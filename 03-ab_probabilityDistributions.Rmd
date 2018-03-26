@@ -223,9 +223,32 @@ he weight given to each possible outcome must be equal and is thus $p = \frac{1}
 Recall that the expected value is the weighted sum of all possible outcomes.
 Thus if $X \sim discrete\ uniform(N)$
 $$
-\mathbb{E}[X] = \sum_{i = 1}^N p * i = \sum_{i = 1}^N \frac{1}{N}* i = \frac{1}{N} \sum_{i = 1}^N i = \frac{1}{N} * S = \frac{1}{N} * \frac{N * (1 + N)}{2} = \frac{(1 + N)}{N}
+\mathbb{E}[X] = \sum_{i = 1}^N p * i = \sum_{i = 1}^N \frac{1}{N}* i = \frac{1}{N} \sum_{i = 1}^N i = \frac{1}{N} * S = \frac{1}{N} * \frac{N * (1 + N)}{2} = \frac{(1 + N)}{2}
 $$
 
+Figuring out the variance is a bit more involved. Since we already know $\mathbb{E}[X]$ we still need $\mathbb{E}[X^{2}]$. Again we apply our equal weight to all the elements and get
+
+$$
+\mathbb{E}[X^{2}] = \sum_{x = 1}^n x^2 * \frac{1}{N} = \frac{1}{N} \sum_{x = 1}^N x^2 
+$$
+
+Therefore we need to find out what $1 + 4 + 9 + 16 + \dots + N^2$ is equal to. Luckily [there exists a formula for that](https://www.khanacademy.org/math/calculus-home/series-calc/series-basics-challenge/v/sum-n-squares-2):
+
+$$
+\sum_{x=1}^N x^2 = \frac{N * (N + 1) * (2*N + 1)}{6}
+$$
+
+Thus,
+
+$$
+\mathbb{E}[X^{2}] = \frac{(N + 1) * (2*N + 1)}{6}
+$$
+
+and
+
+$$
+Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2 = \frac{(N + 1) * (2*N + 1)}{6} - \left(\frac{(1 + N)}{2}\right)^{2} = \frac{(N+1) * (N-1)}{12}
+$$
 
 ## Continuous Distributions
 
