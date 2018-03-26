@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Marketing Research Design &amp; Analysis 2017</title>
+  <meta name="description" content="An Introduction to Statistics Using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2017" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="An Introduction to Statistics Using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2017" />
+  
+  <meta name="twitter:description" content="An Introduction to Statistics Using R" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="summary-statistics.html">
+<link rel="next" href="hypothesis-testing.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">MRDA 2017</a></strong></li>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html"><i class="fa fa-check"></i>Course materials</a><ul>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#datacamp"><i class="fa fa-check"></i>DataCamp</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#why-r"><i class="fa fa-check"></i><b>1.1</b> Why R?</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>1.2</b> How to download and install R and RStudio</a></li>
+<li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#getting-help"><i class="fa fa-check"></i><b>1.3</b> Getting help</a></li>
+<li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#functions"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
+<li class="chapter" data-level="1.5" data-path="getting-started.html"><a href="getting-started.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="getting-started.html"><a href="getting-started.html#a-typical-r-session"><i class="fa fa-check"></i><b>1.6</b> A typical R session</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basic-data-handling.html"><a href="basic-data-handling.html"><i class="fa fa-check"></i><b>2</b> Basic data handling</a><ul>
+<li class="chapter" data-level="2.1" data-path="basic-data-handling.html"><a href="basic-data-handling.html#creating-objects"><i class="fa fa-check"></i><b>2.1</b> Creating objects</a></li>
+<li class="chapter" data-level="2.2" data-path="basic-data-handling.html"><a href="basic-data-handling.html#data-types"><i class="fa fa-check"></i><b>2.2</b> Data types</a></li>
+<li class="chapter" data-level="2.3" data-path="basic-data-handling.html"><a href="basic-data-handling.html#data-structures"><i class="fa fa-check"></i><b>2.3</b> Data structures</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="basic-data-handling.html"><a href="basic-data-handling.html#accessing-data-in-data-frames"><i class="fa fa-check"></i><b>2.3.1</b> Accessing data in data frames</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basic-data-handling.html"><a href="basic-data-handling.html#inspecting-the-content-of-a-data-frame"><i class="fa fa-check"></i><b>2.3.2</b> Inspecting the content of a data frame</a></li>
+<li class="chapter" data-level="2.3.3" data-path="basic-data-handling.html"><a href="basic-data-handling.html#append-and-delete-variables-tofrom-data-frames"><i class="fa fa-check"></i><b>2.3.3</b> Append and delete variables to/from data frames</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-import-and-export.html"><a href="data-import-and-export.html"><i class="fa fa-check"></i><b>3</b> Data import and export</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-import-and-export.html"><a href="data-import-and-export.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>3.1</b> Getting data for this course</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="data-import-and-export.html"><a href="data-import-and-export.html#directly-import-datasets-from-github-recommended"><i class="fa fa-check"></i><b>3.1.1</b> Directly import datasets from GitHub (recommended)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-import-and-export.html"><a href="data-import-and-export.html#download-and-import-datasets-from-learnwu"><i class="fa fa-check"></i><b>3.1.2</b> Download and import datasets from “Learn@WU”</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-import-and-export.html"><a href="data-import-and-export.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>3.2</b> Import data created by other software packages</a></li>
+<li class="chapter" data-level="3.3" data-path="data-import-and-export.html"><a href="data-import-and-export.html#export-data"><i class="fa fa-check"></i><b>3.3</b> Export data</a></li>
+<li class="chapter" data-level="3.4" data-path="data-import-and-export.html"><a href="data-import-and-export.html#import-data-from-the-web"><i class="fa fa-check"></i><b>3.4</b> Import data from the Web</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-import-and-export.html"><a href="data-import-and-export.html#scraping-data-from-websites"><i class="fa fa-check"></i><b>3.4.1</b> Scraping data from websites</a></li>
+<li class="chapter" data-level="3.4.2" data-path="data-import-and-export.html"><a href="data-import-and-export.html#scraping-data-from-apis"><i class="fa fa-check"></i><b>3.4.2</b> Scraping data from APIs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="random-variables.html"><a href="random-variables.html"><i class="fa fa-check"></i><b>4</b> Random Variables</a><ul>
+<li class="chapter" data-level="4.1" data-path="random-variables.html"><a href="random-variables.html#definitions"><i class="fa fa-check"></i><b>4.1</b> Definitions</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="random-variables.html"><a href="random-variables.html#why-random-variables"><i class="fa fa-check"></i><b>4.1.1</b> Why Random Variables?</a></li>
+<li class="chapter" data-level="4.1.2" data-path="random-variables.html"><a href="random-variables.html#discrete-random-variables"><i class="fa fa-check"></i><b>4.1.2</b> Discrete Random Variables</a></li>
+<li class="chapter" data-level="4.1.3" data-path="random-variables.html"><a href="random-variables.html#continuous-case"><i class="fa fa-check"></i><b>4.1.3</b> Continuous Case</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>5</b> Summary statistics</a><ul>
+<li class="chapter" data-level="5.1" data-path="summary-statistics.html"><a href="summary-statistics.html#categorical-variables"><i class="fa fa-check"></i><b>5.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="5.2" data-path="summary-statistics.html"><a href="summary-statistics.html#continuous-variables"><i class="fa fa-check"></i><b>5.2</b> Continuous variables</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="summary-statistics.html"><a href="summary-statistics.html#descriptive-statistics"><i class="fa fa-check"></i><b>5.2.1</b> Descriptive statistics</a></li>
+<li class="chapter" data-level="5.2.2" data-path="summary-statistics.html"><a href="summary-statistics.html#creating-subsets"><i class="fa fa-check"></i><b>5.2.2</b> Creating subsets</a></li>
+<li class="chapter" data-level="5.2.3" data-path="summary-statistics.html"><a href="summary-statistics.html#confidence-intervals"><i class="fa fa-check"></i><b>5.2.3</b> Confidence intervals</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-visualization.html"><a href="data-visualization.html"><i class="fa fa-check"></i><b>6</b> Data visualization</a><ul>
+<li class="chapter" data-level="6.1" data-path="data-visualization.html"><a href="data-visualization.html#categorical-variables-1"><i class="fa fa-check"></i><b>6.1</b> Categorical variables</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="data-visualization.html"><a href="data-visualization.html#bar-plot"><i class="fa fa-check"></i><b>6.1.1</b> Bar plot</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data-visualization.html"><a href="data-visualization.html#covariation-plots"><i class="fa fa-check"></i><b>6.1.2</b> Covariation plots</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data-visualization.html"><a href="data-visualization.html#continuous-variables-1"><i class="fa fa-check"></i><b>6.2</b> Continuous variables</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="data-visualization.html"><a href="data-visualization.html#histogram"><i class="fa fa-check"></i><b>6.2.1</b> Histogram</a></li>
+<li class="chapter" data-level="6.2.2" data-path="data-visualization.html"><a href="data-visualization.html#boxplot"><i class="fa fa-check"></i><b>6.2.2</b> Boxplot</a></li>
+<li class="chapter" data-level="6.2.3" data-path="data-visualization.html"><a href="data-visualization.html#plot-of-means"><i class="fa fa-check"></i><b>6.2.3</b> Plot of means</a></li>
+<li class="chapter" data-level="6.2.4" data-path="data-visualization.html"><a href="data-visualization.html#scatter-plot"><i class="fa fa-check"></i><b>6.2.4</b> Scatter plot</a></li>
+<li class="chapter" data-level="6.2.5" data-path="data-visualization.html"><a href="data-visualization.html#line-plot"><i class="fa fa-check"></i><b>6.2.5</b> Line plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="data-visualization.html"><a href="data-visualization.html#saving-plots"><i class="fa fa-check"></i><b>6.3</b> Saving plots</a></li>
+<li class="chapter" data-level="6.4" data-path="data-visualization.html"><a href="data-visualization.html#additional-options"><i class="fa fa-check"></i><b>6.4</b> Additional options</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>7</b> Hypothesis testing</a><ul>
+<li class="chapter" data-level="7.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#why-do-we-test-hypotheses"><i class="fa fa-check"></i><b>7.1.1</b> Why do we test hypotheses?</a></li>
+<li class="chapter" data-level="7.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-process-of-hypothesis-testing"><i class="fa fa-check"></i><b>7.1.2</b> The process of hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#parametric-tests"><i class="fa fa-check"></i><b>7.2</b> Parametric tests</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>7.2.1</b> Independent-means t-test</a></li>
+<li class="chapter" data-level="7.2.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>7.2.2</b> Dependent-means t-test</a></li>
+<li class="chapter" data-level="7.2.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>7.2.3</b> One-sample t-test</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>7.3</b> Non-parametric tests</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>7.3.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
+<li class="chapter" data-level="7.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>7.3.2</b> Wilcoxon signed-rank test</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>7.4</b> Categorical data</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-proportions"><i class="fa fa-check"></i><b>7.4.1</b> Comparing proportions</a></li>
+<li class="chapter" data-level="7.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>7.4.2</b> Chi-square test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html"><i class="fa fa-check"></i><b>8</b> Analysis of variance</a><ul>
+<li class="chapter" data-level="8.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#introduction-1"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#decomposing-variance"><i class="fa fa-check"></i><b>8.2</b> Decomposing variance</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#total-sum-of-squares"><i class="fa fa-check"></i><b>8.2.1</b> Total sum of squares</a></li>
+<li class="chapter" data-level="8.2.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#model-sum-of-squares"><i class="fa fa-check"></i><b>8.2.2</b> Model sum of squares</a></li>
+<li class="chapter" data-level="8.2.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#residual-sum-of-squares"><i class="fa fa-check"></i><b>8.2.3</b> Residual sum of squares</a></li>
+<li class="chapter" data-level="8.2.4" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#effect-strength"><i class="fa fa-check"></i><b>8.2.4</b> Effect strength</a></li>
+<li class="chapter" data-level="8.2.5" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#test-of-significance"><i class="fa fa-check"></i><b>8.2.5</b> Test of significance</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#one-way-anova"><i class="fa fa-check"></i><b>8.3</b> One-way ANOVA</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#basic-anova"><i class="fa fa-check"></i><b>8.3.1</b> Basic ANOVA</a></li>
+<li class="chapter" data-level="8.3.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#post-hoc-tests"><i class="fa fa-check"></i><b>8.3.2</b> Post-hoc tests</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#n-way-anova"><i class="fa fa-check"></i><b>8.4</b> N-way ANOVA</a></li>
+<li class="chapter" data-level="8.5" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#non-parametric-tests-1"><i class="fa fa-check"></i><b>8.5</b> Non-parametric tests</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>9.1</b> Correlation</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>9.1.1</b> Correlation coefficient</a></li>
+<li class="chapter" data-level="9.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>9.1.2</b> Significance testing</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>9.2</b> Regression</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>9.2.1</b> Simple linear regression</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>9.2.2</b> Multiple linear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>9.3</b> Potential problems</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>9.3.1</b> Outliers</a></li>
+<li class="chapter" data-level="9.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>9.3.2</b> Influential observations</a></li>
+<li class="chapter" data-level="9.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>9.3.3</b> Non-linearity</a></li>
+<li class="chapter" data-level="9.3.4" data-path="regression.html"><a href="regression.html#non-constant-error-variance"><i class="fa fa-check"></i><b>9.3.4</b> Non-constant error variance</a></li>
+<li class="chapter" data-level="9.3.5" data-path="regression.html"><a href="regression.html#non-normally-distributed-errors"><i class="fa fa-check"></i><b>9.3.5</b> Non-normally distributed errors</a></li>
+<li class="chapter" data-level="9.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>9.3.6</b> Correlation of errors</a></li>
+<li class="chapter" data-level="9.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>9.3.7</b> Collinearity</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>9.4</b> Categorical predictors</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>9.4.1</b> Two categories</a></li>
+<li class="chapter" data-level="9.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>9.4.2</b> More than two categories</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>9.5</b> Extensions of the linear model</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>9.5.1</b> Interaction effects</a></li>
+<li class="chapter" data-level="9.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>9.5.2</b> Non-linear relationships</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>10</b> Exploratory factor analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-2"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>10.2</b> Steps in factor analysis</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>10.2.1</b> Are the assumptions satisfied?</a></li>
+<li class="chapter" data-level="10.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>10.2.2</b> Deriving factors</a></li>
+<li class="chapter" data-level="10.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>10.2.3</b> Factor interpretation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#creating-new-variables"><i class="fa fa-check"></i><b>10.2.4</b> Creating new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#reliability-analysis"><i class="fa fa-check"></i><b>10.3</b> Reliability analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="assignments.html"><a href="assignments.html"><i class="fa fa-check"></i><b>11</b> Assignments</a><ul>
+<li class="chapter" data-level="11.1" data-path="assignments.html"><a href="assignments.html#assignment-2-hypothesis-testing"><i class="fa fa-check"></i><b>11.1</b> Assignment 2 (Hypothesis Testing)</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="assignments.html"><a href="assignments.html#load-data"><i class="fa fa-check"></i><b>11.1.1</b> Load data</a></li>
+<li class="chapter" data-level="11.1.2" data-path="assignments.html"><a href="assignments.html#question-1"><i class="fa fa-check"></i><b>11.1.2</b> Question 1</a></li>
+<li class="chapter" data-level="11.1.3" data-path="assignments.html"><a href="assignments.html#question-2"><i class="fa fa-check"></i><b>11.1.3</b> Question 2</a></li>
+<li class="chapter" data-level="11.1.4" data-path="assignments.html"><a href="assignments.html#question-3"><i class="fa fa-check"></i><b>11.1.4</b> Question 3</a></li>
+<li class="chapter" data-level="11.1.5" data-path="assignments.html"><a href="assignments.html#question-4"><i class="fa fa-check"></i><b>11.1.5</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="assignments.html"><a href="assignments.html#assignment-3-anova"><i class="fa fa-check"></i><b>11.2</b> Assignment 3 (Anova)</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="assignments.html"><a href="assignments.html#load-data-1"><i class="fa fa-check"></i><b>11.2.1</b> Load data</a></li>
+<li class="chapter" data-level="11.2.2" data-path="assignments.html"><a href="assignments.html#question-1-1"><i class="fa fa-check"></i><b>11.2.2</b> Question 1</a></li>
+<li class="chapter" data-level="11.2.3" data-path="assignments.html"><a href="assignments.html#question-2-1"><i class="fa fa-check"></i><b>11.2.3</b> Question 2</a></li>
+<li class="chapter" data-level="11.2.4" data-path="assignments.html"><a href="assignments.html#question-3-1"><i class="fa fa-check"></i><b>11.2.4</b> Question 3</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="assignments.html"><a href="assignments.html#assignment-4-regression"><i class="fa fa-check"></i><b>11.3</b> Assignment 4 (Regression)</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="assignments.html"><a href="assignments.html#load-data-2"><i class="fa fa-check"></i><b>11.3.1</b> Load data</a></li>
+<li class="chapter" data-level="11.3.2" data-path="assignments.html"><a href="assignments.html#question-1-2"><i class="fa fa-check"></i><b>11.3.2</b> Question 1</a></li>
+<li class="chapter" data-level="11.3.3" data-path="assignments.html"><a href="assignments.html#question-2-2"><i class="fa fa-check"></i><b>11.3.3</b> Question 2</a></li>
+<li class="chapter" data-level="11.3.4" data-path="assignments.html"><a href="assignments.html#question-3-2"><i class="fa fa-check"></i><b>11.3.4</b> Question 3</a></li>
+<li class="chapter" data-level="11.3.5" data-path="assignments.html"><a href="assignments.html#question-4-1"><i class="fa fa-check"></i><b>11.3.5</b> Question 4</a></li>
+<li class="chapter" data-level="11.3.6" data-path="assignments.html"><a href="assignments.html#question-5"><i class="fa fa-check"></i><b>11.3.6</b> Question 5</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2017</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-visualization" class="section level1">
+<h1><span class="header-section-number">6</span> Data visualization</h1>
+<p>This section dicusses how to produce appropriate graphics to describe our data visually. While R includes tools to build plots, we will be using the ggplot2 package by Hadley Wickham. It has the advantage of being fairly straightforward to learn but being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book “Discovering Statistics Using R” by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">“R for Data science”</a> by Hadley Wickham.</p>
+<p>ggplot2 is built around the idea of constructing plots by stacking layers on top of one another. Every plot starts with the <code>ggplot(data)</code> function, after which layers can be added with the “+” symbol. The following figures show the layered structure of creating plots with ggplot.</p>
+<p style="text-align:center;">
+<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/ggplot2.JPG" alt="DSUR cover" height="250"  />    <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/ggplot1.JPG" alt="DSUR cover" height="250"  />
+</p>
+<div id="categorical-variables-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> Categorical variables</h2>
+<div id="bar-plot" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Bar plot</h3>
+<p>To give you an example of how the graphics are composed, let’s go back to the frequency table from the previous chapter, where we created this table:</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["startdate"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["enddate"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ipaddress"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["duration"],"name":[4],"type":["int"],"align":["right"]},{"label":["experience"],"name":[5],"type":["int"],"align":["right"]},{"label":["theory_ht"],"name":[6],"type":["int"],"align":["right"]},{"label":["theory_anova"],"name":[7],"type":["int"],"align":["right"]},{"label":["theory_reg"],"name":[8],"type":["int"],"align":["right"]},{"label":["theory_fa"],"name":[9],"type":["int"],"align":["right"]},{"label":["pract_ht"],"name":[10],"type":["int"],"align":["right"]},{"label":["pract_anova"],"name":[11],"type":["int"],"align":["right"]},{"label":["pract_reg"],"name":[12],"type":["int"],"align":["right"]},{"label":["pract_fa"],"name":[13],"type":["int"],"align":["right"]},{"label":["overall_knowledge"],"name":[14],"type":["int"],"align":["right"]},{"label":["multi_1"],"name":[15],"type":["int"],"align":["right"]},{"label":["multi_2"],"name":[16],"type":["int"],"align":["right"]},{"label":["multi_3"],"name":[17],"type":["int"],"align":["right"]},{"label":["multi_4"],"name":[18],"type":["int"],"align":["right"]},{"label":["overall_100"],"name":[19],"type":["int"],"align":["right"]},{"label":["prior_SPSS"],"name":[20],"type":["int"],"align":["right"]},{"label":["prior_R"],"name":[21],"type":["int"],"align":["right"]},{"label":["prior_Stata"],"name":[22],"type":["int"],"align":["right"]},{"label":["prior_Excel"],"name":[23],"type":["int"],"align":["right"]},{"label":["prior_SAS"],"name":[24],"type":["int"],"align":["right"]},{"label":["software_preference"],"name":[25],"type":["int"],"align":["right"]},{"label":["future_importance"],"name":[26],"type":["int"],"align":["right"]},{"label":["gender"],"name":[27],"type":["int"],"align":["right"]},{"label":["country"],"name":[28],"type":["int"],"align":["right"]},{"label":["group"],"name":[29],"type":["int"],"align":["right"]},{"label":["lat"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[31],"type":["dbl"],"align":["right"]}],"data":[{"1":"04.09.2017 21:03","2":"04.09.2017 21:05","3":"188.23.190.194","4":"136","5":"3","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"3","13":"3","14":"2","15":"2","16":"2","17":"4","18":"3","19":"25","20":"1","21":"1","22":"1","23":"5","24":"1","25":"5","26":"4","27":"1","28":"1","29":"1","30":"48.30000","31":"16.350006"},{"1":"04.09.2017 21:07","2":"04.09.2017 21:12","3":"93.10.250.2","4":"297","5":"3","6":"1","7":"3","8":"3","9":"3","10":"1","11":"1","12":"1","13":"1","14":"2","15":"2","16":"2","17":"2","18":"4","19":"15","20":"1","21":"1","22":"1","23":"4","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"43.71671","31":"7.366699"},{"1":"04.09.2017 21:09","2":"04.09.2017 21:13","3":"91.0.18.86","4":"237","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2","15":"3","16":"3","17":"3","18":"3","19":"30","20":"1","21":"1","22":"1","23":"2","24":"1","25":"5","26":"4","27":"2","28":"2","29":"2","30":"50.91330","31":"6.815201"},{"1":"04.09.2017 21:14","2":"04.09.2017 21:23","3":"37.116.255.55","4":"579","5":"1","6":"3","7":"3","8":"3","9":"2","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"3","18":"2","19":"65","20":"1","21":"1","22":"1","23":"3","24":"1","25":"3","26":"4","27":"2","28":"2","29":"1","30":"45.50000","31":"11.399994"},{"1":"04.09.2017 21:25","2":"04.09.2017 21:30","3":"178.165.131.208","4":"290","5":"1","6":"3","7":"3","8":"2","9":"2","10":"5","11":"5","12":"4","13":"3","14":"3","15":"4","16":"3","17":"4","18":"2","19":"70","20":"3","21":"1","22":"1","23":"3","24":"1","25":"1","26":"4","27":"2","28":"1","29":"1","30":"48.20869","31":"16.240707"},{"1":"04.09.2017 21:42","2":"04.09.2017 21:46","3":"212.28.68.81","4":"205","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1","15":"3","16":"3","17":"2","18":"4","19":"0","20":"1","21":"1","22":"1","23":"1","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"47.00560","31":"28.857498"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>How can we plot this kind of data? Since we have a categorical variable, we will use a bar plot. However, to be able to use the table for your plot, you first need to assign it to an object as a data frame using the <code>as.data.frame()</code>-function.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Var1"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"none","2":"0.18181818"},{"1":"basic","2":"0.58181818"},{"1":"intermediate","2":"0.16363636"},{"1":"advanced","2":"0.07272727"},{"1":"proficient","2":"0.00000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Since <code>Var1</code> is not a very descriptive name, let’s rename the variable to something more meaningful</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["overall_knowledge"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"none","2":"0.18181818"},{"1":"basic","2":"0.58181818"},{"1":"intermediate","2":"0.16363636"},{"1":"advanced","2":"0.07272727"},{"1":"proficient","2":"0.00000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Once we have our dataset we can begin constructing the plot. As mentioned previously, we start with the <code>ggplot()</code> function, with the argument specifying the dataset to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, We would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+bar_chart &lt;-<span class="st"> </span><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge,<span class="dt">y =</span> Freq))
+bar_chart</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-65"></span>
+<img src="_main_files/figure-html/unnamed-chunk-65-1.png" alt="Bar chart (step 1)" width="672" />
+<p class="caption">
+Figure 6.1: Bar chart (step 1)
+</p>
+</div>
+<p>You can see that the coordinate system is empty. This is because so far, we have told R merely which variables we would like to plot but we haven’t specified which geometric figures (points, bars, lines, etc.) we would like to use. This is done using the <code>geom_xxx</code> function. ggplot includes many different geoms, for a wide range of plots (e.g., geom_line, geom_histogram, geom_boxplot, etc.). A good overview of the various geom functions can be found <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">here</a>. In our case, we would like to use a bar chart for which <code>geom_col</code> is appropriate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-66"></span>
+<img src="_main_files/figure-html/unnamed-chunk-66-1.png" alt="Bar chart (step 2)" width="672" />
+<p class="caption">
+Figure 6.2: Bar chart (step 2)
+</p>
+</div>
+<p>Note that the same could be achieved using <code>geom_bar</code>. However, by default <code>geom_bar</code> counts the number of observations within each category of a variable. This is not required in our case because we have already used the <code>prop.table()</code> function to compute the relative frequencies. The argument <code>stat = &quot;identity&quot;</code> prevents <code>geom_bar</code> from performing counting operations and uses it “as it is”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-67"></span>
+<img src="_main_files/figure-html/unnamed-chunk-67-1.png" alt="Bar chart (alternative specification)" width="672" />
+<p class="caption">
+Figure 6.3: Bar chart (alternative specification)
+</p>
+</div>
+<p>Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follow now just serves the purpose of making the plot look nicer by modifying the appearence of the plot. How about some more meaningful axis labels? We can specify the axis labels using the <code>ylab()</code> and <code>xlab()</code> functions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-68"></span>
+<img src="_main_files/figure-html/unnamed-chunk-68-1.png" alt="Bar chart (step 3)" width="672" />
+<p class="caption">
+Figure 6.4: Bar chart (step 3)
+</p>
+</div>
+<p>How about adding some value labels to the bars? This can be done using <code>geom_text()</code>. Note that the <code>sprintf()</code> function is not mandatory and is only added to format the numeric labels here. The function takes two arguments: the first specifies the format wrapped in two <code>%</code> sings. Thus, <code>%.0f</code> means to format the value as a fixed point value with no digits after the decimal point, and <code>%%</code> is a literal that prints a “%” sign. The second argument is simply the numeric value to be used. In this case, the relative frequencies multiplied by 100 to obtain the percentage values. Using the <code>vjust =</code> argument, we can adjust the vertical alignment of the label. In this case, we would like to display the label slightly above the bars.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.2</span>) </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-69"></span>
+<img src="_main_files/figure-html/unnamed-chunk-69-1.png" alt="Bar chart (step 4)" width="672" />
+<p class="caption">
+Figure 6.5: Bar chart (step 4)
+</p>
+</div>
+<p>We could go ahead and specify the appearance of every single element of the plot now. However, there are also pre-secified themes that include various formating steps in one singe function. For example <code>theme_bw()</code> would make the plot appear like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-70"></span>
+<img src="_main_files/figure-html/unnamed-chunk-70-1.png" alt="Bar chart (step 5)" width="672" />
+<p class="caption">
+Figure 6.6: Bar chart (step 5)
+</p>
+</div>
+<p>and <code>theme_minimal()</code> looks like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-71"></span>
+<img src="_main_files/figure-html/unnamed-chunk-71-1.png" alt="Bar chart (options 1)" width="672" />
+<p class="caption">
+Figure 6.7: Bar chart (options 1)
+</p>
+</div>
+<p>These were examples of built-in formatations of <code>ggolot()</code>, where the default is <code>theme_classic()</code>. For even more options, check out the <code>ggthemes</code> package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example <code>theme_economist()</code> uses the formating of the journal “The Economist”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
+bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_economist</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-72"></span>
+<img src="_main_files/figure-html/unnamed-chunk-72-1.png" alt="Bar chart (options 2)" width="672" />
+<p class="caption">
+Figure 6.8: Bar chart (options 2)
+</p>
+</div>
+<p><strong>Summary</strong></p>
+<p>To create a plot with ggplot we give it the appropriate data (in the <code>ggplot()</code> function), tell it which shape to use (via a function of the geom family), assign variables to the correct axis (by using the the <code>aes()</code> function) and define the appearence of the plot.</p>
+<p>Now we would like to investigate whether the distribution differs between male and female students. For this purpose we first construct the conditional relative frequency table from the previous chapter again. Recall that the latter gives us the relative frequency within a group (in our case male and female), as compared to the relative frequency within the entire sample.</p>
+<p>We can now take these tables to construct plots grouped by gender. To achieve this we simply need to add the <code>facet_wrap()</code> function, which replicates a plot multiple times, split by a specified grouping factor. Note that the grouping factor has to be supplied in R’s formula notation, hence it is preceded by a “~” symbol.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge_cat, <span class="dt">y =</span> Freq)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gender_cat) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Conditional relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-74"></span>
+<img src="_main_files/figure-html/unnamed-chunk-74-1.png" alt="Grouped bar chart (conditional relative frequencies)" width="672" />
+<p class="caption">
+Figure 6.9: Grouped bar chart (conditional relative frequencies)
+</p>
+</div>
+<p>To plot the relative frequencies for each response category by group in a slightly different way, we can also use the <code>fill</code> argument, which tells ggplot to fill the bars by a specified variable (in our case “gender”). The <code>position = &quot;dodge&quot;</code> argument causes the bars to be displayed next to each other (as opposed to stacked on top of one another).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge_cat, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> gender_cat)) <span class="op">+</span><span class="st"> </span><span class="co">#use &quot;fill&quot; argument for different colors</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co">#use &quot;dodge&quot; to display bars next to each other (instead of stacked on top)</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)),<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.9</span>), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.25</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Conditional relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-75"></span>
+<img src="_main_files/figure-html/unnamed-chunk-75-1.png" alt="Grouped bar chart (conditional relative frequencies) (2)" width="672" />
+<p class="caption">
+Figure 6.10: Grouped bar chart (conditional relative frequencies) (2)
+</p>
+</div>
+</div>
+<div id="covariation-plots" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Covariation plots</h3>
+<p>To visualise the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Let’s use a different example. Say, we wanted to investigate the association between prior theoretical and prior practical knowledge in regression analysis. First, we need to make sure that the respective variables are coded as factors.</p>
+<p>There are multiple ways to visualise such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with <code>geom_count()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> test_data) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, <span class="dt">y =</span> Practice_Regression_cat))  <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-77"></span>
+<img src="_main_files/figure-html/unnamed-chunk-77-1.png" alt="Covariation between categorical data (1)" width="672" />
+<p class="caption">
+Figure 6.11: Covariation between categorical data (1)
+</p>
+</div>
+<p>Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first to have create a dataframe that contains the absolute frequencies of all combinations of factors. Then we can take this dataframe and supply it to <code>geom_tile()</code>, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the <code>aes()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table_plot_abs_reg &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(test_data[,<span class="kw">c</span>(<span class="st">&quot;Theory_Regression_cat&quot;</span>, <span class="st">&quot;Practice_Regression_cat&quot;</span>)])) <span class="co">#absolute frequencies</span>
+
+<span class="kw">ggplot</span>(table_plot_abs_reg, <span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, <span class="dt">y =</span> Practice_Regression_cat)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-78"></span>
+<img src="_main_files/figure-html/unnamed-chunk-78-1.png" alt="Covariation between categorical data (2)" width="672" />
+<p class="caption">
+Figure 6.12: Covariation between categorical data (2)
+</p>
+</div>
+</div>
+</div>
+<div id="continuous-variables-1" class="section level2">
+<h2><span class="header-section-number">6.2</span> Continuous variables</h2>
+<div id="histogram" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Histogram</h3>
+<p>Histograms can be plotted for continuous data using the <code>geom_histogram()</code> function. Note that the <code>aes()</code> function only needs one argument here, since a histogram is a plot of the distribtion of only one variable. As an example, let’s consider a data set containig the advertising expenditures and product sales of a company sellin products in two different stores:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">adv_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat&quot;</span>, 
+                       <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+                       <span class="dt">header =</span> <span class="ot">TRUE</span>)
+
+adv_data<span class="op">$</span>store &lt;-<span class="st"> </span><span class="kw">factor</span>(adv_data<span class="op">$</span>store, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;store1&quot;</span>, <span class="st">&quot;store2&quot;</span>))
+
+<span class="kw">head</span>(adv_data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["store"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"133553","2":"1841","3":"store1"},{"1":"119778","2":"1782","3":"store1"},{"1":"147097","2":"1782","3":"store1"},{"1":"55589","2":"573","3":"store1"},{"1":"109886","2":"1877","3":"store1"},{"1":"150285","2":"1907","3":"store1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Now we can create the histogram using <code>geom_histogram()</code>. The argument <code>binwidth</code> specifies the range that each bar spans, <code>col = &quot;black&quot;</code> specifies the border to be black and <code>fill = &quot;darkblue&quot;</code> sets the inner color of the bars to dark blue. The For brevity we have now also started naming the x and y axis with the single function <code>labs()</code>, instead of using the two distinct functions <code>xlab()</code> and <code>ylab()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(sales)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-80"></span>
+<img src="_main_files/figure-html/unnamed-chunk-80-1.png" alt="Histogram" width="672" />
+<p class="caption">
+Figure 6.13: Histogram
+</p>
+</div>
+</div>
+<div id="boxplot" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Boxplot</h3>
+<p>Another common way to display the disribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom <code>geom_boxplot()</code>. In our case we want to show the difference in distribution between the two stores in our sample, which is why the <code>aes()</code> function contains both an x and a y variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-81"></span>
+<img src="_main_files/figure-html/unnamed-chunk-81-1.png" alt="Boxplot by group" width="672" />
+<p class="caption">
+Figure 6.14: Boxplot by group
+</p>
+</div>
+<p>The following graphic shows you how to interpret the boxplot:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-82"></span>
+<img src="_main_files/figure-html/unnamed-chunk-82-1.png" alt="Information contained in a Boxplot" width="672" />
+<p class="caption">
+Figure 6.15: Information contained in a Boxplot
+</p>
+</div>
+<p>You may also augment the boxplot with the data points using <code>geom_jitter()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">colour=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-83"></span>
+<img src="_main_files/figure-html/unnamed-chunk-83-1.png" alt="Boxplot with augmented data points" width="672" />
+<p class="caption">
+Figure 6.16: Boxplot with augmented data points
+</p>
+</div>
+<p>In case you would like to create the boxplot on the total data (i.e., not by group), just leave the <code>x =</code> argument within the <code>aes()</code> function empty:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> sales)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-84"></span>
+<img src="_main_files/figure-html/unnamed-chunk-84-1.png" alt="Single Boxplot" width="672" />
+<p class="caption">
+Figure 6.17: Single Boxplot
+</p>
+</div>
+</div>
+<div id="plot-of-means" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Plot of means</h3>
+<p>Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot’s layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a <code>geom_pointrange()</code> layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in <code>geom_bar()</code>, namely <code>stat =</code>, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. <code>geom_bar()</code> typically uses the <code>count</code> stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling <code>geom_bar()</code> explicitly that we want to use a different stat we can override its behaviour, forcing it to create a bar plot of the means.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(store, sales)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of sales&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">100000</span>, <span class="dv">130000</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-85"></span>
+<img src="_main_files/figure-html/unnamed-chunk-85-1.png" alt="Plot of means" width="672" />
+<p class="caption">
+Figure 6.18: Plot of means
+</p>
+</div>
+</div>
+<div id="scatter-plot" class="section level3">
+<h3><span class="header-section-number">6.2.4</span> Scatter plot</h3>
+<p>The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The <code>geom_smooth()</code> function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument <code>method = &quot;lm&quot;</code>). The “fill” and “alpha” arguments solely affect appearence, in our case the color and the opacity of the confidence interval, respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-86"></span>
+<img src="_main_files/figure-html/unnamed-chunk-86-1.png" alt="Scatter plot" width="672" />
+<p class="caption">
+Figure 6.19: Scatter plot
+</p>
+</div>
+<p>As you can see, there appears to be a positive relationship between advertising and sales.</p>
+<div id="grouped-scatter-plot" class="section level4">
+<h4><span class="header-section-number">6.2.4.1</span> Grouped scatter plot</h4>
+<p>It could be that customers from different store respond differently to advertising. We can visually capture such differences with a grouped scatter plot. By adding the argument <code>colour = store</code> to the aesthetic specification, ggplot automatically treats the two stores as distinct groups and plots accordingly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales, <span class="dt">colour =</span> store)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour=</span><span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-87"></span>
+<img src="_main_files/figure-html/unnamed-chunk-87-1.png" alt="Grouped scatter plot" width="672" />
+<p class="caption">
+Figure 6.20: Grouped scatter plot
+</p>
+</div>
+<p>It appears from the plot that customers in store 1 are more responsive to advertising.</p>
+</div>
+<div id="combination-of-scatter-plot-and-histogram" class="section level4">
+<h4><span class="header-section-number">6.2.4.2</span> Combination of scatter plot and histogram</h4>
+<p>Using the <code>ggExtra()</code> package, you may also augment the scatterplto with a histogram:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggExtra)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() 
+ggExtra<span class="op">::</span><span class="kw">ggMarginal</span>(p, <span class="dt">type =</span> <span class="st">&quot;histogram&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-88"></span>
+<img src="_main_files/figure-html/unnamed-chunk-88-1.png" alt="Scatter plot with histogram" width="672" />
+<p class="caption">
+Figure 6.21: Scatter plot with histogram
+</p>
+</div>
+<p>In this case, the <code>type = &quot;histogram&quot;</code> argument specifies that we would like to plot a histogram. However, you could also opt for <code>type = &quot;boxplot&quot;</code> or <code>type = &quot;density&quot;</code> to use a boxplot or density plot instead.</p>
+</div>
+</div>
+<div id="line-plot" class="section level3">
+<h3><span class="header-section-number">6.2.5</span> Line plot</h3>
+<p>Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did in the previously).</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["value"],"name":[1],"type":["chr"],"align":["left"]},{"label":["date"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"8747358","2":"2016"},{"1":"8633169","2":"2015"},{"1":"8541575","2":"2014"},{"1":"8479375","2":"2013"},{"1":"8429991","2":"2012"},{"1":"8391643","2":"2011"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre><code>## &#39;data.frame&#39;:    57 obs. of  2 variables:
+##  $ date : int  2016 2015 2014 2013 2012 2011 2010 2009 2008 2007 ...
+##  $ value: num  8747358 8633169 8541575 8479375 8429991 ...</code></pre>
+<p>As you can see doing this is very straighforward. Given the correct <code>aes()</code> and geom specification ggplot constructs the correct plot for us.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-90"></span>
+<img src="_main_files/figure-html/unnamed-chunk-90-1.png" alt="Line plot" width="672" />
+<p class="caption">
+Figure 6.22: Line plot
+</p>
+</div>
+</div>
+</div>
+<div id="saving-plots" class="section level2">
+<h2><span class="header-section-number">6.3</span> Saving plots</h2>
+<p>To save the last displayed plot, simply use the function <code>ggsave()</code>, and it will save the plot to your working directory. Use the arguments <code>height</code>and <code>width</code> to specify the size of the file. You may also choose the file format by adjusting the ending of the file name. E.g., <code>file_name.jpg</code> will create a file in JPG-format, whereas <code>file_name.png</code> saves the file in PNG-format, etc..</p>
+</div>
+<div id="additional-options" class="section level2">
+<h2><span class="header-section-number">6.4</span> Additional options</h2>
+<p>Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of shazam users from Germany. The data contains the latitude and logitude information where a music track was “shazamed”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggmap)
+<span class="kw">library</span>(dplyr)
+geo_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat&quot;</span>, 
+                       <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+                       <span class="dt">header =</span> <span class="ot">TRUE</span>)
+<span class="kw">head</span>(geo_data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["lat"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["lon"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["latlon"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"50.7","2":"7.7","3":"50.7_7.7"},{"1":"51.0","2":"6.3","3":"51_6.3"},{"1":"52.2","2":"10.5","3":"52.2_10.5"},{"1":"50.9","2":"11.0","3":"50.9_11"},{"1":"49.9","2":"8.2","3":"49.9_8.2"},{"1":"53.3","2":"13.4","3":"53.3_13.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>There is a package called “ggmap”, which is an augmentation for the ggplot packages. It lets you load maps from different web services (e.g., Google maps) and maps the user location within the coordination system of ggplot. With this information, you can creat interesting plots like heat maps. We won’t go into detail here but you may go through the following code on your own if you are interested.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Download the base map</span>
+de_map_g_str &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="st">&quot;Germany&quot;</span>, <span class="dt">zoom =</span> <span class="dv">6</span>)
+
+<span class="co"># Draw the heat map</span>
+<span class="kw">ggmap</span>(de_map_g_str, <span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density2d</span>(<span class="dt">data =</span> geo_data, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">size =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_density2d</span>(<span class="dt">data =</span> geo_data, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat, <span class="dt">fill =</span> ..level.., <span class="dt">alpha =</span> ..level..), 
+                 <span class="dt">size =</span> <span class="fl">0.01</span>, <span class="dt">bins =</span> <span class="dv">16</span>, <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
+<img src="_main_files/figure-html/unnamed-chunk-93-1.png" alt="Geo-location data (1)" width="672" />
+<p class="caption">
+Figure 6.23: Geo-location data (1)
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transform data</span>
+geo_data &lt;-<span class="st"> </span>geo_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(latlon) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">sumCount =</span> <span class="kw">n</span>(), <span class="dt">lat =</span> <span class="kw">first</span>(lat), <span class="dt">lon =</span> <span class="kw">first</span>(lon)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(latlon)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>()
+
+<span class="co"># Draw circle plot</span>
+
+circle_scale_amt =<span class="st"> </span><span class="fl">0.15</span> <span class="co"># adjust circle size</span>
+
+usa_center =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">geocode</span>(<span class="st">&quot;Germany&quot;</span>))
+<span class="kw">ggmap</span>(<span class="kw">get_googlemap</span>(<span class="dt">center =</span> usa_center, <span class="dt">scale =</span> <span class="dv">2</span>, <span class="dt">zoom =</span> <span class="dv">6</span>), <span class="dt">extent =</span> <span class="st">&quot;normal&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">data =</span> geo_data, <span class="dt">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>, 
+             <span class="dt">size =</span> geo_data<span class="op">$</span>sumCount<span class="op">*</span>circle_scale_amt) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_size_continuous</span>(<span class="dt">range =</span> <span class="kw">range</span>(geo_data<span class="op">$</span>sumCount)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylim</span>(<span class="kw">min</span>(geo_data<span class="op">$</span>lat), <span class="kw">max</span>(geo_data<span class="op">$</span>lat)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="kw">min</span>(geo_data<span class="op">$</span>lon), <span class="kw">max</span>(geo_data<span class="op">$</span>lon)) </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
+<img src="_main_files/figure-html/unnamed-chunk-93-2.png" alt="Geo-location data (2)" width="672" />
+<p class="caption">
+Figure 6.23: Geo-location data (2)
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="summary-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hypothesis-testing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

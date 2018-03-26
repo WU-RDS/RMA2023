@@ -1,0 +1,102 @@
+---
+title: "Example R Markdown"
+author: "Your Name"
+output: html_document
+---
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents, which is useful for documenting your research output. For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf>.
+
+When you click the "Knit" button above the code editor, a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+### Load data
+
+```{r load_data}
+music_sales <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+music_sales$group <- factor(music_sales$group, levels = c(1:2), labels = c("low_price", "high_price")) #convert grouping variable to factor
+str(music_sales) #inspect data
+head(music_sales) #inspect data
+```
+
+The code above uses an example we covered during the session. The R code has to be included within two "```", which tells R to interpret the input as code. The "r" parameter within the curly brackets tells R that the code entered is R code and "load_data" is simply the name of the code chunk for internal reference (i.e., "{r load_data}"). Within the code chunk, you may use the R code as you would in a plain script file (like the ones we use during the sessions). The code will automatically be executed when you click the "knit" button to create your output file and the output will be displayed below it. You may also execute the code chunk while working in the code editor to inspect the output before creating the document by clicking the green "play" button in the top right corner of the code chunk. For example, the above code loads the data, converts a variable to factor and uses the "head()" and "str()" functions to inspect the data.
+
+Note that there are packages that have been developed to make the output look nicer. For example, the "kable()" function from the "knitr" package may be used in combination with the "kableExtra" package to format tables (for details see here: <https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html>)
+
+You may include as many code chunks as you like. For example, the next chunk includes the descriptive statistics. 
+
+
+### Descriptive statistics
+
+```{r desc_stat}
+library(psych)
+psych::describe(music_sales$unit_sales) #overall descriptives
+describeBy(music_sales$unit_sales, music_sales$group) #descriptives by group
+```
+
+You should include your interpretation of the results directly below the output.
+
+It is also easy to structure your document by using headlines (e.g., "#" will be the first level, "##" the next, "###" the next, etc.). In this example, the next section would include the statistical test and "### Statistical test" would indicate the headline for this section. 
+
+
+### Statistical test
+
+```{r stat_test}
+t.test(unit_sales ~ group, data = music_sales)
+```
+
+You may also embed output directly in the text. For example, to display the mean of the variable "unit_sales" directly in the text, you may use: `r round(mean(music_sales$unit_sales),2)`. When you create the document using the "knit" button, this will display the mean directly in the text. Or you may use `r round(t.test(unit_sales ~ group, data = music_sales)$statistic,2)` to extract the test statistic and refer to it in the text. 
+
+You can also highlight text by printing it in **bold** or *italics* using either `**` or `*` to wrap the respective text. 
+
+Using the `*` symbol at the beginning of a line will create an ordered list:
+
+* Element 1
+* Element 2
+* Element 3
+
+
+## Including Plots
+
+You can also embed plots, like the ones that we have created during the session:
+
+```{r mean_plot, fig.align="center", echo=TRUE, fig.cap=c("Plot of means"), message = FALSE, warning = FALSE}
+library(ggplot2)
+ggplot(music_sales, aes(group, unit_sales)) + 
+  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
+  geom_pointrange(stat = "summary") + 
+  labs(x = "Group", y = "Average number of sales") +
+  theme_bw()
+```
+
+Note that the additional (optional) parameters within the curly brackets:
+
+*  `fig.align="center"`: aligns the plot horizontally at the center of the page 
+* `fig.cap=c("Plot of means")`: adds a plot name below the plot
+* `warning = FALSE`: prevents warning messages from being displayed 
+* `message = FALSE`: prevents any other messages from being displayed 
+
+
+
+## Include equations
+
+It is also possible to include equations in your file using Latex math notation. For example, to state your hypothesis, you could use:
+
+$H_0: \mu_1 = \mu_2$
+
+$H_1: \mu_1 \neq \mu_2$
+
+You can see that each equation is wrapped by two `$` symbols, which tells R that it is an equation. The text within the two `$` symbols is interpreted as Latex math notation. For example, separating the letter "H" and the number "0" by `_` created a subscript (i.e., `H_0` creates $H_0$). Greek letters are displayed as such when they are preceded by a `\` (i.e., `\mu` creates $\mu$). In addition, you may use all kind of mathematical operator using the appropriate Latex notation (e.g., `\neq` creates the operator $\neq$) . Here you can find an overview of the different symbols and their Latex notation: <http://reu.dimacs.rutgers.edu/Symbols.pdf>. For further examples, see <http://www.statpower.net/Content/310/R%20Stuff/SampleMarkdown.html> and <http://www.stat.cmu.edu/~cshalizi/rmarkdown/>.
+
+
+
+## Submitting your assignment
+
+When you are done with your analysis for your assignment, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. 
+
+**The file name should be "assignment2_studentID_name.html"**
+
+

@@ -1,0 +1,101 @@
+---
+title: "Assignment 4 (Regression)"
+author: "[your name and student ID here]"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## Assignment
+
+As a marketing manager of a consumer electronics company, you are assigned the task to analyze the relative influence of different marketing activities. Specifically, you are supposed to analyse the effects of (1) TV advertising, (2) online advertising, and (3) radio advertising on the sales of fitness trackers (wristbands). Your data set consists of sales of the product in different markets (each line represents one market) from the past year, along with the advertising budgets for the product in each of those markets for three different media: TV, online, and radio. 
+
+The following variables are available to you:
+
+* Sales (in thousands of units)
+* TV advertising budget (in thousands of Euros)
+* Online advertising budget (in thousands of Euros)
+* Radio advertising budget (in thousands of Euros)
+
+Please conduct the following analyses: 
+
+1. Formally state the regression equation, which you will use to determine the relative influence of the marketing activities on sales.
+2. Describe the model variables using appropriate statstics and plots
+3. Estimate a multiple linear regression model to determine the relative influence of each of the variables. Before you interpret the results, test if the model assumptions are fulfilled and use appropriate tests and plots to test the assumptions.
+4. Interpret the model results:
+      * Which variables have a significant influence on sales and what is the interpretation of the coefficients?
+      * What is the relative importance of the predictor variables?
+      * Interpret the F-test
+      * How do you judge the fit of the model? Please also visualize the model fit using an appropriate graph.
+5. What sales quantity would you predict based on your model for a product when the marketing activities are planned as follows: TV: 150 thsd. €, Online: 26 thsd. €, Radio: 15 thsd. €? Please provide the equation you used to make the prediction. 
+
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment4.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment4_studendID_name.html".
+
+## Data analysis
+
+## Load data
+
+```{r load_data}
+sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/assignment4.1.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+sales_data$market_id <- 1:nrow(sales_data)
+head(sales_data)
+str(sales_data)
+```
+
+## Question 1
+
+Provide a description of your steps here! Below is a template for you regression equation:
+
+$$DV=\beta_0 + \beta_1 * var1 + ... + \epsilon$$
+
+```{r question_1_1}
+# provide your code here (you can use multiple code chunks per question if you like)
+# the output will automatically appear below the code chunk when you create the html file
+```
+
+Interpret the results here!
+
+## Question 2
+
+Provide a description of your steps here!
+
+```{r question_2_1}
+# provide your code here (you can use multiple code chunks per question if you like)
+```
+
+Interpret the results here!
+
+## Question 3
+
+Provide a description of your steps here!
+
+```{r question_3_1}
+# provide your code here (you can use multiple code chunks per question if you like)
+```
+
+Interpret the results here!
+
+## Question 4
+
+Provide a description of your steps here!
+
+```{r question_4_1}
+# provide your code here (you can use multiple code chunks per question if you like)
+```
+
+Interpret the results here!
+
+## Question 5
+
+Provide a description of your steps here! Below is a template for your equation:
+
+$$\hat{sales}= X + Y + Z = XYZ$$
+ 
+```{r question_5_1}
+# provide your code here (you can use multiple code chunks per question if you like)
+```
+
+Interpret the results here!
+

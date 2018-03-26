@@ -1,0 +1,280 @@
+---
+title: "Assignment 3 (ANOVA)"
+author: "Peter Knaus, 1126969"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## Assignment
+
+The data file contains customer information from an online fashion shop. In an experiment, the customers were exposed to different types of online advertising over the past year (randomly assigned) and now you wish to analyze the results.
+
+The following variables are included in the data set:
+
+* customerID: unique customer ID
+* revenue: revenue per cusomer for the past year (in EUR)
+* gender: 0=male, 1=female
+* retargeting: type of online advertising that the customer was exposed to (3 levels: 1 = no advertising, 2 = generic retargeting, 3 = dynamic retargeting)
+* customerRank: ranking of customers according to their expenditure level (low rank = valuable customer, high rank = less valuable customer) 
+
+Use R and appropriate analytical techniques to answer the following questions:
+
+1. Has the types of online advertising an effect on revenue? Are there significant differences between the individual groups?
+2. Does the effect of online advertising on revenue depend on gender? (conduct a 2 x 3 analysis of variance with "revenue" as the dependent variable and "gender" and "retargeting" as the independent variables or factors.)
+3. Is the customer ranking significantly influenced by the type of online advertising? Are there significant differences between the individual groups?
+
+When answering the questions, please remember to address the following points:
+
+* Formulate the corresponding hypotheses and choose an appropriate statistical test
+* Provide the reason for your choice and discuss if the assumptions of the test are met 
+* Convert the variables to the appropriate type (e.g., factor variables)
+* Create appropriate graphs to explore the data (e.g., boxplot, bar chart)
+* Provide appropriate descriptive statistics for the variables
+* Report and interpret the test results accurately
+* Finally, don't forget to report your research conclusion in an appropriate way
+
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment3.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment3_studendID_name.html".
+
+## Data analysis
+
+## Load data
+
+As always, the first step is to load required packages (packages that have not been used as often in the course will be loaded as required to show which packages contain certain functions) and to load and inspect the data. 
+
+```{r load_data, warning=FALSE, message=FALSE}
+library(plyr)
+library(ggplot2)
+library(pastecs)
+
+dld.full <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/assignment3.6.dat", 
+                            sep = "\t", 
+                            header = TRUE) #read in data
+head(dld.full)
+str(dld.full)
+```
+
+Next we are going to recode some of the variables into factors and give them more descriptive level names. 
+
+```{r, warning=FALSE, message=FALSE}
+dld.full$retargeting <- factor(dld.full$retargeting, levels = c(1,2,3), labels = c("no retargeting", "generic retargeting", "dynamic retargeting"))
+dld.full$gender <- factor(dld.full$gender, levels = c(1,0),labels = c("female","male"))
+```
+
+## Question 1
+
+To answer whether the type of advertising has an effect on revenue we need to formulate a testable null hypothesis. In our case the null hypothesis is stating that the average level of sales is equal for all advertising types. In mathematical notation this implies:
+
+$$H_0: \mu_1 = \mu_2 = \mu_3 $$
+
+The alternate hypothesis is simply that the means are not all equal, i.e., 
+
+$$H_1: \textrm{Means are not all equal}$$  
+
+If you wanted to put this in mathematical notation, you could also write:
+
+$$H_1: \exists {i,j}: {\mu_i \ne \mu_j} $$  
+
+However, this was not required. 
+
+The appropriate test for such a hypothesis is one-way ANOVA since we have a metric scales dependent variable and a categorical independent variable with more than two levels.
+
+Next we will calculate summary statistics for the data and produce an approppriate plot.
+
+```{r question_1_1, fig.align="center"}
+by(dld.full$revenue,dld.full$retargeting,stat.desc)
+ggplot(dld.full, aes(retargeting, revenue)) + 
+  stat_summary(fun.y = mean, geom = "bar", fill = "White", colour = "Black") +
+  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
+  labs(x = "Experimental group (promotion level)", y = "Number of sales") + 
+  theme_bw()
+
+```
+
+Both the summary statistics and the plot hint at the fact that the means may not be equal. Before we move to the test, we need to see if a series of assumptions are met, namely:
+
+* Distributional assumptions
+* Homogeneity of variances
+* Indepnedence of observations
+
+The last assumption is satisfied due to the fact that the observations were randomly assigned to the advertisement groups. To see if we need to worry about distributional assumptions we first take a look at the number of observations in each advertising group.
+
+```{r, warning=FALSE, message=FALSE}
+#check number of observations by group
+table(dld.full$retargeting)
+```
+
+Due to the fact that there always more than 30 observations in each group we can rely on the central limit theorem to satisfy the distributional assumptions. 
+
+Homogeneity of variances can be checked with Levene's test (implemented as ```leveneTest()``` from the ```car``` package). The null hypothesis of this test is that the variances are equal, with the alternative hypothesis being that the variances not all equal. 
+
+```{r, warning=FALSE, message=FALSE}
+#Homogeneity of variances test:
+library(car)
+leveneTest(revenue ~ retargeting, data=dld.full, center=mean)
+```
+
+The test is not significant (for a signifcance level of 5 %), meaning that we do not reject the null hypothesis of equal variances and can operate under the assumption that the variances are equal. 
+
+Since all assumptions are fulfilled we can move on to conducting the actual ANOVA using the ```aov()``` function.
+
+```{r, warning=FALSE, message=FALSE}
+#Anova:
+aov <- aov(revenue~retargeting, data = dld.full)
+summary(aov)
+```
+
+The p-value is below any sensible level of signficance, which means that we reject the null hypothesis of the means being equal in the three advertising groups. 
+
+Next we will briefly inspect the residuals of the ANOVA to see if the assumptions of the test really are justified.
+
+```{r, warning=FALSE, message=FALSE}
+#Inspect residuals
+plot(aov,1)
+```
+
+The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled. 
+
+
+```{r, warning=FALSE, message=FALSE}
+plot(aov,2)
+```
+
+The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behaviour here may indicate problems with the model specification. 
+
+To further confirm that the residuals are roughly normally distributed we employ the Shapiro-Wilk test. The null hypothesis is that the distribution of the data is normal, with the alternative hypothesis positing that the data is not normally distributed.
+
+```{r, warning=FALSE, message=FALSE}
+shapiro.test(resid(aov))
+```
+
+The p value is far above any widely used significance level and thus we can not reject the null hypothesis of normal distribution, which further implies that the normality assumption is fulfilled.
+
+The ANOVA result only tells us that the means of the three groups are not equal, but it does not tell us anything about _which_ pairs of means are unequal. To find this out we need to conduct post hoc tests. Here we will conduct both the Bonferroni correction as well as Tukey's HSD test, however either would be sufficient for your homework. 
+
+Bonferroni's correction conducts multiple pairwise t-tests, with the null hypothesis being that of equal means in each case and the alternative hypothesis stating that the means are unequal.
+
+```{r, warning=FALSE, message=FALSE}
+#bonferroni
+pairwise.t.test(dld.full$revenue, dld.full$retargeting, data=dld.full, p.adjust.method = "bonferroni")
+```
+
+All of the p-values in our output are well below 0.05, meaning that we reject the null hypothesis in all three cases. 
+
+Tukey's HSD similarly compares pairwise means, corrected for family-wise errors. 
+
+```{r, warning=FALSE, message=FALSE}
+#tukey correction using the mult-comp package
+library(multcomp)
+tukeys <- glht(aov,linfct=mcp(retargeting = "Tukey"))
+summary(tukeys)
+```
+
+As in the case of Bonferroni's correction, all three p-values are well below 0.05 and thus we reject the null hypothesis of equal means. Tukey's HSD further lets us estimate the difference in means with corresponding confidence intervals.
+
+```{r, warning=FALSE, message=FALSE}
+confint(tukeys)
+# The mar parameter changes the margins around created plots. This is done so the labels on the side of the Tukey plot are visible (however, this was not expected). 
+par(mar = c(5, 20, 4, 2))
+plot(tukeys)
+par(mar = c(5, 4, 4, 2))
+```
+
+It is clearly visible that none of the CIs cross the 0 bound, which further indicates that the differences in means are statistically significantly different from 0.
+
+From a reporting standpoint we can say that revenue is higher when using generic retargeting vs. no retargeting, dynamic retargeting vs. no retargeting and also when using dynamic retargeting vs. generic retargeting.
+
+## Question 2
+
+Next we want to analyse whether gender interacts with retargeting when it comes to revenue. The correct tool for this analysis is n-way ANOVA (a.k.a factorial ANOVA). As usual, we start off with some descriptive statistics and plots to get a feel for the data. 
+
+```{r question_2_1, fig.align="center"}
+#create new grouping variable
+dld.full$Group <- paste(dld.full$retargeting, dld.full$gender, sep = "_") 
+#check descriptives and plot data
+by(dld.full$revenue,dld.full$Group,stat.desc)
+
+ggplot(dld.full, aes(gender, revenue)) + 
+  stat_summary(fun.y = mean, geom = "bar", fill = "White", colour = "Black") +
+  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
+  labs(x = "Gender", y = "Average revenue") + 
+  theme_bw()
+
+ggplot(dld.full, aes(x = interaction(gender, retargeting), y = revenue, fill = gender)) +
+  stat_summary(fun.y = mean, geom = "bar", position = position_dodge()) +
+  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+
+```
+
+Both the summary statistics and the plots seem to indicate a difference between men and women. Before we can jump straight into the analysis, we need to test whether the assumptions of the model are justified. 
+
+We begin with the distributional assumptions. To this end we check how many observations are in each group.
+```{r, warning=FALSE, message=FALSE}
+#check number of obs per group
+table(dld.full$Group)
+```
+
+Since there are more than 30 observations in each group, we can again rely on the central limit theorem to satisfy the normality assumption. Next is the homogeneity of variances assumption, which we again test using Levene's test.
+
+```{r, warning=FALSE, message=FALSE}
+#test homogeneity of variances
+leveneTest(dld.full$revenue, interaction(dld.full$retargeting,dld.full$gender), center=mean)
+```
+
+Again the p-value is far above any widely used significance level and we can not reject the null hypothesis of equal variances. As the necessary assumptions are fulfilled, we can move on to the factorial ANOVA.
+
+```{r, warning=FALSE, message=FALSE}
+aov <- aov(revenue~retargeting+gender+retargeting:gender, data = dld.full)
+summary(aov)
+```
+
+Since the interaction effect is significant, we can no longer interpret the main effects and can only resort to saying that the effect of one factor depends on the other, i.e. that gender has an effect on the level of revenue in each advertising group. This means that gender has an effect on the revenue generated in each advertising group. 
+
+As a final step we again check the residuals to see whether or not the assumptions are justified.
+
+```{r, warning=FALSE, message=FALSE}
+#Inspect residuals
+plot(aov,1)
+plot(aov,2)
+shapiro.test(resid(aov))
+```
+
+Both assumptions (homogeneity of variances and the normality assumption) seem to be justifiable through the residuals. 
+
+
+## Question 3
+
+For the last question we want to examine whether customer ranks are signifcantly different for different types of advertising. Because we are dealing with data on an ordinal scale, we can not use ANOVA for this type of question. The non-parametric counterpart is the Kruskal-Wallis test, which tests for differences in medians between groups. Hence, the null hypothesis is that the medians are equal in each group and the alternative hypothesis is that the medians are unequal. 
+
+$$H_0: \tilde{x}_1 =  \tilde{x}_2 = \tilde{x}_3 $$
+$$H_1: \textrm{The meadians are not all equal} $$
+A good way to visualize ordinal data is through a boxplot.
+
+```{r, fig.align="center"}
+ggplot(data = dld.full, aes(x = retargeting, y = rank)) + 
+  geom_boxplot() + 
+  theme_bw() + 
+  labs(x = "", y = "Rank")
+```
+
+The boxplot seems to indicate that the medians are unequal. 
+
+The only assumption that we require for this test is that the dependent variable is at least ordinal, which is fulfilled for customer ranks. Hence we can move on to performing the test in R.
+
+```{r question_3_1}
+#ordinal data so we use a non-parametric test
+kruskal.test(rank ~ retargeting, data = dld.full)
+```
+
+The p-value is again below any sensible signifcance level and thus we reject the null hypothesis of equal medians. This means that the median rank of customers is different for different types of retargeting, implying that the type of retargeting has an effect on the customer rank.
+
+To further see which of the medians are unequeal we perform the Nemenyi post hoc test, which can be found in the ```PCMCR``` package in R. The null hyptohesis is that the pairwise medians are equal, while the alternative hypothesis is that the pairwise medians are unequal. 
+
+```{r, warning=FALSE, message=FALSE}
+library(PMCMR)
+posthoc.kruskal.nemenyi.test(x = dld.full$rank, g = dld.full$retargeting, dist = "Tukey")
+```
+
+All of the p-values are well below 0.05, meaning that the pairwise differences between the medians are always signifianct. This in turn implies that every type of advertising leads to different customer ranks. 

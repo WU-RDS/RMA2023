@@ -1,0 +1,263 @@
+---
+  title: "Assignment 4 (Regression)"
+  author: "[your name and student ID here]"
+  output:
+  html_document: default
+  pdf_document: default
+---
+  
+## Assignment
+  
+As a marketing manager of a consumer electronics company, you are assigned the task to analyze the relative influence of different marketing activities. Specifically, you are supposed to analyse the effects of (1) TV advertising, (2) online advertising, and (3) radio advertising on the sales of fitness trackers (wristbands). Your data set consists of sales of the product in different markets (each line represents one market) from the past year, along with the advertising budgets for the product in each of those markets for three different media: TV, online, and radio. 
+
+The following variables are available to you:
+  
+* Sales (in thousands of units)
+* TV advertising budget (in thousands of Euros)
+* Online advertising budget (in thousands of Euros)
+* Radio advertising budget (in thousands of Euros)
+
+Please conduct the following analyses: 
+  
+1. Formally state the regression equation, which you will use to determine the relative influence of the marketing activities on sales.
+2. Describe the model variables using appropriate statstics and plots
+3. Estimate a multiple linear regression model to determine the relative influence of each of the variables. Before you interpret the results, test if the model assumptions are fulfilled and use appropriate tests and plots to test the assumptions.
+4. Interpret the model results:
+* Which variables have a significant influence on sales and what is the interpretation of the coefficients?
+* What is the relative importance of the predictor variables?
+* Interpret the F-test
+* How do you judge the fit of the model? Please also visualize the model fit using an appropriate graph.
+5. What sales quantity would you predict based on your model for a product when the marketing activities are planned as follows: TV: 150 thsd. €, Online: 26 thsd. €, Radio: 15 thsd. €? Please provide the equation you used to make the prediction. 
+
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment4.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment4_studendID_name.html".
+
+## Data analysis
+
+## Load data
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/assignment4.2.dat", 
+                         sep = "\t", 
+                         header = TRUE) #read in data
+sales_data$market_id <- 1:nrow(sales_data)
+head(sales_data)
+str(sales_data)
+```
+
+## Question 1
+
+In a first step, we specifiy the regression equation. In this case, sales is the dependend variable which is regressed on the different types of advertising expenditures that represent the independent variables. Thus, the regression equation is:
+
+$$Sales=\beta_0 + \beta_1 * tvadspend + \beta_2 * onlineadspend + \beta_3 * radioadspend + \epsilon$$
+  
+## Question 2
+  
+The descriptive statistics can be checked using the ```describe()``` function:
+  
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(psych)
+describe(sales_data)
+```
+
+Since we have continuous variables, we use scatterplots to investigate the relationship between sales and each of the predictor variables.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(ggplot2)
+ggplot(sales_data, aes(x = tv_adspend, y = sales)) + geom_point() +theme_bw()
+ggplot(sales_data, aes(x = online_adspend, y = sales)) + geom_point() +theme_bw()
+ggplot(sales_data, aes(x = radio_adspend, y = sales)) + geom_point() +theme_bw()
+```
+
+The plots already suggest that there might be a positive linear relationship between sales and TV- and online-advertising. However, there does not appear to be a strong relationship between sales and radio advertising. 
+
+## Question 3
+  
+The estimate the model, we will use the ```lm()``` function:
+  
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+linear_model <- lm(sales ~ tv_adspend + online_adspend + radio_adspend, data = sales_data)
+```
+
+Before we can inspect the results, we need to test if there might be potential problems with our model specification. 
+
+### Outliers
+
+The check for outliers, we extract the studentized residuals from our model and test if there are any absolute values larger than 3. 
+  
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+sales_data$stud_resid <- rstudent(linear_model)
+plot(1:nrow(sales_data),sales_data$stud_resid, ylim=c(-3.3,3.3)) #create scatterplot 
+abline(h=c(-3,3),col="red",lty=2) #add reference lines
+```
+
+Since there are no residuals with absolut values larger than 3, we conclude that there are no severe outliers. 
+
+### Influencial observations
+
+To test for influential observations, we use Cook's Distance. You may use the following two plots to verify if any Cook's Dinstance values are larger than the cutoff of 1. 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(linear_model,4)
+plot(linear_model,5)
+```
+
+Since all values are well below the cutoff, we conclude that influencial observations are not a problem in our model. 
+
+### Non-linear relationships
+
+Next, we test if a linear specification appears feasible. You could test this using the added variable plots:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(car)
+avPlots(linear_model)
+```
+
+The plots suggest that the linear specification is appropriate. In addition, you could also use the residuals plot to see if the linear specification is appropriate. The red line is a smoothed curve through the residuals plot and if it deviates from the dashed grey horizontal line a lot, this would suggest that a linear specification is not appropriate. 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(linear_model, 1)
+```
+
+In this example, the red line is close to the dashed grey line, so the linear specification appears reasonable. 
+
+### Heteroscedasticity
+
+Next, we test if the residual variance is approximately the same at all levels of the predicted outcome variables (i.e., homoscedasticity). To do this, we use the residuals plot again.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(linear_model, 1)
+```
+
+The spread of residuals at different levels of the predicted outcome does not appear to be very different. Thus, we can conclude that heteroscedasticity is unlikely to be a problem. 
+
+### Non-normally distributed errors
+
+Next, we test if the residuals are approximately normally distributed using the Q-Q plot from the output:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(linear_model,2)
+```
+
+The Q-Q plot does not suggest a severe deviation from a normal distribution. This could also be validated using the Shapiro test:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+shapiro.test(resid(linear_model))
+```
+
+### Correlation of errors
+
+Next, we test if the residuals are uncorrelated. Any clustered pattern in the residuals plot would indicate dependence of errors. 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(linear_model,1)
+```
+
+In our example, the residuals do not appear to be correlated since there is no clustered pattern.
+
+### Multicollinearity
+
+To test for linear dependence of the regressors, we first test the bivariate correlations for any extremely high correlations (i.e., >0.8).
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library("Hmisc")
+rcorr(as.matrix(sales_data[,c("tv_adspend","online_adspend","radio_adspend")]))
+```
+
+The results show that the bivariate correlations are rather low. This can also be shown in a plot:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(sales_data[,c("tv_adspend","online_adspend","radio_adspend")])
+```
+
+In a next step, we compute the variance inflation factor for each predictor variable. The values should be close to 1 and values larger than 4 indicate potential problems with the linear dependence of regressors.  
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(car)
+vif(linear_model)
+```
+
+Here, all vif values are well below the cutoff, indicating that there are no problems with multicollinearity. 
+
+## Question 4
+
+In a next step, we will investigate the results from the model using the ```summary()``` function. 
+  
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+summary(linear_model)
+```
+
+For each of the individual predictors, we test the following hypothesis: 
+
+$$H_0: \beta_k=0$$
+$$H_1: \beta_k\ne0$$
+
+where k denotes the number of the regression coefficient. In the present example, we reject the null hypothesis for the first two predictors, where we observe a significant effect (i.e., p < 0.05 for "tv_adspend" and "online_adspend"). However, we fail to reject the null for the "radio_adspend" variable (i.e., the effect is insignificant). 
+
+The interpretation of the coefficients is as follows: 
+
+* tv_adspend (&beta;<sub>1</sub>): when tv advertising expenditures increase by 1 Euro, sales will increase by `r round(summary(linear_model)$coefficients[2],3)` units
+* online_adspend (&beta;<sub>2</sub>): when online advertising expenditures increase by 1 Euro, sales will increase by `r round(summary(linear_model)$coefficients[3],3)` units
+* radio_adspend (&beta;<sub>3</sub>): when radio advertising expenditures increase by 1 Euro, sales will increase by `r round(summary(linear_model)$coefficients[4],3)` units
+
+You should always provide a measure of uncertainty that is associated with the estimates. You could compute the confidence intervals around the coefficients using the ```confint()``` function.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+confint(linear_model)
+```
+
+The results show that, for example, with a 95% probability the effect of online advertising will be between 0.172 and 0.211. 
+
+Although the variables are measured on the same scale, you should still test the relative influence by inspecting the standardized coefficients that express the effects in terms of standard deviations.  
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(lm.beta)
+lm.beta(linear_model)
+```
+
+Here, we conclude that tv advertising has the largest ROI followed by online advertising and radio advertising. 
+
+Another significance test is the F-test. It tests the null hypothesis:
+
+$$H_0: R^2=0$$
+
+This is equivalent to the following null hypothesis: 
+
+$$H_0: \beta_1=\beta_2=\beta_3=\beta_k=0$$
+
+The result of the test is provided in the output above ("F-statistic: 363.7 on 3 and 236 DF,  p-value: < 2.2e-16"). Since the p-value is smaller than 0.05, we reject the null hypothesis that all coefficients are zero. 
+
+If you would like to make it more explicit, you could use the ```anova()``` function to get the specific anova results.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+anova(linear_model)
+```
+
+Regarding the model fit, the R<sup>2</sup> statistic tells us that approximately 82% of the variance can be explained by the model. This can be visualized as follows: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+sales_data$yhat <- predict(linear_model)
+ggplot(sales_data,aes(yhat,sales)) +  
+  geom_point(size=2,shape=1) +  #Use hollow circles
+  scale_x_continuous(name="predicted values") +
+  scale_y_continuous(name="observed values") +
+  geom_abline(intercept = 0, slope = 1) +
+  theme_bw()
+```
+
+## Question 5
+  
+Finally, we can predict the outcome for the given marketing mix using the following equation: 
+  
+$$\hat{sales}= 0.045*150 + 0.192*26 + 0.007*15 = 14.623$$
+  
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+summary(linear_model)$coefficients[1,1] + 
+  summary(linear_model)$coefficients[2,1]*150 + 
+  summary(linear_model)$coefficients[3,1]*26 + 
+  summary(linear_model)$coefficients[4,1]*15
+```
+
+This means that given the planned marketing mix, we would expect to seel around 14.623 units. 
+
+
+

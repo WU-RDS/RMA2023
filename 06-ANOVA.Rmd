@@ -1,0 +1,873 @@
+---
+title: "06-anova"
+output:
+  html_document:
+    toc: yes
+  html_notebook: default
+  pdf_document:
+    toc: yes
+---
+
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+```
+
+# Analysis of variance
+
+This chapter is primarily based on Field, A., Miles J., & Field, Z. (2012): Discovering Statistics Using R. Sage Publications, **chapters 10 & 12**. 
+
+## Introduction
+In the previous section we learned how to compare means using a t-test. The t-test has some limitations since it only lets you compare 2 means and you can only use it with one independent variable. However, often we would like to compare means from 3 or more groups. In addition, there may be instances in which you manipulate more than one independent variable. For these applications, ANOVA (ANalysis Of VAriance) can be used. Hence, to conduct ANOVA you need: 
+
+* A metric dependent variable (i.e., measured using an interval or ratio scale)
+* One or more non-metric (categorical) independent variables (also called factors) 
+
+A treatment is a particular combination of factor levels, or categories. One-way ANOVA is used when there is only one categorical variable (factor). In this case, a treatment is the same as a factor level. N-way ANOVA is used with two or more factors.
+
+Let's use an example to see how ANOVA works. Assume that you are a marketing manager at an online fashion store, and you wish to analyze the effect of online promotion on sales. You conduct an experiment and select a sample of 30 comparable products to be included in the experiment. Then you randomly assign the products to one of three groups: (1) = high promotion level, (2) = medium promotion level, (3) = low promotion level, and record the sales over one day. This means that you have 10 products assigned to each treatment. 
+
+As always, we load and inspect the data first:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+online_store_promo <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/online_store_promo.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+online_store_promo$Promotion <- factor(online_store_promo$Promotion, levels = c(1:3), labels = c("high", "medium","low")) #convert grouping variable to factor
+str(online_store_promo) #inspect data
+print(online_store_promo) #inspect data
+```
+
+The null hypothesis, typically, is that all means are equal (non-directional hypothesis). Hence, in our case:
+
+<p style="text-align:center;">
+$H_0: \mu_1 = \mu_2 = \mu_3$ <br>
+</p>
+
+To get a first impression if there are any differences in sales across the experimental groups, we use the ```describeBy(...)``` function from the ```psych``` package:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, paged.print = FALSE}
+library(psych)
+describeBy(online_store_promo$Sales, online_store_promo$Promotion) #inspect data
+```
+
+In addition, you should visualize the data using appropriate plots:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Plot of means"), tidy = FALSE}
+#Plot of means
+library(plyr)
+library(ggplot2)
+ggplot(online_store_promo, aes(Promotion, Sales)) + 
+  stat_summary(fun.y = mean, geom = "bar", fill = "White", colour = "Black") +
+  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
+  labs(x = "Experimental group (promotion level)", y = "Sales (thsd. units)") + 
+  theme_bw()
+```
+
+Note that ANOVA is an omnibus test, which means that we test for an overall difference between groups. Hence, the test will only tell you if the group means are different, but it won't tell you exactly which groups are differnt from another.
+
+So why don’t we then just conduct a series of t-tests for all combinations of groups (i.e., high vs. low, low vs. medium, medium vs. high)? The reason is that if we assume each test to be independent, then there is a 5% probability of falsely rejecting the null hypothesis (Type I error) for each test. In our case:
+
+* High vs. low (&alpha; = 0.05)
+* High vs. medium (&alpha; = 0.05)
+* Medium vs. low (&alpha; = 0.05)
+
+This means that the overall probability of making a Type I error is 1-(0.95<sup>3</sup>) = 0.143, since the probability of no Type I error is 0.95 for each of the three tests. Consequently, the Type I error probability would be 14.3%, which is above the conventional standard of 5%. This is also known as the familywise or experimentwise error.
+
+## Decomposing variance
+
+The basic concept underlying ANOVA is the decomposition of the variance in the data. There are three variance components which we need to consider:
+
+* We calculate how much variability there is between scores: <b>Total sum of squares (SS<sub>T</sub>)</b>
+* We then calculate how much of this variability can be explained by the model we fit to the data (i.e., how much variability is due to the experimental manipulation): <b>Model sum of squares (SS<sub>M</sub>)</b>
+* … and how much cannot be explained (i.e., how much variability is due to individual differences in performance): <b>Residual sum of squares (SS<sub>R</sub>)</b>
+
+The following figure shows the different variance components using a generalized data matrix:
+
+<br>
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE, fig.align="center", fig.height = 3, fig.width = 8, fig.cap="Decomposing variance"}
+library(EBImage)
+img = readImage("https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/sum_of_squares.JPG")
+display(img, method = "raster")
+
+```
+
+<br>
+
+The total variation is determined by the variation between the categories (due to our experimental manipulation) and the within-category variation that is due to extraneous factors (e.g., differences between the products that are included in each group):   
+
+\begin{equation} 
+\begin{split}
+SS_T= SS_M+SS_R
+\end{split}
+(\#eq:vardecomp)
+\end{equation} 
+
+To get a better feeling how this relates to our data set, we can look at the data in a slightly different way. Specifically, we can use the ```dcast(...)``` function from the ```reshape2``` package to convert the data to wide format: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Observations"), tidy = FALSE}
+library(reshape2)
+dcast(online_store_promo, Obs ~ Promotion, value.var = "Sales")
+```
+
+In this example, X<sub>1</sub> from the generalized data matrix above would refer to the factor level "high", X<sub>2</sub> to the level "medium", and X<sub>3</sub> to the level "low". Y<sub>11</sub> refers to the first data point in the first row (i.e., "10"), Y<sub>12</sub> to the second data point in the first row (i.e., "8"), etc.. The grand mean ($\overline{Y}$) and the category means ($\overline{Y}_c$) can be easily computed: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+mean(online_store_promo$Sales) #grand mean
+by(online_store_promo$Sales,online_store_promo$Promotion,mean) #category mean
+```
+
+To see how each variance component can be derived, let's look at the data again. The following graph shows the individual observations by experimental group:
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap="Sum of Squares"}
+sales <- c(10,9,10,8,9,8,9,7,7,6,8,8,7,9,6,4,5,5,6,4,5,7,6,4,5,2,3,2,1,2)
+promotion <-c(rep(1,10), rep(2,10), rep(3,10))
+count <- c(rep(1:10,3))
+d <- data.frame(sales,promotion,count)
+d$promotion <- factor(d$promotion, levels = c(1:3), labels = c("High", "Medium", "Low"))
+means <- aggregate(d[,1], list(d$promotion), mean)
+means <- plyr::rename(means, c(Group.1="promotion"))
+d$groupmean <- c(rep(means[1,2],10),rep(means[2,2],10),rep(means[3,2],10))
+d$grandmean <- c(mean(d$sales))
+d$group6 <- store <-c(rep(1,5),rep(2,5),rep(3,5),rep(4,5),rep(5,5),rep(6,5))
+d$group6 <- factor(d$group6, levels = c(1:6), labels = c("High/Yes", "High/No", "Medium/Yes", "Medium/No","Low/Yes", "Low/No"))
+means6 <- aggregate(d[,1], list(d$group6), mean)
+means6 <- plyr::rename(means6, c(Group.1="group6"))
+d$groupmean6 <- c(rep(means6[1,2],5),rep(means6[2,2],5),rep(means6[3,2],5),rep(means6[4,2],5),rep(means6[5,2],5),rep(means6[6,2],5))
+
+ggplot(d, aes(x=count,y=sales,color=promotion)) + 
+  geom_point(size=3) + facet_grid(~promotion, scales = "free_x") + 
+  scale_x_continuous(breaks = 1:30) +
+  labs(x = "Observations",y = "Sales (thsd. units)", colour="promotion",size=11, fill="") +
+  theme(axis.title = element_text(size = 12),
+        axis.text  = element_text(size=12),
+        strip.text.x = element_text(size = 12),
+        legend.position="none")+ theme_bw()
+```
+
+### Total sum of squares
+
+To compute the total variation in the data, we consider the difference between each observation and the grand mean. The grand mean is the mean over all observations in the dataset. The vertical lines in the following plot measure how far each observation is away from the grand mean:
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap="Total Sum of Squares"}
+ggplot(d, aes(x=count,y=sales,color=promotion)) + 
+  geom_point(size=3) + facet_grid(~promotion, scales = "free_x") + 
+  scale_x_continuous(breaks = 1:30) + geom_hline(aes(yintercept = grandmean,color=promotion)) +
+  labs(x = "Observations",y = "Sales (thsd. units)", colour="promotion",size=11, fill="") +
+  geom_segment(aes(x=count,y=grandmean, xend=count, yend=sales),size=1) + 
+  theme(axis.title = element_text(size = 12),
+        axis.text  = element_text(size=12),
+        strip.text.x = element_text(size = 12),
+        legend.position="none")+ theme_bw()
+```
+
+The formal representation of the total sum of squares (SS<sub>T</sub>) is:
+
+\begin{equation} 
+\begin{split}
+SS_T= \sum_{i=1}^{N} (Y_i-\overline{Y})^2
+\end{split}
+(\#eq:sumsquares)
+\end{equation} 
+
+This means that we need to subtract the grand mean from each individual data point, square the difference, and sum up over all the squared differences. Thus, in our example, the total sum of squares can be calculated as:
+
+$$ 
+\begin{align}
+SS_T =&(10−6.067)^2 + (9−6.067)^2 + … + (7−6.067)^2\\
+      &+(8−6.067)^2 + (8−6.067)^2 + … + (4−6.067)^2\\
+      &+(5−6.067)^2 + (7−6.067)^2 + … + (2−6.067)^2\\ 
+     =& 185.867
+\end{align}
+$$
+
+You could also compute this in R using:
+
+```{r}
+SST <- sum((online_store_promo$Sales - mean(online_store_promo$Sales))^2)
+SST
+``` 
+
+For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b>. Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. In our example, we used all 30 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:
+
+\begin{equation} 
+\begin{split}
+df_T = N-1=30-1=29
+\end{split}
+(\#eq:dfT)
+\end{equation} 
+
+### Model sum of squares
+
+Now we know that there are 185.867 units of total variation in our data. Next, we compute how much of the total variation can be explained by the differences between groups (i.e., our experimental manipulation). To compute the explained variation in the data, we consider the difference between the values predicted by our model for each observation (i.e., the group mean) and the grand mean. The group mean refers to the mean value within the experimental group. The vertical lines in the following plot measure how far the predicted value for each observation (i.e., the group mean) is away from the grand mean:
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap="Model Sum of Squares"}
+ggplot(d, aes(x=count,y=sales,color=promotion)) + 
+  geom_point(size=3) + facet_grid(~promotion, scales = "free_x") + 
+  scale_x_continuous(breaks = 1:30) + geom_hline(aes(yintercept = grandmean,color=promotion)) +
+  geom_hline(aes(yintercept = groupmean,color=promotion)) +
+  labs(x = "Observations",y = "Sales (thsd. units)", colour="promotion",size=11, fill="") +
+  geom_segment(aes(x=count,y=grandmean, xend=count, yend=groupmean),size=1) + 
+  theme(axis.title = element_text(size = 12),
+        axis.text  = element_text(size=12),
+        strip.text.x = element_text(size = 12),
+        legend.position="none")+ theme_bw()
+```
+
+The formal representation of the model sum of squares (SS<sub>M</sub>) is:
+
+\begin{equation} 
+\begin{split}
+SS_M= \sum_{j=1}^{c} n_j(\overline{Y}_j-\overline{Y})^2
+\end{split}
+(\#eq:modelsumsquares)
+\end{equation} 
+
+where c denotes the number of categories (experimental groups). This means that we need to subtract the grand mean from each group mean, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:
+
+$$ 
+\begin{align}
+SS_M &= 10*(8.3−6.067)^2 + 10*(6.2−6.067)^2 + 10*(3.7−6.067)^2 \\
+     &= 106.067
+\end{align}
+$$
+
+You could also compute this manually in R using:
+
+```{r}
+SSM <- sum(10*(by(online_store_promo$Sales, online_store_promo$Promotion, mean) - mean(online_store_promo$Sales))^2)
+SSM
+``` 
+
+In this case, we used the three group means to calculate the sum of squares, so the model degrees of freedom (df<sub>M</sub>) are:
+
+\begin{equation} 
+\begin{split}
+df_M= c-1=3-1=2
+\end{split}
+(\#eq:dfM)
+\end{equation} 
+
+### Residual sum of squares
+
+Lastly, we calculate the amount of variation that cannot be explained by our model. In ANOVA, this is the sum of squared distances between what the model predicts for each data point (i.e., the group means) and the observed values. In other words, this refers to the amount of variation that is caused by extraneous factors, such as differences between product characteristics of the products in the different experimental groups. The vertical lines in the following plot measure how far each observation is away from the group mean:
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap="Residual Sum of Squares"}
+ggplot(d, aes(x=count,y=sales,color=promotion)) + 
+  geom_point(size=3) + facet_grid(~promotion, scales = "free_x") + 
+  scale_x_continuous(breaks = 1:30) + geom_hline(data = means, aes(yintercept = x,color=promotion)) +
+  labs(x = "Observations",y = "Sales (thsd. units)", colour="promotion",size=11, fill="") +
+  geom_segment(aes(x=count,y=groupmean, xend=count, yend=sales),size=1) + 
+  theme(axis.title = element_text(size = 12),
+        axis.text  = element_text(size=12),
+        strip.text.x = element_text(size = 12),
+        legend.position="none")+ theme_bw()
+```
+
+The formal representation of the residual sum of squares (SS<sub>R</sub>) is:
+
+\begin{equation} 
+\begin{split}
+SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\overline{Y}_{j})^2
+\end{split}
+(\#eq:sumsquaresresid)
+\end{equation} 
+
+This means that we need to subtract the group mean from each individual obseration, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:
+
+$$ 
+\begin{align}
+SS_R =& (10−8.3)^2 + (9−8.3)^2 + … + (6−8.3)^2 \\
+     &+(8−6.2)^2 + (8−6.2)^2 + … + (4−6.2)^2 \\
+     &+ (5−3.7)^2 + (7−3.7)^2 + … + (2−3.7)^2 \\
+     =& 79.8
+\end{align}
+$$
+
+You could also compute this in R using:
+
+```{r}
+SSR <- sum((online_store_promo$Sales - rep(by(online_store_promo$Sales, online_store_promo$Promotion, mean), each = 10))^2)
+SSR
+``` 
+
+In this case, we used the 10 values for each of the SS for each group, so the residual degrees of freedom (df<sub>R</sub>) are:
+
+\begin{equation} 
+\begin{split}
+df_R= (n_1-1)+(n_2-1)+(n_3-1) \\
+=(10-1)+(10-1)+(10-1)=27
+\end{split}
+(\#eq:dfR)
+\end{equation} 
+
+### Effect strength
+
+Once you have computed the different sum of squares, you can investigate the effect strength. Eta<sup>2</sup> is a measure of the variation in Y that is explained by X:
+
+\begin{equation} 
+\begin{split}
+\eta^2= \frac{SS_M}{SS_T}=\frac{106.067}{185.876}=0.571
+\end{split}
+(\#eq:eta)
+\end{equation} 
+
+To compute this in R:
+
+```{r}
+eta <- SSM/SST
+eta
+```
+
+The statistic can only take values between 0 and 1. It is equal to 0 when all the category means are equal, indicating that X has no effect on Y. In contrast, it has a value of 1 when there is no variability within each category of X but there is some variability between categories.
+
+### Test of significance
+
+How can we determine whether the effect of X on Y is significant?
+
+* First, we calculate the fit of the most basic model (i.e., the grand mean)
+* Then, we calculate the fit of the “best” model (i.e., the group means)
+* A good model should fit the data significantly better than the basic model
+* The F-statistic or F-ratio compares the amount of systematic variance in the data to the amount of unsystematic variance
+
+The F-statistic uses the ratio of mean square related to X (explained variation) and the mean square related to the error (unexplained variation):
+
+<p style="text-align:center;">
+$\frac{SS_M}{SS_R}$ <br>
+</p>
+
+However, since these are summed values, their magnitude is influenced by the number of scores that were summed. For example, to calculate SS<sub>M</sub> we only used the sum of 3 values (the group means), while we used 30 and 27 values to calculate SS<sub>T</sub> and SS<sub>R</sub>, respectively. Thus, we calculate the average sum of squares (“mean square”) to compare the average amount of systematic vs. unsystematic variation by deviding the SS values by the degrees of freedom associated with the respective statistic.
+
+Mean square due to X:
+
+\begin{equation} 
+\begin{split}
+MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{106.067}{(3-1)}
+\end{split}
+(\#eq:MSM)
+\end{equation} 
+
+Mean square due to error:
+
+\begin{equation} 
+\begin{split}
+MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{79.8}{(30-3)}
+\end{split}
+(\#eq:MSR)
+\end{equation} 
+
+Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-radio can be derived as follows:
+
+\begin{equation} 
+\begin{split}
+F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{106.067}{(3-1)}}{\frac{79.8}{(30-3)}}=17.944
+\end{split}
+(\#eq:Fstat)
+\end{equation} 
+
+You can easily compute this in R:
+
+```{r}
+f_ratio <- (SSM/2)/(SSR/27)
+f_ratio
+```
+
+This statistic follows the F distribution with (m = c – 1) and (n = N – c) degrees of freedom. This means that, like the $\chi^2$ distribution, the shape of the F-distribution depends on the degrees of freedom. In this case, the shape depends on the degrees of freedom associated with the numerator and denominator used to compute the F-ratio. The following figure shows the shape of the F-distribution for different degrees of freedom:  
+
+```{r echo = F, message=FALSE, warning=FALSE, eval=T, fig.align="center", fig.cap = "The F distribution"}
+library(ggplot2)
+a <- seq(0,4, 2)
+ggplot(data.frame(x=c(0,4)), aes(x))+
+  stat_function(fun = df, args = list(2,2), aes(colour = paste0("m = 2",", n = 2"))) +
+  stat_function(fun = df, args = list(2,5), aes(colour = paste0("m = 2",", n = 5")))+
+  stat_function(fun = df, args = list(2,10), aes(colour = paste0("m = 2",", n = 10")))+
+  stat_function(fun = df, args = list(5,2), aes(colour = paste0("m = 5",", n = 2")))+
+  stat_function(fun = df, args = list(5,5), aes(colour = paste0("m = 5",", n = 5")))+
+  stat_function(fun = df, args = list(5,10), aes(colour = paste0("m = 5",", n = 10")))+
+  stat_function(fun = df, args = list(10,2), aes(colour = paste0("m = 10",", n = 2")))+
+  stat_function(fun = df, args = list(10,5), aes(colour = paste0("m = 10",", n = 5")))+
+  stat_function(fun = df, args = list(10,10), aes(colour = paste0("m = 10",", n = 10")))+
+  stat_function(fun = df, args = list(20,20), aes(colour = paste0("m = 20",", n = 20")))+
+  ylim(min=0, max=1) +
+  labs(colour = 'Degrees of Freedom', x = 'Value', y = 'Density') + theme_bw()
+```
+
+The outcome of the test is one of the following:
+
+* If the null hypothesis of equal category means is not rejected, then the independent variable does not have a significant effect on the dependent variable
+* If the null hypothesis is rejected, then the effect of the independent variable is significant  
+
+For 2 and 27 degrees of freedom, the critical value of F is 3.35 for &alpha;=0.05. As usual, you can either look up these values in a table or use the appropriate function in R:
+
+```{r}
+f_crit <- qf(.95, df1 = 2, df2 = 27) #critical value
+f_crit 
+f_ratio > f_crit #test if calculated test statistic is larger than critical value
+```
+
+The output tells us that the calculated test statistic exeeds the critical value. We can also show the test result visually:
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Visual depiction of the test result"}
+df1 <- 2
+df2 <- 27
+p <- 0.95
+min <- 0
+max <- 20
+f_crit <- round(qf(p,df1=df1,df2=df2), digits = 3)
+f_cal <- f_ratio
+plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = df, args = list(df1,df2))+
+  stat_function(fun = df, args = list(df1,df2), xlim = c(qf(p,df1=df1,df2=df2),max), geom = "area") +
+  scale_x_continuous(breaks = c(0, f_crit, f_cal)) +
+  geom_vline(xintercept = f_cal, color = "red") +
+  labs(title = paste0("Result of F-test: reject H0"),
+         subtitle = paste0("Red line: Calculated test statistic;"," Black area: Rejection region"),
+         x = "x", y = "Density") +
+  theme(legend.position="none") + 
+  theme_bw()
+plot1
+```
+
+Thus, we conclude that because F<sub>CAL</sub> = 17.944 > F<sub>CR</sub> = 3.35, H<sub>0</sub> is rejected!
+
+Interpretation: one or more of the differences between means are statistically significant.
+
+Reporting: There was a significant effect of promotion on sales levels, F(2,27) = 17.94, p < 0.05, &eta; = 0.571. 
+
+Remember: This doesn’t tell us where the differences between groups lie. To find out which group means exactly differ, we need to use post-hoc procedures (see below).
+
+You don't have to compute these statistics manually! Luckily, there is a function for ANOVA in R, which does the above calculations for you as we will see in the next section.
+
+## One-way ANOVA
+
+### Basic ANOVA
+
+As already indicated, one-way ANOVA is used when there is only one categorical variable (factor). Before conducting ANOVA, you need to check if the assumptions of the test are fulfilled. The assumptions of ANOVA are discussed in the following sections.
+
+#### Independence of observations {-}
+
+The observations in the groups should be independent. Because we randomly assigned the products to the experimental conditions, this assumption can be assumed to be met. 
+
+#### Distributional assumptions {-}
+
+ANOVA is relatively immune to violations to the normality assumption when sample sizes are large due to the Central Limit Theorem. However, if your sample is small (i.e., n < 30 per group) you may nevertheless want to check the normality of your data, e.g., by using the Shapiro-Wilk test or QQ-Plot. In our example, we only have 10 observations per group, which means that we cannot rely on the Central Limit Theorem and we should test the normality of our data. This can be done using the Shapiro-Wilk Test, which has the Null Hyposesis that the data is normally distributed. Hence, an insignificant test results means that the data can be assumed to be approximately normally distributed:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, paged.print = FALSE}
+shapiro.test(online_store_promo[online_store_promo$Promotion == "low", ]$Sales)
+shapiro.test(online_store_promo[online_store_promo$Promotion == "medium", ]$Sales)
+shapiro.test(online_store_promo[online_store_promo$Promotion == "high", ]$Sales)
+```
+
+Since the test result is insignificant for all groups, we can conclude that the data approximately follow a normal distribution. 
+
+We could also test the distributional assumptions visually using a Q-Q plot (i.e., quantile-quantile plot). This plot can be used to assess if a set of data plausibly came from some theoretical distribution such as the Normal distribution. Since this is just a visual check, it is somewhat subjective. But it may help us to judge if our assumption is plausible, and if not, which data points contribute to the violation. A Q-Q plot is a scatterplot created by plotting two sets of quantiles against one another. If both sets of quantiles came from the same distribution, we should see the points forming a line that’s roughly straight. In other words, Q-Q plots take your sample data, sort it in ascending order, and then plot them versus quantiles calculated from a theoretical distribution. Quantiles are often referred to as “percentiles” and refer to the points in your data below which a certain proportion of your data fall. Recall, for example, the standard Normal distribution with a mean of 0 and a standard deviation of 1. Since the 50th percentile (or 0.5 quantile) is 0, half the data lie below 0. The 95th percentile (or 0.95 quantile), is about 1.64, which means that 95 percent of the data lie below 1.64. The 97.5th quantile is about 1.96, which means that 97.5% of the data lie below 1.96. In the Q-Q plot, the number of quantiles is selected to match the size of your sample data.
+
+To create the Q-Q plot for the normal distribution, you may use the ```qqnorm()``` function, which takes the data to be tested as an argument. Using the ```qqline()``` function subsequently on the data creates the line on which the data points should fall based on the theoretical quantiles. If the individual data points deviate a lot from this line, it means that the data is not likely to follow a normal distribution. 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, paged.print = FALSE, fig.align="center", fig.cap = c("Q-Q plot 1","Q-Q plot 2","Q-Q plot 3")}
+qqnorm(online_store_promo[online_store_promo$Promotion=="low",]$Sales) 
+qqline(online_store_promo[online_store_promo$Promotion=="low",]$Sales)
+qqnorm(online_store_promo[online_store_promo$Promotion=="medium",]$Sales) 
+qqline(online_store_promo[online_store_promo$Promotion=="medium",]$Sales)
+qqnorm(online_store_promo[online_store_promo$Promotion=="high",]$Sales) 
+qqline(online_store_promo[online_store_promo$Promotion=="high",]$Sales)
+```
+
+The Q-Q plots suggest an approximately Normal distribution. If the assumption had been violated, you might consider transforming your data or resort to a non-parametric test. 
+
+#### Homogeneity of variance {-}
+
+You can test the homogeneity of variances in R using Levene's test:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, paged.print = FALSE}
+library(car)
+leveneTest(Sales ~ Promotion, data = online_store_promo, center = mean)
+```
+
+The null hypothesis of the test is that the group variances are equal. Thus, if the test result is significant it means that the variances are not equal. If we cannot reject the null hypothesis (i.e., the group variances are not significantly different), we can proceed with the ANOVA as follows: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+aov <- aov(Sales ~ Promotion, data = online_store_promo)
+summary(aov)
+```
+
+You can see that the p-value is smaller than 0.05. This means that, if there really was no difference between the population means (i.e., the Null hyposesis was true), the probability of the observed differences (or larger differences) is less than 5%.
+
+To compute &eta;<sup>2</sup> from the output, we can extract the relevant sum of squares as follows
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+summary(aov)[[1]]$'Sum Sq'[1]/(summary(aov)[[1]]$'Sum Sq'[1] + summary(aov)[[1]]$'Sum Sq'[2])
+```
+
+You can see that the results match the results from our manual computation above. 
+
+The ```aov()``` function also automatically generates some plots that you can use to judge if the model assumptions are met. We will inspect two of the plots here.
+
+We will use the first plot to inspect if the residual variances are equal across the experimental groups:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(aov,1)
+```
+
+Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels auf our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is highest for the "low" group and lowest for the "high" group. However, the differences are not that large and since the Levene's test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case. 
+
+The second plot can be used to test the assumption that the residuals are approximately normally distributed. We use a Q-Q plot to test this assumption:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(aov,2)
+```
+
+The plot suggests that the residuals are approximately normally distributed. We could also test this by extracting the residuals from the anova output using the ```resid()``` function and using the Shapiro-Wilk test: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+shapiro.test(resid(aov))
+```
+
+Confirming the impression from the Q-Q plot, we cannot reject the Null that the residuals are approximately normally distributed. 
+
+Note that if Levene's test would have been significant (i.e., variances are not equal), we would have needed to either resort to non-parametric tests (see below), or compute the Welch's F-ratio instead:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+oneway.test(Sales ~ Promotion, data=online_store_promo)
+```
+
+You can see that the results are fairly similar, since the variances turned out to be fairly equal across groups.
+
+### Post-hoc tests
+
+Provided that significant differences were detected by the overall ANOVA you can find out which group means are different using post hoc procedures. Post hoc procedures are designed to conduct pairwise comparisons of all different combinations of the treatment groups by correcting the level of significance for each test such that the overall Type I error rate (&alpha;) across all comparisons remains at 0.05.
+
+In other words, we rejected H<sub>0</sub>: &mu;<sub>1</sub>= &mu;<sub>2</sub>= &mu;<sub>3</sub>, and now we would like to test:
+
+Test1: 
+
+<p style="text-align:center;">
+$H_0: \mu_1 = \mu_2$ <br>
+</p>
+
+Test2: 
+
+<p style="text-align:center;">
+$H_0: \mu_1 = \mu_3$ <br>
+</p>
+
+Test3: 
+
+<p style="text-align:center;">
+$H_0: \mu_2 = \mu_3$ <br>
+</p>
+
+There are several post hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey's HSD ("honest significant differences"). Both tests control for familywise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’ HSDs is better when testing large numbers of means. 
+
+#### Bonferroni
+
+One of the most popular (and easiest) methods to correct for the familywise error rate is to conduct the individual t-tests and divide &alpha; by the number of comparisons („k“):
+
+\begin{equation} 
+\begin{split}
+p_{CR}= \frac{\alpha}{k}
+\end{split}
+(\#eq:pCR)
+\end{equation} 
+
+In our example with three groups:
+
+<p style="text-align:center;">
+$p_{CR}= \frac{0.05}{3}=0.017$ <br>
+</p>
+
+Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., the critical t value is higher). You can implement the Bonferroni procedure in R using:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+pairwise.t.test(online_store_promo$Sales, online_store_promo$Promotion, data = online_store_promo, p.adjust.method = "bonferroni")
+```
+
+In the output, you will get the corrected p-values for the individual tests. In our example, we can reject H<sub>0</sub> of equal means for all three tests, since p < 0.05 for all combinations of groups.
+
+Note the difference between the results from the post-hoc test compared to individual t-tests. For example, when we test the "medium" vs. "high" groups, the result from a t-test would be: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+data_subset <- subset(online_store_promo,Promotion != "low")
+t.test(Sales ~ Promotion, data = data_subset)
+```
+
+The p-value is lower in the t-test, reflecting the fact that the familywise error is not corrected (i.e., the test is less conservative).
+
+#### Tukey's HSD
+
+Tukey's HSD also compares all possible pairs of means (two-by-two combinations; i.e., like a t-test, except that it corrects for family-wise error rate).
+
+Test statistic:
+
+\begin{equation} 
+\begin{split}
+HSD= q\sqrt{\frac{MS_R}{n_c}}
+\end{split}
+(\#eq:tukey)
+\end{equation} 
+
+where:
+
+* q = value from studentized range table (see e.g., <a href="http://www.real-statistics.com/statistics-tables/studentized-range-q-table/" target="_blank">here</a>)
+* MS<sub>R</sub> = Mean Square Error from ANOVA
+* n<sub>c</sub> = number of observations per group
+* Decision: Reject H<sub>0</sub> if
+
+<p style="text-align:center;">
+$|\overline{Y}_i-\overline{Y}_j | > HSD$ , <br>
+</p>
+
+The value from the studentized range table can be obtained using the ```qtukey()``` function.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+q <- qtukey(0.95, nm = 3, df = 27)
+q
+```
+
+Hence:
+
+<p style="text-align:center;">
+$HSD= 3.506\sqrt{\frac{2.96}{10}}=1.906$ <br>
+</p>
+
+Or, in R:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+hsd <- q * sqrt(summary(aov)[[1]]$'Mean Sq'[2]/10)
+hsd
+```
+
+Since all mean differences between groups are larger than 1.906, we can reject the null hypothsis for all individual tests, confirming the results from the Bonferroni test. To compute Tukey's HSD, we can use the appropriate function from the ```multcomp``` package.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(multcomp)
+tukeys <- glht(aov, linfct = mcp(Promotion = "Tukey"))
+summary(tukeys)
+confint(tukeys)
+```
+
+We may also plot the result for the mean differences incl. their confidence intervals: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap="Tukey's HSD"}
+plot(tukeys)
+```
+
+You can see that the CIs do not cross zero, which means that the true difference between group means is unlikely zero.  
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+mean1 <- mean(online_store_promo[online_store_promo$Promotion=="high","Sales"]) #mean group "high"
+mean1
+mean2 <- mean(online_store_promo[online_store_promo$Promotion=="medium","Sales"]) #mean group "medium"
+mean2
+mean3 <- mean(online_store_promo[online_store_promo$Promotion=="low","Sales"]) #mean group "low"
+mean3
+#CI high vs. medium
+mean_diff_high_med <- mean2-mean1
+mean_diff_high_med
+ci_med_high_lower <- mean_diff_high_med-hsd
+ci_med_high_upper <- mean_diff_high_med+hsd
+ci_med_high_lower
+ci_med_high_upper
+#CI high vs.low
+mean_diff_high_low <- mean3-mean1
+mean_diff_high_low
+ci_low_high_lower <- mean_diff_high_low-hsd
+ci_low_high_upper <- mean_diff_high_low+hsd
+ci_low_high_lower
+ci_low_high_upper
+#CI medium vs.low
+mean_diff_med_low <- mean3-mean2
+mean_diff_med_low
+ci_low_med_lower <- mean_diff_med_low-hsd
+ci_low_med_upper <- mean_diff_med_low+hsd
+ci_low_med_lower
+ci_low_med_upper
+```
+
+Reporting of post hoc results: 
+
+The post hoc tests based on Bonferroni and Tukey’s HSD revealed that sales were significantly higher when using medium vs. low levels, high vs. medium levels, as well high vs. low levels of promotion. 
+
+**The following video summarizes how to conduct a one-way ANOVA in R**
+
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vl32om-3KpY" frameborder="0" allowfullscreen></iframe>
+</div>
+
+## N-way ANOVA
+
+As stated above, N-way ANOVA is used when you have a metric dependent variable and two or more factors with two or more factor levels. In other words, with N-way ANOVA, you can investigate the effects of more than one factor simultaneously. In addition, you can assess interactions between the factors that occur when the effects of one factor on the dependent variable depend on the level (category) of the other factors. An experiment with two or more independent variables is also called a **factorial design** and N-way ANOVA is therefore also referred to as factorial ANOVA.  
+
+Let's extend our example from above and assume that there was a second factor considered in the experiment. Besides the different levels of promotion intensity, the 30 products were also randomly assigned to two experimental groups that determined whether the product was featured in a newsletter or not. Hence, there is a second factor "newsletter" with two factor levels (i.e., "yes" and "no"):  
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE}
+online_store_promo$Newsletter <- factor(online_store_promo$Newsletter, levels = c(0:1), labels = c("no", "yes")) #convert grouping variable to factor
+head(online_store_promo)
+```
+
+This means that we have a 2x3 factorial design since we have one factor with 3 levels (i.e., online promotion (1) "high", (2) "medium", (3) "low"), and one factor with 2 levels (i.e., newsletter (1) "yes", (2) "no"). In a next step, we create a new grouping variable that specifiess the treatment using the ```paste(...)``` function. The ```paste(...)``` function basically concatenates its arguments and separates them by the string given by ```sep = ""```.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+online_store_promo$Group <- paste(online_store_promo$Promotion, online_store_promo$Newsletter, sep = "_") #create new grouping variable
+online_store_promo 
+```
+
+As you can see, we now have six experimental groups:
+
+(1) = high promotion, newsletter
+(2) = high promotion, no newsletter
+(3) = medium promotion, newsletter
+(4) = medium promotion, no newsletter
+(5) = low promotion, newsletter
+(6) = low promotion, no newletter
+
+In our analysis, we now focus on the comparsion of the means between the six groups. Let's inspect the group means: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+by(online_store_promo$Sales, online_store_promo$Group, mean) #category means
+```
+
+We can also plot the means for each factor individually and for both factors combined.
+
+Plot means for first factor "promotion" (same as before):
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Plot of means (in-store promotion)"), tidy = FALSE}
+#Plot of means
+ggplot(online_store_promo, aes(Promotion, Sales)) + 
+  stat_summary(fun.y = mean, geom = "bar", fill="White", colour="Black") +
+  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
+  labs(x = "Experimental group (promotion level)", y = "Number of sales") + 
+  theme_bw()
+```
+
+Plot means for second factor "newsletter":
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Plot of means (newsletter)"), tidy = FALSE}
+#Plot of means
+ggplot(online_store_promo, aes(Newsletter, Sales)) + 
+  stat_summary(fun.y = mean, geom = "bar", fill="White", colour="Black") +
+  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
+  labs(x = "Experimental group (newsletter)", y = "Number of sales") + 
+  theme_bw()
+```
+
+Plot means for both factors together:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Plot of means (interaction)"), tidy = FALSE}
+ggplot(online_store_promo, aes(x = interaction(Newsletter, Promotion), y = Sales, fill = Newsletter)) +
+  stat_summary(fun.y = mean, geom = "bar", position = position_dodge()) +
+  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
+  theme_bw()
+```
+
+So what is different compared to the one-way ANOVA? In the one-way ANOVA, we computed the sum of squares as:
+
+\begin{equation} 
+\begin{split}
+SS_T= SS_M+SS_R
+\end{split}
+(\#eq:vardecomp)
+\end{equation}
+
+The main difference is that in an N-way ANOVA the model sum of squares SS<sub>M</sub> consists of different components. In our case:
+
+\begin{equation} 
+\begin{split}
+SS_M= SS_{X_1}+SS_{X_2}+SS_{X_1X_2}
+\end{split}
+(\#eq:SSMn)
+\end{equation}
+
+That is, we can further decompose the explained variance into the variance explained by the first factor (X<sub>1</sub>), the variance explained by the second factor (X<sub>2</sub>), and the variance explained by the interaction of these factors (X<sub>1</sub>X<sub>2</sub>). The interaction will tell us if the effect of one factor depends on the level of the second factor and vice versa. Because we now have more information available (the manipulation of the second factor), we would expect the amount of explained variance to increase relative to the amount of unexplained variance.
+
+To visualize this, we can include this new information in the plot that we used before to inspect the model sum of squares:
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap="Sum of Squares (N-way ANOVA)"}
+count <- c(rep(1:5,6))
+ggplot(d, aes(x=count,y=sales,color=group6)) + 
+  geom_point(size=3) + facet_grid(~group6, scales = "free_x") + 
+  scale_x_continuous(breaks = 1:30) + geom_hline(aes(yintercept = grandmean, color=group6)) +
+  geom_hline(aes(yintercept = groupmean6,color=group6)) +
+  labs(x = "Observations",y = "Sales (million units)", colour="promo/nl",size=11, fill="") +
+  geom_segment(aes(x=count,y=grandmean, xend=count, yend=groupmean6),size=1) + 
+  theme(axis.title = element_text(size = 12),
+        axis.text  = element_text(size=12),
+        strip.text.x = element_text(size = 12),
+        legend.position="none") + theme_bw()
+```
+
+You can see that our model now better represents the data using the additional information (i.e., the distance between the individual observations and the group mean has decreased). Let's re-run the ANOVA using the additional information. To do this, we use the same commands as before and simply include the additional factor:
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, paged.print = FALSE, fig.align="center", fig.cap="Tukey's HSD"}
+library(car)
+leveneTest(online_store_promo$Sales, interaction(online_store_promo$Promotion, online_store_promo$Newsletter), center = mean) #test for homogeneity of variances
+aov <- aov(Sales ~ Promotion + Newsletter + Promotion:Newsletter, data = online_store_promo) #compute the basic anova
+summary(aov)
+```
+
+The Levene's Test indicates that the variances of the groups are not significantly different. Theoretically, you would also need to test the distributional assumptions for each group again, but we skip this step here. 
+
+The ANOVA output shows us that the two main effects are significant, while the interaction is not. This means that online promotions and newsletter features result in higher sales. However, the effect of each factor is independent of the other. Note that in the presence of significant interaction effects, it would make no sense to interpret the main effects! If this would be the case, we would only conclude that the effect of one factor depends on the other factor. If the interaction effect is insignificant (as in our case), you could also conduct post hoc tests for each individual factor. However, you only need to conduct post hoc tests for factors with more than 2 levels (i.e., not for the newsletter factor) since there is no familywise error for variables with two categories.
+
+In an N-way ANOVA, the multiple &eta;<sup>2</sup> measures the strength of the joint effect of two factors (also called the overall effect). To compute the multiple &eta;<sup>2</sup>, the revised equation is:
+
+\begin{equation} 
+\begin{split}
+\eta^2= \frac{SS_{X_1}+SS_{X_2}+SS_{X_1X_2}}{SS_T}
+\end{split}
+(\#eq:etan)
+\end{equation}
+
+From the output, we can extract the relevant sum of squares as follows:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+(summary(aov)[[1]]$'Sum Sq'[1] + summary(aov)[[1]]$'Sum Sq'[2] + summary(aov)[[1]]$'Sum Sq'[3])/(summary(aov)[[1]]$'Sum Sq'[1] + summary(aov)[[1]]$'Sum Sq'[2] + summary(aov)[[1]]$'Sum Sq'[3] + summary(aov)[[1]]$'Sum Sq'[4])
+```
+
+As in the one-way ANOVA, we check the residuals plots generated by R to see if the residulas are approximately normally distributed and whether the residual variance is similar across groups.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+plot(aov,1) #homogeneity of variances
+plot(aov,2) #normal distribution of residuals
+```
+
+Reporting: 
+
+* There was a significant main effect of promotion on sales, F(2,24) = 53.03, p < 0.05. 
+* The post hoc tests based on Bonferroni and Tukey’s HSD revealed that the sales were significantly higher when using medium vs. low levels, high vs. medium levels, as well high vs. low levels of promotion. 
+* There was a significant main effect of newsletter features on sales levels, F(1,24) = 53.33, p < 0.05.  
+* The effect of each factor is independent of the other since the interaction effect between the level of promotion and direct mailing was insignificant, F(2,24) = 3.27, p > 0.05.
+
+## Non-parametric tests
+
+When should you use non-parametric tests?
+
+* When the dependent variable is measured at an ordinal scale and we want to compare more than 2 means
+* When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)
+
+The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the ```kruskal.test()``` function. Using the same data as before, we type: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+kruskal.test(Sales ~ Promotion, data = online_store_promo) 
+```
+
+The test-statistic follows a chi-square distribution and since the test is significant (p < 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. To get a first impression, we can plot the data using a boxplot:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
+#Boxplot
+ggplot(online_store_promo, aes(x = Promotion, y = Sales)) + 
+  geom_boxplot() + 
+  labs(x = "Experimental group (promotion level)", y = "Number of sales") + 
+  theme_bw() 
+```
+
+To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the ```PMCMR``` package.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(PMCMR)
+posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
+```
+
+The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we loose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met. 
