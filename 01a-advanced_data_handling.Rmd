@@ -1,0 +1,255 @@
+---
+title: "01a-advanced data handling"
+output:
+  html_document:
+    toc: yes
+    df_print: paged
+  html_notebook: default
+  pdf_document:
+    toc: yes
+---
+```{r, echo=FALSE}
+library(knitr)
+library(dplyr)
+options(scipen = F)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=FALSE, rownames.print = FALSE, rows.print = 10, eval = TRUE)
+
+
+
+top10_track_streams <- c(163608, 126687, 120480, 110022, 108630, 95639, 94690, 89011, 87869, 85599) 
+top10_artist_names <- c("Axwell /\\ Ingrosso", "Imagine Dragons", "J Balvin", "Robin Schulz", "Jonas Blue", "David Guetta", "French Montana", "Calvin Harris", "Liam Payne", "Lauv") # Characters have to be put in ""
+top10_track_explicit <- c(0,0,0,0,0,0,1,1,0,0)
+top10_track_explicit <- factor(top10_track_explicit, 
+                               levels = c(0:1), 
+                               labels = c("not explicit", "explicit"))
+top10_artist_genre <- c("Dance","Alternative","Latino","Dance","Dance","Dance","Hip-Hop/Rap","Dance","Pop","Pop")
+top10_artist_genre <- as.factor(top10_artist_genre)
+top_10_track_release_date <- as.Date(c("2017-05-24", "2017-06-23", "2017-07-03", "2017-06-30", "2017-05-05", "2017-06-09", "2017-07-14", "2017-06-16", "2017-05-18", "2017-05-19"))
+top10_track_explicit_1 <- c(FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE)  
+
+music_data <- data.frame(top10_track_streams, 
+                         top10_artist_names, 
+                         top10_track_explicit, 
+                         top10_artist_genre, 
+                         top_10_track_release_date, 
+                         top10_track_explicit_1,
+                         stringsAsFactors = FALSE)
+
+```
+
+
+# Advanced data handling
+
+This chapter covers more advanced techniques for handling data in R.
+
+## The dplyr package
+
+There are many ways to achieve the same thing in R. Data transformation and handling tasks can be solved with the functions provided by base R, but the ```dplyr```package offers a comprehensive suite of functions that makes many tasks easier, while keeping code very readable. As such we will be presenting it here, but keep in mind that all of these tasks could also be achieved without any packages. 
+
+Before we continue, ensure that the ```dplyr()``` package is installed and loaded. 
+
+### Filter rows
+
+One of the most basic tasks one could wish to perform on a dataset is select certain observations based on various characteristics. ```dplyr``` uses the ```filter()``` function to this end. To select certain rows from a dataset you simply supply the data frame as the first argument and then tell ```filter()``` the logical criteria it should use to select observations. While this may sound fairly abstract, it will become very clear after a few examples.
+
+Recall the ```music_data``` data frame from the previous chapter. Suppose we want to select only observations where the lyrics are not explicit. The code to achieve this would looks as follows:
+
+```{r message=FALSE, warning=FALSE}
+filter(music_data, top10_track_explicit == "not explicit")
+```
+
+The first argument supplied to the ```filter()``` function is the data frame we want to subset. The second argument tells ```filter()``` that we only want observations where the column ```top10_track_explicit``` is equal to the value ```"not explicit"```. If you look into the output you will notice that only tracks with non explicit lyrics have been returned.
+
+Another way to filter observations is to choose all observations where one column is within a certain range. This can be achieved with the logical operators introduced in the basic data handling chapter. In the following example we select all tracks with less than 100000 streams. 
+
+```{r message=FALSE, warning=FALSE}
+filter(music_data, top10_track_streams < 100000)
+```
+
+You can enforce multiple conditions with ```&```. The following example selects all observations with less than 150000 but more than 100000 streams.
+
+```{r message=FALSE, warning=FALSE}
+filter(music_data,  top10_track_streams > 100000 & top10_track_streams < 150000)
+```
+
+The ```|``` symbol is the way R expresses "or". This way you can select observations that fulfill either one or the other condition. Say we would like to select all observations with less than 100000 or more than 150000 streams. The following code would do exactly that
+```{r message=FALSE, warning=FALSE}
+filter(music_data,  top10_track_streams < 100000 | top10_track_streams > 150000)
+```
+
+A very useful feature of the ```filter()``` function is its ability to accept multiple criteria at once. Say we want to select all tracks marked as ```"not explicit"``` with less than 100000 streams. This can be achieved by simply supplying the function with additional arguments, as in the example below. 
+
+```{r message=FALSE, warning=FALSE}
+filter(music_data, top10_track_explicit == "not explicit", top10_track_streams < 100000)
+```
+
+Below is an interactive version of the last command with the dataset preloaded. Feel free to experiment with various ways to specify rows to be extracted to get a feel for how the filter function works.
+
+<iframe src="http://localhost:3838/dplyr_filter/?showcase=0" width="750" height="500",  frameBorder = 0>
+</iframe>
+
+### Select columns
+
+Another common task is to select or exclude certain columns of a data frame. The ```dplyr``` package contains the ```select()``` function for exactly this purpose. Similarly to ```filter()``` you first supply the function with the data frame you wish to apply the selection to, followed by the columns you wish to select or exclude. 
+
+The following code selects the two columns ```top10_track_explicit``` and  ```top10_track_streams``` from the ```music_data``` dataset. 
+
+```{r message=FALSE, warning=FALSE}
+select(music_data, top10_track_explicit, top10_track_streams)
+```
+
+Two remove columns from a dataframe you simply put a ```-``` before the column name. 
+
+```{r message=FALSE, warning=FALSE}
+select(music_data, -top10_track_explicit, -top10_track_streams)
+```
+
+You can also select or exclude a whole range of columns through numbers or names. 
+
+```{r message=FALSE, warning=FALSE}
+# Selects all columns from top10_track_explicit to top_10_track_release_date
+select(music_data, top10_track_explicit:top_10_track_release_date)
+
+# This is equivalent to  
+select(music_data, 3:5)
+
+```
+
+Below you will again find an interactive version to experiment with. 
+
+<iframe src="http://localhost:3838/dplyr_select/?showcase=0" width="750" height="500",  frameBorder = 0>
+</iframe>
+
+### Rename columns
+
+Renaming of columns is done with a special version of the ```select()``` function called ```rename()```. The syntax may seem familiar at this point, with the first argument being the data frame to apply the function to and the following arguments being the transformations to apply. The example changes the names of the ```top10_track_explicit``` and ```top10_artist_names``` columns into ```explicit``` and ```names```, respectively.
+
+```{r message=FALSE, warning=FALSE}
+rename(music_data, explicit = top10_track_explicit, names = top10_artist_names)
+```
+
+### Arrange rows
+
+If you just want to change the order of a data frame without discarding any observations or columns, you can use the ```arrange()``` function. It takes a data frame and a set of column names to order by, always in ascending order. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns.
+
+```{r message=FALSE, warning=FALSE}
+arrange(music_data, top10_artist_genre, top10_track_streams)
+```
+
+If you wish to arrange them in descending order, you can wrap the column name in the ```desc()``` function. 
+
+```{r message=FALSE, warning=FALSE}
+arrange(music_data, top10_artist_genre, desc(top10_track_streams))
+```
+
+Below you will again find an interactive version of the ```arrange()``` function to experiment with. 
+
+<iframe src="http://localhost:3838/dplyr_arrange/?showcase=0" width="750" height="500",  frameBorder = 0>
+</iframe>
+
+### Add new variables
+
+There are two functions to create new variables based on other variables in the dplyr package, ```mutate()``` and ```transmutate()```. They both do the same thing, with one key difference: ```mutate()``` returns both the newly created variables _and_ the ones previously contained in the data frame, while ```transmutate()``` only returns the newly created variables. 
+
+Both functions take variables already present in the dataset and apply a function to them to generate new variables. This can be something as simple as adding 1 to every entry in a column or more complex procedures, like standardising variables. The syntax is fairly straightforward: The first argument is the data frame we wish to apply the transformation to, and all the following arguments are the new variables we want to create. An exapmle will make this clearer. Say we (for some reason) want to add 10 to every entry of the ```top10_track_streams``` column in our dataset. The code to do this would look as follows:
+```{r, message=FALSE, warning=FALSE}
+mutate(music_data, streams_plus_10 = top10_track_streams + 10)
+```
+
+As previously mentioned, we can also perform more complex operations, such as standardising variables (i.e. subtracting the mean value and dividing by the standard deviation). 
+
+```{r, message=FALSE, warning=FALSE}
+mutate(music_data, streams_standardised = (top10_track_streams - mean(top10_track_streams))/ sd(top10_track_streams)) 
+```
+
+You can also add other vectors to an existing data frame with mutate, given that it is the same length as the data frame you want to add it to. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+set.seed(123)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# Generate random data with 10 rows
+extra_column <- rnorm(nrow(music_data))
+
+mutate(music_data, new_data = extra_column) 
+```
+
+Below is again a version for you to experiment with. The vector ```extra_column``` from the last example has also been loaded into the environment, so you can try adding a whole new vector to the data frame. 
+
+<iframe src="http://localhost:3838/dplyr_mutate/?showcase=0" width="750" height="500",  frameBorder = 0>
+</iframe>
+
+### Pipes
+
+A very practical feature of the dplyr package are so called "pipes". Say you want to apply three of the previously mentioned functions to the same data frame. So far, the way we learned to do this would be as follows:
+
+
+```{r, message=FALSE, warning=FALSE}
+# First use select() to take only certain columns
+music_data_new <- select(music_data, top10_track_explicit_1, top10_artist_names, top10_track_streams)
+
+# Now use filter() to choose only rows that fulfill certain criteria 
+music_data_new <- filter(music_data_new, top10_track_streams < 100000)
+
+# Then change order with arrange()
+music_data_new <- arrange(music_data_new, top10_track_streams)
+
+# Print to console
+music_data_new
+```
+
+While this does achieve our objective, it is quite tedious. With the pipes offered by ```dplyr```, you can chain these commands together to streamline your code, while keeping it very readable. The symbol for a pipe is ```%>%```. From a technical perspective, this hands the preceding object to the next function as the first argument. This may sound compicated, but will become clear after an example. The code below will create exactly the same data frame as the example above, but in a much more compact form.
+
+```{r, message=FALSE, warning=FALSE}
+music_data_new <- music_data %>%
+  select(top10_track_explicit_1, top10_artist_names, top10_track_streams) %>%
+  filter(top10_track_streams < 100000) %>%
+  arrange(top10_track_streams)
+
+# Print to console
+music_data_new
+```
+
+Let's unpack what happened here. The first line "pipes" ```music_data``` into the first function, ```select()```, which is in the second line. Here we remove all columns except for ```top10_track_explicit_1```, ```top10_artist_names``` and ```top10_track_streams```. Then we take this data frame with the reduced columns and hand it to ```filter()```, which only selects observations with less than 100000 streams. Finally, we pass the filtered, column reduced data frame to arrange, which orders the rows by the number of streams per track. The assigment operator (```<-```) at the top then saves this data frame in the environment as ```music_new_data```. Note that, in contrast to the previous examples, we no longer have to specify which data frame we want to apply the various functions to, as the pipes take care of this for us.
+
+Again, experiment with this feature below and it will quickly become very intuitive.
+
+<iframe src="http://localhost:3838/dplyr_pipes/?showcase=0" width="750" height="500",  frameBorder = 0>
+</iframe>
+
+### Creating custom summaries
+
+The ```summarise()``` function lets you build customised summaries of your data. This can range from creating means and standrad deviations of certain variables to simply counting how many observations are in a data frame. Say we want to find out the mean and standard deviation of the number of streams and also count the number of observations. With ``summarise()``` that would look as follows:
+
+```{r, message=FALSE, warning=FALSE}
+summarise(music_data, nObservations = n(), mean_streams = mean(top10_track_streams), sd_streams = sd(top10_track_streams))
+```
+
+On its own, this function is not that impressive. After all, we could just apply the ```mean()```, ```sd()``` and ```nrow()``` functions individually and would have gotten the same result, albeit not in such a nice format. 
+
+However, when combined with the ```group_by()``` function, ```summarise()``` becomes truly powerful. ```group_by()``` splits a data frame into groups, by the values of a column in the data frame. Say we wanted to calculate the mean and standard deviation of explicit and non-explicit songs seperately. 
+
+```{r, message=FALSE, warning=FALSE}
+music_data %>%
+  group_by(top10_track_explicit) %>%
+  summarise(nObservations = n(), mean_streams = mean(top10_track_streams), sd_streams = sd(top10_track_streams))
+```
+
+This is a useful tool for getting a good overview of your data and potentially generating data for visualizations or tables. 
+
+## Dealing with strings
+
+Strings (which is short for "character strings"), are ?????
+
+Manipulating strings and getting them into a format that you can work with is often
+
+```{r}
+x <- c("apple", "banana", "pear")
+str_view(x, "an")
+```
+
+## Case study 
+
+
