@@ -256,12 +256,21 @@ $$
 A distribution is continuous if the cumulative distribution function is a continuous function (no steps!). 
 
 ```{r, }
-ggplot(data.frame(x = c(-5, 5)), aes(x)) +
+library(cowplot)
+
+cdf <- ggplot(data.frame(x = c(-5, 5)), aes(x)) +
   stat_function(fun = punif, args = list(min = -5, max = 5), geom = "line", aes(color = "Uniform")) +
   stat_function(fun = pnorm, geom = "line", aes(color = "Normal")) + 
-  labs(x = "Value", y = "Cumulative Probability", title = "CDF of a continuous distributions") +
+  labs(x = "Value", y = "Cumulative Probability", title = "CDF of continuous distributions") +
   theme_bw() +
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank(), legend.pos = "bottom")
+pdf <- ggplot(data.frame(x = c(-5, 5)), aes(x)) +
+  stat_function(fun = dunif, args = list(min = -5, max = 5), geom = "line", aes(color = "Uniform")) +
+  stat_function(fun = dnorm, geom = "line", aes(color = "Normal")) + 
+  labs(x = "Value", y = "Probability density", title = "PDF of  continuous distributions") +
+  theme_bw() +
+  theme(legend.title=element_blank(), legend.pos="bottom")
+plot_grid(cdf, pdf, align = c(axis = "b"), rel_widths = 1) 
 ```
 
 As a consequence we cannot simply sum up values to get an expected value or a variance. We are now dealing with real numbers and thus there are infinitely many values between any two arbitrary numbers that are not equal.
@@ -272,17 +281,13 @@ $$
 \mathbb{E}[X] = \int_{-∞}^{∞} x f_{X}(x) dx
 $$
 
-where $f_X(x)$ is the density of the random variable $X$ evaluated at some point $x$ and the integral over $x$ has the same purpose as the sum over $x$ before. 
+where $f_X(x)$ is the density of the random variable $X$ evaluated at some point $x$ and the integral over $x$ ("$dx$") has the same purpose as the sum over $x$ before. 
 
 ### Uniform Distribution
 
-To illustrate the concept of the integral the uniform distribution provides a simple example. As in the continuous case it assigns equal weight to each equally sized between the area on which the variable is defined $[a, b]$. Why each interval and not each value? Since there are infinitely many values between $a$ and $b$ each individual value cannot be assigned a probability small enough for all of the probabilities to sum to $1$ (which is a basic requirement of a probability). Thus we can only assign a probability to an interval, e.g. $[0, 0.001]$, of which only *finitely* many exist between $a$ and $b$, e.g. $a = -2$ and $b = 1$. In this example there exist $3000$ intervals of values $[x, x + 0.001]$. Since we are dealing with intervals the density can be thought of as the area under the PDF for a given interval.
+To illustrate the concept of the integral the uniform distribution provides a simple example. As in the continuous case it assigns equal weight to each equally sized interval in the area on which the variable is defined ($[a, b]$). Why each interval and not each value? Since there are infinitely many values between $a$ and $b$ (again due to real numbers) each individual value cannot be assigned a probability small enough for all of the probabilities to sum to $1$ (which is a basic requirement of a probability). Thus we can only assign a probability to an interval, e.g. $[0, 0.001]$, of which only *finitely* many exist between $a$ and $b$, e.g. $a = -2$ and $b = 1$. In this example there exist $3,000$ intervals of values $[x, x + 0.001]$. Since we are dealing with intervals the probability density can be thought of as the area under the PDF for a given interval or the sum of the areas of *very small* intervals within the chosen interval. 
 
-
-```{r}
-
-```
-
+<!--- TODO here dist_unif shiny app --->
 
 The PDF is defined as
 
@@ -290,4 +295,25 @@ $$
 f_X(x) = \frac{1}{b-a} \text{ if } x \in [a, b], \ 0 \text{ otherwise}
 $$
 
-That is, the weight $\frac{1}{b-a}$ is assign to values in the interval of interest and all other values have weight $0$. As already mentioned *all* values between $a$ and $b$ have to be considered.  
+That is, the weight $\frac{1}{b-a}$ is assign to values in the interval of interest and all other values have weight $0$. As already mentioned *all* values between $a$ and $b$ have to be considered. Thus, in order to calculate the expected value and the variance we have to integrate over $x$.
+
+$$
+\mathbb{E}[X] = ∫_a^b x * \frac{1}{b-a} dx = \frac{b+a}{2}
+$$
+
+If you plug in $a = 1$ in the formula above you can see the relation to the discrete uniform distribution and the similar role of integral and summation. Notice also how the expectation operator "translates" to the integral. For the expectation of $X$ we integrate over all $x$, the possible realizations of $X$, weighted by the PDF of $X$. Now, in order to get the variance we want to calculate the expected squared deviation from the expected value.
+
+\begin{align*}
+Var(X) &= \mathbb{E}\left[(X - \mathbb{E}[X])^{2} \right] = \mathbb{E}\left[\left(X - \frac{b+a}{2}\right)^2\right] \\
+&= ∫_a^b \left(x - \frac{b+a}{2}\right)^2 * \frac{1}{b-a} dx = \frac{(b-a)^2}{12}
+\end{align*}
+
+Clearly the Uniform distribution can be used whenever we want to model a population in which all possible outcomes are equally likely. 
+
+### Normal distribution
+
+The normal distribution is probably the most widely known one. Its PDF is the famous bell curve. It has two parameters $\mu$, and $\sigma^2$. $\mu$ is the mean and $\sigma^2$ the variance of the distribution. In the case of $\mu = 0,\ \sigma^2 = 1$ it is called the *standard normal distribution*.
+
+The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see [Central Limit Theorem](#central-limit-theorem)). The normal distribution can be *standardized*, i.e. given any random normal variable, $X\sim N(\mu, \sigma^2)$, we can get a *standard normal* variable $Y \sim N(0, 1)$ where $Y = \frac{X - \mu}{\sigma}$. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal $Y\sim N(0,1)$ we get that $X \sim N(\mu, \sigma^{2}$ where $X = \mu + \sigma * Y$ by just rearranging the formula above. 
+
+
