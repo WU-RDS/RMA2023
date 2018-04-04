@@ -1,4 +1,4 @@
-data <-readr::read_csv("./MRD_A3_Survey.csv")
+data <-readr::read_csv("./MRDA2018/MRD_A3_Survey.csv")
 
 data <- data[-c(1,2),]
 
