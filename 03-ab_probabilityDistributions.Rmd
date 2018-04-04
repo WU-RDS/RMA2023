@@ -36,7 +36,7 @@ $$
 
 This is the expected squared deviation from the expected value. Taking the squared deviation always yields a positive value. In addition, larger deviations are emphasized. This is visualized in the plot below. Some observations: The tosses that do not deviate from the mean and those that only deviate by 1 stay the same when squaring. Those that are $-1$ become $+1$ and all others are becoming positive and increase compared to their absolute value.
 
-<iframe src="./sqrerror.html", width="900", height="600"/>
+<iframe src="./sqrerror.html", width="900", height="600", frameborder="0"/>
 
 
 ### Binomial Distribution - Coin toss yet again!
@@ -48,20 +48,7 @@ $$
 
 where $n$ are the number of coins and $p$ is the probability of observing head. Here $n,\ p$ are the parameters of the *binomial* distribution. 
 
-
-```{r discreteDist}
-y <- rbinom(1e5, 5, (1/6))
-plot(NULL, xlim=c(0, 5), ylim = c(0,1), 
-     ylab = "Cumulative Probability", xlab = "observed #", xaxt = "n", main="Cumulative distribution function of the Binomial Distribution", adj = 0)
-mtext("p = 1/6, n = 5", adj = 0)
-axis(1, at = 0:5)
-grid(NULL, NULL, lwd = 1, lty = 'solid', col = "gray93", equilogs = FALSE)
-lines(ecdf(y))
-```
-
-<!---
-TODO Replace with shiny app 
---->
+<iframe src="http://localhost:3838/Dist_Binomial/" style="border: none; width: 950px; height: 400px"></iframe>
 
 The binomial distribution can be used whenever there are two or more possible outcomes, one of which is seen as "success", that is we want to add $1$ if this outcome occurs and the other(s) as failure in which case nothing is added. The idea is based on the concept of [Bernoulli trials](https://en.wikipedia.org/wiki/Bernoulli_trial). It works analogously for dice if we are interested in the number of dice the show a particular value, say $1$. 
 
@@ -69,16 +56,6 @@ The binomial distribution can be used whenever there are two or more possible ou
 2. For each die check if it shows $1$.
 3. If yes add 1, if no, do not add anything.
 5. The random variable is the final number and follows a binomial distribution with $p = \frac{1}{6},\ n = 5$
-
-```{r}
-library(ggplot2)
-y <- data.frame(x=0:5, y=dbinom(0:5, 5, (1/6)))
-ggplot(y, aes(x = x, y = y))+
-  geom_point()+
-  theme_bw()+
-  scale_x_continuous(breaks = 0:10, labels=0:10)+
-  labs(x = "observed #", y = "Probability Mass", title = "Probability mass function of the Binomial distribution", subtitle = "p = 1/6, n = 5")
-```
 
 So, given the parameters $p,\ n$ of the binomial distribution what are the expected value and the variance?
 
@@ -184,7 +161,8 @@ See [Quantile Function](https://en.wikipedia.org/wiki/Quantile_function).
 
 The discrete uniform distribution assigns the same probability to all possible values. 
 
-```{r}
+```{r, echo = FALSE}
+library(ggplot2)
 dat <- data.frame(x = 1:10, y = rep( ( 1 / 10), time = 10))
 ggplot(dat, aes(x = x, y = y)) +
   geom_linerange(aes(ymin = 0, ymax = y)) +
@@ -255,7 +233,7 @@ $$
 
 A distribution is continuous if the cumulative distribution function is a continuous function (no steps!). 
 
-```{r, }
+```{r, echo = FALSE, message = FALSE, warnings = FALSE}
 library(cowplot)
 
 cdf <- ggplot(data.frame(x = c(-5, 5)), aes(x)) +
@@ -270,7 +248,7 @@ pdf <- ggplot(data.frame(x = c(-5, 5)), aes(x)) +
   labs(x = "Value", y = "Probability density", title = "PDF of  continuous distributions") +
   theme_bw() +
   theme(legend.title=element_blank(), legend.pos="bottom")
-plot_grid(cdf, pdf, align = c(axis = "b"), rel_widths = 1) 
+plot_grid(cdf, pdf, align = c(axis = "b"), rel_widths = 1)
 ```
 
 As a consequence we cannot simply sum up values to get an expected value or a variance. We are now dealing with real numbers and thus there are infinitely many values between any two arbitrary numbers that are not equal.
@@ -287,7 +265,6 @@ where $f_X(x)$ is the density of the random variable $X$ evaluated at some point
 
 To illustrate the concept of the integral the uniform distribution provides a simple example. As in the continuous case it assigns equal weight to each equally sized interval in the area on which the variable is defined ($[a, b]$). Why each interval and not each value? Since there are infinitely many values between $a$ and $b$ (again due to real numbers) each individual value cannot be assigned a probability small enough for all of the probabilities to sum to $1$ (which is a basic requirement of a probability). Thus we can only assign a probability to an interval, e.g. $[0, 0.001]$, of which only *finitely* many exist between $a$ and $b$, e.g. $a = -2$ and $b = 1$. In this example there exist $3,000$ intervals of values $[x, x + 0.001]$. Since we are dealing with intervals the probability density can be thought of as the area under the PDF for a given interval or the sum of the areas of *very small* intervals within the chosen interval. 
 
-<!--- TODO here dist_unif shiny app --->
 
 The PDF is defined as
 
@@ -310,10 +287,20 @@ Var(X) &= \mathbb{E}\left[(X - \mathbb{E}[X])^{2} \right] = \mathbb{E}\left[\lef
 
 Clearly the Uniform distribution can be used whenever we want to model a population in which all possible outcomes are equally likely. 
 
+<iframe src="http://localhost:3838/dist_Uniform/uniform/" style="border: none; width: 950px; height: 650px"></iframe>
+
 ### Normal distribution
 
 The normal distribution is probably the most widely known one. Its PDF is the famous bell curve. It has two parameters $\mu$, and $\sigma^2$. $\mu$ is the mean and $\sigma^2$ the variance of the distribution. In the case of $\mu = 0,\ \sigma^2 = 1$ it is called the *standard normal distribution*.
 
-The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see [Central Limit Theorem](#central-limit-theorem)). The normal distribution can be *standardized*, i.e. given any random normal variable, $X\sim N(\mu, \sigma^2)$, we can get a *standard normal* variable $Y \sim N(0, 1)$ where $Y = \frac{X - \mu}{\sigma}$. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal $Y\sim N(0,1)$ we get that $X \sim N(\mu, \sigma^{2}$ where $X = \mu + \sigma * Y$ by just rearranging the formula above. 
+The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see [Central Limit Theorem](#central-limit-theorem)). The normal distribution can be *standardized*, i.e. given any random normal variable, $X\sim N(\mu, \sigma^2)$, we can get a *standard normal* variable $Y \sim N(0, 1)$ where $Y = \frac{X - \mu}{\sigma}$. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal $Y\sim N(0,1)$ we can get to any $X \sim N(\mu, \sigma^{2}$ by defining $X = \mu + \sigma * Y$ by just rearranging the formula above. In the application below you can see the PDF and CDF of the normal distribution and set a mean and a standard deviation. Try to get an intuition about why this simple transformation works. First change only the mean and observe that the shape of the PDF stays the same and its *location* is shifted. Starting from a normal distribution with $μ = 0$ and setting $\mu = 4$ is equivalent to adding $4$ to each value (see table of percentiles). Similarly changing the standard deviation from $σ = 1$ to $σ = 2,\ 3,\ 4, \dots$ is equivalent to multiplying each value with $2,\ 3,\ 4, \dots$. 
 
+<iframe src="http://localhost:3838/Dist_Normal/" style="border: none; width: 900px; height: 550px"></iframe>
 
+The normal PDF is defined as
+
+$$
+f(x | μ, σ) = \frac{1}{\sqrt{2πσ^{2}}} e^{-\frac{1}{2}\frac{(x-\mu)^2}{σ^2}}
+$$
+
+The first part $\left(\frac{1}{\sqrt{2\piσ^2}}\right)$ scales the density down at each point as the standard deviation is increased because $\sigma$ is in the denominator. When you increase the standard deviation in the application above you will see that the density gets lower on the whole range. Intuitively the total mass of $1$ needs to be distributed over more values and is thus less in each region. The second part $\left(e^{-\frac{1}{2}\frac{(x-μ)^2}{\sigma^2}}\right)$ re-scales regions based on how far they are away from the mean due to the $(x-\mu)^2$ part. Notice that values further away from the mean are re-scaled more due to this. The negative sign in the exponent means that the scaling is downward. $\sigma^2$ in the denominator tells us that this scaling is reduced for higher $\sigma^2$ and "stronger" for lower $\sigma^2$. In other words: as $\sigma$ is increased regions further away from the mean get more probability density. If the standard deviation is set to $1$ for example there is almost no mass for values that deviate from the mean by more than $2$. However, if we set $\sigma = 10$ the 75th percentile is at $6.75$. That is 25\% of values lie above that value. 

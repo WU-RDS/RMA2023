@@ -27,9 +27,9 @@ ui <- fluidPage(
                      step = 0.1),
          p(textOutput("dens")),
          uiOutput("pdfInteg"),
-         withMathJax(helpText("$$\\mathbb{E}[X] = \\int_1^{11} x * \\frac{1}{11-1} dx =  \\frac{11+1}{2} = 6$$")),
-         withMathJax(helpText("$$Var(X) = \\mathbb{E}[(X-\\mathbb{E}[X])^2] = \\mathbb{E}\\left[\\left(x- 6 \\right)^2\\right]$$")),
-         withMathJax(helpText("$$ = \\int_1^{11} \\left(x-6\\right)^2 * \\frac{1}{11-1} dx = \\frac{(11-1)^2}{12} = 8.\\overline{33}$$"))
+         withMathJax(helpText("$$\\mathbb{E}[X] = \\int_1^{11} x * \\frac{1}{11-1} dx \\\\ =  \\frac{11+1}{2} = 6$$")),
+         withMathJax(helpText("$$Var(X) = \\mathbb{E}[(X-\\mathbb{E}[X])^2] \\\\ = \\mathbb{E}\\left[\\left(x- 6 \\right)^2\\right]$$")),
+         withMathJax(helpText("$$ = \\int_1^{11} \\left(x-6\\right)^2 * \\frac{1}{11-1} dx \\\\ = \\frac{(11-1)^2}{12} = 8.\\overline{33}$$"))
          ),
       # Show a plot of the generated distribution
    mainPanel(
@@ -57,7 +57,7 @@ server <- function(input, output) {
       theme_bw() +
       scale_x_continuous(breaks = c(1:11))+
       lims(y = c(0, 0.15))
-  })
+  }, height = 550)
   output$dens <- renderText({
       curDens <- round((input$area[2] - input$area[1]) * 0.1, 2)
     paste("Density of selected interval:", curDens)
