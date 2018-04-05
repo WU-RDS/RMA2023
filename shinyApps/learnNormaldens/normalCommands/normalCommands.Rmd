@@ -1,0 +1,29 @@
+---
+output: html_document
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.cap = "Code", exercise.eval = TRUE,
+  exercise.timelimit = 10, exercise.lines = 3, exercise.checker = NULL,
+  exercise.completion = TRUE, exercise.diagnostics = FALSE,
+  exercise.startover = TRUE)
+```
+
+```{r random, exercise=TRUE}
+rnorm(10, mean = 0, sd = 10) # Random draws
+```
+
+```{r quantile, exercise=TRUE}
+qnorm(0.75, mean = 0, sd = 10) # Value at quantile
+```
+
+```{r cdf, exercise=TRUE}
+pnorm(6.75, mean = 0, sd = 10) # CDF evaluated
+```
+
+```{r pdf, exercise=TRUE}
+dnorm(c(-10, 0, 10), mean = 0, sd = 10) # PDF evaluated
+```

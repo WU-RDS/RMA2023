@@ -138,20 +138,7 @@ $$
 
 You can directly get values from the binomial distribution in R
 
-```{r}
-# Parameters
-p <- 0.8
-n <- 2
-# Random sample with 100 observations
-head(rbinom(100, n, p))
-# Probability mass at point 2
-dbinom(2, n, p)
-# Cumulative probability at point 1
-pbinom(1, n, p)
-# Quantile function at percentiles 0.36 and 0.37
-qbinom(0.36, n, p)
-qbinom(0.37, n, p)
-```
+<iframe src="http://localhost:3838/learnBinomial/" style="border: none; width: 900px; height: 640px"></iframe>
 
 <!--- TODO Make shiny app ---> 
 
@@ -303,4 +290,12 @@ $$
 f(x | μ, σ) = \frac{1}{\sqrt{2πσ^{2}}} e^{-\frac{1}{2}\frac{(x-\mu)^2}{σ^2}}
 $$
 
-The first part $\left(\frac{1}{\sqrt{2\piσ^2}}\right)$ scales the density down at each point as the standard deviation is increased because $\sigma$ is in the denominator. When you increase the standard deviation in the application above you will see that the density gets lower on the whole range. Intuitively the total mass of $1$ needs to be distributed over more values and is thus less in each region. The second part $\left(e^{-\frac{1}{2}\frac{(x-μ)^2}{\sigma^2}}\right)$ re-scales regions based on how far they are away from the mean due to the $(x-\mu)^2$ part. Notice that values further away from the mean are re-scaled more due to this. The negative sign in the exponent means that the scaling is downward. $\sigma^2$ in the denominator tells us that this scaling is reduced for higher $\sigma^2$ and "stronger" for lower $\sigma^2$. In other words: as $\sigma$ is increased regions further away from the mean get more probability density. If the standard deviation is set to $1$ for example there is almost no mass for values that deviate from the mean by more than $2$. However, if we set $\sigma = 10$ the 75th percentile is at $6.75$. That is 25\% of values lie above that value. 
+The first part $\left(\frac{1}{\sqrt{2\piσ^2}}\right)$ scales the density down at each point as the standard deviation is increased because $\sigma$ is in the denominator. When you increase the standard deviation in the application above you will see that the density gets lower on the whole range. Intuitively the total mass of $1$ needs to be distributed over more values and is thus less in each region. The second part $\left(e^{-\frac{1}{2}\frac{(x-μ)^2}{\sigma^2}}\right)$ re-scales regions based on how far they are away from the mean due to the $(x-\mu)^2$ part. Notice that values further away from the mean are re-scaled more due to this. The negative sign in the exponent means that the scaling is downward. $\sigma^2$ in the denominator tells us that this scaling is reduced for higher $\sigma^2$ and "stronger" for lower $\sigma^2$. In other words: as $\sigma$ is increased regions further away from the mean get more probability density. If the standard deviation is set to $1$ for example there is almost no mass for values that deviate from the mean by more than $2$. However, if we set $\sigma = 10$ the 75th percentile is at $6.75$. That is, 25\% of values lie above that value. Equivalently, if we take the integral from $6.75$ to $∞$ we will get $0.25$. Remember that the integral is just the surface area under the curve in that interval. This is also equivalent to saying that if we draw from a normal distribution with $\mu=0,\ \sigma = 10$ the probability of getting *at least* $6.75$ is 25\%.
+
+The CDF is defined as
+
+$$
+\frac{1}{\sqrt{2 \pi σ^2}} \int_{-∞}^x e^{\frac{-(t-μ)^2}{2 σ^2}} dt
+$$
+
+<iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 900px; height: 650px"></iframe>

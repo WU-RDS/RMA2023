@@ -16,8 +16,9 @@ ui <- fluidPage(
                  tableOutput("percentiles")
     ),
     mainPanel(
-      plotOutput("distplot", height = "200"),
-      plotOutput("CDFplot", height = "200")
+      plotOutput("distplot", height = "260"),
+      p(),
+      plotOutput("CDFplot", height = "260")
     ) 
   )
 )
