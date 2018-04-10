@@ -11,6 +11,7 @@ output:
 ```{r, echo=FALSE}
 library(knitr)
 library(dplyr)
+library(stringr)
 options(scipen = F)
 #This code automatically tidies code so that it does not reach over the page
 opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=FALSE, rownames.print = FALSE, rows.print = 10, eval = TRUE)
@@ -18,7 +19,7 @@ opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=FALSE, rownames.print = FALS
 
 
 top10_track_streams <- c(163608, 126687, 120480, 110022, 108630, 95639, 94690, 89011, 87869, 85599) 
-top10_artist_names <- c("Axwell /\\ Ingrosso", "Imagine Dragons", "J Balvin", "Robin Schulz", "Jonas Blue", "David Guetta", "French Montana", "Calvin Harris", "Liam Payne", "Lauv") # Characters have to be put in ""
+top10_artist_names <- c("Axwell /\\ Ingrosso", "Imagine Dragons", "J. Balvin", "Robin Schulz", "Jonas Blue", "David Guetta", "French Montana", "Calvin Harris", "Liam Payne", "Lauv") # Characters have to be put in ""
 top10_track_explicit <- c(0,0,0,0,0,0,1,1,0,0)
 top10_track_explicit <- factor(top10_track_explicit, 
                                levels = c(0:1), 
@@ -148,7 +149,7 @@ Below you will again find an interactive version of the ```arrange()``` function
 <iframe src="http://localhost:3838/dplyr_arrange/?showcase=0" width="750" height="500",  frameBorder = 0>
 </iframe>
 
-### Add new variables
+### Adding and changing variables
 
 There are two functions to create new variables based on other variables in the dplyr package, ```mutate()``` and ```transmutate()```. They both do the same thing, with one key difference: ```mutate()``` returns both the newly created variables _and_ the ones previously contained in the data frame, while ```transmutate()``` only returns the newly created variables. 
 
@@ -157,7 +158,9 @@ Both functions take variables already present in the dataset and apply a functio
 mutate(music_data, streams_plus_10 = top10_track_streams + 10)
 ```
 
-As previously mentioned, we can also perform more complex operations, such as standardising variables (i.e. subtracting the mean value and dividing by the standard deviation). 
+This code essentially defines a new column named ``` streams_plus_10```, which is the column ```top10_track_streams``` + 10. 
+
+As previously mentioned, we can also perform more complex operations, such as standardising variables (i.e. subtracting the mean value and dividing by the standard deviation). Note that we are generating the mean and the standard deviation in our code by applying functions (```mean()``` and ```sd()```) to the entire column and then we use these values to perform the standardisation on _each_ value of the column.
 
 ```{r, message=FALSE, warning=FALSE}
 mutate(music_data, streams_standardised = (top10_track_streams - mean(top10_track_streams))/ sd(top10_track_streams)) 
@@ -174,6 +177,24 @@ set.seed(123)
 extra_column <- rnorm(nrow(music_data))
 
 mutate(music_data, new_data = extra_column) 
+```
+
+### Changing variables
+
+If you don't want to add a whole new variable and only want to edit a variable already present in the data frame, ```dplyr``` has you covered with the ```mutate_at()``` function. The practical thing about this function is that it can also be applied to a whole range of variables if you want to perform the same operation on multiple columns. To do this, you give the function not just a single column name, but a whole vector of column names. 
+
+Say we first want to change the type of a single column. For example, maybe we want ```top10_track_explicit``` to be a character column and not a factor. We again tell ```mutate_at()``` which data frame we want to change, followed by the column(s) to change and finally the function we want to apply. You may have noticed that the column name is in quotation marks here, as opposed to the other functions we have met from the ```dplyr```package. This is a side effect of its ability to apply a function to a range of columns and not just a single one, as this can only be achieved via a character vector. So from a technical standpoint we are giving the ```mutate_at()``` function a character vector of length one, solely containg the element ```"top10_track_explicit"```.
+
+```{r, message=FALSE, warning=FALSE}
+mutate_at(music_data, "top10_track_explicit", as.character)
+```
+
+Now say we want to change multiple columns to be character vectors. To do this we will first create a vector of the names of the columns we want to apply the function to and then simply give ```mutate_at()```this vector as one of its arguments. If you do this, don't forget the ```c()``` function to create a vector. 
+
+```{r, warning=FALSE, message=FALSE}
+columns <- c("top10_track_explicit", "top10_artist_genre", "top10_track_explicit_1")
+
+mutate_at(music_data, columns, as.character)
 ```
 
 Below is again a version for you to experiment with. The vector ```extra_column``` from the last example has also been loaded into the environment, so you can try adding a whole new vector to the data frame. 
@@ -229,7 +250,7 @@ summarise(music_data, nObservations = n(), mean_streams = mean(top10_track_strea
 
 On its own, this function is not that impressive. After all, we could just apply the ```mean()```, ```sd()``` and ```nrow()``` functions individually and would have gotten the same result, albeit not in such a nice format. 
 
-However, when combined with the ```group_by()``` function, ```summarise()``` becomes truly powerful. ```group_by()``` splits a data frame into groups, by the values of a column in the data frame. Say we wanted to calculate the mean and standard deviation of explicit and non-explicit songs seperately. 
+However, when combined with the ```group_by()``` function, ```summarise()``` becomes very useful. ```group_by()``` splits a data frame into groups, by the values of a column in the data frame. Say we wanted to calculate the mean and standard deviation of explicit and non-explicit songs seperately. 
 
 ```{r, message=FALSE, warning=FALSE}
 music_data %>%
@@ -239,11 +260,40 @@ music_data %>%
 
 This is a useful tool for getting a good overview of your data and potentially generating data for visualizations or tables. 
 
+<iframe src="http://localhost:3838/dplyr_summarise/?showcase=0" width="750" height="500",  frameBorder = 0>
+</iframe>
+
 ## Dealing with strings
 
-Strings (which is short for "character strings"), are ?????
- 
-Manipulating strings and getting them into a format that you can work with is often a difficult task. 
+Strings (which is short for "character strings"), can be tough to deal with. They are unstructured, messy and getting them into a format that one can perform analysis with is often a task that requires a lot of time. However, seeing as they appear fairly frequently in datasets and often contain valubale information, it is definitiely worth the time to learn how to deal with them.
+
+### The ```stringr``` package
+
+A very accesible package for manipulating strings is the ```stringr``` package. It is designed to be as uniform as possible, meaning that once you have understood the basic syntax of any one of its functions it is very easy to apply any of its functions. It sacrifices some flexibility for this simplicity, so if you ever encounter a task you can not easily solve with ```stringr``` it is worth checking out the package it is built on, ```stringi```. For now, however, ```stringr``` will be more than sufficient. 
+
+The majority of functions in ```stringr``` are built around two core arguments: a string to be worked on and a pattern. There are quite a few that aren't, such as ```str_length()```, but these are (for the most part) fairly self explanatory and will not be explained further here. A full list of the included functions can be found [here](https://cran.r-project.org/web/packages/stringr/stringr.pdf).
+
+The string to be worked on can either be an individual string in quotation marks or an entire vector or column of strings that the same operation should be applied to. The pattern can _technically_ also be a vector of patterns to look for, however, in this tutorial we will only use single patterns. 
+
+Recall the list of artist names in the ```music_data``` data frame.
+
+```{r, message=FALSE, warning=FALSE}
+music_data$top10_artist_names
+```
+
+Say, for example, we want to see which names contain a "g". ```stringr``` contains the function ```str_detect```, which tells you exactly that. Note that these functions are all case sensitive, i.e. the "G" in "David Guetta" is not detected. 
+
+```{r, message=FALSE, warning=FALSE}
+str_detect(string = music_data$top10_artist_names, pattern = "g")
+```
+
+Say we want to be a bit more specific and want to know 
+
+```{r, warning=FALSE, message=FALSE}
+str_locate_all(string = music_data$top10_artist_names, pattern = "g")
+```
+
+#### A crash course in regex
 
 ```{r}
 
