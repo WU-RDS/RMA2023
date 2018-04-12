@@ -287,17 +287,51 @@ Say, for example, we want to see which names contain a "g". ```stringr``` contai
 str_detect(string = music_data$top10_artist_names, pattern = "g")
 ```
 
-Say we want to be a bit more specific and want to know 
+Say we want to be a bit more specific and want to know _exactly_ where the g is located in each artist name. ```str_locate_all``` returns a list of start and end values for each entry in the character vector.
 
 ```{r, warning=FALSE, message=FALSE}
 str_locate_all(string = music_data$top10_artist_names, pattern = "g")
 ```
 
-#### A crash course in regex
+This obviously also works for patterns longer than just one letter.
 
 ```{r}
-
+str_locate_all(string = music_data$top10_artist_names, pattern = "vin")
 ```
+
+Another common task is to replace all instances of one character with another character. Say, for example, we want to replace all occurences of "a" with "b". The function ```str_replace_all()``` does exactly that. Note that there is also a function called ```str_replace()```, but this only replaces the *first*  match that the pattern finds. 
+
+```{r, message=FALSE, warning=FALSE}
+str_replace_all(music_data$top10_artist_names, pattern = "a", replacement = "b")
+```
+
+A common application for this function is to replace all "." with "," or vice versa in price data. R, for example, needs the decimal seperator to be a ".", so if you want to perform numerical analyses on price data that isn't in a uniform format, this function can be very useful. 
+
+Say we want to replace all "." with "," in the artist names.
+
+```{r, message=FALSE, warning=FALSE}
+str_replace_all(music_data$top10_artist_names, pattern = ".", replacement = ",")
+```
+
+This result may be somewhat surprising. Why did the function replace _every_ character with "," even though we specified ```pattern = "."```? The explanation for this can be found in how the function matches patterns.
+
+#### A crash course in regex
+
+Behind the scenes ```stringr``` uses something called regex (short for "regular expressions") to match patterns. regex allows you to match not just individual letters, but more abstract patterns. It does this by special characters that do not match literally. You have already met the first such special character ".", which is regex's version of a wildcard, meaning that it matches _any_ other character. That's why, when we told stringr to replace all dots with commas, it replaced every character with a comma. 
+
+This raises the question of what to do if we want to literally match a dot and not any character. There are two ways to go about this. First, we could *escape* the wildcard character. What this means is that we use another special character to tell regex that the next character is meant to be taken literally and not as a wildcard. The symbol for this is a double back slash "\\". So, if we wanted to change only the dot to a comma we would write
+
+```{r, message=FALSE, warning=FALSE}
+str_replace_all(music_data$top10_artist_names, pattern = "\\.", replacement = ",")
+```
+
+The second way to achieve this would be by passing the pattern string through the ```fixed()``` function, which tells ```stringr``` that it should take the entire string literally. This means that the following code achieves the same result as using "\\"
+
+```{r, message=FALSE, warning=FALSE}
+str_replace_all(music_data$top10_artist_names, pattern = fixed("."), replacement = ",")
+```
+
+##### 
 
 ## Case study 
 
