@@ -5,14 +5,15 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(sliderInput("df", 
                              "Degrees of freedom", 
-                             min = 2,
+                             min = 1,
                              max = 30,
                              value = 4, 
                              step = 1)
     ),
     mainPanel(
-      plotOutput("distplot", height = "200"),
-      plotOutput("CDFplot", height = "200")
+      plotOutput("distplot", height = "260"),
+      p(),
+      plotOutput("CDFplot", height = "260")
     )
     
   )

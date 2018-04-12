@@ -280,7 +280,7 @@ Clearly the Uniform distribution can be used whenever we want to model a populat
 
 The normal distribution is probably the most widely known one. Its PDF is the famous bell curve. It has two parameters $\mu$, and $\sigma^2$. $\mu$ is the mean and $\sigma^2$ the variance of the distribution. In the case of $\mu = 0,\ \sigma^2 = 1$ it is called the *standard normal distribution*.
 
-The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see [Central Limit Theorem](#central-limit-theorem)). The normal distribution can be *standardized*, i.e. given any random normal variable, $X\sim N(\mu, \sigma^2)$, we can get a *standard normal* variable $Y \sim N(0, 1)$ where $Y = \frac{X - \mu}{\sigma}$. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal $Y\sim N(0,1)$ we can get to any $X \sim N(\mu, \sigma^{2}$ by defining $X = \mu + \sigma * Y$ by just rearranging the formula above. In the application below you can see the PDF and CDF of the normal distribution and set a mean and a standard deviation. Try to get an intuition about why this simple transformation works. First change only the mean and observe that the shape of the PDF stays the same and its *location* is shifted. Starting from a normal distribution with $μ = 0$ and setting $\mu = 4$ is equivalent to adding $4$ to each value (see table of percentiles). Similarly changing the standard deviation from $σ = 1$ to $σ = 2,\ 3,\ 4, \dots$ is equivalent to multiplying each value with $2,\ 3,\ 4, \dots$. 
+The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see [Central Limit Theorem](#central-limit-theorem)). The normal distribution can be *standardized*, i.e. given any random normal variable, $X\sim N(\mu, \sigma^2)$, we can get a *standard normal* variable $Y \sim N(0, 1)$ where $Y = \frac{X - \mu}{\sigma}$. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal $Y\sim N(0,1)$ we can get to any $X \sim N(\mu, \sigma^{2})$ by defining $X = \mu + \sigma * Y$ by just rearranging the formula above. In the application below you can see the PDF and CDF of the normal distribution and set a mean and a standard deviation. Try to get an intuition about why this simple transformation works. First change only the mean and observe that the shape of the PDF stays the same and its *location* is shifted. Starting from a normal distribution with $μ = 0$ and setting $\mu = 4$ is equivalent to adding $4$ to each value (see table of percentiles). Similarly changing the standard deviation from $σ = 1$ to $σ = 2,\ 3,\ 4, \dots$ is equivalent to multiplying each value with $2,\ 3,\ 4, \dots$. 
 
 <iframe src="http://localhost:3838/Dist_Normal/" style="border: none; width: 900px; height: 550px"></iframe>
 
@@ -305,3 +305,30 @@ Notice that this is just the integral of the density up to a point $x$.
 
 <iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 900px; height: 900px"></iframe>
 
+### $\chi^2$ Distribution
+
+The $\chi^2$ distribution has only one parameter, its *degrees of freedom*. The exact meaning of degrees of freedom will be discussed later when we are talking about hypothesis testing. Roughly they give the number of *independent* points of information that can be used to estimate a statistic. Naming the parameter of the $\chi^2$ distribution degrees of freedom reflects its importance for hypothesis testing. That is the case since many models assume the data to be normally distributed and the $\chi^2$ distribution is closely related to the normal distribution. Explicitly if $X \sim N(0, 1)$ then $X^2 \sim \chi^2(1)$. That is, if we have one random variable with standard normal distribution and square it, we get a $\chi^2$ random variable with $1$ degree of freedom. So in a test in which one standard normally distributed variable is used the resulting *test-statistic* is following the $\chi^2(1)$ distribution. How to exactly count the variables that go into a specific statistic will be discussed at a later point. If multiple squared independent standard normal variables are summed up the degrees of freedom increase accordingly.
+
+$$
+Q = ∑_{i = 1}^k X_i^2,\ X_{i} \sim N(0,1) \Rightarrow Q \sim \chi^2(k) 
+$$
+
+That is, if we square $k$ normal variables and sum them up the result is a $\chi^2$ variable with $k$ degrees of freedom
+
+<iframe src="http://localhost:3838/Dist_Chisq/" style="border: none; width: 900px; height: 550px"></iframe>
+
+Calculating the expected value, using the properties of the standard normal distribution, is simple.
+
+Let $X \sim N(0,1)$. Then $Var(X) = \mathbb{E}[X^{2}] - \mathbb{E}[X]^2 = 1$. Also, $\mathbb{E}[X] = \mu = 0$. Therefore, $\mathbb{E}[X^{2}] = 1$. Thus, the expected value of one squared standard normal variable is $1$. If we sum $k$ *independent* normal variables we get 
+
+$$
+\mathbb{E}[Q] = \sum_{i = 1}^k \mathbb{E}[X^{2}] = \sum_{i = 1 }^k 1 = k
+$$
+
+The derivation of the variance is a bit more involved because it involves calculating 
+
+$$
+\mathbb{E}[Q^{2}] = \mathbb{E}[\left(X^{2}\right)^2] = \mathbb{E}[X^{4}]
+$$
+
+where $Q\sim \chi^2(1)$ and $X \sim N(0,1)$
