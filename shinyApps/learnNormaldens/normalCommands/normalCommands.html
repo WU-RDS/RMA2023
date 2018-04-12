@@ -113,18 +113,18 @@ $(document).ready(function () {
 
 
 
-<div id="htmlwidget-1539ea602721123531b0" style="width:100%;height:auto;", class = "quiz html-widget">
+<div id="htmlwidget-a4a4fdd4aadecc55400f" style="width:100%;height:auto;", class = "quiz html-widget">
 <div class="panel panel-default">
 <div class="panel-body quizArea">
 </div>
 </div>
 </div>
 
-<script type="application/json" data-for="htmlwidget-1539ea602721123531b0">{"x":{"question":"Which of the following commands was used to evaluate the integral above?","answers":[{"option":"rnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"qnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"pnorm(x, mean = 10, sd = 5)","correct":true,"message":null},{"option":"dnorm(x, mean = 10, sd = 5)","correct":false,"message":null}],"label":"pdf-quest","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Which of the following commands was used to evaluate the integral above?","a":[{"option":"rnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"qnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"pnorm(x, mean = 10, sd = 5)","correct":true,"message":null},{"option":"dnorm(x, mean = 10, sd = 5)","correct":false,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-a4a4fdd4aadecc55400f">{"x":{"question":"Which of the following commands was used to evaluate the integral above \\(\\left(  P(X≤x)\\right)\\)?","answers":[{"option":"rnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"qnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"pnorm(x, mean = 10, sd = 5)","correct":true,"message":null},{"option":"dnorm(x, mean = 10, sd = 5)","correct":false,"message":null}],"label":"pdf-quest","skipStartButton":true,"perQuestionResponseAnswers":true,"perQuestionResponseMessaging":true,"preventUnanswered":true,"displayQuestionCount":false,"displayQuestionNumber":false,"disableRanking":true,"nextQuestionText":"","checkAnswerText":"Submit Answer","allowRetry":true,"randomSortAnswers":false,"json":{"info":{"name":"","main":""},"questions":[{"q":"Which of the following commands was used to evaluate the integral above \\(\\left(  P(X≤x)\\right)\\)?","a":[{"option":"rnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"qnorm(x, mean = 10, sd = 5)","correct":false,"message":null},{"option":"pnorm(x, mean = 10, sd = 5)","correct":true,"message":null},{"option":"dnorm(x, mean = 10, sd = 5)","correct":false,"message":null}],"correct":"Correct!","incorrect":"Incorrect."}]}},"evals":[],"jsHooks":[]}</script>
 <div class="tutorial-exercise" data-label="random" data-caption="Code" data-completion="1" data-diagnostics="0" data-startover="1" data-lines="3">
 <pre class="text"><code>rnorm(10, mean = 0, sd = 10) # Random draws</code></pre>
-<pre><code> [1] -13.7791238  13.6946529 -10.2509413 -14.6654107  -8.5869089
- [6]   3.3197563   0.9305733   4.7672441  -5.6153226  11.8478454</code></pre>
+<pre><code> [1]  3.671681 23.883350  4.334680  8.385121 -6.624628 -1.968222 -1.639742
+ [8]  5.956076  8.991572  1.280376</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":7,"fig.height":5,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":672,"warning":true,"error":false,"message":true,"exercise.df_print":"default","exercise.timelimit":10,"exercise.checker":"NULL"}</script>
 </div>
 <div class="tutorial-exercise" data-label="quantile" data-caption="Code" data-completion="1" data-diagnostics="0" data-startover="1" data-lines="3">
@@ -150,6 +150,14 @@ tutorial_options(exercise.cap = "Code", exercise.eval = TRUE,
   exercise.timelimit = 10, exercise.lines = 3, exercise.checker = NULL,
   exercise.completion = TRUE, exercise.diagnostics = FALSE,
   exercise.startover = TRUE)
+
+tutorial_event_recorder <- function(tutorial_id, tutorial_version, user_id, 
+                                    event, data) {
+  cat(tutorial_id, " (", tutorial_version, "): ", user_id , "\n", sep = "")
+  cat("event: ", event, "\n", sep = "")
+}
+options(tutorial.event_recorder = tutorial_event_recorder)
+
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
