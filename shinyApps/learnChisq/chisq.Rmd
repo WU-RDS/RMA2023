@@ -1,0 +1,41 @@
+---
+output: html_document
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+library(checkr)
+check <- function(USER_CODE) {
+  code <- for_checkr(USER_CODE)
+  line_binding(code, rchisq(10, 5), passif(TRUE, "Just what I wanted!"), 
+               message = "Sorry. Not exactly what I was looking for.")
+}
+
+tutorial_options(exercise.cap = "Code", exercise.eval = TRUE,
+  exercise.timelimit = 10, exercise.lines = 3, exercise.checker = checkr::check,
+  exercise.completion = TRUE, exercise.diagnostics = FALSE,
+  exercise.startover = TRUE)
+
+# tutorial_event_recorder <- function(tutorial_id, tutorial_version, user_id, 
+#                                     event, data) {
+#   cat(tutorial_id, " (", tutorial_version, "): ", user_id , "\n", sep = "")
+#   cat("event: ", event, "\n", sep = "")
+# }
+# options(tutorial.event_recorder = tutorial_event_recorder)
+
+```
+
+
+
+```{r random, exercise=TRUE}
+rnorm(10, mean = 0, sd = 10) # Random draws
+```
+
+```{r random-check}
+#check(USER_CODE)
+
+
+```
+
