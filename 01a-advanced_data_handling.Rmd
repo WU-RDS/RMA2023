@@ -14,7 +14,7 @@ library(dplyr)
 library(stringr)
 options(scipen = F)
 #This code automatically tidies code so that it does not reach over the page
-opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=FALSE, rownames.print = FALSE, rows.print = 10, eval = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=FALSE, rownames.print = FALSE, rows.print = 10, eval = TRUE, warning = FALSE, message = FALSE)
 
 
 
@@ -315,9 +315,9 @@ str_replace_all(music_data$top10_artist_names, pattern = ".", replacement = ",")
 
 This result may be somewhat surprising. Why did the function replace _every_ character with "," even though we specified ```pattern = "."```? The explanation for this can be found in how the function matches patterns.
 
-#### A crash course in regex
+### A crash course in regex
 
-Behind the scenes ```stringr``` uses something called regex (short for "regular expressions") to match patterns. regex allows you to match not just individual letters, but more abstract patterns. It does this by special characters that do not match literally. You have already met the first such special character ".", which is regex's version of a wildcard, meaning that it matches _any_ other character. That's why, when we told stringr to replace all dots with commas, it replaced every character with a comma. 
+Behind the scenes ```stringr``` uses something called regex (short for "regular expressions") to match patterns. regex allows you to match not just individual letters, but more abstract patterns. It does this by using special characters that do not match literally. You have already met the first such special character ".", which is regex's version of a wildcard, meaning that it matches _any_ other character. That's why, when we told stringr to replace all dots with commas, it replaced every character with a comma. 
 
 This raises the question of what to do if we want to literally match a dot and not any character. There are two ways to go about this. First, we could *escape* the wildcard character. What this means is that we use another special character to tell regex that the next character is meant to be taken literally and not as a wildcard. The symbol for this is a double back slash "\\". So, if we wanted to change only the dot to a comma we would write
 
@@ -325,14 +325,113 @@ This raises the question of what to do if we want to literally match a dot and n
 str_replace_all(music_data$top10_artist_names, pattern = "\\.", replacement = ",")
 ```
 
-The second way to achieve this would be by passing the pattern string through the ```fixed()``` function, which tells ```stringr``` that it should take the entire string literally. This means that the following code achieves the same result as using "\\"
+The second way to achieve this would be by passing the pattern string through the ```fixed()``` function, which tells ```stringr``` that it should take the entire string literally. This means that the following code achieves the same result as using "\\".
 
 ```{r, message=FALSE, warning=FALSE}
 str_replace_all(music_data$top10_artist_names, pattern = fixed("."), replacement = ",")
 ```
 
-##### 
+#### Other special characters in regex
+
+We will quickly go through the most important regex special characters. Be aware that this list is by no means exhautive and is only meant to give you some basic tools that can help you with string manipulation. Keep this in mind if a regex is displaying unexpected behaviour, as it could be due to some wildcard you are not aware of. If all else fails you can always used the ```fixed()``` function to just match literal strings. 
+
+##### Square brackets ```[]```
+
+Square brackets can be used to match from a set of different letters. This means that ```[abc]``` will match a, b or c. The following code will replace a, b or c with a capital X. 
+```{r}
+str_replace_all(music_data$top10_artist_names, pattern = "[abc]", replacement = "X")
+```
+
+Note again that this is case sensitive, meaning that A, B and C are not replaced. However, square brackets are a great way to replace both capitalized and non-capitalized occurences at once.
+
+```{r}
+str_replace_all(music_data$top10_artist_names, pattern = "[ABCabc]", replacement = "X")
+```
+
+If you include a ```^``` in the beginning of a square bracket pattern, regex will interpret that to mean any character _except_ the ones in brackets. This means that if we take the same code as before and include a ```^```, all letters except for A, B and C (and their non-capitalized counterparts) will be replaced by a capital X.
+
+```{r}
+str_replace_all(music_data$top10_artist_names, pattern = "[^ABCabc]", replacement = "X")
+```
+
+##### Repetition operators: ```*```,```+``` and ```{}```
+
+Repetition operators can be used to match the same character (or set of characters) multiple times. ```+``` matches a character one or more times, ```*``` matches a character zero or more times and with ```{}``` you can specfiy the range that matches can occur in.
+```{r}
+vector <- c("", "a", "aa", "aaa", "aaaa")
+```
+```{r}
+# Replace one or more a with an X
+str_replace(vector, pattern = "a+", replacement = "X")
+```
+```{r}
+# replace zero or more a with an X
+str_replace(vector, pattern = "a*", replacement = "X")
+```
+```{r}
+# replace exactly two a with an X
+str_replace(vector, pattern = "a{2}", replacement = "X")
+```
+```{r}
+# replace two to three a with an X
+str_replace(vector, pattern = "a{2,3}", replacement = "X")
+```
+
+Note that the ```+``` and ```*``` operators are "greedy", meaning that they try to match as much as possible, which can often lead to unintended consequences. It is often a good practice with regex to be as specific as possible while remaining as general as needed.
+
+##### Parentheses: ```()```
+
+Parentheses are used to create groups. Groups always match in their entirety and can be combined with other operators. 
+
+```{r}
+vector <- c("abc", "abcabc", "123abc", "abcabcabc")
+
+str_replace_all(vector, pattern = "(abc){2}", replacement = "X")
+
+```
+
+The pattern ```"(abc){2}"``` will match only ```"abcabc"```, seeing as it looks for matches that repeat the group ```"(abc)"``` twice. 
+
+##### Optional characters: ```?```
+
+The question mark tells regex that the preceding character is optional for a match.  
+
+```{r}
+vector <- c("abc", "ac")
+
+str_replace_all(vector, pattern = "abc", replacement = "X")
+```
+
+As expected, this only replaces the first element of the vector, as the second (```"ac"```) is not an exact match.
+
+```{r}
+str_replace_all(vector, pattern = "ab?c", replacement = "X")
+```
+
+By including ```?``` after the b, we tell regex that it is optional, i.e. that both ```"abc"``` and ```"ac"``` are correct matches. This can also be applied to groups and sets. 
+
+##### Anchors: ```^``` and ```$```
+
+Anchors can be used to specify that a match should only occur at the very beginning or end of a character string, with ```^``` and ```$``` standing for the beginning and the end, respectively. 
+
+```{r}
+vector <- c("abc123", "123abc")
+
+str_replace_all(vector, pattern = "^abc", replacement = "X")
+```
+
+This code only replaces the ```"abc"``` in ```"abc123"``` because it appears at the beginning of the string. 
+
+```{r}
+str_replace_all(vector, pattern = "abc$", replacement = "X")
+```
+
+```abc$```, on the other hand, only matches the ```"abc"``` in ```"123abc"``` because it appears at the end of the string. 
+
+
+[regex can do a lot more than shown here](https://www.regular-expressions.info/tutorial.html), but these basic tools already enable you to do a lot of things that would take much more time when done by hand.  
 
 ## Case study 
 
+Let's take everything we have learned in this chapter and apply it to a practical example. We will be using a survey dataset from Qualtrics, which was created by a group of students for this course in 2017. 
 
