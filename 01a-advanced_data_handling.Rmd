@@ -433,5 +433,74 @@ str_replace_all(vector, pattern = "abc$", replacement = "X")
 
 ## Case study 
 
-Let's take everything we have learned in this chapter and apply it to a practical example. We will be using a survey dataset from Qualtrics, which was created by a group of students for this course in 2017. 
+Let's take everything we have learned in this chapter and apply it to a practical example. We will be using survey data from Qualtrics, which was created by a group of students for this course in 2017. We will only be looking at a small subsection of the variables available, to keep things from becoming unwieldy. 
 
+As always, let's first load all the required libraries and the dataset and take a look at it.
+
+```{r}
+library(dplyr)
+library(stringr)
+
+###### MAYBE: change this to github?
+
+data <- read.csv("./Survey_data.csv", stringsAsFactors = FALSE)
+data
+```
+
+This data frame consists of 11 variables and 305 observations. 
+
+* _Progress:_ How much of the survey (in percent) was completed.
+* _ResponseId:_ A unique ID for each participant
+* _Q39:_ A multiple choice question on supermarket recognition. Participants were presented with 8 supermarket brands and asked which of them they were familiar with. A value of ```1,2,3,4,5,6,7,8``` means that the participant knew all eight, while, e.g., ```3,5``` means that the person only knew supermarkets 3 and 5. 
+* _Q18_1_ to Q18_1_8:_ A series of questions on willingness to pay for various products. 
+
+The data has a couple problems we need to take care of before we can start analysing it properly. 
+
+* _The first two rows:_ Qualtrics data comes with two rows that contain no useful information. Additionally, these force all columns to be of type "character", which we can't perform all types of analysis on. 
+* _Not all respondents finished the survey:_ As you can tell by the progress column, not all respondents finished the survey. To be able to perform proper analysis, we only want those that completed the survey. * _Multiple choice question:_ The multiple choice question is currently in a format that is very hard to work with. It would be best to have eight individual columns that each correspond to an individual supermarket. 
+* _The price data is a mess:_ The price data is arguably the hardest challenge. The data is not uniform, with the decimal seperator symbol varying and some rows containing aditional text and symbols that we do not need. We need to filter out only the relevant parts and then transform it from a character to a numeric column to work on it. 
+
+As a first step, we will filter out all observations where the progress column is unequal 100. This has the added advantage of removing the first two rows as well.
+
+```{r}
+data <- data %>%
+  filter(Progress == 100)
+```
+
+Next we want to turn the multiple choice question into something a bit more useful. We will create eight new columns, called ```Q39_A1``` to ```Q39_A8```, which contain a 1 if the respective number appears in ```Q39``` and a 0 otherwise. So, for example, if ```Q39```is equal to ```1,2,5``` then ```Q39_A1```, ```Q39_A2``` and ```Q39_A5``` will be set to 1 and all others will be set to 0.
+
+We will achieve this with mutate and str_detect. 
+
+```{r}
+data <- data %>%
+   mutate(Q39_A1 = str_detect(Q39, pattern = "1"),
+         Q39_A2 = str_detect(Q39, pattern = "2"),
+         Q39_A3 = str_detect(Q39, pattern = "3"),
+         Q39_A4 = str_detect(Q39, pattern = "4"),
+         Q39_A5 = str_detect(Q39, pattern = "5"),
+         Q39_A6 = str_detect(Q39, pattern = "6"),
+         Q39_A7 = str_detect(Q39, pattern = "7"),
+         Q39_A8 = str_detect(Q39, pattern = "8"))
+```
+
+We always first define the name of the new column we want to create and then tell mutate the function with which to create the new column. In this case we use ```str_detect()``` to check if the correct number appears in the column ```Q39```. You can read the first line in ```mutate()``` as: "If a 1 appears in the field ```Q39``` set the column ```Q39_A1``` to ```TRUE``` and otherwise set it to ```FALSE```".
+
+Now is a good time to take a look at the columns we have created and see if it did what we wanted.
+```{r}
+data %>%
+  select(Q39, Q39_A1:Q39_A8)
+```
+
+Everything seems to have worked! In a later step we will change the values ```TRUE``` and ```FALSE``` to 1 and 0, respectively, simply because it is easier to work with. 
+
+
+
+
+price_cols <- paste0("Q18_1_", 1:8)
+
+data <- data %>%
+  filter(Progress == 100) %>%
+  mutate_at(price_cols, str_remove_all, pattern = "[^0-9,\\.]") %>%
+  mutate_at(price_cols, str_replace_all, pattern = ",", replacement = ".") %>%
+  %>%
+  mutate_at(price_cols, as.numeric)
