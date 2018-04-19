@@ -334,4 +334,12 @@ $$
 
 where $Q\sim \chi^2(1)$ and $X \sim N(0,1)$. However, above we claimed that the Normal distribution has only two parameters, $\mu,\text{ and } \sigma^2$, for which we only need $\mathbb{E}[X]$ and $\mathbb{E}[X^{2}]$ to fully describe the Normal distribution. These are called the first and second <a target="_blank"  href="https://en.wikipedia.org/wiki/Moment_(mathematics)">moments</a> of the distribution. Equivalently, $\mathbb{E}[X^{4}]$ is the $4^{th}$ moment. We can express the $4^th$ moment in terms of the second moment for any variable that follows a Normal distribution. $\mathbb{E}[X^{4}] = 3 * \sigma^2$ for any Normal variable and thus $\mathbb{E}[X^{4}] = 3$ for Standard Normal variables. Therefore, $\mathbb{E}[Q^{2}] = 3 - \mathbb{E}[Q]^2 = 2$ for $Q \sim \chi^2(1)$. In general $Var(Q) = 2k$ for $Q \sim \chi^2(k)$ due to the *variance sum law* which states that the variance of a sum of independent variables is equal to the sum of the variances. Notice that this does not hold if the variables are **not** independent which is why the independence of the Normal variables that go into the $\chi^2$ distribution has been emphasized. 
 
+### t-Distribution
 
+Another important distribution for hypothesis testing is the t-distribution also called Student's t-distribution. It is the distribution of the location of the mean of a sample from the normal distribution relative to the "true" mean ($\mu$). Like the $\chi^2$ distribution it also has only one parameter called the degrees of freedom. However, in this case the degrees of freedom are the number of draws from the normal distribution minus 1. They are denoted by the Greek letter nu ($\nu$). We take $n$ draws from a Normal distribution with mean $\mu$ and standard deviation $\sigma^2$ and let $\bar X = \frac{1}{n} \sum_{i = 1}^n x_i$ the sample mean and $S^{2} = \frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar X)^2$ the sample variance. Then
+
+ $$
+ \frac{\bar X - \mu}{S/ \sqrt{n}}
+ $$
+ 
+ has a t-distribution with $\nu = n-1$ degrees of freedom. 
