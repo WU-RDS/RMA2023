@@ -342,4 +342,12 @@ Another important distribution for hypothesis testing is the t-distribution also
  \frac{\bar X - \mu}{S/ \sqrt{n}}
  $$
  
- has a t-distribution with $\nu = n-1$ degrees of freedom. 
+ has a t-distribution with $\nu = n-1$ degrees of freedom.  Why $n-1$ and not $n$ as in the $\chi^2$ distribution? Recall that when constructing a $\chi^2(k)$ variable we sum up $k$ independent standard normally distributed variables but we have no intermediate calculations with these variables. In the case of the t-Distribution we "lose" a degree of freedom due to the intermediary calculations. We can notice this by multiplying and dividing the formula above by $\sigma$, the "true" variance of the $x_i$.
+ 
+ \begin{align*}
+& \frac{\bar X - \mu}{S/ \sqrt{n}} \\
+=& \frac{\bar X - \mu}{S/ \sqrt{n}} \frac{\frac{1}{\sigma/\sqrt{n}}}{\frac{1}{\sigma/\sqrt{n}}}  = \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\frac{(S/\sqrt{n})}{(\sigma/\sqrt{n})}}\\
+=& \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\frac{S}{\sigma}}\\
+=& \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\sqrt{S^2/\sigma^2}}
+\end{align*}
+
