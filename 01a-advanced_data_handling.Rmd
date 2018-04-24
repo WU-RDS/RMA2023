@@ -493,14 +493,55 @@ data %>%
 
 Everything seems to have worked! In a later step we will change the values ```TRUE``` and ```FALSE``` to 1 and 0, respectively, simply because it is easier to work with. 
 
+The last big task is to clean up the price data. Let's take a look at it.
 
+```{r}
+data %>% 
+  select(Q18_1_1:Q18_1_8)
+```
 
+The problems can be grouped roughly into two categories:
 
-price_cols <- paste0("Q18_1_", 1:8)
+* _Additional symbols:_ Some respondents added additional symbols or text that we need to get rid of.
+* _Wrong decimal seperator:_ R needs all decimal seperators to be ```.``` and not ```,```, so we need to make sure all of them are dots. 
 
+We will tackle both of these problems with ```mutate_at()``` and the the ```stringr```package. First we will strip out any character that isn't a number, a comma or a dot. ```str_remove_all``` removes all instances of characters that are matched by the expression given in "pattern". The pattern we use here is ```[^0-9,\\.]```, which can be read as "match all characters that are not (remember that ```^``` at the beggining means 'everything but') ```0-9``` a comma (```,```) or a dot (```\\.```)". Remember that the dot is a special character and therefore has to be escaped with the double backslash. 
+
+```{r}
 data <- data %>%
-  filter(Progress == 100) %>%
-  mutate_at(price_cols, str_remove_all, pattern = "[^0-9,\\.]") %>%
-  mutate_at(price_cols, str_replace_all, pattern = ",", replacement = ".") %>%
-  %>%
-  mutate_at(price_cols, as.numeric)
+  mutate_at(vars(Q18_1_1:Q18_1_8), str_remove_all, pattern = "[^0-9,\\.]")
+```
+
+Let's take a look and see if the code did what we wanted it to. 
+
+```{}
+data %>% 
+  select(Q18_1_1:Q18_1_8)
+```
+
+So far, so good. To complete the clean up of the price data, we simply want to replace any instances of a comma with a dot. The code for this is quite simple. 
+
+```{r}
+data <- data %>%
+  mutate_at(vars(Q18_1_1:Q18_1_8), str_replace_all, pattern = ",", replacement = ".") 
+
+
+# Print variables we just mutated to see if everything worked
+data %>% 
+  select(Q18_1_1:Q18_1_8)
+
+```
+
+As a final step we want to convert all variables that we want to work with into numeric variables. Again, we use ```mutate_at()```, this time coupled with the ```as.numeric()``` function.
+
+```{r}
+data <- data %>% 
+  mutate_at(vars(Q18_1_1:Q39_A8), as.numeric)
+```
+
+Finally, let's have a look at the finished data frame. All the relevenat data is now in a format that we can perform further analysis with.
+
+```{r}
+# Print entire data frame
+data
+```
