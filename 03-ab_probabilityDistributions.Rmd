@@ -351,3 +351,38 @@ Another important distribution for hypothesis testing is the t-distribution also
 =& \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\sqrt{S^2/\sigma^2}}
 \end{align*}
 
+Now recall the definition of $S^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar X)^2$ which is the sum of $n-1$ independent normally distributed variables, divided by $n-1$. Only $n-1$ are independent since given an mean computed from $n$ variables only $n-1$ can be chosen arbitrarily. 
+
+Let $\bar X(n) = \frac{1}{n} \sum_{i=1}^n x_i$ 
+Then
+
+$$
+x_n = \bar X(n) - \sum_{i = 1}^{n-1} x_i
+$$
+
+and thus $x_n$ is not independent. 
+
+We already know the distribution of $n-1$ squared standard normally distributed variables. We introduced the $\sigma$ term in order to normalize the variable. Therefore the denominator is 
+
+$$
+\sqrt{\frac{\chi^2_{n-1}}{(n-1)}}
+$$
+
+Notice that as the degrees of freedom approach infinity the t-Distribution becomes the Standard Normal Distribution.
+
+<iframe src="http://localhost:3838/Dist_T/" style="border: none; width: 900px; height: 400px"></iframe>
+
+
+### F-Distribution
+
+The F-Distribution is another derived distribution which is important for hypothesis testing. It can be used  to compare the variability (i.e. variance) of two populations given that they are normally distributed and independent. Given samples from these two populations the F-Distribution is the distribution of
+
+$$
+\frac{S^2_1 / S^2_2}{\sigma^2_1/\sigma^2_2} = \frac{S^2_1/\sigma^{2}_1}{S^2_2/\sigma^2_2}
+$$
+
+As shown above both the numerator and the denominator are $\chi^2(n-1)$ divided by the degrees of freedom
+
+$$
+F_{n-1, m-1} = \frac{\chi^2_{n-1}/(n-1)}{\chi^2_{m-1}/(m-1)}
+$$
