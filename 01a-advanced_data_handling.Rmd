@@ -100,7 +100,7 @@ The following code selects the two columns ```top10_track_explicit``` and  ```to
 select(music_data, top10_track_explicit, top10_track_streams)
 ```
 
-Two remove columns from a dataframe you simply put a ```-``` before the column name. 
+To remove columns from a data frame you simply put a ```-``` before the column name. 
 
 ```{r message=FALSE, warning=FALSE}
 select(music_data, -top10_track_explicit, -top10_track_streams)
@@ -221,7 +221,7 @@ music_data_new <- arrange(music_data_new, top10_track_streams)
 music_data_new
 ```
 
-While this does achieve our objective, it is quite tedious. With the pipes offered by ```dplyr```, you can chain these commands together to streamline your code, while keeping it very readable. The symbol for a pipe is ```%>%```. From a technical perspective, this hands the preceding object to the next function as the first argument. This may sound compicated, but will become clear after an example. The code below will create exactly the same data frame as the example above, but in a much more compact form.
+While this does achieve our objective, it is quite tedious. With the pipes offered by ```dplyr```, you can chain these commands together to streamline your code, while keeping it very readable. The symbol for a pipe is ```%>%```. From a technical perspective, this hands the preceding object to the next function as the first argument. This may sound complicated, but will become clear after an example. The code below will create exactly the same data frame as the example above, but in a much more compact form.
 
 ```{r, message=FALSE, warning=FALSE}
 music_data_new <- music_data %>%
@@ -242,7 +242,7 @@ Again, experiment with this feature below and it will quickly become very intuit
 
 ### Creating custom summaries
 
-The ```summarise()``` function lets you build customised summaries of your data. This can range from creating means and standrad deviations of certain variables to simply counting how many observations are in a data frame. Say we want to find out the mean and standard deviation of the number of streams and also count the number of observations. With ``summarise()``` that would look as follows:
+The ```summarise()``` function lets you build customised summaries of your data. This can range from creating means and standard deviations of certain variables to simply counting how many observations are in a data frame. Say we want to find out the mean and standard deviation of the number of streams and also count the number of observations. With ```summarise()``` that would look as follows:
 
 ```{r, message=FALSE, warning=FALSE}
 summarise(music_data, nObservations = n(), mean_streams = mean(top10_track_streams), sd_streams = sd(top10_track_streams))
@@ -457,8 +457,9 @@ This data frame consists of 11 variables and 305 observations.
 The data has a couple problems we need to take care of before we can start analysing it properly. 
 
 * _The first two rows:_ Qualtrics data comes with two rows that contain no useful information. Additionally, these force all columns to be of type "character", which we can't perform all types of analysis on. 
-* _Not all respondents finished the survey:_ As you can tell by the progress column, not all respondents finished the survey. To be able to perform proper analysis, we only want those that completed the survey. * _Multiple choice question:_ The multiple choice question is currently in a format that is very hard to work with. It would be best to have eight individual columns that each correspond to an individual supermarket. 
-* _The price data is a mess:_ The price data is arguably the hardest challenge. The data is not uniform, with the decimal seperator symbol varying and some rows containing aditional text and symbols that we do not need. We need to filter out only the relevant parts and then transform it from a character to a numeric column to work on it. 
+* _Not all respondents finished the survey:_ As you can tell by the progress column, not all respondents finished the survey. To be able to perform proper analysis, we only want those that completed the survey.
+* _Multiple choice question:_ The multiple choice question is currently in a format that is very hard to work with. It would be best to have eight individual columns that each correspond to an individual supermarket. 
+* _The price data is a mess:_ The price data is arguably the hardest challenge. The data is not uniform, with the decimal separator symbol varying and some rows containing aditional text and symbols that we do not need. We need to filter out only the relevant parts and then transform it from a character to a numeric column to work on it. 
 
 As a first step, we will filter out all observations where the progress column is unequal 100. This has the added advantage of removing the first two rows as well.
 
