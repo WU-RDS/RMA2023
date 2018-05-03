@@ -74,7 +74,7 @@ server <- function(input, output){
     if(values$started){
       if(nrow(values$data) == 0){
         values$data <- data.frame(Value = replicate(input$BatchSize, sum(sample(1:6, input$DiceNum, replace = TRUE))), Draw = 1:input$BatchSize)
-      } else if (nrow(values$data) < 1000000) {
+      } else if (nrow(values$data) < 1000) {
         values$data <- rbind(values$data, data.frame(Value = replicate(input$BatchSize, sum(sample(1:6, input$DiceNum, replace = TRUE))), Draw = (nrow(values$data) + 1):(nrow(values$data) + input$BatchSize)))
       } 
       
