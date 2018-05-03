@@ -20,11 +20,11 @@ This chapter is primarily based on:
   $$
 
 ### Why Random Variables?
-Random variables are used to extract and simplify information that we have obtained from some kind of experiment. If we toss five coins for example it would be tedious to say "I have observed heads, heads, tails, heads, tails". (Now imagine your sample includes 500 observations and you want to express that information.) Instead we naturally define a random variable (even though we might not call it that) and say "I have observed three heads" or we define another random variable and say "I have observed two tails". From a given sample we can define multiple random variables. We could also define a more "complicated" random variable that adds four points for each heads and one point for each tails. In general there are no restrictions on our function as long as it maps from the sample space to the real numbers. We distinguish two types of random variables, discrete and continuous, that are discussed on the following sections.  
+Random variables are used to extract and simplify information that we obtain from an experiment. For example, if we toss five coins it would be tedious to say "I have observed heads, heads, tails, heads, tails". With five coins this might still be a feasible way to convey the outcome of the experiment, but what about 500 coins? Instead we naturally condense the inforation into a random variable (even though we might not call it that) and say "I have observed three heads" or we define another random variable and say "I have observed two tails". There are many ways to summarise the outcome of an experiment and hence we can define multiple random variables from the same experiment. We could also define a more "complicated" random variable that adds four points for each heads and one point for each tails. In general there are no restrictions on our function as long as it maps from the sample space to the real numbers. We distinguish two types of random variables, discrete and continuous, which are discussed in the following sections.  
 
 ### Discrete Random Variables
 
-A random variable is discrete if its **cumulative distribution function** is a step function as in the plot below. That is, the CDF shifts or jumps from one probability to the next at some point(s). Notice that the black dots indicate that at that specific point the probability is already at the higher step. More formally: the CDF is "right-continuous". That is the case for all CDFs. To illustrate this concept we explore the plot below. We have a discrete random variable as the CDF jumps rather than being one line. We can observe integer values between 0 and 10 whereas the probability of observing less than or equal to 0 is almost 0 and the probability of observing less than or equal to 10 is 1. The function is right continuous: Let's look at the values 4 and 5 for example. The probability of observing 4 or less than 4 is just under 0.4. The probability of observing 5 or less is just over 0.6. For further examples see [tossing coins](#tossing-coins) and [sum of two dice](#sum-of-two-dice)
+A random variable is discrete if its **cumulative distribution function** is a step function as in the plot below. That is, the CDF shifts or jumps from one probability to the next at certain point(s). Notice that the black dots indicate that at that specific point the probability is already at the higher level. The formal way of expressing this property is to say that the CDF is "right-continuous". All CDFs share this property. To illustrate this concept we explore the plot below. We are dealing with a discrete random variable as the CDF jumps rather than being one line. We can observe integer values between 0 and 10 whereas the probability of observing less than or equal to 0 is almost 0 and the probability of observing less than or equal to 10 is 1. The function is right continuous: Let's look at the values 4 and 5 for example. The probability of observing 4 or less than 4 is just under 0.4. The probability of observing 5 or less is just over 0.6. For further examples see [tossing coins](#tossing-coins) and [sum of two dice](#sum-of-two-dice)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
@@ -88,13 +88,13 @@ $$
 p(h) = p(t) = 0.5
 $$
 
-By definition the probabilities add up to one. If we toss a coin we are certain that we get either heads or tails and thus for a fair coin the chance is 50/50. If you set the slider to 3 and the probability of observing h ($p(h)$) to $0.5$ the **cumulative distribution function** will update accordingly. The dots mean that at that point we are already at the higher probability and not on the line below. Let's analyze the result. Between 0 and 0.2 lies the probability of observing less than or equal to 0 heads. Of course we cannot observe a negative number of heads and so this is just the probability of observing no heads. There is only one realization of our experiment that fulfills that property: $g(ttt) = 0$. So how likely is that to happen? Each coin has the probability 0.5 to show tails and we need all of them to land on tails.
+By definition the probabilities add up to one. If we toss a coin we are certain that we will get either heads or tails and thus for a fair coin the chance is 50/50. If you set the slider to 3 and the probability of observing h ($p(h)$) to $0.5$ the **cumulative distribution function** will update accordingly. The dots mean that at that point we are already at the higher probability and not on the line below. Let's analyze the result. The probability of observing less than or equal to 0 heads lies between 0 and 0.2. Of course we cannot observe a negative number of heads and so this is just the probability of observing no heads. There is only one realization of our experiment that fulfills that property: $g(ttt) = 0$. So how likely is that to happen? Each coin has the probability 0.5 to show tails and we need all of them to land on tails.
 
 $$
 p(ttt) = 0.5 * 0.5 * 0.5 = 0.125
 $$ 
 
-Another way of calculating the probability is to look at the sample space. There are 8 equally likely outcomes (for fair coins!) one of which fulfills the property that we observe 0 heads. 
+Another way of calculating the probability is to look at the sample space. There are 8 equally likely outcomes (for fair coins!), one of which fulfills the property that we observe 0 heads. 
 
 $$
 p(ttt) = \frac{1}{8} = 0.125 = F_x(0)
@@ -108,17 +108,17 @@ $$
 
 Now 4 out of the 8 possibilities (50\%) in the sample space fulfill the property.
 
-For $F_X(2)$ we add the probabilities of the observing 2 heads ($p(hht) + p(hth) + p(thh)$). 
+For $F_X(2)$ we add the probabilities of observing 2 heads ($p(hht) + p(hth) + p(thh)$). 
 
 $$
 F_X(2) = \underbrace{0.5}_{F_X(1)} + \underbrace{0.125}_{p(hht)} + \underbrace{0.125}_{p(hth)} + \underbrace{0.125}_{p(thh)} = 0.875 = \frac{7}{8}
 $$
 
-Since we are interested in less than or equal to we can *always* just add the probabilities of the possible outcomes at a given point to the cumulative distribution of the previous value (this gives us an idea about the link between cumulative distribution and probability mass functions). Now 7 out of 8 outcomes fulfill the property.
+Since we are interested in less than or equal to we can *always* add the probabilities of the possible outcomes at a given point to the cumulative distribution of the previous value (this gives us an idea about the link between cumulative distribution and probability mass functions). Now 7 out of 8 outcomes fulfill the property we are interested in.
 
-Obviously the probability of observing 3 or less heads when tossing 3 coins is 1 (the certain outcome).
+Obviously the probability of observing 3 or fewer heads when tossing 3 coins is 1 (the certain outcome).
 
-This analysis changes if we consider a weighted coin that shows a higher probability on one side than the other. As the probability of observing heads increases the lines in the cumulative distribution shift downward. That means each of the levels are now less likely. In order to see why, let's look at the probability of observing 2 or less heads when the probability of observing head is 0.75 (the probability of tails is thus 0.25) for each of the 3 coins. 
+This analysis changes if we consider a weighted coin, i.e. a coin that has a higher probability of showing one side than the other. As the probability of observing heads increases the lines in the cumulative distribution shift downward. That means each of the levels are now less likely. In order to see why, let's look at the probability of observing 2 or fewer heads when the probability of observing heads is 0.75 (the probability of tails is thus 0.25) for each of the 3 coins. 
 
 $$
 F_X(2) = \overbrace{\underbrace{0.25*0.25*0.25}_{p(ttt) = F_X(0) = 0.016} + \underbrace{0.75 * 0.25 * 0.25}_{p(htt)=0.047} + \underbrace{0.25 * 0.75 * 0.25}_{p(tht)=0.047} + \underbrace{0.25 * 0.25 * 0.75}_{p(tth)=0.047}}^{F_X(1) = 0.156}\dots\\ + \underbrace{0.75 * 0.75 * 0.25}_{p(hht) = 0.141} + \underbrace{0.75 * 0.25 * 0.75}_{p(hth) = 0.141} + \underbrace{0.25 * 0.75 * 0.75}_{p(thh) = 0.141} = 0.578
@@ -169,7 +169,7 @@ ggplot(cont, aes(x=x)) +
   theme_bw() 
 ```
 
-One example for a continuous random variable is the average profit of a store per week. Let's think of the possible values: Profit could be negative if, for example, the payment to employees exceeds the contribution margin accrued from the products sold. Of course it can also be positive and technically it is not restricted to any range of values (e.g. it could exceed a billion, be below negative 10,000 or *anywhere* inbetween). Below you can see some (simulated) profit data. Observe that the CDF looks continuous. The red overlay is the CDF of the normal distribution which was used for the simulation. The final plot is a histogram of the data with the normal denisty (again in red). It shows that profits around 500 are more likely (higher bars) and the further away from 500 we get the less likely it is that a certain profit will be observed in a given week. Recall the definition of the probability density function shows the probability of a given outcome.
+One example for a continuous random variable is the average profit of a store per week. Let's think of possible values: Profit could be negative if, for example, the payment to employees exceeds the contribution margin accrued from the products sold. Of course it can also be positive and technically it is not restricted to any range of values (e.g. it could exceed a billion, be below negative 10,000 or *anywhere* inbetween). Below you can see some (simulated) profit data. Observe that the CDF looks continuous. The red overlay is the CDF of the normal distribution which was used for the simulation. The final plot is a histogram of the data with the normal denisty (again in red). It shows that profits around 500 are more likely (higher bars) and the further away from 500 we get the less likely it is that a certain profit will be observed in a given week. Recall the definition of the probability density function shows the probability of a given outcome.
 
 ```{r, echo = FALSE }
 set.seed(0914)
