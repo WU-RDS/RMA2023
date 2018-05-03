@@ -7,55 +7,8 @@ This chapter is primarily based on:
 
 Random variables are used to extract and simplify information that we obtain from an experiment. For example, if we toss five coins it would be tedious to say "I have observed heads, heads, tails, heads, tails". With five coins this might still be a feasible way to convey the outcome of the experiment, but what about 500 coins? Instead we naturally condense the inforation into a random variable (even though we might not call it that) and say "I have observed three heads" or we define another random variable and say "I have observed two tails". There are many ways to summarise the outcome of an experiment and hence we can define multiple random variables from the same experiment. We could also define a more "complicated" random variable that adds four points for each heads and one point for each tails. In general there are no restrictions on our function as long as it maps from the sample space to the real numbers. We distinguish two types of random variables, discrete and continuous, which are discussed in the following sections.  
 
-## Definitions 
-
-* **Sample Space**: The set of all possible outcomes of a particular experiment is called the sample space of the experiment [@cbSI, p. 1]. Denoted $S$.
-* **Random Variable**: A function from a sample space $\left(S\right)$ into the [real numbers](https://en.wikipedia.org/wiki/Real_number) [@cbSI, p. 27]. Denoted $X$.
-* **Cumulative distribution function**: A function that defines the probability that a random variable $\left(X\right)$ is less than or equal to an outcome ($x$) for all possible outcomes [@cbSI, p. 29]. Denoted 
-
-  $$
-  F_X(x) = P_X(X \leq x), \text{ for all } x
-  $$
-
-* **Probability mass/density function**: A function that defines the probability that a random variable $\left(X\right)$ is equal to an outcome ($x$) for all possible outcomes. Denoted 
- 
-  $$
-  f_X(x)=P(X = x), \text{ for all } x
-  $$
-
-### Discrete Random Variables
-
-A random variable is discrete if its **cumulative distribution function** is a step function as in the plot below. That is, the CDF shifts or jumps from one probability to the next at some point(s). Notice that the black dots indicate that at that specific point the probability is already at the higher step. More formally: the CDF is "right-continuous". That is the case for all CDFs. To illustrate this concept we explore the plot below. We have a discrete random variable as the CDF jumps rather than being one line. We can observe integer values between 0 and 10 whereas the probability of observing less than or equal to 0 is almost 0 and the probability of observing less than or equal to 10 is 1. The function is right continuous: Let's look at the values 4 and 5 for example. The probability of observing 4 or less than 4 is just under 0.4. The probability of observing 5 or less is just over 0.6. For further examples see [tossing coins](#tossing-coins) and [sum of two dice](#sum-of-two-dice)
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-```
-
-```{r discrete}
-y <- rbinom(1e5, 10, 0.5)
-    plot(NULL, xlim=c(0, 10), ylim = c(0,1), 
-                  ylab = "Cumulative Probability", xlab = "observed #", xaxt = "n", main="Cumulative distribution function of a discrete random variable")
-    axis(1, at = 0:10)
-        grid(NULL, NULL, lwd = 1, lty = 'solid', col = "gray93", equilogs = FALSE)
-        lines(ecdf(y))
-  
-```
-
-For discrete random variables the function that defines the probability of each event is called the **probability mass funciton**. Notice that the "jumps" in the CDF are equivalent to the mass at every point. It follows that the sum of the mass up to a point in the PMF (below) is equal to the level at that point in the CDF (above). 
-
-```{r}
-library(ggplot2)
-y <- data.frame(x=0:10, y=dbinom(0:10, 10, 0.5))
-ggplot(y, aes(x = x, y = y))+
-  geom_point()+
-  theme_bw()+
-  scale_x_continuous(breaks = 0:10, labels=0:10)+
-  labs(x = "observed #", y = "Probability Mass", title = "Probability mass function of a discrete random variable")
-```
-
-
 ### Tossing coins
-Here you can toss a chosen number of coins (between 1 and 20). The tossing is the experiment in this case. The **sample space** consists of all the possible combinations of heads ("h") and tails ("t") given the number of coins. For a single coin: 
+Assume you toss a chosen number of coins (between 1 and 20). The tossing is the experiment in this case. The [**sample space**](#definitions) consists of all the possible combinations of heads ("h") and tails ("t") given the number of coins. For a single coin: 
 
 $$
 S = \{h, t\}
@@ -203,5 +156,52 @@ ggplot(profit_df, aes(x = profit))+
   labs(x = 'Profit', title = "Probability density of profits")
 
 ```
+### Discrete Random Variables
 
+A random variable is discrete if its [**cumulative distribution function**](#definitions) is a step function as in the plot below. That is, the CDF shifts or jumps from one probability to the next at some point(s). Notice that the black dots indicate that at that specific point the probability is already at the higher step. More formally: the CDF is "right-continuous". That is the case for all CDFs. To illustrate this concept we explore the plot below. We have a discrete random variable as the CDF jumps rather than being one line. We can observe integer values between 0 and 10 whereas the probability of observing less than or equal to 0 is almost 0 and the probability of observing less than or equal to 10 is 1. The function is right continuous: Let's look at the values 4 and 5 for example. The probability of observing 4 or less than 4 is just under 0.4. The probability of observing 5 or less is just over 0.6. For further examples see [tossing coins](#tossing-coins) and [sum of two dice](#sum-of-two-dice)
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r discrete}
+y <- rbinom(1e5, 10, 0.5)
+    plot(NULL, xlim=c(0, 10), ylim = c(0,1), 
+                  ylab = "Cumulative Probability", xlab = "observed #", xaxt = "n", main="Cumulative distribution function of a discrete random variable")
+    axis(1, at = 0:10)
+        grid(NULL, NULL, lwd = 1, lty = 'solid', col = "gray93", equilogs = FALSE)
+        lines(ecdf(y))
+  
+```
+
+For discrete random variables the function that defines the probability of each event is called the **probability mass funciton**. Notice that the "jumps" in the CDF are equivalent to the mass at every point. It follows that the sum of the mass up to a point in the PMF (below) is equal to the level at that point in the CDF (above). 
+
+```{r}
+library(ggplot2)
+y <- data.frame(x=0:10, y=dbinom(0:10, 10, 0.5))
+ggplot(y, aes(x = x, y = y))+
+  geom_point()+
+  theme_bw()+
+  scale_x_continuous(breaks = 0:10, labels=0:10)+
+  labs(x = "observed #", y = "Probability Mass", title = "Probability mass function of a discrete random variable")
+```
+
+### Definitions 
+
+* **Sample Space**: The set of all possible outcomes of a particular experiment is called the sample space of the experiment [@cbSI, p. 1]. Denoted $S$.
+* **Random Variable**: A function from a sample space $\left(S\right)$ into the [real numbers](https://en.wikipedia.org/wiki/Real_number) [@cbSI, p. 27]. Denoted $X$.
+* **Cumulative distribution function**: A function that defines the probability that a random variable $\left(X\right)$ is less than or equal to an outcome ($x$) for all possible outcomes [@cbSI, p. 29]. Denoted 
+
+  $$
+  F_X(x) = P_X(X \leq x), \text{ for all } x
+  $$
+
+* **Probability mass/density function**: A function that defines the probability that a random variable $\left(X\right)$ is equal to an outcome ($x$) for all possible outcomes. Denoted 
+ 
+  $$
+  f_X(x)=P(X = x), \text{ for all } x
+  $$
+
+**Go to:**
+
+* [Tossing Coins](#tossing-coins)
