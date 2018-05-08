@@ -1,5 +1,7 @@
 ---
 output:
+  html_document:
+    df_print: paged
   html_notebook: default
 ---
 
@@ -14,63 +16,64 @@ In the previous chapter we talked about probability density/mass functions (PDFs
 A natural question to ask is "where do these distributions come from?". It turns out that many random variables follow well known distributions, the properties of which have been studied extensively. Furthermore, many observations in the real world (e.g. height data) can also be approximated with theoretical distributions. 
 Let's consider our coin toss example. We did not actually toss thousands of coins to come up with their probability distribution. We modelled the population of coin tosses using their theoretical distribution (the [binomial distribution](#binom)).
 
-We say that a random variable $X$ *follows* or *has* some distribution. Distributions have parameters that influence the shape of the function and if we do not specify the parameters we usually speak of a *family of distributions*. If $X$ follows the distribution $D$ and $a,\ b$ are its parameters, we write:
+We say that a random variable $X$ *follows* or *has* some distribution. Distributions have parameters that influence the shape of the distribution function and if we do not explicitly specify the parameters we usually speak of a *family of distributions*. If $X$ follows the distribution $D$ and $a,\ b$ are its parameters, we write:
 
 $$
 X \sim D(a, b)
 $$
 
-Two important properties of a distribution are the *expected value* and the *variance*. We usually want to know what outcome we expect on average given a distribution. We can use the concept of an expected value, denoted $\mathbb{E}[X]$. In addition, the variance $\left(Var(X)\right)$ gives a measure of spread around the mean. If the variance is high, values far away from the mean are more likely. Conversely, if variance is low, values far away from the mean are less likely. 
+Two important properties of a distribution are the *expected value* and the *variance*. We usually want to know what outcome we expect on average given a distribution. For this, we can use the concept of an expected value, denoted $\mathbb{E}[X]$. On the other hand, the variance $\left(Var(X)\right)$ gives us a measure of spread around the expected value. If the variance is high, values far away from the expected value are more likely. Similarly, if the variance is low, values far away from the mean are less likely. These concepts may seem somewhat abstract, but will become clear after a few examples.
 
-Let's start again with discrete distributions and then move on the continuous ones. 
+We will now introduce common families of distributions, starting again with discrete examples and then moving on to the continuous case.
 
 ## Discrete Distributions
 
-For discrete distributions the expected value is defined as the sum of all possible values weighted by their respective probability mass. That is, values that are very unlikely get less weight and those that are very likely get more weight. This can be written as
+For discrete distributions the expected value is defined as the sum of all possible values weighted by their respective probability. Intuitively, values that are very unlikely get less weight and those that are very likely get more weight. This can be written as
 
 $$
 	\mathbb{E}[X] = \sum_{x} x f_{X}(x) = \sum_x x P(X = x) 
 $$
 
-The variance is defines as
+The variance is defined as
 
 $$
 Var(X) = \mathbb{E}\left[\left(X - \mathbb{E}[X] \right)^2 \right] = \mathbb{E}[X^{2}] - ( \mathbb{E}[X])^{2}
 $$
 
-This is the expected squared deviation from the expected value. Taking the squared deviation always yields a positive value. In addition, larger deviations are emphasized. This is visualized in the plot below. Some observations: The tosses that do not deviate from the mean and those that only deviate by 1 stay the same when squaring. Those that are $-1$ become $+1$ and all others are becoming positive and increase compared to their absolute value.
+This is the expected squared deviation from the expected value. Taking the squared deviation always yields a positive value. Additionally, larger deviations are emphasized. This is visualized in the plot below, which shows the transformation from the deviation from the expected value to the squared deviation from the expected value. Some observations: The tosses that do not deviate from the mean and those that only deviate by 1 stay the same when squared. Those that are $-1$ become $+1$ and all others become positive and increase compared to their absolute value.
 
 <iframe src="./sqrerror.html", width="900", height="600", frameborder="0"/>
 
 
 ### <a id="binom"></a> Binomial Distribution - Coin toss yet again!
-It turns out that the random variable "number of heads observed" follows a very common distribution, the **binomial distribution**. This can be written as follows: $X$ being the number of heads observed,
+
+Our first example of a discrete distribution has to do with coin tosses again. It turns out that the random variable "number of heads observed" follows a very common distribution, the **binomial distribution**. This can be written as follows: $X$ being the number of heads observed,
 
 $$
 X \sim binomial(n, p)
 $$
 
-where $n$ are the number of coins and $p$ is the probability of observing head. Here $n,\ p$ are the parameters of the *binomial* distribution. 
+where $n$ is the number of coins and $p$ is the probability of observing heads. Here $n,\ p$ are the _parameters_ of the *binomial* distribution. 
 
 <iframe src="http://localhost:3838/Dist_Binomial/" style="border: none; width: 950px; height: 400px"></iframe>
 
-The binomial distribution can be used whenever there are two or more possible outcomes, one of which is seen as "success", that is we want to add $1$ if this outcome occurs and the other(s) as failure in which case nothing is added. The idea is based on the concept of [Bernoulli trials](https://en.wikipedia.org/wiki/Bernoulli_trial). It works analogously for dice if we are interested in the number of dice the show a particular value, say $1$. 
+The binomial distribution can be used whenever you conduct an experiment composed of multiple trials where there are two or more possible outcomes, one of which is seen as "success". The idea is based on the concept of [Bernoulli trials](https://en.wikipedia.org/wiki/Bernoulli_trial), which are basically a binomial distribution with $n=1$. A binomial distribution can also be used for dice, if we are interested in the number of dice that show a particular value, say $1$. 
 
 1. Throw any number of dice, say $5$.
 2. For each die check if it shows $1$.
 3. If yes add 1, if no, do not add anything.
-5. The random variable is the final number and follows a binomial distribution with $p = \frac{1}{6},\ n = 5$
+4. The random variable is the final number and follows a binomial distribution with $p = \frac{1}{6},\ n = 5$.
 
 So, given the parameters $p,\ n$ of the binomial distribution what are the expected value and the variance?
 
 Let's start with the coin toss with a fair coin:
-Now $p = 0.5,\ n = 1$ and $X_{0}$ is again the number of heads observed. We sum over all possibilities and weigh by the probability:
+Let $p = 0.5,\ n = 1$ and $X_{0}$ is again the number of heads observed. We sum over all possibilities and weigh by the probability:
 
 $$
 0.5 * 1 + 0.5 * 0 = 0.5 = \mathbb{E}[X_{0}]
 $$
 
-What happens if we change the probability of observing head to $0.8$?
+What happens if we change the probability of observing heads to $0.8$?
 Then the random variable $X_1$ has expectation
 
 $$ 
@@ -106,51 +109,34 @@ $$
 Var(X_1) = \underbrace{0.8}_{p(h)} * \underbrace{(0.2^2)}_{deviation} + 0.2 * (0.8^2) = 0.8 - 0.8^2 = 0.16
 $$
 
-How did we get to the second to last equality?
-
-Notice that the sum follows this pattern for $n = 1$ and any appropriate $p$:
-
-$$
-Var(X_i) = p * (1-p)^2 + (1-p) * p^2
-$$
-
-If we expand the squared term and simplify:
-
-\begin{align*}
-Var(X_i) &= p * (1 - 2*p + p^2) + p^2 - p^3 \\
-&= p - 2*p^2 + p^3 + p^2 - p^3 \\
-&= p - p^2
-\end{align*}
-
-What happens if we change the number of coins to $2$ and keep $p=0.8$?
-
-$$
-Var(X_2) = 0.8 * 0.2^2 + 0.2 * 0.8^2 + 0.8 * 0.2^2 + 0.2 * 0.8^2 = 2 * (0.8 * 0.2^2 + 0.2 * 0.8^2) = 2 * (0.8 - 0.8^2) = 0.32
-$$
-
-Since increasing $n$ further simply adds more of the same terms we can easily adapt the general formula above for any appropriate $n$ and $p$:
+Generally, for any $n$ and $p$, the variance of the binomial distribution is given by 
 
 $$
 Var(X_i) = n * (p-p^2)
 $$
 
-Equivalently this formula can be written as:
+or, equivalently:
 
 $$
 n * (p - p^2) = np - np^2 = np * (1-p) = Var(X_i)
 $$
 
-You can directly get values from the binomial distribution in R
+The derivation of this equation can be found in the [Appendix](#appendix).
+
+
+
+You can work with the binomial distribution in R using the ```binom``` family of functions. In R, a distribution usually has four different functions associated with it, differentiated by the letter it begins with. The four letters these functions start with are ```r```, ```q```, ```p``` and ```d```.
+
+* ```rbinom()```: Returns ```r```andom draws from the binomial distribution with specified $p$ and $n$ values.
+* ```pbinom()```: Returns the cumulative ```p```robability of a value, i.e. how likely is the specified number or less, given $n$ and $p$. 
+* ```qbinom()```: Returns the ```q```uantile (See [Quantile Function](https://en.wikipedia.org/wiki/Quantile_function)) of a specified probability value. This can be understood as the inverse of the ```pbinom()``` function.
+* ```dbinom()```: Returns the value of the probaility mass function, evaluated at the specified value (in case of a continuous distribution, it evaluates the probability ```d```ensity function). 
 
 <iframe src="http://localhost:3838/learnBinomial/" style="border: none; width: 900px; height: 640px"></iframe>
 
-<!--- TODO Make shiny app ---> 
-
-See [Quantile Function](https://en.wikipedia.org/wiki/Quantile_function).
-
 ### Discrete Uniform Distribution
 
-The discrete uniform distribution assigns the same probability to all possible values. 
+The discrete uniform distribution assigns the same probability to all possible values. Below you can find the PMF and CDF of a uniform distribution that starts at one and goes to ten.
 
 ```{r, echo = FALSE}
 library(ggplot2)
@@ -189,7 +175,7 @@ S &= N + (N-1) + (N-2) + \dots + 3 + 2 + 1 \\
 S&= \frac{N * (1 + N)}{2}
 \end{align*}
 
-he weight given to each possible outcome must be equal and is thus $p = \frac{1}{N}$. 
+The weight given to each possible outcome must be equal and is thus $p = \frac{1}{N}$. 
 Recall that the expected value is the weighted sum of all possible outcomes.
 Thus if $X \sim discrete\ uniform(N)$
 $$
@@ -202,7 +188,7 @@ $$
 \mathbb{E}[X^{2}] = \sum_{x = 1}^n x^2 * \frac{1}{N} = \frac{1}{N} \sum_{x = 1}^N x^2 
 $$
 
-Therefore we need to find out what $1 + 4 + 9 + 16 + \dots + N^2$ is equal to. Luckily [there exists a formula for that](https://www.khanacademy.org/math/calculus-home/series-calc/series-basics-challenge/v/sum-n-squares-2):
+Therefore we need to find out what $1 + 4 + 9 + 16 + \dots + N^2$ is equal to. Luckily, [there exists a formula for that](https://www.khanacademy.org/math/calculus-home/series-calc/series-basics-challenge/v/sum-n-squares-2):
 
 $$
 \sum_{x=1}^N x^2 = \frac{N * (N + 1) * (2*N + 1)}{6}
@@ -220,9 +206,11 @@ $$
 Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2 = \frac{(N + 1) * (2*N + 1)}{6} - \left(\frac{(1 + N)}{2}\right)^{2} = \frac{(N+1) * (N-1)}{12}
 $$
 
+Note that these derivations are only valid for a uniform distribution that starts at one. However the generalization to a distribution with an arbitrary starting point is [fairly straightforward](https://en.wikipedia.org/wiki/Discrete_uniform_distribution). 
+
 ## Continuous Distributions
 
-A distribution is continuous if the cumulative distribution function is a continuous function (no steps!). 
+As mentionend in the last chapter, a distribution is continuous if the cumulative distribution function is a continuous function (no steps!). 
 
 ```{r, echo = FALSE, message = FALSE, warnings = FALSE}
 library(cowplot)
@@ -254,7 +242,7 @@ where $f_X(x)$ is the density of the random variable $X$ evaluated at some point
 
 ### Uniform Distribution
 
-To illustrate the concept of the integral the uniform distribution provides a simple example. As in the continuous case it assigns equal weight to each equally sized interval in the area on which the variable is defined ($[a, b]$). Why each interval and not each value? Since there are infinitely many values between $a$ and $b$ (again due to real numbers) each individual value cannot be assigned a probability small enough for all of the probabilities to sum to $1$ (which is a basic requirement of a probability). Thus we can only assign a probability to an interval, e.g. $[0, 0.001]$, of which only *finitely* many exist between $a$ and $b$, e.g. $a = -2$ and $b = 1$. In this example there exist $3,000$ intervals of values $[x, x + 0.001]$. Since we are dealing with intervals the probability density can be thought of as the area under the PDF for a given interval or the sum of the areas of *very small* intervals within the chosen interval. 
+To illustrate the concept of the integral the continuous uniform distribution provides a simple example. As in the discrete case it assigns equal weight to each equally sized interval in the area on which the variable is defined ($[a, b]$). Why each interval and not each value? Since there are infinitely many values between $a$ and $b$ (again due to real numbers) each individual value cannot be assigned a probability small enough for all of the probabilities to sum to $1$ (which is a basic requirement of a probability). Thus we can only assign a probability to an interval, e.g. $[0, 0.001]$, of which only *finitely* many exist between $a$ and $b$, e.g. $a = -2$ and $b = 1$. In this example there exist $3,000$ intervals of values $[x, x + 0.001]$. Since we are dealing with intervals the probability density can be thought of as the area under the PDF for a given interval or the sum of the areas of *very small* intervals within the chosen interval. 
 
 
 The PDF is defined as
@@ -390,3 +378,41 @@ As shown above both the numerator and the denominator are $\chi^2(n-1)$ divided 
 $$
 F_{n-1, m-1} = \frac{\chi^2_{n-1}/(n-1)}{\chi^2_{m-1}/(m-1)}
 $$
+
+
+## Appendix
+
+### Derivation of the varaince of the binomial distribution
+
+Notice that the sum follows this pattern for $n = 1$ and any appropriate $p$:
+
+$$
+Var(X_i) = p * (1-p)^2 + (1-p) * p^2 
+$$
+
+If we expand the squared term and simplify:
+
+\begin{align*}
+Var(X_i) &= p * (1 - 2*p + p^2) + p^2 - p^3 \\
+&= p - 2*p^2 + p^3 + p^2 - p^3 \\
+&= p - p^2
+\end{align*}
+
+What happens if we change the number of coins to $2$ and keep $p=0.8$?
+
+$$
+Var(X_2) = 0.8 * 0.2^2 + 0.2 * 0.8^2 + 0.8 * 0.2^2 + 0.2 * 0.8^2 = 2 * (0.8 * 0.2^2 + 0.2 * 0.8^2) = 2 * (0.8 - 0.8^2) = 0.32
+$$
+
+Since increasing $n$ further simply adds more of the same terms we can easily adapt the general formula above for any appropriate $n$ and $p$:
+
+$$
+Var(X_i) = n * (p-p^2)
+$$
+
+Equivalently this formula can be written as:
+
+$$
+n * (p - p^2) = np - np^2 = np * (1-p) = Var(X_i)
+$$
+
