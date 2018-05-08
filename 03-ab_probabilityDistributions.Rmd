@@ -10,13 +10,17 @@ This chapter is primarily based on:
 
 ## Introduction
 
-On the previous page we talked about probability density/mass functions (PDFs/PMFs) and cumulative distribution functions (CDFs). We have also shown some plots of those functions. Here, we want to explore probability distributions that can help us describe the PDFs and CDFs of some random variables. There are a number of well known probability distributions, a few of which will be presented here. Probability distributions can be used to model populations. Let's consider our coin toss example. We did not actually toss thousands of coins to come up with their probability distribution. We modeled the population of coin tosses using their probability distribution. We say that a random variable $X$ *follows* or *has* some distribution. Distributions have parameters and if we do not specify the parameters we usually speak of a *family of distributions*. If $X$ follows the distribution $D$ and $a,\ b$ are its parameters, we write:
+In the previous chapter we talked about probability density/mass functions (PDFs/PMFs) and cumulative distribution functions (CDFs). We also discussed plots of those functions. 
+A natural question to ask is "where do these distributions come from?". It turns out that many random variables follow well known distributions, the properties of which have been studied extensively. Furthermore, many observations in the real world (e.g. height data) can also be approximated with theoretical distributions. 
+Let's consider our coin toss example. We did not actually toss thousands of coins to come up with their probability distribution. We modelled the population of coin tosses using their theoretical distribution (the [binomial distribution](#binom)).
+
+We say that a random variable $X$ *follows* or *has* some distribution. Distributions have parameters that influence the shape of the function and if we do not specify the parameters we usually speak of a *family of distributions*. If $X$ follows the distribution $D$ and $a,\ b$ are its parameters, we write:
 
 $$
 X \sim D(a, b)
 $$
 
-We usually want to know what outcome we expect on average given a distribution. We can use the concept of an expected value, denoted $\mathbb{E}[X]$. In addition, the variance $\left(Var(X)\right)$ gives a measure of spread around the mean. If the variance is high, values far away from the mean are more likely. Conversely, if variance is low, values far away from the mean are less likely. 
+Two important properties of a distribution are the *expected value* and the *variance*. We usually want to know what outcome we expect on average given a distribution. We can use the concept of an expected value, denoted $\mathbb{E}[X]$. In addition, the variance $\left(Var(X)\right)$ gives a measure of spread around the mean. If the variance is high, values far away from the mean are more likely. Conversely, if variance is low, values far away from the mean are less likely. 
 
 Let's start again with discrete distributions and then move on the continuous ones. 
 
@@ -39,7 +43,7 @@ This is the expected squared deviation from the expected value. Taking the squar
 <iframe src="./sqrerror.html", width="900", height="600", frameborder="0"/>
 
 
-### Binomial Distribution - Coin toss yet again!
+### <a id="binom"></a> Binomial Distribution - Coin toss yet again!
 It turns out that the random variable "number of heads observed" follows a very common distribution, the **binomial distribution**. This can be written as follows: $X$ being the number of heads observed,
 
 $$
