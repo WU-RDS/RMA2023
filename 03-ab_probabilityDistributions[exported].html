@@ -334,7 +334,37 @@ Q = ∑_{i = 1}^k X_i^2,\ X_{i} \sim N(0,1) \Rightarrow Q \sim \chi^2(k)
 <p><span class="math display">\[
  \frac{\bar X - \mu}{S/ \sqrt{n}}
  \]</span></p>
-<p>has a t-distribution with <span class="math inline">\(\nu = n-1\)</span> degrees of freedom.</p>
+<p>has a t-distribution with <span class="math inline">\(\nu = n-1\)</span> degrees of freedom. Why <span class="math inline">\(n-1\)</span> and not <span class="math inline">\(n\)</span> as in the <span class="math inline">\(\chi^2\)</span> distribution? Recall that when constructing a <span class="math inline">\(\chi^2(k)\)</span> variable we sum up <span class="math inline">\(k\)</span> independent standard normally distributed variables but we have no intermediate calculations with these variables. In the case of the t-Distribution we “lose” a degree of freedom due to the intermediary calculations. We can notice this by multiplying and dividing the formula above by <span class="math inline">\(\sigma\)</span>, the “true” variance of the <span class="math inline">\(x_i\)</span>.</p>
+<span class="math display">\[\begin{align*}
+&amp; \frac{\bar X - \mu}{S/ \sqrt{n}} \\
+=&amp; \frac{\bar X - \mu}{S/ \sqrt{n}} \frac{\frac{1}{\sigma/\sqrt{n}}}{\frac{1}{\sigma/\sqrt{n}}}  = \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\frac{(S/\sqrt{n})}{(\sigma/\sqrt{n})}}\\
+=&amp; \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\frac{S}{\sigma}}\\
+=&amp; \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\sqrt{S^2/\sigma^2}}
+\end{align*}\]</span>
+<p>Now recall the definition of <span class="math inline">\(S^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar X)^2\)</span> which is the sum of <span class="math inline">\(n-1\)</span> independent normally distributed variables, divided by <span class="math inline">\(n-1\)</span>. Only <span class="math inline">\(n-1\)</span> are independent since given an mean computed from <span class="math inline">\(n\)</span> variables only <span class="math inline">\(n-1\)</span> can be chosen arbitrarily.</p>
+<p>Let <span class="math inline">\(\bar X(n) = \frac{1}{n} \sum_{i=1}^n x_i\)</span> Then</p>
+<p><span class="math display">\[
+x_n = \bar X(n) - \sum_{i = 1}^{n-1} x_i
+\]</span></p>
+<p>and thus <span class="math inline">\(x_n\)</span> is not independent.</p>
+<p>We already know the distribution of <span class="math inline">\(n-1\)</span> squared standard normally distributed variables. We introduced the <span class="math inline">\(\sigma\)</span> term in order to normalize the variable. Therefore the denominator is</p>
+<p><span class="math display">\[
+\sqrt{\frac{\chi^2_{n-1}}{(n-1)}}
+\]</span></p>
+<p>Notice that as the degrees of freedom approach infinity the t-Distribution becomes the Standard Normal Distribution.</p>
+<iframe src="http://localhost:3838/Dist_T/" style="border: none; width: 900px; height: 400px">
+</iframe>
+</div>
+<div id="f-distribution" class="section level3">
+<h3>F-Distribution</h3>
+<p>The F-Distribution is another derived distribution which is important for hypothesis testing. It can be used to compare the variability (i.e. variance) of two populations given that they are normally distributed and independent. Given samples from these two populations the F-Distribution is the distribution of</p>
+<p><span class="math display">\[
+\frac{S^2_1 / S^2_2}{\sigma^2_1/\sigma^2_2} = \frac{S^2_1/\sigma^{2}_1}{S^2_2/\sigma^2_2}
+\]</span></p>
+<p>As shown above both the numerator and the denominator are <span class="math inline">\(\chi^2(n-1)\)</span> divided by the degrees of freedom</p>
+<p><span class="math display">\[
+F_{n-1, m-1} = \frac{\chi^2_{n-1}/(n-1)}{\chi^2_{m-1}/(m-1)}
+\]</span></p>
 </div>
 </div>
 </div>
