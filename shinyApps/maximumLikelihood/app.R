@@ -9,6 +9,7 @@
 
 library(shiny)
 library(ggplot2)
+library(xtable)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
    
@@ -20,14 +21,15 @@ ui <- fluidPage(
       sidebarPanel(
          sliderInput("mean",
                      "Mean:",
-                     min = -50,
+                     min = 0,
                      max = 50,
-                     value = 0),
+                     value = 10),
          sliderInput("var",
                      "Variance:",
                      min = 0,
                      max = 50, 
-                     value = 1)
+                     value = 10),
+         tableOutput('loglik')
       ),
       
       # Show a plot of the generated distribution
@@ -39,18 +41,17 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-  
+  set.seed(1776)
+  x <- data.frame(x = rnorm(1500, 20, 5))
    output$distPlot <- renderPlot({
-      # generate bins based on input$bins from ui.R
-     set.seed(1776)
-      x <- data.frame(x = rnorm(500, 20, 5))
       ggplot(x, aes(x))+
-        geom_density()+
+        geom_histogram(aes(y=..density..), bins = 50)+
         stat_function(fun = function(y){dnorm(y, mean = input$mean, sd = sqrt(input$var) )}, geom = "line")
-      
-      # draw the histogram with the specified number of bins
-
          })
+   output$loglik <- renderTable({
+     slik <- data.frame(`LogLikelihood` = sum(dnorm(x$x, mean = input$mean, sd = sqrt(input$var), log = TRUE)))
+    xtable(slik)
+   }, colnames = TRUE)
 }
 
 # Run the application 
