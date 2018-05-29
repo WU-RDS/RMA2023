@@ -16,13 +16,13 @@ options(digits = 3)
 
 ## Motivation and intuition
 
-In the last chapter we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model, however the predictions it will produce will most likely not be particularly useful. To further expand on this, consider the following simulated data. Y is the outcome we want to explain and X is our sole predictor. Looking at the scatter plot we can already see that X probably has an effect on Y, but how to correctly model it?
+In the last chapter we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. To further expand on this, consider the following simulated data. $Y$ is the outcome we want to explain and $\mathbb{x}$ is our sole predictor. Looking at the scatter plot we can already see that $\mathbb{x}$ probably has an effect on $Y$. But how can we model it correctly?
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Simulated binary outcome data"}
 library(ggplot2)
 library(gridExtra)
 
-set.seed(1776)
+set.seed(1776) # AMERICA THE BEAUTIFUL
 
 beta.true <- as.matrix(c(0.6))
 N <- 100
@@ -58,23 +58,40 @@ plot.cor <- ggplot(data = as.data.frame(cbind(Y, X)), aes(x = X, y = Y)) +
   theme(axis.title.y = element_blank())
 
 grid.arrange(plot.bad, plot.cor, ncol = 2)
-
-
 ```
 
-A key insight at this point is that the connection between X and Y is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by X around values of 0, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on. 
+A key insight at this point is that the connection between $\mathbb{x}$ and $Y$ is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by X around values of 0, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.  
 
 ## Technical details of the model
 
 As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:
 
 $$
-f(x) = \frac{1}{1 + e^{-x}}
+f(x) = \frac{1}{1 + e^{-\mathbb{x}}}
 $$
-What this function does is compress all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. The $x$ in the function above is then replaced by our familiar linear specification, i.e.
+This function transfroms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. 
+
+```{r}
+library(latex2exp)
+x <- seq(-10, 10, length.out = 1000)
+fx <- 1/(1+exp(-x))
+df <- data.frame(x = x, fx = fx)
+ggplot(df, aes(x = x, y = fx)) + 
+  geom_line()+
+  labs(y = TeX("$\\frac{1}{1+e^{-x}}}$"))+
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5))
+```
+
+
+
+The $\mathbb{x}$ in the function above is then replaced by our familiar linear specification, i.e.
 
 $$
 P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
 $$
 
+## Estimation in R
 
+## Interpretation
+
+## Appendix 
