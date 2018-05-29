@@ -16,7 +16,7 @@ options(digits = 3)
 
 ## Motivation and intuition
 
-In the last chapter we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. To further expand on this, consider the following simulated data. $Y$ is the outcome we want to explain and $\mathbb{x}$ is our sole predictor. Looking at the scatter plot we can already see that $\mathbb{x}$ probably has an effect on $Y$. But how can we model it correctly?
+In the last chapter we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. To further expand on this, consider the following simulated data. $Y$ is the outcome we want to explain and $\mathbb{X}$ is our sole predictor. Looking at the scatter plot we can already see that $\mathbb{X}$ probably has an effect on $Y$. But how can we model it correctly?
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Simulated binary outcome data"}
 library(ggplot2)
@@ -60,14 +60,14 @@ plot.cor <- ggplot(data = as.data.frame(cbind(Y, X)), aes(x = X, y = Y)) +
 grid.arrange(plot.bad, plot.cor, ncol = 2)
 ```
 
-A key insight at this point is that the connection between $\mathbb{x}$ and $Y$ is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by X around values of 0, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.  
+A key insight at this point is that the connection between $\mathbb{X}$ and $Y$ is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by $\mathbb{X}$ around values of 0, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.  
 
 ## Technical details of the model
 
 As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:
 
 $$
-f(x) = \frac{1}{1 + e^{-\mathbb{x}}}
+f(x) = \frac{1}{1 + e^{-\mathbb{X}}}
 $$
 This function transfroms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. 
 
@@ -84,7 +84,7 @@ ggplot(df, aes(x = x, y = fx)) +
 
 
 
-The $\mathbb{x}$ in the function above is then replaced by our familiar linear specification, i.e.
+The $\mathbb{X}$ in the function above is then replaced by our familiar linear specification, i.e.
 
 $$
 P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
