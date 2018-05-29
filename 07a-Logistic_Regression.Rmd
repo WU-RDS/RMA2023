@@ -98,11 +98,12 @@ We can predict the probability given an observation using the ```predict(my_logi
 
 In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the ```logitmfx(...)``` function from the ```mfx``` package. If we set ```logitmfx(my_logit, data = my_data, atmean = FALSE)``` we calculate the latter, otherwise the former. However, in general we are most interested in the sign and significance of the coefficient. In order to measure the quality of the model overall we can use the Akaike information criterion ("AIC"). It is reported with the summary output for logit models. The absolute value of the AIC has no meaning by itself. However, it can be used to compare and select models. The model with the lowest value is the one that should be chosen according to the AIC. Note that the AIC does not indicate how well the model fits the data. Therefore, we need a measure comparable to the $R^2$ for linear regressions. In fact multiple "Pseudo $R^2$s" have been developed. There are multiple packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. This is left as an exercise for the reader.   
 
-## EXAMPLE
+## Example
 
-> In this example we are going to analyse the probability that somebody cheats on their spouse. As explanatory variables sex, age, religiousness (1 = Anti, 5 = very), self rating of marriage (1 = very unhappy, 5 = very happy) and years married are used. We observe that ones sex does not have a significant impact on the probability of cheating. The older someone gets the less likely it is for them to cheat. More religious people are also less likely to cheat. Unsurprisingly being happier in ones marriage also decreases the likelihood of cheating. On the other hand, the longer someone is married the more likely they are to have cheated. Education does not have a significant impact. If we compare the first model with one that does not include religiousness we notice that the AIC is higher in the latter model. Thus, between the two we would choose the first. Next we calculate the average partial effect using ```logitmfx(...)```. This shows that, on average, giving ones marriage the highest rating decreases the probability of cheating by $\sim 25\%$. Finally, we look at making predictions with our model using ```predict(...)```. The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 17\%$ (Try predicting your own likelihood of cheating). Looking at the plot of the prediction shows that the highest density is of probability of cheating is just below $20\%$ and the maximum is above $80\%$. 
+In this example we are going to analyse the probability that somebody cheats on their spouse. As explanatory variables sex, age, religiousness (1 = Anti, 5 = very), self rating of marriage (1 = very unhappy, 5 = very happy) and years married are used. We observe that ones sex does not have a significant impact on the probability of cheating. The older someone gets the less likely it is for them to cheat. More religious people are also less likely to cheat. Unsurprisingly being happier in ones marriage also decreases the likelihood of cheating. On the other hand, the longer someone is married the more likely they are to have cheated. Education does not have a significant impact. If we compare the first model with one that does not include religiousness we notice that the AIC is higher in the latter model. Thus, between the two we would choose the first. Next we calculate the average partial effect using ```logitmfx(...)```. This shows that, on average, giving ones marriage the highest rating decreases the probability of cheating by $\sim 25\%$. Finally, we look at making predictions with our model using ```predict(...)```. The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 17\%$ (Try predicting your own likelihood of cheating). Looking at the plot of the prediction shows that the highest density is of probability of cheating is just below $20\%$ and the maximum is above $80\%$. 
 
 ```{r}
+library(Ecdat)
 data("Fair") # needs library(Ecdat)
 head(Fair)
 
@@ -143,7 +144,7 @@ logisticPseudoR2s <- function(LogModel) {
 
 ```
 
-> Below three versions of pseudo $R^2$s are reported. They indicate that our model does not describe our data well. So do not worry too much if the model indicates your partner has a high probability of cheating! As an exercise try to write a function that will return the following output:
+Below three versions of pseudo $R^2$s are reported. They indicate that our model does not describe our data well. So do not worry too much if the model indicates your partner has a high probability of cheating! As an exercise try to write a function that will return the following output:
 
 ```{r}
 logisticPseudoR2s(my_logit) # try to write this function!!
@@ -153,13 +154,13 @@ logisticPseudoR2s(my_logit) # try to write this function!!
 
 Perfect prediction occurs whenever a linear function of $X$ can perfectly separate the $1$s from the $0$s in the dependent variable. This is problematic when estimating a logit model as it will result in biased estimators (also check to p-values in the example!). R will return the following message if this occurs:
 
-> glm.fit: fitted probabilities numerically 0 or 1 occurred
+```glm.fit: fitted probabilities numerically 0 or 1 occurred```
 
 Given this error one should not use the output of the ```glm(...)``` function for the analysis. There are [various ways](https://stats.stackexchange.com/a/68917) to deal with this problem, onw of which is to Firth's bias-Reduced penalized-likelihood logistic regression using the ```logistf(Y~X)``` function in the ```logistf``` package.  
 
-## EXAMPLE
+## Example
 
-> In this example data $Y = 0$ if $x_1 <0$ and $Y=1$ if $x_1>0$ and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are $1$ despite $x_1$ being a predictor of $Y$. Thus we turn to the penalized-likelihood version. This model correctly indicates that $x_1$ is in fact a predictor for $Y$ as the coefficient is significant.  
+In this example data $Y = 0$ if $x_1 <0$ and $Y=1$ if $x_1>0$ and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are $1$ despite $x_1$ being a predictor of $Y$. Thus we turn to the penalized-likelihood version. This model correctly indicates that $x_1$ is in fact a predictor for $Y$ as the coefficient is significant.  
 
 ```{r}
 Y <- c(0,0,0,0,1,1,1,1)
@@ -172,8 +173,4 @@ library(logistf)
 # Perfect prediction with penalized-likelihood logit
 summary(logistf(Y~X))
 ```
-
-
-
-
 
