@@ -1,0 +1,80 @@
+---
+title: "07a- Logistic Regression"
+output:
+  html_document:
+    toc: yes
+  html_notebook: default
+  pdf_document:
+    toc: yes
+---
+
+```{r message=FALSE, warning=FALSE, echo=F, eval=TRUE,paged.print = FALSE}
+options(digits = 3)
+```
+
+# Logistic regression
+
+## Motivation and intuition
+
+In the last chapter we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model, however the predictions it will produce will most likely not be particularly useful. To further expand on this, consider the following simulated data. Y is the outcome we want to explain and X is our sole predictor. Looking at the scatter plot we can already see that X probably has an effect on Y, but how to correctly model it?
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Simulated binary outcome data"}
+library(ggplot2)
+library(gridExtra)
+
+set.seed(1776)
+
+beta.true <- as.matrix(c(0.6))
+N <- 100
+K <- nrow(beta.true)
+X <- matrix(runif(K * N, -8, 8), ncol = K)
+probs <- 1/(1 + exp(-X %*% beta.true))
+
+Y <- rbinom(n = N, size = 1, prob = probs)
+  
+lin.mod <- lm(Y ~ X)$coefficients
+
+lin.mod.pred <- cbind(1,X) %*% lin.mod
+
+ggplot(data = data.frame(Y = Y, X = X), aes(x = X, y = Y)) +
+  geom_point() + 
+  theme_bw()
+```
+
+Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a logistic regression model. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilites, while the logistic model stays between 0 and 1. 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="The same binary data explained by two models; A linear probabilty model (on the left) and a logistic regression model (on the right)"}
+plot.bad <- ggplot(data = as.data.frame(cbind(Y, X)), aes(x = X, y = Y)) +
+  geom_point() + 
+  geom_line(data = data.frame(pred = lin.mod.pred[order(X)], X = X[order(X)]), aes(y = pred), lwd = 1.01, color = "firebrick") + 
+  theme_bw() +
+  ylim(-0.2, 1.2) 
+
+plot.cor <- ggplot(data = as.data.frame(cbind(Y, X)), aes(x = X, y = Y)) +
+  geom_point() + 
+  geom_line(data = data.frame(probs = probs[order(X)], X = X[order(X)]), aes(y = probs), lwd = 1.01, color = "firebrick") + 
+  theme_bw() +
+  ylim(-0.2, 1.2) +
+  theme(axis.title.y = element_blank())
+
+grid.arrange(plot.bad, plot.cor, ncol = 2)
+
+
+```
+
+A key insight at this point is that the connection between X and Y is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by X around values of 0, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on. 
+
+## Technical details of the model
+
+As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:
+
+$$
+f(x) = \frac{1}{1 + e^{-x}}
+$$
+What this function does is compress all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. The $x$ in the function above is then replaced by our familiar linear specification, i.e.
+
+$$
+P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
+$$
+
+
