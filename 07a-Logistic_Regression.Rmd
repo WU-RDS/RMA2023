@@ -8,15 +8,17 @@ output:
     toc: yes
 ---
 
-```{r message=FALSE, warning=FALSE, echo=F, eval=TRUE,paged.print = FALSE}
+```{r eval=TRUE, echo=F, message=FALSE, warning=FALSE}
+library(knitr)
 options(digits = 3)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy=TRUE, rownames.print = FALSE, rows.print = 10, message = FALSE, warning = FALSE)
 ```
 
 # Logistic regression
 
 ## Motivation and intuition
 
-In the last chapter we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. To further expand on this, consider the following simulated data. $Y$ is the outcome we want to explain and $\mathbb{X}$ is our sole predictor. Looking at the scatter plot we can already see that $\mathbb{X}$ probably has an effect on $Y$. But how can we model it correctly?
+In the last chapter we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. To further expand on this, consider the following simulated data. $Y$ is the outcome we want to explain and $\mathbf{X}$ is our sole predictor. Looking at the scatter plot we can already see that $\mathbf{X}$ probably has an effect on $Y$. But how can we model it correctly?
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Simulated binary outcome data"}
 library(ggplot2)
@@ -60,47 +62,49 @@ plot.cor <- ggplot(data = as.data.frame(cbind(Y, X)), aes(x = X, y = Y)) +
 grid.arrange(plot.bad, plot.cor, ncol = 2)
 ```
 
-A key insight at this point is that the connection between $\mathbb{X}$ and $Y$ is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by $\mathbb{X}$ around values of 0, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.  
+A key insight at this point is that the connection between $\mathbf{X}$ and $Y$ is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by $\mathbf{X}$ around values of 0, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.  
 
 ## Technical details of the model
 
 As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:
 
 $$
-f(x) = \frac{1}{1 + e^{-\mathbb{X}}}
+f(\mathbf{X}) = \frac{1}{1 + e^{-\mathbf{X}}}
 $$
 This function transfroms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. 
 
-```{r}
+```{r, echo = FALSE}
 library(latex2exp)
 x <- seq(-10, 10, length.out = 1000)
 fx <- 1/(1+exp(-x))
 df <- data.frame(x = x, fx = fx)
 ggplot(df, aes(x = x, y = fx)) + 
   geom_line()+
-  labs(y = TeX("$\\frac{1}{1+e^{-x}}}$"))+
+  labs(y = TeX("$\\frac{1}{1+e^{-\\mathbf{X}}}$"), x = TeX("$\\mathbf{X}$"))+
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5))
 ```
 
 
 
-The $\mathbb{X}$ in the function above is then replaced by our familiar linear specification, i.e.
+The $\mathbf{X}$ in the function above is then replaced by our familiar linear specification, i.e.
 
 $$
-P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
+\mathbf{X} = \beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i}\\
+f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
 $$
 
 ## Estimation in R
 
-In order to perform a logistic regression in R the ```glm(Y~X, family = binomial(link = "logit"))``` function can be used (you can replace "logit" with "probit" for a probit regression). The coefficients of the model give the change in the log odds of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being $1$ (i.e. uno). 
+In order to perform a logistic regression in R the ```glm(Y~X, family = binomial(link = "logit"))``` function can be used (you can replace "logit" with "probit" for a probit regression). The coefficients of the model give the change in the [log odds](https://en.wikipedia.org/wiki/Odds#Statistical_usage) of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being $1$. 
 
-We can predict the probability given an observation using the ```predict(my_logit, newdata = ..., type = "response")``` function.
+We can predict the probability given an observation using the ```predict(my_logit, newdata = ..., type = "response")``` function. Replace ```...``` with the observed $x_{i,j}$ values for which you would like to predict the outcome variable.
 
-In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the ```logitmfx(...)``` function from the ```mfx``` package. If we set ```logitmfx(my_logit, data = my_data, atmean = FALSE)``` we calculate the latter, otherwise the former. However, in general we are most interested in the sign and significance of the coefficient. In order to measure the quality of the model overall we can use the Akaike information criterion ("AIC"). It is reported with the summary output for logit models. The absolute value of the AIC has no meaning by itself. However, it can be used to compare and select models. The model with the lowest value is the one that should be chosen according to the AIC. Note that the AIC does not indicate how well the model fits the data. Therefore, we need a measure comparable to the $R^2$ for linear regressions. In fact multiple "Pseudo $R^2$s" have been developed. There are multiple packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. This is left as an exercise for the reader.   
+In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the ```logitmfx(...)``` function from the ```mfx``` package. If we set ```logitmfx(my_logit, data = my_data, atmean = FALSE)``` we calculate the latter. Setting ```atmean = TRUE``` will calculate the former. However, in general we are most interested in the sign and significance of the coefficient. In order to measure the quality of the model overall we can use the Akaike information criterion ("AIC"). It is reported with the summary output for logit models. The value of the AIC has no meaning by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models. Therefore, we need a measure comparable to the $R^2$ for linear regressions. In fact multiple "Pseudo $R^2$s" have been developed. There are multiple packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. This is left as an exercise for the reader.   
 
 ## Example
 
-In this example we are going to analyse the probability that somebody cheats on their spouse. As explanatory variables sex, age, religiousness (1 = Anti, 5 = very), self rating of marriage (1 = very unhappy, 5 = very happy) and years married are used. We observe that ones sex does not have a significant impact on the probability of cheating. The older someone gets the less likely it is for them to cheat. More religious people are also less likely to cheat. Unsurprisingly being happier in ones marriage also decreases the likelihood of cheating. On the other hand, the longer someone is married the more likely they are to have cheated. Education does not have a significant impact. If we compare the first model with one that does not include religiousness we notice that the AIC is higher in the latter model. Thus, between the two we would choose the first. Next we calculate the average partial effect using ```logitmfx(...)```. This shows that, on average, giving ones marriage the highest rating decreases the probability of cheating by $\sim 25\%$. Finally, we look at making predictions with our model using ```predict(...)```. The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 17\%$ (Try predicting your own likelihood of cheating). Looking at the plot of the prediction shows that the highest density is of probability of cheating is just below $20\%$ and the maximum is above $80\%$. 
+In this example we are going to analyse the probability that somebody cheats on their spouse. As explanatory variables sex, age, religiousness (1 = anti, 5 = very), self rating of marriage (1 = very unhappy, 5 = very happy) and years married are used. We observe that one's sex does not have a significant impact on the probability of cheating. The older someone gets the less likely it is for them to cheat. More religious people are also less likely to cheat. Unsurprisingly being happier in one's marriage also decreases the likelihood of cheating. On the other hand, the longer someone is married the more likely they are to have cheated. Education does not have a significant impact. If we compare the first model with one that does not include religiousness we notice that the AIC is lower in the former model. Thus, between the two we would choose the first. Next we calculate the average partial effect using ```logitmfx(...)```. This shows that, on average, giving ones marriage the highest rating decreases the probability of cheating by $\sim 25\%$. Finally, we look at making predictions with our model using ```predict(...)```. The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 17\%$ (Try predicting your own likelihood of cheating).
+
 
 ```{r}
 library(Ecdat)
@@ -123,9 +127,6 @@ logitmfx(my_logit, data = Fair, atmean = FALSE)
 
 # Prediction for one observation
 predict(my_logit, newdata = data.frame(sex = "male", age = 30, ym = 2, religious = 2, education = 16, rate = 4), type = "response")
-
-# Density of the prediction for the dataset
-plot(density(predict(my_logit, type = "response")))
 ```
 
 ```{r echo = FALSE}
@@ -156,7 +157,7 @@ Perfect prediction occurs whenever a linear function of $X$ can perfectly separa
 
 ```glm.fit: fitted probabilities numerically 0 or 1 occurred```
 
-Given this error one should not use the output of the ```glm(...)``` function for the analysis. There are [various ways](https://stats.stackexchange.com/a/68917) to deal with this problem, onw of which is to Firth's bias-Reduced penalized-likelihood logistic regression using the ```logistf(Y~X)``` function in the ```logistf``` package.  
+Given this error, one should not use the output of the ```glm(...)``` function for the analysis. There are [various ways](https://stats.stackexchange.com/a/68917) to deal with this problem, one of which is to use Firth's bias-Reduced penalized-likelihood logistic regression with the ```logistf(Y~X)``` function in the ```logistf``` package.  
 
 ## Example
 
@@ -173,4 +174,14 @@ library(logistf)
 # Perfect prediction with penalized-likelihood logit
 summary(logistf(Y~X))
 ```
+
+## Estimation of the parameters $\beta_i$
+
+Let's return to the model to figure out how the parameters $\beta_i$ are estimated. In the data we observe the $y_i$, the outcome variable that is either $0$ or $1$, and the $x_{i,j}$, the predictors for each observation. In addition, by using the logit model we have assumed the following functional form. So far we have looked at estimating the $\beta_i$ with R but have not discussed how that works.
+
+$$
+P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
+$$
+
+In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solve for $\beta_i$ since the function is now non-linear. Therefor, we turn to a methodology called maximum likelihood estimation. Basically, we try out different $\beta_i$ and choose the combination that best fits the observed data.
 
