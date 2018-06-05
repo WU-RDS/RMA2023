@@ -1,0 +1,47 @@
+---
+output: html_document
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.cap = "Code", exercise.eval = TRUE,
+  exercise.timelimit = 10, exercise.lines = 3, exercise.checker = NULL,
+  exercise.completion = TRUE, exercise.diagnostics = FALSE,
+  exercise.startover = TRUE)
+
+# tutorial_event_recorder <- function(tutorial_id, tutorial_version, user_id, 
+#                                     event, data) {
+#   cat(tutorial_id, " (", tutorial_version, "): ", user_id , "\n", sep = "")
+#   cat("event: ", event, "\n", sep = "")
+# }
+# options(tutorial.event_recorder = tutorial_event_recorder)
+
+```
+
+```{r pdf-quest, echo=FALSE}
+question("Which of the following commands was used to evaluate the integral above $\\left(  P(X≤x)\\right)$?",
+  answer("rnorm(x, mean = 10, sd = 5)"),
+  answer("qnorm(x, mean = 10, sd = 5)"),
+  answer("pnorm(x, mean = 10, sd = 5)", correct = TRUE),
+  answer("dnorm(x, mean = 10, sd = 5)"),
+  allow_retry = TRUE
+)
+```
+
+```{r random, exercise=TRUE}
+rnorm(10, mean = 0, sd = 10) # Random draws
+```
+
+```{r quantile, exercise=TRUE}
+qnorm(0.75, mean = 0, sd = 10) # Value at quantile
+```
+
+```{r cdf, exercise=TRUE}
+pnorm(6.75, mean = 0, sd = 10) # CDF evaluated
+```
+
+```{r pdf, exercise=TRUE}
+dnorm(c(-10, 0, 10), mean = 0, sd = 10) # PDF evaluated
+```

@@ -1,0 +1,29 @@
+---
+runtime: shiny_prerendered
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.cap = "Code", exercise.eval = TRUE,
+  exercise.timelimit = 5, exercise.lines = 3, exercise.checker = NULL,
+  exercise.completion = TRUE, exercise.diagnostics = FALSE,
+  exercise.startover = TRUE)
+```
+
+```{r random, exercise = TRUE}
+rbinom(10, 2,  prob = 0.8) # Random sample with 100 observations
+```
+
+```{r quantile, exercise = TRUE}
+qbinom(0.37, 2, prob = 0.8) # Quantile function
+```
+
+```{r cdf, exercise = TRUE}
+pbinom(1, 2, prob = 0.8) # CDF 
+```
+
+```{r pdf, exercise = TRUE}
+dbinom(2, 2, prob = 0.8) # PMF
+```

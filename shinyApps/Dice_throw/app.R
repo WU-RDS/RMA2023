@@ -46,6 +46,8 @@ ui <- fluidPage(
 )
 
 server <- function(input, output){
+  
+  max_draws <- 20000
  
   values <- reactiveValues()
   values$data <- data.frame(Value = integer(), Draw = integer())
@@ -58,7 +60,7 @@ server <- function(input, output){
   observeEvent(input$Fast, {values$timer <- reactiveTimer(100)})
   observeEvent(input$Standard, {values$timer <- reactiveTimer(1000)})
   observeEvent(input$Slow, {values$timer <- reactiveTimer(2000)})
-  
+
   observeEvent(input$Reset, {
     values$data <- data.frame(Value = integer(), Draw = integer())
     values$started <- FALSE
@@ -74,20 +76,21 @@ server <- function(input, output){
     if(values$started){
       if(nrow(values$data) == 0){
         values$data <- data.frame(Value = replicate(input$BatchSize, sum(sample(1:6, input$DiceNum, replace = TRUE))), Draw = 1:input$BatchSize)
-      } else if (nrow(values$data) < 1000000) {
+      } else if (nrow(values$data) < max_draws) {
         values$data <- rbind(values$data, data.frame(Value = replicate(input$BatchSize, sum(sample(1:6, input$DiceNum, replace = TRUE))), Draw = (nrow(values$data) + 1):(nrow(values$data) + input$BatchSize)))
       } 
-      
-      values$alt_data <- data.frame(table(factor(values$data$Value, levels = input$DiceNum:(input$DiceNum*6)))/sum(table(values$data$Value)))
-      names(values$alt_data) <- c("Value", "Probability")
-      values$alt_data$Value <- as.numeric(as.character(values$alt_data$Value))
+      if (nrow(values$data) < max_draws){
+        values$alt_data <- data.frame(table(factor(values$data$Value, levels = input$DiceNum:(input$DiceNum*6)))/sum(table(values$data$Value)))
+        names(values$alt_data) <- c("Value", "Probability")
+        values$alt_data$Value <- as.numeric(as.character(values$alt_data$Value))
+      }
     }
   })
   
   
   
   output$SumHist <- renderPlot({
-    if (nrow(values$data) > 0){
+    if (nrow(values$data) > 0 ){
       # ggplot(data = values$data, aes(x = Value)) + 
       #   geom_bar(color = "black", fill = "white") + 
       #   theme_bw() +
