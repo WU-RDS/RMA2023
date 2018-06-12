@@ -183,5 +183,38 @@ $$
 P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
 $$
 
-In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solve for $\beta_i$ since the function is now non-linear. Therefor, we turn to a methodology called maximum likelihood estimation. Basically, we try out different $\beta_i$ and choose the combination that best fits the observed data.
+In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solve for $\beta_i$ since the function is now non-linear. Therefor, we turn to a methodology called maximum likelihood estimation. Basically, we try out different $\beta_i$ and choose the combination that best fits the observed data. In other words: choose the combination of $\beta_i$ that maximize the likelihood of observing the given dataset. 
+
+### Example
+
+Consider an experiment in which we want to find out whether a person will listen to the full song or skip it. Further assume that the genre of the song is the only determining factor of wheter somebody is likely to skip it or not. 
+
+
+```{r likesSongExample}
+set.seed(1234)
+ratingGenre <- floor(runif(10000, 1, 10))
+pSkip <- 1/(1+exp(-(1 - 0.75 * ratingGenre)))
+skipped <- sapply(pSkip, function(p) sample(c(1, 0), size = 1, prob = c(p, 1-p)))
+
+x <- cbind(1, ratingGenre)
+mlEstimate <- function(params){
+  pred <- 1/(1+exp(-(x %*% params)))
+  loglik <- skipped * log(pred) + (1-skipped) * log(1 - pred)
+  sum(loglik)
+}
+a <- seq(0.5, 1.5, length.out = 100)
+b <- seq(-1, 0, length.out = 100)
+params <- expand.grid(a,b)
+j <- 1:10000
+logliks <- sapply(j,function(x) mlEstimate(t(params[x,])))
+maxLik <- which(logliks == max(logliks))
+
+params[maxLik, ]
+
+summary(glm(skipped ~ ratingGenre, family = binomial(link = 'logit')))
+
+```
+
+
+
 
