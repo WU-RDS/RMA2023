@@ -187,7 +187,18 @@ In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solv
 
 ### Example
 
-Consider an experiment in which we want to find out whether a person will listen to the full song or skip it. Further assume that the genre of the song is the only determining factor of wheter somebody is likely to skip it or not. 
+Consider an experiment in which we want to find out whether a person will listen to the full song or skip it. Further assume that the genre of the song is the only determining factor of wheter somebody is likely to skip it or not. Each individual has rated the genre on a scale from 1 (worst) to 10 (best). Our model looks as follows:
+
+$$ 
+P(\text{skipped}_i) = {1 \over 1 + e^{-(\beta_0 + \beta_1 \text{rating}_i)}}
+$$
+
+The probability that individual $i$ will skip a song is the logisitc function with $X = \beta_0 + \beta_1 * \text{rating}_i$, where $\text{rating}_i$ is individual $i$'s rating of the genre of the song. Since we assume independence of individuals we can write the joint likelihood as
+
+$$
+\prod_{i=1}^{N} \left({1 \over 1 + e^{-(\beta_0 + \beta_1 \text{rating}_i)}}\right)^{y_i} + \left(1- {1 \over 1 + e^{-(\beta_0 + \beta_1 \text{rating}_i)}}\right)^{(1-y_i)}
+$$
+Notice that $y_i$ is either equal to one or to zero. So for each individual only one of the two parts is not equal to one (recall that any real number to the power of 0 is equal to 1). The the part left of the plus sign is "looking at" individuals who skipped the song given their rating and the right part is looking at individuals who did not skip the song given their rating. For the former we want the predicted probability of skipping to be as high as possible. For the latter we want the predicted probability of *not* skipping to be as high as possible and thus write $1 - {1 \over 1+ e^{-(\beta_0 + \beta_1 \text{rating}_i)}}$. This is convenient since we can now maximize a single function. Another way to simplify the calculation and make it computationally feasible is taking the logarithm. This will ensure that extremely small probabilities can still be processed by the computer ([see this illustration](#sum-of-ln-vs-product)).    
 
 
 ```{r likesSongExample}
@@ -215,6 +226,26 @@ summary(glm(skipped ~ ratingGenre, family = binomial(link = 'logit')))
 
 ```
 
+#### Sum of LN vs Product
 
+To illustrate why the natural log (ln) is important for computations with numbers close to zero (such as joint probabilities), we create a vector of fictitious probabilities and multiply them with each other. As we can see, already a small number of values close to 0 will lead to their product being erroneously interpreted as being 0. If we are only interested in comparing magnitude (as in the case of likelihoods) we can safely apply the ln, since it is a monotonically increasing function and will thus not change the ranking. 
+```{r}
+probs <- c(0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001,
+           0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001,
+           0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001,
+           0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001,
+           0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001,
+           0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001,
+           0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001,
+           0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001)
+prod(probs)
 
+lProbs <- log(probs) # this is the ln
+sum(lProbs)
+
+probs2 <- rbind(probs, probs, probs, probs, probs,
+                probs, probs, probs, probs, probs) # now 10 times as many values
+lProbs2 <- log(probs2)
+sum(lProbs2)
+```
 
