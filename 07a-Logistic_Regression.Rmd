@@ -97,41 +97,60 @@ What this formula implies is that we are taking the probability predictions from
 
 ## Estimation in R
 
-We are now going to show how to perform logistic regression in R. We are going to analyse the probability that somebody cheats on their spouse. As explanatory variables sex, age, religiousness (1 = anti, 5 = very), self rating of marriage (1 = very unhappy, 5 = very happy) and years married are used. 
-
-In order to perform a logistic regression in R the ```glm(Y~X, family = binomial(link = "logit"))``` function can be used (you can replace "logit" with "probit" for a probit regression). The coefficients of the model give the change in the [log odds](https://en.wikipedia.org/wiki/Odds#Statistical_usage) of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being $1$. 
-
-We can predict the probability given an observation using the ```predict(my_logit, newdata = ..., type = "response")``` function. Replace ```...``` with the observed $x_{i,j}$ values for which you would like to predict the outcome variable.
-
-In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the ```logitmfx(...)``` function from the ```mfx``` package. If we set ```logitmfx(my_logit, data = my_data, atmean = FALSE)``` we calculate the latter. Setting ```atmean = TRUE``` will calculate the former. However, in general we are most interested in the sign and significance of the coefficient. In order to measure the quality of the model overall we can use the Akaike information criterion ("AIC"). It is reported with the summary output for logit models. The value of the AIC has no meaning by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models. Therefore, we need a measure comparable to the $R^2$ for linear regressions. In fact multiple "Pseudo $R^2$s" have been developed. There are multiple packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. This is left as an exercise for the reader.   
-
-## Example
-
- We observe that one's sex does not have a significant impact on the probability of cheating. The older someone gets the less likely it is for them to cheat. More religious people are also less likely to cheat. Unsurprisingly being happier in one's marriage also decreases the likelihood of cheating. On the other hand, the longer someone is married the more likely they are to have cheated. Education does not have a significant impact. If we compare the first model with one that does not include religiousness we notice that the AIC is lower in the former model. Thus, between the two we would choose the first. Next we calculate the average partial effect using ```logitmfx(...)```. This shows that, on average, giving ones marriage the highest rating decreases the probability of cheating by $\sim 25\%$. Finally, we look at making predictions with our model using ```predict(...)```. The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 17\%$ (Try predicting your own likelihood of cheating).
-
+We are now going to show how to perform logistic regression in R with data on extramarital affairs. Our goal is to explain the probability that someone cheats on their spouse. As explanatory variables sex, age, religiousness (1 = anti, 5 = very), self rating of marriage (1 = very unhappy, 5 = very happy), years of education and years married are used. Let's start by taking a look at the data. 
 
 ```{r}
 library(Ecdat)
 data("Fair") # needs library(Ecdat)
 head(Fair)
+```
 
+As a first step we need to transform the variable ```nbaffairs``` into a binary variable. 
+
+```{r}
 # Recoding number of affairs to binary variable
-Fair$nbaffairs[Fair$nbaffairs>0] <- 1
-# The model
-my_logit <- glm(nbaffairs~sex+age+factor(religious)+factor(rate)+ym+education, data = Fair, family = binomial(link = "logit"))
+Fair$nbaffairs[Fair$nbaffairs > 0] <- 1
+```
+
+Now we can estimate the model with the ```glm(Y ~ X, family = binomial(link = "logit"))``` function. The syntax looks very similar to the familiar ```lm()``` function. The following code performs the estimation:
+
+```{r}
+my_logit <- glm(nbaffairs ~ sex + age + religious + rate + ym + education, data = Fair, family = binomial(link = "logit"))
+```
+
+To investigate the model output, we can again use ```summary()```
+
+```{r}
 summary(my_logit)
+```
 
-# Take "religious" out. Compare AIC!
-my_logit2 <- glm(nbaffairs~sex+age+factor(rate)+ym+education, data = Fair, family = binomial(link = "logit"))
-summary(my_logit2)
+The coefficients of the model give the change in the [log odds](https://en.wikipedia.org/wiki/Odds#Statistical_usage) of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being $1$. 
 
+We observe that one's sex does not have a significant impact on the probability of cheating. The older someone gets the less likely it is for them to cheat. More religious people are also less likely to cheat. Unsurprisingly being happier in one's marriage also decreases the likelihood of cheating. On the other hand, the longer someone is married the more likely they are to have cheated. Education does not have a significant impact.
+
+In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the ```logitmfx(...)``` function from the ```mfx``` package. If we set ```logitmfx(my_logit, data = my_data, atmean = FALSE)``` we calculate the latter. Setting ```atmean = TRUE``` will calculate the former. However, in general we are most interested in the sign and significance of the coefficient.
+
+```{r}
 library(mfx)
 # Average partial effect
 logitmfx(my_logit, data = Fair, atmean = FALSE)
-
-# Prediction for one observation
-predict(my_logit, newdata = data.frame(sex = "male", age = 30, ym = 2, religious = 2, education = 16, rate = 4), type = "response")
 ```
+
+STILL NEED TO INCLUDE INTERPRETATION OF MFX!
+ 
+### Model selection
+
+We will present two methods for model selection for logistic regression. The first is based on the _Akaike Information Criterium_ (AIC). It is reported with the summary output for logit models. The value of the AIC is __relative__, meaning that it has no interpretation by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models. 
+
+For example, consider the following model, where we exclude the ```religious``` covariate. Seeing as it was able to contribute significantly to the explanatory power of the model, the AIC increases, indicating that the model including ```religious``` is better suited to explain the data.
+
+```{r}
+# Take "religious" out. Compare AIC to full model!
+my_logit2 <- glm(nbaffairs ~ sex + age + rate + ym + education, data = Fair, family = binomial(link = "logit"))
+summary(my_logit2)
+```
+
+Measures for the absolute fit, comparable to the $R^2$ for linear regressions, are also available. In fact multiple "Pseudo $R^2$s" have been developed. There are multiple packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. This is left as an exercise for the reader.
 
 ```{r echo = FALSE}
 logisticPseudoR2s <- function(LogModel) {
@@ -154,6 +173,18 @@ Below three versions of pseudo $R^2$s are reported. They indicate that our model
 ```{r}
 logisticPseudoR2s(my_logit) 
 ```
+
+### Predictions
+
+We can predict the probability given an observation using the ```predict(my_logit, newdata = ..., type = "response")``` function. Replace ```...``` with the observed $x_{i,j}$ values for which you would like to predict the outcome variable.
+
+
+```{r}
+# Prediction for one observation
+predict(my_logit, newdata = data.frame(sex = "male", age = 30, ym = 2, religious = 2, education = 16, rate = 4), type = "response")
+```
+
+The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 24\%$ (Try predicting your own likelihood of cheating).   
 
 ## Perfect Prediction Logit
 
