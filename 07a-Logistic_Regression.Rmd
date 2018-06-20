@@ -87,13 +87,13 @@ ggplot(df, aes(x = x, y = fx)) +
 
 
 
-The $\mathbf{X}$ in the function above is then replaced by our familiar linear specification, i.e.
+The logistic function on its own is not very useful yet, as we want to be able to determine how predictors influence the probability of a value to be equal to 1. To this end we replace the $\mathbf{X}$ in the function above with our familiar linear specification, i.e.
 
 $$
 \mathbf{X} = \beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i}\\
 f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
 $$
-What this formula implies is that we are taking the probability predictions from our well known linear form and ensuring that they only result in values between 0 and 1, thus giving us valid probabilities. 
+Now we have a mathematical relationship between our predictor variables $(x_1, ..., x_m)$ and the probability of $y_i$ being equal to one. The last step is to estimate the parameters of this model $(\beta_0, \beta_1, ..., \beta_m)$ to determine the magnitude of the effects.  
 
 ## Estimation in R
 
@@ -136,7 +136,7 @@ library(mfx)
 logitmfx(my_logit, data = Fair, atmean = FALSE)
 ```
 
-STILL NEED TO INCLUDE INTERPRETATION OF MFX!
+This now gives the average partial effects in percentage points. For example, the ```age``` result can be read as "on average, an additional year decreases the probability of cheating by 0.075%". Keep in mind that these are _average_ effects, as the effects are no longer linear, e.g. if you already have a 0% chance of cheating, you clearly can't decrease it any further. 
  
 ### Model selection
 

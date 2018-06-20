@@ -45,9 +45,13 @@ server <- function(input, output) {
   # ADJUST THESE IN CASE OF CHANGE IN START VALUE
   mean.start <- 10
   var.start <- 10
+  
 
   set.seed(1776) # Oh say can you see
   x <- data.frame(x = rnorm(1500, 20, 5))
+  
+  start_loglik <- sum(dnorm(x$x, mean = mean.start, sd = sqrt(var.start), log = TRUE))
+  
    output$distPlot <- renderPlot({
       ggplot(x, aes(x))+
         geom_histogram(aes(y=..density..), bins = 50)+
@@ -55,7 +59,9 @@ server <- function(input, output) {
         theme_bw()
          })
    output$loglik <- renderTable({
-     slik <- data.frame(`LogLikelihood` = sum(dnorm(x$x, mean = input$mean, sd = sqrt(input$var), log = TRUE)), `High Score` = loglik.stor$max$loglik)
+     slik <- data.frame(`Log Likelihood` = sum(dnorm(x$x, mean = input$mean, sd = sqrt(input$var), log = TRUE)), 
+                        `High Score` = ifelse(is.null(loglik.stor$max),
+                                              start_loglik, loglik.stor$max$loglik))
     xtable(slik)
    }, colnames = TRUE, ignoreInit = TRUE)
 
@@ -75,14 +81,14 @@ server <- function(input, output) {
    
    output$loglikPlot <- renderPlot({
      current.obs.number <- loglik.stor$stor[nrow(loglik.stor$stor), "number"]
-     try(ggplot(data = loglik.stor$stor, aes(x = number, y = loglik)) + 
-       geom_point() +
-       geom_line() +
+     suppressWarnings(ggplot(data = loglik.stor$stor, aes(x = number, y = loglik)) + 
+       geom_point(na.rm = TRUE) +
+       geom_line(na.rm = TRUE) +
        geom_hline(data = loglik.stor$max, mapping = aes(yintercept = loglik)) + 
        scale_x_continuous(limits = if(nrow(loglik.stor$stor) < 11){c(1,10)} else {c(current.obs.number -10 , current.obs.number)}) +
        theme_bw() +
        theme(axis.ticks.x = element_blank(), axis.text.x = element_blank()) + 
-       xlab(label = ""), silent = TRUE)
+       xlab(label = ""))
  
    })
 }
