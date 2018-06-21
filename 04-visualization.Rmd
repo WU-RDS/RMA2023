@@ -232,11 +232,7 @@ ggplot(adv_data,aes(x = store, y = sales)) +
 
 The following graphic shows you how to interpret the boxplot:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE, fig.align="center", fig.cap="Information contained in a Boxplot"}
-library(EBImage)
-img = readImage("https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/boxplot.JPG")
-display(img, method = "raster")
-```
+![Information contained in a Boxplot](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/boxplot.JPG)
 
 You may also augment the boxplot with the data points using ```geom_jitter()```:
 
@@ -370,32 +366,32 @@ There is a package called "ggmap", which is an augmentation for the ggplot packa
 
 ```{r message=FALSE, warning=FALSE,echo=TRUE, eval=TRUE, fig.align="center", fig.cap = c("Geo-location data (1)","Geo-location data (2)")}
 # Download the base map
-de_map_g_str <- get_map(location = "Germany", zoom = 6)
-
-# Draw the heat map
-ggmap(de_map_g_str, extent = "device") + 
-  geom_density2d(data = geo_data, aes(x = lon, y = lat), size = 0.3) + 
-  stat_density2d(data = geo_data, aes(x = lon, y = lat, fill = ..level.., alpha = ..level..), 
-                 size = 0.01, bins = 16, geom = "polygon") + 
-  scale_fill_gradient(low = "green", high = "red") + 
-  scale_alpha(range = c(0, 0.3), guide = FALSE)
-
-# Transform data
-geo_data <- geo_data %>% 
-  group_by(latlon) %>% 
-  dplyr::summarise(sumCount = n(), lat = first(lat), lon = first(lon)) %>% 
-  filter(!is.na(latlon)) %>% 
-  as.data.frame()
-
-# Draw circle plot
-
-circle_scale_amt = 0.15 # adjust circle size
-
-usa_center = as.numeric(geocode("Germany"))
-ggmap(get_googlemap(center = usa_center, scale = 2, zoom = 6), extent = "normal") + 
-  geom_point(aes(x = lon, y = lat), data = geo_data, col = "orange", alpha = 0.3, 
-             size = geo_data$sumCount*circle_scale_amt) + 
-  scale_size_continuous(range = range(geo_data$sumCount)) + 
-  ylim(min(geo_data$lat), max(geo_data$lat)) + 
-  xlim(min(geo_data$lon), max(geo_data$lon)) 
+# de_map_g_str <- get_map(location = "Germany", zoom = 6)
+# 
+# # Draw the heat map
+# ggmap(de_map_g_str, extent = "device") + 
+#   geom_density2d(data = geo_data, aes(x = lon, y = lat), size = 0.3) + 
+#   stat_density2d(data = geo_data, aes(x = lon, y = lat, fill = ..level.., alpha = ..level..), 
+#                  size = 0.01, bins = 16, geom = "polygon") + 
+#   scale_fill_gradient(low = "green", high = "red") + 
+#   scale_alpha(range = c(0, 0.3), guide = FALSE)
+# 
+# # Transform data
+# geo_data <- geo_data %>% 
+#   group_by(latlon) %>% 
+#   dplyr::summarise(sumCount = n(), lat = first(lat), lon = first(lon)) %>% 
+#   filter(!is.na(latlon)) %>% 
+#   as.data.frame()
+# 
+# # Draw circle plot
+# 
+# circle_scale_amt = 0.15 # adjust circle size
+# 
+# usa_center = as.numeric(geocode("Germany"))
+# ggmap(get_googlemap(center = usa_center, scale = 2, zoom = 6), extent = "normal") + 
+#   geom_point(aes(x = lon, y = lat), data = geo_data, col = "orange", alpha = 0.3, 
+#              size = geo_data$sumCount*circle_scale_amt) + 
+#   scale_size_continuous(range = range(geo_data$sumCount)) + 
+#   ylim(min(geo_data$lat), max(geo_data$lat)) + 
+#   xlim(min(geo_data$lon), max(geo_data$lon)) 
 ```

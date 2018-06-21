@@ -22,11 +22,7 @@ devtools::install_github('PMassicotte/gtrendsR',force=T)
 
 Before you can start your analytics in R, you first need to import the data you wish to perform the analytics on. You will often be faced with different types of data formats (usually produced by some other statistical software like SPSS or Excel or a text editor). Fortunately, R is fairly flexible with respect to the sources from which data may be imported and you can import the most common data formats into R with the help of a few packages. R can, among others, handle data from the following sources: 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE, fig.align="center", fig.height = 3, fig.width = 8, fig.cap="Data import"}
-library(EBImage)
-img = readImage("https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/data_import.JPG")
-display(img, method = "raster")
-```
+![Data Import](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/data_import.JPG)
 
 In the previous chapter, we saw how we may use the keyboard to input data in R. In the following sections, we will learn how to import data from text files and other statistical software packages. 
 
@@ -130,11 +126,7 @@ class(population$Population)
 
 Reading data from websites can be tricky since you need to analyze the page structure first. Many web-services (e.g., Facebook, Twitter, YouTube) actually have application programming interfaces (API's), which you can use to obtain data in a pre-structured format. JSON (JavaScript Object Notation) is a popular lightweight data-interchange format in which data can be obtained. The process of obtaining data is visualized in the following graphic:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE, fig.align="center", fig.height = 2.5, fig.width = 8, fig.cap="Obtaining data from APIs"}
-library(EBImage)
-img = readImage("https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/API.JPG")
-display(img, method = "raster")
-```
+![Obtaining data from APIs](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/API.JPG)
 
 The process of obtainig data from APIs consists of the following steps:
 
@@ -159,9 +151,9 @@ head(ctrydata[[2]][,c("value","date")]) #checks if we scraped the desired data
 An even more convenient way to obtain data from web APIs is to use existing R packages that someone else has already created. There are R packages available for various web-services. For example, the ```gtrendsR``` package can be used to conveniently obtain data from the <a href="https://trends.google.at/trends/" target="_blank">Google Trends</a> page. The ```gtrends()``` function is easy to use ans returns a list of elements (e.g., "interest over time", "interest by city", "related topics"), which can be inspected using the ```ls()``` function. The following example can be used to obtain data for the search term "data science" in the US between September 1 and October 6: 
 
 ```{r message=FALSE, warning=FALSE}
-library(gtrendsR)
-google_trends <- gtrends("data science", geo = c("US"), gprop = c("web"), time = "2017-09-01 2017-10-06")
-ls(google_trends)
-head(google_trends$interest_over_time)
+# library(gtrendsR)
+# google_trends <- gtrends("data science", geo = c("US"), gprop = c("web"), time = "2017-09-01 2017-10-06")
+# ls(google_trends)
+# head(google_trends$interest_over_time)
 ```    
 
