@@ -22,12 +22,14 @@ ui <- fluidPage(
                      "Mean:",
                      min = 0,
                      max = 50,
-                     value = 10),
+                     value = 10, 
+                     step = 0.1),
          sliderInput("var",
                      "Variance:",
                      min = 0,
                      max = 50, 
-                     value = 10),
+                     value = 10,
+                     step = 0.1),
          tableOutput('loglik')
       ),
       
