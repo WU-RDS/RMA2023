@@ -321,20 +321,19 @@ summary(glm(skipped ~ ratingGenre, family = binomial(link = 'logit')))
 ```{r, echo = FALSE, fig.cap="Plot of the log likelihood function", fig.align="center"}
 library(plotly)
 
-mlEstimate <- function(beta_0, beta_1){
-  pred <- 1/(1+exp(-(beta_0 + beta_1 * ratingGenre)))
-  loglik <- skipped * log(pred) + (1-skipped) * log(1 - pred)
-  return(sum(loglik))
-}
-
-
 beta_0 <- seq(0, 2, length.out = 100)
 beta_1 <- seq(-0.4, -0.2, length.out = 100)
 opts <- expand.grid(beta_0, beta_1)
 opts$loglik <- apply(opts, 1, function(x) mlEstimate(x[1], x[2]))
 z <- matrix(opts$loglik, ncol = length(a), byrow = TRUE)
 
-plot_ly(x =beta_1, y = beta_0, z = z) %>% add_surface()
+plot_ly(x =beta_1, y = beta_0, z = z) %>% 
+  add_surface() %>%
+  layout(scene = list(
+          xaxis = list(title = "beta_1"),
+          yaxis = list(title = "beta_2"),
+          zaxis = list(title = "Log likelihood")
+    ))
 ```
 
 
