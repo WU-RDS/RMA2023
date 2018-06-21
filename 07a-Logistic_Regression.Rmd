@@ -118,7 +118,7 @@ Now we can estimate the model with the ```glm(Y ~ X, family = binomial(link = "l
 my_logit <- glm(nbaffairs ~ sex + age + religious + rate + ym + education, data = Fair, family = binomial(link = "logit"))
 ```
 
-To investigate the model output, we can again use ```summary()```
+To investigate the model output, we use ```summary()```, as we did for linear models. 
 
 ```{r}
 summary(my_logit)
@@ -136,7 +136,7 @@ library(mfx)
 logitmfx(my_logit, data = Fair, atmean = FALSE)
 ```
 
-This now gives the average partial effects in percentage points. For example, the ```age``` result can be read as "on average, an additional year decreases the probability of cheating by 0.075%". Keep in mind that these are _average_ effects, as the effects are no longer linear, e.g. if you already have a 0% chance of cheating, you clearly can't decrease it any further. 
+This now gives the average partial effects in percentage points. For example, the ```age``` result can be read as "on average, an additional year decreases the probability of cheating by 0.75%". Keep in mind that these are _average_ effects, as the effects are no longer linear, e.g. if you already have a 0% chance of cheating, you clearly can't decrease it any further. 
  
 ### Model selection
 
@@ -150,7 +150,7 @@ my_logit2 <- glm(nbaffairs ~ sex + age + rate + ym + education, data = Fair, fam
 summary(my_logit2)
 ```
 
-Measures for the absolute fit, comparable to the $R^2$ for linear regressions, are also available. In fact multiple "Pseudo $R^2$s" have been developed. There are multiple packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. This is left as an exercise for the reader.
+Measures for the absolute fit, comparable to the $R^2$ for linear regression, are also available. In fact multiple "Pseudo $R^2$s" have been developed. There are multiple packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. This is left as an exercise for the reader.
 
 ```{r echo = FALSE}
 logisticPseudoR2s <- function(LogModel) {
@@ -184,17 +184,17 @@ We can predict the probability given an observation using the ```predict(my_logi
 predict(my_logit, newdata = data.frame(sex = "male", age = 30, ym = 2, religious = 2, education = 16, rate = 4), type = "response")
 ```
 
-The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 24\%$ (Try predicting your own likelihood of cheating).   
+The prediction indicates that a 30 year old male who has been married for two years, has 16 years of education, highly rates his marriage and is not very religious has a probability of cheating of $\sim 21\%$ (Try predicting your own likelihood of cheating).   
 
-## Perfect Prediction Logit
+### Perfect Prediction Logit
 
 Perfect prediction occurs whenever a linear function of $X$ can perfectly separate the $1$s from the $0$s in the dependent variable. This is problematic when estimating a logit model as it will result in biased estimators (also check to p-values in the example!). R will return the following message if this occurs:
 
 ```glm.fit: fitted probabilities numerically 0 or 1 occurred```
 
-Given this error, one should not use the output of the ```glm(...)``` function for the analysis. There are [various ways](https://stats.stackexchange.com/a/68917) to deal with this problem, one of which is to use Firth's bias-Reduced penalized-likelihood logistic regression with the ```logistf(Y~X)``` function in the ```logistf``` package.  
+Given this error, one should not use the output of the ```glm(...)``` function for the analysis. There are [various ways](https://stats.stackexchange.com/a/68917) to deal with this problem, one of which is to use Firth's bias-reduced penalized-likelihood logistic regression with the ```logistf(Y~X)``` function in the ```logistf``` package.  
 
-## Example
+#### Example
 
 In this example data $Y = 0$ if $x_1 <0$ and $Y=1$ if $x_1>0$ and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are $1$ despite $x_1$ being a predictor of $Y$. Thus we turn to the penalized-likelihood version. This model correctly indicates that $x_1$ is in fact a predictor for $Y$ as the coefficient is significant.  
 
@@ -210,7 +210,9 @@ library(logistf)
 summary(logistf(Y~X))
 ```
 
-## Estimation of the parameters $\beta_i$
+## Appendix
+
+### Estimation of the parameters $\beta_i$
 
 Let's return to the model to figure out how the parameters $\beta_i$ are estimated. In the data we observe the $y_i$, the outcome variable that is either $0$ or $1$, and the $x_{i,j}$, the predictors for each observation. In addition, by using the logit model we have assumed the following functional form.
 
@@ -218,7 +220,7 @@ $$
 P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
 $$
 
-So far we have looked at estimating the $\beta_i$ with R but have not discussed how that works. In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solve for $\beta_i$ since the function is now non-linear. Therefore, we turn to a methodology called maximum likelihood estimation. Basically, we try out different $\beta_i$ and choose the combination that best fits the observed data. In other words: choose the combination of $\beta_i$ that maximize the likelihood of observing the given dataset. For each individual we have information about the binary outcome and the predictors. For those whose outcome is $1$ we want to choose the $\beta_i$ such that our predicted probability of the outcome ($P(y_i = 1)$) is as close to $1$ as possible. At the same time, for those whose outcome is $0$ we would like the prediction ($P(y_i = 1)$) to be as close to $0$ as possible. Therefore, we "split" the sample into two groups (outcome $1$ and outcome $0$). For the first group each individual has the probability function shown above which we want to maximize for this group. For the other group we would need to minimize the joint probability since we want our prediction to be as close to $0$ as possible. Alternatively we can easily transform the probability to $P(y_i = 0)$ which we can then maximize. Since probabilities add up to $1$ and we only have two possible outcomes $P(y_i = 0) = 1 - P(y_i = 1)$. This is convenient because now we can calculate the joint likelihood of all observations and maximize a single function. We assume that the observations are independent from each other and thus the joint likelihood is just the product of the individual probabilities. Thus for the group of $n_1$ individuals with outcome $1$ we have the joint likelihood
+So far we have looked at estimating the $\beta_i$ with R but have not discussed how that works. In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solve for $\beta_i$ since the function is now non-linear. Therefore, we turn to a methodology called _maximum likelihood estimation_. Basically, we try out different $\beta_i$ and choose the combination that best fits the observed data. In other words: choose the combination of $\beta_i$ that maximize the likelihood of observing the given dataset. For each individual we have information about the binary outcome and the predictors. For those whose outcome is $1$ we want to choose the $\beta_i$ such that our predicted probability of the outcome ($P(y_i = 1)$) is as close to $1$ as possible. At the same time, for those whose outcome is $0$ we would like the prediction ($P(y_i = 1)$) to be as close to $0$ as possible. Therefore, we "split" the sample into two groups (outcome $1$ and outcome $0$). For the first group each individual has the probability function shown above which we want to maximize for this group. For the other group we would need to minimize the joint probability since we want our prediction to be as close to $0$ as possible. Alternatively we can easily transform the probability to $P(y_i = 0)$ which we can then maximize. Since probabilities add up to $1$ and we only have two possible outcomes $P(y_i = 0) = 1 - P(y_i = 1)$. This is convenient because now we can calculate the joint likelihood of all observations and maximize a single function. We assume that the observations are independent from each other and thus the joint likelihood is just the product of the individual probabilities. Thus for the group of $n_1$ individuals with outcome $1$ we have the joint likelihood
 
 $$
 \prod_{i=1}^{n_1} {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
@@ -253,15 +255,51 @@ $$
 $$
 
 Notice that $y_i$ is either equal to one or to zero. So for each individual only one of the two parts is not equal to one (recall that any real number to the power of 0 is equal to 1). The the part left of the plus sign is "looking at" individuals who skipped the song given their rating and the right part is looking at individuals who did not skip the song given their rating. For the former we want the predicted probability of skipping to be as high as possible. For the latter we want the predicted probability of *not* skipping to be as high as possible and thus write $1 - {1 \over 1+ e^{-(\beta_0 + \beta_1 \text{rating}_i)}}$. This is convenient since we can now maximize a single function. Another way to simplify the calculation and make it computationally feasible is taking the logarithm. This will ensure that extremely small probabilities can still be processed by the computer ([see this illustration](#sum-of-ln-vs-product)).    
+```{r, echo = FALSE}
+set.seed(123)
+```
+
+Manually applying this in R would looks as follows. We begin by simulating some data. ```ratingGenre``` is a vector of 10000 randomly generated numbers between 1 and 10. ```pSkip``` will be a vector of probabilites generated by applying the logistic function to our linear model, with the parameters $\beta_0 = 1$ and $\beta_1 = -0.3$.
+
+```{r}
+ratingGenre <- sample(1:10, size = 10000, replace = TRUE)
+linModel <- 1 - 0.3 * ratingGenre
+pSkip <- 1/(1+exp(-linModel))
+```
+
+Now we have to sample whether a user skipped a song or not, based on their probability of skipping. The resulting vector ```skipped``` is composed of 0s and 1s and indicates whether or not a person skipped a song. 
+
+```{r}
+skipped <- 1:length(pSkip)
+for(i in 1:length(pSkip)){
+  skipped[i] <- sample(c(1, 0), size = 1, prob = c(pSkip[i], 1-pSkip[i]))
+}
+```
+
+Our simulated data now looks as follows:
+
+```{r, echo = FALSE, fig.align="center", fig.cap="Percent of songs skipped as a function of the genre rating"}
+freq <- prop.table(table(data.frame(skipped = skipped, rating = ratingGenre)), margin = 2) * 100
+
+freq <- as.data.frame(freq)
+
+colnames(freq) <- c("Skipped", "rating", "Freq")
+
+freq$Skipped <- factor(freq$Skipped, levels = c(0,1), labels = c("No", "Yes"))
+
+ggplot(data = freq, aes(x = rating, y = Freq, fill = Skipped)) +
+geom_col() +
+  ylab("Percent") + 
+  xlab("Genre rating") +
+  theme_bw()
+
+```
+
+The visualization shows that an increase in ```genreRating``` leads to a decrease in the probability of a song being skipped. Now we want to perform maximum likelihood estimation and see how close we get to the true parameter values.
+
+```{r}
 
 
-```{r likesSongExample}
-set.seed(1234)
-ratingGenre <- floor(runif(10000, 1, 10))
-pSkip <- 1/(1+exp(-(1 - 0.75 * ratingGenre)))
-skipped <- sapply(pSkip, function(p) sample(c(1, 0), size = 1, prob = c(p, 1-p)))
-
-x <- cbind(1, ratingGenre)
 mlEstimate <- function(params){
   pred <- 1/(1+exp(-(x %*% params)))
   loglik <- skipped * log(pred) + (1-skipped) * log(1 - pred)
