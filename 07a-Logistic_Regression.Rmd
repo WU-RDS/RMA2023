@@ -300,8 +300,8 @@ The visualization shows that an increase in ```genreRating``` leads to a decreas
 ```{r}
 
 
-mlEstimate <- function(params){
-  pred <- 1/(1+exp(-(x %*% params)))
+mlEstimate <- function(beta_0, beta_1){
+  pred <- 1/(1+exp(-(beta_0 + beta_1 * ratingGenre)))
   loglik <- skipped * log(pred) + (1-skipped) * log(1 - pred)
   sum(loglik)
 }
@@ -309,7 +309,7 @@ a <- seq(0.5, 1.5, length.out = 100)
 b <- seq(-1, 0, length.out = 100)
 params <- expand.grid(a,b)
 j <- 1:10000
-logliks <- sapply(j,function(x) mlEstimate(t(params[x,])))
+logliks <- sapply(j,function(x) mlEstimate(params[x,1], params[x,2]))
 maxLik <- which(logliks == max(logliks))
 
 params[maxLik, ]
@@ -317,6 +317,25 @@ params[maxLik, ]
 summary(glm(skipped ~ ratingGenre, family = binomial(link = 'logit')))
 
 ```
+
+```{r, echo = FALSE, fig.cap="Plot of the log likelihood function", fig.align="center"}
+library(plotly)
+
+beta_0 <- seq(0, 2, length.out = 100)
+beta_1 <- seq(-0.4, -0.2, length.out = 100)
+opts <- expand.grid(beta_0, beta_1)
+opts$loglik <- apply(opts, 1, function(x) mlEstimate(x[1], x[2]))
+z <- matrix(opts$loglik, ncol = length(a), byrow = TRUE)
+
+plot_ly(x =beta_1, y = beta_0, z = z) %>% 
+  add_surface() %>%
+  layout(scene = list(
+          xaxis = list(title = "beta_1"),
+          yaxis = list(title = "beta_2"),
+          zaxis = list(title = "Log likelihood")
+    ))
+```
+
 
 #### Sum of LN vs Product
 
