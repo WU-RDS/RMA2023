@@ -239,6 +239,27 @@ $$
 \prod_{k = 1}^{n_1 + n_2} \left({1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}\right)^{y_i} \times \left( 1 - {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}\right)^{1-y_i}
 $$
 
+The indicators $(\cdot)^{y_i}$ and $(\cdot)^{1-y_i}$ select the appropriate likelihood. To illustrate this consider an individual with outcome $y_j = 1$ 
+
+$$
+\begin{align*}
+&\left({1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}\right)^{y_j} \times \left( 1 - {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}\right)^{1-y_j}\\
+=&\left({1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}\right)^{1} \times \left( 1 - {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}\right)^{0}\\
+=&{1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}} \times 1\\
+=&{1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}} 
+\end{align*}
+$$
+
+Equivalently for an individual with outcome $y_s = 0$:
+
+$$
+\begin{align*}
+&\left({1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}\right)^{y_i} \times \left( 1 - {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}\right)^{1-y_i}\\
+=&\left({1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}\right)^{0} \times \left( 1 - {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}\right)^{1}\\
+=&1\times \left( 1 - {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}\right)^{1}\\
+=& 1 - {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,j} + \beta_2 * x_{2,j} + ... +\beta_m * x_{m,j})}}
+\end{align*}
+$$
 
 ### Example
 
