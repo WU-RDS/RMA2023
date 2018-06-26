@@ -11,7 +11,7 @@ output:
 ```{r eval=TRUE, echo=F, message=FALSE, warning=FALSE}
 library(knitr)
 options(digits = 3)
-opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy=TRUE, rownames.print = FALSE, rows.print = 10, message = FALSE, warning = FALSE, echo = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy=TRUE, rownames.print = FALSE, rows.print = 10, message = FALSE, warning = FALSE)
 ```
 
 # Logistic regression
@@ -316,7 +316,7 @@ geom_col() +
 
 ```
 
-The visualization shows that an increase in ```genreRating``` leads to a decrease in the probability of a song being skipped. Now we want to perform maximum likelihood estimation and see how close we get to the true parameter values.
+The visualization shows that an increase in ```genreRating``` leads to a decrease in the probability of a song being skipped. Now we want to perform maximum likelihood estimation and see how close we get to the true parameter values. To achive this, we need a function that, given a value for $\beta_0$ and $\beta_1$, gives us the value of the log likelihood. The follwing code defines such a function.
 
 ```{r}
 mlEstimate <- function(beta_0, beta_1){
@@ -324,18 +324,9 @@ mlEstimate <- function(beta_0, beta_1){
   loglik <- skipped * log(pred) + (1-skipped) * log(1 - pred)
   sum(loglik)
 }
-a <- seq(0.5, 1.5, length.out = 100)
-b <- seq(-1, 0, length.out = 100)
-params <- expand.grid(a,b)
-j <- 1:10000
-logliks <- sapply(j,function(x) mlEstimate(params[x,1], params[x,2]))
-maxLik <- which(logliks == max(logliks))
-
-params[maxLik, ]
-
-summary(glm(skipped ~ ratingGenre, family = binomial(link = 'logit')))
-
 ```
+
+The log likelihood function has the following form.
 
 ```{r, echo = FALSE, fig.cap="Plot of the log likelihood function", fig.align="center"}
 library(plotly)
@@ -344,17 +335,60 @@ beta_0 <- seq(0, 2, length.out = 100)
 beta_1 <- seq(-0.4, -0.2, length.out = 100)
 opts <- expand.grid(beta_0, beta_1)
 opts$loglik <- apply(opts, 1, function(x) mlEstimate(x[1], x[2]))
-z <- matrix(opts$loglik, ncol = length(a), byrow = TRUE)
+z <- matrix(opts$loglik, ncol = length(beta_0), byrow = TRUE)
 
 plot_ly(x =beta_1, y = beta_0, z = z) %>% 
   add_surface() %>%
   layout(scene = list(
           xaxis = list(title = "beta_1"),
-          yaxis = list(title = "beta_2"),
+          yaxis = list(title = "beta_0"),
           zaxis = list(title = "Log likelihood")
     ))
 ```
 
+As you can see, the maximum of the log likelihood function lies around ```-0.3, 1```, the true parameter values. Now we need to find an algorithm that finds the combination of $\beta_0$ and $\beta_1$ that optimizes this function. There are multiple ways to go about this. The ```glm()``` function uses the built-in optimization function ```optim()```. While we could do the same, we will use a slightly different approach to make the process more intuitive. We are going to employ something called _grid maximization_. Basically, we make a list of all plausible combinations of parameter values and calculate the log likelihood for each combination. Then we simply select the parameter combination that has the highest log likelihood.
+
+```prob_beta_0``` and ```prob_beta_1``` are now vectors that contain 100 plausible values for each parameter.
+```{r}
+prob_beta_0 <- seq(0.5, 1.5, length.out = 100)
+prob_beta_1 <- seq(-1, 0, length.out = 100)
+
+# Print one vector as an example
+prob_beta_0
+```
+
+Next we create a dataframe that contains all possible combinations of ```prob_beta_0``` and ```prob_beta_1```. The ```expand.grid()``` function does exactly that. 
+
+```{r}
+params <- expand.grid(prob_beta_0, prob_beta_1)
+
+# Print df
+params
+```
+
+With the ```apply()``` function we can calculate the log likelihood for each value in the data frame. Note that the ```params``` data frame now has a now column containing the log likelihood.
+
+```{r}
+params$loglik <- apply(params, 1, function(x) mlEstimate(x[1], x[2]))
+
+# print df
+params
+```
+
+Next we simply find the highest log likelihood value and the associated parameter values.
+
+```{r}
+maxLik <- which.max(params$loglik)
+params[maxLik, ]
+```
+
+As you can see, our method comes pretty close to the true parameter values. For comparison, here is the same model calculated with the ```glm()``` function.
+
+
+```{r}
+summary(glm(skipped ~ ratingGenre, family = binomial(link = 'logit')))
+
+```
 
 #### Sum of LN vs Product
 
