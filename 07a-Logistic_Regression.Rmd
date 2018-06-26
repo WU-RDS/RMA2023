@@ -11,7 +11,7 @@ output:
 ```{r eval=TRUE, echo=F, message=FALSE, warning=FALSE}
 library(knitr)
 options(digits = 3)
-opts_chunk$set(tidy.opts=list(width.cutoff=75), tidy=TRUE, rownames.print = FALSE, rows.print = 10, message = FALSE, warning = FALSE)
+opts_chunk$set(tidy.opts=list(width.cutoff=50), tidy=TRUE, rownames.print = FALSE, rows.print = 10, message = FALSE, warning = FALSE, echo = TRUE)
 ```
 
 # Logistic regression
@@ -276,7 +276,7 @@ $$
 $$
 
 Notice that $y_i$ is either equal to one or to zero. So for each individual only one of the two parts is not equal to one (recall that any real number to the power of 0 is equal to 1). The the part left of the plus sign is "looking at" individuals who skipped the song given their rating and the right part is looking at individuals who did not skip the song given their rating. For the former we want the predicted probability of skipping to be as high as possible. For the latter we want the predicted probability of *not* skipping to be as high as possible and thus write $1 - {1 \over 1+ e^{-(\beta_0 + \beta_1 \text{rating}_i)}}$. This is convenient since we can now maximize a single function. Another way to simplify the calculation and make it computationally feasible is taking the logarithm. This will ensure that extremely small probabilities can still be processed by the computer ([see this illustration](#sum-of-ln-vs-product)).    
-```{r, echo = FALSE}
+```{r echo = FALSE}
 set.seed(123)
 ```
 
@@ -319,8 +319,6 @@ geom_col() +
 The visualization shows that an increase in ```genreRating``` leads to a decrease in the probability of a song being skipped. Now we want to perform maximum likelihood estimation and see how close we get to the true parameter values.
 
 ```{r}
-
-
 mlEstimate <- function(beta_0, beta_1){
   pred <- 1/(1+exp(-(beta_0 + beta_1 * ratingGenre)))
   loglik <- skipped * log(pred) + (1-skipped) * log(1 - pred)
