@@ -212,6 +212,12 @@ summary(logistf(Y~X))
 
 ## Appendix
 
+### Maximum likelihood estimation
+
+For non-linear models we cannot turn to linear algebra to solve for the unknown parameters. However, we can use a statistical method called maximum likelihood estimation (MLE). Given observed data and an assumption about their distribution we can estimate for which parameter values the observed data is most likely to occur. We do this by calculating the joint log likelihood of the observations given _a_ choice of parameters (more on that below). Next, we change our parameter values a little bit and see if the joint log likelihood improved. We keep doing that until we cannot find better parameter values anymore (that is we have reached the maximum likelihood). In the following example we have a histogram of a dataset which we assume to be normally distributed. You can now try to find the best parameter values by changing the mean and the variance. Recall that the normal distribution is fully described by just those two parameters. In each step the log likelihood is automatically calculated. The maximum likelihood so far is shown as the high score and the line in the lower graph shows the development of the log likelihood for the past couple of tries.  
+
+<iframe src="http://localhost:3838/maximumLikelihood/" style="border: none; width: 800px; height: 900px"></iframe>
+
 ### Estimation of the parameters $\beta_i$
 
 Let's return to the model to figure out how the parameters $\beta_i$ are estimated. In the data we observe the $y_i$, the outcome variable that is either $0$ or $1$, and the $x_{i,j}$, the predictors for each observation. In addition, by using the logit model we have assumed the following functional form.
