@@ -55,7 +55,7 @@ $$
 
 where $n$ is the number of coins and $p$ is the probability of observing heads. Here $n,\ p$ are the _parameters_ of the *binomial* distribution. 
 
-<iframe src="http://localhost:3838/Dist_Binomial/" style="border: none; width: 950px; height: 400px"></iframe>
+<iframe src="http://localhost:3838/Dist_Binomial/" style="border: none; width: 800px; height: 400px"></iframe>
 
 The binomial distribution can be used whenever you conduct an experiment composed of multiple trials where there are two or more possible outcomes, one of which is seen as "success". The idea is based on the concept of [Bernoulli trials](https://en.wikipedia.org/wiki/Bernoulli_trial), which are basically a binomial distribution with $n=1$. A binomial distribution can also be used for dice, if we are interested in the number of dice that show a particular value, say $1$. 
 
@@ -132,7 +132,7 @@ You can work with the binomial distribution in R using the ```binom``` family of
 * ```qbinom()```: Returns the ```q```uantile (See [Quantile Function](https://en.wikipedia.org/wiki/Quantile_function)) of a specified probability value. This can be understood as the inverse of the ```pbinom()``` function.
 * ```dbinom()```: Returns the value of the probaility mass function, evaluated at the specified value (in case of a continuous distribution, it evaluates the probability ```d```ensity function). 
 
-<iframe src="http://localhost:3838/learnBinomial/" style="border: none; width: 900px; height: 640px"></iframe>
+<iframe src="http://localhost:3838/learnBinomial/" style="border: none; width: 800px; height: 640px"></iframe>
 
 ### Discrete Uniform Distribution
 
@@ -266,7 +266,7 @@ Var(X) &= \mathbb{E}\left[(X - \mathbb{E}[X])^{2} \right] = \mathbb{E}\left[\lef
 
 Clearly the Uniform distribution can be used whenever we want to model a population in which all possible outcomes are equally likely. 
 
-<iframe src="http://localhost:3838/dist_Uniform/uniform/" style="border: none; width: 950px; height: 650px"></iframe>
+<iframe src="http://localhost:3838/dist_Uniform/uniform/" style="border: none; width: 800px; height: 650px"></iframe>
 
 ### Normal distribution
 
@@ -274,7 +274,7 @@ The normal distribution is probably the most widely known one. Its PDF is the fa
 
 The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see [Central Limit Theorem](#central-limit-theorem)). The normal distribution can be *standardized*, i.e. given any random normal variable, $X\sim N(\mu, \sigma^2)$, we can get a *standard normal* variable $Y \sim N(0, 1)$ where $Y = \frac{X - \mu}{\sigma}$. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal $Y\sim N(0,1)$ we can get to any $X \sim N(\mu, \sigma^{2})$ by defining $X = \mu + \sigma * Y$ by just rearranging the formula above. In the application below you can see the PDF and CDF of the normal distribution and set a mean and a standard deviation. Try to get an intuition about why this simple transformation works. First change only the mean and observe that the shape of the PDF stays the same and its *location* is shifted. Starting from a normal distribution with $μ = 0$ and setting $\mu = 4$ is equivalent to adding $4$ to each value (see table of percentiles). Similarly changing the standard deviation from $σ = 1$ to $σ = 2,\ 3,\ 4, \dots$ is equivalent to multiplying each value with $2,\ 3,\ 4, \dots$. 
 
-<iframe src="http://localhost:3838/Dist_Normal/" style="border: none; width: 900px; height: 550px"></iframe>
+<iframe src="http://localhost:3838/Dist_Normal/" style="border: none; width: 800px; height: 550px"></iframe>
 
 The normal PDF is defined as
 
@@ -292,11 +292,11 @@ $$
 
 Notice that this is just the integral of the density up to a point $x$. 
 
-<iframe src="http://localhost:3838/dist_Normal_Integral/" style="border: none; width: 900px; height: 340px"></iframe>
+<iframe src="http://localhost:3838/dist_Normal_Integral/" style="border: none; width: 800px; height: 340px"></iframe>
 
 When using the Normal distribution in R one has to specify the standard deviation $\sigma$ rather than the variance $\sigma^2$. Of course sometimes it is easier to pass `sqrt(variance)` instead of typing in the standard deviation. For example if $Var(X) = 2$ then $SD(X) = \sqrt{2} =  1.41421356\dots$ and it is easier to call `rnorm(10, 0, sqrt(2))` to generate 10 random numbers from a Normal distribution with $\mu = 0, \sigma^2 = 2$.
 
-<iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 900px; height: 900px"></iframe>
+<iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 800px; height: 900px"></iframe>
 
 ### $\chi^2$ Distribution
 
@@ -308,7 +308,7 @@ $$
 
 That is, if we square $k$ normal variables and sum them up the result is a $\chi^2$ variable with $k$ degrees of freedom
 
-<iframe src="http://localhost:3838/Dist_Chisq/" style="border: none; width: 900px; height: 550px"></iframe>
+<iframe src="http://localhost:3838/Dist_Chisq/" style="border: none; width: 800px; height: 550px"></iframe>
 
 Calculating the expected value, using the properties of the standard normal distribution, is simple.
 
@@ -362,7 +362,7 @@ $$
 
 Notice that as the degrees of freedom approach infinity the t-Distribution becomes the Standard Normal Distribution.
 
-<iframe src="http://localhost:3838/Dist_T/" style="border: none; width: 900px; height: 400px"></iframe>
+<iframe src="http://localhost:3838/Dist_T/" style="border: none; width: 800px; height: 400px"></iframe>
 
 
 ### F-Distribution
