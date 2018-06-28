@@ -172,7 +172,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="probability-distributions.html"><a href="probability-distributions.html"><i class="fa fa-check"></i><b>6</b> Probability Distributions</a><ul>
 <li class="chapter" data-level="6.1" data-path="probability-distributions.html"><a href="probability-distributions.html#introduction"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.2" data-path="probability-distributions.html"><a href="probability-distributions.html#discrete-distributions"><i class="fa fa-check"></i><b>6.2</b> Discrete Distributions</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="probability-distributions.html"><a href="probability-distributions.html#binomial-distribution---coin-toss-yet-again"><i class="fa fa-check"></i><b>6.2.1</b> <a id="binom"></a> Binomial Distribution - Coin toss yet again!</a></li>
+<li class="chapter" data-level="6.2.1" data-path="probability-distributions.html"><a href="probability-distributions.html#binomial-distribution"><i class="fa fa-check"></i><b>6.2.1</b> Binomial Distribution</a></li>
 <li class="chapter" data-level="6.2.2" data-path="probability-distributions.html"><a href="probability-distributions.html#discrete-uniform-distribution"><i class="fa fa-check"></i><b>6.2.2</b> Discrete Uniform Distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="probability-distributions.html"><a href="probability-distributions.html#continuous-distributions"><i class="fa fa-check"></i><b>6.3</b> Continuous Distributions</a><ul>
@@ -370,6 +370,8 @@ g(hhh) = 3 &gt; g(hht) = g(hth) = g(thh) = 2 &gt; g(tth) =  g(tht) = g(htt) = 1 
 p(h) = p(t) = 0.5
 \]</span></p>
 <p>By definition the probabilities have to add up to one. If you think of probabilities in percentages, this just expresses that with 100% certainty <em>something</em> happens. If we toss a coin we are certain that we get either heads or tails and thus for a fair coin the chance is 50/50. If you set the slider to 3 and the probability of observing h (<span class="math inline">\(p(h)\)</span>) to <span class="math inline">\(0.5\)</span> the <a href="random-variables.html#definitions"><strong>cumulative distribution function</strong></a> will update accordingly. The dots mean that at that point we are already at the higher probability and not on the line below. Let’s analyze the result. Between 0 and 0.2 lies the probability of observing less than or equal to 0 heads. Of course we cannot observe a negative number of heads and so this is just the probability of observing no heads. There is only one realization of our experiment that fulfills that property: <span class="math inline">\(g(ttt) = 0\)</span>. So how likely is that to happen? Each coin has the probability 0.5 to show tails and we need all of them to land on tails.</p>
+<iframe src="http://imstat.shinyapps.io/coin/" width="800" height="1200" frameBorder="0">
+</iframe>
 <p><span class="math display">\[
 p(ttt) = 0.5 * 0.5 * 0.5 = 0.125
 \]</span></p>
@@ -401,8 +403,6 @@ F_X(0) = f_X(0),\ F_X(1) = f_X(0) + f_X(1),\ F_X(2) = f_X(0) + f_X(1) + f_X(2),\
 <p><span class="math display">\[
 F_X(x) = \sum_{i=0}^x f_X(i)
 \]</span></p>
-<iframe src="http://imstat.shinyapps.io/coin/" width="900" height="1200" frameBorder="0">
-</iframe>
 </div>
 <div id="sum-of-two-dice" class="section level3">
 <h3><span class="header-section-number">5.0.3</span> Sum of two dice</h3>
@@ -418,7 +418,7 @@ P(x) =
       \frac{6}{36} = \frac{1}{6} &amp; \text{if } x = 7\\
 \end{cases}
 \]</span></p>
-<p>To see what this looks like in practice you can simulate dice throws below. The program randomly throws two dice and displays their sum in a histogram with all previous throws. The longer you let the simulation run, the more the sample probabilities will converge to the theoretically calculated values above.</p>
+<p>To see what this looks like in practice you can simulate dice throws below. The program randomly throws two (or more) dice and displays their sum in a histogram with all previous throws. The longer you let the simulation run, the more the sample probabilities will converge to the theoretically calculated values above.</p>
 <iframe src="http://localhost:3838/Dice_throw/" width="900" height="650" frameBorder="0">
 </iframe>
 </div>
