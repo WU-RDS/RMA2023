@@ -280,8 +280,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.3.3" data-path="logistic-regression.html"><a href="logistic-regression.html#perfect-prediction-logit"><i class="fa fa-check"></i><b>12.3.3</b> Perfect Prediction Logit</a></li>
 </ul></li>
 <li class="chapter" data-level="12.4" data-path="logistic-regression.html"><a href="logistic-regression.html#appendix-1"><i class="fa fa-check"></i><b>12.4</b> Appendix</a><ul>
-<li class="chapter" data-level="12.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#estimation-of-the-parameters-beta_i"><i class="fa fa-check"></i><b>12.4.1</b> Estimation of the parameters <span class="math inline">\(\beta_i\)</span></a></li>
-<li class="chapter" data-level="12.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#example-1"><i class="fa fa-check"></i><b>12.4.2</b> Example</a></li>
+<li class="chapter" data-level="12.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-estimation"><i class="fa fa-check"></i><b>12.4.1</b> Maximum likelihood estimation</a></li>
+<li class="chapter" data-level="12.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#estimation-of-the-parameters-beta_i"><i class="fa fa-check"></i><b>12.4.2</b> Estimation of the parameters <span class="math inline">\(\beta_i\)</span></a></li>
+<li class="chapter" data-level="12.4.3" data-path="logistic-regression.html"><a href="logistic-regression.html#example-1"><i class="fa fa-check"></i><b>12.4.3</b> Example</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>13</b> Exploratory factor analysis</a><ul>
@@ -378,8 +379,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><br></p>
 <p>A <strong>construct</strong> is a specific type of concept that exists at a higher level of abstraction than everyday concepts. In this example, the <em>perceived benefits</em> of toothpaste represent the construct that we would like to measure. The construct is unobservable (‘latent’) but it can be inferred from other measurable variables (items) that together comprise a scale (latent construct). A <strong>multi-item scale</strong> consists of multiple items, where an item is a single question or statement to be evaluated. In the above example, we use six items to measure the perceived benefits of toothpaste. If several items correlate highly, they might measure aspects of a common underlying dimension (a.k.a. factors). That is, specific patterns in the correlation matrix signal the existence of one or more factors underlying the data. Let’s inspect the correlation matrix using the <code>rcorr()</code> function from the <code>Hmisc</code> package.</p>
 <p><br></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Hmisc&quot;</span>)
-<span class="kw">rcorr</span>(<span class="kw">as.matrix</span>(factor_analysis))</code></pre></div>
 <pre><code>##                  prevent_cavities shiny_teeth strengthen_gum fresh_breath
 ## prevent_cavities             1.00       -0.05           0.87        -0.09
 ## shiny_teeth                 -0.05        1.00          -0.16         0.57
@@ -451,8 +450,8 @@ Social_i=b_1X_{1i} + b_2X_{2i} + b_3X_{3i}+ b_4X_{4i}+ b_5X_{5i}+ b_6X_{6i}+\eps
 \end{array}\right]\]</span></p>
 <p>The linear relation between the factors and the factor loadings can also be shown in a graph, where each axis represents a factor and the variabels are placed on the coordinates according to the strength of the relationship between the variable and each factor. The greater the loading of variables on a factor, the more that factor explains relationships between those variables. You can also think of the factor loadings as the correlations between a factor and a variable.</p>
 <p><br></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-346"></span>
-<img src="_main_files/figure-html/unnamed-chunk-346-1.png" alt="Factor loadings" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-351"></span>
+<img src="_main_files/figure-html/unnamed-chunk-351-1.png" alt="Factor loadings" width="672" />
 <p class="caption">
 Figure 13.1: Factor loadings
 </p>
@@ -583,8 +582,8 @@ Social_i=&amp; 0.25*preventCavities_{i} + 0.80*shinyTeeth_{i} + 0.13*strengthenG
 <p>Another way to make the correlations more salient is to plot the correlation matrix using different colors that indicate the strength of the correlations. This can be done using the <code>corPolot()</code> function from the <code>psych</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corPlot</span>(correlations, <span class="dt">numbers =</span> <span class="ot">TRUE</span>, <span class="dt">upper =</span> <span class="ot">FALSE</span>, 
     <span class="dt">diag =</span> <span class="ot">FALSE</span>, <span class="dt">main =</span> <span class="st">&quot;Correlations between variables&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-352"></span>
-<img src="_main_files/figure-html/unnamed-chunk-352-1.png" alt="Correlation matrix" width="960" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-357"></span>
+<img src="_main_files/figure-html/unnamed-chunk-357-1.png" alt="Correlation matrix" width="960" />
 <p class="caption">
 Figure 13.2: Correlation matrix
 </p>
@@ -758,8 +757,8 @@ pc1</code></pre></div>
 <p>You can also plot the eigenvalues against the number of factors in order of extraction using a so-called <strong>Scree plot</strong>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(pc1<span class="op">$</span>values, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-358"></span>
-<img src="_main_files/figure-html/unnamed-chunk-358-1.png" alt="Scree plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-363"></span>
+<img src="_main_files/figure-html/unnamed-chunk-363-1.png" alt="Scree plot" width="672" />
 <p class="caption">
 Figure 13.3: Scree plot
 </p>
@@ -983,16 +982,16 @@ large_res &lt;-<span class="st"> </span><span class="kw">abs</span>(residuals) <
 <p>This means that our mean residual is 0.055 and this value should be as low as possible.</p>
 <p>Finally, we need to validate if the residuals are approximately normally distributed, which we do by using a histogram, a Q-Q plot and the Shapiro test.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(residuals)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-365"></span>
-<img src="_main_files/figure-html/unnamed-chunk-365-1.png" alt="Hinstogram of residuals" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-370"></span>
+<img src="_main_files/figure-html/unnamed-chunk-370-1.png" alt="Hinstogram of residuals" width="672" />
 <p class="caption">
 Figure 13.4: Hinstogram of residuals
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(residuals)
 <span class="kw">qqline</span>(residuals)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-366"></span>
-<img src="_main_files/figure-html/unnamed-chunk-366-1.png" alt="Q-Q plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-371"></span>
+<img src="_main_files/figure-html/unnamed-chunk-371-1.png" alt="Q-Q plot" width="672" />
 <p class="caption">
 Figure 13.5: Q-Q plot
 </p>
@@ -1354,17 +1353,12 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[, <span class="kw">c</spa
 ## Q23 0.12 0.42 0.27 0.12 0.06    0</code></pre>
 <p>The above output would lead us to conclude that the fear of computers, fear of statistics and fear of maths subscales of the RAQ all had sufficiently high reliabilities (i.e., Cronbach’s alpha &gt; 0.70). However, the fear of negative peer evaluation subscale had relatively low reliability (Cronbach’s alpha = 0.57). As the output under “Reliability if an item is dropped” suggests, the alpha score would also not increase if an item was dropped from the scale.</p>
 <p>As another example, consider the multi-item scale from the statistical ability questionnaire.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
-<span class="kw">head</span>(test_data)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["startdate"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["enddate"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ipaddress"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["duration"],"name":[4],"type":["int"],"align":["right"]},{"label":["experience"],"name":[5],"type":["int"],"align":["right"]},{"label":["theory_ht"],"name":[6],"type":["int"],"align":["right"]},{"label":["theory_anova"],"name":[7],"type":["int"],"align":["right"]},{"label":["theory_reg"],"name":[8],"type":["int"],"align":["right"]},{"label":["theory_fa"],"name":[9],"type":["int"],"align":["right"]},{"label":["pract_ht"],"name":[10],"type":["int"],"align":["right"]},{"label":["pract_anova"],"name":[11],"type":["int"],"align":["right"]},{"label":["pract_reg"],"name":[12],"type":["int"],"align":["right"]},{"label":["pract_fa"],"name":[13],"type":["int"],"align":["right"]},{"label":["overall_knowledge"],"name":[14],"type":["int"],"align":["right"]},{"label":["multi_1"],"name":[15],"type":["int"],"align":["right"]},{"label":["multi_2"],"name":[16],"type":["int"],"align":["right"]},{"label":["multi_3"],"name":[17],"type":["int"],"align":["right"]},{"label":["multi_4"],"name":[18],"type":["int"],"align":["right"]},{"label":["overall_100"],"name":[19],"type":["int"],"align":["right"]},{"label":["prior_SPSS"],"name":[20],"type":["int"],"align":["right"]},{"label":["prior_R"],"name":[21],"type":["int"],"align":["right"]},{"label":["prior_Stata"],"name":[22],"type":["int"],"align":["right"]},{"label":["prior_Excel"],"name":[23],"type":["int"],"align":["right"]},{"label":["prior_SAS"],"name":[24],"type":["int"],"align":["right"]},{"label":["software_preference"],"name":[25],"type":["int"],"align":["right"]},{"label":["future_importance"],"name":[26],"type":["int"],"align":["right"]},{"label":["gender"],"name":[27],"type":["int"],"align":["right"]},{"label":["country"],"name":[28],"type":["int"],"align":["right"]},{"label":["group"],"name":[29],"type":["int"],"align":["right"]},{"label":["lat"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[31],"type":["dbl"],"align":["right"]}],"data":[{"1":"04.09.2017 21:03","2":"04.09.2017 21:05","3":"188.23.190.194","4":"136","5":"3","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"3","13":"3","14":"2","15":"2","16":"2","17":"4","18":"3","19":"25","20":"1","21":"1","22":"1","23":"5","24":"1","25":"5","26":"4","27":"1","28":"1","29":"1","30":"48.3","31":"16.35"},{"1":"04.09.2017 21:07","2":"04.09.2017 21:12","3":"93.10.250.2","4":"297","5":"3","6":"1","7":"3","8":"3","9":"3","10":"1","11":"1","12":"1","13":"1","14":"2","15":"2","16":"2","17":"2","18":"4","19":"15","20":"1","21":"1","22":"1","23":"4","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"43.7","31":"7.37"},{"1":"04.09.2017 21:09","2":"04.09.2017 21:13","3":"91.0.18.86","4":"237","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2","15":"3","16":"3","17":"3","18":"3","19":"30","20":"1","21":"1","22":"1","23":"2","24":"1","25":"5","26":"4","27":"2","28":"2","29":"2","30":"50.9","31":"6.82"},{"1":"04.09.2017 21:14","2":"04.09.2017 21:23","3":"37.116.255.55","4":"579","5":"1","6":"3","7":"3","8":"3","9":"2","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"3","18":"2","19":"65","20":"1","21":"1","22":"1","23":"3","24":"1","25":"3","26":"4","27":"2","28":"2","29":"1","30":"45.5","31":"11.40"},{"1":"04.09.2017 21:25","2":"04.09.2017 21:30","3":"178.165.131.208","4":"290","5":"1","6":"3","7":"3","8":"2","9":"2","10":"5","11":"5","12":"4","13":"3","14":"3","15":"4","16":"3","17":"4","18":"2","19":"70","20":"3","21":"1","22":"1","23":"3","24":"1","25":"1","26":"4","27":"2","28":"1","29":"1","30":"48.2","31":"16.24"},{"1":"04.09.2017 21:42","2":"04.09.2017 21:46","3":"212.28.68.81","4":"205","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1","15":"3","16":"3","17":"2","18":"4","19":"0","20":"1","21":"1","22":"1","23":"1","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"47.0","31":"28.86"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>The four variables “multi_1” - “multi_4” represent the multi-item scales. We can test the reliability of the scale using the <code>alpha()</code> function (item 4 was reverse coded, hence the “-1” in the <code>keys</code> vector):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">alpha</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;multi_1&quot;</span>, <span class="st">&quot;multi_2&quot;</span>, <span class="st">&quot;multi_3&quot;</span>, 
-    <span class="st">&quot;multi_4&quot;</span>)], <span class="dt">keys =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</code></pre></div>
 <pre><code>## 
 ## Reliability analysis   
 ## Call: psych::alpha(x = test_data[, c(&quot;multi_1&quot;, &quot;multi_2&quot;, &quot;multi_3&quot;, 
@@ -1397,12 +1391,7 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[, <span class="kw">c</spa
 ## multi_3 0.18 0.38 0.22 0.20 0.02    0
 ## multi_4 0.04 0.31 0.16 0.40 0.09    0</code></pre>
 <p>Since the scale exhibits a sufficient degree of reliability, we can compute the new variable as the average score on these items. However, before doing this, we need to recode the reverse coded variable in the appropriate way. It is easy to recode the reverse coded item to be in line with the remaing items on the dimension using the <code>recode()</code> function from the <code>car</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-test_data<span class="op">$</span>multi_4_rec =<span class="st"> </span><span class="kw">recode</span>(test_data<span class="op">$</span>multi_<span class="dv">4</span>, <span class="st">&quot;1=5; 2=4; 3=3; 4=2; 5=1&quot;</span>)</code></pre></div>
 <p>Now we can compute the new variable as the average score of the four items:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-test_data<span class="op">$</span>new_variable =<span class="st"> </span>(test_data<span class="op">$</span>multi_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span>test_data<span class="op">$</span>multi_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_4_rec)<span class="op">/</span><span class="dv">4</span></code></pre></div>
 
 </div>
 </div>

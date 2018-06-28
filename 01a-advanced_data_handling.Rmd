@@ -319,13 +319,13 @@ This result may be somewhat surprising. Why did the function replace _every_ cha
 
 Behind the scenes ```stringr``` uses something called regex (short for "regular expressions") to match patterns. regex allows you to match not just individual letters, but more abstract patterns. It does this by using special characters that do not match literally. You have already met the first such special character ".", which is regex's version of a wildcard, meaning that it matches _any_ other character. That's why, when we told stringr to replace all dots with commas, it replaced every character with a comma. 
 
-This raises the question of what to do if we want to literally match a dot and not any character. There are two ways to go about this. First, we could *escape* the wildcard character. What this means is that we use another special character to tell regex that the next character is meant to be taken literally and not as a wildcard. The symbol for this is a double back slash "\\". So, if we wanted to change only the dot to a comma we would write
+This raises the question of what to do if we want to literally match a dot and not any character. There are two ways to go about this. First, we could *escape* the wildcard character. What this means is that we use another special character to tell regex that the next character is meant to be taken literally and not as a wildcard. The symbol for this is a double back slash "\\\\". So, if we wanted to change only the dot to a comma we would write
 
 ```{r, message=FALSE, warning=FALSE}
 str_replace_all(music_data$top10_artist_names, pattern = "\\.", replacement = ",")
 ```
 
-The second way to achieve this would be by passing the pattern string through the ```fixed()``` function, which tells ```stringr``` that it should take the entire string literally. This means that the following code achieves the same result as using "\\".
+The second way to achieve this would be by passing the pattern string through the ```fixed()``` function, which tells ```stringr``` that it should take the entire string literally. This means that the following code achieves the same result as using "\\\\".
 
 ```{r, message=FALSE, warning=FALSE}
 str_replace_all(music_data$top10_artist_names, pattern = fixed("."), replacement = ",")
@@ -412,7 +412,7 @@ By including ```?``` after the b, we tell regex that it is optional, i.e. that b
 
 ##### Anchors: ```^``` and ```$```
 
-Anchors can be used to specify that a match should only occur at the very beginning or end of a character string, with ```^``` and ```$``` standing for the beginning and the end, respectively. Note that the ```^``` operator has a different meaning inside square brackets (```[]```),e as discussed above.  
+Anchors can be used to specify that a match should only occur at the very beginning or end of a character string, with ```^``` and ```$``` standing for the beginning and the end, respectively. Note that the ```^``` operator has a different meaning inside square brackets (```[]```), as discussed above.  
 
 ```{r}
 vector <- c("abc123", "123abc")
