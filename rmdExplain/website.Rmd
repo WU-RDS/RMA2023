@@ -1,0 +1,251 @@
+---
+title: "Homework Format"
+author: "IMSM (WU)"
+date: "SS 2018"
+output: html_document
+---
+
+# Successful Homework completion {.tabset}
+
+This page will guide you through creating and editing R-Markdown documents for your homework assignments. 
+
+## Creating a new R-Markdown document
+
+0. If an R-Markdown file was provided to you open it with R-Studio an skip to [step 4](#step4) after adding your answers.
+
+1. Open R-Studio
+
+2. Create a new R-Markdown document
+![](./start.PNG)
+![](./openDoc.PNG)
+![](./enterName.PNG)
+![](./template.PNG)
+
+3. Save with appropriate name
+![](./saving.PNG)
+
+    3.1. Add your answers
+
+    3.2. Save again
+
+ <a name="step4"></a>
+ 
+4. "Knit" to HTML 
+![](./knit.PNG)
+
+5. Hand in appropriate file (ending in `.html`) on learn\@WU
+![](./handin.PNG)
+
+## Text and Equations
+
+R-Markdown documents are plain text files that include both text and R-code. Using RStudio they can be converted ('knitted') to HTML or PDF files that include both the text and the results of the R-code. In fact this website is written using R-Markdown and RStudio. In order for RStudio to be able to interpret the document you have to use certain characters or combinations of characters when formatting text and including R-code to be evaluated. By default the document starts with the options for the text part. You can change the title, date, author and a few more advanced options. 
+
+![First lines of an R-Markdown document](./rmdHead.PNG)
+
+### Headings
+
+After that you can immediately start typing text. Usually you want to include some kind of heading first. A heading is created using `#` signs. A single `#` creates a first level heading, two `##` a second level and so on. 
+
+![](./headings.PNG)
+
+### Lists
+
+You can create bullet point lists using `*`, `+` or `-`. Sub-items are created by indenting the item using 4 spaces or 2 tabs. 
+
+````
+* First Item
+````
+
+* First Item
+
+````
+* Second Item
+    + first sub-item
+        - first sub-sub-item
+    + second sub-item
+````
+
+* Second Item
+    + first sub-item
+        - first sub-sub-item
+    + second sub-item
+
+
+In addition ordered lists can be created using numbers and letters. If you need sub-sub-items use `A)` instead of `A.` on the third level. 
+
+````
+1. First item
+    a. first sub-item
+        A) first sub-sub-item 
+     b. second sub-item
+2. Second item
+````
+
+1. First item
+    a. first sub-item
+        A) first sub-sub-item
+    b. second sub-item
+2. Second item
+
+### Equations
+
+Writing well formatted mathematical formulae is done the same way as in [LaTeX](https://en.wikipedia.org/wiki/LaTeX). Math mode is started and ended using `$$`. Take a look at [this wikibook on Mathematics in LaTeX](https://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols) and [this list of Greek letters and mathematical symbols](https://www.sharelatex.com/learn/List_of_Greek_letters_and_math_symbols) if you are not familiar with LaTeX. In addition check out the [LaTeX Math section](#latex-math) of this website.
+
+````
+$$
+ f_1(\omega) = \frac{\sigma^2}{2 \pi},\ \omega \in[-\pi, \pi]
+$$
+````
+
+$$
+ f_1(\omega) = \frac{\sigma^2}{2 \pi},\ \omega \in[-\pi, \pi]
+$$
+
+
+(for those interested this is the spectral density of [white noise](https://en.wikipedia.org/wiki/White_noise))
+
+
+### Text formatting
+
+Text can be formatted in *italics* (`*italics*`) or **bold** (`**bold**`). In addition, you can ad block quotes with `>`
+
+````
+> Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.
+````
+> Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.
+
+## R-Code
+
+### Global options
+
+The first chunk always looks as follows
+
+
+    ```{r setup, include = FALSE}`r ''`
+    knitr::opts_chunk$set(echo = TRUE)
+    ```
+
+It is added to the document automatically and sets options for all the following chunks. These options can be overwritten on a per-chunk basis. 
+
+Keep `knitr::opts_chunk$set(echo = TRUE)` to print your code to the document you will hand in. Changing it to `knitr::opts_chunk$set(echo = FALSE)` will not print your code by default. This can be changed on a per-chunck basis.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+    ```{r cars, echo = FALSE}`r ''`
+    summary(cars)
+
+    plot(dist~speed, cars)
+    ```
+
+
+```{r cars, echo = FALSE}
+summary(cars)
+
+plot(dist~speed, cars)
+```
+
+ 
+    ```{r cars2, echo = TRUE}`r ''`
+    summary(cars)
+
+    plot(dist~speed, cars)
+    ```
+
+
+```{r cars2, echo = TRUE}
+summary(cars)
+
+plot(dist~speed, cars)
+```
+
+ 
+
+## LaTeX Math
+
+In order to write multi-line equations in the same math environment use `\\` after every line. In order to insert a space use a single `\`. To render text inside a math environment use `\text{here is the text}`. In order to align equations start with `\begin{align}` and place an `&` in each line at the point around which it should be aligned. Finally end with `\end{align}`
+
+````
+$$
+\begin{align}
+\text{First equation: }\ Y &= X \beta + \epsilon_y,\ \forall X \\
+\text{Second equation: }\ X &= Z \gamma + \epsilon_x
+\end{align}
+$$
+````
+
+$$
+\begin{align}
+\text{First equation: }\ Y &= X \beta + \epsilon_y,\ \forall X \\
+\text{Second equation: }\ X &= Z \gamma + \epsilon_x
+\end{align}
+$$
+
+### Important symbols
+
+
+````
+$$
+\begin{align}
+1.&\ a^{2} + b\\
+2.&\ a^{2+b} \\
+3.&\ a_{1} \\
+4.&\ a \leq b \\
+5.&\ a \geq b \\
+6.&\ a \neq b\\
+7.&\ a \approx b \\
+8.&\ a \in (0,1) \\
+9.&\ a \rightarrow \infty\\
+10.&\ \frac{a}{b}\\
+11.&\ \frac{\partial a}{\partial b}\\
+12.&\ \sqrt{a} \\
+13.&\ \sum_{i = 1}^{b} a_i\\
+14.&\ \int_{a}^b f(c) dc \\
+15.&\ \prod_{i = 0}^b a_i \\
+16.&\ c \left( \sum_{i=1}^b a_i \right) \text{ (adaptive paranthesis)} 
+\end{align}
+$$
+````
+$$
+\begin{align}
+1.&\ a^{2} + b\\
+2.&\ a^{2+b} \\
+3.&\ a_{1} \\
+4.&\ a \leq b \\
+5.&\ a \geq b \\
+6.&\ a \neq b\\
+7.&\ a \approx b \\
+8.&\ a \in (0,1) \\
+9.&\ a \rightarrow \infty\\
+10.&\ \frac{a}{b}\\
+11.&\ \frac{\partial a}{\partial b}\\
+12.&\ \sqrt{a} \\
+13.&\ \sum_{i = 1}^{b} a_i\\
+14.&\ \int_{a}^b f(c) dc \\
+15.&\ \prod_{i = 0}^b a_i \\
+16.&\ c \left( \sum_{i=1}^b a_i \right) \text{ (adaptive parenthesis)} 
+\end{align}
+$$
+
+The `{}` after `_` and `^` are not strictly necessary if there is only one character in the sub-/superscript. However, in order to place multiple characters in the sub-/superscript they are necessary. 
+e.g.
+````
+$$
+a^b = a^{b} \\
+a^b+c \neq a^{b+c}\\
+\sum_i a_i = \sum_{i} a_{i} \\
+\sum_{i=1}^{b+c} a_i \neq \sum_i=1^b+c a_i
+$$
+````
+$$
+a^b = a^{b} \\
+a^b+c \neq a^{b+c} \\
+\sum_i a_i = \sum_{i} a_{i} \\
+\left(\sum_{i=1}^{b+c} a_i\right) \neq \left(\sum_i=1^b+c a_i\right)
+$$
+
+### Greek letters
+
+[Greek letters](https://en.wikipedia.org/wiki/Greek_alphabet#Letters) are preceded by a `\` followed by their name (`$\beta$` = $\beta$). In order to capitalize them simply capitalize the first letter of the name (`$\Gamma$` = $\Gamma$).

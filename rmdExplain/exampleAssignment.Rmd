@@ -1,0 +1,138 @@
+---
+title: "Assignment 0 (Basics)"
+author: "Lacey Goodstudent - ID: 123456"
+output: html_document
+---
+This document is for demonstration purposes only. Comments are written in *italics* and should not be included in your homework files. 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Assignment
+
+*This section is provided to you*
+
+The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973-74 models).
+
+The following variables are included in the dataset:
+
+  * mpg: Miles/(US) gallon
+  
+  * cyl: Number of cylinders
+  
+  * disp: Displacement (cu.in.)
+  
+  * hp: Gross horsepower
+  
+  * drat: Rear axle ratio
+  
+  * wt: Weight (1000 lbs)
+  
+  * qsec: 1/4 mile time
+  
+  * vs: V/S
+  
+  * am: Transmission (0 = automatic, 1 = manual)
+  
+  * gear: Number of forward gears
+  
+  * carb: Number of carburetors
+
+Use R and appropriate analytical techniques to answer the following questions:
+
+1. How are miles per gallon and weight related?
+
+2. ...
+
+3. ... 
+
+## Data Analysis
+*This section needs to be edited by you*
+
+### Load the data
+
+```{r}
+carData <- read.table("https://gist.githubusercontent.com/seankross/a412dfbd88b3db70b74b/raw/5f23f993cd87c283ce766e7ac6b329ee7cc2e1d1/mtcars.csv",
+                      sep = ',', # make sure to use the appropriate separator!
+                      stringsAsFactors = FALSE, # Do not convert string variables to factors
+                      header = TRUE) # First line includes variable names
+# Make sure this worked:
+head(carData)
+```
+
+### Load the necessary libraries
+
+*You can include options for single chunks in ````{r, options...}` at the beginning of each chunk. When loading the libraries it is good to set `{r, warning=FALSE, message=FALSE}` to avoid printing long messages.*
+
+With ````{r, warning=FALSE, message=FALSE}`:
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+With ````{r}`:
+
+```{r, include=FALSE, echo = FALSE}
+detach(name = package:ggplot2, unload = T)
+detach(package:dplyr, unload = T)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+
+### Question 1
+
+*Description of the steps before the code*
+
+Firs we want to analyze the effect of weight on fuel efficiency...
+```{r}
+ggplot(carData, aes(x = wt, y = mpg)) +
+  geom_line() +
+  ggtitle("MPG by WT")
+
+reg <- lm(mpg~wt, data = carData)
+summary(reg)
+```
+
+*Interpretation of results after the code*
+
+An additional 1000 pounds significantly decrease the miles per gallon by 5.35, on average. ...
+
+
+### Question 2
+
+*You may separate your code into multiple chunks per question if you prefere doing so*
+
+#### 2.1
+
+*Description of steps*
+
+Next I will look at....
+```{r}
+ggplot(carData, aes(y = disp, x = factor(vs), group = vs)) + 
+  geom_boxplot()
+```
+
+*Interpretation*
+
+This shows that...
+
+#### 2.2
+
+*Description*
+
+```{r}
+t.test(disp~vs, data = carData)
+```
+
+*Interpretation*
+
+...
+
+## Question 3
+
+... 
+
