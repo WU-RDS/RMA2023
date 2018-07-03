@@ -1031,6 +1031,72 @@ vif(multiple_regression)
 
 As you can see the values are well below the cutoff, indicating that we don not have to worry about multicollinearity in our example.  
 
+### Omitted Variables
+
+If a variable that in reality influences the outcome is left out of the model ("omitted") a bias might be introduced. Specifically, the other coefficients will be biased if they are correlated with the omitted variable. Intuitively, the variables left in the model "pick up" the effect of the omitted variable to the degree that they are related. In order to understand this it helps to investigate the coefficients of the multiple regression a little bit. We have already seen that in the univariate case 
+
+$$
+\hat{\beta_1}=\frac{COV_{XY}}{s_x^2}
+$$
+
+We have [also seen that we can isolate the partial effect](#partial-plots) of a single variable. Specifically, we can calculate the coefficient of the i-th variable as
+
+$$
+\hat{\beta_{i}} = {COV(\tilde{Y_{i}}, \tilde{X_{i}}) \over V(\tilde{X_i})}
+$$
+
+where $\tilde{Y_{i}}$ is the residual from the regression of $Y$ on all variables except for the i-th and $\tilde{X_i}$ is the residual from the regression of $X_i$ on all other variables. To illustrate this let's generate some data and run a regression.
+
+```{r }
+x1 <- rnorm(100, 5, 15)
+x2 <- rnorm(100, 20, 10) + 3*x1
+x3 <- rnorm(100, 50, 20)
+
+y <- 50 + 2*x1 + 7*x2 + 3*x3 + rnorm(100, 0, 5)
+```
+
+We have added some randomness through the ```rnorm``` command so the coefficients are not exactly as we set them but close. Clearly x1 has partial influence on y.
+
+```{r }
+mod <- lm(y~x1+x2+x3)
+summary(mod)
+```
+
+To illustrate the partial effect of x1 we run regressions for x1 on x2 and x3, as well as y on x2 and x3 and obtain the residuals $\tilde{x1}$ and $\tilde{x2}$. Notice that x1 is highly correlated with x2. 
+
+```{r }
+regX1 <- lm(x1~x2+x3)  
+summary(regX1)
+tildeX1 <- residuals(regX1)
+regY1 <- lm(y~x2+x3)
+tildeY1 <- residuals(regY1)
+```
+We can use the residuals to create the partial plots as seen above.
+
+```{r }
+# This is the same as avPlot
+ggplot(data.frame(y = tildeY1, x = tildeX1), aes(x = x, y = y)) +
+  geom_point(shape = 1) +
+  geom_smooth(method = 'lm', se = FALSE, color = "red") +
+  labs(y = "y | others", x = "x | others") + 
+  theme_bw()
+avPlots(mod)
+```
+And the regression of the residuals of y on x1 yields the same coefficient as in the original regression (minus the rounding errors). 
+
+```{r}
+# This is the same coefficient as in the original regression 
+summary(lm(tildeY1~tildeX1 - 1)) # -1 since we want no intercept
+cov(tildeY1, tildeX1)/var(tildeX1) 
+```
+
+The question now is what would happen if we did not include x2 in the regression? 
+
+```{r }
+lm(y~x1 + x3)
+```
+
+
 ## Categorical predictors
 
 ```{r echo=F, eval=T}
