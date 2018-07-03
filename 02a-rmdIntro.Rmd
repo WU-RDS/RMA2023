@@ -1,10 +1,10 @@
 # Writing reports using R-Markdown
 
-This page will guide you through creating and editing R-Markdown documents. This is a usefull tool for reporting your analysis (e.g. for homework assignments). 
+This page will guide you through creating and editing R-Markdown documents. This is a useful tool for reporting your analysis (e.g. for homework assignments). 
 
 ## Creating a new R-Markdown document
 
-0. If an R-Markdown file was provided to you open it with R-Studio an skip to [step 4](#step4) after adding your answers.
+0. If an R-Markdown file was provided to you, open it with R-Studio and skip to [step 4](#step4) after adding your answers.
 
 1. Open R-Studio
 
@@ -35,15 +35,17 @@ R-Markdown documents are plain text files that include both text and R-code. Usi
 
 ![First lines of an R-Markdown document](./rmdExplain/rmdHead.PNG)
 
+The default is text mode, meaning that lines in an Rmd document will be interpreted as text, unless specified otherwise.
+
 ### Headings
 
-After that you can immediately start typing text. Usually you want to include some kind of heading first. A heading is created using `#` signs. A single `#` creates a first level heading, two `##` a second level and so on. 
+Usually you want to include some kind of heading to structure your text. A heading is created using `#` signs. A single `#` creates a first level heading, two `##` a second level and so on. 
 
 ![](./rmdExplain/headings.PNG)
 
 ### Lists
 
-You can create bullet point lists using `*`, `+` or `-`. Sub-items are created by indenting the item using 4 spaces or 2 tabs. 
+Bullet point lists are created using `*`, `+` or `-`. Sub-items are created by indenting the item using 4 spaces or 2 tabs. 
 
 ````
 * First Item
@@ -59,7 +61,7 @@ You can create bullet point lists using `*`, `+` or `-`. Sub-items are created b
     + second sub-item
 
 
-In addition ordered lists can be created using numbers and letters. If you need sub-sub-items use `A)` instead of `A.` on the third level. 
+Ordered lists can be created using numbers and letters. If you need sub-sub-items use `A)` instead of `A.` on the third level. 
 
 ````
 1. First item
@@ -87,7 +89,9 @@ Text can be formatted in *italics* (`*italics*`) or **bold** (`**bold**`). In ad
 
 ## R-Code
 
-### Global options
+R-code is contained in so called "chunks". These chunks always start with three backticks and ```r``` in curly braces (``` ```{r} ```) and end with three backticks (``` ``` ```). Optionally, parameters can be added after the ```r``` to influence how a chunk behaves. Additionally, you can also give each chunk a name. Note that these have to be **unique**, otherwise R will refuse to knit your document.
+
+### Global and chunk options
 
 The first chunk always looks as follows
 
@@ -132,10 +136,11 @@ summary(cars)
 plot(dist~speed, cars)
 ```
 
+A good overview of all available global/chunk options can be found [here](https://yihui.name/knitr/options/#chunk_options).
+
 ## LaTeX Math
 
-Writing well formatted mathematical formulae is done the same way as in [LaTeX](https://en.wikipedia.org/wiki/LaTeX). Math mode is started and ended using `$$`. Take a look at [this wikibook on Mathematics in LaTeX](https://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols) and [this list of Greek letters and mathematical symbols](https://www.sharelatex.com/learn/List_of_Greek_letters_and_math_symbols) if you are not familiar with LaTeX.
-
+Writing well formatted mathematical formulae is done the same way as in [LaTeX](https://en.wikipedia.org/wiki/LaTeX). Math mode is started and ended using `$$`. 
 ````
 $$
  f_1(\omega) = \frac{\sigma^2}{2 \pi},\ \omega \in[-\pi, \pi]
@@ -148,7 +153,19 @@ $$
 
 (for those interested this is the spectral density of [white noise](https://en.wikipedia.org/wiki/White_noise))
 
-In order to write multi-line equations in the same math environment use `\\` after every line. In order to insert a space use a single `\`. To render text inside a math environment use `\text{here is the text}`. In order to align equations start with `\begin{align}` and place an `&` in each line at the point around which it should be aligned. Finally end with `\end{align}`
+Including inline mathematical notation is done with a single ```$``` symbol. 
+
+````
+${2\over3}$ of my code is inline.
+
+````
+${2\over3}$ of my code is inline.
+
+<br>
+
+Take a look at [this wikibook on Mathematics in LaTeX](https://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols) and [this list of Greek letters and mathematical symbols](https://www.sharelatex.com/learn/List_of_Greek_letters_and_math_symbols) if you are not familiar with LaTeX.
+
+In order to write multi-line equations in the same math environment, use `\\` after every line. In order to insert a space use a single `\`. To render text inside a math environment use `\text{here is the text}`. In order to align equations start with `\begin{align}` and place an `&` in each line at the point around which it should be aligned. Finally end with `\end{align}`
 
 ````
 $$
@@ -168,67 +185,36 @@ $$
 
 ### Important symbols
 
-````
-$$
-\begin{align}
-1.&\ a^{2} + b\\
-2.&\ a^{2+b} \\
-3.&\ a_{1} \\
-4.&\ a \leq b \\
-5.&\ a \geq b \\
-6.&\ a \neq b\\
-7.&\ a \approx b \\
-8.&\ a \in (0,1) \\
-9.&\ a \rightarrow \infty\\
-10.&\ \frac{a}{b}\\
-11.&\ \frac{\partial a}{\partial b}\\
-12.&\ \sqrt{a} \\
-13.&\ \sum_{i = 1}^{b} a_i\\
-14.&\ \int_{a}^b f(c) dc \\
-15.&\ \prod_{i = 0}^b a_i \\
-16.&\ c \left( \sum_{i=1}^b a_i \right) \text{ (adaptive paranthesis)} 
-\end{align}
-$$
-````
+```{r, echo=FALSE, include=TRUE, results="asis", warning = FALSE}
+library(knitr)
+library(kableExtra)
 
-$$
-\begin{align}
-1.&\ a^{2} + b\\
-2.&\ a^{2+b} \\
-3.&\ a_{1} \\
-4.&\ a \leq b \\
-5.&\ a \geq b \\
-6.&\ a \neq b\\
-7.&\ a \approx b \\
-8.&\ a \in (0,1) \\
-9.&\ a \rightarrow \infty\\
-10.&\ \frac{a}{b}\\
-11.&\ \frac{\partial a}{\partial b}\\
-12.&\ \sqrt{a} \\
-13.&\ \sum_{i = 1}^{b} a_i\\
-14.&\ \int_{a}^b f(c) dc \\
-15.&\ \prod_{i = 0}^b a_i \\
-16.&\ c \left( \sum_{i=1}^b a_i \right) \text{ (adaptive parenthesis)} 
-\end{align}
-$$
+lat <- readLines("./lat.txt")
+
+lat1 <- paste0("$", lat, "$")
+lat2 <- paste0("```", lat, "```")
+
+mathy.df <- data.frame(Symbol = lat1, Code = lat2) 
+
+kable(mathy.df, escape=FALSE) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
 
 The `{}` after `_` and `^` are not strictly necessary if there is only one character in the sub-/superscript. However, in order to place multiple characters in the sub-/superscript they are necessary. 
 e.g.
 
-````
-$$
-a^b = a^{b} \\
-a^b+c \neq a^{b+c}\\
-\sum_i a_i = \sum_{i} a_{i} \\
-\sum_{i=1}^{b+c} a_i \neq \sum_i=1^b+c a_i
-$$
-````
-$$
-a^b = a^{b} \\
-a^b+c \neq a^{b+c} \\
-\sum_i a_i = \sum_{i} a_{i} \\
-\left(\sum_{i=1}^{b+c} a_i\right) \neq \left(\sum_i=1^b+c a_i\right)
-$$
+
+```{r, echo=FALSE, include=TRUE, results="asis", warning = FALSE}
+lat <- readLines("./lat2.txt")
+
+lat1 <- paste0("$", lat, "$")
+lat2 <- paste0("```", lat, "```")
+
+mathy.df <- data.frame(Symbol = lat1, Code = lat2) 
+
+kable(mathy.df, escape=FALSE) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
 
 ### Greek letters
 
