@@ -47,6 +47,7 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.7.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -169,7 +170,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2.3" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#text-formatting"><i class="fa fa-check"></i><b>5.2.3</b> Text formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#r-code"><i class="fa fa-check"></i><b>5.3</b> R-Code</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#global-options"><i class="fa fa-check"></i><b>5.3.1</b> Global options</a></li>
+<li class="chapter" data-level="5.3.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#global-and-chunk-options"><i class="fa fa-check"></i><b>5.3.1</b> Global and chunk options</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#latex-math"><i class="fa fa-check"></i><b>5.4</b> LaTeX Math</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#important-symbols"><i class="fa fa-check"></i><b>5.4.1</b> Important symbols</a></li>
@@ -418,7 +419,7 @@ population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(popu
 <span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country\n(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of world\npopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,392,710,000","4":"July 2, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1,333,800,000","4":"July 2, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327,408,000","4":"July 2, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265,015,300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212,104,000","4":"July 2, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209,259,000","4":"July 2, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country\n(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of world\npopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,392,730,000","4":"July 3, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1,333,840,000","4":"July 3, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327,414,000","4":"July 3, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265,015,300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212,115,000","4":"July 3, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209,263,000","4":"July 3, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>You can see that population is read as a character variable because of the commas.</p>
@@ -429,7 +430,7 @@ population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(popu
 <span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country\n(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of world\npopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1392710000","4":"July 2, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1333800000","4":"July 2, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327408000","4":"July 2, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265015300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212104000","4":"July 2, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209259000","4":"July 2, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country\n(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of world\npopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1392730000","4":"July 3, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1333840000","4":"July 3, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327414000","4":"July 3, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265015300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212115000","4":"July 3, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209263000","4":"July 3, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now the variable is of type “numeric” and could be used for analysis.</p>
@@ -484,10 +485,24 @@ ctrydata &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url) <sp
 <div id="scraping-data-from-apis-via-r-packages" class="section level4">
 <h4><span class="header-section-number">4.4.2.2</span> Scraping data from APIs via R packages</h4>
 <p>An even more convenient way to obtain data from web APIs is to use existing R packages that someone else has already created. There are R packages available for various web-services. For example, the <code>gtrendsR</code> package can be used to conveniently obtain data from the <a href="https://trends.google.at/trends/" target="_blank">Google Trends</a> page. The <code>gtrends()</code> function is easy to use ans returns a list of elements (e.g., “interest over time”, “interest by city”, “related topics”), which can be inspected using the <code>ls()</code> function. The following example can be used to obtain data for the search term “data science” in the US between September 1 and October 6:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(gtrendsR)</span>
-<span class="co"># google_trends &lt;- gtrends(&quot;data science&quot;, geo = c(&quot;US&quot;), gprop = c(&quot;web&quot;), time = &quot;2017-09-01 2017-10-06&quot;)</span>
-<span class="co"># ls(google_trends)</span>
-<span class="co"># head(google_trends$interest_over_time)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gtrendsR)
+index =<span class="st"> </span><span class="dv">1</span>
+success =<span class="st"> </span><span class="ot">FALSE</span>
+<span class="cf">while</span>(<span class="op">!</span>(success <span class="op">|</span><span class="st"> </span>index <span class="op">==</span><span class="st"> </span><span class="dv">10</span>)){
+  google_trends &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">gtrends</span>(<span class="st">&quot;data science&quot;</span>, <span class="dt">geo =</span> <span class="kw">c</span>(<span class="st">&quot;US&quot;</span>), <span class="dt">gprop =</span> <span class="kw">c</span>(<span class="st">&quot;web&quot;</span>), <span class="dt">time =</span> <span class="st">&quot;2017-09-01 2017-10-06&quot;</span>), <span class="dt">silent =</span> <span class="ot">TRUE</span>)
+  
+  <span class="cf">if</span>(<span class="op">!</span><span class="kw">is</span>(google_trends, <span class="st">&quot;try-error&quot;</span>)){
+    <span class="kw">ls</span>(google_trends)
+    <span class="kw">head</span>(google_trends<span class="op">$</span>interest_over_time)
+    success =<span class="st"> </span><span class="ot">TRUE</span>
+  }<span class="cf">else</span>{
+  index =<span class="st"> </span>index <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  <span class="kw">Sys.sleep</span>(<span class="kw">runif</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>))}
+}
+<span class="cf">if</span>(success <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){
+  <span class="kw">warning</span>(<span class="st">&quot;Google Trends has exited unsuccessfully&quot;</span>)
+}</code></pre></div>
+<pre><code>## Warning: Google Trends has exited unsuccessfully</code></pre>
 
 </div>
 </div>

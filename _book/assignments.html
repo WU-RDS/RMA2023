@@ -47,6 +47,7 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.7.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -169,7 +170,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2.3" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#text-formatting"><i class="fa fa-check"></i><b>5.2.3</b> Text formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#r-code"><i class="fa fa-check"></i><b>5.3</b> R-Code</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#global-options"><i class="fa fa-check"></i><b>5.3.1</b> Global options</a></li>
+<li class="chapter" data-level="5.3.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#global-and-chunk-options"><i class="fa fa-check"></i><b>5.3.1</b> Global and chunk options</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#latex-math"><i class="fa fa-check"></i><b>5.4</b> LaTeX Math</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#important-symbols"><i class="fa fa-check"></i><b>5.4.1</b> Important symbols</a></li>
@@ -436,13 +437,13 @@ stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_dat
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;SD streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-385-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-386-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_sd)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;SD streams&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-385-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-386-2.png" width="672" /></p>
 <p>As we can see in both the descriptive statistics and the plots, the mean of the number of streams is higher where online_advertising = 1, i.e. for the videos that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a <strong>two sample t-test</strong>. The requirements are clearly met:</p>
 <ul>
 <li>Our dependent value is on a ratio scale.</li>
@@ -482,13 +483,13 @@ stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_dat
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;HD streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-387-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-388-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_hd)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;HD streams&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-387-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-388-2.png" width="672" /></p>
 <p>Again, the summary statistics and boxplots seem to indicate that there is a difference in means. Using the same reasoning as before, we can deduce that we need a two sample t-test to determine whether this difference is signficant.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data, <span class="dt">paired =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## 
@@ -524,7 +525,7 @@ stats_sd &lt;-<span class="st"> </span>psych<span class="op">::</span><span clas
 <span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> streams_hd, <span class="dt">x =</span> <span class="st">&quot;HD&quot;</span>)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Streams&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-389-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-390-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">y =</span> streams_sd, <span class="dt">x =</span> <span class="st">&quot;SD&quot;</span>),<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">y =</span> streams_sd, <span class="dt">x =</span> <span class="st">&quot;SD&quot;</span>),<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
@@ -532,7 +533,7 @@ stats_sd &lt;-<span class="st"> </span>psych<span class="op">::</span><span clas
 <span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">y =</span> streams_hd, <span class="dt">x =</span> <span class="st">&quot;HD&quot;</span>), <span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Video qualtity&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-389-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-390-2.png" width="672" /></p>
 <p>As in question one, it appears that there is a difference in the means. To test whether it is significant we again need a t-test, with one important distinction: Our observations were in both experimental conditions, meaning we have data on HD and SD streams for each observation. This means that we need a <strong>dependent means t-test</strong>. The other assumptions are virtually identical to the regular t-test. The test can be executed in R by adding <code>paired = TRUE</code> to the code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
@@ -562,12 +563,12 @@ rel_freq_table<span class="op">$</span>academy_award &lt;-<span class="st"> </sp
 
 
 <span class="kw">ggplot</span>(rel_freq_table, <span class="kw">aes</span>(<span class="dt">x =</span> genre, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> academy_award)) <span class="op">+</span><span class="st"> </span><span class="co">#plot data</span>
-<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">.7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> .<span class="dv">7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Academy award (proportion)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span>
 <span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Academy award&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-392-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-393-1.png" width="672" /></p>
 <p>If the two variables truly are independent, knowing the genre would tell us nothing about the probability of an academy award. The relative frequency table and the above plot hint at the fact that this may not be the case. To actually test this we use the <strong>Chi-squared test</strong> .</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create contingency table for Chi-squared test</span>
 cont_table &lt;-<span class="st"> </span><span class="kw">table</span>(movie_data[,<span class="kw">c</span>(<span class="st">&quot;genre&quot;</span>, <span class="st">&quot;academy_award&quot;</span>)])
@@ -603,7 +604,7 @@ table_plot_cond_rel<span class="op">$</span>academy_award &lt;-<span class="st">
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>academy_award) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Customer rating&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Relative frequency&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-395-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-396-1.png" width="672" /></p>
 <p>Based solely on this plot it seems that movies with academy awards are more likely to gain higher customer ratings. To be able to test this, we need the Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test). Obviously, we need to check whether the assumptions for the test are fulfilled.</p>
 <ul>
 <li>Our dependent variable is ordinally scaled (i.e. there is a “natural” order to customer satisfaction ratings).</li>
@@ -719,7 +720,7 @@ dld.full<span class="op">$</span>gender &lt;-<span class="st"> </span><span clas
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-399-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-400-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Both the summary statistics and the plot hint at the fact that the means may not be equal. Before we move to the test, we need to see if a series of assumptions are met, namely:</p>
 <ul>
 <li>Distributional assumptions</li>
@@ -755,10 +756,10 @@ aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue<span class
 <p>Next we will briefly inspect the residuals of the ANOVA to see if the assumptions of the test really are justified.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Inspect residuals</span>
 <span class="kw">plot</span>(aov,<span class="dv">1</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-403-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-404-1.png" width="672" /></p>
 <p>The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov,<span class="dv">2</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-404-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-405-1.png" width="672" /></p>
 <p>The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behaviour here may indicate problems with the model specification.</p>
 <p>To further confirm that the residuals are roughly normally distributed we employ the Shapiro-Wilk test. The null hypothesis is that the distribution of the data is normal, with the alternative hypothesis positing that the data is not normally distributed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</code></pre></div>
@@ -830,7 +831,7 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov,<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The mar parameter changes the margins around created plots. This is done so the labels on the side of the Tukey plot are visible (however, this was not expected). </span>
 <span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(tukeys)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-408-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-409-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>))</code></pre></div>
 <p>It is clearly visible that none of the CIs cross the 0 bound, which further indicates that the differences in means are statistically significantly different from 0.</p>
 <p>From a reporting standpoint we can say that revenue is higher when using generic retargeting vs. no retargeting, dynamic retargeting vs. no retargeting and also when using dynamic retargeting vs. generic retargeting.</p>
@@ -894,13 +895,13 @@ dld.full<span class="op">$</span>Group &lt;-<span class="st"> </span><span class
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Gender&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average revenue&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-409-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-410-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dld.full, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">interaction</span>(gender, retargeting), <span class="dt">y =</span> revenue, <span class="dt">fill =</span> gender)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">vjust =</span> <span class="dv">1</span>))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-409-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-410-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Both the summary statistics and the plots seem to indicate a difference between men and women. Before we can jump straight into the analysis, we need to test whether the assumptions of the model are justified.</p>
 <p>We begin with the distributional assumptions. To this end we check how many observations are in each group.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check number of obs per group</span>
@@ -933,9 +934,9 @@ dld.full<span class="op">$</span>Group &lt;-<span class="st"> </span><span class
 <p>As a final step we again check the residuals to see whether or not the assumptions are justified.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Inspect residuals</span>
 <span class="kw">plot</span>(aov,<span class="dv">1</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-413-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-414-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov,<span class="dv">2</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-413-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-414-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
@@ -952,7 +953,7 @@ dld.full<span class="op">$</span>Group &lt;-<span class="st"> </span><span class
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-414-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-415-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The boxplot seems to indicate that the medians are unequal.</p>
 <p>The only assumption that we require for this test is that the dependent variable is at least ordinal, which is fulfilled for customer ranks. Hence we can move on to performing the test in R.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ordinal data so we use a non-parametric test</span>
@@ -1052,11 +1053,11 @@ psych<span class="op">::</span><span class="kw">describe</span>(sales_data)</cod
 <p>Since we have continuous variables, we use scatterplots to investigate the relationship between sales and each of the predictor variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 <span class="kw">ggplot</span>(sales_data, <span class="kw">aes</span>(<span class="dt">x =</span> tv_adspend, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-419-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-420-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sales_data, <span class="kw">aes</span>(<span class="dt">x =</span> online_adspend, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-419-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-420-2.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sales_data, <span class="kw">aes</span>(<span class="dt">x =</span> radio_adspend, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-419-3.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-420-3.png" width="672" /></p>
 <p>The plots already suggest that there might be a positive linear relationship between sales and TV- and online-advertising. However, there does not appear to be a strong relationship between sales and radio advertising.</p>
 </div>
 <div id="question-3-2" class="section level3">
@@ -1070,16 +1071,16 @@ psych<span class="op">::</span><span class="kw">describe</span>(sales_data)</cod
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sales_data<span class="op">$</span>stud_resid &lt;-<span class="st"> </span><span class="kw">rstudent</span>(linear_model)
 <span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(sales_data),sales_data<span class="op">$</span>stud_resid, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">3.3</span>,<span class="fl">3.3</span>)) <span class="co">#create scatterplot </span>
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">lty=</span><span class="dv">2</span>) <span class="co">#add reference lines</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-421-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-422-1.png" width="672" /></p>
 <p>Since there are no residuals with absolut values larger than 3, we conclude that there are no severe outliers.</p>
 </div>
 <div id="influencial-observations" class="section level4">
 <h4><span class="header-section-number">15.3.4.2</span> Influencial observations</h4>
 <p>To test for influential observations, we use Cook’s Distance. You may use the following two plots to verify if any Cook’s Dinstance values are larger than the cutoff of 1.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_model,<span class="dv">4</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-422-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-423-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_model,<span class="dv">5</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-422-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-423-2.png" width="672" /></p>
 <p>Since all values are well below the cutoff, we conclude that influencial observations are not a problem in our model.</p>
 </div>
 <div id="non-linear-relationships-1" class="section level4">
@@ -1087,24 +1088,24 @@ psych<span class="op">::</span><span class="kw">describe</span>(sales_data)</cod
 <p>Next, we test if a linear specification appears feasible. You could test this using the added variable plots:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">avPlots</span>(linear_model)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-423-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-424-1.png" width="672" /></p>
 <p>The plots suggest that the linear specification is appropriate. In addition, you could also use the residuals plot to see if the linear specification is appropriate. The red line is a smoothed curve through the residuals plot and if it deviates from the dashed grey horizontal line a lot, this would suggest that a linear specification is not appropriate.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_model, <span class="dv">1</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-424-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-425-1.png" width="672" /></p>
 <p>In this example, the red line is close to the dashed grey line, so the linear specification appears reasonable.</p>
 </div>
 <div id="heteroscedasticity" class="section level4">
 <h4><span class="header-section-number">15.3.4.4</span> Heteroscedasticity</h4>
 <p>Next, we test if the residual variance is approximately the same at all levels of the predicted outcome variables (i.e., homoscedasticity). To do this, we use the residuals plot again.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_model, <span class="dv">1</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-425-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-426-1.png" width="672" /></p>
 <p>The spread of residuals at different levels of the predicted outcome does not appear to be very different. Thus, we can conclude that heteroscedasticity is unlikely to be a problem.</p>
 </div>
 <div id="non-normally-distributed-errors-1" class="section level4">
 <h4><span class="header-section-number">15.3.4.5</span> Non-normally distributed errors</h4>
 <p>Next, we test if the residuals are approximately normally distributed using the Q-Q plot from the output:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_model,<span class="dv">2</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-426-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-427-1.png" width="672" /></p>
 <p>The Q-Q plot does not suggest a severe deviation from a normal distribution. This could also be validated using the Shapiro test:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(linear_model))</code></pre></div>
 <pre><code>## 
@@ -1117,7 +1118,7 @@ psych<span class="op">::</span><span class="kw">describe</span>(sales_data)</cod
 <h4><span class="header-section-number">15.3.4.6</span> Correlation of errors</h4>
 <p>Next, we test if the residuals are uncorrelated. Any clustered pattern in the residuals plot would indicate dependence of errors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_model,<span class="dv">1</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-428-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-429-1.png" width="672" /></p>
 <p>In our example, the residuals do not appear to be correlated since there is no clustered pattern.</p>
 </div>
 <div id="multicollinearity" class="section level4">
@@ -1140,7 +1141,7 @@ psych<span class="op">::</span><span class="kw">describe</span>(sales_data)</cod
 ## radio_adspend  0.304      0.771</code></pre>
 <p>The results show that the bivariate correlations are rather low. This can also be shown in a plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sales_data[,<span class="kw">c</span>(<span class="st">&quot;tv_adspend&quot;</span>,<span class="st">&quot;online_adspend&quot;</span>,<span class="st">&quot;radio_adspend&quot;</span>)])</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-430-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-431-1.png" width="672" /></p>
 <p>In a next step, we compute the variance inflation factor for each predictor variable. The values should be close to 1 and values larger than 4 indicate potential problems with the linear dependence of regressors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">vif</span>(linear_model)</code></pre></div>
@@ -1228,7 +1229,7 @@ psych<span class="op">::</span><span class="kw">describe</span>(sales_data)</cod
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name=</span><span class="st">&quot;observed values&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-436-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-437-1.png" width="672" /></p>
 </div>
 <div id="question-5" class="section level3">
 <h3><span class="header-section-number">15.3.6</span> Question 5</h3>
