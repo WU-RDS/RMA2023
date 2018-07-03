@@ -44,4 +44,4 @@ p2 <- p2 + suppressWarnings(
   geom_linerange(aes(x = xvals, y = NULL, ymin = 0, ymax = yvals, group = xvals, frame = framevals))) +
   suppressWarnings(geom_point(aes(x = xvals, y = yvals, group = xvals, frame = framevals)))
 
-gganimate(p2 + ggtitle("Deviation to Squared Deviation from expected value"), "./sqrerror.html", interval = 0.5, title = FALSE, verbose = FALSE, loop = FALSE)
+gganimate(p2 + ggtitle("Deviation to Squared Deviation from expected value"), "./sqrerror.gif", interval = 0.5, title = FALSE, verbose = FALSE, loop = FALSE)

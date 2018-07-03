@@ -89,9 +89,16 @@ server <- function(input, output) {
     )
     y <- rbinom(1e5, input$n_toss, input$p_head)
     plot(NULL, xlim=c(0, input$n_toss), ylim = c(0,1), 
-         ylab = "Cumulative Probability", xlab = "# of h", xaxt = "n", main="Cumulative Distribution function of the coin toss")
+         ylab = "Cumulative Probability", xlab = "# of h",
+         xaxt = "n",
+         main=NULL,
+         font.main = 1,
+         las = 1)
+    title("Cumulative Distribution function of the coin toss", adj = 0,
+          line = 0.3, font = 1, family = "sans")
     axis(1, at = 0:input$n_toss)
-    grid(NULL, NULL, lwd = 1, lty = 'solid', col = "gray93", equilogs = FALSE)
+    grid(NULL, NULL, lwd = 1, lty = 'solid', col = "gray93",
+         equilogs = FALSE)
     lines(ecdf(y))
   })
   output$coin_cdf <- renderPlot({coin_cdf_alt()})
@@ -106,8 +113,10 @@ server <- function(input, output) {
       labs(x = "# of h", y = "Probability Mass")+
       scale_x_continuous(breaks = 0:input$n_toss)+
       ggtitle("Probability Mass Function of the coin toss")+
-      theme(plot.title = element_text(hjust = 0.5, face = "bold"))+
+      theme_bw() + 
+      theme(plot.title = element_text(face = "bold"))+
       expand_limits(y=0)
+     
   })
   output$coin_pdf <- renderPlot({coin_pdf()})
   
