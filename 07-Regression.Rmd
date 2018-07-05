@@ -1033,7 +1033,7 @@ As you can see the values are well below the cutoff, indicating that we don not 
 
 ### Omitted Variables
 
-If a variable that in reality influences the outcome is left out of the model ("omitted") a bias might be introduced. Specifically, the other coefficients will be biased if they are correlated with the omitted variable. Intuitively, the variables left in the model "pick up" the effect of the omitted variable to the degree that they are related. In order to understand this it helps to investigate the coefficients of the multiple regression a little bit. We have already seen that in the univariate case 
+If a variable that in reality influences the outcome is left out of the model ("omitted") a bias in other variables' coefficients might be introduced. Specifically, the other coefficients will be biased if the corresponding variables are correlated with the omitted variable. Intuitively, the variables left in the model "pick up" the effect of the omitted variable to the degree that they are related. In order to understand this it helps to investigate the coefficients of the multiple regression a little bit. We have already seen that in the univariate case 
 
 $$
 \hat{\beta_1}=\frac{COV_{XY}}{s_x^2}
@@ -1045,7 +1045,7 @@ $$
 \hat{\beta_{i}} = {COV(\tilde{Y_{i}}, \tilde{X_{i}}) \over V(\tilde{X_i})}
 $$
 
-where $\tilde{Y_{i}}$ is the residual from the regression of $Y$ on all variables except for the i-th and $\tilde{X_i}$ is the residual from the regression of $X_i$ on all other variables. To illustrate this let's generate some data and run a regression.
+where $\tilde{Y_{i}}$ is the residual from the regression of $Y$ on all variables except for the i-th and $\tilde{X_i}$ is the residual from the regression of $X_i$ on all other variables. We can use this result to calculate the bias that is introduced when a variable is omitted from the model. Let's illustrate this with an example.
 
 ```{r }
 x1 <- rnorm(100, 5, 15)
@@ -1054,12 +1054,31 @@ x2 <- rnorm(100, 20, 10) + 3*x1
 y <- 50 + 2*x1 + 7*x2 + rnorm(100, 0, 5)
 ```
 
-We have added some randomness through the ```rnorm``` command so the coefficients are not exactly as we set them but close. Clearly x1 has partial influence on y.
+We have added some randomness through the ```rnorm``` command so the coefficients are not exactly as we set them but close. Clearly x1 and x2 have partial influence on y.
 
 ```{r }
 mod <- lm(y~x1+x2)
 summary(mod)
 ```
+
+Assume variable x2 is now omitted from the model. What happens to the coefficient of x1? If x1 and x2 are not independent the coefficient will be biased. We can also work out intuitively what the bias will be. The marginal effect of x2 on y is captured by x1 to the degree that x1 is related to x2. There are two coefficients of interest: 1. What is the marginal effect of x2 on y? 2. How much of that effect is captured by x1? The former is just the coefficient of x2 in the original regression. The latter is the coefficient of x1 obtained from a regression on x2, since the coefficient shows how x1 and x2 relate to each other.
+
+```{r}
+x2_y <- coef(mod)["x2"] # Marginal effect of x2 on y
+
+modx2x1 <- lm(x2~x1) 
+x1_x2 <- coef(modx2x1)["x1"] # Relation between x2 and x1
+
+bias <- x2_y * x1_x2 
+bias
+
+b1_new <- coef(mod)["x1"] + bias
+b1_new
+summary(lm(y~x1))
+```
+
+
+
 
 To illustrate the partial effect of x1 we run regressions for x1 on x2 and x3, as well as y on x2 and x3 and obtain the residuals $\tilde{x1}$ and $\tilde{x2}$. Notice that x1 is highly correlated with x2. 
 
