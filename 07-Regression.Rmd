@@ -1050,27 +1050,27 @@ where $\tilde{Y_{i}}$ is the residual from the regression of $Y$ on all variable
 ```{r }
 x1 <- rnorm(100, 5, 15)
 x2 <- rnorm(100, 20, 10) + 3*x1
-x3 <- rnorm(100, 50, 20)
 
-y <- 50 + 2*x1 + 7*x2 + 3*x3 + rnorm(100, 0, 5)
+y <- 50 + 2*x1 + 7*x2 + rnorm(100, 0, 5)
 ```
 
 We have added some randomness through the ```rnorm``` command so the coefficients are not exactly as we set them but close. Clearly x1 has partial influence on y.
 
 ```{r }
-mod <- lm(y~x1+x2+x3)
+mod <- lm(y~x1+x2)
 summary(mod)
 ```
 
 To illustrate the partial effect of x1 we run regressions for x1 on x2 and x3, as well as y on x2 and x3 and obtain the residuals $\tilde{x1}$ and $\tilde{x2}$. Notice that x1 is highly correlated with x2. 
 
 ```{r }
-regX1 <- lm(x1~x2+x3)  
+regX1 <- lm(x1~x2)  
 summary(regX1)
 tildeX1 <- residuals(regX1)
-regY1 <- lm(y~x2+x3)
+regY1 <- lm(y~x2)
 tildeY1 <- residuals(regY1)
 ```
+
 We can use the residuals to create the partial plots as seen above.
 
 ```{r }
@@ -1082,6 +1082,7 @@ ggplot(data.frame(y = tildeY1, x = tildeX1), aes(x = x, y = y)) +
   theme_bw()
 avPlots(mod)
 ```
+
 And the regression of the residuals of y on x1 yields the same coefficient as in the original regression (minus the rounding errors). 
 
 ```{r}
@@ -1090,11 +1091,20 @@ summary(lm(tildeY1~tildeX1 - 1)) # -1 since we want no intercept
 cov(tildeY1, tildeX1)/var(tildeX1) 
 ```
 
-The question now is what would happen if we did not include x2 in the regression? 
+The question now is what would happen if we did not include x2 in the regression? Observe that the coefficient of x1 increased substantially. That is, it picked up the effect of x2 through the covariance of x1 and x2.
 
 ```{r }
-lm(y~x1 + x3)
+summary(lm(y~x1))
+summary(mod)$coefficients[2,1] + summary(mod)$coefficients[3,1] / summary(regX1)$coefficients[2,1]
 ```
+
+This estimate is inconsistent since x2 is now part of the error term and thus x1 is correlated with it. It is also quite easy to work out the bias. 
+
+```{r }
+
+summary(mod)$coefficients[3, 1] / summary(regX1)$coefficients[2,1] 
+```
+
 
 
 ## Categorical predictors
