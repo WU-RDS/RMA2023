@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>website.html</title>
+
+</head>
+
+<body>
+
+<h1 id="successful-homework-completion">Successful Homework completion</h1>
+<p>This page will guide you through creating and editing R-Markdown documents for your homework assignments.</p>
+<h2 id="creating-a-new-r-markdown-document">Creating a new R-Markdown document</h2>
+<ol start="0" style="list-style-type: decimal">
+<li><p>If an R-Markdown file was provided to you open it with R-Studio an skip to <a href="#step4">step 4</a> after adding your answers.</p></li>
+<li><p>Open R-Studio</p></li>
+<li><p>Create a new R-Markdown document <img src="./rmdExplain/start.PNG" /> <img src="./rmdExplain/openDoc.PNG" /> <img src="./rmdExplain/enterName.PNG" /> <img src="./rmdExplain/template.PNG" /></p></li>
+<li><p>Save with appropriate name <img src="./rmdExplain/saving.PNG" /></p>
+<p>3.1. Add your answers</p>
+<p>3.2. Save again</p></li>
+</ol>
+<p><a name="step4"></a></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>&quot;Knit&quot; to HTML <img src="./rmdExplain/knit.PNG" /></p></li>
+<li><p>Hand in appropriate file (ending in <code>.html</code>) on learn@WU <img src="./rmdExplain/handin.PNG" /></p></li>
+</ol>
+<h2 id="text-and-equations">Text and Equations</h2>
+<p>R-Markdown documents are plain text files that include both text and R-code. Using RStudio they can be converted ('knitted') to HTML or PDF files that include both the text and the results of the R-code. In fact this website is written using R-Markdown and RStudio. In order for RStudio to be able to interpret the document you have to use certain characters or combinations of characters when formatting text and including R-code to be evaluated. By default the document starts with the options for the text part. You can change the title, date, author and a few more advanced options.</p>
+<div class="figure">
+<img src="./rmdExplain/rmdHead.PNG" alt="First lines of an R-Markdown document" />
+<p class="caption">First lines of an R-Markdown document</p>
+</div>
+<h3 id="headings">Headings</h3>
+<p>After that you can immediately start typing text. Usually you want to include some kind of heading first. A heading is created using <code>#</code> signs. A single <code>#</code> creates a first level heading, two <code>##</code> a second level and so on.</p>
+<div class="figure">
+<img src="./rmdExplain/headings.PNG" />
+
+</div>
+<h3 id="lists">Lists</h3>
+<p>You can create bullet point lists using <code>*</code>, <code>+</code> or <code>-</code>. Sub-items are created by indenting the item using 4 spaces or 2 tabs.</p>
+<pre><code>* First Item</code></pre>
+<ul>
+<li>First Item</li>
+</ul>
+<pre><code>* Second Item
+    + first sub-item
+        - first sub-sub-item
+    + second sub-item</code></pre>
+<ul>
+<li>Second Item
+<ul>
+<li>first sub-item
+<ul>
+<li>first sub-sub-item</li>
+</ul></li>
+<li>second sub-item</li>
+</ul></li>
+</ul>
+<p>In addition ordered lists can be created using numbers and letters. If you need sub-sub-items use <code>A)</code> instead of <code>A.</code> on the third level.</p>
+<pre><code>1. First item
+    a. first sub-item
+        A) first sub-sub-item 
+     b. second sub-item
+2. Second item</code></pre>
+<ol style="list-style-type: decimal">
+<li>First item
+<ol style="list-style-type: lower-alpha">
+<li>first sub-item
+<ol style="list-style-type: upper-alpha">
+<li>first sub-sub-item</li>
+</ol></li>
+<li>second sub-item</li>
+</ol></li>
+<li>Second item</li>
+</ol>
+<h3 id="equations">Equations</h3>
+<p>Writing well formatted mathematical formulae is done the same way as in <a href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</a>. Math mode is started and ended using <code>$$</code>. Take a look at <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics#Symbols">this wikibook on Mathematics in LaTeX</a> and <a href="https://www.sharelatex.com/learn/List_of_Greek_letters_and_math_symbols">this list of Greek letters and mathematical symbols</a> if you are not familiar with LaTeX. In addition check out the <a href="#latex-math">LaTeX Math section</a> of this website.</p>
+<pre><code>$$
+ f_1(\omega) = \frac{\sigma^2}{2 \pi},\ \omega \in[-\pi, \pi]
+$$</code></pre>
+<p><br /><span class="math display">$$
+ f_1(\omega) = \frac{\sigma^2}{2 \pi},\ \omega \in[-\pi, \pi]
+$$</span><br /></p>
+<p>(for those interested this is the spectral density of <a href="https://en.wikipedia.org/wiki/White_noise">white noise</a>)</p>
+<h3 id="text-formatting">Text formatting</h3>
+<p>Text can be formatted in <em>italics</em> (<code>*italics*</code>) or <strong>bold</strong> (<code>**bold**</code>). In addition, you can ad block quotes with <code>&gt;</code></p>
+<pre><code>&gt; Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.</code></pre>
+<blockquote>
+<p>Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.</p>
+</blockquote>
+<h2 id="r-code">R-Code</h2>
+<h3 id="global-options">Global options</h3>
+<p>The first chunk always looks as follows</p>
+<pre><code>```{r setup, include = FALSE}`r &#39;&#39;`
+knitr::opts_chunk$set(echo = TRUE)
+```</code></pre>
+<p>It is added to the document automatically and sets options for all the following chunks. These options can be overwritten on a per-chunk basis.</p>
+<p>Keep <code>knitr::opts_chunk$set(echo = TRUE)</code> to print your code to the document you will hand in. Changing it to <code>knitr::opts_chunk$set(echo = FALSE)</code> will not print your code by default. This can be changed on a per-chunck basis.</p>
+<p><code>{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)</code></p>
+<pre><code>```{r cars, echo = FALSE}`r &#39;&#39;`
+summary(cars)
+
+plot(dist~speed, cars)
+```</code></pre>
+<p>```{r cars, echo = FALSE} summary(cars)</p>
+<p>plot(dist~speed, cars) ```</p>
+<pre><code>```{r cars2, echo = TRUE}`r &#39;&#39;`
+summary(cars)
+
+plot(dist~speed, cars)
+```</code></pre>
+<p>```{r cars2, echo = TRUE} summary(cars)</p>
+<p>plot(dist~speed, cars)</p>
+<pre><code>
+## LaTeX Math
+
+In order to write multi-line equations in the same math environment use `\\` after every line. In order to insert a space use a single `\`. To render text inside a math environment use `\text{here is the text}`. In order to align equations start with `\begin{align}` and place an `&amp;` in each line at the point around which it should be aligned. Finally end with `\end{align}`
+</code></pre>
+<p><br /><span class="math display">$$
+\begin{align}
+\text{First equation: }\ Y &amp;= X \beta + \epsilon_y,\ \forall X \\
+\text{Second equation: }\ X &amp;= Z \gamma + \epsilon_x
+\end{align}
+$$</span><br /></p>
+<pre><code>
+$$
+\begin{align}
+\text{First equation: }\ Y &amp;= X \beta + \epsilon_y,\ \forall X \\
+\text{Second equation: }\ X &amp;= Z \gamma + \epsilon_x
+\end{align}
+$$
+
+### Important symbols
+</code></pre>
+<p><br /><span class="math display">$$
+\begin{align}
+1.&amp;\ a^{2} + b\\
+2.&amp;\ a^{2+b} \\
+3.&amp;\ a_{1} \\
+4.&amp;\ a \leq b \\
+5.&amp;\ a \geq b \\
+6.&amp;\ a \neq b\\
+7.&amp;\ a \approx b \\
+8.&amp;\ a \in (0,1) \\
+9.&amp;\ a \rightarrow \infty\\
+10.&amp;\ \frac{a}{b}\\
+11.&amp;\ \frac{\partial a}{\partial b}\\
+12.&amp;\ \sqrt{a} \\
+13.&amp;\ \sum_{i = 1}^{b} a_i\\
+14.&amp;\ \int_{a}^b f(c) dc \\
+15.&amp;\ \prod_{i = 0}^b a_i \\
+16.&amp;\ c \left( \sum_{i=1}^b a_i \right) \text{ (adaptive paranthesis)} 
+\end{align}
+$$</span><br /></p>
+<pre><code>$$
+\begin{align}
+1.&amp;\ a^{2} + b\\
+2.&amp;\ a^{2+b} \\
+3.&amp;\ a_{1} \\
+4.&amp;\ a \leq b \\
+5.&amp;\ a \geq b \\
+6.&amp;\ a \neq b\\
+7.&amp;\ a \approx b \\
+8.&amp;\ a \in (0,1) \\
+9.&amp;\ a \rightarrow \infty\\
+10.&amp;\ \frac{a}{b}\\
+11.&amp;\ \frac{\partial a}{\partial b}\\
+12.&amp;\ \sqrt{a} \\
+13.&amp;\ \sum_{i = 1}^{b} a_i\\
+14.&amp;\ \int_{a}^b f(c) dc \\
+15.&amp;\ \prod_{i = 0}^b a_i \\
+16.&amp;\ c \left( \sum_{i=1}^b a_i \right) \text{ (adaptive parenthesis)} 
+\end{align}
+$$
+
+The `{}` after `_` and `^` are not strictly necessary if there is only one character in the sub-/superscript. However, in order to place multiple characters in the sub-/superscript they are necessary. 
+e.g.</code></pre>
+<p><br /><span class="math display">$$
+a^b = a^{b} \\
+a^b+c \neq a^{b+c}\\
+\sum_i a_i = \sum_{i} a_{i} \\
+\sum_{i=1}^{b+c} a_i \neq \sum_i=1^b+c a_i
+$$</span><br /> ```` <br /><span class="math display">$$
+a^b = a^{b} \\
+a^b+c \neq a^{b+c} \\
+\sum_i a_i = \sum_{i} a_{i} \\
+\left(\sum_{i=1}^{b+c} a_i\right) \neq \left(\sum_i=1^b+c a_i\right)
+$$</span><br /></p>
+<h3 id="greek-letters">Greek letters</h3>
+<p><a href="https://en.wikipedia.org/wiki/Greek_alphabet#Letters">Greek letters</a> are preceded by a <code>\</code> followed by their name (<code>$\beta$</code> = <span class="math inline"><em>β</em></span>). In order to capitalize them simply capitalize the first letter of the name (<code>$\Gamma$</code> = <span class="math inline"><em>Γ</em></span>).</p>
+
+</body>
+</html>
