@@ -277,6 +277,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.3.5" data-path="regression.html"><a href="regression.html#non-normally-distributed-errors"><i class="fa fa-check"></i><b>12.3.5</b> Non-normally distributed errors</a></li>
 <li class="chapter" data-level="12.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>12.3.6</b> Correlation of errors</a></li>
 <li class="chapter" data-level="12.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>12.3.7</b> Collinearity</a></li>
+<li class="chapter" data-level="12.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>12.3.8</b> Omitted Variables</a></li>
 </ul></li>
 <li class="chapter" data-level="12.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>12.4</b> Categorical predictors</a><ul>
 <li class="chapter" data-level="12.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>12.4.1</b> Two categories</a></li>
@@ -412,14 +413,14 @@ population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(popu
 <span class="kw">print</span>(population)</code></pre></div>
 <pre><code>## {xml_nodeset (3)}
 ## [1] &lt;table class=&quot;plainlinks metadata ambox ambox-move&quot; role=&quot;presentati ...
-## [2] &lt;table class=&quot;wikitable sortable&quot; style=&quot;text-align:right&quot;&gt;\n&lt;tr&gt;\n&lt; ...
+## [2] &lt;table class=&quot;wikitable sortable&quot; style=&quot;text-align:right&quot;&gt;&lt;tbody&gt;\n ...
 ## [3] &lt;table class=&quot;nowraplinks hlist collapsible autocollapse navbox-inne ...</code></pre>
 <p>The output shows that there are two tables on the website and the first one appears to contain the relevant information. So let’s read the first table using the <code>html_table()</code> function. Note that <code>population</code> is of class “list”. A list is a vector that has other R objects (e.g., other vectors, dataframes, matrices, etc.) as its elements. If we want to access the data of one of the elements, we have to use two square brackets on each side instead of just one (e.g., <code>population[[1]]</code> gets us the first table from the list of tables on the website; the argument <code>fill = TRUE</code> ensures that empty cells are replaced with missing values when reading the table).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">population &lt;-<span class="st"> </span>population[[<span class="dv">2</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_table</span>(<span class="dt">fill =</span> <span class="ot">TRUE</span>)
 <span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country\n(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of world\npopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,392,730,000","4":"July 3, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1,333,840,000","4":"July 3, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327,414,000","4":"July 3, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265,015,300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212,115,000","4":"July 3, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209,263,000","4":"July 3, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,392,800,000","4":"July 7, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1,334,010,000","4":"July 7, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327,437,000","4":"July 7, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265,015,300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212,159,000","4":"July 7, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209,281,000","4":"July 7, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>You can see that population is read as a character variable because of the commas.</p>
@@ -430,7 +431,7 @@ population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(popu
 <span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country\n(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of world\npopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1392730000","4":"July 3, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1333840000","4":"July 3, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327414000","4":"July 3, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265015300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212115000","4":"July 3, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209263000","4":"July 3, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1392800000","4":"July 7, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1334010000","4":"July 7, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327437000","4":"July 7, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265015300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212159000","4":"July 7, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209281000","4":"July 7, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now the variable is of type “numeric” and could be used for analysis.</p>
@@ -502,7 +503,6 @@ success =<span class="st"> </span><span class="ot">FALSE</span>
 <span class="cf">if</span>(success <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){
   <span class="kw">warning</span>(<span class="st">&quot;Google Trends has exited unsuccessfully&quot;</span>)
 }</code></pre></div>
-<pre><code>## Warning: Google Trends has exited unsuccessfully</code></pre>
 
 </div>
 </div>
@@ -547,7 +547,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub", "_main.mobi"],
+"download": null,
 "toc": {
 "collapse": "section"
 }

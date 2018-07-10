@@ -277,6 +277,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.3.5" data-path="regression.html"><a href="regression.html#non-normally-distributed-errors"><i class="fa fa-check"></i><b>12.3.5</b> Non-normally distributed errors</a></li>
 <li class="chapter" data-level="12.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>12.3.6</b> Correlation of errors</a></li>
 <li class="chapter" data-level="12.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>12.3.7</b> Collinearity</a></li>
+<li class="chapter" data-level="12.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>12.3.8</b> Omitted Variables</a></li>
 </ul></li>
 <li class="chapter" data-level="12.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>12.4</b> Categorical predictors</a><ul>
 <li class="chapter" data-level="12.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>12.4.1</b> Two categories</a></li>
@@ -469,8 +470,8 @@ Social_i=b_1X_{1i} + b_2X_{2i} + b_3X_{3i}+ b_4X_{4i}+ b_5X_{5i}+ b_6X_{6i}+\eps
 \end{array}\right]\]</span></p>
 <p>The linear relation between the factors and the factor loadings can also be shown in a graph, where each axis represents a factor and the variabels are placed on the coordinates according to the strength of the relationship between the variable and each factor. The greater the loading of variables on a factor, the more that factor explains relationships between those variables. You can also think of the factor loadings as the correlations between a factor and a variable.</p>
 <p><br></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-352"></span>
-<img src="_main_files/figure-html/unnamed-chunk-352-1.png" alt="Factor loadings" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-361"></span>
+<img src="_main_files/figure-html/unnamed-chunk-361-1.png" alt="Factor loadings" width="672" />
 <p class="caption">
 Figure 14.1: Factor loadings
 </p>
@@ -601,8 +602,8 @@ Social_i=&amp; 0.25*preventCavities_{i} + 0.80*shinyTeeth_{i} + 0.13*strengthenG
 ## 0.3223 0.1622 0.0799</code></pre>
 <p>Another way to make the correlations more salient is to plot the correlation matrix using different colors that indicate the strength of the correlations. This can be done using the <code>corPolot()</code> function from the <code>psych</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corPlot</span>(correlations,<span class="dt">numbers=</span><span class="ot">TRUE</span>,<span class="dt">upper=</span><span class="ot">FALSE</span>,<span class="dt">diag=</span><span class="ot">FALSE</span>,<span class="dt">main=</span><span class="st">&quot;Correlations between variables&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-358"></span>
-<img src="_main_files/figure-html/unnamed-chunk-358-1.png" alt="Correlation matrix" width="960" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-367"></span>
+<img src="_main_files/figure-html/unnamed-chunk-367-1.png" alt="Correlation matrix" width="960" />
 <p class="caption">
 Figure 14.2: Correlation matrix
 </p>
@@ -776,8 +777,8 @@ pc1</code></pre></div>
 <p>You can also plot the eigenvalues against the number of factors in order of extraction using a so-called <strong>Scree plot</strong>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(pc1<span class="op">$</span>values, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-364"></span>
-<img src="_main_files/figure-html/unnamed-chunk-364-1.png" alt="Scree plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-373"></span>
+<img src="_main_files/figure-html/unnamed-chunk-373-1.png" alt="Scree plot" width="672" />
 <p class="caption">
 Figure 14.3: Scree plot
 </p>
@@ -1001,16 +1002,16 @@ large_res &lt;-<span class="st"> </span><span class="kw">abs</span>(residuals) <
 <p>This means that our mean residual is 0.055 and this value should be as low as possible.</p>
 <p>Finally, we need to validate if the residuals are approximately normally distributed, which we do by using a histogram, a Q-Q plot and the Shapiro test.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(residuals)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-371"></span>
-<img src="_main_files/figure-html/unnamed-chunk-371-1.png" alt="Hinstogram of residuals" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-380"></span>
+<img src="_main_files/figure-html/unnamed-chunk-380-1.png" alt="Hinstogram of residuals" width="672" />
 <p class="caption">
 Figure 14.4: Hinstogram of residuals
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(residuals) 
 <span class="kw">qqline</span>(residuals)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-372"></span>
-<img src="_main_files/figure-html/unnamed-chunk-372-1.png" alt="Q-Q plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-381"></span>
+<img src="_main_files/figure-html/unnamed-chunk-381-1.png" alt="Q-Q plot" width="672" />
 <p class="caption">
 Figure 14.5: Q-Q plot
 </p>
@@ -1221,21 +1222,21 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Reliability analysis   
 ## Call: psych::alpha(x = computer_fear)
 ## 
-##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd
-##       0.82      0.82    0.81       0.4 4.6 0.0052  3.4 0.71
+##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+##       0.82      0.82    0.81       0.4 4.6 0.0052  3.4 0.71     0.39
 ## 
 ##  lower alpha upper     95% confidence boundaries
 ## 0.81 0.82 0.83 
 ## 
 ##  Reliability if an item is dropped:
-##     raw_alpha std.alpha G6(smc) average_r S/N alpha se     NA
-## Q06      0.79      0.79    0.77      0.38 3.7   0.0063 0.0078
-## Q07      0.79      0.79    0.77      0.38 3.7   0.0063 0.0077
-## Q10      0.82      0.82    0.80      0.44 4.7   0.0053 0.0041
-## Q13      0.79      0.79    0.77      0.39 3.8   0.0062 0.0078
-## Q14      0.80      0.80    0.77      0.39 3.9   0.0060 0.0082
-## Q15      0.81      0.81    0.79      0.41 4.2   0.0056 0.0091
-## Q18      0.79      0.78    0.76      0.38 3.6   0.0064 0.0056
+##     raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+## Q06      0.79      0.79    0.77      0.38 3.7   0.0063 0.0081  0.38
+## Q07      0.79      0.79    0.77      0.38 3.7   0.0063 0.0079  0.36
+## Q10      0.82      0.82    0.80      0.44 4.7   0.0053 0.0043  0.44
+## Q13      0.79      0.79    0.77      0.39 3.8   0.0062 0.0081  0.38
+## Q14      0.80      0.80    0.77      0.39 3.9   0.0060 0.0085  0.36
+## Q15      0.81      0.81    0.79      0.41 4.2   0.0056 0.0095  0.44
+## Q18      0.79      0.78    0.76      0.38 3.6   0.0064 0.0058  0.38
 ## 
 ##  Item statistics 
 ##        n raw.r std.r r.cor r.drop mean   sd
@@ -1262,22 +1263,22 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Call: psych::alpha(x = statistics_fear, keys = c(1, -1, 1, 1, 1, 1, 
 ##     1, 1))
 ## 
-##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd
-##       0.82      0.82    0.81      0.37 4.7 0.0053    3 0.64
+##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+##       0.82      0.82    0.81      0.37 4.7 0.0053    3 0.64      0.4
 ## 
 ##  lower alpha upper     95% confidence boundaries
 ## 0.81 0.82 0.83 
 ## 
 ##  Reliability if an item is dropped:
-##      raw_alpha std.alpha G6(smc) average_r S/N alpha se     NA
-## Q01       0.80      0.80    0.79      0.37 4.1   0.0060 0.0051
-## Q03-      0.80      0.80    0.79      0.37 4.1   0.0061 0.0069
-## Q04       0.80      0.80    0.78      0.36 4.0   0.0062 0.0059
-## Q05       0.81      0.81    0.80      0.38 4.2   0.0058 0.0056
-## Q12       0.80      0.80    0.79      0.36 4.0   0.0061 0.0065
-## Q16       0.79      0.80    0.78      0.36 3.9   0.0062 0.0055
-## Q20       0.82      0.82    0.80      0.40 4.6   0.0055 0.0021
-## Q21       0.79      0.80    0.78      0.36 3.9   0.0063 0.0062
+##      raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+## Q01       0.80      0.80    0.79      0.37 4.1   0.0060 0.0052  0.40
+## Q03-      0.80      0.80    0.79      0.37 4.1   0.0061 0.0070  0.40
+## Q04       0.80      0.80    0.78      0.36 4.0   0.0062 0.0061  0.35
+## Q05       0.81      0.81    0.80      0.38 4.2   0.0058 0.0058  0.41
+## Q12       0.80      0.80    0.79      0.36 4.0   0.0061 0.0067  0.39
+## Q16       0.79      0.80    0.78      0.36 3.9   0.0062 0.0057  0.35
+## Q20       0.82      0.82    0.80      0.40 4.6   0.0055 0.0022  0.41
+## Q21       0.79      0.80    0.78      0.36 3.9   0.0063 0.0063  0.38
 ## 
 ##  Item statistics 
 ##         n raw.r std.r r.cor r.drop mean   sd
@@ -1305,21 +1306,17 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Reliability analysis   
 ## Call: psych::alpha(x = math_fear)
 ## 
-##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd
-##       0.82      0.82    0.75       0.6 4.5 0.0062  3.7 0.75
+##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+##       0.82      0.82    0.75       0.6 4.5 0.0062  3.7 0.75     0.59
 ## 
 ##  lower alpha upper     95% confidence boundaries
 ## 0.81 0.82 0.83 
 ## 
 ##  Reliability if an item is dropped:
-##     raw_alpha std.alpha G6(smc) average_r S/N alpha se
-## Q08      0.74      0.74    0.59      0.59 2.8    0.010
-## Q11      0.74      0.74    0.59      0.59 2.9    0.010
-## Q17      0.77      0.77    0.63      0.63 3.4    0.009
-##                                      NA
-## Q08 0.000000000000000000000000000000012
-## Q11 0.000000000000000000000000000000012
-## Q17 0.000000000000000000000000000000012
+##     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+## Q08      0.74      0.74    0.59      0.59 2.8    0.010    NA  0.59
+## Q11      0.74      0.74    0.59      0.59 2.9    0.010    NA  0.59
+## Q17      0.77      0.77    0.63      0.63 3.4    0.009    NA  0.63
 ## 
 ##  Item statistics 
 ##        n raw.r std.r r.cor r.drop mean   sd
@@ -1337,19 +1334,19 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Reliability analysis   
 ## Call: psych::alpha(x = peer_evaluation)
 ## 
-##   raw_alpha std.alpha G6(smc) average_r S/N   ase mean   sd
-##       0.57      0.57    0.53      0.21 1.3 0.013  3.4 0.65
+##   raw_alpha std.alpha G6(smc) average_r S/N   ase mean   sd median_r
+##       0.57      0.57    0.53      0.21 1.3 0.013  3.4 0.65     0.23
 ## 
 ##  lower alpha upper     95% confidence boundaries
 ## 0.54 0.57 0.6 
 ## 
 ##  Reliability if an item is dropped:
-##     raw_alpha std.alpha G6(smc) average_r  S/N alpha se     NA
-## Q02      0.52      0.52    0.45      0.21 1.07    0.015 0.0025
-## Q09      0.48      0.48    0.41      0.19 0.92    0.017 0.0033
-## Q19      0.52      0.53    0.46      0.22 1.11    0.015 0.0050
-## Q22      0.49      0.49    0.43      0.19 0.96    0.016 0.0059
-## Q23      0.56      0.57    0.50      0.25 1.32    0.014 0.0013
+##     raw_alpha std.alpha G6(smc) average_r  S/N alpha se  var.r med.r
+## Q02      0.52      0.52    0.45      0.21 1.07    0.015 0.0028  0.23
+## Q09      0.48      0.48    0.41      0.19 0.92    0.017 0.0036  0.22
+## Q19      0.52      0.53    0.46      0.22 1.11    0.015 0.0055  0.23
+## Q22      0.49      0.49    0.43      0.19 0.96    0.016 0.0065  0.19
+## Q23      0.56      0.57    0.50      0.25 1.32    0.014 0.0014  0.24
 ## 
 ##  Item statistics 
 ##        n raw.r std.r r.cor r.drop mean   sd
@@ -1383,18 +1380,18 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Call: psych::alpha(x = test_data[, c(&quot;multi_1&quot;, &quot;multi_2&quot;, &quot;multi_3&quot;, 
 ##     &quot;multi_4&quot;)], keys = c(1, 1, 1, -1))
 ## 
-##   raw_alpha std.alpha G6(smc) average_r S/N   ase mean   sd
-##        0.9       0.9    0.88      0.68 8.7 0.024  2.7 0.92
+##   raw_alpha std.alpha G6(smc) average_r S/N   ase mean   sd median_r
+##        0.9       0.9    0.88      0.68 8.7 0.024  2.7 0.92     0.65
 ## 
 ##  lower alpha upper     95% confidence boundaries
 ## 0.85 0.9 0.94 
 ## 
 ##  Reliability if an item is dropped:
-##          raw_alpha std.alpha G6(smc) average_r  S/N alpha se     NA
-## multi_1       0.85      0.86    0.81      0.66  5.9    0.035 0.0081
-## multi_2       0.83      0.83    0.77      0.63  5.0    0.039 0.0022
-## multi_3       0.86      0.86    0.83      0.68  6.3    0.034 0.0156
-## multi_4-      0.91      0.91    0.88      0.77 10.0    0.022 0.0047
+##          raw_alpha std.alpha G6(smc) average_r  S/N alpha se  var.r med.r
+## multi_1       0.85      0.86    0.81      0.66  5.9    0.035 0.0101  0.61
+## multi_2       0.83      0.83    0.77      0.63  5.0    0.039 0.0028  0.61
+## multi_3       0.86      0.86    0.83      0.68  6.3    0.034 0.0195  0.61
+## multi_4-      0.91      0.91    0.88      0.77 10.0    0.022 0.0058  0.78
 ## 
 ##  Item statistics 
 ##           n raw.r std.r r.cor r.drop mean  sd
@@ -1411,10 +1408,10 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## multi_4 0.04 0.31 0.16 0.40 0.09    0</code></pre>
 <p>Since the scale exhibits a sufficient degree of reliability, we can compute the new variable as the average score on these items. However, before doing this, we need to recode the reverse coded variable in the appropriate way. It is easy to recode the reverse coded item to be in line with the remaing items on the dimension using the <code>recode()</code> function from the <code>car</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-test_data<span class="op">$</span>multi_4_rec =<span class="st"> </span><span class="kw">recode</span>(test_data<span class="op">$</span>multi_<span class="dv">4</span>, <span class="st">&quot;1=5; 2=4; 3=3; 4=2; 5=1&quot;</span>)</code></pre></div>
+test_data<span class="op">$</span>multi_<span class="dv">4</span>_rec =<span class="st"> </span><span class="kw">recode</span>(test_data<span class="op">$</span>multi_<span class="dv">4</span>, <span class="st">&quot;1=5; 2=4; 3=3; 4=2; 5=1&quot;</span>)</code></pre></div>
 <p>Now we can compute the new variable as the average score of the four items:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-test_data<span class="op">$</span>new_variable =<span class="st"> </span>(test_data<span class="op">$</span>multi_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_4_rec) <span class="op">/</span><span class="st"> </span><span class="dv">4</span></code></pre></div>
+test_data<span class="op">$</span>new_variable =<span class="st"> </span>(test_data<span class="op">$</span>multi_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">4</span>_rec) <span class="op">/</span><span class="st"> </span><span class="dv">4</span></code></pre></div>
 
 </div>
 </div>
@@ -1457,7 +1454,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub", "_main.mobi"],
+"download": null,
 "toc": {
 "collapse": "section"
 }
