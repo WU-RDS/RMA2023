@@ -17,13 +17,7 @@ In this course, we will work with the statistical software package <b>R</b>. Ple
 
 <b>RStudio</b> provides a graphical user interface (GUI) that makes working with R easier. You can also download RStudio for free:
 
-* "[Download R Studio](http://www.rstudio.com/products/rstudio/#Desk)" [FREE download]
-
-## Why R?
-
-* It's free.
-* A lot of free training material.
-* Runs on a variety of platforms (Windows, Linux, OSX, …).
+* "[Download R Studio](https://www.rstudio.com/products/rstudio/download/#download)(Windows, Linux, OSX, …).
 * Contains statistical routines not yet available in other programs.
 * Active global community (e.g., <a href="https://www.r-bloggers.com/" target="_blank">https://www.r-bloggers.com/</a>).
 * Many specialized user-written packages.
@@ -43,20 +37,20 @@ In this course, we will work with the statistical software package <b>R</b>. Ple
 
 * Built-in R tutorial: type in “help.start()” to get to the official R tutorial
 * Questions regarding specific functions: type in “?function_name” to get to the help page of specific functions (e.g., “?lm” gives you help on the lm() function)
-* Video tutorials: Make use of one of the many video tutorials on YouTube (e.g., <a href="https://www.rstudio.com/resources/cheatsheets/" target="_blank">http://www.r-bloggers.com/learn-r-from-the-ground-up/</a>).
+* Video tutorials: Make use of one of the many video tutorials on YouTube (e.g., <a href="http://www.r-bloggers.com/learn-r-from-the-ground-up/" target="_blank">http://www.r-bloggers.com/learn-r-from-the-ground-up/</a>).
 * Errors & warnings: because R is interactive, consider errors your friends!
 * Most importantly: the more time you spend using R, the more comfortable you become with it and it will be easier to see its  advantages 
 * R Cheatsheets: Cheat sheets make it easy to learn about and use some popular packages (<a href="https://www.rstudio.com/resources/cheatsheets/" target="_blank">https://www.rstudio.com/resources/cheatsheets/</a>).
 
 ## Functions
 
-When analyzing data in R, you will access most of the functionalities by calling functions. A <b>function</b> is a piece of code written to carry out a specified task (e.g., the ```lm()```-function to run a linear regression). It can or can not accept arguments or parameters and it can or can not return one or more values. Functions are generally called like this:
+When analyzing data in R, you will access most of the functionalities by calling functions. A <b>function</b> is a piece of code written to carry out a specified task (e.g., the ```lm()```-function to run a linear regression). It may or may not accept arguments or parameters and it may or may not return one or more values. Functions are generally called like this:
 
 ```{r, eval=FALSE}
 function_name(arg1 = val1, arg2 = val2, ...)
 ```
 
-To give you an example, let's use the built-in ```seq()```-function to generate a sequence of numbers. RStudio has some nice features that help you when writing code. For example, when you type "se"" and hit TAB, a pop-up shows you possible completions. The more letters you type in, the more precise the suggestions will become and you will notice that after typing in the third letter, a pop-up with possible completions will appear automatically and you can select the desired function using the ↑/↓ arrows and hitting ENTER. The pop-up even reminds you of the arguments that a function takes. If you require more details, you may either press the F1 key or type in ```?seq``` and you will find the details for the function in the help tab in the lower right pane. When you have selected the desired function from the pop-up, RStudio will automatically add matching opening and closing parentheses (i.e., go from ```seq``` to ```seq()```). Within the paratheses you may now type in the arguments that the function takes. Let's use ```seq()``` to generate a sequence of numbers from 1 to 10. To do this, you may include the argument names (i.e., ```from = ```, ```to = ```), or just the desired values in the correct order.  
+To give you an example, let's use the built-in ```seq()```-function to generate a sequence of numbers. RStudio has some nice features that help you when writing code. For example, when you type "se" and hit TAB, a pop-up shows you possible completions. The more letters you type in, the more precise the suggestions will become and you will notice that after typing in the third letter, a pop-up with possible completions will appear automatically and you can select the desired function using the ↑/↓ arrows and hitting ENTER. The pop-up even reminds you of the arguments that a function takes. If you require more details, you may either press the F1 key or type in ```?seq``` and you will find the details for the function in the help tab in the lower right pane. When you have selected the desired function from the pop-up, RStudio will automatically add matching opening and closing parentheses (i.e., go from ```seq``` to ```seq()```). Within the paratheses you may now type in the arguments that the function takes. Let's use ```seq()``` to generate a sequence of numbers from 1 to 10. To do this, you may include the argument names (i.e., ```from = ```, ```to = ```), or just the desired values in the correct order.  
 An important thing to note is that R is case-sensitive, meaning that ```Seq()``` and ```seq()``` are viewed as two different functions by R.
 
 ```{r}
@@ -73,9 +67,9 @@ seq(10,1) #produces reversed sequence
 
 ## Packages
 
-Most of the R functionalities are contained in distinct modules called <b>packages</b>. When R is installed, a small set of packages is also installed. For example, the Base R package contains the basic functions which let R function as a language: arithmetic, input/output, basic programming support, etc.. However, a large number of packages exist that contain specialized functions that will help you to achieve specific tasks. To access the functions outside the scope of the pre-installed packages, you have to install the package first using the ```install.packages()```-function. For example, to install the ggplot2 package to create graphics, type in ```install.packages("ggplot2")```. Note that you only have to install a package once. After you have installed a package, you may load it to access its functionalities using the ```library()```-function. E.g., to load the ggplot2-package, type in ```library(ggplot2)```.     
+Most of the R functionalities are contained in distinct modules called <b>packages</b>. When R is installed, a small set of packages is also installed. For example, the Base R package contains the basic functions which let R function as a language: arithmetic, input/output, basic programming support, etc.. However, a large number of packages exist that contain specialized functions that will help you to achieve specific tasks. To access the functions outside the scope of the pre-installed packages, you have to install the package first using the ```install.packages()```-function. For example, to install the ggplot2 package to create graphics, type in ```install.packages("ggplot2")```. Note that you only have to install a package once. After you have installed a package, you may load it to access its functionalities using the ```library()```-function. E.g., to load the ggplot2-package, type in ```library(ggplot2)```. 
 
-The number of R packages is rapidly increasing and there are many spacialized packages to perform different types of analytics. 
+The number of R packages is rapidly increasing and there are many specialized packages to perform different types of analytics. 
 <p style="text-align:center;">
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/rpackages.png" alt="DSUR cover" height="300"  />&nbsp;
 </p>
@@ -101,5 +95,4 @@ The video below provides a more in-depth discussion of packages, their installat
 
 4. Perform statistical analysis on your data (using methods that we will cover later)
 
-5. Save your <b>workspace</b>. The R workspace is your current working environment incl. any user-defined objects (e.g., data frames, functions). You can save an image of the current workspace to a file called ”.RData”. In fact, RStudio will ask you automatically if you would like to save the workspace when you close the program at the end of the session. In addition, you may save an image of the workspace at any time during the session using the ```save.image()```-function. This saves the workspace impage to the current working directory. When you re-open R from that working directory, the workspace will be loaded, and all these things will be available to you again. You may also save the image to any other location by specifying the path to the folder explicitly (i.e., ```save.image(path_to_project_folder)```). If you open R from a different location, you may load the workspace manually using the ```load("")```-function which points to the image file in the respective directory (e.g., ```load("path_to_project_folder/.RData")```. However, saving your workspace is not always required. Especially when you save your work in an R script file (which is highly recommended), you will be able to restore your latest results by simply executing the code contained therein again. This also prevents you from carrying over potential mistakes from one session to the next.  
- 
+5. Save your <b>workspace</b>. The R workspace is your current working environment incl. any user-defined objects (e.g., data frames, functions). You can save an image of the current workspace to a file called ”.RData”. In fact, RStudio will ask you automatically if you would like to save the workspace when you close the program at the end of the session. In addition, you may save an image of the workspace at any time during the session using the ```save.image()```-function. This saves the workspace image to the current working directory. When you re-open R from that working directory, the workspace will be loaded, and all these things will be available to you again. You may also save the image to any other location by specifying the path to the folder explicitly (i.e., ```save.image(path_to_project_folder)```). If you open R from a different location, you may load the workspace manually using the ```load("")```-function which points to the image file in the respective directory (e.g., ```load("path_to_project_folder/.RData")```. However, saving your workspace is not always required. Especially when you save your work in an R script file (which is highly recommended), you will be able to restore your latest results by simply executing the code contained therein again. This also prevents you from carrying over potential mistakes from one session to the next.

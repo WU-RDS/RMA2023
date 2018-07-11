@@ -46,7 +46,7 @@ This chapter covers more advanced techniques for handling data in R.
 
 ## The dplyr package
 
-There are many ways to achieve the same thing in R. Data transformation and handling tasks can be solved with the functions provided by base R, but the ```dplyr```package offers a comprehensive suite of functions that makes many tasks easier, while keeping code very readable. As such we will be presenting it here, but keep in mind that all of these tasks could also be achieved without any packages. 
+There are many ways to achieve the same thing in R. Data transformation and handling tasks can be solved with the functions provided by base R (i.e. the functions that come with every R installation), but the ```dplyr```package offers a comprehensive suite of functions that makes many tasks easier, while keeping code very readable. As such we will be presenting it here, but keep in mind that all of these tasks could also be achieved without any packages. 
 
 Before we continue, ensure that the ```dplyr()``` package is installed and loaded. 
 
@@ -233,7 +233,7 @@ music_data_new <- music_data %>%
 music_data_new
 ```
 
-Let's unpack what happened here. The first line "pipes" ```music_data``` into the first function, ```select()```, which is in the second line. Here we remove all columns except for ```top10_track_explicit_1```, ```top10_artist_names``` and ```top10_track_streams```. Then we take this data frame with the reduced columns and hand it to ```filter()```, which only selects observations with less than 100000 streams. Finally, we pass the filtered, column reduced data frame to arrange, which orders the rows by the number of streams per track. The assigment operator (```<-```) at the top then saves this data frame in the environment as ```music_new_data```. Note that, in contrast to the previous examples, we no longer have to specify which data frame we want to apply the various functions to, as the pipes take care of this for us.
+Let's unpack what happened here. The first line "pipes" ```music_data``` into the first function, ```select()```, which is in the second line. Here we remove all columns except for ```top10_track_explicit_1```, ```top10_artist_names``` and ```top10_track_streams```. Then we take this data frame with the reduced columns and hand it to ```filter()```, which only selects observations with less than 100000 streams. Finally, we pass the filtered, column reduced data frame to arrange, which sorts the rows by the number of streams per track. The assigment operator (```<-```) at the top then saves this data frame in the environment as ```music_new_data```. Note that, in contrast to the previous examples, we no longer have to specify which data frame we want to apply the various functions to, as the pipes take care of this for us.
 
 Again, experiment with this feature below and it will quickly become very intuitive.
 
@@ -250,7 +250,7 @@ summarise(music_data, nObservations = n(), mean_streams = mean(top10_track_strea
 
 On its own, this function is not that impressive. After all, we could just apply the ```mean()```, ```sd()``` and ```nrow()``` functions individually and would have gotten the same result, albeit not in such a nice format. 
 
-However, when combined with the ```group_by()``` function, ```summarise()``` becomes very useful. ```group_by()``` splits a data frame into groups, by the values of a column in the data frame. Say we wanted to calculate the mean and standard deviation of explicit and non-explicit songs seperately. 
+However, when combined with the ```group_by()``` function, ```summarise()``` becomes very useful. ```group_by()``` splits a data frame into groups, by the values of a column in the data frame. Say we wanted to calculate the mean and standard deviation of explicit and non-explicit songs separately. 
 
 ```{r, message=FALSE, warning=FALSE}
 music_data %>%
@@ -269,7 +269,7 @@ Strings (which is short for "character strings"), can be tough to deal with. The
 
 ### The ```stringr``` package
 
-A very accesible package for manipulating strings is the ```stringr``` package. It is designed to be as uniform as possible, meaning that once you have understood the basic syntax of any one of its functions it is very easy to apply any of its functions. It sacrifices some flexibility for this simplicity, so if you ever encounter a task you can not easily solve with ```stringr``` it is worth checking out the package it is built on, ```stringi```. For now, however, ```stringr``` will be more than sufficient. 
+A very accesible package for manipulating strings is the ```stringr``` package. It is designed to be as uniform as possible, meaning that once you have understood the basic syntax of any one of its functions it is very easy to apply all of them. It sacrifices some flexibility for this simplicity, so if you ever encounter a task you can not easily solve with ```stringr``` it is worth checking out the package it is built on, ```stringi```. For now, however, ```stringr``` will be more than sufficient. 
 
 The majority of functions in ```stringr``` are built around two core arguments: a string to be worked on and a pattern. There are quite a few that aren't, such as ```str_length()```, but these are (for the most part) fairly self explanatory and will not be explained further here. A good overview of the included functions can be found [here](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf).
 
@@ -333,7 +333,7 @@ str_replace_all(music_data$top10_artist_names, pattern = fixed("."), replacement
 
 #### Other special characters in regex
 
-We will quickly go through the most important regex special characters. Be aware that this list is by no means exhautive and is only meant to give you some basic tools that can help you with string manipulation. Keep this in mind if a regex is displaying unexpected behaviour, as it could be due to some wildcard you are not aware of. If all else fails you can always used the ```fixed()``` function to just match literal strings. 
+We will quickly go through the most important regex special characters. Be aware that this list is by no means exhaustive and is only meant to give you some basic tools that can help you with string manipulation. Keep this in mind if a regex is displaying unexpected behaviour, as it could be due to some wildcard you are not aware of. If all else fails you can always used the ```fixed()``` function to just match literal strings. 
 
 ##### Square brackets ```[]```
 
@@ -356,7 +356,7 @@ str_replace_all(music_data$top10_artist_names, pattern = "[^ABCabc]", replacemen
 
 ##### Repetition operators: ```*```,```+``` and ```{}```
 
-Repetition operators can be used to match the same character (or set of characters) multiple times. ```+``` matches a character one or more times, ```*``` matches a character zero or more times and with ```{}``` you can specfiy the range that matches can occur in.
+Repetition operators can be used to match the same character (or set of characters) multiple times. ```+``` matches a character one or more times, ```*``` matches a character zero or more times and with ```{}``` you can specify the range that matches can occur in.
 ```{r}
 vector <- c("", "a", "aa", "aaa", "aaaa")
 ```
@@ -443,7 +443,7 @@ library(stringr)
 
 ###### MAYBE: change this to github?
 
-data <- read.csv("./Survey_data.csv", stringsAsFactors = FALSE)
+data <- read.csv("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/Survey_data.csv?token=AVa282-xpSEw5xe33hyhPSi4W_YJOa2Fks5bT106wA%3D%3D", stringsAsFactors = FALSE)
 data
 ```
 
@@ -456,7 +456,7 @@ This data frame consists of 11 variables and 305 observations.
 
 The data has a couple problems we need to take care of before we can start analysing it properly. 
 
-* _The first two rows:_ Qualtrics data comes with two rows that contain no useful information. Additionally, these force all columns to be of type "character", which we can't perform all types of analysis on. 
+* _The first two rows:_ Qualtrics data comes with two rows that contain no useful information. Additionally, these force all columns to be of type "character", which we can't perform all types of analyses on. 
 * _Not all respondents finished the survey:_ As you can tell by the progress column, not all respondents finished the survey. To be able to perform proper analysis, we only want those that completed the survey.
 * _Multiple choice question:_ The multiple choice question is currently in a format that is very hard to work with. It would be best to have eight individual columns that each correspond to an individual supermarket. 
 * _The price data is a mess:_ The price data is arguably the hardest challenge. The data is not uniform, with the decimal separator symbol varying and some rows containing aditional text and symbols that we do not need. We need to filter out only the relevant parts and then transform it from a character to a numeric column to work on it. 

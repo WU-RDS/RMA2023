@@ -37,7 +37,7 @@ To see the value of an object, simply type its name into the console and hit ent
 x #print the value of x to the console
 ```
 
-You can also explicitely tell R to print the value of an object:
+You can also explicitly tell R to print the value of an object:
 
 ```{r}
 print(x) #print the value of x to the console
@@ -167,7 +167,7 @@ music_data # Returns the entire data frame
 
 Hint: You may also use the ```View()```-function to view the data in a table format (like in SPSS or Excel), i.e. enter the command ```View(data)```. Note that you can achieve the same by clicking on the small table icon next to the data frame in the "Environment"-window on the right in RStudio. 
 
-Sometimes it is convenient to return only specific values instead of the entire data frame. There are a variety of ways to identify the elements of a dataframe. One easy way is to explicitely state, which rows and columns you wish to view. The general form of the command is ```data.frame[rows,columns]```. By leaving one of the arguments of ```data.frame[rows,columns]``` blank (e.g., ```data.frame[rows,]```) we tell R that we want to access either all rows or columns, respectively. Here are some examples:  
+Sometimes it is convenient to return only specific values instead of the entire data frame. There are a variety of ways to identify the elements of a data frame. One easy way is to explicitely state, which rows and columns you wish to view. The general form of the command is ```data.frame[rows,columns]```. By leaving one of the arguments of ```data.frame[rows,columns]``` blank (e.g., ```data.frame[rows,]```) we tell R that we want to access either all rows or columns, respectively. Here are some examples:  
 
 ```{r}
 music_data[,2:4] # all rows and columns 2,3,4
@@ -187,7 +187,7 @@ You may also create subsets of the data frame, e.g., using mathematical expressi
 The same can be achieved using the ```subset()```-function
 
 ```{r}
-  subset(music_data,top10_track_explicit == "explicit") # selects subsets of observations in a dataframe
+  subset(music_data,top10_track_explicit == "explicit") # selects subsets of observations in a data frame
   
   #creates a new data frame that only contains tracks from genre "Dance" 
   music_data_dance <- subset(music_data,top10_artist_genre == "Dance") 
@@ -215,11 +215,11 @@ tail(music_data, 3) # returns the last X rows (here, the last 3 rows)
 ```{r}
 names(music_data) # returns the names of the variables in the data frame
 ```
-```str()``` displays the internal structure of an R object. In the case of a dataframe, it returns the class (e.g., numeric, factor, etc.) of each variable, as well as the number of observations and the number of variables. 
+```str()``` displays the internal structure of an R object. In the case of a data frame, it returns the class (e.g., numeric, factor, etc.) of each variable, as well as the number of observations and the number of variables. 
 ```{r}
 str(music_data) # returns the structure of the data frame
 ```
-```nrow()``` and ```ncol()``` return the rows and columns of a dataframe or matrix, respectively. ```dim()``` displays the dimensions of an R object.
+```nrow()``` and ```ncol()``` return the rows and columns of a data frame or matrix, respectively. ```dim()``` displays the dimensions of an R object.
 ```{r}
 nrow(music_data) # returns the number of rows 
 ncol(music_data) # returns the number of columns 
@@ -257,13 +257,13 @@ head(music_data)
 
 You can also rename variables in a data frame, e.g., using the ```rename()```-function from the ```plyr``` package. In the following code "::" signifies that the function "rename" should be taken from the package "plyr". This can be useful if multiple packages have a function with the same name. Calling a function this way also means that you can access a function without loading the entire package via ```library()```.
 
-```{r  message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(plyr)
 music_data <- plyr::rename(music_data, c(top10_artist_genre="genre",top_10_track_release_date="release_date"))
 head(music_data)
 ```
 
-The video below provides an overview of dataframes, going into more detail on some points. 
+The video below provides an overview of data frames, going into more detail on some points. 
 
 <div align="center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/r3Izt1u20y0" frameborder="0" allowfullscreen></iframe>

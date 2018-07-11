@@ -20,9 +20,9 @@ library(devtools)
 devtools::install_github('PMassicotte/gtrendsR',force=T)
 ```
 
-Before you can start your analytics in R, you first need to import the data you wish to perform the analytics on. You will often be faced with different types of data formats (usually produced by some other statistical software like SPSS or Excel or a text editor). Fortunately, R is fairly flexible with respect to the sources from which data may be imported and you can import the most common data formats into R with the help of a few packages. R can, among others, handle data from the following sources: 
+Before you can start your analysis in R, you first need to import the data you wish to perform the analysis on. You will often be faced with different types of data formats (usually produced by some other statistical software like SPSS or Excel or a text editor). Fortunately, R is fairly flexible with respect to the sources from which data may be imported and you can import the most common data formats into R with the help of a few packages. R can, among others, handle data from the following sources: 
 
-![Data Import](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/data_import.JPG)
+![](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/data_import.JPG)
 
 In the previous chapter, we saw how we may use the keyboard to input data in R. In the following sections, we will learn how to import data from text files and other statistical software packages. 
 
@@ -45,7 +45,7 @@ test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/maste
 It is also possible to download the data from the respective folder on the "Learn\@WU" platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-test_data <- read.table(test_file, header=TRUE)
+test_data <- read.table("test_file.extension", header=TRUE)
 ```
 
 ## Import data created by other software packages
@@ -72,7 +72,7 @@ The import of other file formats works in a very similar way (e.g., Stata, SAS).
 
 ## Export data
 
-Exporting to different formats is also easy, as you can just replace "read" with "write" in many of the previously discussed functions (e.g. ```write.table(file_name)```). This will save the data file to the working directory. To check what the current working directory is you can use ```getwd()```. By default, the ```write.table(file_name)```function includes the row number as the first variable. By specifying ```row.names = FALSE```, you may exclude this variable since it doesn't contain any useful information.  
+Exporting to different formats is also easy, as you can just replace "read" with "write" in many of the previously discussed functions (e.g. ```write.table(object, "file_name")```). This will save the data file to the working directory. To check what the current working directory is you can use ```getwd()```. By default, the ```write.table(object, "file_name")```function includes the row number as the first variable. By specifying ```row.names = FALSE```, you may exclude this variable since it doesn't contain any useful information.  
 
 ```{r eval=FALSE}
 write.table(test_data, "testData.dat", row.names = FALSE, sep = "\t") #writes to a tab-delimited text file
@@ -94,7 +94,7 @@ population <- html_nodes(population, "table")
 print(population)
 ```
 
-The output shows that there are two tables on the website and the first one appears to contain the relevant information. So let's read the first table using the  ```html_table()``` function. Note that ```population``` is of class "list". A list is a vector that has other R objects (e.g., other vectors, dataframes, matrices, etc.) as its elements. If we want to access the data of one of the elements, we have to use two square brackets on each side instead of just one (e.g., ```population[[1]]``` gets us the first table from the list of tables on the website; the argument ```fill = TRUE``` ensures that empty cells are replaced with missing values when reading the table).
+The output shows that there are two tables on the website and the first one appears to contain the relevant information. So let's read the first table using the  ```html_table()``` function. Note that ```population``` is of class "list". A list is a vector that has other R objects (e.g., other vectors, data frames, matrices, etc.) as its elements. If we want to access the data of one of the elements, we have to use two square brackets on each side instead of just one (e.g., ```population[[1]]``` gets us the first table from the list of tables on the website; the argument ```fill = TRUE``` ensures that empty cells are replaced with missing values when reading the table).
 
 ```{r}
 population <- population[[2]] %>% html_table(fill = TRUE)
