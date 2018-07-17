@@ -360,7 +360,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">7.1</span> Introduction</h2>
-<p>In the previous chapter we talked about probability density/mass functions (PDFs/PMFs) and cumulative distribution functions (CDFs). We also discussed plots of those functions. A natural question to ask is “where do these distributions come from?”. It turns out that many random variables follow well known distributions, the properties of which have been studied extensively. Furthermore, many observations in the real world (e.g. height data) can also be approximated with theoretical distributions. Let’s consider our coin toss example. We did not actually toss thousands of coins to come up with their probability distribution. We modelled the population of coin tosses using their theoretical distribution (the <a href="probability-distributions.html#binomial-distribution">binomial distribution</a>).</p>
+<p>In the previous chapter we talked about probability density/mass functions (PDFs/PMFs) and cumulative distribution functions (CDFs). We also discussed plots of those functions. A natural question to ask is “where do these distributions come from?”. It turns out that many random variables follow well known distributions, the properties of which have been studied extensively. Furthermore, many observations in the real world (e.g. height data) can also be approximated with theoretical distributions. Let’s consider our coin toss example. We did not actually toss thousands of coins to come up with their probability distribution. We modeled the population of coin tosses using their theoretical distribution (the <a href="probability-distributions.html#binomial-distribution">binomial distribution</a>).</p>
 <p>We say that a random variable <span class="math inline">\(X\)</span> <em>follows</em> or <em>has</em> some distribution. Distributions have parameters that influence the shape of the distribution function and if we do not explicitly specify the parameters we usually speak of a <em>family of distributions</em>. If <span class="math inline">\(X\)</span> follows the distribution <span class="math inline">\(D\)</span> and <span class="math inline">\(a,\ b\)</span> are its parameters, we write:</p>
 <p><span class="math display">\[
 X \sim D(a, b)
@@ -439,7 +439,7 @@ n * (p - p^2) = np - np^2 = np * (1-p) = Var(X_i)
 <li><code>rbinom()</code>: Returns <code>r</code>andom draws from the binomial distribution with specified <span class="math inline">\(p\)</span> and <span class="math inline">\(n\)</span> values.</li>
 <li><code>pbinom()</code>: Returns the cumulative <code>p</code>robability of a value, i.e. how likely is the specified number or less, given <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>.</li>
 <li><code>qbinom()</code>: Returns the <code>q</code>uantile (See <a href="https://en.wikipedia.org/wiki/Quantile_function">Quantile Function</a>) of a specified probability value. This can be understood as the inverse of the <code>pbinom()</code> function.</li>
-<li><code>dbinom()</code>: Returns the value of the probaility mass function, evaluated at the specified value (in case of a continuous distribution, it evaluates the probability <code>d</code>ensity function).</li>
+<li><code>dbinom()</code>: Returns the value of the probability mass function, evaluated at the specified value (in case of a continuous distribution, it evaluates the probability <code>d</code>ensity function).</li>
 </ul>
 <iframe src="http://localhost:3838/learnBinomial/" style="border: none; width: 800px; height: 640px">
 </iframe>
@@ -484,7 +484,7 @@ Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2 = \frac{(N + 1) * (2*N + 1)}{6} - \le
 </div>
 <div id="continuous-distributions" class="section level2">
 <h2><span class="header-section-number">7.3</span> Continuous Distributions</h2>
-<p>As mentionend in the last chapter, a distribution is continuous if the cumulative distribution function is a continuous function (no steps!).</p>
+<p>As mentioned in the last chapter, a distribution is continuous if the cumulative distribution function is a continuous function (no steps!).</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <p>As a consequence we cannot simply sum up values to get an expected value or a variance. We are now dealing with real numbers and thus there are infinitely many values between any two arbitrary numbers that are not equal.</p>
 <p>Therefore, instead of the sum we have to evaluate the integral of all the possible values weighted by the probability density function (the continuous equivalent to the probability mass function).</p>
