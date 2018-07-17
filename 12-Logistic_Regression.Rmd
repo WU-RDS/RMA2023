@@ -43,7 +43,7 @@ ggplot(data = data.frame(Y = Y, X = X), aes(x = X, y = Y)) +
   theme_bw()
 ```
 
-Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a __logistic regression model__. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilites, while the logistic model stays between 0 and 1. 
+Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a __logistic regression model__. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="The same binary data explained by two models; A linear probabilty model (on the left) and a logistic regression model (on the right)"}
 plot.bad <- ggplot(data = as.data.frame(cbind(Y, X)), aes(x = X, y = Y)) +
@@ -71,7 +71,7 @@ As the name suggests, the logistic function is an important component of the log
 $$
 f(\mathbf{X}) = \frac{1}{1 + e^{-\mathbf{X}}}
 $$
-This function transfroms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. 
+This function transforms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. 
 
 ```{r, echo = FALSE}
 library(latex2exp)
@@ -214,7 +214,7 @@ summary(logistf(Y~X))
 
 ### Maximum likelihood estimation
 
-For non-linear models we cannot turn to linear algebra to solve for the unknown parameters. However, we can use a statistical method called maximum likelihood estimation (MLE). Given observed data and an assumption about their distribution we can estimate for which parameter values the observed data is most likely to occur. We do this by calculating the joint log likelihood of the observations given _a_ choice of parameters (more on that below). Next, we change our parameter values a little bit and see if the joint log likelihood improved. We keep doing that until we cannot find better parameter values anymore (that is we have reached the maximum likelihood). In the following example we have a histogram of a dataset which we assume to be normally distributed. You can now try to find the best parameter values by changing the mean and the variance. Recall that the normal distribution is fully described by just those two parameters. In each step the log likelihood is automatically calculated. The maximum likelihood so far is shown as the high score and the line in the lower graph shows the development of the log likelihood for the past couple of tries.  
+For non-linear models we cannot turn to linear algebra to solve for the unknown parameters. However, we can use a statistical method called maximum likelihood estimation (MLE). Given observed data and an assumption about their distribution we can estimate for which parameter values the observed data is most likely to occur. We do this by calculating the joint log likelihood of the observations given _a_ choice of parameters (more on that below). Next, we change our parameter values a little bit and see if the joint log likelihood improved. We keep doing that until we cannot find better parameter values anymore (that is we have reached the maximum likelihood). In the following example we have a histogram of a data set which we assume to be normally distributed. You can now try to find the best parameter values by changing the mean and the variance. Recall that the normal distribution is fully described by just those two parameters. In each step the log likelihood is automatically calculated. The maximum likelihood so far is shown as the high score and the line in the lower graph shows the development of the log likelihood for the past couple of tries.  
 
 <iframe src="http://localhost:3838/maximumLikelihood/" style="border: none; width: 800px; height: 900px"></iframe>
 
@@ -226,7 +226,7 @@ $$
 P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
 $$
 
-So far we have looked at estimating the $\beta_i$ with R but have not discussed how that works. In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solve for $\beta_i$ since the function is now non-linear. Therefore, we turn to a methodology called _maximum likelihood estimation_. Basically, we try out different $\beta_i$ and choose the combination that best fits the observed data. In other words: choose the combination of $\beta_i$ that maximize the likelihood of observing the given dataset. For each individual we have information about the binary outcome and the predictors. For those whose outcome is $1$ we want to choose the $\beta_i$ such that our predicted probability of the outcome ($P(y_i = 1)$) is as close to $1$ as possible. At the same time, for those whose outcome is $0$ we would like the prediction ($P(y_i = 1)$) to be as close to $0$ as possible. Therefore, we "split" the sample into two groups (outcome $1$ and outcome $0$). For the first group each individual has the probability function shown above which we want to maximize for this group. For the other group we would need to minimize the joint probability since we want our prediction to be as close to $0$ as possible. Alternatively we can easily transform the probability to $P(y_i = 0)$ which we can then maximize. Since probabilities add up to $1$ and we only have two possible outcomes $P(y_i = 0) = 1 - P(y_i = 1)$. This is convenient because now we can calculate the joint likelihood of all observations and maximize a single function. We assume that the observations are independent from each other and thus the joint likelihood is just the product of the individual probabilities. Thus for the group of $n_1$ individuals with outcome $1$ we have the joint likelihood
+So far we have looked at estimating the $\beta_i$ with R but have not discussed how that works. In contrast to linear models (e.g. OLS) we cannot rely on linear algebra to solve for $\beta_i$ since the function is now non-linear. Therefore, we turn to a methodology called _maximum likelihood estimation_. Basically, we try out different $\beta_i$ and choose the combination that best fits the observed data. In other words: choose the combination of $\beta_i$ that maximize the likelihood of observing the given data set. For each individual we have information about the binary outcome and the predictors. For those whose outcome is $1$ we want to choose the $\beta_i$ such that our predicted probability of the outcome ($P(y_i = 1)$) is as close to $1$ as possible. At the same time, for those whose outcome is $0$ we would like the prediction ($P(y_i = 1)$) to be as close to $0$ as possible. Therefore, we "split" the sample into two groups (outcome $1$ and outcome $0$). For the first group each individual has the probability function shown above which we want to maximize for this group. For the other group we would need to minimize the joint probability since we want our prediction to be as close to $0$ as possible. Alternatively we can easily transform the probability to $P(y_i = 0)$ which we can then maximize. Since probabilities add up to $1$ and we only have two possible outcomes $P(y_i = 0) = 1 - P(y_i = 1)$. This is convenient because now we can calculate the joint likelihood of all observations and maximize a single function. We assume that the observations are independent from each other and thus the joint likelihood is just the product of the individual probabilities. Thus for the group of $n_1$ individuals with outcome $1$ we have the joint likelihood
 
 $$
 \prod_{i=1}^{n_1} {1 \over 1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
@@ -275,7 +275,7 @@ $$
 P(\text{skipped}_i) = {1 \over 1 + e^{-(\beta_0 + \beta_1 \text{rating}_i)}}
 $$
 
-The probability that individual $i$ will skip a song is the logisitc function with $X = \beta_0 + \beta_1 * \text{rating}_i$, where $\text{rating}_i$ is individual $i$'s rating of the genre of the song. Since we assume independence of individuals we can write the joint likelihood as
+The probability that individual $i$ will skip a song is the logistic function with $X = \beta_0 + \beta_1 * \text{rating}_i$, where $\text{rating}_i$ is individual $i$'s rating of the genre of the song. Since we assume independence of individuals we can write the joint likelihood as
 
 $$
 \prod_{i=1}^{N} \left({1 \over 1 + e^{-(\beta_0 + \beta_1 \text{rating}_i)}}\right)^{y_i} \times \left(1- {1 \over 1 + e^{-(\beta_0 + \beta_1 \text{rating}_i)}}\right)^{(1-y_i)}
@@ -286,7 +286,7 @@ Notice that $y_i$ is either equal to one or to zero. So for each individual only
 set.seed(123)
 ```
 
-Manually applying this in R would looks as follows. We begin by simulating some data. ```ratingGenre``` is a vector of 10000 randomly generated numbers between 1 and 10. ```pSkip``` will be a vector of probabilites generated by applying the logistic function to our linear model, with the parameters $\beta_0 = 1$ and $\beta_1 = -0.3$.
+Manually applying this in R would looks as follows. We begin by simulating some data. ```ratingGenre``` is a vector of 10000 randomly generated numbers between 1 and 10. ```pSkip``` will be a vector of probabilities generated by applying the logistic function to our linear model, with the parameters $\beta_0 = 1$ and $\beta_1 = -0.3$.
 
 ```{r, message = FALSE, warning = FALSE}
 ratingGenre <- sample(1:10, size = 10000, replace = TRUE)
@@ -322,7 +322,7 @@ geom_col() +
 
 ```
 
-The visualization shows that an increase in ```genreRating``` leads to a decrease in the probability of a song being skipped. Now we want to perform maximum likelihood estimation and see how close we get to the true parameter values. To achive this, we need a function that, given a value for $\beta_0$ and $\beta_1$, gives us the value of the log likelihood. The follwing code defines such a function.
+The visualization shows that an increase in ```genreRating``` leads to a decrease in the probability of a song being skipped. Now we want to perform maximum likelihood estimation and see how close we get to the true parameter values. To achieve this, we need a function that, given a value for $\beta_0$ and $\beta_1$, gives us the value of the log likelihood. The following code defines such a function.
 
 ```{r, message = FALSE, warning = FALSE}
 mlEstimate <- function(beta_0, beta_1){
@@ -363,7 +363,7 @@ prob_beta_1 <- seq(-1, 0, length.out = 100)
 prob_beta_0
 ```
 
-Next we create a dataframe that contains all possible combinations of ```prob_beta_0``` and ```prob_beta_1```. The ```expand.grid()``` function does exactly that. 
+Next we create a data frame that contains all possible combinations of ```prob_beta_0``` and ```prob_beta_1```. The ```expand.grid()``` function does exactly that. 
 
 ```{r, message = FALSE, warning = FALSE}
 params <- expand.grid(prob_beta_0, prob_beta_1)
