@@ -47,6 +47,7 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.7.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -108,11 +109,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul class="summary">
 <li><strong><a href="./">MRDA 2018</a></strong></li>
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#datacamp"><i class="fa fa-check"></i>DataCamp</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html"><i class="fa fa-check"></i>Course materials</a><ul>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#datacamp"><i class="fa fa-check"></i>DataCamp</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
 <li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> How to download and install R and RStudio</a></li>
@@ -396,29 +398,29 @@ att_data<span class="op">$</span>respodentID &lt;-<span class="st"> </span><span
 ## 8         2        2          11
 ## 12        2        2          12</code></pre>
 <p>Let’s look at the data. The following graph shows the individual data points for the “duration of residency”&quot; variable, where the blue horizontal line represents the mean of the variable (9.33) and the vertical lines show the distance of the individual data points from the mean.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
-<img src="_main_files/figure-html/unnamed-chunk-3-1.png" alt="Scores for duration of residency variable" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-261"></span>
+<img src="_main_files/figure-html/unnamed-chunk-261-1.png" alt="Scores for duration of residency variable" width="672" />
 <p class="caption">
 Figure 12.1: Scores for duration of residency variable
 </p>
 </div>
 <p>You can see that there are some respondents that have been living in the city longer than average and some respondents that have been living in the city shorter than average. Let’s do the same for the second variable (“Attitude”):</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
-<img src="_main_files/figure-html/unnamed-chunk-4-1.png" alt="Scores for attitude variable" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-262"></span>
+<img src="_main_files/figure-html/unnamed-chunk-262-1.png" alt="Scores for attitude variable" width="672" />
 <p class="caption">
 Figure 12.2: Scores for attitude variable
 </p>
 </div>
 <p>Again, we can see that some respondents have an above average attitude towards the city (more favorable) and some respondents have a below average attitude towards the city. Let’s plot the data in one graph now to see if there is some co-movement:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="_main_files/figure-html/unnamed-chunk-5-1.png" alt="Scores for attitude and duration of residency variables" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-263"></span>
+<img src="_main_files/figure-html/unnamed-chunk-263-1.png" alt="Scores for attitude and duration of residency variables" width="672" />
 <p class="caption">
 Figure 12.3: Scores for attitude and duration of residency variables
 </p>
 </div>
 <p>We can see that there is indeed some co-movement here. The variables <b>covary</b> because respondents who have an above (below) average attitude towards the city also appear to have been living in the city for an above (below) average amount of time and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterpot to visualize the relationship between two metric variables:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
-<img src="_main_files/figure-html/unnamed-chunk-6-1.png" alt="Scatterplot for durationand attitute variables" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-264"></span>
+<img src="_main_files/figure-html/unnamed-chunk-264-1.png" alt="Scatterplot for durationand attitute variables" width="672" />
 <p class="caption">
 Figure 12.4: Scatterplot for durationand attitute variables
 </p>
@@ -503,14 +505,14 @@ t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl"
 t_crit</code></pre></div>
 <pre><code>## [1] 2.23</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pt</span>(<span class="dt">q =</span> t_calc, <span class="dt">df =</span> df, <span class="dt">lower.tail =</span> F) <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="co">#p-value </span></code></pre></div>
-<pre><code>## [1] 7.55e-06</code></pre>
+<pre><code>## [1] 0.00000755</code></pre>
 <p>Or you can simply use the <code>cor.test()</code> function, which also produces the 95% confidence interval:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor.test</span>(att_data<span class="op">$</span>attitude, att_data<span class="op">$</span>duration, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
 ## data:  att_data$attitude and att_data$duration
-## t = 8, df = 10, p-value = 8e-06
+## t = 8, df = 10, p-value = 0.000008
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
 ##  0.783 0.982
@@ -527,7 +529,7 @@ t_crit</code></pre></div>
 ##  Spearman&#39;s rank correlation rho
 ## 
 ## data:  att_data$attitude and att_data$duration
-## S = 10, p-value = 2e-06
+## S = 10, p-value = 0.000002
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
 ##  rho 
@@ -537,7 +539,7 @@ t_crit</code></pre></div>
 ##  Kendall&#39;s rank correlation tau
 ## 
 ## data:  att_data$attitude and att_data$duration
-## z = 4, p-value = 9e-05
+## z = 4, p-value = 0.00009
 ## alternative hypothesis: true tau is not equal to 0
 ## sample estimates:
 ##   tau 
@@ -600,7 +602,7 @@ regression<span class="op">$</span>genre &lt;-<span class="st"> </span><span cla
 <span class="kw">head</span>(regression)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["airplay"],"name":[3],"type":["int"],"align":["right"]},{"label":["starpower"],"name":[4],"type":["int"],"align":["right"]},{"label":["genre"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["country"],"name":[6],"type":["fctr"],"align":["left"]}],"data":[{"1":"330","2":"10.3","3":"43","4":"10","5":"electronic","6":"international","_rn_":"1"},{"1":"300","2":"174.1","3":"40","4":"7","5":"electronic","6":"international","_rn_":"2"},{"1":"250","2":"1000.0","3":"5","4":"7","5":"pop","6":"international","_rn_":"3"},{"1":"120","2":"75.9","3":"34","4":"6","5":"rock","6":"local","_rn_":"4"},{"1":"290","2":"1351.3","3":"37","4":"9","5":"electronic","6":"local","_rn_":"5"},{"1":"60","2":"202.7","3":"13","4":"8","5":"rock","6":"local","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["airplay"],"name":[3],"type":["int"],"align":["right"]},{"label":["starpower"],"name":[4],"type":["int"],"align":["right"]},{"label":["genre"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["country"],"name":[6],"type":["fctr"],"align":["left"]}],"data":[{"1":"330","2":"10.3","3":"43","4":"10","5":"electronic","6":"international"},{"1":"300","2":"174.1","3":"40","4":"7","5":"electronic","6":"international"},{"1":"250","2":"1000.0","3":"5","4":"7","5":"pop","6":"international"},{"1":"120","2":"75.9","3":"34","4":"6","5":"rock","6":"local"},{"1":"290","2":"1351.3","3":"37","4":"9","5":"electronic","6":"local"},{"1":"60","2":"202.7","3":"13","4":"8","5":"rock","6":"local"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">describe</span>(regression) <span class="co">#descriptive statistics using psych</span></code></pre></div>
@@ -649,8 +651,8 @@ Sales=\beta_0+\beta_1*adspend+\epsilon
 \tag{12.7}
 \end{equation}\]</span>
 <p>We use the hat symbol, <sup>^</sup>, to denote the estimated value for an unknown parameter or coefficient, or to denote the predicted value of the response (sales). In practice, β<sub>0</sub> and β<sub>1</sub> are unknown and must be estimated from the data to make predictions. In the case of our advertising example, the data set consists of the advertising budget and product sales (n = 200). Our goal is to obtain coefficient estimates such that the linear model fits the available data well. In other words, we fit a line through the scatterplot of observations and try to find the line that best describes the data. The following graph shows the scatterplot for our data, where the black line shows the regression line. The grey vertical lines shows the difference between the predicted values (the regression line) and the observed values. This difference is referred to as the residuals (“e”).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
-<img src="_main_files/figure-html/unnamed-chunk-16-1.png" alt="Ordinary least squares (OLS)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-274"></span>
+<img src="_main_files/figure-html/unnamed-chunk-274-1.png" alt="Ordinary least squares (OLS)" width="672" />
 <p class="caption">
 Figure 12.5: Ordinary least squares (OLS)
 </p>
@@ -699,8 +701,8 @@ beta_<span class="dv">0</span></code></pre></div>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
-<img src="_main_files/figure-html/unnamed-chunk-19-1.png" alt="Scatterplot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-277"></span>
+<img src="_main_files/figure-html/unnamed-chunk-277-1.png" alt="Scatterplot" width="672" />
 <p class="caption">
 Figure 12.6: Scatterplot
 </p>
@@ -772,8 +774,8 @@ SS_T= \sum_{i=1}^{N} (Y_i-\overline{Y})^2
 \tag{12.14}
 \end{equation}\]</span>
 <p>The following graph shows the total sum of squares:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
-<img src="_main_files/figure-html/unnamed-chunk-22-1.png" alt="Total sum of squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-280"></span>
+<img src="_main_files/figure-html/unnamed-chunk-280-1.png" alt="Total sum of squares" width="672" />
 <p class="caption">
 Figure 12.7: Total sum of squares
 </p>
@@ -784,8 +786,8 @@ SS_M= \sum_{j=1}^{c}  n_j(\overline{Y}_j-\overline{Y})^2
 \tag{12.15}
 \end{equation}\]</span>
 <p>The model sum of squares represents the improvement in prediction resulting from using the regression model rather than the mean of the data. The following graph shows the model sum of squares for our example:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
-<img src="_main_files/figure-html/unnamed-chunk-23-1.png" alt="Ordinary least squares (OLS)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
+<img src="_main_files/figure-html/unnamed-chunk-281-1.png" alt="Ordinary least squares (OLS)" width="672" />
 <p class="caption">
 Figure 12.8: Ordinary least squares (OLS)
 </p>
@@ -796,8 +798,8 @@ SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\overline{Y}_{j})^2
 \tag{12.16}
 \end{equation}\]</span>
 <p>The following graph shows the residual sum of squares for our example:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
-<img src="_main_files/figure-html/unnamed-chunk-24-1.png" alt="Ordinary least squares (OLS)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
+<img src="_main_files/figure-html/unnamed-chunk-282-1.png" alt="Ordinary least squares (OLS)" width="672" />
 <p class="caption">
 Figure 12.9: Ordinary least squares (OLS)
 </p>
@@ -811,8 +813,8 @@ R^2= \frac{SS_M}{SS_T}
 \end{equation}\]</span>
 <p>It takes values between 0 (very bad fit) and 1 (very good fit). Note that when the goal of your model is to predict future outcomes, a “too good” model fit can pose severe challenges. The reason is that the model might fit your specific sample so well, that it will only predict well within the sample but not generalize to other samples. This is called <strong>overfitting</strong> and it shows that there is a trade-off between model fit and out-of-sample predictive ability of the model, if the goal is to predict beyond the sample.</p>
 <p>You can get a first impression of the fit of the model by inspecting the scatter plot as can be seen in the plot below. If the observations are highly dispersed around the regression line (left plot), the fit will be lower compared to a data set where the values are less dispersed (right plot).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
-<img src="_main_files/figure-html/unnamed-chunk-25-1.png" alt="Good vs. bad model fit" width="960" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
+<img src="_main_files/figure-html/unnamed-chunk-283-1.png" alt="Good vs. bad model fit" width="960" />
 <p class="caption">
 Figure 12.10: Good vs. bad model fit
 </p>
@@ -906,9 +908,9 @@ Sales=\beta_0+\beta_1*adspend+\beta_2*airplay+\epsilon
 \end{equation}\]</span>
 <p>The words “adspend” and “airplay” represent data that we have observed on advertising expenditures and number of radio plays, and β<sub>1</sub> and β<sub>2</sub> represent the unknown relationship between sales and advertising expenditures and radio airplay, respectively. The coefficients tells you by how much sales will increase for an additional Euro spent on advertising (when radio airplay is held constant) and by how much sales will increase for an additional radio play (when advertising expenditures are held constant). Thus, we can make predictions about album sales based not only on advertising spending, but also on radio airplay.</p>
 <p>With several predictors, the partitioning of sum of squares is the same as in the bivariate model, except that the model is no longer a 2-D straight line. With two predictors, the regression line becomes a 3-D regression plane. In our example:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
-<div id="cac1cfc4fbd" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="cac1cfc4fbd">{"x":{"visdat":{"cac26da7a2c":["function () ","plotlyVisDat"],"cac53881f79":["function () ","data"]},"cur_data":"cac53881f79","attrs":{"cac26da7a2c":{"x":{},"y":{},"z":{},"colors":["#A9D0F5","#08088A"],"alpha":1,"sizes":[10,100],"type":"surface"},"cac53881f79":{"x":[10.256,174.093,1000,75.896,1351.254,202.705,365.985,305.268,263.268,513.694,152.609,35.987,1720.806,102.568,215.368,426.784,507.772,233.291,1035.433,102.642,526.142,624.538,912.349,611.479,215.994,561.963,474.76,231.523,678.596,70.922,1567.548,263.598,1423.568,715.678,251.192,777.237,509.43,964.11,583.627,923.373,344.392,1095.578,100.025,30.425,1080.342,97.972,799.899,1071.752,893.355,283.161,917.017,234.568,456.897,206.973,1294.099,826.859,406.814,564.158,192.607,10.652,45.689,42.568,20.456,635.192,1002.273,1177.047,507.638,265.398,215.689,526.48,26.895,883.877,9.104,103.568,169.583,429.504,223.639,145.585,1323.287,985.968,500.922,226.652,1051.168,68.093,1547.159,393.774,804.282,801.577,450.562,196.65,26.598,179.061,345.687,295.84,2271.86,1134.575,601.434,45.298,759.518,832.869,1326.598,56.894,709.399,56.895,767.134,503.172,700.929,910.851,888.569,800.615,1500,985.685,1380.689,785.694,792.345,957.167,1789.659,656.137,613.697,313.362,336.51,1544.899,68.954,1445.563,785.692,125.628,377.925,217.994,759.862,1163.444,842.957,125.179,236.598,669.811,1188.193,612.234,922.019,50,2000,1054.027,385.045,1507.972,102.568,204.568,1170.918,574.513,689.547,784.22,405.913,179.778,607.258,1542.329,1112.47,856.985,836.331,236.908,568.954,1077.855,579.321,1500,731.364,25.689,391.749,233.999,275.7,56.895,255.117,471.814,566.501,102.568,250.568,68.594,642.786,1500,102.563,756.984,51.229,644.151,537.352,15.313,243.237,256.894,22.464,45.689,724.938,1126.461,1985.119,1837.516,135.986,514.068,237.703,976.641,1452.689,1600,268.598,900.889,982.063,201.356,746.024,1132.877],"y":[43,40,5,34,37,13,23,54,18,2,11,30,32,22,36,37,9,2,12,5,14,20,57,20,19,35,22,16,53,4,29,43,26,28,24,37,32,34,30,15,23,31,21,28,18,38,28,37,26,30,10,21,18,14,38,36,24,32,9,39,24,45,13,17,32,23,0,25,35,26,19,26,53,29,28,17,26,42,35,17,36,45,20,15,28,27,17,32,46,36,47,19,22,55,31,39,21,36,21,44,27,27,16,33,33,21,35,26,14,34,11,28,33,20,33,28,30,34,49,40,20,42,35,35,8,49,19,42,6,36,32,28,25,34,33,21,34,63,31,25,42,37,25,26,39,44,46,36,12,2,29,33,28,10,38,19,19,13,30,38,22,23,22,20,18,37,16,20,32,26,53,28,32,24,37,30,19,47,22,22,10,1,1,39,8,38,35,40,22,21,27,31,19,24,1,38,26,11,34,55],"z":[330,300,250,120,290,60,140,290,160,100,160,150,290,140,230,230,30,80,190,90,120,150,230,70,150,210,180,140,360,10,240,270,290,220,150,230,220,240,260,170,130,270,140,60,210,190,210,240,210,200,140,90,120,100,360,180,240,150,110,90,160,230,40,60,230,230,120,100,150,120,60,280,120,230,230,40,140,360,250,210,260,250,200,150,250,100,260,210,290,210,220,70,110,250,320,300,180,180,200,320,280,140,100,120,230,150,250,190,240,250,230,120,230,110,210,230,320,210,230,250,60,330,150,360,150,180,80,180,130,320,280,200,130,190,270,150,230,310,340,240,180,220,40,190,290,220,340,250,190,120,230,190,210,170,310,90,170,140,300,340,170,100,200,80,100,70,50,70,240,160,290,140,210,300,230,280,160,200,210,110,110,70,100,190,70,360,360,300,120,200,150,220,280,300,140,290,180,140,210,250],"colors":["#A9D0F5","#08088A"],"alpha":1,"sizes":[10,100],"type":"scatter3d","mode":"markers","marker":{"color":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"size":3,"opacity":0.8,"symbol":75}}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"manual","aspectratio":{"x":1,"y":1,"z":1},"xaxis":{"title":"adspend","range":[0,2300]},"yaxis":{"title":"airplay","range":[0,70]},"zaxis":{"title":"sales","range":[0,null]}},"xaxis":{"domain":[0,1]},"yaxis":{"domain":[0,1]},"hovermode":"closest","showlegend":false,"legend":{"y":0.5,"yanchor":"top"}},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"z","ticklen":2,"len":0.5,"y":1,"lenmode":"fraction","yanchor":"top"},"colorscale":[["0","rgba(169,208,245,1)"],["0.130813747154817","rgba(153,181,231,1)"],["0.193798965446292","rgba(146,168,224,1)"],["0.239340724187596","rgba(140,159,219,1)"],["0.280039172357033","rgba(135,151,215,1)"],["0.313953436788704","rgba(131,144,211,1)"],["0.347867701220375","rgba(126,137,208,1)"],["0.375968218497229","rgba(123,132,205,1)"],["0.403100517276854","rgba(119,126,202,1)"],["0.42926459755925","rgba(116,121,199,1)"],["0.453487804675746","rgba(113,116,196,1)"],["0.476745011380733","rgba(109,112,194,1)"],["0.5","rgba(106,107,191,1)"],["0.523254988619267","rgba(103,103,189,1)"],["0.546512195324254","rgba(100,98,186,1)"],["0.57073540244075","rgba(97,94,184,1)"],["0.596899482723146","rgba(93,89,181,1)"],["0.624031781502771","rgba(89,84,178,1)"],["0.652132298779625","rgba(85,78,175,1)"],["0.686046563211296","rgba(80,72,172,1)"],["0.719960827642967","rgba(74,66,168,1)"],["0.760659275812404","rgba(68,58,164,1)"],["0.806201034553708","rgba(60,49,159,1)"],["0.869186252845183","rgba(48,37,152,1)"],["1","rgba(8,8,138,1)"]],"showscale":true,"x":[9.104,103.3855,197.667,291.9485,386.23,480.5115,574.793,669.0745,763.356,857.6375,951.919,1046.2005,1140.482,1234.7635,1329.045,1423.3265,1517.608,1611.8895,1706.171,1800.4525,1894.734,1989.0155,2083.297,2177.5785,2271.86],"y":[0,2.625,5.25,7.875,10.5,13.125,15.75,18.375,21,23.625,26.25,28.875,31.5,34.125,36.75,39.375,42,44.625,47.25,49.875,52.5,55.125,57.75,60.375,63],"z":[[41.9148312294276,50.1066740811476,58.2985169328676,66.4903597845876,74.6822026363075,82.8740454880275,91.0658883397475,99.2577311914675,107.449574043187,115.641416894907,123.833259746627,132.025102598347,140.216945450067,148.408788301787,156.600631153507,164.792474005227,172.984316856947,181.176159708667,189.368002560387,197.559845412107,205.751688263827,213.943531115547,222.135373967267,230.327216818987,238.519059670707],[51.3354036298894,59.5272464816094,67.7190893333294,75.9109321850494,84.1027750367694,92.2946178884894,100.486460740209,108.678303591929,116.870146443649,125.061989295369,133.253832147089,141.445674998809,149.637517850529,157.829360702249,166.021203553969,174.213046405689,182.404889257409,190.596732109129,198.788574960849,206.980417812569,215.172260664289,223.364103516009,231.555946367729,239.747789219449,247.939632071169],[60.7559760303513,68.9478188820713,77.1396617337913,85.3315045855112,93.5233474372312,101.715190288951,109.907033140671,118.098875992391,126.290718844111,134.482561695831,142.674404547551,150.866247399271,159.058090250991,167.249933102711,175.441775954431,183.633618806151,191.825461657871,200.017304509591,208.209147361311,216.400990213031,224.592833064751,232.784675916471,240.976518768191,249.168361619911,257.360204471631],[70.1765484308131,78.3683912825331,86.5602341342531,94.7520769859731,102.943919837693,111.135762689413,119.327605541133,127.519448392853,135.711291244573,143.903134096293,152.094976948013,160.286819799733,168.478662651453,176.670505503173,184.862348354893,193.054191206613,201.246034058333,209.437876910053,217.629719761773,225.821562613493,234.013405465213,242.205248316933,250.397091168653,258.588934020373,266.780776872093],[79.597120831275,87.788963682995,95.9808065347149,104.172649386435,112.364492238155,120.556335089875,128.748177941595,136.940020793315,145.131863645035,153.323706496755,161.515549348475,169.707392200195,177.899235051915,186.091077903635,194.282920755355,202.474763607075,210.666606458795,218.858449310515,227.050292162235,235.242135013955,243.433977865675,251.625820717395,259.817663569115,268.009506420835,276.201349272555],[89.0176932317368,97.2095360834568,105.401378935177,113.593221786897,121.785064638617,129.976907490337,138.168750342057,146.360593193777,154.552436045497,162.744278897217,170.936121748937,179.127964600657,187.319807452377,195.511650304097,203.703493155817,211.895336007537,220.087178859257,228.279021710977,236.470864562696,244.662707414416,252.854550266136,261.046393117856,269.238235969576,277.430078821296,285.621921673016],[98.4382656321987,106.630108483919,114.821951335639,123.013794187359,131.205637039079,139.397479890799,147.589322742519,155.781165594239,163.973008445958,172.164851297678,180.356694149398,188.548537001118,196.740379852838,204.932222704558,213.124065556278,221.315908407998,229.507751259718,237.699594111438,245.891436963158,254.083279814878,262.275122666598,270.466965518318,278.658808370038,286.850651221758,295.042494073478],[107.85883803266,116.05068088438,124.2425237361,132.43436658782,140.62620943954,148.81805229126,157.00989514298,165.2017379947,173.39358084642,181.58542369814,189.77726654986,197.96910940158,206.1609522533,214.35279510502,222.54463795674,230.73648080846,238.92832366018,247.1201665119,255.31200936362,263.50385221534,271.69569506706,279.88753791878,288.0793807705,296.27122362222,304.46306647394],[117.279410433122,125.471253284842,133.663096136562,141.854938988282,150.046781840002,158.238624691722,166.430467543442,174.622310395162,182.814153246882,191.005996098602,199.197838950322,207.389681802042,215.581524653762,223.773367505482,231.965210357202,240.157053208922,248.348896060642,256.540738912362,264.732581764082,272.924424615802,281.116267467522,289.308110319242,297.499953170962,305.691796022682,313.883638874402],[126.699982833584,134.891825685304,143.083668537024,151.275511388744,159.467354240464,167.659197092184,175.851039943904,184.042882795624,192.234725647344,200.426568499064,208.618411350784,216.810254202504,225.002097054224,233.193939905944,241.385782757664,249.577625609384,257.769468461104,265.961311312824,274.153154164544,282.344997016264,290.536839867984,298.728682719704,306.920525571424,315.112368423144,323.304211274864],[136.120555234046,144.312398085766,152.504240937486,160.696083789206,168.887926640926,177.079769492646,185.271612344366,193.463455196086,201.655298047806,209.847140899526,218.038983751246,226.230826602966,234.422669454686,242.614512306406,250.806355158126,258.998198009846,267.190040861566,275.381883713286,283.573726565006,291.765569416726,299.957412268446,308.149255120166,316.341097971886,324.532940823606,332.724783675326],[145.541127634508,153.732970486228,161.924813337948,170.116656189668,178.308499041388,186.500341893108,194.692184744828,202.884027596548,211.075870448268,219.267713299988,227.459556151708,235.651399003428,243.843241855148,252.035084706868,260.226927558588,268.418770410308,276.610613262028,284.802456113748,292.994298965468,301.186141817187,309.377984668907,317.569827520627,325.761670372347,333.953513224067,342.145356075787],[154.96170003497,163.15354288669,171.34538573841,179.53722859013,187.72907144185,195.92091429357,204.11275714529,212.30459999701,220.49644284873,228.68828570045,236.88012855217,245.07197140389,253.263814255609,261.455657107329,269.647499959049,277.839342810769,286.031185662489,294.223028514209,302.414871365929,310.606714217649,318.798557069369,326.990399921089,335.182242772809,343.374085624529,351.565928476249],[164.382272435432,172.574115287152,180.765958138871,188.957800990591,197.149643842311,205.341486694031,213.533329545751,221.725172397471,229.917015249191,238.108858100911,246.300700952631,254.492543804351,262.684386656071,270.876229507791,279.068072359511,287.259915211231,295.451758062951,303.643600914671,311.835443766391,320.027286618111,328.219129469831,336.410972321551,344.602815173271,352.794658024991,360.986500876711],[173.802844835893,181.994687687613,190.186530539333,198.378373391053,206.570216242773,214.762059094493,222.953901946213,231.145744797933,239.337587649653,247.529430501373,255.721273353093,263.913116204813,272.104959056533,280.296801908253,288.488644759973,296.680487611693,304.872330463413,313.064173315133,321.256016166853,329.447859018573,337.639701870293,345.831544722013,354.023387573733,362.215230425453,370.407073277173],[183.223417236355,191.415260088075,199.607102939795,207.798945791515,215.990788643235,224.182631494955,232.374474346675,240.566317198395,248.758160050115,256.950002901835,265.141845753555,273.333688605275,281.525531456995,289.717374308715,297.909217160435,306.101060012155,314.292902863875,322.484745715595,330.676588567315,338.868431419035,347.060274270755,355.252117122475,363.443959974195,371.635802825915,379.827645677635],[192.643989636817,200.835832488537,209.027675340257,217.219518191977,225.411361043697,233.603203895417,241.795046747137,249.986889598857,258.178732450577,266.370575302297,274.562418154017,282.754261005737,290.946103857457,299.137946709177,307.329789560897,315.521632412617,323.713475264337,331.905318116057,340.097160967777,348.289003819497,356.480846671217,364.672689522937,372.864532374657,381.056375226377,389.248218078097],[202.064562037279,210.256404888999,218.448247740719,226.640090592439,234.831933444159,243.023776295879,251.215619147599,259.407461999319,267.599304851039,275.791147702759,283.982990554479,292.174833406199,300.366676257919,308.558519109639,316.750361961359,324.942204813079,333.134047664799,341.325890516519,349.517733368239,357.709576219959,365.901419071679,374.093261923398,382.285104775118,390.476947626838,398.668790478558],[211.485134437741,219.676977289461,227.868820141181,236.060662992901,244.252505844621,252.444348696341,260.636191548061,268.828034399781,277.019877251501,285.211720103221,293.403562954941,301.595405806661,309.787248658381,317.9790915101,326.170934361821,334.36277721354,342.55462006526,350.74646291698,358.9383057687,367.13014862042,375.32199147214,383.51383432386,391.70567717558,399.8975200273,408.08936287902],[220.905706838203,229.097549689923,237.289392541643,245.481235393363,253.673078245083,261.864921096803,270.056763948522,278.248606800242,286.440449651962,294.632292503682,302.824135355402,311.015978207122,319.207821058842,327.399663910562,335.591506762282,343.783349614002,351.975192465722,360.167035317442,368.358878169162,376.550721020882,384.742563872602,392.934406724322,401.126249576042,409.318092427762,417.509935279482],[230.326279238664,238.518122090384,246.709964942104,254.901807793824,263.093650645544,271.285493497264,279.477336348984,287.669179200704,295.861022052424,304.052864904144,312.244707755864,320.436550607584,328.628393459304,336.820236311024,345.012079162744,353.203922014464,361.395764866184,369.587607717904,377.779450569624,385.971293421344,394.163136273064,402.354979124784,410.546821976504,418.738664828224,426.930507679944],[239.746851639126,247.938694490846,256.130537342566,264.322380194286,272.514223046006,280.706065897726,288.897908749446,297.089751601166,305.281594452886,313.473437304606,321.665280156326,329.857123008046,338.048965859766,346.240808711486,354.432651563206,362.624494414926,370.816337266646,379.008180118366,387.200022970086,395.391865821806,403.583708673526,411.775551525246,419.967394376966,428.159237228686,436.351080080406],[249.167424039588,257.359266891308,265.551109743028,273.742952594748,281.934795446468,290.126638298188,298.318481149908,306.510324001628,314.702166853348,322.894009705068,331.085852556788,339.277695408508,347.469538260228,355.661381111948,363.853223963668,372.045066815388,380.236909667108,388.428752518828,396.620595370548,404.812438222268,413.004281073988,421.196123925708,429.387966777428,437.579809629148,445.771652480868],[258.58799644005,266.77983929177,274.97168214349,283.16352499521,291.35536784693,299.54721069865,307.73905355037,315.93089640209,324.12273925381,332.31458210553,340.50642495725,348.69826780897,356.89011066069,365.08195351241,373.27379636413,381.46563921585,389.65748206757,397.84932491929,406.04116777101,414.23301062273,422.42485347445,430.61669632617,438.80853917789,447.00038202961,455.192224881329],[268.008568840512,276.200411692232,284.392254543952,292.584097395672,300.775940247392,308.967783099112,317.159625950832,325.351468802552,333.543311654272,341.735154505992,349.926997357712,358.118840209432,366.310683061152,374.502525912872,382.694368764592,390.886211616311,399.078054468031,407.269897319751,415.461740171471,423.653583023191,431.845425874911,440.037268726631,448.229111578351,456.420954430071,464.612797281791]],"type":"surface","frame":null},{"x":[10.256,174.093,1000,75.896,1351.254,202.705,365.985,305.268,263.268,513.694,152.609,35.987,1720.806,102.568,215.368,426.784,507.772,233.291,1035.433,102.642,526.142,624.538,912.349,611.479,215.994,561.963,474.76,231.523,678.596,70.922,1567.548,263.598,1423.568,715.678,251.192,777.237,509.43,964.11,583.627,923.373,344.392,1095.578,100.025,30.425,1080.342,97.972,799.899,1071.752,893.355,283.161,917.017,234.568,456.897,206.973,1294.099,826.859,406.814,564.158,192.607,10.652,45.689,42.568,20.456,635.192,1002.273,1177.047,507.638,265.398,215.689,526.48,26.895,883.877,9.104,103.568,169.583,429.504,223.639,145.585,1323.287,985.968,500.922,226.652,1051.168,68.093,1547.159,393.774,804.282,801.577,450.562,196.65,26.598,179.061,345.687,295.84,2271.86,1134.575,601.434,45.298,759.518,832.869,1326.598,56.894,709.399,56.895,767.134,503.172,700.929,910.851,888.569,800.615,1500,985.685,1380.689,785.694,792.345,957.167,1789.659,656.137,613.697,313.362,336.51,1544.899,68.954,1445.563,785.692,125.628,377.925,217.994,759.862,1163.444,842.957,125.179,236.598,669.811,1188.193,612.234,922.019,50,2000,1054.027,385.045,1507.972,102.568,204.568,1170.918,574.513,689.547,784.22,405.913,179.778,607.258,1542.329,1112.47,856.985,836.331,236.908,568.954,1077.855,579.321,1500,731.364,25.689,391.749,233.999,275.7,56.895,255.117,471.814,566.501,102.568,250.568,68.594,642.786,1500,102.563,756.984,51.229,644.151,537.352,15.313,243.237,256.894,22.464,45.689,724.938,1126.461,1985.119,1837.516,135.986,514.068,237.703,976.641,1452.689,1600,268.598,900.889,982.063,201.356,746.024,1132.877],"y":[43,40,5,34,37,13,23,54,18,2,11,30,32,22,36,37,9,2,12,5,14,20,57,20,19,35,22,16,53,4,29,43,26,28,24,37,32,34,30,15,23,31,21,28,18,38,28,37,26,30,10,21,18,14,38,36,24,32,9,39,24,45,13,17,32,23,0,25,35,26,19,26,53,29,28,17,26,42,35,17,36,45,20,15,28,27,17,32,46,36,47,19,22,55,31,39,21,36,21,44,27,27,16,33,33,21,35,26,14,34,11,28,33,20,33,28,30,34,49,40,20,42,35,35,8,49,19,42,6,36,32,28,25,34,33,21,34,63,31,25,42,37,25,26,39,44,46,36,12,2,29,33,28,10,38,19,19,13,30,38,22,23,22,20,18,37,16,20,32,26,53,28,32,24,37,30,19,47,22,22,10,1,1,39,8,38,35,40,22,21,27,31,19,24,1,38,26,11,34,55],"z":[330,300,250,120,290,60,140,290,160,100,160,150,290,140,230,230,30,80,190,90,120,150,230,70,150,210,180,140,360,10,240,270,290,220,150,230,220,240,260,170,130,270,140,60,210,190,210,240,210,200,140,90,120,100,360,180,240,150,110,90,160,230,40,60,230,230,120,100,150,120,60,280,120,230,230,40,140,360,250,210,260,250,200,150,250,100,260,210,290,210,220,70,110,250,320,300,180,180,200,320,280,140,100,120,230,150,250,190,240,250,230,120,230,110,210,230,320,210,230,250,60,330,150,360,150,180,80,180,130,320,280,200,130,190,270,150,230,310,340,240,180,220,40,190,290,220,340,250,190,120,230,190,210,170,310,90,170,140,300,340,170,100,200,80,100,70,50,70,240,160,290,140,210,300,230,280,160,200,210,110,110,70,100,190,70,360,360,300,120,200,150,220,280,300,140,290,180,140,210,250],"type":"scatter3d","mode":"markers","marker":{"fillcolor":"rgba(255,127,14,1)","color":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"size":3,"opacity":0.8,"symbol":75},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-288"></span>
+<div id="12f662b600e" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="12f662b600e">{"x":{"visdat":{"12f2598cbed":["function () ","plotlyVisDat"],"12f5f91bc29":["function () ","data"]},"cur_data":"12f5f91bc29","attrs":{"12f2598cbed":{"x":{},"y":{},"z":{},"colors":["#A9D0F5","#08088A"],"alpha":1,"sizes":[10,100],"type":"surface"},"12f5f91bc29":{"x":[10.256,174.093,1000,75.896,1351.254,202.705,365.985,305.268,263.268,513.694,152.609,35.987,1720.806,102.568,215.368,426.784,507.772,233.291,1035.433,102.642,526.142,624.538,912.349,611.479,215.994,561.963,474.76,231.523,678.596,70.922,1567.548,263.598,1423.568,715.678,251.192,777.237,509.43,964.11,583.627,923.373,344.392,1095.578,100.025,30.425,1080.342,97.972,799.899,1071.752,893.355,283.161,917.017,234.568,456.897,206.973,1294.099,826.859,406.814,564.158,192.607,10.652,45.689,42.568,20.456,635.192,1002.273,1177.047,507.638,265.398,215.689,526.48,26.895,883.877,9.104,103.568,169.583,429.504,223.639,145.585,1323.287,985.968,500.922,226.652,1051.168,68.093,1547.159,393.774,804.282,801.577,450.562,196.65,26.598,179.061,345.687,295.84,2271.86,1134.575,601.434,45.298,759.518,832.869,1326.598,56.894,709.399,56.895,767.134,503.172,700.929,910.851,888.569,800.615,1500,985.685,1380.689,785.694,792.345,957.167,1789.659,656.137,613.697,313.362,336.51,1544.899,68.954,1445.563,785.692,125.628,377.925,217.994,759.862,1163.444,842.957,125.179,236.598,669.811,1188.193,612.234,922.019,50,2000,1054.027,385.045,1507.972,102.568,204.568,1170.918,574.513,689.547,784.22,405.913,179.778,607.258,1542.329,1112.47,856.985,836.331,236.908,568.954,1077.855,579.321,1500,731.364,25.689,391.749,233.999,275.7,56.895,255.117,471.814,566.501,102.568,250.568,68.594,642.786,1500,102.563,756.984,51.229,644.151,537.352,15.313,243.237,256.894,22.464,45.689,724.938,1126.461,1985.119,1837.516,135.986,514.068,237.703,976.641,1452.689,1600,268.598,900.889,982.063,201.356,746.024,1132.877],"y":[43,40,5,34,37,13,23,54,18,2,11,30,32,22,36,37,9,2,12,5,14,20,57,20,19,35,22,16,53,4,29,43,26,28,24,37,32,34,30,15,23,31,21,28,18,38,28,37,26,30,10,21,18,14,38,36,24,32,9,39,24,45,13,17,32,23,0,25,35,26,19,26,53,29,28,17,26,42,35,17,36,45,20,15,28,27,17,32,46,36,47,19,22,55,31,39,21,36,21,44,27,27,16,33,33,21,35,26,14,34,11,28,33,20,33,28,30,34,49,40,20,42,35,35,8,49,19,42,6,36,32,28,25,34,33,21,34,63,31,25,42,37,25,26,39,44,46,36,12,2,29,33,28,10,38,19,19,13,30,38,22,23,22,20,18,37,16,20,32,26,53,28,32,24,37,30,19,47,22,22,10,1,1,39,8,38,35,40,22,21,27,31,19,24,1,38,26,11,34,55],"z":[330,300,250,120,290,60,140,290,160,100,160,150,290,140,230,230,30,80,190,90,120,150,230,70,150,210,180,140,360,10,240,270,290,220,150,230,220,240,260,170,130,270,140,60,210,190,210,240,210,200,140,90,120,100,360,180,240,150,110,90,160,230,40,60,230,230,120,100,150,120,60,280,120,230,230,40,140,360,250,210,260,250,200,150,250,100,260,210,290,210,220,70,110,250,320,300,180,180,200,320,280,140,100,120,230,150,250,190,240,250,230,120,230,110,210,230,320,210,230,250,60,330,150,360,150,180,80,180,130,320,280,200,130,190,270,150,230,310,340,240,180,220,40,190,290,220,340,250,190,120,230,190,210,170,310,90,170,140,300,340,170,100,200,80,100,70,50,70,240,160,290,140,210,300,230,280,160,200,210,110,110,70,100,190,70,360,360,300,120,200,150,220,280,300,140,290,180,140,210,250],"colors":["#A9D0F5","#08088A"],"alpha":1,"sizes":[10,100],"type":"scatter3d","mode":"markers","marker":{"color":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"size":3,"opacity":0.8,"symbol":75}}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"manual","aspectratio":{"x":1,"y":1,"z":1},"xaxis":{"title":"adspend","range":[0,2300]},"yaxis":{"title":"airplay","range":[0,70]},"zaxis":{"title":"sales","range":[0,null]}},"xaxis":{"domain":[0,1]},"yaxis":{"domain":[0,1]},"hovermode":"closest","showlegend":false,"legend":{"y":0.5,"yanchor":"top"}},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"colorbar":{"title":"z","ticklen":2,"len":0.5,"y":1,"lenmode":"fraction","yanchor":"top"},"colorscale":[["0","rgba(169,208,245,1)"],["0.130813747154817","rgba(153,181,231,1)"],["0.193798965446292","rgba(146,168,224,1)"],["0.239340724187596","rgba(140,159,219,1)"],["0.280039172357033","rgba(135,151,215,1)"],["0.313953436788704","rgba(131,144,211,1)"],["0.347867701220375","rgba(126,137,208,1)"],["0.375968218497229","rgba(123,132,205,1)"],["0.403100517276854","rgba(119,126,202,1)"],["0.42926459755925","rgba(116,121,199,1)"],["0.453487804675746","rgba(113,116,196,1)"],["0.476745011380733","rgba(109,112,194,1)"],["0.5","rgba(106,107,191,1)"],["0.523254988619267","rgba(103,103,189,1)"],["0.546512195324254","rgba(100,98,186,1)"],["0.57073540244075","rgba(97,94,184,1)"],["0.596899482723146","rgba(93,89,181,1)"],["0.624031781502771","rgba(89,84,178,1)"],["0.652132298779625","rgba(85,78,175,1)"],["0.686046563211296","rgba(80,72,172,1)"],["0.719960827642967","rgba(74,66,168,1)"],["0.760659275812404","rgba(68,58,164,1)"],["0.806201034553708","rgba(60,49,159,1)"],["0.869186252845183","rgba(48,37,152,1)"],["1","rgba(8,8,138,1)"]],"showscale":true,"x":[9.104,103.3855,197.667,291.9485,386.23,480.5115,574.793,669.0745,763.356,857.6375,951.919,1046.2005,1140.482,1234.7635,1329.045,1423.3265,1517.608,1611.8895,1706.171,1800.4525,1894.734,1989.0155,2083.297,2177.5785,2271.86],"y":[0,2.625,5.25,7.875,10.5,13.125,15.75,18.375,21,23.625,26.25,28.875,31.5,34.125,36.75,39.375,42,44.625,47.25,49.875,52.5,55.125,57.75,60.375,63],"z":[[41.9148312294276,50.1066740811476,58.2985169328676,66.4903597845876,74.6822026363075,82.8740454880275,91.0658883397475,99.2577311914675,107.449574043187,115.641416894907,123.833259746627,132.025102598347,140.216945450067,148.408788301787,156.600631153507,164.792474005227,172.984316856947,181.176159708667,189.368002560387,197.559845412107,205.751688263827,213.943531115547,222.135373967267,230.327216818987,238.519059670707],[51.3354036298894,59.5272464816094,67.7190893333294,75.9109321850494,84.1027750367694,92.2946178884894,100.486460740209,108.678303591929,116.870146443649,125.061989295369,133.253832147089,141.445674998809,149.637517850529,157.829360702249,166.021203553969,174.213046405689,182.404889257409,190.596732109129,198.788574960849,206.980417812569,215.172260664289,223.364103516009,231.555946367729,239.747789219449,247.939632071169],[60.7559760303513,68.9478188820713,77.1396617337913,85.3315045855112,93.5233474372312,101.715190288951,109.907033140671,118.098875992391,126.290718844111,134.482561695831,142.674404547551,150.866247399271,159.058090250991,167.249933102711,175.441775954431,183.633618806151,191.825461657871,200.017304509591,208.209147361311,216.400990213031,224.592833064751,232.784675916471,240.976518768191,249.168361619911,257.360204471631],[70.1765484308131,78.3683912825331,86.5602341342531,94.7520769859731,102.943919837693,111.135762689413,119.327605541133,127.519448392853,135.711291244573,143.903134096293,152.094976948013,160.286819799733,168.478662651453,176.670505503173,184.862348354893,193.054191206613,201.246034058333,209.437876910053,217.629719761773,225.821562613493,234.013405465213,242.205248316933,250.397091168653,258.588934020373,266.780776872093],[79.597120831275,87.788963682995,95.9808065347149,104.172649386435,112.364492238155,120.556335089875,128.748177941595,136.940020793315,145.131863645035,153.323706496755,161.515549348475,169.707392200195,177.899235051915,186.091077903635,194.282920755355,202.474763607075,210.666606458795,218.858449310515,227.050292162235,235.242135013955,243.433977865675,251.625820717395,259.817663569115,268.009506420835,276.201349272555],[89.0176932317368,97.2095360834568,105.401378935177,113.593221786897,121.785064638617,129.976907490337,138.168750342057,146.360593193777,154.552436045497,162.744278897217,170.936121748937,179.127964600657,187.319807452377,195.511650304097,203.703493155817,211.895336007537,220.087178859257,228.279021710977,236.470864562696,244.662707414416,252.854550266136,261.046393117856,269.238235969576,277.430078821296,285.621921673016],[98.4382656321987,106.630108483919,114.821951335639,123.013794187359,131.205637039079,139.397479890799,147.589322742519,155.781165594239,163.973008445958,172.164851297678,180.356694149398,188.548537001118,196.740379852838,204.932222704558,213.124065556278,221.315908407998,229.507751259718,237.699594111438,245.891436963158,254.083279814878,262.275122666598,270.466965518318,278.658808370038,286.850651221758,295.042494073478],[107.85883803266,116.05068088438,124.2425237361,132.43436658782,140.62620943954,148.81805229126,157.00989514298,165.2017379947,173.39358084642,181.58542369814,189.77726654986,197.96910940158,206.1609522533,214.35279510502,222.54463795674,230.73648080846,238.92832366018,247.1201665119,255.31200936362,263.50385221534,271.69569506706,279.88753791878,288.0793807705,296.27122362222,304.46306647394],[117.279410433122,125.471253284842,133.663096136562,141.854938988282,150.046781840002,158.238624691722,166.430467543442,174.622310395162,182.814153246882,191.005996098602,199.197838950322,207.389681802042,215.581524653762,223.773367505482,231.965210357202,240.157053208922,248.348896060642,256.540738912362,264.732581764082,272.924424615802,281.116267467522,289.308110319242,297.499953170962,305.691796022682,313.883638874402],[126.699982833584,134.891825685304,143.083668537024,151.275511388744,159.467354240464,167.659197092184,175.851039943904,184.042882795624,192.234725647344,200.426568499064,208.618411350784,216.810254202504,225.002097054224,233.193939905944,241.385782757664,249.577625609384,257.769468461104,265.961311312824,274.153154164544,282.344997016264,290.536839867984,298.728682719704,306.920525571424,315.112368423144,323.304211274864],[136.120555234046,144.312398085766,152.504240937486,160.696083789206,168.887926640926,177.079769492646,185.271612344366,193.463455196086,201.655298047806,209.847140899526,218.038983751246,226.230826602966,234.422669454686,242.614512306406,250.806355158126,258.998198009846,267.190040861566,275.381883713286,283.573726565006,291.765569416726,299.957412268446,308.149255120166,316.341097971886,324.532940823606,332.724783675326],[145.541127634508,153.732970486228,161.924813337948,170.116656189668,178.308499041388,186.500341893108,194.692184744828,202.884027596548,211.075870448268,219.267713299988,227.459556151708,235.651399003428,243.843241855148,252.035084706868,260.226927558588,268.418770410308,276.610613262028,284.802456113748,292.994298965468,301.186141817187,309.377984668907,317.569827520627,325.761670372347,333.953513224067,342.145356075787],[154.96170003497,163.15354288669,171.34538573841,179.53722859013,187.72907144185,195.92091429357,204.11275714529,212.30459999701,220.49644284873,228.68828570045,236.88012855217,245.07197140389,253.263814255609,261.455657107329,269.647499959049,277.839342810769,286.031185662489,294.223028514209,302.414871365929,310.606714217649,318.798557069369,326.990399921089,335.182242772809,343.374085624529,351.565928476249],[164.382272435432,172.574115287152,180.765958138871,188.957800990591,197.149643842311,205.341486694031,213.533329545751,221.725172397471,229.917015249191,238.108858100911,246.300700952631,254.492543804351,262.684386656071,270.876229507791,279.068072359511,287.259915211231,295.451758062951,303.643600914671,311.835443766391,320.027286618111,328.219129469831,336.410972321551,344.602815173271,352.794658024991,360.986500876711],[173.802844835893,181.994687687613,190.186530539333,198.378373391053,206.570216242773,214.762059094493,222.953901946213,231.145744797933,239.337587649653,247.529430501373,255.721273353093,263.913116204813,272.104959056533,280.296801908253,288.488644759973,296.680487611693,304.872330463413,313.064173315133,321.256016166853,329.447859018573,337.639701870293,345.831544722013,354.023387573733,362.215230425453,370.407073277173],[183.223417236355,191.415260088075,199.607102939795,207.798945791515,215.990788643235,224.182631494955,232.374474346675,240.566317198395,248.758160050115,256.950002901835,265.141845753555,273.333688605275,281.525531456995,289.717374308715,297.909217160435,306.101060012155,314.292902863875,322.484745715595,330.676588567315,338.868431419035,347.060274270755,355.252117122475,363.443959974195,371.635802825915,379.827645677635],[192.643989636817,200.835832488537,209.027675340257,217.219518191977,225.411361043697,233.603203895417,241.795046747137,249.986889598857,258.178732450577,266.370575302297,274.562418154017,282.754261005737,290.946103857457,299.137946709177,307.329789560897,315.521632412617,323.713475264337,331.905318116057,340.097160967777,348.289003819497,356.480846671217,364.672689522937,372.864532374657,381.056375226377,389.248218078097],[202.064562037279,210.256404888999,218.448247740719,226.640090592439,234.831933444159,243.023776295879,251.215619147599,259.407461999319,267.599304851039,275.791147702759,283.982990554479,292.174833406199,300.366676257919,308.558519109639,316.750361961359,324.942204813079,333.134047664799,341.325890516519,349.517733368239,357.709576219959,365.901419071679,374.093261923398,382.285104775118,390.476947626838,398.668790478558],[211.485134437741,219.676977289461,227.868820141181,236.060662992901,244.252505844621,252.444348696341,260.636191548061,268.828034399781,277.019877251501,285.211720103221,293.403562954941,301.595405806661,309.787248658381,317.9790915101,326.170934361821,334.36277721354,342.55462006526,350.74646291698,358.9383057687,367.13014862042,375.32199147214,383.51383432386,391.70567717558,399.8975200273,408.08936287902],[220.905706838203,229.097549689923,237.289392541643,245.481235393363,253.673078245083,261.864921096803,270.056763948522,278.248606800242,286.440449651962,294.632292503682,302.824135355402,311.015978207122,319.207821058842,327.399663910562,335.591506762282,343.783349614002,351.975192465722,360.167035317442,368.358878169162,376.550721020882,384.742563872602,392.934406724322,401.126249576042,409.318092427762,417.509935279482],[230.326279238664,238.518122090384,246.709964942104,254.901807793824,263.093650645544,271.285493497264,279.477336348984,287.669179200704,295.861022052424,304.052864904144,312.244707755864,320.436550607584,328.628393459304,336.820236311024,345.012079162744,353.203922014464,361.395764866184,369.587607717904,377.779450569624,385.971293421344,394.163136273064,402.354979124784,410.546821976504,418.738664828224,426.930507679944],[239.746851639126,247.938694490846,256.130537342566,264.322380194286,272.514223046006,280.706065897726,288.897908749446,297.089751601166,305.281594452886,313.473437304606,321.665280156326,329.857123008046,338.048965859766,346.240808711486,354.432651563206,362.624494414926,370.816337266646,379.008180118366,387.200022970086,395.391865821806,403.583708673526,411.775551525246,419.967394376966,428.159237228686,436.351080080406],[249.167424039588,257.359266891308,265.551109743028,273.742952594748,281.934795446468,290.126638298188,298.318481149908,306.510324001628,314.702166853348,322.894009705068,331.085852556788,339.277695408508,347.469538260228,355.661381111948,363.853223963668,372.045066815388,380.236909667108,388.428752518828,396.620595370548,404.812438222268,413.004281073988,421.196123925708,429.387966777428,437.579809629148,445.771652480868],[258.58799644005,266.77983929177,274.97168214349,283.16352499521,291.35536784693,299.54721069865,307.73905355037,315.93089640209,324.12273925381,332.31458210553,340.50642495725,348.69826780897,356.89011066069,365.08195351241,373.27379636413,381.46563921585,389.65748206757,397.84932491929,406.04116777101,414.23301062273,422.42485347445,430.61669632617,438.80853917789,447.00038202961,455.192224881329],[268.008568840512,276.200411692232,284.392254543952,292.584097395672,300.775940247392,308.967783099112,317.159625950832,325.351468802552,333.543311654272,341.735154505992,349.926997357712,358.118840209432,366.310683061152,374.502525912872,382.694368764592,390.886211616311,399.078054468031,407.269897319751,415.461740171471,423.653583023191,431.845425874911,440.037268726631,448.229111578351,456.420954430071,464.612797281791]],"type":"surface","frame":null},{"x":[10.256,174.093,1000,75.896,1351.254,202.705,365.985,305.268,263.268,513.694,152.609,35.987,1720.806,102.568,215.368,426.784,507.772,233.291,1035.433,102.642,526.142,624.538,912.349,611.479,215.994,561.963,474.76,231.523,678.596,70.922,1567.548,263.598,1423.568,715.678,251.192,777.237,509.43,964.11,583.627,923.373,344.392,1095.578,100.025,30.425,1080.342,97.972,799.899,1071.752,893.355,283.161,917.017,234.568,456.897,206.973,1294.099,826.859,406.814,564.158,192.607,10.652,45.689,42.568,20.456,635.192,1002.273,1177.047,507.638,265.398,215.689,526.48,26.895,883.877,9.104,103.568,169.583,429.504,223.639,145.585,1323.287,985.968,500.922,226.652,1051.168,68.093,1547.159,393.774,804.282,801.577,450.562,196.65,26.598,179.061,345.687,295.84,2271.86,1134.575,601.434,45.298,759.518,832.869,1326.598,56.894,709.399,56.895,767.134,503.172,700.929,910.851,888.569,800.615,1500,985.685,1380.689,785.694,792.345,957.167,1789.659,656.137,613.697,313.362,336.51,1544.899,68.954,1445.563,785.692,125.628,377.925,217.994,759.862,1163.444,842.957,125.179,236.598,669.811,1188.193,612.234,922.019,50,2000,1054.027,385.045,1507.972,102.568,204.568,1170.918,574.513,689.547,784.22,405.913,179.778,607.258,1542.329,1112.47,856.985,836.331,236.908,568.954,1077.855,579.321,1500,731.364,25.689,391.749,233.999,275.7,56.895,255.117,471.814,566.501,102.568,250.568,68.594,642.786,1500,102.563,756.984,51.229,644.151,537.352,15.313,243.237,256.894,22.464,45.689,724.938,1126.461,1985.119,1837.516,135.986,514.068,237.703,976.641,1452.689,1600,268.598,900.889,982.063,201.356,746.024,1132.877],"y":[43,40,5,34,37,13,23,54,18,2,11,30,32,22,36,37,9,2,12,5,14,20,57,20,19,35,22,16,53,4,29,43,26,28,24,37,32,34,30,15,23,31,21,28,18,38,28,37,26,30,10,21,18,14,38,36,24,32,9,39,24,45,13,17,32,23,0,25,35,26,19,26,53,29,28,17,26,42,35,17,36,45,20,15,28,27,17,32,46,36,47,19,22,55,31,39,21,36,21,44,27,27,16,33,33,21,35,26,14,34,11,28,33,20,33,28,30,34,49,40,20,42,35,35,8,49,19,42,6,36,32,28,25,34,33,21,34,63,31,25,42,37,25,26,39,44,46,36,12,2,29,33,28,10,38,19,19,13,30,38,22,23,22,20,18,37,16,20,32,26,53,28,32,24,37,30,19,47,22,22,10,1,1,39,8,38,35,40,22,21,27,31,19,24,1,38,26,11,34,55],"z":[330,300,250,120,290,60,140,290,160,100,160,150,290,140,230,230,30,80,190,90,120,150,230,70,150,210,180,140,360,10,240,270,290,220,150,230,220,240,260,170,130,270,140,60,210,190,210,240,210,200,140,90,120,100,360,180,240,150,110,90,160,230,40,60,230,230,120,100,150,120,60,280,120,230,230,40,140,360,250,210,260,250,200,150,250,100,260,210,290,210,220,70,110,250,320,300,180,180,200,320,280,140,100,120,230,150,250,190,240,250,230,120,230,110,210,230,320,210,230,250,60,330,150,360,150,180,80,180,130,320,280,200,130,190,270,150,230,310,340,240,180,220,40,190,290,220,340,250,190,120,230,190,210,170,310,90,170,140,300,340,170,100,200,80,100,70,50,70,240,160,290,140,210,300,230,280,160,200,210,110,110,70,100,190,70,360,360,300,120,200,150,220,280,300,140,290,180,140,210,250],"type":"scatter3d","mode":"markers","marker":{"fillcolor":"rgba(255,127,14,1)","color":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"#b31d83",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"size":3,"opacity":0.8,"symbol":75},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
 <p class="caption">
 Figure 12.11: Regression plane
 </p>
@@ -973,8 +975,8 @@ Sales=\beta_0+\beta_1*adspend+\beta_2*airplay+\beta_3*starpower+\epsilon
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name=</span><span class="st">&quot;observed values&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
-<img src="_main_files/figure-html/unnamed-chunk-34-1.png" alt="Model fit" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-292"></span>
+<img src="_main_files/figure-html/unnamed-chunk-292-1.png" alt="Model fit" width="672" />
 <p class="caption">
 Figure 12.12: Model fit
 </p>
@@ -983,8 +985,8 @@ Figure 12.12: Model fit
 <p>In the context of a simple linear regression (i.e., with a single independent variable), a scatter plot of the dependent variable against the independent variable provides a good indication of the nature of the relationship. If there is more than one independent variable, however, things become more complicated. The reason is that although the scatter plot still show the relationship between the two variables, it does not take into account the effect of the other independent variables in the model. Partial regression plot show the effect of adding another variable to a model that already controls for the remaining variables in the model. In other words, it is a scatterplot of the residuals of the outcome variable and each predictor when both variables are regressed separately on the remaining predictors. As an example, consider the effect of advertising expenditures on sales. In this case, the partial plot would show the effect of adding advertising expenditures as an explanatory variable while controlling for the variation that is explained by airplay and starpower in both variables (sales and advertising). Think of it as the purified relationship between advertising and sales that remains after controlling for other factors. The partial plots can easily be created using the <code>avPlots()</code> function from the <code>car</code> package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">avPlots</span>(multiple_regression)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
-<img src="_main_files/figure-html/unnamed-chunk-35-1.png" alt="Partial plots" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-293"></span>
+<img src="_main_files/figure-html/unnamed-chunk-293-1.png" alt="Partial plots" width="672" />
 <p class="caption">
 Figure 12.13: Partial plots
 </p>
@@ -1031,36 +1033,30 @@ B_{k}=\beta_{k} * \frac{s_{x_k}}{s_y}
 <div id="outliers" class="section level3">
 <h3><span class="header-section-number">12.3.1</span> Outliers</h3>
 <p>Outliers are data points that differ vastly from the trend. They can introduce bias into a model due to the fact that they alter the parameter estimates. Consider the example below. A linear regression was performed twice on the same data set, except during the second estimation the two green points were changed to be outliers by being moved to the positions indicated in red. The solid red line is the regression line based on the unaltered data set, while the dotted line was estimated using the altered data set. As you can see the second regression would lead to different conclusions than the first. Therefore it is important to identify outliers and further deal with them.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-38"></span>
-<img src="_main_files/figure-html/unnamed-chunk-38-1.png" alt="Effects of outliers" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-296"></span>
+<img src="_main_files/figure-html/unnamed-chunk-296-1.png" alt="Effects of outliers" width="672" />
 <p class="caption">
 Figure 12.14: Effects of outliers
 </p>
 </div>
 <p>One quick way to visually detect outliers is by creating a scatterplot (as above) to see whether anything seems off. Another approach is to inspect the studentized residuals. If there are no outliers in your data, about 95% will be between -2 and 2, as per the assumptions of the normal distribution. Values well outside of this range are unlikely to happen by chance and warrant further inspection. As a rule of thumb, observations whose studentized residuals are greater than 3 in absolute values are potential outliers.</p>
 <p>The studentized residuals can be obtained in R with the function <code>rstudent()</code>. We can use this function to create a new variable that contains the studentized residuals e music sales regression from before yields the following residuals:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regression<span class="op">$</span>stud_resid &lt;-<span class="st"> </span><span class="kw">rstudent</span>(multiple_regression)
-<span class="kw">head</span>(regression)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["airplay"],"name":[3],"type":["int"],"align":["right"]},{"label":["starpower"],"name":[4],"type":["int"],"align":["right"]},{"label":["genre"],"name":[5],"type":["int"],"align":["right"]},{"label":["country"],"name":[6],"type":["int"],"align":["right"]},{"label":["yhat"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["stud_resid"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"330","2":"10","3":"43","4":"10","5":"3","6":"1","7":"135","8":"2.20","_rn_":"1"},{"1":"300","2":"174","3":"40","4":"7","5":"3","6":"1","7":"229","8":"2.15","_rn_":"2"},{"1":"250","2":"1000","3":"5","4":"7","5":"2","6":"1","7":"273","8":"2.11","_rn_":"3"},{"1":"120","2":"76","3":"34","4":"6","5":"1","6":"0","7":"248","8":"-0.87","_rn_":"4"},{"1":"290","2":"1351","3":"37","4":"9","5":"3","6":"0","7":"189","8":"-0.48","_rn_":"5"},{"1":"60","2":"203","3":"13","4":"8","5":"1","6":"0","7":"189","8":"-1.36","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["airplay"],"name":[3],"type":["int"],"align":["right"]},{"label":["starpower"],"name":[4],"type":["int"],"align":["right"]},{"label":["genre"],"name":[5],"type":["int"],"align":["right"]},{"label":["country"],"name":[6],"type":["int"],"align":["right"]},{"label":["yhat"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["stud_resid"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"330","2":"10","3":"43","4":"10","5":"3","6":"1","7":"135","8":"2.20"},{"1":"300","2":"174","3":"40","4":"7","5":"3","6":"1","7":"229","8":"2.15"},{"1":"250","2":"1000","3":"5","4":"7","5":"2","6":"1","7":"273","8":"2.11"},{"1":"120","2":"76","3":"34","4":"6","5":"1","6":"0","7":"248","8":"-0.87"},{"1":"290","2":"1351","3":"37","4":"9","5":"3","6":"0","7":"189","8":"-0.48"},{"1":"60","2":"203","3":"13","4":"8","5":"1","6":"0","7":"189","8":"-1.36"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>A good way to visually inspect the studentized residuals is to plot them in a scatterplot and roughly check if most of the observations are within the -3, 3 bounds.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(regression),regression<span class="op">$</span>stud_resid, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">3.3</span>,<span class="fl">3.3</span>)) <span class="co">#create scatterplot </span>
-<span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">lty=</span><span class="dv">2</span>) <span class="co">#add reference lines</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40"></span>
-<img src="_main_files/figure-html/unnamed-chunk-40-1.png" alt="Plot of the studentized residuals" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-298"></span>
+<img src="_main_files/figure-html/unnamed-chunk-298-1.png" alt="Plot of the studentized residuals" width="672" />
 <p class="caption">
 Figure 12.15: Plot of the studentized residuals
 </p>
 </div>
 <p>To identify potentially influential observations in our data set, we can apply a filter to our data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">outliers &lt;-<span class="st"> </span><span class="kw">subset</span>(regression,<span class="kw">abs</span>(stud_resid)<span class="op">&gt;</span><span class="dv">3</span>)
-outliers</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["airplay"],"name":[3],"type":["int"],"align":["right"]},{"label":["starpower"],"name":[4],"type":["int"],"align":["right"]},{"label":["genre"],"name":[5],"type":["int"],"align":["right"]},{"label":["country"],"name":[6],"type":["int"],"align":["right"]},{"label":["yhat"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["stud_resid"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"360","2":"146","3":"42","4":"8","5":"3","6":"0","7":"139","8":"3.2","_rn_":"78"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["airplay"],"name":[3],"type":["int"],"align":["right"]},{"label":["starpower"],"name":[4],"type":["int"],"align":["right"]},{"label":["genre"],"name":[5],"type":["int"],"align":["right"]},{"label":["country"],"name":[6],"type":["int"],"align":["right"]},{"label":["yhat"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["stud_resid"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"360","2":"146","3":"42","4":"8","5":"3","6":"0","7":"139","8":"3.2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>After a detailed inspection of the potential outliers, you might decide to delete the affected observations from the data set or not. If an outlier has resulted from an error in data collection, then you might simply remove the observation. However, even though data may have extreme values, they might not be influential to determine a regression line. That means, the results wouldn’t be much different if we either include or exclude them from analysis. This means that the decision of whether to exclude an outlier or not is closely related to the question whether this observation is an influential observation, as will be discussed next.</p>
@@ -1068,17 +1064,15 @@ outliers</code></pre></div>
 <div id="influential-observations" class="section level3">
 <h3><span class="header-section-number">12.3.2</span> Influential observations</h3>
 <p>Related to the issue of outliers is that of influential observations, meaning observations that exert undue influence on the parameters. It is possible to determine whether or not the results are driven by an influential observation by calculating how far the predicted values for your data would move if the model was fitted without this particular observation. This calculated total distance is called <strong>Cook’s distance</strong>. To identify influential observations, we can inspect the respective plots created from the model output. A rule of thumb to determine whether an observation should be classified as influential or not is to look for observation with a Cook’s distance &gt; 1 (although opinions vary on this). The following plot can be used to see the Cook’s distance associated with each data point:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(multiple_regression,<span class="dv">4</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
-<img src="_main_files/figure-html/unnamed-chunk-42-1.png" alt="Cook's distance" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-300"></span>
+<img src="_main_files/figure-html/unnamed-chunk-300-1.png" alt="Cook's distance" width="672" />
 <p class="caption">
 Figure 12.16: Cook’s distance
 </p>
 </div>
 <p>It is easy to see that none of the Cook’s distance values is close to the critical value of 1. Another useful plot to identify influential observations is plot number 5 from the output:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(multiple_regression,<span class="dv">5</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-43"></span>
-<img src="_main_files/figure-html/unnamed-chunk-43-1.png" alt="Residuals vs. Leverage" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-301"></span>
+<img src="_main_files/figure-html/unnamed-chunk-301-1.png" alt="Residuals vs. Leverage" width="672" />
 <p class="caption">
 Figure 12.17: Residuals vs. Leverage
 </p>
@@ -1091,8 +1085,8 @@ Figure 12.17: Residuals vs. Leverage
 <p>An important underlying assumption for OLS is that of linearity, meaning that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms. One quick way to assess whether a linear relationship can be assumed is to inspect the added variable plots that we already came across earlier:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
 <span class="kw">avPlots</span>(multiple_regression)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44"></span>
-<img src="_main_files/figure-html/unnamed-chunk-44-1.png" alt="Partial plots" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-302"></span>
+<img src="_main_files/figure-html/unnamed-chunk-302-1.png" alt="Partial plots" width="672" />
 <p class="caption">
 Figure 12.18: Partial plots
 </p>
@@ -1107,9 +1101,8 @@ Figure 12.18: Partial plots
 <div id="non-constant-error-variance" class="section level3">
 <h3><span class="header-section-number">12.3.4</span> Non-constant error variance</h3>
 <p>Another important assumption of the linear model is that the error terms have a constant variance (i.e., homoscedasticity). The following plot from the model output shows the residuals (the vertical distance from an observed value to the predicted values) versus the fitted values (the predicted value from the regression model). If all the points fell exactly on the dashed grey line, it would mean that we have a perfect prediction. The residual variance (i.e., the spread of the values on the y-axis) should be similar across the scale of the fitted values on the x-axis.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(multiple_regression, <span class="dv">1</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-45"></span>
-<img src="_main_files/figure-html/unnamed-chunk-45-1.png" alt="Residuals vs. fitted values" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-303"></span>
+<img src="_main_files/figure-html/unnamed-chunk-303-1.png" alt="Residuals vs. fitted values" width="672" />
 <p class="caption">
 Figure 12.19: Residuals vs. fitted values
 </p>
@@ -1122,8 +1115,8 @@ Figure 12.19: Residuals vs. fitted values
 <p>Another assumption of OLS is that the error term is normally distributed. This can be a reasonable assumption for many scenarios, but we still need a way to check if it is actually the case. As we can not directly observe the actual error term, we have to work with the next best thing - the residuals.</p>
 <p>A quick way to assess whether a given sample is approximately normally distributed is by using Q-Q plots. These plot the theoretical position of the observations (under the assumption that they are normally distributed) against the actual position. The plot below is created by the model output and shows the residuals in a Q-Q plot. As you can see, most of the points roughly follow the theoretical distribution, as given by the straight line. If most of the points are close to the line, the data is approximately normally distributed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(multiple_regression,<span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-46"></span>
-<img src="_main_files/figure-html/unnamed-chunk-46-1.png" alt="Q-Q plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-304"></span>
+<img src="_main_files/figure-html/unnamed-chunk-304-1.png" alt="Q-Q plot" width="672" />
 <p class="caption">
 Figure 12.20: Q-Q plot
 </p>
@@ -1169,8 +1162,8 @@ Figure 12.20: Q-Q plot
 ## starpower 0.2557  0.0099</code></pre>
 <p>The bivariate correlations can also be show in a plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(regression[,<span class="kw">c</span>(<span class="st">&quot;adspend&quot;</span>,<span class="st">&quot;airplay&quot;</span>,<span class="st">&quot;starpower&quot;</span>)])</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-49"></span>
-<img src="_main_files/figure-html/unnamed-chunk-49-1.png" alt="Bivariate correlation plots" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-307"></span>
+<img src="_main_files/figure-html/unnamed-chunk-307-1.png" alt="Bivariate correlation plots" width="672" />
 <p class="caption">
 Figure 12.21: Bivariate correlation plots
 </p>
@@ -1193,10 +1186,9 @@ Figure 12.21: Bivariate correlation plots
 <h3><span class="header-section-number">12.3.8</span> Omitted Variables</h3>
 <p>If a variable that influences the outcome is left out of the model (“omitted”), a bias in other variables’ coefficients might be introduced. Specifically, the other coefficients will be biased if the corresponding variables are correlated with the omitted variable. Intuitively, the variables left in the model “pick up” the effect of the omitted variable to the degree that they are related. Let’s illustrate this with an example.</p>
 <p>Consider the following data on the number of people visiting concerts of smaller bands.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(concerts)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["avg_rating"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["followers"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["concert_visitors"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.88","2":"6903","3":"1425","_rn_":"1"},{"1":"7.88","2":"5760","3":"1317","_rn_":"2"},{"1":"4.09","2":"6164","3":"1311","_rn_":"3"},{"1":"8.83","2":"12198","3":"2612","_rn_":"4"},{"1":"9.40","2":"7702","3":"1712","_rn_":"5"},{"1":"0.46","2":"9051","3":"1818","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["avg_rating"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["followers"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["concert_visitors"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.88","2":"6903","3":"1425"},{"1":"7.88","2":"5760","3":"1317"},{"1":"4.09","2":"6164","3":"1311"},{"1":"8.83","2":"12198","3":"2612"},{"1":"9.40","2":"7702","3":"1712"},{"1":"0.46","2":"9051","3":"1818"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>The data set contains three variables:</p>
@@ -1206,8 +1198,6 @@ Figure 12.21: Bivariate correlation plots
 <li><strong>concert_visitors</strong>: The number of tickets sold for the concert.</li>
 </ul>
 <p>If we estimate a model to explain the number of tickets sold as a function of the average rating and the number of followers, the results would look as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">concert_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(concert_visitors <span class="op">~</span><span class="st"> </span>avg_rating <span class="op">+</span><span class="st"> </span>followers, <span class="dt">data =</span> concerts)
-<span class="kw">summary</span>(concert_mod)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = concert_visitors ~ avg_rating + followers, data = concerts)
@@ -1228,8 +1218,6 @@ Figure 12.21: Bivariate correlation plots
 ## Multiple R-squared:  0.999,  Adjusted R-squared:  0.999 
 ## F-statistic: 3.95e+04 on 2 and 97 DF,  p-value: &lt;0.0000000000000002</code></pre>
 <p>Now assume we don’t have data on the number of followers a band has, but we still have information on the average rating and want to explain the number of tickets sold. Fitting a linear model with just the <code>avg_rating</code> variable included yields the following results:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">concert_mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(concert_visitors <span class="op">~</span><span class="st"> </span>avg_rating, <span class="dt">data =</span> concerts)
-<span class="kw">summary</span>(concert_mod2)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = concert_visitors ~ avg_rating, data = concerts)
@@ -1255,21 +1243,12 @@ Figure 12.21: Bivariate correlation plots
 <li>How much of that effect is captured by <code>avg_rating</code>?</li>
 </ol>
 <p>The former is just the coefficient of <code>followers</code> in the original regression.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">followers_concert_mod &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">coef</span>(concert_mod)[<span class="st">&quot;followers&quot;</span>]) <span class="co"># Marginal effect of followers on sales</span>
-followers_concert_mod</code></pre></div>
 <pre><code>## [1] 0.2</code></pre>
 <p>The latter is the coefficient of <code>avg_rating</code> obtained from a regression on <code>followers</code>, since the coefficient shows how <code>avg_rating</code> and <code>followers</code> relate to each other.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod_follow_rating &lt;-<span class="st"> </span><span class="kw">lm</span>(followers <span class="op">~</span><span class="st"> </span>avg_rating, <span class="dt">data =</span> concerts) 
-follow_rating &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">coef</span>(mod_follow_rating)[<span class="st">&quot;avg_rating&quot;</span>]) <span class="co"># Relation between followers and avg_rating</span>
-follow_rating</code></pre></div>
 <pre><code>## [1] 220</code></pre>
 <p>Now we can calculate the bias induced by omitting <code>followers</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bias &lt;-<span class="st"> </span>followers_concert_mod <span class="op">*</span><span class="st"> </span>follow_rating
-<span class="kw">cat</span>(<span class="st">&quot;Bias:&quot;</span>, bias)</code></pre></div>
 <pre><code>## Bias: 44</code></pre>
 <p>To calculate the biased coefficient, simply add the bias to the coefficient from the original model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b1_bias &lt;-<span class="st"> </span><span class="kw">coef</span>(concert_mod)[<span class="st">&quot;avg_rating&quot;</span>] <span class="op">+</span><span class="st"> </span>bias
-<span class="kw">cat</span>(<span class="st">&quot;Biased Beta:&quot;</span>, b1_bias)</code></pre></div>
 <pre><code>## Biased Beta: 65</code></pre>
 </div>
 </div>
@@ -1427,8 +1406,8 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour=</span><span class="st">&quot;country&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-63"></span>
-<img src="_main_files/figure-html/unnamed-chunk-63-1.png" alt="Effect of advertising by group" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-321"></span>
+<img src="_main_files/figure-html/unnamed-chunk-321-1.png" alt="Effect of advertising by group" width="672" />
 <p class="caption">
 Figure 12.22: Effect of advertising by group
 </p>
@@ -1526,7 +1505,7 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
 <span class="kw">head</span>(non_linear_reg)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["sales"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"16","2":"13817","_rn_":"1"},{"1":"17","2":"5075","_rn_":"2"},{"1":"15","2":"3501","_rn_":"3"},{"1":"27","2":"23662","_rn_":"4"},{"1":"14","2":"9977","_rn_":"5"},{"1":"19","2":"11972","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sales"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"16","2":"13817"},{"1":"17","2":"5075"},{"1":"15","2":"3501"},{"1":"27","2":"23662"},{"1":"14","2":"9977"},{"1":"19","2":"11972"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now we inspect if a linear specification is appropriate by looking at the scatterplot:</p>
@@ -1534,8 +1513,8 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-67"></span>
-<img src="_main_files/figure-html/unnamed-chunk-67-1.png" alt="Non-linear relationship" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-325"></span>
+<img src="_main_files/figure-html/unnamed-chunk-325-1.png" alt="Non-linear relationship" width="672" />
 <p class="caption">
 Figure 12.23: Non-linear relationship
 </p>
@@ -1564,16 +1543,16 @@ Figure 12.23: Non-linear relationship
 <p>Advertising appears to be positively related to sales with an additional Euro that is spent on advertising resulting in 0.0005 additional sales. The R<sup>2</sup> statistic suggests that approximately 51% of the total variation can be explained by the model</p>
 <p>To test if the linear specification is appropriate, let’s inspect some of the plots that are generated by R. We start by inspecting the residuals plot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_reg,<span class="dv">1</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-69"></span>
-<img src="_main_files/figure-html/unnamed-chunk-69-1.png" alt="Residuals vs. Fitted" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-327"></span>
+<img src="_main_files/figure-html/unnamed-chunk-327-1.png" alt="Residuals vs. Fitted" width="672" />
 <p class="caption">
 Figure 12.24: Residuals vs. Fitted
 </p>
 </div>
 <p>The plot suggests that the assumption of homescedasticity is violated (i.e., the spread of values on the y-axis is different for different levels of the fitted values). In addition, the red line deviates from the dashed grey line, suggesting that the relationship might not be linear. Finally, the Q-Q plot of the residuals suggests that the residuals are not normally distributed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(linear_reg,<span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-70"></span>
-<img src="_main_files/figure-html/unnamed-chunk-70-1.png" alt="Q-Q plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-328"></span>
+<img src="_main_files/figure-html/unnamed-chunk-328-1.png" alt="Q-Q plot" width="672" />
 <p class="caption">
 Figure 12.25: Q-Q plot
 </p>
@@ -1594,8 +1573,8 @@ log(Y) =log(\beta_0) + \beta_1*log(X_1) + \beta_2*log(X_2) + ...+ \beta_J*log(X_
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-71"></span>
-<img src="_main_files/figure-html/unnamed-chunk-71-1.png" alt="Linearized effect" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-329"></span>
+<img src="_main_files/figure-html/unnamed-chunk-329-1.png" alt="Linearized effect" width="672" />
 <p class="caption">
 Figure 12.26: Linearized effect
 </p>
@@ -1628,15 +1607,15 @@ log(sales) = log(\beta_0) + \beta_1*log(advertising) + log(\epsilon)
 ## F-statistic: 2.13e+03 on 1 and 998 DF,  p-value: &lt;0.0000000000000002</code></pre>
 <p>Note that this specification implies decreasing marginal returns (i.e., the returns of advertising are decreasing with the level of advertising), which appear to be more consistent with the data. The specification is also consistent with proportional changes in advertising being associated with proportional changes in sales (i.e., advertising does not become more effective with increasing levels). This has important implications on the interpretation of the coefficients. In our example, you would interpret the coefficient as follows: <strong>A 1% increase in advertising leads to a 0.3% increase in sales</strong>. Hence, the interpretation is in proportional terms and no longer in units. This means that the coefficients in a log-log model can be directly interpreted as elasticities, which also makes communication easier. We can generally also inspect the R<sup>2</sup> statistic to see that the model fit has increased compared to the linear specification (i.e., R<sup>2</sup> has increased to 0.681 from 0.509). However, please note that the variables are now measured on a different scale, which means that the model fit in theory is not directly comparable. Also, we could use the residuals plot to confirm that the revised specification is more appropriate:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(log_reg,<span class="dv">1</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-73"></span>
-<img src="_main_files/figure-html/unnamed-chunk-73-1.png" alt="Residuals plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-331"></span>
+<img src="_main_files/figure-html/unnamed-chunk-331-1.png" alt="Residuals plot" width="672" />
 <p class="caption">
 Figure 12.27: Residuals plot
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(log_reg,<span class="dv">2</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-73"></span>
-<img src="_main_files/figure-html/unnamed-chunk-73-2.png" alt="Q-Q plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-331"></span>
+<img src="_main_files/figure-html/unnamed-chunk-331-2.png" alt="Q-Q plot" width="672" />
 <p class="caption">
 Figure 12.27: Q-Q plot
 </p>
@@ -1648,58 +1627,74 @@ non_linear_reg<span class="op">$</span>pred_log_reg &lt;-<span class="st"> </spa
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, <span class="dt">y =</span> sales),<span class="dt">shape=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> non_linear_reg,<span class="kw">aes</span>(<span class="dt">x=</span>advertising,<span class="dt">y=</span>pred_lin_reg),<span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> non_linear_reg,<span class="kw">aes</span>(<span class="dt">x=</span>advertising,<span class="dt">y=</span><span class="kw">exp</span>(pred_log_reg)),<span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">size=</span><span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-74"></span>
-<img src="_main_files/figure-html/unnamed-chunk-74-1.png" alt="Comparison if model fit" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-332"></span>
+<img src="_main_files/figure-html/unnamed-chunk-332-1.png" alt="Comparison if model fit" width="672" />
 <p class="caption">
 Figure 12.28: Comparison if model fit
 </p>
 </div>
 <p>Another way of modelling non-linearities is including a squared term if there are decreasing or increasing effects. In fact, we can model non-constant slopes as long as the form is a linear combination of exponentials of the explanatory variables. Usually we do not expect <em>many</em> inflection points so squared or third power terms suffice. Note that the degree of the polynomial has to be equal to the number of inflection points.</p>
 <p>A common example is the number of cooks in a kitchen and the meals cooked. If there are only two cooks each can have their own equipment and stove, etc. As more cooks are added to the kitchen they will have to share some of the equipment as well as the space and the meals cooked per cook will decline. At some point an additional cook will just stand in the way of all the other cooks and the output will actually decline.</p>
-<p><code>lm(...)</code> can take squared (or any power) terms as input by adding <code>I(X^2)</code> as explanatory variable. In the example below we see a clear quadratic relation ship with an inflection point at around 250. If we try to model this using the level of the covariates without the quadratic term we do not get a very good fit.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">500</span>)
-Y &lt;-<span class="st"> </span><span class="dv">50</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span><span class="op">*</span>X <span class="op">-</span><span class="st"> </span>.<span class="dv">01</span><span class="op">*</span>(X<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">500</span>)
-
-modLinear &lt;-<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X)
-<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">outcome =</span> Y, <span class="dt">regressor =</span> X, <span class="dt">fit =</span> <span class="kw">fitted</span>(modLinear))) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> regressor, <span class="dt">y =</span> outcome, <span class="dt">color =</span> <span class="st">&quot;Data&quot;</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> regressor, <span class="dt">y =</span> fit, <span class="dt">color =</span> <span class="st">&quot;Fitted&quot;</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Linear Model&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
-<p>By including the quadratic term we can fit the data very well. This is still a linear model since the outcome variable is still explained by a linear combination of regressors even though one of the regressors is now just a non-linear function of the same variable (i.e. the squared value).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod &lt;-<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(X<span class="op">^</span><span class="dv">2</span>))
-<span class="kw">summary</span>(mod)</code></pre></div>
+<p><code>lm(...)</code> can take squared (or any power) terms as input by adding <code>I(X^2)</code> as explanatory variable. In the example below we see a clear quadratic relationship with an inflection point at around 3500. If we try to model this using the level of the covariates without the quadratic term we do not get a very good fit. We can think of the following example as a profit function. If we do not produce anything a loss is incured due to fixed cost. When we start producing each unit has a positive contribution margin and thus we start making a profit. However, the more pieces we produce the higher the marginal cost. This could be due to more people working overtime or an additional machine that has to be maintained. At some point (here around 3500) the production of an additional unit costs more than the sales price and the profit starts falling again and would eventually become negative.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-333-1.png" width="672" /></p>
+<p>The graph above clearly shows that a production of between 2500 and 5000 pieces is profitable and producing nothing would lead to a loss. Let’s see which production level showed the highest profit. It is clear that the profit is highest when producing a little over 3500 pieces.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Profit"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Production"],"name":[2],"type":["int"],"align":["right"]},{"label":["Prediction"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"113035","2":"3572","3":"10156"},{"1":"105666","2":"3741","3":"4832"},{"1":"96791","2":"3728","3":"5241"},{"1":"96319","2":"3691","3":"6407"},{"1":"93903","2":"2834","3":"33410"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>However, if we look at the prediction using just the number of pieces produced the maximum is at <span class="math inline">\(3\)</span>, the minimum production level observed. Clearly, this is not a desired result.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Profit"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Production"],"name":[2],"type":["int"],"align":["right"]},{"label":["Prediction"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"-72607","2":"3","3":"122609"},{"1":"-12799","2":"6","3":"122515"},{"1":"-69583","2":"8","3":"122452"},{"1":"-48498","2":"13","3":"122294"},{"1":"-53960","2":"21","3":"122042"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Profit"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Production"],"name":[2],"type":["int"],"align":["right"]},{"label":["Prediction"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"-72607","2":"3","3":"122609"},{"1":"-12799","2":"6","3":"122515"},{"1":"-69583","2":"8","3":"122452"},{"1":"-48498","2":"13","3":"122294"},{"1":"-53960","2":"21","3":"122042"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>By including a quadratic term we can fit the data very well. This is still a linear model since the outcome variable is still explained by a linear combination of regressors even though one of the regressors is now just a non-linear function of the same variable (i.e. the squared value).</p>
 <pre><code>## 
 ## Call:
-## lm(formula = Y ~ X + I(X^2))
+## lm(formula = Profit ~ Production + I(Production^2), data = profitData)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1499.6  -326.6     7.9   346.8  1664.7 
+##    Min     1Q Median     3Q    Max 
+## -43783  -9435    156   9582  40979 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept) 54.7806777 19.0874770    2.87              0.0042 ** 
-## X            5.0808911  0.0309720  164.05 &lt;0.0000000000000002 ***
-## I(X^2)      -0.0100090  0.0000439 -227.80 &lt;0.0000000000000002 ***
+##                       Estimate     Std. Error t value            Pr(&gt;|t|)
+## (Intercept)     -49302.5113713   1358.5708506   -36.3 &lt;0.0000000000000002
+## Production          69.8161216      0.6168468   113.2 &lt;0.0000000000000002
+## I(Production^2)     -0.0099982      0.0000589  -169.7 &lt;0.0000000000000002
+##                    
+## (Intercept)     ***
+## Production      ***
+## I(Production^2) ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 491 on 997 degrees of freedom
-## Multiple R-squared:  0.987,  Adjusted R-squared:  0.986 
-## F-statistic: 3.65e+04 on 2 and 997 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">outcome =</span> Y, <span class="dt">regressor =</span> X, <span class="dt">fit =</span> <span class="kw">fitted</span>(mod))) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> regressor, <span class="dt">y =</span> outcome, <span class="dt">color =</span> <span class="st">&quot;Data&quot;</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> regressor, <span class="dt">y =</span> fit, <span class="dt">color =</span> <span class="st">&quot;Fitted&quot;</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Quadratic Model&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">modNon &lt;-<span class="st"> </span><span class="kw">lowess</span>(Y, X, <span class="dt">f =</span> <span class="fl">0.2</span>)
-<span class="kw">plot</span>(modNon)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-76-2.png" width="672" /></p>
+## Residual standard error: 14200 on 997 degrees of freedom
+## Multiple R-squared:  0.986,  Adjusted R-squared:  0.986 
+## F-statistic: 3.51e+04 on 2 and 997 DF,  p-value: &lt;0.0000000000000002</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-336-1.png" width="672" /></p>
+<p>Now the prediction of the model is very close to the actual data and we could base our production decisions on that model.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Profit"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Production"],"name":[2],"type":["int"],"align":["right"]},{"label":["Prediction"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"63974","2":"3482","3":"72575"},{"1":"57133","2":"3529","3":"72562"},{"1":"44694","2":"3448","3":"72557"},{"1":"71244","2":"3446","3":"72556"},{"1":"78204","2":"3444","3":"72554"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>When interpreting the coefficients of the predictor in this model we have to be careful. Since we included the squared term the slope is now different at each level of production (this can be seen in the graph above). This can easily be seen by calculating the derivative of the model with respect to production.</p>
+<p><span class="math display">\[
+\text{Profit} = \alpha + \beta_1 \text{ Production} + \beta_2 \text{ Production}^2 + \varepsilon\\
+{\delta \text{ Profit} \over \delta \text{ Production}} = \beta_1 + 2 \beta_2 \text{ Production} \equiv \text{Slope}
+\]</span></p>
+<p>Intuitively, this means that the change of profit due to one more piece being produced depends on the current production level. At the maximum predicted value the slope is close to <span class="math inline">\(0\)</span> (theoretically it is equal to <span class="math inline">\(0\)</span> but this would require decimals and we can only sell whole pieces). Above we only calculated the prediction for the observed data, so let’s first predict the profit for all possible values between <span class="math inline">\(1\)</span> and <span class="math inline">\(10,000\)</span> to get the optimal production level according to our model.</p>
+<pre><code>## [1] 0.0084</code></pre>
+<p>For all other levels of production we insert the pieces produced into the formula to obtain the slope at that point. In the following example you can choose the level of production and to illustrate the change in the slope</p>
+<iframe src="http://localhost:3838/squaredReg/sqreg/" style="border: none; width: 800px; height: 400px">
+</iframe>
 </div>
 </div>
 <div id="appendix-1" class="section level2">
@@ -1713,89 +1708,66 @@ modLinear &lt;-<span class="st"> </span><span class="kw">lm</span>(Y <span class
 \hat{\beta_{i}} = {COV(\tilde{Y_{i}}, \tilde{X_{i}}) \over V(\tilde{X_i})}
 \]</span></p>
 <p>where <span class="math inline">\(\tilde{Y_{i}}\)</span> is the residual from the regression of <span class="math inline">\(Y\)</span> on all variables except for the i-th and <span class="math inline">\(\tilde{X_i}\)</span> is the residual from the regression of <span class="math inline">\(X_i\)</span> on all other variables. Let’s illustrate this with an example.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">5</span>, <span class="dv">15</span>)
-x2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">20</span>, <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>x1
-
-y &lt;-<span class="st"> </span><span class="dv">50</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>x1 <span class="op">+</span><span class="st"> </span><span class="dv">7</span><span class="op">*</span>x2 <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">5</span>)</code></pre></div>
 <p>We have added some randomness through the <code>rnorm</code> command so the coefficients are not exactly as we set them but close. Clearly x1 and x2 have partial influence on y.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>x1<span class="op">+</span>x2)
-<span class="kw">summary</span>(mod)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x2)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -11.18  -2.94  -0.48   2.85  13.37 
+##     Min      1Q  Median      3Q     Max 
+## -11.482  -3.658   0.264   3.641  11.015 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept)  50.2258     1.1450    43.9 &lt;0.0000000000000002 ***
-## x1            1.9820     0.1522    13.0 &lt;0.0000000000000002 ***
-## x2            6.9886     0.0494   141.6 &lt;0.0000000000000002 ***
+## (Intercept)  51.8262     1.0013    51.8 &lt;0.0000000000000002 ***
+## x1            1.9608     0.1508    13.0 &lt;0.0000000000000002 ***
+## x2            6.9714     0.0488   142.8 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 5 on 97 degrees of freedom
+## Residual standard error: 4.9 on 97 degrees of freedom
 ## Multiple R-squared:     1,   Adjusted R-squared:     1 
-## F-statistic: 2.12e+05 on 2 and 97 DF,  p-value: &lt;0.0000000000000002</code></pre>
+## F-statistic: 2.55e+05 on 2 and 97 DF,  p-value: &lt;0.0000000000000002</code></pre>
 <p>To see the partial effect of x1 we run regressions for x1 on x2, as well as y on x2 and obtain the residuals <span class="math inline">\(\tilde{x1}\)</span> and <span class="math inline">\(\tilde{x2}\)</span>. Notice that x1 is highly correlated with x2.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regX1 &lt;-<span class="st"> </span><span class="kw">lm</span>(x1<span class="op">~</span>x2)  
-<span class="kw">summary</span>(regX1)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = x1 ~ x2)
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-##  -8.90  -2.37   0.09   2.22   7.40 
+## -7.818 -2.104 -0.435  2.123  9.326 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept) -6.34368    0.40850   -15.5 &lt;0.0000000000000002 ***
-## x2           0.31509    0.00776    40.6 &lt;0.0000000000000002 ***
+## (Intercept) -5.40071    0.38978   -13.9 &lt;0.0000000000000002 ***
+## x2           0.31581    0.00711    44.4 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 3.3 on 98 degrees of freedom
-## Multiple R-squared:  0.944,  Adjusted R-squared:  0.943 
-## F-statistic: 1.65e+03 on 1 and 98 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tildeX1 &lt;-<span class="st"> </span><span class="kw">residuals</span>(regX1)
-regY1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y<span class="op">~</span>x2)
-tildeY1 &lt;-<span class="st"> </span><span class="kw">residuals</span>(regY1)</code></pre></div>
+## Multiple R-squared:  0.953,  Adjusted R-squared:  0.952 
+## F-statistic: 1.97e+03 on 1 and 98 DF,  p-value: &lt;0.0000000000000002</code></pre>
 <p>We can use the residuals to create the partial plots as seen above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is the same as avPlot</span>
-<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">y =</span> tildeY1, <span class="dt">x =</span> tildeX1), <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;y | others&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;x1 | others&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">avPlots</span>(mod)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-80-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-342-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-342-2.png" width="672" /></p>
 <p>And the regression of the residuals of y on x1 yields the same coefficient as in the original regression (minus the rounding errors).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is the same coefficient as in the original regression </span>
-<span class="kw">summary</span>(<span class="kw">lm</span>(tildeY1<span class="op">~</span>tildeX1 <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)) <span class="co"># -1 since we want no intercept</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = tildeY1 ~ tildeX1 - 1)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -11.18  -2.94  -0.48   2.85  13.37 
+##     Min      1Q  Median      3Q     Max 
+## -11.482  -3.658   0.264   3.641  11.015 
 ## 
 ## Coefficients:
 ##         Estimate Std. Error t value            Pr(&gt;|t|)    
-## tildeX1    1.982      0.151    13.2 &lt;0.0000000000000002 ***
+## tildeX1    1.961      0.149    13.1 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 4.9 on 99 degrees of freedom
-## Multiple R-squared:  0.636,  Adjusted R-squared:  0.632 
-## F-statistic:  173 on 1 and 99 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="st">&quot;Coefficient using the partial covariance:&quot;</span>)</code></pre></div>
+## Residual standard error: 4.8 on 99 degrees of freedom
+## Multiple R-squared:  0.635,  Adjusted R-squared:  0.632 
+## F-statistic:  172 on 1 and 99 DF,  p-value: &lt;0.0000000000000002</code></pre>
 <pre><code>## [1] &quot;Coefficient using the partial covariance:&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cov</span>(tildeY1, tildeX1)<span class="op">/</span><span class="kw">var</span>(tildeX1)</code></pre></div>
 <pre><code>## [1] 2</code></pre>
 
 </div>

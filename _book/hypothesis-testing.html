@@ -431,22 +431,22 @@ test\ statistic = \frac{effect}{error}
 <span class="kw">library</span>(Hmisc)
 <span class="kw">rm</span>(music_sales)
 music_sales &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
-music_sales<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">factor</span>(music_sales<span class="op">$</span>group, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), 
-    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low_price&quot;</span>, <span class="st">&quot;high_price&quot;</span>))  <span class="co">#convert grouping variable to factor</span>
-<span class="kw">str</span>(music_sales)  <span class="co">#inspect data</span></code></pre></div>
+                          <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
+music_sales<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">factor</span>(music_sales<span class="op">$</span>group, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low_price&quot;</span>, <span class="st">&quot;high_price&quot;</span>)) <span class="co">#convert grouping variable to factor</span>
+<span class="kw">str</span>(music_sales) <span class="co">#inspect data</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    102 obs. of  3 variables:
 ##  $ product_id: int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ unit_sales: int  6 27 30 24 21 11 18 15 18 13 ...
 ##  $ group     : Factor w/ 2 levels &quot;low_price&quot;,&quot;high_price&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales)  <span class="co">#inspect data</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales) <span class="co">#inspect data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["product_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["unit_sales"],"name":[2],"type":["int"],"align":["right"]},{"label":["group"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"1","2":"6","3":"low_price"},{"1":"2","2":"27","3":"low_price"},{"1":"3","2":"30","3":"low_price"},{"1":"4","2":"24","3":"low_price"},{"1":"5","2":"21","3":"low_price"},{"1":"6","2":"11","3":"low_price"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Inspect frequencies.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_sales<span class="op">$</span>unit_sales, music_sales<span class="op">$</span>group)  <span class="co">#frequencies</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_sales<span class="op">$</span>unit_sales, music_sales<span class="op">$</span>group) <span class="co">#frequencies</span></code></pre></div>
 <pre><code>##     
 ##      low_price high_price
 ##   0          0          7
@@ -469,10 +469,10 @@ music_sales<span class="op">$</span>group &lt;-<span class="st"> </span><span cl
 ##   27         1          0
 ##   30         1          1</code></pre>
 <p>Inspect descriptives (overall and by group).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">describe</span>(music_sales<span class="op">$</span>unit_sales)  <span class="co">#overall descriptives</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">describe</span>(music_sales<span class="op">$</span>unit_sales) <span class="co">#overall descriptives</span></code></pre></div>
 <pre><code>##    vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
 ## X1    1 102 7.12 6.26      6     6.1 4.45   0  30    30 1.71     3.02 0.62</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(music_sales<span class="op">$</span>unit_sales, music_sales<span class="op">$</span>group)  <span class="co">#descriptives by group</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(music_sales<span class="op">$</span>unit_sales, music_sales<span class="op">$</span>group) <span class="co">#descriptives by group</span></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: low_price
@@ -932,13 +932,14 @@ Figure 10.7: p-hacking (red indicates false positives)
 <p>Let’s load and inspect the data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(music_sales_dep)
 music_sales_dep &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment_dependent.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
-<span class="kw">str</span>(music_sales_dep)  <span class="co">#inspect data</span></code></pre></div>
+                              <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+                              <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
+<span class="kw">str</span>(music_sales_dep) <span class="co">#inspect data</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    51 obs. of  3 variables:
 ##  $ product_id           : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ unit_sales_low_price : int  6 27 30 24 21 11 18 15 18 13 ...
 ##  $ unit_sales_high_price: int  9 12 30 18 20 15 2 3 3 9 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales_dep)  <span class="co">#inspect data</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales_dep) <span class="co">#inspect data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["product_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["unit_sales_low_price"],"name":[2],"type":["int"],"align":["right"]},{"label":["unit_sales_high_price"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"6","3":"9"},{"1":"2","2":"27","3":"12"},{"1":"3","2":"30","3":"30"},{"1":"4","2":"24","3":"18"},{"1":"5","2":"21","3":"20"},{"1":"6","2":"11","3":"15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -960,12 +961,11 @@ music_sales_dep &lt;-<span class="st"> </span><span class="kw">read.table</span>
 ## unit_sales_high_price 1.84     4.10 0.82</code></pre>
 <p>To plot the data, we need to do some restructuring first, since the variables are now stored in two different columns (“unit_sales_low_price” and “unit_sales_high_price”). This is also known as the “wide” format. To plot the data we need all observations to be stored in one variable. This is also known as the “long” format. We can use the <code>melt(...)</code> function from the <code>reshape2</code>package to “melt” the two variable into one column to plot the data. Since we are working with the same data as before, the plot ist the same as before.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
-<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">melt</span>(music_sales_dep[, <span class="kw">c</span>(<span class="st">&quot;unit_sales_low_price&quot;</span>, 
-    <span class="st">&quot;unit_sales_high_price&quot;</span>)]), <span class="kw">aes</span>(<span class="dt">x =</span> variable, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, 
-        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">melt</span>(music_sales_dep[, <span class="kw">c</span>(<span class="st">&quot;unit_sales_low_price&quot;</span>, <span class="st">&quot;unit_sales_high_price&quot;</span>)]), <span class="kw">aes</span>(<span class="dt">x =</span> variable, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of sales&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-176"></span>
 <img src="_main_files/figure-html/unnamed-chunk-176-1.png" alt="plot of means (dependent test)" width="672" />
 <p class="caption">
@@ -1140,14 +1140,12 @@ t=\frac{\overline{X}-\mu}{s_\overline{x}}=\frac{7.12-4}{0.62}=5.03
 </ul>
 <p>As always, we load the data first:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">call_center &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
-call_center<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>conversion, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))  <span class="co">#convert to factor</span>
-call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), 
-    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>))  <span class="co">#convert to factor</span></code></pre></div>
+                          <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
+call_center<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>conversion , <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)) <span class="co">#convert to factor</span>
+call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent , <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>)) <span class="co">#convert to factor</span></code></pre></div>
 <p>Next, we create a table to check the relative frequncies:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(call_center), 
-    <span class="dv">2</span>))  <span class="co">#conditional relative frequencies</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(call_center), <span class="dv">2</span>)) <span class="co">#conditional relative frequencies</span>
 rel_freq_table</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1156,7 +1154,7 @@ rel_freq_table</code></pre></div>
 </div>
 <p>We could also plot the data to visualize the frequencies using ggplot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(rel_freq_table, <span class="kw">aes</span>(<span class="dt">x =</span> agent, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> conversion)) <span class="op">+</span><span class="st"> </span><span class="co">#plot data</span>
-<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> .<span class="dv">7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">.7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Agent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
@@ -1183,23 +1181,21 @@ CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
 \tag{10.17}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\sqrt{p(1-p)}\)</span> is the equvalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_1&quot;</span>))  <span class="co">#number of observations for agent 1</span>
-n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_2&quot;</span>))  <span class="co">#number of observations for agent 1</span>
-n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>
-<span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;yes&quot;</span>))  <span class="co">#number of conversions for agent 1</span>
-n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>
-<span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;yes&quot;</span>))  <span class="co">#number of conversions for agent 2</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_1&quot;</span>)) <span class="co">#number of observations for agent 1</span>
+n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_2&quot;</span>)) <span class="co">#number of observations for agent 1</span>
+n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>conversion<span class="op">==</span><span class="st">&quot;yes&quot;</span>)) <span class="co">#number of conversions for agent 1</span>
+n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>conversion<span class="op">==</span><span class="st">&quot;yes&quot;</span>)) <span class="co">#number of conversions for agent 2</span>
 p1 &lt;-<span class="st"> </span>n1_conv<span class="op">/</span>n1  <span class="co">#proportion of conversions for agent 1</span>
 p2 &lt;-<span class="st"> </span>n2_conv<span class="op">/</span>n2  <span class="co">#proportion of conversions for agent 2</span>
 
-error1 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((p1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p1))<span class="op">/</span>n1)
+error1 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sqrt</span>((p1<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p1))<span class="op">/</span>n1)
 ci_lower1 &lt;-<span class="st"> </span>p1 <span class="op">-</span><span class="st"> </span>error1
 ci_upper1 &lt;-<span class="st"> </span>p1 <span class="op">+</span><span class="st"> </span>error1
 ci_lower1</code></pre></div>
 <pre><code>## [1] 0.6133232</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_upper1</code></pre></div>
 <pre><code>## [1] 0.7200101</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">error2 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((p2 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p2))<span class="op">/</span>n2)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">error2 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sqrt</span>((p2<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p2))<span class="op">/</span>n2)
 ci_lower2 &lt;-<span class="st"> </span>p2 <span class="op">-</span><span class="st"> </span>error2
 ci_upper2 &lt;-<span class="st"> </span>p2 <span class="op">+</span><span class="st"> </span>error2
 ci_lower2</code></pre></div>
