@@ -57,7 +57,7 @@ server <- function(input, output) {
    output$distPlot <- renderPlot({
       ggplot(x, aes(x))+
         geom_histogram(aes(y=..density..), bins = 50)+
-        stat_function(fun = function(y){dnorm(y, mean = input$mean, sd = sqrt(input$var) )}, geom = "line", color = "red") + 
+        stat_function(fun = function(y){dnorm(y, mean = input$mean, sd = sqrt(input$var) )}, geom = "line", color = "red") +
         theme_bw()
          })
    output$loglik <- renderTable({
@@ -83,15 +83,15 @@ server <- function(input, output) {
    
    output$loglikPlot <- renderPlot({
      current.obs.number <- loglik.stor$stor[nrow(loglik.stor$stor), "number"]
-     suppressWarnings(ggplot(data = loglik.stor$stor, aes(x = number, y = loglik)) + 
+     pltLLik <- ggplot(data = loglik.stor$stor, aes(x = number, y = loglik, group = 1)) +
        geom_point(na.rm = TRUE) +
-       geom_line(na.rm = TRUE) +
-       geom_hline(data = loglik.stor$max, mapping = aes(yintercept = loglik)) + 
+       geom_line(na.rm = TRUE, aes(group=1)) +
+       geom_hline(data = loglik.stor$max, mapping = aes(yintercept = loglik)) +
        scale_x_continuous(limits = if(nrow(loglik.stor$stor) < 11){c(1,10)} else {c(current.obs.number -10 , current.obs.number)}) +
        theme_bw() +
-       theme(axis.ticks.x = element_blank(), axis.text.x = element_blank()) + 
-       xlab(label = ""))
- 
+       theme(axis.ticks.x = element_blank(), axis.text.x = element_blank()) +
+       xlab(label = "")
+     suppressMessages(print(pltLLik))
    })
 }
 

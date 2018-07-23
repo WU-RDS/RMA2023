@@ -88,7 +88,7 @@ server <- function(input, output) {
       need(input$p_head<=1 & input$p_head>=0, 'Select a probability between 0 and 1!')
     )
     y <- rbinom(1e5, input$n_toss, input$p_head)
-    plot(NULL, xlim=c(0, input$n_toss), ylim = c(0,1), 
+    plot(NULL, xlim=c(0, input$n_toss+1), ylim = c(0,1), 
          ylab = "Cumulative Probability", xlab = "# of h",
          xaxt = "n",
          main=NULL,
