@@ -107,10 +107,11 @@ You can see that population is read as a character variable because of the comma
 class(population$Population)
 ```
 
-If we wanted to use this variable for some kind of analysis, we would first need to convert it to numeric format using the ```as.numeric()``` function. However, before we can do this, we can use the ```gsub()``` function, which replaces all matches of a string. In our case, we would like to replace the commas (```","```) with nothing (```""```).
+If we wanted to use this variable for some kind of analysis, we would first need to convert it to numeric format using the ```as.numeric()``` function. However, before we can do this, we can use the ```str_replace_all()``` function from the stringr package, which replaces all matches of a string. In our case, we would like to replace the commas (```","```) with nothing (```""```).
 
 ```{r}
-population$Population <- as.numeric(gsub(",","",population$Population)) #convert to numeric
+library(stringr)
+population$Population <- as.numeric(str_replace_all(population$Population, pattern = ",", replacement = "")) #convert to numeric
 head(population) #checks if we scraped the desired data
 ```
 
