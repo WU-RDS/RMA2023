@@ -8,7 +8,7 @@
 #
 
 library(shiny)
-library(xtable)
+library(ggplot2)
 ui <- fluidPage(
   withMathJax(),
    sidebarLayout(
@@ -31,8 +31,9 @@ server <- function(input, output) {
   set.seed(1234)
   X <- as.integer(runif(1000, 0, 10000))
   Y <- -50000 + 70*X - .01*(X^2) + rnorm(1000, 0, 15000)
+  profitData <- data.frame(Profit = Y, Production = X)
   mod <- lm(Profit ~ Production + I(Production^2), data = profitData)
-  profitData <- data.frame(Profit = Y, Production = X, Prediction = fitted(mod))
+  profitData$Prediction <- fitted(mod)
   output$Plot <- renderPlot({
     slope <- coef(mod)[["Production"]] + 2 * coef(mod)[["I(Production^2)"]] * input$production
     y0 <- predict(mod, newdata = data.frame(Production = input$production))
