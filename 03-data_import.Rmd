@@ -28,11 +28,11 @@ In the previous chapter, we saw how we may use the keyboard to input data in R. 
 
 ## Getting data for this course
 
-Most of the datasets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). There are two ways for you to obtain access to the datasets:
+Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). There are two ways for you to obtain access to the data sets:
 
 ### Directly import datasets from GitHub (recommended)
 
-All datasets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
+All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
 
 ```{r}
 test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
@@ -84,7 +84,7 @@ write_sav(test_data, "my_file.sav")
 
 ### Scraping data from websites
 
-Sometimes you may come accross interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the ```rvest``` package. Let's assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is ```<table>```. So let's read the entire website using ```read_html(url)``` and filter all tables using ```read_html(html_nodes(...,"table"))```.
+Sometimes you may come across interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the ```rvest``` package. Let's assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is ```<table>```. So let's read the entire website using ```read_html(url)``` and filter all tables using ```read_html(html_nodes(...,"table"))```.
 
 ```{r message=FALSE, warning=FALSE}
 library(rvest)
@@ -129,7 +129,7 @@ Reading data from websites can be tricky since you need to analyze the page stru
 
 ![Obtaining data from APIs](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/API.JPG)
 
-The process of obtainig data from APIs consists of the following steps:
+The process of obtaining data from APIs consists of the following steps:
 
 * Identify an API that has enough data to be relevant and reliable (e.g., <a href="http://www.programmableweb.com:" target="_blank">www.programmableweb.com</a> has >12,000 open web APIs in 63 categories).
 * Request information by calling (or, more technically speaking, creating a request to) the API (e.g., R, python, php or JavaScript).

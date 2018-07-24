@@ -18,7 +18,7 @@ options(scipen = 999)
 opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
 ```
 
-This section dicusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible.
+This section discusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible.
 <br>
 <br>
 
@@ -56,7 +56,7 @@ test_data$overall_knowledge_cat <- factor(test_data$overall_knowledge, levels = 
 test_data$gender_cat <- factor(test_data$gender, levels = c(1:2), labels = c("male", "female"))
 ```
 
-The ```table()``` function creates a frequency table. Let's start with the number of occurences of the categories associated with the prior knowledge and gender variables separately:
+The ```table()``` function creates a frequency table. Let's start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:
 
 ```{r}
 table(test_data[,c("overall_knowledge_cat")]) #absolute frequencies
@@ -137,7 +137,7 @@ These examples are meant to exemplify that there are often many different ways t
 
 ### Creating subsets
 
-From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. You could easily create a subset of the original data, which you would then use for estimation using the ```subset()``` function. For example, the follwing code creates a subset that excludes all cases with a duration of more than 900 seconds (15 minutes): 
+From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. You could easily create a subset of the original data, which you would then use for estimation using the ```subset()``` function. For example, the following code creates a subset that excludes all cases with a duration of more than 900 seconds (15 minutes): 
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 estimation_sample <- subset(test_data,duration < 900)
@@ -155,7 +155,7 @@ CI = \overline{X}\pm(z*\frac{s}{\sqrt{n}})
 (\#eq:confidence)
 \end{equation} 
 
-, where $\overline{x}$ is the sample mean, $\frac{s}{\sqrt{n}}$ is the standard error of the mean, and z is the critical z-score for a given level of confidence. If the interval is small, the sample must be very close to the population. Conversely, when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. We can obtain the critical z-score for the 95% CI using the ```qnorm()```-function. Using ```nrow(data_set)```, we can obtain the number ob rows (i.e., observations) in a dataset. 
+, where $\overline{x}$ is the sample mean, $\frac{s}{\sqrt{n}}$ is the standard error of the mean, and z is the critical z-score for a given level of confidence. If the interval is small, the sample must be very close to the population. Conversely, when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. We can obtain the critical z-score for the 95% CI using the ```qnorm()```-function. Using ```nrow(data_set)```, we can obtain the number ob rows (i.e., observations) in a data set. 
 
 ```{r message=FALSE, warning=FALSE}
 mean(test_data$overall_100)
@@ -166,9 +166,9 @@ print(ci_lower)
 print(ci_upper)
 ```
 
-Given our sample size and the variability in our data, we are 95% confident that the true level of overall statstical knowledge is between `r round(ci_lower,0)` and `r round(ci_upper,0)`!
+Given our sample size and the variability in our data, we are 95% confident that the true level of overall statistical knowledge is between `r round(ci_lower,0)` and `r round(ci_upper,0)`!
 
-Note that the CI is also implicitely included in the summary statistics created by the ```stat.desc()``` function.  
+Note that the CI is also implicitly included in the summary statistics created by the ```stat.desc()``` function.  
 
 ```{r message=FALSE, warning=FALSE}
 mean_x <- stat.desc(test_data$overall_100)["mean"]

@@ -77,7 +77,7 @@ test\ statistic = \frac{effect}{error}
 (\#eq:teststatistic)
 \end{equation} 
 
-where ```effect``` denotes the effect that you are investigating (e.g., the mean difference in an outcome variable between two experimental groups), while ```error``` denotes the variation we would naturally expect to find based on the variablity in the data and the sample size (e.g., the standard error of the mean difference). When the standard error is lower, the test statistic gets larger and you are more likely to obtain a significant test result. Hence - all else being equal - when you increase your sample size, this will increase the value of your test statistic (i.e., decrease the p-value). 
+where ```effect``` denotes the effect that you are investigating (e.g., the mean difference in an outcome variable between two experimental groups), while ```error``` denotes the variation we would naturally expect to find based on the variability in the data and the sample size (e.g., the standard error of the mean difference). When the standard error is lower, the test statistic gets larger and you are more likely to obtain a significant test result. Hence - all else being equal - when you increase your sample size, this will increase the value of your test statistic (i.e., decrease the p-value). 
 
 <br>
 
@@ -112,11 +112,11 @@ And in addition for independent tests:
 
 ### Independent-means t-test
 
-As an example of a parametric test, we will discuss the independent- and dependent-means t-test. The <b>independent-means t-test</b> is used when there are two experimental conditions and different units (e.g., participants, products) were assinged to each condition, while the <b>dependent-means t-test</b> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
+As an example of a parametric test, we will discuss the independent- and dependent-means t-test. The <b>independent-means t-test</b> is used when there are two experimental conditions and different units (e.g., participants, products) were assigned to each condition, while the <b>dependent-means t-test</b> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
 
 <b>Example case:</b> What is the effect of price promotions on the sales of music albums?
 
-<b>Experimental setup:</b> As a marketing manager of a music download store, you are interested in the effect of price on demand. In the music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assinged to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day. 
+<b>Experimental setup:</b> As a marketing manager of a music download store, you are interested in the effect of price on demand. In the music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assigned to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day. 
 
 Let's load and investigate the data first:    
 
@@ -168,7 +168,7 @@ ggplot(music_sales,aes(unit_sales)) +
   theme_bw()
 ```
 
-There appears to be a difference between the two groups. The quesition is: is this difference statstically significant, or would we expect to observe a difference of this magnitude by chance given the sample size and variability in the data? 
+There appears to be a difference between the two groups. The question is: is this difference statistically significant, or would we expect to observe a difference of this magnitude by chance given the sample size and variability in the data? 
 
 Let's test this using a statistical test!
 
@@ -406,7 +406,7 @@ print(p)
 
 In our example, we used a non-directional hypothesis, meaning that a two-sided test is appropriate. Nevertheless, let's consider the consequences of using a directional hypothesis (one-sided test). If we assume a positive effect of price promotion on sales (reducing the price leads to higher sales), then we would expect the mean sales in the experimental group to be larger compared to the control group and, thus, derive a positive test statistic. Imagine a scenario where we need a test statistic bigger than 1.66 to find a significant effect at the 5% level under a directional hypothesis, but the test-statistic we get is actually -2.1. In this case, we would retain the null hypothesis although an effect exists and could have been detected using a two-sided test. So unless you consider the consequences of missing an effect in the untested direction negligible, you should use a two-sided test (non-directional hypothesis).      
 
-Now we need to make a decision between the independent and the dependent t-test. As stated above, the independent-means t-test is used when there are two experimental conditions and different units were assinged to each condition, while the dependent-means t-test is used when there are two experimental conditions and the same units were observed in both conditions of the experiment. In our example, the <b>independent-means t-test</b> is appropriate since different music albums were randomly assigned to both experimental conditions.
+Now we need to make a decision between the independent and the dependent t-test. As stated above, the independent-means t-test is used when there are two experimental conditions and different units were assigned to each condition, while the dependent-means t-test is used when there are two experimental conditions and the same units were observed in both conditions of the experiment. In our example, the <b>independent-means t-test</b> is appropriate since different music albums were randomly assigned to both experimental conditions.
 
 Finally, let's test if the assumptions of the chosen test are fulfilled:
 
@@ -443,7 +443,7 @@ Unlike &alpha; and n, which are specified by the researcher, the magnitude of &b
 * <b>Power (1-&beta;)</b>: The probability of finding an effect that does genuinely exists. 
 * <b>Effect size (d)</b>: Standardized measure of the effect size under the alternate hypothesis. 
 
-Although &beta; is unknown, it is related to &alpha;. For example, if we would like to be absolutely sure that we do not falsely identify an effect which does not exist (i.e., make a type I error), this means that the probability of identifying an effect that does exist (i.e., 1-&beta;) decreases and vice verca. Thus, an extremely low value of &alpha; (e.g., &alpha; = 0.0001) will result in intolerably high &beta; errors. A common approach is to set &alpha;=0.05 and &beta;=0.80. 
+Although &beta; is unknown, it is related to &alpha;. For example, if we would like to be absolutely sure that we do not falsely identify an effect which does not exist (i.e., make a type I error), this means that the probability of identifying an effect that does exist (i.e., 1-&beta;) decreases and vice versa. Thus, an extremely low value of &alpha; (e.g., &alpha; = 0.0001) will result in intolerably high &beta; errors. A common approach is to set &alpha;=0.05 and &beta;=0.80. 
 
 Unlike the t-value of our test, the effect size (d) is unaffected by the sample size and can be categorized as follows (see Cohen, J. 1988): 
 
@@ -451,7 +451,7 @@ Unlike the t-value of our test, the effect size (d) is unaffected by the sample 
 * 0.5 (medium effect)
 * 0.8 (large effect)
 
-In order to test more subtle effects (smaller effect sizes), you need a larger sample size compared to the test of more obvious effects. In <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2205186" target="_blank">this paper</a>, you can find a list of examples for different effect sizes and the number of obervations you need to reliably find an effect of that magnitude. Although the exact effect size is unknown before the experiment, you might be able to make a guess about the effect size (e.g., based on previous studies).   
+In order to test more subtle effects (smaller effect sizes), you need a larger sample size compared to the test of more obvious effects. In <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2205186" target="_blank">this paper</a>, you can find a list of examples for different effect sizes and the number of observations you need to reliably find an effect of that magnitude. Although the exact effect size is unknown before the experiment, you might be able to make a guess about the effect size (e.g., based on previous studies).   
   
 When constructing an experimental design, your goal should be to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible. To achieve this goal, you may use the ```pwr``` package, which let's you compute ```n```, ```d```, ```alpha```, and ```power```. You only need to specify three of the four input variables to get the fourth.
 
@@ -522,7 +522,7 @@ var_2
 
 ##### Step 2: Compute pooled variance estimate from the sample variances {-}
 
-When we compare two groups that contain different numbers of participants and the the populations can be expecte to have approximately the same variances, we apply a weighting of the variances of each sample to compute the <b>pooled variance</b>.
+When we compare two groups that contain different numbers of participants and the populations can be expected to have approximately the same variances, we apply a weighting of the variances of each sample to compute the <b>pooled variance</b>.
 
 \begin{equation} 
 \begin{split}
@@ -561,7 +561,7 @@ s_{\overline{X}_1-\overline{X}_2}^2={\frac{s_1^2}{N_1}+\frac{s_2^2}{N_2}}
 (\#eq:addvariances)
 \end{equation} 
 
-Now we have the variance of the sampling distribution of differences. To find the standard error, we only need to take the sqaure root of the variance (because the standard error is the standard deviation of the sampling distribution and the standard error is the square root of the variance):
+Now we have the variance of the sampling distribution of differences. To find the standard error, we only need to take the square root of the variance (because the standard error is the standard deviation of the sampling distribution and the standard error is the square root of the variance):
 
 \begin{equation} 
 \begin{split}
@@ -572,7 +572,7 @@ s_{\overline{X}_1-\overline{X}_2}=\sqrt{{\frac{s_1^2}{N_1}+\frac{s_2^2}{N_2}}}=\
 
 <br>
 
-Let's check again if the result is corect:
+Let's check again if the result is correct:
 
 ```{r message=FALSE, warning=FALSE}
 se_x1_x2 <- sqrt((var_pooled/n_1)+(var_pooled/n_2))
@@ -654,7 +654,7 @@ df <- (n_1 + n_2 - 2)
 2*(1-pt(abs(t_cal), df))
 ```
 
-Here, ```pt()``` is the cumulative probability distribution function of the t-distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value **less than or equal to** the calculated test statistic given the the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic **larger than or equal to** the calculated test statstic under the null hypothsis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are runnig a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.  
+Here, ```pt()``` is the cumulative probability distribution function of the t-distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value **less than or equal to** the calculated test statistic given the the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic **larger than or equal to** the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.  
 
 **Interpretation:** Under the assumption that the null hypothesis is true the probability of finding a difference of at least the observed magnitude is less than 5%.
 
@@ -682,7 +682,7 @@ We use ```0.975``` and not ```0.95``` since we are running a two-sided test and 
 
 <b>Interpretation:</b> The probability of observing a difference in means of this magnitude or larger is less than 5%.
 
-<b>Decision:</b> Reject H<sub>0</sub>, given that the calculated t-value (T<sub>CAL</sub>) of `r t_cal` is larger than critial value (T<sub>CR</sub>) of `r qt(0.975, df)`. 
+<b>Decision:</b> Reject H<sub>0</sub>, given that the calculated t-value (T<sub>CAL</sub>) of `r t_cal` is larger than critical value (T<sub>CR</sub>) of `r qt(0.975, df)`. 
 
 The following graph shows the test result.
 
@@ -736,7 +736,7 @@ If the parameter value specified in the null hypothesis (usually 0) does not lie
 
 <b>Decision:</b> Reject H<sub>0</sub>, given that the true parameter (zero) is not included in the interval. 
 
-To illustrate this, we can randomly draw 100 samples from the two populations using simulated data, copute their means and construct confidence intervals around their mean difference. The result is shown in the following graph: 
+To illustrate this, we can randomly draw 100 samples from the two populations using simulated data, compute their means and construct confidence intervals around their mean difference. The result is shown in the following graph: 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.height = 10, fig.width = 6,  fig.align="center", fig.cap = "Confidence Intervals"}
 plot_dat <- data.frame(count=NA,mean=NA,cil=NA,ciu=NA)
@@ -770,13 +770,13 @@ factorplot1
 
 ```
 
-You can see that for 5 out of 100 samples, the caclulated confidence interval does not contain the true population mean (red line).
+You can see that for 5 out of 100 samples, the calculated confidence interval does not contain the true population mean (red line).
 
 #### Report results and draw a marketing conclusion
 
 The conclusion reached by hypothesis testing must finally be expressed in terms of the marketing research problem: 
 
-The test showed that the sales promotion indreased sales by about `r round(mean_1-mean_2,2)` unit on average. This difference is significant t(100) = 2.056, p < .05 (95% CI = [`r round((mean_1-mean_2)-qt(0.975,df)*se_x1_x2,2)`,`r round((mean_1-mean_2)+qt(0.975,df)*se_x1_x2,2)`]).
+The test showed that the sales promotion increased sales by about `r round(mean_1-mean_2,2)` unit on average. This difference is significant t(100) = 2.056, p < .05 (95% CI = [`r round((mean_1-mean_2)-qt(0.975,df)*se_x1_x2,2)`,`r round((mean_1-mean_2)+qt(0.975,df)*se_x1_x2,2)`]).
 
 **The following video summarizes how to conduct an independent-means t-test in R**
 
@@ -786,7 +786,7 @@ The test showed that the sales promotion indreased sales by about `r round(mean_
 
 #### A note on the interpretation of p-values
 
-From my experience, students tend to place a lot of weight on p-values when interpreting their research findings. It is therefore important to note some points that hopefully help to put the meaning of a "singnificant" vs. "insignificant" test result into perspective.
+From my experience, students tend to place a lot of weight on p-values when interpreting their research findings. It is therefore important to note some points that hopefully help to put the meaning of a "significant" vs. "insignificant" test result into perspective.
 
 <b>Significant result</b>
 
@@ -841,7 +841,7 @@ ggplot(data=df,aes(y=tvalues, x=replication,color = col)) +
 
 ### Dependent-means t-test
 
-While the independent-means t-test is used when different units (e.g., participants, products) were assinged to the different condition, the <b>dependent-means t-test</b> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
+While the independent-means t-test is used when different units (e.g., participants, products) were assigned to the different condition, the <b>dependent-means t-test</b> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
 
 Imagine, for example, a slightly different experimental setup for the price experiment: 
 
@@ -870,7 +870,7 @@ table(music_sales_dep[, c("unit_sales_high_price")]) #frequencies high price
 psych::describe(music_sales_dep[, c("unit_sales_low_price", "unit_sales_high_price")]) #overall descriptives
 ```
 
-To plot the data, we need to do some restructuring first, since the variables are now stored in two different columns ("unit_sales_low_price" and "unit_sales_high_price"). This is also known as the "wide" format. To plot the data we need all observations to be stored in one variable. This is also known as the "long" format. We can use the ```melt(...)``` function from the ```reshape2```package to "melt" the two variable into one column to plot the data. Since we are working with the same data as before, the plot ist the same as before.  
+To plot the data, we need to do some restructuring first, since the variables are now stored in two different columns ("unit_sales_low_price" and "unit_sales_high_price"). This is also known as the "wide" format. To plot the data we need all observations to be stored in one variable. This is also known as the "long" format. We can use the ```melt(...)``` function from the ```reshape2```package to "melt" the two variable into one column to plot the data. Since we are working with the same data as before, the plot is the same as before.  
 
 ```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "plot of means (dependent test)"}
 library(reshape2)
@@ -1017,7 +1017,7 @@ t=\frac{\overline{X}-\mu}{s_\overline{x}}=\frac{7.12-4}{0.62}=5.03
 
 The degrees of freedom for the t-statistic to test the hypothesis about one mean are n-1 (= 101). From the t distribution, the probability of getting a more extreme value than 5.03 is less than 0.05. Hence, H<sub>0</sub> is rejected. Alternatively, the critical t-value for 101 degrees of freedom and a significance level of 0.05 is 1.645. This implies that the average sales level exceeds 4.0. 
 
-This can be implemented using the ```t.test``` function and specifying ```mu``` as the threshold for your test and using the argument ```alternative``` to specify the direcition in which we would like to test. 
+This can be implemented using the ```t.test``` function and specifying ```mu``` as the threshold for your test and using the argument ```alternative``` to specify the direction in which we would like to test. 
 
 ```{r message=FALSE, warning=FALSE}
 t.test(music_sales$unit_sales, mu = 4, alternative = "greater")
@@ -1038,7 +1038,7 @@ When should you use non-parametric tests?
 
 ### Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)
 
-The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale, the data is not normally distributed or if the variances can not be assumed to be homogenous. The following assumptions must be fulfilled for the test to be applicable:
+The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale, the data is not normally distributed or if the variances can not be assumed to be homogeneous. The following assumptions must be fulfilled for the test to be applicable:
 
 * The dependent variable is at least ordinally scaled (i.e. a ranking between values can be established).
 * The independent variable has only two levels. 
@@ -1047,7 +1047,7 @@ The Mann-Whitney U test is a non-parametric test of differences between groups, 
 
 Intuitively, the test compares the frequency of low and high ranks between groups. Under the null hypothesis, the amount of high and low ranks should be roughly equal in the two groups. This is achieved through comparing the expected sum of ranks to the actual sum of ranks. 
 
-The test is implemented in R as the function ```wilcox.test()``` and there is no need to compute the ranks before you rund the test as the function does this for you. Using the same data on music sales as before the test could be executed as follows:
+The test is implemented in R as the function ```wilcox.test()``` and there is no need to compute the ranks before you run the test as the function does this for you. Using the same data on music sales as before the test could be executed as follows:
 
 ```{r message=FALSE, warning=FALSE}
 wilcox.test(unit_sales ~ group, data = music_sales) #Mann-Whitney U Test
@@ -1096,7 +1096,7 @@ call_center$conversion <- factor(call_center$conversion , levels = c(0:1), label
 call_center$agent <- factor(call_center$agent , levels = c(0:1), labels = c("agent_1", "agent_2")) #convert to factor
 ```
 
-Next, we create a table to check the relative frequncies:
+Next, we create a table to check the relative frequencies:
 
 ```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 rel_freq_table <- as.data.frame(prop.table(table(call_center), 2)) #conditional relative frequencies
@@ -1120,7 +1120,7 @@ contigency_table <- table(call_center)
 mosaicplot(contigency_table, main = "Proportion of conversions by agent")
 ```
 
-Recall that we can use confidence intervals to determine the range of values that the true population parameter will take with a certain level of confidence based on the sample. Similar to the confidence interval for means, we can compute a confidence interval for proportions. The (1-&alpha;)% confidence interval for poportions is approximately 
+Recall that we can use confidence intervals to determine the range of values that the true population parameter will take with a certain level of confidence based on the sample. Similar to the confidence interval for means, we can compute a confidence interval for proportions. The (1-&alpha;)% confidence interval for proportions is approximately 
 
 \begin{equation} 
 \begin{split}
@@ -1129,7 +1129,7 @@ CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
 (\#eq:CIdiff)
 \end{equation} 
 
-where $\sqrt{p(1-p)}$ is the equvalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:
+where $\sqrt{p(1-p)}$ is the equivalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:
 
 ```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 n1 <- nrow(subset(call_center,agent=="agent_1")) #number of observations for agent 1
@@ -1191,7 +1191,7 @@ You can also see that the output from the ```prop.test()``` includes the results
 
 The test showed that the conversion rate for agent 1 was higher by `r round(((prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[1])-(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[2]))*100,0)`%. This difference is significant &chi; (1) = 70, p < .05 (95% CI = [`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[1],2)`,`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[2],2)`]).
 
-To <b>calculate the required sample size</b> when comparing porportions, the ```power.prop.test()``` function can be used. For example, we could ask how large our sample needs to be if we would like to compare two groups with probabilities of 10% and 15%, respectively using the conventional settings for &alpha; and &beta;:
+To <b>calculate the required sample size</b> when comparing proportions, the ```power.prop.test()``` function can be used. For example, we could ask how large our sample needs to be if we would like to compare two groups with probabilities of 10% and 15%, respectively using the conventional settings for &alpha; and &beta;:
 
 ```{r}
 power.prop.test(p1=0.01,p2=0.15,sig.level=0.05,power=0.8)
@@ -1234,7 +1234,7 @@ Under the null hypothesis, the two variables are independent (i.e., there is no 
 (\#eq:Chisq)
 \end{equation} 
 
-where $J$ is the number of cells in the contigency table, $f_o$ are the observed cell frequencies and $f_e$ are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value. 
+where $J$ is the number of cells in the contingency table, $f_o$ are the observed cell frequencies and $f_e$ are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value. 
 
 The observed cell frequencies can easily be seen from the contingency table: 
 
@@ -1351,7 +1351,7 @@ p_val <- 1-pchisq(chisq_cal,df)
 p_val
 ```
 
-The test statistic can also be calculated in R directly on the contigency table with the function ```chisq.test()```.
+The test statistic can also be calculated in R directly on the contingency table with the function ```chisq.test()```.
 
 ```{r message=FALSE, warning=FALSE}
 chisq.test(cont_table, correct = FALSE)

@@ -14,7 +14,7 @@ library(knitr)
 
 # Data visualization
 
-This section dicusses how to produce appropriate graphics to describe our data visually. While R includes tools to build plots, we will be using the ggplot2 package by Hadley Wickham. It has the advantage of being fairly straightforward to learn but being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham.
+This section discusses how to produce appropriate graphics to describe our data visually. While R includes tools to build plots, we will be using the ggplot2 package by Hadley Wickham. It has the advantage of being fairly straightforward to learn but being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham.
 
 ggplot2 is built around the idea of constructing plots by stacking layers on top of one another. Every plot starts with the ```ggplot(data)``` function, after which layers can be added with the "+" symbol. The following figures show the layered structure of creating plots with ggplot. 
 
@@ -59,7 +59,7 @@ table_plot_rel <- plyr::rename(table_plot_rel, c(Var1="overall_knowledge"))
 head(table_plot_rel)
 ```
 
-Once we have our dataset we can begin constructing the plot. As mentioned previously, we start with the ```ggplot()``` function, with the argument specifying the dataset to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, We would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis). 
+Once we have our data set we can begin constructing the plot. As mentioned previously, we start with the ```ggplot()``` function, with the argument specifying the data set to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, We would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis). 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (step 1)"}
 library(ggplot2)
@@ -79,7 +79,7 @@ Note that the same could be achieved using ```geom_bar```. However, by default `
 bar_chart + geom_bar(stat = "identity") 
 ```
 
-Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follow now just serves the purpose of making the plot look nicer by modifying the appearence of the plot. How about some more meaningful axis labels? We can specify the axis labels using the ```ylab()``` and ```xlab()``` functions:
+Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follow now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the ```ylab()``` and ```xlab()``` functions:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (step 3)"}
 bar_chart + geom_col() +
@@ -96,7 +96,7 @@ bar_chart + geom_col() +
   geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) 
 ```
 
-We could go ahead and specify the appearance of every single element of the plot now. However, there are also pre-secified themes that include various formating steps in one singe function. For example ```theme_bw()``` would make the plot appear like this: 
+We could go ahead and specify the appearance of every single element of the plot now. However, there are also pre-specified themes that include various formatting steps in one singe function. For example ```theme_bw()``` would make the plot appear like this: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (step 5)"}
 bar_chart + geom_col() +
@@ -116,7 +116,7 @@ bar_chart + geom_col() +
   theme_minimal()
 ```
 
-These were examples of built-in formatations of ```ggolot()```, where the default is ```theme_classic()```. For even more options, check out the ```ggthemes``` package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example ```theme_economist()``` uses the formating of the journal "The Economist":
+These were examples of built-in formations of ```ggolot()```, where the default is ```theme_classic()```. For even more options, check out the ```ggthemes``` package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example ```theme_economist()``` uses the formatting of the journal "The Economist":
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (options 2)"}
 library(ggthemes)
@@ -128,7 +128,7 @@ bar_chart + geom_col() +
 
 **Summary**
 
-To create a plot with ggplot we give it the appropriate data (in the ```ggplot()``` function), tell it which shape to use (via a function of the geom family), assign variables to the correct axis (by using the the ```aes()``` function) and define the appearence of the plot.
+To create a plot with ggplot we give it the appropriate data (in the ```ggplot()``` function), tell it which shape to use (via a function of the geom family), assign variables to the correct axis (by using the the ```aes()``` function) and define the appearance of the plot.
 
 Now we would like to investigate whether the distribution differs between male and female students. For this purpose we first construct the conditional relative frequency table from the previous chapter again. Recall that the latter gives us the relative frequency within a group (in our case male and female), as compared to the relative frequency within the entire sample. 
 
@@ -160,7 +160,7 @@ ggplot(table_plot_cond_rel, aes(x = overall_knowledge_cat, y = Freq, fill = gend
 
 ### Covariation plots
 
-To visualise the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Let's use a different example. Say, we wanted to investigate the association between prior theoretical and prior practical knowledge in regression analysis. First, we need to make sure that the respective variables are coded as factors. 
+To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Let's use a different example. Say, we wanted to investigate the association between prior theoretical and prior practical knowledge in regression analysis. First, we need to make sure that the respective variables are coded as factors. 
 
 ```{r}
 test_data$Theory_Regression_cat <- factor(test_data$theory_reg, 
@@ -172,7 +172,7 @@ test_data$Practice_Regression_cat <- factor(test_data$pract_reg,
                                             labels = c("Definitely not", "Probably not", "Might or might not", "Probably yes", "Definitely yes"))
 ```
 
-There are multiple ways to visualise such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with ```geom_count()```.
+There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with ```geom_count()```.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Covariation between categorical data (1)"}
 ggplot(data = test_data) + 
@@ -198,7 +198,7 @@ ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regressio
 
 ### Histogram
 
-Histograms can be plotted for continuous data using the ```geom_histogram()``` function. Note that the ```aes()``` function only needs one argument here, since a histogram is a plot of the distribtion of only one variable. As an example, let's consider a data set containig the advertising expenditures and product sales of a company sellin products in two different stores: 
+Histograms can be plotted for continuous data using the ```geom_histogram()``` function. Note that the ```aes()``` function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let's consider a data set containing the advertising expenditures and product sales of a company selling products in two different stores: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Histogram"}
 adv_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat", 
@@ -221,7 +221,7 @@ ggplot(adv_data,aes(sales)) +
 
 ### Boxplot
 
-Another common way to display the disribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom ```geom_boxplot()```. In our case we want to show the difference in distribution between the two stores in our sample, which is why the ```aes()``` function contains both an x and a y variable. 
+Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom ```geom_boxplot()```. In our case we want to show the difference in distribution between the two stores in our sample, which is why the ```aes()``` function contains both an x and a y variable. 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Boxplot by group"}
 ggplot(adv_data,aes(x = store, y = sales)) +
@@ -255,7 +255,7 @@ ggplot(adv_data,aes(x = "", y = sales)) +
 
 ### Plot of means
 
-Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot's layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a ```geom_pointrange()``` layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in ```geom_bar()```, namely ```stat = ```, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. ```geom_bar()``` typically uses the ```count``` stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling ```geom_bar()``` explicitly that we want to use a different stat we can override its behaviour, forcing it to create a bar plot of the means.
+Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot's layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a ```geom_pointrange()``` layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in ```geom_bar()```, namely ```stat = ```, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. ```geom_bar()``` typically uses the ```count``` stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling ```geom_bar()``` explicitly that we want to use a different stat we can override its behavior, forcing it to create a bar plot of the means.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Plot of means"}
 ggplot(adv_data,aes(store, sales)) + 
@@ -268,7 +268,7 @@ ggplot(adv_data,aes(store, sales)) +
 
 ### Scatter plot
 
-The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The ```geom_smooth()``` function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument ```method = "lm"```). The "fill" and "alpha" arguments solely affect appearence, in our case the color and the opacity of the confidence interval, respectively.
+The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The ```geom_smooth()``` function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument ```method = "lm"```). The "fill" and "alpha" arguments solely affect appearance, in our case the color and the opacity of the confidence interval, respectively.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Scatter plot"}
 ggplot(adv_data, aes(advertising, sales)) + 
@@ -296,7 +296,7 @@ It appears from the plot that customers in store 1 are more responsive to advert
 
 #### Combination of scatter plot and histogram
 
-Using the ```ggExtra()``` package, you may also augment the scatterplto with a histogram:
+Using the ```ggExtra()``` package, you may also augment the scatterplot with a histogram:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Scatter plot with histogram"}
 library(ggExtra)
@@ -326,7 +326,7 @@ ctrydata_at$date <- as.integer(ctrydata_at$date)
 str(ctrydata_at)
 ```
 
-As you can see doing this is very straighforward. Given the correct ```aes()``` and geom specification ggplot constructs the correct plot for us.
+As you can see doing this is very straightforward. Given the correct ```aes()``` and geom specification ggplot constructs the correct plot for us.
 
 ```{r message=FALSE, warning=FALSE,echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Line plot"}
 ggplot(ctrydata_at, aes(x = date, y = value)) + 
@@ -351,7 +351,7 @@ ggsave("theory_practice_regression.jpg", height = 5, width = 7.5)
 
 ## Additional options
 
-Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of shazam users from Germany. The data contains the latitude and logitude information where a music track was "shazamed". 
+Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of Shazam users from Germany. The data contains the latitude and longitude information where a music track was "shazamed". 
 
 ```{r message=FALSE, warning=FALSE,echo=TRUE, eval=TRUE}
 library(ggmap)
@@ -362,7 +362,7 @@ geo_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master
 head(geo_data)
 ```
 
-There is a package called "ggmap", which is an augmentation for the ggplot packages. It lets you load maps from different web services (e.g., Google maps) and maps the user location within the coordination system of ggplot. With this information, you can creat interesting plots like heat maps. We won't go into detail here but you may go through the following code on your own if you are interested. 
+There is a package called "ggmap", which is an augmentation for the ggplot packages. It lets you load maps from different web services (e.g., Google maps) and maps the user location within the coordination system of ggplot. With this information, you can create interesting plots like heat maps. We won't go into detail here but you may go through the following code on your own if you are interested. 
 
 ```{r notrun, echo=TRUE, eval=FALSE}
 # Download the base map

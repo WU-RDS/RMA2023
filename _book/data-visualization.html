@@ -383,7 +383,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <p>Once we have our dataset we can begin constructing the plot. As mentioned previously, we start with the <code>ggplot()</code> function, with the argument specifying the dataset to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, We would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-bar_chart &lt;-<span class="st"> </span><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge,<span class="dt">y =</span> Freq))
+bar_chart &lt;-<span class="st"> </span><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge, 
+    <span class="dt">y =</span> Freq))
 bar_chart</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
 <img src="_main_files/figure-html/unnamed-chunk-123-1.png" alt="Bar chart (step 1)" width="672" />
@@ -392,7 +393,7 @@ Figure 9.1: Bar chart (step 1)
 </p>
 </div>
 <p>You can see that the coordinate system is empty. This is because so far, we have told R merely which variables we would like to plot but we haven’t specified which geometric figures (points, bars, lines, etc.) we would like to use. This is done using the <code>geom_xxx</code> function. ggplot includes many different geoms, for a wide range of plots (e.g., geom_line, geom_histogram, geom_boxplot, etc.). A good overview of the various geom functions can be found <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">here</a>. In our case, we would like to use a bar chart for which <code>geom_col</code> is appropriate.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-124"></span>
 <img src="_main_files/figure-html/unnamed-chunk-124-1.png" alt="Bar chart (step 2)" width="672" />
 <p class="caption">
@@ -400,7 +401,7 @@ Figure 9.2: Bar chart (step 2)
 </p>
 </div>
 <p>Note that the same could be achieved using <code>geom_bar</code>. However, by default <code>geom_bar</code> counts the number of observations within each category of a variable. This is not required in our case because we have already used the <code>prop.table()</code> function to compute the relative frequencies. The argument <code>stat = &quot;identity&quot;</code> prevents <code>geom_bar</code> from performing counting operations and uses it “as it is”.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-125"></span>
 <img src="_main_files/figure-html/unnamed-chunk-125-1.png" alt="Bar chart (alternative specification)" width="672" />
 <p class="caption">
@@ -408,9 +409,8 @@ Figure 9.3: Bar chart (alternative specification)
 </p>
 </div>
 <p>Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follow now just serves the purpose of making the plot look nicer by modifying the appearence of the plot. How about some more meaningful axis labels? We can specify the axis labels using the <code>ylab()</code> and <code>xlab()</code> functions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-126"></span>
 <img src="_main_files/figure-html/unnamed-chunk-126-1.png" alt="Bar chart (step 3)" width="672" />
 <p class="caption">
@@ -418,10 +418,9 @@ Figure 9.4: Bar chart (step 3)
 </p>
 </div>
 <p>How about adding some value labels to the bars? This can be done using <code>geom_text()</code>. Note that the <code>sprintf()</code> function is not mandatory and is only added to format the numeric labels here. The function takes two arguments: the first specifies the format wrapped in two <code>%</code> sings. Thus, <code>%.0f</code> means to format the value as a fixed point value with no digits after the decimal point, and <code>%%</code> is a literal that prints a “%” sign. The second argument is simply the numeric value to be used. In this case, the relative frequencies multiplied by 100 to obtain the percentage values. Using the <code>vjust =</code> argument, we can adjust the vertical alignment of the label. In this case, we would like to display the label slightly above the bars.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.2</span>) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
+    Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust =</span> <span class="op">-</span><span class="fl">0.2</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-127"></span>
 <img src="_main_files/figure-html/unnamed-chunk-127-1.png" alt="Bar chart (step 4)" width="672" />
 <p class="caption">
@@ -429,11 +428,9 @@ Figure 9.5: Bar chart (step 4)
 </p>
 </div>
 <p>We could go ahead and specify the appearance of every single element of the plot now. However, there are also pre-secified themes that include various formating steps in one singe function. For example <code>theme_bw()</code> would make the plot appear like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
+    Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust =</span> <span class="op">-</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-128"></span>
 <img src="_main_files/figure-html/unnamed-chunk-128-1.png" alt="Bar chart (step 5)" width="672" />
 <p class="caption">
@@ -441,11 +438,9 @@ Figure 9.6: Bar chart (step 5)
 </p>
 </div>
 <p>and <code>theme_minimal()</code> looks like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
+    Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust =</span> <span class="op">-</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-129"></span>
 <img src="_main_files/figure-html/unnamed-chunk-129-1.png" alt="Bar chart (options 1)" width="672" />
 <p class="caption">
@@ -454,10 +449,8 @@ Figure 9.7: Bar chart (options 1)
 </div>
 <p>These were examples of built-in formatations of <code>ggolot()</code>, where the default is <code>theme_classic()</code>. For even more options, check out the <code>ggthemes</code> package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example <code>theme_economist()</code> uses the formating of the journal “The Economist”:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
-bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_economist</span>()</code></pre></div>
+bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_economist</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-130"></span>
 <img src="_main_files/figure-html/unnamed-chunk-130-1.png" alt="Bar chart (options 2)" width="672" />
 <p class="caption">
@@ -468,12 +461,10 @@ Figure 9.8: Bar chart (options 2)
 <p>To create a plot with ggplot we give it the appropriate data (in the <code>ggplot()</code> function), tell it which shape to use (via a function of the geom family), assign variables to the correct axis (by using the the <code>aes()</code> function) and define the appearence of the plot.</p>
 <p>Now we would like to investigate whether the distribution differs between male and female students. For this purpose we first construct the conditional relative frequency table from the previous chapter again. Recall that the latter gives us the relative frequency within a group (in our case male and female), as compared to the relative frequency within the entire sample.</p>
 <p>We can now take these tables to construct plots grouped by gender. To achieve this we simply need to add the <code>facet_wrap()</code> function, which replicates a plot multiple times, split by a specified grouping factor. Note that the grouping factor has to be supplied in R’s formula notation, hence it is preceded by a “~” symbol.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge_cat, <span class="dt">y =</span> Freq)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gender_cat) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Conditional relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge_cat, 
+    <span class="dt">y =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>gender_cat) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Conditional relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-132"></span>
 <img src="_main_files/figure-html/unnamed-chunk-132-1.png" alt="Grouped bar chart (conditional relative frequencies)" width="672" />
 <p class="caption">
@@ -498,11 +489,9 @@ Figure 9.10: Grouped bar chart (conditional relative frequencies) (2)
 <h3><span class="header-section-number">9.1.2</span> Covariation plots</h3>
 <p>To visualise the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Let’s use a different example. Say, we wanted to investigate the association between prior theoretical and prior practical knowledge in regression analysis. First, we need to make sure that the respective variables are coded as factors.</p>
 <p>There are multiple ways to visualise such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with <code>geom_count()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> test_data) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, <span class="dt">y =</span> Practice_Regression_cat))  <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> test_data) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, 
+    <span class="dt">y =</span> Practice_Regression_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-135"></span>
 <img src="_main_files/figure-html/unnamed-chunk-135-1.png" alt="Covariation between categorical data (1)" width="672" />
 <p class="caption">
@@ -510,13 +499,13 @@ Figure 9.11: Covariation between categorical data (1)
 </p>
 </div>
 <p>Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first to have create a dataframe that contains the absolute frequencies of all combinations of factors. Then we can take this dataframe and supply it to <code>geom_tile()</code>, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the <code>aes()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table_plot_abs_reg &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(test_data[,<span class="kw">c</span>(<span class="st">&quot;Theory_Regression_cat&quot;</span>, <span class="st">&quot;Practice_Regression_cat&quot;</span>)])) <span class="co">#absolute frequencies</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table_plot_abs_reg &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(test_data[, 
+    <span class="kw">c</span>(<span class="st">&quot;Theory_Regression_cat&quot;</span>, <span class="st">&quot;Practice_Regression_cat&quot;</span>)]))  <span class="co">#absolute frequencies</span>
 
-<span class="kw">ggplot</span>(table_plot_abs_reg, <span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, <span class="dt">y =</span> Practice_Regression_cat)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="kw">ggplot</span>(table_plot_abs_reg, <span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, 
+    <span class="dt">y =</span> Practice_Regression_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-136"></span>
 <img src="_main_files/figure-html/unnamed-chunk-136-1.png" alt="Covariation between categorical data (2)" width="672" />
 <p class="caption">
@@ -531,10 +520,10 @@ Figure 9.12: Covariation between categorical data (2)
 <h3><span class="header-section-number">9.2.1</span> Histogram</h3>
 <p>Histograms can be plotted for continuous data using the <code>geom_histogram()</code> function. Note that the <code>aes()</code> function only needs one argument here, since a histogram is a plot of the distribtion of only one variable. As an example, let’s consider a data set containig the advertising expenditures and product sales of a company sellin products in two different stores:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">adv_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat&quot;</span>, 
-                       <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
-                       <span class="dt">header =</span> <span class="ot">TRUE</span>)
+    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
 
-adv_data<span class="op">$</span>store &lt;-<span class="st"> </span><span class="kw">factor</span>(adv_data<span class="op">$</span>store, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;store1&quot;</span>, <span class="st">&quot;store2&quot;</span>))
+adv_data<span class="op">$</span>store &lt;-<span class="st"> </span><span class="kw">factor</span>(adv_data<span class="op">$</span>store, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), 
+    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;store1&quot;</span>, <span class="st">&quot;store2&quot;</span>))
 
 <span class="kw">head</span>(adv_data)</code></pre></div>
 <div data-pagedtable="false">
@@ -543,10 +532,9 @@ adv_data<span class="op">$</span>store &lt;-<span class="st"> </span><span class
   </script>
 </div>
 <p>Now we can create the histogram using <code>geom_histogram()</code>. The argument <code>binwidth</code> specifies the range that each bar spans, <code>col = &quot;black&quot;</code> specifies the border to be black and <code>fill = &quot;darkblue&quot;</code> sets the inner color of the bars to dark blue. The For brevity we have now also started naming the x and y axis with the single function <code>labs()</code>, instead of using the two distinct functions <code>xlab()</code> and <code>ylab()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(sales)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, 
+    <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of sales&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-138"></span>
 <img src="_main_files/figure-html/unnamed-chunk-138-1.png" alt="Histogram" width="672" />
 <p class="caption">
@@ -557,10 +545,8 @@ Figure 9.13: Histogram
 <div id="boxplot" class="section level3">
 <h3><span class="header-section-number">9.2.2</span> Boxplot</h3>
 <p>Another common way to display the disribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom <code>geom_boxplot()</code>. In our case we want to show the difference in distribution between the two stores in our sample, which is why the <code>aes()</code> function contains both an x and a y variable.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-139"></span>
 <img src="_main_files/figure-html/unnamed-chunk-139-1.png" alt="Boxplot by group" width="672" />
 <p class="caption">
@@ -573,11 +559,9 @@ Figure 9.14: Boxplot by group
 <p class="caption">Information contained in a Boxplot</p>
 </div>
 <p>You may also augment the boxplot with the data points using <code>geom_jitter()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">colour=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
 <img src="_main_files/figure-html/unnamed-chunk-140-1.png" alt="Boxplot with augmented data points" width="672" />
 <p class="caption">
@@ -585,10 +569,8 @@ Figure 9.15: Boxplot with augmented data points
 </p>
 </div>
 <p>In case you would like to create the boxplot on the total data (i.e., not by group), just leave the <code>x =</code> argument within the <code>aes()</code> function empty:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> sales)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-141"></span>
 <img src="_main_files/figure-html/unnamed-chunk-141-1.png" alt="Single Boxplot" width="672" />
 <p class="caption">
@@ -599,12 +581,11 @@ Figure 9.16: Single Boxplot
 <div id="plot-of-means" class="section level3">
 <h3><span class="header-section-number">9.2.3</span> Plot of means</h3>
 <p>Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot’s layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a <code>geom_pointrange()</code> layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in <code>geom_bar()</code>, namely <code>stat =</code>, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. <code>geom_bar()</code> typically uses the <code>count</code> stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling <code>geom_bar()</code> explicitly that we want to use a different stat we can override its behaviour, forcing it to create a bar plot of the means.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(store, sales)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of sales&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">100000</span>, <span class="dv">130000</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(store, sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
+    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Average number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">100000</span>, 
+    <span class="dv">130000</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-142"></span>
 <img src="_main_files/figure-html/unnamed-chunk-142-1.png" alt="Plot of means" width="672" />
 <p class="caption">
@@ -615,11 +596,10 @@ Figure 9.17: Plot of means
 <div id="scatter-plot" class="section level3">
 <h3><span class="header-section-number">9.2.4</span> Scatter plot</h3>
 <p>The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The <code>geom_smooth()</code> function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument <code>method = &quot;lm&quot;</code>). The “fill” and “alpha” arguments solely affect appearence, in our case the color and the opacity of the confidence interval, respectively.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, 
+        <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-143"></span>
 <img src="_main_files/figure-html/unnamed-chunk-143-1.png" alt="Scatter plot" width="672" />
 <p class="caption">
@@ -630,11 +610,10 @@ Figure 9.18: Scatter plot
 <div id="grouped-scatter-plot" class="section level4">
 <h4><span class="header-section-number">9.2.4.1</span> Grouped scatter plot</h4>
 <p>It could be that customers from different store respond differently to advertising. We can visually capture such differences with a grouped scatter plot. By adding the argument <code>colour = store</code> to the aesthetic specification, ggplot automatically treats the two stores as distinct groups and plots accordingly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales, <span class="dt">colour =</span> store)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour=</span><span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales, <span class="dt">colour =</span> store)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, 
+        <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-144"></span>
 <img src="_main_files/figure-html/unnamed-chunk-144-1.png" alt="Grouped scatter plot" width="672" />
 <p class="caption">
@@ -647,10 +626,9 @@ Figure 9.19: Grouped scatter plot
 <h4><span class="header-section-number">9.2.4.2</span> Combination of scatter plot and histogram</h4>
 <p>Using the <code>ggExtra()</code> package, you may also augment the scatterplto with a histogram:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggExtra)
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>() 
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, 
+        <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()
 ggExtra<span class="op">::</span><span class="kw">ggMarginal</span>(p, <span class="dt">type =</span> <span class="st">&quot;histogram&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
 <img src="_main_files/figure-html/unnamed-chunk-145-1.png" alt="Scatter plot with histogram" width="672" />
@@ -673,10 +651,9 @@ Figure 9.20: Scatter plot with histogram
 ##  $ date : int  2016 2015 2014 2013 2012 2011 2010 2009 2008 2007 ...
 ##  $ value: num  8736668 8642699 8546356 8479823 8429991 ...</code></pre>
 <p>As you can see doing this is very straighforward. Given the correct <code>aes()</code> and geom specification ggplot constructs the correct plot for us.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-147"></span>
 <img src="_main_files/figure-html/unnamed-chunk-147-1.png" alt="Line plot" width="672" />
 <p class="caption">
@@ -695,8 +672,7 @@ Figure 9.21: Line plot
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggmap)
 <span class="kw">library</span>(dplyr)
 geo_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat&quot;</span>, 
-                       <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
-                       <span class="dt">header =</span> <span class="ot">TRUE</span>)
+    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
 <span class="kw">head</span>(geo_data)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -707,12 +683,12 @@ geo_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Download the base map</span>
 de_map_g_str &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="st">&quot;Germany&quot;</span>, <span class="dt">zoom =</span> <span class="dv">6</span>)
 <span class="co"># Draw the heat map</span>
-<span class="kw">ggmap</span>(de_map_g_str, <span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_density2d</span>(<span class="dt">data =</span> geo_data, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">size =</span> <span class="fl">0.3</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">stat_density2d</span>(<span class="dt">data =</span> geo_data, <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat, <span class="dt">fill =</span> ..level.., <span class="dt">alpha =</span> ..level..),
-                 <span class="dt">size =</span> <span class="fl">0.01</span>, <span class="dt">bins =</span> <span class="dv">16</span>, <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw">ggmap</span>(de_map_g_str, <span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density2d</span>(<span class="dt">data =</span> geo_data, 
+    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">size =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_density2d</span>(<span class="dt">data =</span> geo_data, 
+    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat, <span class="dt">fill =</span> ..level.., <span class="dt">alpha =</span> ..level..), 
+    <span class="dt">size =</span> <span class="fl">0.01</span>, <span class="dt">bins =</span> <span class="dv">16</span>, <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, 
+    <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>), 
+    <span class="dt">guide =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:run1"></span>
 <img src="_main_files/figure-html/run1-1.png" alt="Geo-location data (1)" width="672" />
 <p class="caption">

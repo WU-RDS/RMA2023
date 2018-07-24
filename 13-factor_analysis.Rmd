@@ -21,7 +21,7 @@ This chapter is primarily based on
 In this chapter, we will focus on exploratory factor analysis. 
 
 Generally, factor analysis is a class of procedures used for data reduction or summarization. It is an **interdependence technique**, meaning that there is 
-no distinction between dependent and independent variables and all variables are considered simultaneously. In **exploratory factor analysis**, specific hypotheses about how many factors will emerge, and what items these factors will comprise are not requires (as opposed to confirmatory factor analysis). Principal Components Analysis (PCA) is one of the most frequently used tequniques. The goals are …
+no distinction between dependent and independent variables and all variables are considered simultaneously. In **exploratory factor analysis**, specific hypotheses about how many factors will emerge, and what items these factors will comprise are not requires (as opposed to confirmatory factor analysis). Principal Components Analysis (PCA) is one of the most frequently used techniques. The goals are …
 
 * To identify underlying dimensions, or factors, that explain the correlations among a set of variables
 * To identify a new, smaller set of uncorrelated variables to replace the original set of correlated variables in subsequent multivariate analysis (e.g., regression analysis, t-test, etc.)  
@@ -76,7 +76,7 @@ Factor_i=b_1Variable_{1i} + b_2Variable_{2i} + b_nVariable_{ni}+\epsilon_i
 (\#eq:factor2)
 \end{equation}
 
-where the dependent variable "Factor" refers to the factor score of person *i* on the underlying dimensions. In our case, the initial inspection suggested two underlying factors (i.e., health benefits and social benefits), so that we can construct two equations that describe both factors in terms of the variabels that we have measured:
+where the dependent variable "Factor" refers to the factor score of person *i* on the underlying dimensions. In our case, the initial inspection suggested two underlying factors (i.e., health benefits and social benefits), so that we can construct two equations that describe both factors in terms of the variables that we have measured:
 
 \begin{equation} 
 Health_i=b_1X_{1i} + b_2X_{2i} + b_3X_{3i}+ b_4X_{4i}+ b_5X_{5i}+ b_6X_{6i}+\epsilon_i
@@ -100,7 +100,7 @@ $$\mathbf{A} = \left[\begin{array}
 -0.18 & 0.87
 \end{array}\right]$$
 
-The linear relation between the factors and the factor loadings can also be shown in a graph, where each axis represents a factor and the variabels are placed on the coordinates according to the strength of the relationship between the variable and each factor. The greater the loading of variables on a factor, the more that factor explains relationships between those variables. You can also think of the factor loadings as the correlations between a factor and a variable.
+The linear relation between the factors and the factor loadings can also be shown in a graph, where each axis represents a factor and the variables are placed on the coordinates according to the strength of the relationship between the variable and each factor. The greater the loading of variables on a factor, the more that factor explains relationships between those variables. You can also think of the factor loadings as the correlations between a factor and a variable.
 
 <br>
 
@@ -151,11 +151,11 @@ Social_i=& 0.25*preventCavities_{i} + 0.80*shinyTeeth_{i} + 0.13*strengthenGum_{
 (\#eq:factor6)
 \end{equation}
 
-where the variable names are replaced by the values that were observed for respondent *i* to compute the factor scores for respondent *i*. This means that we have reduced the number of variables from six to two. Note that this is a rather simple approach that is intended to explain the underlying logic. However, that the resulting factor scores will depend on the measurement scales of the variables. If different measurment scales would be used, the resulting factor scores for different factors could not be compared. Thus, R will compute the factor scores using more sophisticated methods as we will see below.  
+where the variable names are replaced by the values that were observed for respondent *i* to compute the factor scores for respondent *i*. This means that we have reduced the number of variables from six to two. Note that this is a rather simple approach that is intended to explain the underlying logic. However, that the resulting factor scores will depend on the measurement scales of the variables. If different measurement scales would be used, the resulting factor scores for different factors could not be compared. Thus, R will compute the factor scores using more sophisticated methods as we will see below.  
 
 ## Steps in factor analysis
 
-Now that we have a broad understanding of how factor analysis works, let's use another example to go through the process of deriving factors step by step. In this section, we will use the R anxiety quesitonnaire from the book by Andy Field et al.. The questionnaire is intended to measure the various aspects of student's anxiety towards learning R. It includes 23 items for which respondents are asked to indicate on a five-point Likert scale to what extent they agree with the respective statements. The questionnaire is shown in the following figure:     
+Now that we have a broad understanding of how factor analysis works, let's use another example to go through the process of deriving factors step by step. In this section, we will use the R anxiety questionnaire from the book by Andy Field et al.. The questionnaire is intended to measure the various aspects of student's anxiety towards learning R. It includes 23 items for which respondents are asked to indicate on a five-point Likert scale to what extent they agree with the respective statements. The questionnaire is shown in the following figure:     
 
 ![The R anxiety questionnaire (source: Field, A. et al. (2012): Discovering Statistics Using R, p. 768)](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/ra_anx_quest.JPG)
 
@@ -177,7 +177,7 @@ raq_matrix <- cor(raq_data)
 round(raq_matrix,3)
 ```
 
-If the variables measure the same construct, we would expect to see a certain degree of correlation between the variables. Even if the variabels turn out to measure different dimensions of the same underlying contruct, we would still expect to see some degree of correlation. So the first problem that could occur is that the **correlations are not high enough**. A first approach would be to scan the correlation matrix for correlations lower than about 0.3 and identify variables that have many correlations below this threshold. If your data set contains many variables, this task can be quite tedious. To make the task a little easier, you could proceed as follows. 
+If the variables measure the same construct, we would expect to see a certain degree of correlation between the variables. Even if the variables turn out to measure different dimensions of the same underlying construct, we would still expect to see some degree of correlation. So the first problem that could occur is that the **correlations are not high enough**. A first approach would be to scan the correlation matrix for correlations lower than about 0.3 and identify variables that have many correlations below this threshold. If your data set contains many variables, this task can be quite tedious. To make the task a little easier, you could proceed as follows. 
 
 Create a dataframe from the correlation matrix and set the diagonal elements to missing since these are always 1:
 
@@ -186,7 +186,7 @@ correlations <- as.data.frame(raq_matrix)
 diag(correlations) <- NA
 ```
 
-Now we can use the ```apply()``` function to count the number of correlations for each variable that are below a certain threshold (say, 0.3). The ```apply()``` function is very useful as it lets you apply function by the rows or columns in your dataframe. In the following example ```abs(correlations) < 0.3``` returns a logical value for the correlation matrix that returns ```TRUE``` if the statement is true. The second argument ```1``` means that the function should be applied to the rows (```2``` would apply it to the columns). The third argument states the function that should be applied. In our case, we would like to count the number of absolute correlations below 0.3 so we apply the ```sum``` function, which sums the number of ```TRUE``` occurences by row. The final argument ```na.rm = TRUE``` simply tells R to neglect the missing values that we have created for the diagonals of the matrix.   
+Now we can use the ```apply()``` function to count the number of correlations for each variable that are below a certain threshold (say, 0.3). The ```apply()``` function is very useful as it lets you apply function by the rows or columns in your dataframe. In the following example ```abs(correlations) < 0.3``` returns a logical value for the correlation matrix that returns ```TRUE``` if the statement is true. The second argument ```1``` means that the function should be applied to the rows (```2``` would apply it to the columns). The third argument states the function that should be applied. In our case, we would like to count the number of absolute correlations below 0.3 so we apply the ```sum``` function, which sums the number of ```TRUE``` occurrences by row. The final argument ```na.rm = TRUE``` simply tells R to neglect the missing values that we have created for the diagonals of the matrix.   
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 apply(abs(correlations) < 0.3, 1, sum, na.rm = TRUE)
@@ -204,7 +204,7 @@ Another way to make the correlations more salient is to plot the correlation mat
 corPlot(correlations,numbers=TRUE,upper=FALSE,diag=FALSE,main="Correlations between variables")
 ```
 
-You will, however, notice that this is a rather subjective approach. The **Bartlett's test** is a statistical test that can be used to test whether all the off-diagonal elements in the population correlation matrix are zero (i.e., whether the populaiton correlation matrix resembles an identify matrix). Thus, it tests whether the correlations are overall too small. If the matrix is an identify matrix, it means that all variables are independent. Thus, a significant test statistic (i.e., p < 0.05) indicates that there is some relationship between variables. The test can be implemented using the ```cortest.bartlett()``` function from the ```psych``` package:
+You will, however, notice that this is a rather subjective approach. The **Bartlett's test** is a statistical test that can be used to test whether all the off-diagonal elements in the population correlation matrix are zero (i.e., whether the population correlation matrix resembles an identify matrix). Thus, it tests whether the correlations are overall too small. If the matrix is an identify matrix, it means that all variables are independent. Thus, a significant test statistic (i.e., p < 0.05) indicates that there is some relationship between variables. The test can be implemented using the ```cortest.bartlett()``` function from the ```psych``` package:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 library(psych)
@@ -228,14 +228,14 @@ det(raq_matrix) > 0.00001
 
 As you can see, the determinant is larger than the threshold, indicating that the overall correlation between variables is not too strong. 
 
-Finnally, you should test if the correlation pattern in the matrix is appropriate for factor analysis using the Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy. This statistic is a measure of the proportion of variance among variables that might be common variance. 
+Finally, you should test if the correlation pattern in the matrix is appropriate for factor analysis using the Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy. This statistic is a measure of the proportion of variance among variables that might be common variance. 
 
 \begin{equation} 
 MSA_j=\frac{\sum_{k\ne j}^{}{r^2_{jk}}}{\sum_{k\ne j}^{}{r^2_{jk}}+\sum_{k\ne j}^{}{p^2_{jk}}}
 (\#eq:MSA)
 \end{equation}
 
-where $r_{jk}$ is the correlation between two variabels of interest and $p_{jk}$ is their partial correlation. The partial correlation measures the degree of association between the two variables, when the effect of the remaining variables is controlled for. It can takes values between 0 (bad) and 1 (good), where a value of 0 indicates that the sum of partial correlations is large relative to the sum of correlations. If the remaining correlation between two variables remains high if you control for all the other variables, this provides an indication that the correlation is fairly concentrated and on a subset of the variables and factor analysis is likely to be inappropriate. In consrast, a value close to 1 means that the sum of the partial correlations is fairly is low, indicating a more compact pattern of correlations between a larger set of variables. Values should at least exceed 0.50, with the thresholds:
+where $r_{jk}$ is the correlation between two variables of interest and $p_{jk}$ is their partial correlation. The partial correlation measures the degree of association between the two variables, when the effect of the remaining variables is controlled for. It can takes values between 0 (bad) and 1 (good), where a value of 0 indicates that the sum of partial correlations is large relative to the sum of correlations. If the remaining correlation between two variables remains high if you control for all the other variables, this provides an indication that the correlation is fairly concentrated and on a subset of the variables and factor analysis is likely to be inappropriate. In contrast, a value close to 1 means that the sum of the partial correlations is fairly is low, indicating a more compact pattern of correlations between a larger set of variables. Values should at least exceed 0.50, with the thresholds:
 
 *  <.50 = unacceptable
 * \>.50 = miserable
@@ -279,7 +279,7 @@ plot(pc1$values, type="b")
 abline(h=1, lty=2)
 ```
 
-The dashed line is simply a visualisation of the rule that we will retain factors with Eigenvalues > 1 (suggesting four factors). Another criterion based on this plot would be to find the point where the curve flattens (point of inflexion). If the largest few eigenvalues in the covariance matrix dominate in magnitude, then the scree plot will exhibit an “elbow”. From that point onwards, the incremental gain in explained variance is rather low. Also according to this criterion, we would extract four factors. Taken together, the results suggest that we should extract four factors.   
+The dashed line is simply a visualization of the rule that we will retain factors with Eigenvalues > 1 (suggesting four factors). Another criterion based on this plot would be to find the point where the curve flattens (point of inflection). If the largest few eigenvalues in the covariance matrix dominate in magnitude, then the scree plot will exhibit an “elbow”. From that point onwards, the incremental gain in explained variance is rather low. Also according to this criterion, we would extract four factors. Taken together, the results suggest that we should extract four factors.   
 
 Now that we know how many components we want to extract, we can rerun the analysis, specifying that number:
 
@@ -288,7 +288,7 @@ pc2 <- principal(raq_data, nfactors = 4, rotate = "none")
 pc2
 ```
 
-Now that the output is less complex, we can inspect the remaining statistics. The first part of the output is the **factor matrix**, which contains the factor loadings of all the variables on the four extracted factors (i.e., PC1, PC2, PC3, PC4). As we have said before, the **factor loadings** are the correlations between the variables and the factors. The factor matrix also contains the columsn "h2" and "u2". "h2" refers to the **communality**, which is the proportion of variance a variable shares with all the other variables being considered. This is also the proportion of variance explained by the common factors. In contrast, "u2" refers to the unique variance, which is the proportion of the variance that is unique to a particular variable. In PCA, we are primarily interested in the common variance. When the communality is very low (say <.30), a variable is “quite unique” and  should be removed, as it is definitely measuring “something else”. In our example, all comunalities (i.e., h2) are above 0.3 so that we retain all variables.
+Now that the output is less complex, we can inspect the remaining statistics. The first part of the output is the **factor matrix**, which contains the factor loadings of all the variables on the four extracted factors (i.e., PC1, PC2, PC3, PC4). As we have said before, the **factor loadings** are the correlations between the variables and the factors. The factor matrix also contains the columns "h2" and "u2". "h2" refers to the **communality**, which is the proportion of variance a variable shares with all the other variables being considered. This is also the proportion of variance explained by the common factors. In contrast, "u2" refers to the unique variance, which is the proportion of the variance that is unique to a particular variable. In PCA, we are primarily interested in the common variance. When the communality is very low (say <.30), a variable is “quite unique” and  should be removed, as it is definitely measuring “something else”. In our example, all communalities (i.e., h2) are above 0.3 so that we retain all variables.
 
 Note that there is a difference between PCA and common factor analysis. PCA focuses on the variance and aims to reproduce the total variable variance. This means that the components reflect both common and unique variance of the variables. Factor analysis, in contrast, focuses on the correlation and aims to reproduce the correlations among variables. Here, the factors only represent the common variance that variable share and do not include the unique variance. In other words, while factor analysis focuses on explaining the off-diagonal terms in the correlation matrix (i.e., shared co-variance), PCA focuses on explaining the diagonal terms (i.e., the variances). However, although PCA aims to reproduce the on-diagonal terms in the correlation matrix, it also tends to fit the off-diagonal correlations quite well. Hence, the results are often comparable. See also <a href="https://en.wikipedia.org/wiki/Principal_component_analysis#Relation_between_PCA_and_factor_analysis" target="_blank">here</a>.
 
@@ -306,9 +306,9 @@ reproduced_matrix <- factor.model(pc2$loadings)
 round(reproduced_matrix,3)
 ```
 
-You can see that the reproduced correlation between the first and second variable is -0.112. From the correlation table from the beginning we know, however, that the observed correlation was -0.099. Hence, the difference between the observed and reproduced correlation is: (-0.099)-(-0.112) = 0.013, which correspondes to the residual of this variable pair in the residual matrix. Note that the diagonal elements in the reproduced matrix correspond to the communalities in the model summary above (i.e., "h2"). 
+You can see that the reproduced correlation between the first and second variable is -0.112. From the correlation table from the beginning we know, however, that the observed correlation was -0.099. Hence, the difference between the observed and reproduced correlation is: (-0.099)-(-0.112) = 0.013, which corresponds to the residual of this variable pair in the residual matrix. Note that the diagonal elements in the reproduced matrix correspond to the communalities in the model summary above (i.e., "h2"). 
 
-A measure of fit can now be computed based on the size of the residuals. In the worst case, the residuals would be as large as the correlations in the original matrix, which would be the case if we extracted no factors at all. A measure of fit could therefore be the sum of the squared residuals divided by the sum of the squared correlations. We square the residuals to account for positive and negative deviaitons. **Values >0.90 are considered indicators of good fit.** From the output above, you can see that: "Fit based upon off diagonal values = 0.96". Thus, we conclude that the model fit is sufficient. 
+A measure of fit can now be computed based on the size of the residuals. In the worst case, the residuals would be as large as the correlations in the original matrix, which would be the case if we extracted no factors at all. A measure of fit could therefore be the sum of the squared residuals divided by the sum of the squared correlations. We square the residuals to account for positive and negative deviations. **Values >0.90 are considered indicators of good fit.** From the output above, you can see that: "Fit based upon off diagonal values = 0.96". Thus, we conclude that the model fit is sufficient. 
 
 You could also manually compute this statistic by summing over the squared residuals and correlations, take their ratio and subtract it from one (note that we use the ```upper.tri()``` function to use the upper triangle of the matrix only; this has the effect of discarding the diagonal elements and the elements below the diagonal).  
 
@@ -318,7 +318,7 @@ ssc <- (sum(raq_matrix[upper.tri((raq_matrix))]^2)) #sum of squared correlations
 1-(ssr/ssc) #model fit
 ```
 
-In a next step, we check the size of the residuals. **If fewer residuals than 50% have absolute values greater than 0.05 the model is a good fit.** This can be tested using the following code. We first convert the residuals to a matrix and select the upper triagular again to avoid duplicates. Finally, we count all occurences where the absolute value is larger than 0.05 and divide it by the number of total observations to get the proportion.
+In a next step, we check the size of the residuals. **If fewer residuals than 50% have absolute values greater than 0.05 the model is a good fit.** This can be tested using the following code. We first convert the residuals to a matrix and select the upper triangular again to avoid duplicates. Finally, we count all occurrences where the absolute value is larger than 0.05 and divide it by the number of total observations to get the proportion.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 residuals <- as.matrix(residuals[upper.tri((residuals))])
@@ -391,7 +391,7 @@ The component correlations indicate that the factors might indeed be correlated,
 
 ### Creating new variables
 
-Once we have decided on the final model, we can calculate the new variables as the weighted sum of the variables that form a factor. This means, we estimate a person's score on a factor based on their scores on the items that consitute the measurement scales. These scores are also referred to as the **factor scores**. Because we have used the ```scores = TRUE``` argument in the previous command, the factor scores have already been created for us. By default, R uses the regression method to compute the factor scores, which controls for differences in the units of measurement. You can access the residuals as follows: 
+Once we have decided on the final model, we can calculate the new variables as the weighted sum of the variables that form a factor. This means, we estimate a person's score on a factor based on their scores on the items that constitute the measurement scales. These scores are also referred to as the **factor scores**. Because we have used the ```scores = TRUE``` argument in the previous command, the factor scores have already been created for us. By default, R uses the regression method to compute the factor scores, which controls for differences in the units of measurement. You can access the residuals as follows: 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 head(pc4$scores)
@@ -455,7 +455,7 @@ The four variables "multi_1" - "multi_4" represent the multi-item scales. We can
 psych::alpha(test_data[,c("multi_1","multi_2","multi_3","multi_4")], keys=c(1,1,1,-1))
 ```
 
-Since the scale exhibits a sufficient degree of reliability, we can compute the new variable as the average score on these items. However, before doing this, we need to recode the reverse coded variable in the appropriate way. It is easy to recode the reverse coded item to be in line with the remaing items on the dimension using the ```recode()``` function from the ```car``` package. 
+Since the scale exhibits a sufficient degree of reliability, we can compute the new variable as the average score on these items. However, before doing this, we need to recode the reverse coded variable in the appropriate way. It is easy to recode the reverse coded item to be in line with the remaining items on the dimension using the ```recode()``` function from the ```car``` package. 
 
 ```{r, warning=FALSE, message=FALSE}
 library(car)
