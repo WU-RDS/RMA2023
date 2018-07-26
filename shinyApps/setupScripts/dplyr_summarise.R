@@ -1,0 +1,35 @@
+library(dplyr)
+
+tutorial_options(exercise.timelimit = 10, exercise.eval = TRUE)
+
+#Numeric:
+top10_track_streams <- c(163608, 126687, 120480, 110022, 108630, 95639, 94690, 89011, 87869, 85599) 
+
+#Character:
+top10_artist_names <- c("Axwell /\\ Ingrosso", "Imagine Dragons", "J Balvin", "Robin Schulz", "Jonas Blue", "David Guetta", "French Montana", "Calvin Harris", "Liam Payne", "Lauv") # Characters have to be put in ""
+
+#Factor variable with two categories:
+top10_track_explicit <- c(0,0,0,0,0,0,1,1,0,0)
+top10_track_explicit <- factor(top10_track_explicit, 
+                               levels = c(0:1), 
+                               labels = c("not explicit", "explicit"))
+
+#Factor variable with more than two categories:
+top10_artist_genre <- c("Dance","Alternative","Latino","Dance","Dance","Dance","Hip-Hop/Rap","Dance","Pop","Pop")
+top10_artist_genre <- as.factor(top10_artist_genre)
+
+#Date:
+top_10_track_release_date <- as.Date(c("2017-05-24", "2017-06-23", "2017-07-03", "2017-06-30", "2017-05-05", "2017-06-09", "2017-07-14", "2017-06-16", "2017-05-18", "2017-05-19"))
+
+#Logical
+top10_track_explicit_1 <- c(FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE)  
+
+music_data <- data.frame(top10_track_streams, 
+                         top10_artist_names, 
+                         top10_track_explicit, 
+                         top10_artist_genre, 
+                         top_10_track_release_date, 
+                         top10_track_explicit_1,
+                         stringsAsFactors = FALSE)
+set.seed(123)
+extra_column <- rnorm(nrow(music_data))
