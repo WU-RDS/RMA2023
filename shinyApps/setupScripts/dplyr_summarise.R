@@ -1,6 +1,5 @@
 library(dplyr)
 
-tutorial_options(exercise.timelimit = 10, exercise.eval = TRUE)
 
 #Numeric:
 top10_track_streams <- c(163608, 126687, 120480, 110022, 108630, 95639, 94690, 89011, 87869, 85599) 
@@ -33,3 +32,5 @@ music_data <- data.frame(top10_track_streams,
                          stringsAsFactors = FALSE)
 set.seed(123)
 extra_column <- rnorm(nrow(music_data))
+setwd('/home/daniel/Documents/imsm/mrda/shinyApps/setupScripts')
+save.image(file = "learn.RData")

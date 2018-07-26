@@ -177,12 +177,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="random-variables.html"><a href="random-variables.html"><i class="fa fa-check"></i><b>6</b> Random Variables</a><ul>
-<li class="chapter" data-level="6.0.1" data-path="random-variables.html"><a href="random-variables.html#why-random-variables"><i class="fa fa-check"></i><b>6.0.1</b> Why Random Variables?</a></li>
-<li class="chapter" data-level="6.0.2" data-path="random-variables.html"><a href="random-variables.html#tossing-coins"><i class="fa fa-check"></i><b>6.0.2</b> Tossing coins</a></li>
-<li class="chapter" data-level="6.0.3" data-path="random-variables.html"><a href="random-variables.html#sum-of-two-dice"><i class="fa fa-check"></i><b>6.0.3</b> Sum of two dice</a></li>
-<li class="chapter" data-level="6.0.4" data-path="random-variables.html"><a href="random-variables.html#discrete-random-variables"><i class="fa fa-check"></i><b>6.0.4</b> Discrete Random Variables</a></li>
-<li class="chapter" data-level="6.0.5" data-path="random-variables.html"><a href="random-variables.html#continuous-case"><i class="fa fa-check"></i><b>6.0.5</b> Continuous Case</a></li>
-<li class="chapter" data-level="6.0.6" data-path="random-variables.html"><a href="random-variables.html#definitions"><i class="fa fa-check"></i><b>6.0.6</b> Definitions</a></li>
+<li class="chapter" data-level="6.1" data-path="random-variables.html"><a href="random-variables.html#why-random-variables"><i class="fa fa-check"></i><b>6.1</b> Why Random Variables?</a></li>
+<li class="chapter" data-level="6.2" data-path="random-variables.html"><a href="random-variables.html#tossing-coins"><i class="fa fa-check"></i><b>6.2</b> Tossing coins</a></li>
+<li class="chapter" data-level="6.3" data-path="random-variables.html"><a href="random-variables.html#sum-of-two-dice"><i class="fa fa-check"></i><b>6.3</b> Sum of two dice</a></li>
+<li class="chapter" data-level="6.4" data-path="random-variables.html"><a href="random-variables.html#discrete-random-variables"><i class="fa fa-check"></i><b>6.4</b> Discrete Random Variables</a></li>
+<li class="chapter" data-level="6.5" data-path="random-variables.html"><a href="random-variables.html#continuous-case"><i class="fa fa-check"></i><b>6.5</b> Continuous Case</a></li>
+<li class="chapter" data-level="6.6" data-path="random-variables.html"><a href="random-variables.html#definitions"><i class="fa fa-check"></i><b>6.6</b> Definitions</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="probability-distributions.html"><a href="probability-distributions.html"><i class="fa fa-check"></i><b>7</b> Probability Distributions</a><ul>
 <li class="chapter" data-level="7.1" data-path="probability-distributions.html"><a href="probability-distributions.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
@@ -362,10 +362,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In the previous chapter, we saw how we may use the keyboard to input data in R. In the following sections, we will learn how to import data from text files and other statistical software packages.</p>
 <div id="getting-data-for-this-course" class="section level2">
 <h2><span class="header-section-number">4.1</span> Getting data for this course</h2>
-<p>Most of the datasets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). There are two ways for you to obtain access to the datasets:</p>
+<p>Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). There are two ways for you to obtain access to the data sets:</p>
 <div id="directly-import-datasets-from-github-recommended" class="section level3">
 <h3><span class="header-section-number">4.1.1</span> Directly import datasets from GitHub (recommended)</h3>
-<p>All datasets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the <code>read.table()</code> function. The <code>header=TRUE</code> argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The <code>sep=&quot;\t&quot;</code>-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.</p>
+<p>All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the <code>read.table()</code> function. The <code>header=TRUE</code> argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The <code>sep=&quot;\t&quot;</code>-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat&quot;</span>, 
                         <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
                         <span class="dt">header =</span> <span class="ot">TRUE</span>)</code></pre></div>
@@ -405,7 +405,7 @@ test_data_spss &lt;-<span class="st"> </span><span class="kw">read_sav</span>(<s
 <h2><span class="header-section-number">4.4</span> Import data from the Web</h2>
 <div id="scraping-data-from-websites" class="section level3">
 <h3><span class="header-section-number">4.4.1</span> Scraping data from websites</h3>
-<p>Sometimes you may come accross interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the <code>rvest</code> package. Let’s assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is <code>&lt;table&gt;</code>. So let’s read the entire website using <code>read_html(url)</code> and filter all tables using <code>read_html(html_nodes(...,&quot;table&quot;))</code>.</p>
+<p>Sometimes you may come across interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the <code>rvest</code> package. Let’s assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is <code>&lt;table&gt;</code>. So let’s read the entire website using <code>read_html(url)</code> and filter all tables using <code>read_html(html_nodes(...,&quot;table&quot;))</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
 url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population&quot;</span>
 population &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) 
@@ -420,7 +420,7 @@ population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(popu
 <span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,393,110,000","4":"July 24, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1,334,740,000","4":"July 24, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327,533,000","4":"July 24, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265,015,300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212,346,000","4":"July 24, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209,355,000","4":"July 24, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,393,150,000","4":"July 26, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1,334,820,000","4":"July 26, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327,544,000","4":"July 26, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265,015,300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212,368,000","4":"July 26, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209,363,000","4":"July 26, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>You can see that population is read as a character variable because of the commas.</p>
@@ -432,7 +432,7 @@ population<span class="op">$</span>Population &lt;-<span class="st"> </span><spa
 <span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1393110000","4":"July 24, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1334740000","4":"July 24, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327533000","4":"July 24, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265015300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212346000","4":"July 24, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209355000","4":"July 24, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1393150000","4":"July 26, 2018","5":"18.2%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1334820000","4":"July 26, 2018","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"327544000","4":"July 26, 2018","5":"4.29%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"265015300","4":"July 1, 2018","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Pakistan","3":"212368000","4":"July 26, 2018","5":"2.78%","6":"Official population clock"},{"1":"6","2":"Brazil","3":"209363000","4":"July 26, 2018","5":"2.74%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now the variable is of type “numeric” and could be used for analysis.</p>
@@ -448,7 +448,7 @@ population<span class="op">$</span>Population &lt;-<span class="st"> </span><spa
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/API.JPG" alt="Obtaining data from APIs" />
 <p class="caption">Obtaining data from APIs</p>
 </div>
-<p>The process of obtainig data from APIs consists of the following steps:</p>
+<p>The process of obtaining data from APIs consists of the following steps:</p>
 <ul>
 <li>Identify an API that has enough data to be relevant and reliable (e.g., <a href="http://www.programmableweb.com:" target="_blank">www.programmableweb.com</a> has &gt;12,000 open web APIs in 63 categories).</li>
 <li>Request information by calling (or, more technically speaking, creating a request to) the API (e.g., R, python, php or JavaScript).</li>
@@ -504,7 +504,6 @@ success =<span class="st"> </span><span class="ot">FALSE</span>
 <span class="cf">if</span>(success <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){
   <span class="kw">warning</span>(<span class="st">&quot;Google Trends has exited unsuccessfully&quot;</span>)
 }</code></pre></div>
-<pre><code>## Warning: Google Trends has exited unsuccessfully</code></pre>
 
 </div>
 </div>

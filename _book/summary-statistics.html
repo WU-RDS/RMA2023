@@ -177,12 +177,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="random-variables.html"><a href="random-variables.html"><i class="fa fa-check"></i><b>6</b> Random Variables</a><ul>
-<li class="chapter" data-level="6.0.1" data-path="random-variables.html"><a href="random-variables.html#why-random-variables"><i class="fa fa-check"></i><b>6.0.1</b> Why Random Variables?</a></li>
-<li class="chapter" data-level="6.0.2" data-path="random-variables.html"><a href="random-variables.html#tossing-coins"><i class="fa fa-check"></i><b>6.0.2</b> Tossing coins</a></li>
-<li class="chapter" data-level="6.0.3" data-path="random-variables.html"><a href="random-variables.html#sum-of-two-dice"><i class="fa fa-check"></i><b>6.0.3</b> Sum of two dice</a></li>
-<li class="chapter" data-level="6.0.4" data-path="random-variables.html"><a href="random-variables.html#discrete-random-variables"><i class="fa fa-check"></i><b>6.0.4</b> Discrete Random Variables</a></li>
-<li class="chapter" data-level="6.0.5" data-path="random-variables.html"><a href="random-variables.html#continuous-case"><i class="fa fa-check"></i><b>6.0.5</b> Continuous Case</a></li>
-<li class="chapter" data-level="6.0.6" data-path="random-variables.html"><a href="random-variables.html#definitions"><i class="fa fa-check"></i><b>6.0.6</b> Definitions</a></li>
+<li class="chapter" data-level="6.1" data-path="random-variables.html"><a href="random-variables.html#why-random-variables"><i class="fa fa-check"></i><b>6.1</b> Why Random Variables?</a></li>
+<li class="chapter" data-level="6.2" data-path="random-variables.html"><a href="random-variables.html#tossing-coins"><i class="fa fa-check"></i><b>6.2</b> Tossing coins</a></li>
+<li class="chapter" data-level="6.3" data-path="random-variables.html"><a href="random-variables.html#sum-of-two-dice"><i class="fa fa-check"></i><b>6.3</b> Sum of two dice</a></li>
+<li class="chapter" data-level="6.4" data-path="random-variables.html"><a href="random-variables.html#discrete-random-variables"><i class="fa fa-check"></i><b>6.4</b> Discrete Random Variables</a></li>
+<li class="chapter" data-level="6.5" data-path="random-variables.html"><a href="random-variables.html#continuous-case"><i class="fa fa-check"></i><b>6.5</b> Continuous Case</a></li>
+<li class="chapter" data-level="6.6" data-path="random-variables.html"><a href="random-variables.html#definitions"><i class="fa fa-check"></i><b>6.6</b> Definitions</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="probability-distributions.html"><a href="probability-distributions.html"><i class="fa fa-check"></i><b>7</b> Probability Distributions</a><ul>
 <li class="chapter" data-level="7.1" data-path="probability-distributions.html"><a href="probability-distributions.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
@@ -354,7 +354,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="summary-statistics" class="section level1">
 <h1><span class="header-section-number">8</span> Summary statistics</h1>
-<p>This section dicusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible. <br> <br></p>
+<p>This section discusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible. <br> <br></p>
 <table>
 <thead>
 <tr class="header">
@@ -415,7 +415,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>“gender”: the gender of the students (1 = male, 2 = female)</li>
 </ul>
 <p>In a first step, we convert the variables to factor variables using the <code>factor()</code> function to assign appropriate labels according to the scale points:</p>
-<p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurences of the categories associated with the prior knowledge and gender variables separately:</p>
+<p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:</p>
 <pre><code>## 
 ##         none        basic intermediate     advanced   proficient 
 ##           10           32            9            4            0</code></pre>
@@ -547,7 +547,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="creating-subsets" class="section level3">
 <h3><span class="header-section-number">8.2.2</span> Creating subsets</h3>
-<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is 2.9 days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. You could easily create a subset of the original data, which you would then use for estimation using the <code>subset()</code> function. For example, the follwing code creates a subset that excludes all cases with a duration of more than 900 seconds (15 minutes):</p>
+<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is 2.9 days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. You could easily create a subset of the original data, which you would then use for estimation using the <code>subset()</code> function. For example, the following code creates a subset that excludes all cases with a duration of more than 900 seconds (15 minutes):</p>
 <pre><code>##             vars  n   mean     sd median trimmed   mad min max range skew
 ## duration       1 51 266.51 148.48    230  239.02 88.96 107 785   678 1.70
 ## overall_100    2 51  38.53  20.40     40   38.29 29.65   0  80    80 0.11
@@ -564,12 +564,12 @@ CI = \overline{X}\pm(z*\frac{s}{\sqrt{n}})
 \end{split}
 \tag{8.1}
 \end{equation}\]</span>
-<p>, where <span class="math inline">\(\overline{x}\)</span> is the sample mean, <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span> is the standard error of the mean, and z is the critical z-score for a given level of confidence. If the interval is small, the sample must be very close to the population. Conversely, when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. We can obtain the critical z-score for the 95% CI using the <code>qnorm()</code>-function. Using <code>nrow(data_set)</code>, we can obtain the number ob rows (i.e., observations) in a dataset.</p>
+<p>, where <span class="math inline">\(\overline{x}\)</span> is the sample mean, <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span> is the standard error of the mean, and z is the critical z-score for a given level of confidence. If the interval is small, the sample must be very close to the population. Conversely, when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. We can obtain the critical z-score for the 95% CI using the <code>qnorm()</code>-function. Using <code>nrow(data_set)</code>, we can obtain the number ob rows (i.e., observations) in a data set.</p>
 <pre><code>## [1] 39.18182</code></pre>
 <pre><code>## [1] 33.78262</code></pre>
 <pre><code>## [1] 44.58102</code></pre>
-<p>Given our sample size and the variability in our data, we are 95% confident that the true level of overall statstical knowledge is between 34 and 45!</p>
-<p>Note that the CI is also implicitely included in the summary statistics created by the <code>stat.desc()</code> function.</p>
+<p>Given our sample size and the variability in our data, we are 95% confident that the true level of overall statistical knowledge is between 34 and 45!</p>
+<p>Note that the CI is also implicitly included in the summary statistics created by the <code>stat.desc()</code> function.</p>
 <pre><code>##     mean 
 ## 33.65889</code></pre>
 <pre><code>##     mean 
