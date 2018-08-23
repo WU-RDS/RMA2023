@@ -390,7 +390,7 @@ Var(X) = \mathbb{E}\left[\left(X - \mathbb{E}[X] \right)^2 \right] = \mathbb{E}[
 X \sim binomial(n, p)
 \]</span></p>
 <p>where <span class="math inline">\(n\)</span> is the number of coins and <span class="math inline">\(p\)</span> is the probability of observing heads. Here <span class="math inline">\(n,\ p\)</span> are the <em>parameters</em> of the <em>binomial</em> distribution.</p>
-<iframe src="http://localhost:3838/Dist_Binomial/" style="border: none; width: 800px; height: 400px">
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_binom/" style="border: none; width: 800px; height: 400px">
 </iframe>
 <p>The binomial distribution can be used whenever you conduct an experiment composed of multiple trials where there are two or more possible outcomes, one of which is seen as “success”. The idea is based on the concept of <a href="https://en.wikipedia.org/wiki/Bernoulli_trial">Bernoulli trials</a>, which are basically a binomial distribution with <span class="math inline">\(n=1\)</span>. A binomial distribution can also be used for dice, if we are interested in the number of dice that show a particular value, say <span class="math inline">\(1\)</span>.</p>
 <ol style="list-style-type: decimal">
@@ -441,7 +441,7 @@ n * (p - p^2) = np - np^2 = np * (1-p) = Var(X_i)
 <li><code>qbinom()</code>: Returns the <code>q</code>uantile (See <a href="https://en.wikipedia.org/wiki/Quantile_function">Quantile Function</a>) of a specified probability value. This can be understood as the inverse of the <code>pbinom()</code> function.</li>
 <li><code>dbinom()</code>: Returns the value of the probability mass function, evaluated at the specified value (in case of a continuous distribution, it evaluates the probability <code>d</code>ensity function).</li>
 </ul>
-<iframe src="http://localhost:3838/learnBinomial/" style="border: none; width: 800px; height: 640px">
+<iframe width="100%" height="600" src="https://rdrr.io/snippets/embed/?code=print(%22Random%20sample%20with%2010%20observations%3A%22)%0Arbinom(10%2C%202%2C%20%20prob%20%3D%200.8)%20%0Aprint(%22Quantile%20function%3A%22)%0Aqbinom(0.37%2C%202%2C%20prob%20%3D%200.8)%20%0Aprint(%22CDF%3A%22)%20%0Apbinom(1%2C%202%2C%20prob%20%3D%200.8)%0Aprint(%22PMF%3A%22)%20%0Adbinom(2%2C%202%2C%20prob%20%3D%200.8)%0A" frameborder="0">
 </iframe>
 </div>
 <div id="discrete-uniform-distribution" class="section level3">
@@ -509,14 +509,14 @@ Var(X) &amp;= \mathbb{E}\left[(X - \mathbb{E}[X])^{2} \right] = \mathbb{E}\left[
 &amp;= ∫_a^b \left(x - \frac{b+a}{2}\right)^2 * \frac{1}{b-a} dx = \frac{(b-a)^2}{12}
 \end{align*}\]</span>
 <p>Clearly the Uniform distribution can be used whenever we want to model a population in which all possible outcomes are equally likely.</p>
-<iframe src="http://localhost:3838/dist_Uniform/uniform/" style="border: none; width: 800px; height: 650px">
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_uniform/" style="border: none; width: 800px; height: 650px">
 </iframe>
 </div>
 <div id="normal-distribution" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Normal distribution</h3>
 <p>The normal distribution is probably the most widely known one. Its PDF is the famous bell curve. It has two parameters <span class="math inline">\(\mu\)</span>, and <span class="math inline">\(\sigma^2\)</span>. <span class="math inline">\(\mu\)</span> is the mean and <span class="math inline">\(\sigma^2\)</span> the variance of the distribution. In the case of <span class="math inline">\(\mu = 0,\ \sigma^2 = 1\)</span> it is called the <em>standard normal distribution</em>.</p>
 <p>The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see <a href="#central-limit-theorem">Central Limit Theorem</a>). The normal distribution can be <em>standardized</em>, i.e. given any random normal variable, <span class="math inline">\(X\sim N(\mu, \sigma^2)\)</span>, we can get a <em>standard normal</em> variable <span class="math inline">\(Y \sim N(0, 1)\)</span> where <span class="math inline">\(Y = \frac{X - \mu}{\sigma}\)</span>. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal <span class="math inline">\(Y\sim N(0,1)\)</span> we can get to any <span class="math inline">\(X \sim N(\mu, \sigma^{2})\)</span> by defining <span class="math inline">\(X = \mu + \sigma * Y\)</span> by just rearranging the formula above. In the application below you can see the PDF and CDF of the normal distribution and set a mean and a standard deviation. Try to get an intuition about why this simple transformation works. First change only the mean and observe that the shape of the PDF stays the same and its <em>location</em> is shifted. Starting from a normal distribution with <span class="math inline">\(μ = 0\)</span> and setting <span class="math inline">\(\mu = 4\)</span> is equivalent to adding <span class="math inline">\(4\)</span> to each value (see table of percentiles). Similarly changing the standard deviation from <span class="math inline">\(σ = 1\)</span> to <span class="math inline">\(σ = 2,\ 3,\ 4, \dots\)</span> is equivalent to multiplying each value with <span class="math inline">\(2,\ 3,\ 4, \dots\)</span>.</p>
-<iframe src="http://localhost:3838/Dist_Normal/" style="border: none; width: 800px; height: 550px">
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_normal/" style="border: none; width: 800px; height: 550px">
 </iframe>
 <p>The normal PDF is defined as</p>
 <p><span class="math display">\[
@@ -528,13 +528,12 @@ f(x | μ, σ) = \frac{1}{\sqrt{2πσ^{2}}} e^{-\frac{1}{2}\frac{(x-\mu)^2}{σ^2}
 P(X \leq x) = \frac{1}{\sqrt{2 \pi σ^2}} \int_{-∞}^x e^{-\frac{1}{2}\frac{-(t-μ)^2}{σ^2}} dt
 \]</span></p>
 <p>Notice that this is just the integral of the density up to a point <span class="math inline">\(x\)</span>.</p>
-<iframe src="http://localhost:3838/dist_Normal_Integral/" style="border: none; width: 800px; height: 340px">
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_normal_integral/" style="border: none; width: 800px; height: 340px">
 </iframe>
 <p>When using the Normal distribution in R one has to specify the standard deviation <span class="math inline">\(\sigma\)</span> rather than the variance <span class="math inline">\(\sigma^2\)</span>. Of course sometimes it is easier to pass <code>sqrt(variance)</code> instead of typing in the standard deviation. For example if <span class="math inline">\(Var(X) = 2\)</span> then <span class="math inline">\(SD(X) = \sqrt{2} = 1.41421356\dots\)</span> and it is easier to call <code>rnorm(10, 0, sqrt(2))</code> to generate 10 random numbers from a Normal distribution with <span class="math inline">\(\mu = 0, \sigma^2 = 2\)</span>.</p>
-<iframe width="100%" height="800" src="https://rdrr.io/snippets/embed/?code=rnorm(10%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%20%23%20Random%20draws%0A" frameborder="0">
+<iframe width="100%" height="600" src="https://rdrr.io/snippets/embed/?code=print(%22Random%20sample%3A%22)%0Arnorm(10%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22Quantile%20function%3A%22)%0Aqnorm(0.75%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22CDF%3A%22)%0Apnorm(6.75%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22PDF%3A%22)%0Adnorm(c(-10%2C%200%2C%2010)%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)" frameborder="0">
 </iframe>
-<iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 800px; height: 900px">
-</iframe>
+<!-- <iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 800px; height: 900px"></iframe> -->
 </div>
 <div id="chi2-distribution" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> <span class="math inline">\(\chi^2\)</span> Distribution</h3>
@@ -543,7 +542,7 @@ P(X \leq x) = \frac{1}{\sqrt{2 \pi σ^2}} \int_{-∞}^x e^{-\frac{1}{2}\frac{-(t
 Q = ∑_{i = 1}^k X_i^2,\ X_{i} \sim N(0,1) \Rightarrow Q \sim \chi^2(k) 
 \]</span></p>
 <p>That is, if we square <span class="math inline">\(k\)</span> normal variables and sum them up the result is a <span class="math inline">\(\chi^2\)</span> variable with <span class="math inline">\(k\)</span> degrees of freedom</p>
-<iframe src="http://localhost:3838/Dist_Chisq/" style="border: none; width: 800px; height: 550px">
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_chisq/" style="border: none; width: 800px; height: 550px">
 </iframe>
 <p>Calculating the expected value, using the properties of the standard normal distribution, is simple.</p>
 <p>Let <span class="math inline">\(X \sim N(0,1)\)</span>. Then <span class="math inline">\(Var(X) = \mathbb{E}[X^{2}] - \mathbb{E}[X]^2 = \sigma^2 = 1\)</span>. Also, <span class="math inline">\(\mathbb{E}[X] = \mu = 0\)</span>. Therefore, <span class="math inline">\(\mathbb{E}[X^{2}] = 1\)</span>. Thus, the expected value of one squared standard normal variable is <span class="math inline">\(1\)</span>. If we sum <span class="math inline">\(k\)</span> <em>independent</em> normal variables we get</p>
@@ -580,7 +579,7 @@ x_n = \bar X(n) - \sum_{i = 1}^{n-1} x_i
 \sqrt{\frac{\chi^2_{n-1}}{(n-1)}}
 \]</span></p>
 <p>Notice that as the degrees of freedom approach infinity the t-Distribution becomes the Standard Normal Distribution.</p>
-<iframe src="http://localhost:3838/Dist_T/" style="border: none; width: 800px; height: 400px">
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_t/" style="border: none; width: 800px; height: 400px">
 </iframe>
 </div>
 <div id="f-distribution" class="section level3">
