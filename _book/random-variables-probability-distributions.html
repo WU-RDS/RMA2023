@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Marketing Research Design &amp; Analysis 2018</title>
+  <meta name="description" content="An Introduction to Statistics Using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2018" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="An Introduction to Statistics Using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2018" />
+  
+  <meta name="twitter:description" content="An Introduction to Statistics Using R" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="prev" href="writing-reports-using-r-markdown.html">
+<link rel="next" href="summarizing-data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">MRDA 2018</a></strong></li>
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html"><i class="fa fa-check"></i>Course materials</a><ul>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#datacamp"><i class="fa fa-check"></i>DataCamp</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> How to download and install R and RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#getting-help"><i class="fa fa-check"></i><b>1.2</b> Getting help</a></li>
+<li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a></li>
+<li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="getting-started.html"><a href="getting-started.html#a-typical-r-session"><i class="fa fa-check"></i><b>1.5</b> A typical R session</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>2</b> Data handling</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>2.1</b> Basic data handling</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>2.1.1</b> Creating objects</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>2.1.2</b> Data types</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>2.1.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-handling.html"><a href="data-handling.html#advanced-data-handling"><i class="fa fa-check"></i><b>2.2</b> Advanced data handling</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data-handling.html"><a href="data-handling.html#the-dplyr-package"><i class="fa fa-check"></i><b>2.2.1</b> The dplyr package</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-handling.html"><a href="data-handling.html#dealing-with-strings"><i class="fa fa-check"></i><b>2.2.2</b> Dealing with strings</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-handling.html"><a href="data-handling.html#case-study"><i class="fa fa-check"></i><b>2.2.3</b> Case study</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>2.3</b> Data import and export</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>2.3.1</b> Getting data for this course</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>2.3.2</b> Import data created by other software packages</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-handling.html"><a href="data-handling.html#export-data"><i class="fa fa-check"></i><b>2.3.3</b> Export data</a></li>
+<li class="chapter" data-level="2.3.4" data-path="data-handling.html"><a href="data-handling.html#import-data-from-the-web"><i class="fa fa-check"></i><b>2.3.4</b> Import data from the Web</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html"><i class="fa fa-check"></i><b>3</b> Writing reports using R-Markdown</a><ul>
+<li class="chapter" data-level="3.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i><b>3.1</b> Creating a new R-Markdown document</a></li>
+<li class="chapter" data-level="3.2" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#text-and-equations"><i class="fa fa-check"></i><b>3.2</b> Text and Equations</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#headings"><i class="fa fa-check"></i><b>3.2.1</b> Headings</a></li>
+<li class="chapter" data-level="3.2.2" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#lists"><i class="fa fa-check"></i><b>3.2.2</b> Lists</a></li>
+<li class="chapter" data-level="3.2.3" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#text-formatting"><i class="fa fa-check"></i><b>3.2.3</b> Text formatting</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#r-code"><i class="fa fa-check"></i><b>3.3</b> R-Code</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#global-and-chunk-options"><i class="fa fa-check"></i><b>3.3.1</b> Global and chunk options</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#latex-math"><i class="fa fa-check"></i><b>3.4</b> LaTeX Math</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#important-symbols"><i class="fa fa-check"></i><b>3.4.1</b> Important symbols</a></li>
+<li class="chapter" data-level="3.4.2" data-path="writing-reports-using-r-markdown.html"><a href="writing-reports-using-r-markdown.html#greek-letters"><i class="fa fa-check"></i><b>3.4.2</b> Greek letters</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html"><i class="fa fa-check"></i><b>4</b> Random Variables &amp; Probability Distributions</a><ul>
+<li class="chapter" data-level="4.1" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#random-variables"><i class="fa fa-check"></i><b>4.1</b> Random Variables</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#why-random-variables"><i class="fa fa-check"></i><b>4.1.1</b> Why Random Variables?</a></li>
+<li class="chapter" data-level="4.1.2" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#tossing-coins"><i class="fa fa-check"></i><b>4.1.2</b> Tossing coins</a></li>
+<li class="chapter" data-level="4.1.3" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#sum-of-two-dice"><i class="fa fa-check"></i><b>4.1.3</b> Sum of two dice</a></li>
+<li class="chapter" data-level="4.1.4" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#discrete-random-variables"><i class="fa fa-check"></i><b>4.1.4</b> Discrete Random Variables</a></li>
+<li class="chapter" data-level="4.1.5" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#continuous-case"><i class="fa fa-check"></i><b>4.1.5</b> Continuous Case</a></li>
+<li class="chapter" data-level="4.1.6" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#definitions"><i class="fa fa-check"></i><b>4.1.6</b> Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#probability-distributions"><i class="fa fa-check"></i><b>4.2</b> Probability Distributions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#introduction"><i class="fa fa-check"></i><b>4.2.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2.2" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#discrete-distributions"><i class="fa fa-check"></i><b>4.2.2</b> Discrete Distributions</a></li>
+<li class="chapter" data-level="4.2.3" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#continuous-distributions"><i class="fa fa-check"></i><b>4.2.3</b> Continuous Distributions</a></li>
+<li class="chapter" data-level="4.2.4" data-path="random-variables-probability-distributions.html"><a href="random-variables-probability-distributions.html#appendix"><i class="fa fa-check"></i><b>4.2.4</b> Appendix</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>5</b> Summarizing data</a><ul>
+<li class="chapter" data-level="5.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>5.1</b> Summary statistics</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>5.1.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="5.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>5.1.2</b> Continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>5.2</b> Data visualization</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>5.2.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="5.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>5.2.2</b> Continuous variables</a></li>
+<li class="chapter" data-level="5.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>5.2.3</b> Saving plots</a></li>
+<li class="chapter" data-level="5.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#additional-options"><i class="fa fa-check"></i><b>5.2.4</b> Additional options</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#why-do-we-test-hypotheses"><i class="fa fa-check"></i><b>6.1.1</b> Why do we test hypotheses?</a></li>
+<li class="chapter" data-level="6.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-process-of-hypothesis-testing"><i class="fa fa-check"></i><b>6.1.2</b> The process of hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#parametric-tests"><i class="fa fa-check"></i><b>6.2</b> Parametric tests</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>6.2.1</b> Independent-means t-test</a></li>
+<li class="chapter" data-level="6.2.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>6.2.2</b> Dependent-means t-test</a></li>
+<li class="chapter" data-level="6.2.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.2.3</b> One-sample t-test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.3</b> Non-parametric tests</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>6.3.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
+<li class="chapter" data-level="6.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>6.3.2</b> Wilcoxon signed-rank test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.4</b> Categorical data</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-proportions"><i class="fa fa-check"></i><b>6.4.1</b> Comparing proportions</a></li>
+<li class="chapter" data-level="6.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>6.4.2</b> Chi-square test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#analysis-of-variance"><i class="fa fa-check"></i><b>6.5</b> Analysis of variance</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-2"><i class="fa fa-check"></i><b>6.5.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>6.5.2</b> Decomposing variance</a></li>
+<li class="chapter" data-level="6.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>6.5.3</b> One-way ANOVA</a></li>
+<li class="chapter" data-level="6.5.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#n-way-anova"><i class="fa fa-check"></i><b>6.5.4</b> N-way ANOVA</a></li>
+<li class="chapter" data-level="6.5.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests-1"><i class="fa fa-check"></i><b>6.5.5</b> Non-parametric tests</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>7.1.1</b> Correlation coefficient</a></li>
+<li class="chapter" data-level="7.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>7.1.2</b> Significance testing</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>7.2.1</b> Simple linear regression</a></li>
+<li class="chapter" data-level="7.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>7.2.2</b> Multiple linear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>7.3.1</b> Outliers</a></li>
+<li class="chapter" data-level="7.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>7.3.2</b> Influential observations</a></li>
+<li class="chapter" data-level="7.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>7.3.3</b> Non-linearity</a></li>
+<li class="chapter" data-level="7.3.4" data-path="regression.html"><a href="regression.html#non-constant-error-variance"><i class="fa fa-check"></i><b>7.3.4</b> Non-constant error variance</a></li>
+<li class="chapter" data-level="7.3.5" data-path="regression.html"><a href="regression.html#non-normally-distributed-errors"><i class="fa fa-check"></i><b>7.3.5</b> Non-normally distributed errors</a></li>
+<li class="chapter" data-level="7.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>7.3.6</b> Correlation of errors</a></li>
+<li class="chapter" data-level="7.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>7.3.7</b> Collinearity</a></li>
+<li class="chapter" data-level="7.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>7.3.8</b> Omitted Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
+<li class="chapter" data-level="7.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>7.4.2</b> More than two categories</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>7.5.1</b> Interaction effects</a></li>
+<li class="chapter" data-level="7.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>7.5.2</b> Non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#appendix-1"><i class="fa fa-check"></i><b>7.6</b> Appendix</a></li>
+<li class="chapter" data-level="7.7" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.7</b> Logistic regression</a><ul>
+<li class="chapter" data-level="7.7.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>7.7.1</b> Motivation and intuition</a></li>
+<li class="chapter" data-level="7.7.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>7.7.2</b> Technical details of the model</a></li>
+<li class="chapter" data-level="7.7.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>7.7.3</b> Estimation in R</a></li>
+<li class="chapter" data-level="7.7.4" data-path="regression.html"><a href="regression.html#appendix-2"><i class="fa fa-check"></i><b>7.7.4</b> Appendix</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>8.2.1</b> Are the assumptions satisfied?</a></li>
+<li class="chapter" data-level="8.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>8.2.2</b> Deriving factors</a></li>
+<li class="chapter" data-level="8.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>8.2.3</b> Factor interpretation</a></li>
+<li class="chapter" data-level="8.2.4" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#creating-new-variables"><i class="fa fa-check"></i><b>8.2.4</b> Creating new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#reliability-analysis"><i class="fa fa-check"></i><b>8.3</b> Reliability analysis</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2018</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="random-variables-probability-distributions" class="section level1">
+<h1><span class="header-section-number">4</span> Random Variables &amp; Probability Distributions</h1>
+<p>This chapter is primarily based on:</p>
+<ul>
+<li>Casella, G., &amp; Berger, R. L. (2002). Statistical inference (Vol. 2). Pacific Grove, CA: Duxbury (<strong>chapters 1 &amp; 3</strong>).</li>
+</ul>
+<div id="random-variables" class="section level2">
+<h2><span class="header-section-number">4.1</span> Random Variables</h2>
+<div id="why-random-variables" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Why Random Variables?</h3>
+<p>Random variables are used to extract and simplify information that we obtain from an experiment. For example, if we toss five coins it would be tedious to say “I have observed heads, heads, tails, heads, tails”. With five coins this might still be a feasible way to convey the outcome of the experiment, but what about 500 coins? Instead, we naturally condense the information into a random variable (even though we might not call it that) and say “I have observed three heads” or we define another random variable and say “I have observed two tails”. There are many ways to summarize the outcome of an experiment and hence we can define multiple random variables from the same experiment. We could also define a more “complicated” random variable that adds four points for each heads and one point for each tails. In general there are no restrictions on our function as long as it maps from the sample space to the real numbers. We distinguish two types of random variables, discrete and continuous, which are discussed in the following sections.</p>
+</div>
+<div id="tossing-coins" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Tossing coins</h3>
+<p>As a first example of a random variable, assume you toss a chosen number of coins (between 1 and 20). The tossing is the experiment in this case. The <a href="random-variables-probability-distributions.html#definitions"><strong>sample space</strong></a> consists of all the possible combinations of heads (“h”) and tails (“t”) given the number of coins. For a single coin:</p>
+<p><span class="math display">\[
+S = \{h, t\}
+\]</span></p>
+<p>For two coins:</p>
+<p><span class="math display">\[
+S = \{hh, ht, th, tt\}
+\]</span></p>
+<p>For three coins:</p>
+<p><span class="math display">\[
+S = \{hhh, hht, hth, thh, tth, tht, htt, ttt\}
+\]</span></p>
+<p>and so on.</p>
+<p>One of the outcomes in the sample space will be realized whenever one tosses the coin(s). The <a href="random-variables-probability-distributions.html#definitions">definition of random variables</a> allows for many possibilities. An operation that takes any realization of the experiment (e.g. hht) as an input and gives us a real number as an outcome is a <strong>random variable</strong>. For this example we have chosen “number of heads” as the function but it could also be number of tails or (number of heads)+(4*number of tails). Lets call our function <span class="math inline">\(g\)</span>. Then</p>
+<p><span class="math display">\[
+g(hhh) = 3 &gt; g(hht) = g(hth) = g(thh) = 2 &gt; g(tth) =  g(tht) = g(htt) = 1 &gt; g(ttt) = 0
+\]</span></p>
+<p>for three coins.</p>
+<p>So far we have only considered the possible outcomes but not how likely they are. We might be interested in how likely it is to observe 2 or less heads when tossing three coins. Let’s first consider a fair coin. With a fair coin it is just as likely to get heads as it is tails. Formally</p>
+<p><span class="math display">\[
+p(h) = p(t) = 0.5
+\]</span></p>
+<p>By definition the probabilities have to add up to one. If you think of probabilities in percentages, this just expresses that with 100% certainty <em>something</em> happens. If we toss a coin we are certain that we get either heads or tails and thus for a fair coin the chance is 50/50. Below you will find an app where you can experiment with different numbers of coins and different probabilities.</p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/coin_reactive/" width="800" height="1200" frameBorder="0">
+</iframe>
+<p>If you set the slider to 3 and the probability of observing h (<span class="math inline">\(p(h)\)</span>) to <span class="math inline">\(0.5\)</span> the <a href="random-variables-probability-distributions.html#definitions"><strong>cumulative distribution function</strong></a> will update accordingly. The dots mean that at that point we are already at the higher probability and not on the line below. Let’s analyze the result. The probability of observing less than or equal to 0 heads lies between 0 and 0.2. Of course we cannot observe a negative number of heads and so this is just the probability of observing no heads. There is only one realization of our experiment that fulfills that property: <span class="math inline">\(g(ttt) = 0\)</span>. So how likely is that to happen? Each coin has the probability 0.5 to show tails and we need all of them to land on tails. <span class="math display">\[
+p(ttt) = 0.5 * 0.5 * 0.5 = 0.125
+\]</span></p>
+<p>Another way of calculating the probability is to look at the sample space. There are 8 equally likely outcomes (for fair coins!) one of which fulfills the property that we observe 0 heads.</p>
+<p><span class="math display">\[
+p(ttt) = \frac{1}{8} = 0.125 = F_x(0)
+\]</span></p>
+<p>The next “level” shows the probability of observing less than or equal to 1 head. That is the probability of observing 0 heads (<span class="math inline">\(p(ttt) = 0.125\)</span>) plus the probability of observing one head (<span class="math inline">\(p(htt) + p(tht) + p(tth)\)</span>). The probability of observing one head is given by the sum of the probabilities of the possibilities from the sample space. Let’s take a second to think about how probabilities are combined. If we want to know the probability of one event <strong>and</strong> another we have to <strong>multiply</strong> their respective probabilities such as in the case of <span class="math inline">\(p(ttt)\)</span>. There we wanted to know how likely it is that the first <em>and</em> the second <em>and</em> the third coin are all tails. Now we want to know the probability of either <span class="math inline">\(p(ttt)\)</span> <em>or</em> <span class="math inline">\(p(htt)\)</span> <em>or</em> <span class="math inline">\(p(tht)\)</span> <em>or</em> <span class="math inline">\(p(tth)\)</span>. In the case that <strong>either</strong> event fulfills the condition we <strong>add</strong> the probabilities. This is possible because the probabilities are independent. That is, having observed heads (or tails) on the first coin does not influence the probability of observing heads on the others.</p>
+<p><span class="math display">\[
+p(ttt) = p(htt)  = \underbrace{0.5}_{p(h)} * \underbrace{0.5}_{p(t)} *\underbrace{0.5}_{p(t)} = p(tht) = p(tth)= 0.125 \\ \Rightarrow F_X(1) = \underbrace{0.125}_{p(ttt) = F_X(0)} + \underbrace{0.125}_{p(htt)} + \underbrace{0.125}_{p(tht)} + \underbrace{0.125}_{p(tth)} = 0.5
+\]</span></p>
+<p>Now 4 out of the 8 possibilities (50%) in the sample space fulfill the property.</p>
+<p>For <span class="math inline">\(F_X(2)\)</span> we add the probabilities of the observing 2 heads (<span class="math inline">\(p(hht) + p(hth) + p(thh)\)</span>).</p>
+<p><span class="math display">\[
+F_X(2) = \underbrace{0.5}_{F_X(1)} + \underbrace{0.125}_{p(hht)} + \underbrace{0.125}_{p(hth)} + \underbrace{0.125}_{p(thh)} = 0.875 = \frac{7}{8}
+\]</span></p>
+<p>Since we are interested in less than or equal to we can <em>always</em> just add the probabilities of the possible outcomes at a given point to the cumulative distribution of the previous value (this gives us an idea about the link between cumulative distribution and probability mass functions). Now 7 out of 8 outcomes fulfill the property.</p>
+<p>Obviously the probability of observing 3 or less heads when tossing 3 coins is 1 (the certain outcome).</p>
+<p>This analysis changes if we consider a weighted coin that shows a higher probability on one side than the other. As the probability of observing heads increases the lines in the cumulative distribution shift downward. That means each of the levels are now less likely. In order to see why, let’s look at the probability of observing 2 or less heads when the probability of observing head is 0.75 (the probability of tails is thus 0.25) for each of the 3 coins.</p>
+<p><span class="math display">\[
+F_X(2) = \overbrace{\underbrace{0.25*0.25*0.25}_{p(ttt) = F_X(0) = 0.016} + \underbrace{0.75 * 0.25 * 0.25}_{p(htt)=0.047} + \underbrace{0.25 * 0.75 * 0.25}_{p(tht)=0.047} + \underbrace{0.25 * 0.25 * 0.75}_{p(tth)=0.047}}^{F_X(1) = 0.156}\dots\\ + \underbrace{0.75 * 0.75 * 0.25}_{p(hht) = 0.141} + \underbrace{0.75 * 0.25 * 0.75}_{p(hth) = 0.141} + \underbrace{0.25 * 0.75 * 0.75}_{p(thh) = 0.141} = 0.578
+\]</span></p>
+<p>What happens if you decrease the probability of observing heads?</p>
+<p>The <a href="random-variables-probability-distributions.html#definitions"><strong>probability mass function</strong></a> defines the probability of observing an exact amount of heads (for all amounts) given the number of coins and the probability of observing heads. Continuing our example with 3 fair coins this means that <span class="math inline">\(f_X(0) = p(ttt) = 0.125\)</span>, <span class="math inline">\(f_X(1) = p(htt) + p(tht) + p(tth) = 0.375\)</span>, <span class="math inline">\(f_X(2) = p(hht) + p(hth) + p(thh) = 0.375\)</span> and <span class="math inline">\(f_X(3) = p(hhh) = 0.125\)</span>. So instead of summing up the probabilities up to a given point we look at each point individually. This is also the link between the probability mass function and the cumulative distribution function: The cumulative distribution function at a given point (<span class="math inline">\(x\)</span>) is just the sum of the probability mass function up to that point. That is</p>
+<p><span class="math display">\[
+F_X(0) = f_X(0),\ F_X(1) = f_X(0) + f_X(1),\ F_X(2) = f_X(0) + f_X(1) + f_X(2),\ \dots\\ F_X(x) = f_X(0) + f_X(1) + \dots + f_X(x)
+\]</span></p>
+<p>A more general way to write this is:</p>
+<p><span class="math display">\[
+F_X(x) = \sum_{i=0}^x f_X(i)
+\]</span></p>
+</div>
+<div id="sum-of-two-dice" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Sum of two dice</h3>
+<p>Another example for a discrete random variable is the sum of two dice throws. Assume first that you have a six sided die. The six values it can take are all equally probable (if we assume that it is fair). Now if we throw two six sided dice and sum up the displayed dots, the possible values are no longer all equally probable. This is because some values can be produced by more combinations of throws. Consider the value 2. A 2 can only be produced by both dice displaying one dot. As the probability for a specific value on one die is <span class="math inline">\(\frac{1}{6}\)</span>, the probability of both throws resulting in a 1 is <span class="math inline">\(\frac{1}{6} * \frac{1}{6} = \frac{1}{36}\)</span>. Now consider the value 3. 3 can be produced by the first dice roll being a 1 and the second being a 2 and by the first roll being a 2 and the second a 1. While these may seem like the same thing, they are actually two distinct events. To calculate the probability of a 3 you sum the probabilities of these two possibilities together, i.e. <span class="math inline">\(P\{1,2\} + P\{2,1\} = \frac{1}{6} * \frac{1}{6} + \frac{1}{6} * \frac{1}{6} = \frac{2}{36}\)</span>. This implies that a 3 is twice as probable as a 2. When done for all possible values of the sum of two dice you arrive at the following probabilities:</p>
+<p><span class="math display">\[
+P(x) = 
+\begin{cases} 
+      \frac{1}{36} &amp; \text{if }x = 2 \text{ or } 12 \\
+      \frac{2}{36} = \frac{1}{18} &amp; \text{if } x = 3 \text{ or } 11\\
+      \frac{3}{36} = \frac{1}{12} &amp; \text{if } x = 4 \text{ or } 10\\
+      \frac{4}{36} = \frac{1}{9} &amp; \text{if } x = 5 \text{ or } 11\\
+      \frac{5}{36} &amp; \text{if } x = 6 \text{ or } 8\\
+      \frac{6}{36} = \frac{1}{6} &amp; \text{if } x = 7\\
+\end{cases}
+\]</span></p>
+<p>To see what this looks like in practice you can simulate dice throws below. The program randomly throws two (or more) dice and displays their sum in a histogram with all previous throws. The longer you let the simulation run, the more the sample probabilities will converge to the theoretically calculated values above.</p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dice_throw/" width="800" height="650" frameBorder="0">
+</iframe>
+</div>
+<div id="discrete-random-variables" class="section level3">
+<h3><span class="header-section-number">4.1.4</span> Discrete Random Variables</h3>
+<p>Now that we have seen examples for discrete random variables, we can define them more formally. A random variable is discrete if its <a href="random-variables-probability-distributions.html#definitions"><strong>cumulative distribution function</strong></a> is a step function as in the plot below. That is, the CDF shifts or jumps from one probability to the next at some point(s). Notice that the black dots indicate that at that specific point the probability is already at the higher step. More formally: the CDF is “right-continuous”. That is the case for all CDFs. To illustrate this concept we explore the plot below. We have a discrete random variable as the CDF jumps rather than being one line. We can observe integer values between 0 and 10 whereas the probability of observing less than or equal to 0 is almost 0 and the probability of observing less than or equal to 10 is 1. The function is right continuous: Let’s look at the values 4 and 5 for example. The probability of observing 4 or less than 4 is just under 0.4. The probability of observing 5 or less is just over 0.6. For further examples see <a href="random-variables-probability-distributions.html#tossing-coins">tossing coins</a> and <a href="random-variables-probability-distributions.html#sum-of-two-dice">sum of two dice</a></p>
+<p><img src="_main_files/figure-html/discrete-1.png" width="672" /></p>
+<p>For discrete random variables the function that defines the probability of each event is called the <strong>probability mass funciton</strong>. Notice that the “jumps” in the CDF are equivalent to the mass at every point. It follows that the sum of the mass up to a point in the PMF (below) is equal to the level at that point in the CDF (above).</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
+</div>
+<div id="continuous-case" class="section level3">
+<h3><span class="header-section-number">4.1.5</span> Continuous Case</h3>
+<p>The vigilant reader might have noticed that while the <a href="random-variables-probability-distributions.html#definitions">definition of a random variable</a> allows for the function to map to the real numbers the coin and dice examples only uses mapping to the <a href="https://en.wikipedia.org/wiki/Natural_number">natural numbers</a>. Just as with discrete random variables we can define continuous random variables by their cumulative distribution function. As you might have guessed the cumulative distribution function of a continuous random variable is <em>continuous</em>, i.e. there are no jumps.</p>
+<p><img src="_main_files/figure-html/continuousCDF-1.png" width="672" /></p>
+<p>One example for a continuous random variable is the average profit of a store per week. Let’s think of the possible values: Profit could be negative if, for example, the payment to employees exceeds the contribution margin accrued from the products sold. Of course it can also be positive and technically it is not restricted to any range of values (e.g. it could exceed a billion, be below negative 10,000 or <em>anywhere</em> in between). Below you can see some (simulated) profit data. Observe that the CDF looks continuous. The red overlay is the CDF of the normal distribution (see chapter on probability distributions) which was used for the simulation. The final plot is a histogram of the data with the normal density (again in red). It shows that profits around 500 are more likely (higher bars) and the further away from 500 we get the less likely it is that a certain profit will be observed in a given week. Recall the definition of the probability density function shows the probability of a given outcome.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Week"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Profit"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2018","2":"35","3":"193.05"},{"1":"2018","2":"34","3":"672.71"},{"1":"2018","2":"33","3":"291.34"},{"1":"2018","2":"32","3":"497.38"},{"1":"2018","2":"31","3":"986.79"},{"1":"2018","2":"30","3":"327.10"},{"1":"2018","2":"29","3":"447.66"},{"1":"2018","2":"28","3":"623.69"},{"1":"2018","2":"27","3":"786.14"},{"1":"2018","2":"26","3":"269.10"},{"1":"2018","2":"25","3":"336.15"},{"1":"2018","2":"24","3":"729.85"},{"1":"2018","2":"23","3":"400.31"},{"1":"2018","2":"22","3":"290.36"},{"1":"2018","2":"21","3":"913.52"},{"1":"2018","2":"20","3":"35.83"},{"1":"2018","2":"19","3":"307.31"},{"1":"2018","2":"18","3":"477.41"},{"1":"2018","2":"17","3":"454.03"},{"1":"2018","2":"16","3":"607.72"},{"1":"2018","2":"15","3":"48.47"},{"1":"2018","2":"14","3":"491.76"},{"1":"2018","2":"13","3":"270.04"},{"1":"2018","2":"12","3":"463.80"},{"1":"2018","2":"11","3":"805.41"},{"1":"2018","2":"10","3":"557.86"},{"1":"2018","2":"9","3":"449.73"},{"1":"2018","2":"8","3":"516.32"},{"1":"2018","2":"7","3":"455.57"},{"1":"2018","2":"6","3":"536.33"},{"1":"2018","2":"5","3":"589.12"},{"1":"2018","2":"4","3":"354.18"},{"1":"2018","2":"3","3":"906.70"},{"1":"2018","2":"2","3":"573.02"},{"1":"2018","2":"1","3":"378.67"},{"1":"2017","2":"52","3":"325.35"},{"1":"2017","2":"51","3":"527.29"},{"1":"2017","2":"50","3":"710.85"},{"1":"2017","2":"49","3":"776.61"},{"1":"2017","2":"48","3":"423.32"},{"1":"2017","2":"47","3":"445.27"},{"1":"2017","2":"46","3":"614.08"},{"1":"2017","2":"45","3":"459.53"},{"1":"2017","2":"44","3":"195.73"},{"1":"2017","2":"43","3":"758.38"},{"1":"2017","2":"42","3":"718.19"},{"1":"2017","2":"41","3":"726.28"},{"1":"2017","2":"40","3":"589.39"},{"1":"2017","2":"39","3":"685.10"},{"1":"2017","2":"38","3":"378.21"},{"1":"2017","2":"37","3":"546.38"},{"1":"2017","2":"36","3":"435.08"},{"1":"2017","2":"35","3":"409.22"},{"1":"2017","2":"34","3":"542.59"},{"1":"2017","2":"33","3":"1091.28"},{"1":"2017","2":"32","3":"258.55"},{"1":"2017","2":"31","3":"620.65"},{"1":"2017","2":"30","3":"466.76"},{"1":"2017","2":"29","3":"702.96"},{"1":"2017","2":"28","3":"559.05"},{"1":"2017","2":"27","3":"407.82"},{"1":"2017","2":"26","3":"527.90"},{"1":"2017","2":"25","3":"583.17"},{"1":"2017","2":"24","3":"991.00"},{"1":"2017","2":"23","3":"453.74"},{"1":"2017","2":"22","3":"931.92"},{"1":"2017","2":"21","3":"11.44"},{"1":"2017","2":"20","3":"429.67"},{"1":"2017","2":"19","3":"-54.72"},{"1":"2017","2":"18","3":"398.40"},{"1":"2017","2":"17","3":"612.80"},{"1":"2017","2":"16","3":"720.13"},{"1":"2017","2":"15","3":"677.36"},{"1":"2017","2":"14","3":"726.93"},{"1":"2017","2":"13","3":"524.32"},{"1":"2017","2":"12","3":"700.21"},{"1":"2017","2":"11","3":"270.23"},{"1":"2017","2":"10","3":"383.94"},{"1":"2017","2":"9","3":"1112.73"},{"1":"2017","2":"8","3":"560.88"},{"1":"2017","2":"7","3":"521.22"},{"1":"2017","2":"6","3":"588.30"},{"1":"2017","2":"5","3":"345.50"},{"1":"2017","2":"4","3":"922.35"},{"1":"2017","2":"3","3":"506.36"},{"1":"2017","2":"2","3":"305.84"},{"1":"2017","2":"1","3":"492.86"},{"1":"2016","2":"53","3":"565.31"},{"1":"2016","2":"52","3":"572.14"},{"1":"2016","2":"51","3":"330.77"},{"1":"2016","2":"50","3":"609.19"},{"1":"2016","2":"49","3":"789.38"},{"1":"2016","2":"48","3":"491.33"},{"1":"2016","2":"47","3":"565.23"},{"1":"2016","2":"46","3":"573.41"},{"1":"2016","2":"45","3":"745.89"},{"1":"2016","2":"44","3":"428.57"},{"1":"2016","2":"43","3":"526.48"},{"1":"2016","2":"42","3":"518.55"},{"1":"2016","2":"41","3":"547.14"},{"1":"2016","2":"40","3":"666.68"},{"1":"2016","2":"39","3":"617.74"},{"1":"2016","2":"38","3":"373.65"},{"1":"2016","2":"37","3":"206.46"},{"1":"2016","2":"36","3":"806.03"},{"1":"2016","2":"35","3":"628.27"},{"1":"2016","2":"34","3":"643.82"},{"1":"2016","2":"33","3":"498.32"},{"1":"2016","2":"32","3":"1002.03"},{"1":"2016","2":"31","3":"483.86"},{"1":"2016","2":"30","3":"373.65"},{"1":"2016","2":"29","3":"540.29"},{"1":"2016","2":"28","3":"396.93"},{"1":"2016","2":"27","3":"313.62"},{"1":"2016","2":"26","3":"838.02"},{"1":"2016","2":"25","3":"483.22"},{"1":"2016","2":"24","3":"353.27"},{"1":"2016","2":"23","3":"830.91"},{"1":"2016","2":"22","3":"247.07"},{"1":"2016","2":"21","3":"309.52"},{"1":"2016","2":"20","3":"962.06"},{"1":"2016","2":"19","3":"582.82"},{"1":"2016","2":"18","3":"766.96"},{"1":"2016","2":"17","3":"970.18"},{"1":"2016","2":"16","3":"536.00"},{"1":"2016","2":"15","3":"443.61"},{"1":"2016","2":"14","3":"557.14"},{"1":"2016","2":"13","3":"636.61"},{"1":"2016","2":"12","3":"500.73"},{"1":"2016","2":"11","3":"632.63"},{"1":"2016","2":"10","3":"426.65"},{"1":"2016","2":"9","3":"371.41"},{"1":"2016","2":"8","3":"621.34"},{"1":"2016","2":"7","3":"451.09"},{"1":"2016","2":"6","3":"496.77"},{"1":"2016","2":"5","3":"735.51"},{"1":"2016","2":"4","3":"325.43"},{"1":"2016","2":"3","3":"541.34"},{"1":"2016","2":"2","3":"493.61"},{"1":"2016","2":"1","3":"522.63"},{"1":"2015","2":"52","3":"769.84"},{"1":"2015","2":"51","3":"795.51"},{"1":"2015","2":"50","3":"533.45"},{"1":"2015","2":"49","3":"646.67"},{"1":"2015","2":"48","3":"574.75"},{"1":"2015","2":"47","3":"657.55"},{"1":"2015","2":"46","3":"103.43"},{"1":"2015","2":"45","3":"652.95"},{"1":"2015","2":"44","3":"583.53"},{"1":"2015","2":"43","3":"191.71"},{"1":"2015","2":"42","3":"719.06"},{"1":"2015","2":"41","3":"427.53"},{"1":"2015","2":"40","3":"414.48"},{"1":"2015","2":"39","3":"261.60"},{"1":"2015","2":"38","3":"0.07"},{"1":"2015","2":"37","3":"708.47"},{"1":"2015","2":"36","3":"184.77"},{"1":"2015","2":"35","3":"851.55"},{"1":"2015","2":"34","3":"499.03"},{"1":"2015","2":"33","3":"178.53"},{"1":"2015","2":"32","3":"688.07"},{"1":"2015","2":"31","3":"400.17"},{"1":"2015","2":"30","3":"969.35"},{"1":"2015","2":"29","3":"265.92"},{"1":"2015","2":"28","3":"570.10"},{"1":"2015","2":"27","3":"49.71"},{"1":"2015","2":"26","3":"705.07"},{"1":"2015","2":"25","3":"561.56"},{"1":"2015","2":"24","3":"238.63"},{"1":"2015","2":"23","3":"593.85"},{"1":"2015","2":"22","3":"514.14"},{"1":"2015","2":"21","3":"435.00"},{"1":"2015","2":"20","3":"696.22"},{"1":"2015","2":"19","3":"232.12"},{"1":"2015","2":"18","3":"417.82"},{"1":"2015","2":"17","3":"492.26"},{"1":"2015","2":"16","3":"429.67"},{"1":"2015","2":"15","3":"546.66"},{"1":"2015","2":"14","3":"559.31"},{"1":"2015","2":"13","3":"593.04"},{"1":"2015","2":"12","3":"515.60"},{"1":"2015","2":"11","3":"301.28"},{"1":"2015","2":"10","3":"640.05"},{"1":"2015","2":"9","3":"715.91"},{"1":"2015","2":"8","3":"359.35"},{"1":"2015","2":"7","3":"452.45"},{"1":"2015","2":"6","3":"767.00"},{"1":"2015","2":"5","3":"404.02"},{"1":"2015","2":"4","3":"377.58"},{"1":"2015","2":"3","3":"372.22"},{"1":"2015","2":"2","3":"630.40"},{"1":"2015","2":"1","3":"758.09"},{"1":"2014","2":"52","3":"504.08"},{"1":"2014","2":"51","3":"660.47"},{"1":"2014","2":"50","3":"782.48"},{"1":"2014","2":"49","3":"452.48"},{"1":"2014","2":"48","3":"282.34"},{"1":"2014","2":"47","3":"572.39"},{"1":"2014","2":"46","3":"384.27"},{"1":"2014","2":"45","3":"306.75"},{"1":"2014","2":"44","3":"406.22"},{"1":"2014","2":"43","3":"323.23"},{"1":"2014","2":"42","3":"589.15"},{"1":"2014","2":"41","3":"283.03"},{"1":"2014","2":"40","3":"474.06"},{"1":"2014","2":"39","3":"387.57"},{"1":"2014","2":"38","3":"604.68"},{"1":"2014","2":"37","3":"513.24"},{"1":"2014","2":"36","3":"310.64"},{"1":"2014","2":"35","3":"922.71"},{"1":"2014","2":"34","3":"285.56"},{"1":"2014","2":"33","3":"433.35"},{"1":"2014","2":"32","3":"687.03"},{"1":"2014","2":"31","3":"670.54"},{"1":"2014","2":"30","3":"684.46"},{"1":"2014","2":"29","3":"543.33"},{"1":"2014","2":"28","3":"562.19"},{"1":"2014","2":"27","3":"441.97"},{"1":"2014","2":"26","3":"533.75"},{"1":"2014","2":"25","3":"656.94"},{"1":"2014","2":"24","3":"282.59"},{"1":"2014","2":"23","3":"620.37"},{"1":"2014","2":"22","3":"945.86"},{"1":"2014","2":"21","3":"825.64"},{"1":"2014","2":"20","3":"379.48"},{"1":"2014","2":"19","3":"277.46"},{"1":"2014","2":"18","3":"465.77"},{"1":"2014","2":"17","3":"589.20"},{"1":"2014","2":"16","3":"606.99"},{"1":"2014","2":"15","3":"429.41"},{"1":"2014","2":"14","3":"280.15"},{"1":"2014","2":"13","3":"572.50"},{"1":"2014","2":"12","3":"749.92"},{"1":"2014","2":"11","3":"390.94"},{"1":"2014","2":"10","3":"700.80"},{"1":"2014","2":"9","3":"463.08"},{"1":"2014","2":"8","3":"340.74"},{"1":"2014","2":"7","3":"620.01"},{"1":"2014","2":"6","3":"510.49"},{"1":"2014","2":"5","3":"628.47"},{"1":"2014","2":"4","3":"350.68"},{"1":"2014","2":"3","3":"289.20"},{"1":"2014","2":"2","3":"417.70"},{"1":"2014","2":"1","3":"181.09"},{"1":"2013","2":"52","3":"577.11"},{"1":"2013","2":"51","3":"385.61"},{"1":"2013","2":"50","3":"657.65"},{"1":"2013","2":"49","3":"855.30"},{"1":"2013","2":"48","3":"659.35"},{"1":"2013","2":"47","3":"560.99"},{"1":"2013","2":"46","3":"248.63"},{"1":"2013","2":"45","3":"382.93"},{"1":"2013","2":"44","3":"198.77"},{"1":"2013","2":"43","3":"400.71"},{"1":"2013","2":"42","3":"364.70"},{"1":"2013","2":"41","3":"255.73"},{"1":"2013","2":"40","3":"215.32"},{"1":"2013","2":"39","3":"746.95"},{"1":"2013","2":"38","3":"692.03"},{"1":"2013","2":"37","3":"684.83"},{"1":"2013","2":"36","3":"896.42"},{"1":"2013","2":"35","3":"602.80"},{"1":"2013","2":"34","3":"311.05"},{"1":"2013","2":"33","3":"376.50"},{"1":"2013","2":"32","3":"767.61"},{"1":"2013","2":"31","3":"455.57"},{"1":"2013","2":"30","3":"642.21"},{"1":"2013","2":"29","3":"807.95"},{"1":"2013","2":"28","3":"300.12"},{"1":"2013","2":"27","3":"578.83"},{"1":"2013","2":"26","3":"559.61"},{"1":"2013","2":"25","3":"1137.78"},{"1":"2013","2":"24","3":"805.49"},{"1":"2013","2":"23","3":"351.32"},{"1":"2013","2":"22","3":"493.08"},{"1":"2013","2":"21","3":"582.03"},{"1":"2013","2":"20","3":"566.53"},{"1":"2013","2":"19","3":"754.36"},{"1":"2013","2":"18","3":"523.33"},{"1":"2013","2":"17","3":"53.00"},{"1":"2013","2":"16","3":"359.74"},{"1":"2013","2":"15","3":"577.32"},{"1":"2013","2":"14","3":"585.48"},{"1":"2013","2":"13","3":"364.15"},{"1":"2013","2":"12","3":"695.85"},{"1":"2013","2":"11","3":"244.26"},{"1":"2013","2":"10","3":"684.11"},{"1":"2013","2":"9","3":"786.14"},{"1":"2013","2":"8","3":"365.27"},{"1":"2013","2":"7","3":"677.66"},{"1":"2013","2":"6","3":"688.07"},{"1":"2013","2":"5","3":"707.95"},{"1":"2013","2":"4","3":"492.00"},{"1":"2013","2":"3","3":"483.39"},{"1":"2013","2":"2","3":"523.88"},{"1":"2013","2":"1","3":"391.59"},{"1":"2012","2":"52","3":"503.06"},{"1":"2012","2":"51","3":"339.50"},{"1":"2012","2":"50","3":"684.36"},{"1":"2012","2":"49","3":"777.83"},{"1":"2012","2":"48","3":"186.13"},{"1":"2012","2":"47","3":"741.18"},{"1":"2012","2":"46","3":"660.64"},{"1":"2012","2":"45","3":"524.98"},{"1":"2012","2":"44","3":"639.41"},{"1":"2012","2":"43","3":"291.01"},{"1":"2012","2":"42","3":"345.12"},{"1":"2012","2":"41","3":"577.83"},{"1":"2012","2":"40","3":"489.52"},{"1":"2012","2":"39","3":"460.29"},{"1":"2012","2":"38","3":"564.06"},{"1":"2012","2":"37","3":"633.14"},{"1":"2012","2":"36","3":"361.34"},{"1":"2012","2":"35","3":"316.40"},{"1":"2012","2":"34","3":"486.67"},{"1":"2012","2":"33","3":"447.26"},{"1":"2012","2":"32","3":"719.79"},{"1":"2012","2":"31","3":"539.40"},{"1":"2012","2":"30","3":"787.48"},{"1":"2012","2":"29","3":"585.29"},{"1":"2012","2":"28","3":"368.31"},{"1":"2012","2":"27","3":"448.99"},{"1":"2012","2":"26","3":"430.29"},{"1":"2012","2":"25","3":"526.30"},{"1":"2012","2":"24","3":"716.21"},{"1":"2012","2":"23","3":"408.19"},{"1":"2012","2":"22","3":"709.16"},{"1":"2012","2":"21","3":"733.81"},{"1":"2012","2":"20","3":"479.73"},{"1":"2012","2":"19","3":"305.14"},{"1":"2012","2":"18","3":"256.80"},{"1":"2012","2":"17","3":"559.83"},{"1":"2012","2":"16","3":"514.17"},{"1":"2012","2":"15","3":"615.78"},{"1":"2012","2":"14","3":"315.55"},{"1":"2012","2":"13","3":"311.67"},{"1":"2012","2":"12","3":"689.93"},{"1":"2012","2":"11","3":"406.03"},{"1":"2012","2":"10","3":"381.95"},{"1":"2012","2":"9","3":"912.25"},{"1":"2012","2":"8","3":"615.74"},{"1":"2012","2":"7","3":"503.52"},{"1":"2012","2":"6","3":"507.17"},{"1":"2012","2":"5","3":"511.45"},{"1":"2012","2":"4","3":"405.77"},{"1":"2012","2":"3","3":"685.52"},{"1":"2012","2":"2","3":"640.05"},{"1":"2012","2":"1","3":"629.72"},{"1":"2011","2":"52","3":"528.66"},{"1":"2011","2":"51","3":"493.89"},{"1":"2011","2":"50","3":"860.76"},{"1":"2011","2":"49","3":"624.89"},{"1":"2011","2":"48","3":"643.95"},{"1":"2011","2":"47","3":"545.76"},{"1":"2011","2":"46","3":"374.14"},{"1":"2011","2":"45","3":"647.43"},{"1":"2011","2":"44","3":"212.73"},{"1":"2011","2":"43","3":"781.82"},{"1":"2011","2":"42","3":"408.88"},{"1":"2011","2":"41","3":"143.54"},{"1":"2011","2":"40","3":"491.72"},{"1":"2011","2":"39","3":"416.09"},{"1":"2011","2":"38","3":"170.68"},{"1":"2011","2":"37","3":"860.51"},{"1":"2011","2":"36","3":"594.05"},{"1":"2011","2":"35","3":"34.41"},{"1":"2011","2":"34","3":"194.80"},{"1":"2011","2":"33","3":"138.65"},{"1":"2011","2":"32","3":"189.96"},{"1":"2011","2":"31","3":"405.98"},{"1":"2011","2":"30","3":"461.73"},{"1":"2011","2":"29","3":"769.48"},{"1":"2011","2":"28","3":"542.12"},{"1":"2011","2":"27","3":"577.10"},{"1":"2011","2":"26","3":"502.09"},{"1":"2011","2":"25","3":"519.10"},{"1":"2011","2":"24","3":"446.20"},{"1":"2011","2":"23","3":"596.40"},{"1":"2011","2":"22","3":"721.24"},{"1":"2011","2":"21","3":"300.41"},{"1":"2011","2":"20","3":"806.08"},{"1":"2011","2":"19","3":"181.74"},{"1":"2011","2":"18","3":"94.31"},{"1":"2011","2":"17","3":"638.20"},{"1":"2011","2":"16","3":"674.23"},{"1":"2011","2":"15","3":"468.03"},{"1":"2011","2":"14","3":"439.36"},{"1":"2011","2":"13","3":"441.86"},{"1":"2011","2":"12","3":"351.94"},{"1":"2011","2":"11","3":"139.20"},{"1":"2011","2":"10","3":"715.28"},{"1":"2011","2":"9","3":"393.87"},{"1":"2011","2":"8","3":"433.00"},{"1":"2011","2":"7","3":"630.58"},{"1":"2011","2":"6","3":"500.34"},{"1":"2011","2":"5","3":"67.49"},{"1":"2011","2":"4","3":"523.16"},{"1":"2011","2":"3","3":"466.84"},{"1":"2011","2":"2","3":"247.73"},{"1":"2011","2":"1","3":"615.09"},{"1":"2010","2":"53","3":"866.55"},{"1":"2010","2":"52","3":"545.29"},{"1":"2010","2":"51","3":"362.41"},{"1":"2010","2":"50","3":"109.89"},{"1":"2010","2":"49","3":"410.12"},{"1":"2010","2":"48","3":"503.18"},{"1":"2010","2":"47","3":"488.38"},{"1":"2010","2":"46","3":"236.37"},{"1":"2010","2":"45","3":"406.30"},{"1":"2010","2":"44","3":"695.70"},{"1":"2010","2":"43","3":"449.25"},{"1":"2010","2":"42","3":"601.32"},{"1":"2010","2":"41","3":"680.82"},{"1":"2010","2":"40","3":"729.77"},{"1":"2010","2":"39","3":"221.39"},{"1":"2010","2":"38","3":"853.59"},{"1":"2010","2":"37","3":"483.41"},{"1":"2010","2":"36","3":"684.06"},{"1":"2010","2":"35","3":"797.57"},{"1":"2010","2":"34","3":"706.52"},{"1":"2010","2":"33","3":"633.47"},{"1":"2010","2":"32","3":"499.58"},{"1":"2010","2":"31","3":"847.04"},{"1":"2010","2":"30","3":"624.45"},{"1":"2010","2":"29","3":"523.20"},{"1":"2010","2":"28","3":"762.75"},{"1":"2010","2":"27","3":"661.43"},{"1":"2010","2":"26","3":"762.43"},{"1":"2010","2":"25","3":"358.09"},{"1":"2010","2":"24","3":"468.11"},{"1":"2010","2":"23","3":"340.10"},{"1":"2010","2":"22","3":"615.42"},{"1":"2010","2":"21","3":"126.22"},{"1":"2010","2":"20","3":"509.89"},{"1":"2010","2":"19","3":"641.49"},{"1":"2010","2":"18","3":"722.94"},{"1":"2010","2":"17","3":"371.80"},{"1":"2010","2":"16","3":"506.25"},{"1":"2010","2":"15","3":"509.04"},{"1":"2010","2":"14","3":"335.64"},{"1":"2010","2":"13","3":"627.40"},{"1":"2010","2":"12","3":"642.25"},{"1":"2010","2":"11","3":"767.57"},{"1":"2010","2":"10","3":"535.54"},{"1":"2010","2":"9","3":"748.34"},{"1":"2010","2":"8","3":"432.83"},{"1":"2010","2":"7","3":"336.65"},{"1":"2010","2":"6","3":"300.21"},{"1":"2010","2":"5","3":"866.33"},{"1":"2010","2":"4","3":"468.77"},{"1":"2010","2":"3","3":"506.50"},{"1":"2010","2":"2","3":"567.19"},{"1":"2010","2":"1","3":"394.53"},{"1":"2009","2":"52","3":"271.91"},{"1":"2009","2":"51","3":"280.25"},{"1":"2009","2":"50","3":"382.34"},{"1":"2009","2":"49","3":"242.36"},{"1":"2009","2":"48","3":"787.93"},{"1":"2009","2":"47","3":"556.29"},{"1":"2009","2":"46","3":"595.29"},{"1":"2009","2":"45","3":"484.30"},{"1":"2009","2":"44","3":"354.62"},{"1":"2009","2":"43","3":"532.02"},{"1":"2009","2":"42","3":"294.38"},{"1":"2009","2":"41","3":"676.31"},{"1":"2009","2":"40","3":"602.98"},{"1":"2009","2":"39","3":"410.89"},{"1":"2009","2":"38","3":"692.60"},{"1":"2009","2":"37","3":"385.12"},{"1":"2009","2":"36","3":"244.51"},{"1":"2009","2":"35","3":"485.35"},{"1":"2009","2":"34","3":"348.76"},{"1":"2009","2":"33","3":"521.08"},{"1":"2009","2":"32","3":"175.56"},{"1":"2009","2":"31","3":"222.91"},{"1":"2009","2":"30","3":"333.30"},{"1":"2009","2":"29","3":"694.92"},{"1":"2009","2":"28","3":"920.76"},{"1":"2009","2":"27","3":"682.59"},{"1":"2009","2":"26","3":"353.10"},{"1":"2009","2":"25","3":"564.34"},{"1":"2009","2":"24","3":"457.46"},{"1":"2009","2":"23","3":"347.59"},{"1":"2009","2":"22","3":"643.73"},{"1":"2009","2":"21","3":"765.02"},{"1":"2009","2":"20","3":"439.12"},{"1":"2009","2":"19","3":"207.00"},{"1":"2009","2":"18","3":"402.64"},{"1":"2009","2":"17","3":"754.02"},{"1":"2009","2":"16","3":"480.76"},{"1":"2009","2":"15","3":"792.30"},{"1":"2009","2":"14","3":"300.74"},{"1":"2009","2":"13","3":"421.93"},{"1":"2009","2":"12","3":"76.04"},{"1":"2009","2":"11","3":"616.44"},{"1":"2009","2":"10","3":"859.39"},{"1":"2009","2":"9","3":"401.86"},{"1":"2009","2":"8","3":"770.38"},{"1":"2009","2":"7","3":"572.67"},{"1":"2009","2":"6","3":"431.24"},{"1":"2009","2":"5","3":"370.97"},{"1":"2009","2":"4","3":"344.01"},{"1":"2009","2":"3","3":"703.31"},{"1":"2009","2":"2","3":"265.57"},{"1":"2009","2":"1","3":"657.35"},{"1":"2008","2":"52","3":"224.31"},{"1":"2008","2":"51","3":"503.84"},{"1":"2008","2":"50","3":"543.38"},{"1":"2008","2":"49","3":"359.12"},{"1":"2008","2":"48","3":"827.67"},{"1":"2008","2":"47","3":"391.40"},{"1":"2008","2":"46","3":"564.23"},{"1":"2008","2":"45","3":"711.33"},{"1":"2008","2":"44","3":"760.51"},{"1":"2008","2":"43","3":"601.01"},{"1":"2008","2":"42","3":"569.72"},{"1":"2008","2":"41","3":"466.38"},{"1":"2008","2":"40","3":"874.74"},{"1":"2008","2":"39","3":"691.87"},{"1":"2008","2":"38","3":"687.64"},{"1":"2008","2":"37","3":"211.19"},{"1":"2008","2":"36","3":"644.95"},{"1":"2008","2":"35","3":"566.74"},{"1":"2008","2":"34","3":"422.38"},{"1":"2008","2":"33","3":"420.53"},{"1":"2008","2":"32","3":"343.71"},{"1":"2008","2":"31","3":"829.28"},{"1":"2008","2":"30","3":"782.65"},{"1":"2008","2":"29","3":"552.82"},{"1":"2008","2":"28","3":"244.43"},{"1":"2008","2":"27","3":"717.06"},{"1":"2008","2":"26","3":"600.65"},{"1":"2008","2":"25","3":"822.99"},{"1":"2008","2":"24","3":"726.69"},{"1":"2008","2":"23","3":"195.46"},{"1":"2008","2":"22","3":"308.70"},{"1":"2008","2":"21","3":"544.75"},{"1":"2008","2":"20","3":"582.41"},{"1":"2008","2":"19","3":"531.08"},{"1":"2008","2":"18","3":"221.87"},{"1":"2008","2":"17","3":"543.86"},{"1":"2008","2":"16","3":"748.42"},{"1":"2008","2":"15","3":"834.75"},{"1":"2008","2":"14","3":"390.64"},{"1":"2008","2":"13","3":"528.87"},{"1":"2008","2":"12","3":"534.16"},{"1":"2008","2":"11","3":"781.97"},{"1":"2008","2":"10","3":"691.92"},{"1":"2008","2":"9","3":"485.90"},{"1":"2008","2":"8","3":"793.48"},{"1":"2008","2":"7","3":"235.64"},{"1":"2008","2":"6","3":"409.82"},{"1":"2008","2":"5","3":"476.17"},{"1":"2008","2":"4","3":"1019.81"},{"1":"2008","2":"3","3":"686.23"},{"1":"2008","2":"2","3":"153.75"},{"1":"2008","2":"1","3":"507.87"},{"1":"2007","2":"52","3":"477.04"},{"1":"2007","2":"51","3":"529.56"},{"1":"2007","2":"50","3":"294.44"},{"1":"2007","2":"49","3":"706.85"},{"1":"2007","2":"48","3":"469.08"},{"1":"2007","2":"47","3":"483.91"},{"1":"2007","2":"46","3":"673.29"},{"1":"2007","2":"45","3":"680.22"},{"1":"2007","2":"44","3":"719.51"},{"1":"2007","2":"43","3":"641.74"},{"1":"2007","2":"42","3":"408.01"},{"1":"2007","2":"41","3":"369.03"},{"1":"2007","2":"40","3":"657.39"},{"1":"2007","2":"39","3":"587.68"},{"1":"2007","2":"38","3":"253.37"},{"1":"2007","2":"37","3":"124.62"},{"1":"2007","2":"36","3":"322.66"},{"1":"2007","2":"35","3":"275.38"},{"1":"2007","2":"34","3":"638.33"},{"1":"2007","2":"33","3":"159.67"},{"1":"2007","2":"32","3":"750.61"},{"1":"2007","2":"31","3":"273.25"},{"1":"2007","2":"30","3":"315.53"},{"1":"2007","2":"29","3":"785.37"},{"1":"2007","2":"28","3":"424.98"},{"1":"2007","2":"27","3":"668.47"},{"1":"2007","2":"26","3":"652.08"},{"1":"2007","2":"25","3":"742.71"},{"1":"2007","2":"24","3":"367.85"},{"1":"2007","2":"23","3":"934.34"},{"1":"2007","2":"22","3":"274.60"},{"1":"2007","2":"21","3":"664.12"},{"1":"2007","2":"20","3":"586.02"},{"1":"2007","2":"19","3":"292.79"},{"1":"2007","2":"18","3":"674.06"},{"1":"2007","2":"17","3":"499.17"},{"1":"2007","2":"16","3":"623.13"},{"1":"2007","2":"15","3":"475.23"},{"1":"2007","2":"14","3":"482.69"},{"1":"2007","2":"13","3":"693.64"},{"1":"2007","2":"12","3":"354.58"},{"1":"2007","2":"11","3":"1053.20"},{"1":"2007","2":"10","3":"203.79"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><img src="_main_files/figure-html/unnamed-chunk-101-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-101-2.png" width="672" /></p>
+</div>
+<div id="definitions" class="section level3">
+<h3><span class="header-section-number">4.1.6</span> Definitions</h3>
+<ul>
+<li><strong>Sample Space</strong>: The set of all possible outcomes of a particular experiment is called the sample space of the experiment <span class="citation">(Casella and Berger <a href="#ref-cbSI">2002</a>, 1)</span>. Denoted <span class="math inline">\(S\)</span>.</li>
+<li><strong>Random Variable</strong>: A function from a sample space <span class="math inline">\(\left(S\right)\)</span> into the <a href="https://en.wikipedia.org/wiki/Real_number">real numbers</a> <span class="citation">(Casella and Berger <a href="#ref-cbSI">2002</a>, 27)</span>. Denoted <span class="math inline">\(X\)</span>.</li>
+<li><strong>Cumulative distribution function</strong>: A function that defines the probability that a random variable <span class="math inline">\(\left(X\right)\)</span> is less than or equal to an outcome (<span class="math inline">\(x\)</span>) for all possible outcomes <span class="citation">(Casella and Berger <a href="#ref-cbSI">2002</a>, 29)</span>. Denoted</li>
+</ul>
+<p><span class="math display">\[
+  F_X(x) = P_X(X \leq x), \text{ for all } x
+  \]</span></p>
+<ul>
+<li><strong>Probability mass/density function</strong>: A function that defines the probability that a random variable <span class="math inline">\(\left(X\right)\)</span> is equal to an outcome (<span class="math inline">\(x\)</span>) for all possible outcomes. Denoted</li>
+</ul>
+<p><span class="math display">\[
+  f_X(x)=P(X = x), \text{ for all } x
+  \]</span></p>
+<p><strong>Go to:</strong></p>
+<ul>
+<li><p><a href="random-variables-probability-distributions.html#tossing-coins">Tossing Coins</a></p></li>
+<li><p><a href="random-variables-probability-distributions.html#sum-of-two-dice">Sum of two dice</a></p></li>
+<li><p><a href="random-variables-probability-distributions.html#discrete-random-variables">Discrete Random Variables</a></p></li>
+<li><p><a href="random-variables-probability-distributions.html#continuous-case">Continuous case</a></p></li>
+</ul>
+
+</div>
+</div>
+<div id="probability-distributions" class="section level2">
+<h2><span class="header-section-number">4.2</span> Probability Distributions</h2>
+<p>This chapter is primarily based on:</p>
+<ul>
+<li>Casella, G., &amp; Berger, R. L. (2002). Statistical inference (Vol. 2). Pacific Grove, CA: Duxbury (<strong>chapters 2&amp;3</strong>).</li>
+</ul>
+<div id="introduction" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Introduction</h3>
+<p>In the previous chapter we talked about probability density/mass functions (PDFs/PMFs) and cumulative distribution functions (CDFs). We also discussed plots of those functions. A natural question to ask is “where do these distributions come from?”. It turns out that many random variables follow well known distributions, the properties of which have been studied extensively. Furthermore, many observations in the real world (e.g. height data) can also be approximated with theoretical distributions. Let’s consider our coin toss example. We did not actually toss thousands of coins to come up with their probability distribution. We modeled the population of coin tosses using their theoretical distribution (the <a href="random-variables-probability-distributions.html#binomial-distribution">binomial distribution</a>).</p>
+<p>We say that a random variable <span class="math inline">\(X\)</span> <em>follows</em> or <em>has</em> some distribution. Distributions have parameters that influence the shape of the distribution function and if we do not explicitly specify the parameters we usually speak of a <em>family of distributions</em>. If <span class="math inline">\(X\)</span> follows the distribution <span class="math inline">\(D\)</span> and <span class="math inline">\(a,\ b\)</span> are its parameters, we write:</p>
+<p><span class="math display">\[
+X \sim D(a, b)
+\]</span></p>
+<p>Two important properties of a distribution are the <em>expected value</em> and the <em>variance</em>. We usually want to know what outcome we expect on average given a distribution. For this, we can use the concept of an expected value, denoted <span class="math inline">\(\mathbb{E}[X]\)</span>. On the other hand, the variance <span class="math inline">\(\left(Var(X)\right)\)</span> gives us a measure of spread around the expected value. If the variance is high, values far away from the expected value are more likely. Similarly, if the variance is low, values far away from the mean are less likely. These concepts may seem somewhat abstract, but will become clear after a few examples.</p>
+<p>We will now introduce common families of distributions, starting again with discrete examples and then moving on to the continuous case.</p>
+</div>
+<div id="discrete-distributions" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Discrete Distributions</h3>
+<p>For discrete distributions the expected value is defined as the sum of all possible values weighted by their respective probability. Intuitively, values that are very unlikely get less weight and those that are very likely get more weight. This can be written as</p>
+<p><span class="math display">\[
+    \mathbb{E}[X] = \sum_{x} x f_{X}(x) = \sum_x x P(X = x) 
+\]</span></p>
+<p>The variance is defined as</p>
+<p><span class="math display">\[
+Var(X) = \mathbb{E}\left[\left(X - \mathbb{E}[X] \right)^2 \right] = \mathbb{E}[X^{2}] - ( \mathbb{E}[X])^{2}
+\]</span></p>
+<p>This is the expected squared deviation from the expected value. Taking the squared deviation always yields a positive value. Additionally, larger deviations are emphasized. This is visualized in the plot below, which shows the transformation from the deviation from the expected value to the squared deviation from the expected value. Some observations: The tosses that do not deviate from the mean and those that only deviate by 1 stay the same when squared. Those that are <span class="math inline">\(-1\)</span> become <span class="math inline">\(+1\)</span> and all others become positive and increase compared to their absolute value.</p>
+<center>
+<img src="sqrerror.gif" alt="Deviation to squared error" />
+</center>
+<p><a id="binom"></a></p>
+<div id="binomial-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.2.1</span> Binomial Distribution</h4>
+<p>Our first example of a discrete distribution has to do with coin tosses again. It turns out that the random variable “number of heads observed” follows a very common distribution, the <strong>binomial distribution</strong>. This can be written as follows: <span class="math inline">\(X\)</span> being the number of heads observed,</p>
+<p><span class="math display">\[
+X \sim binomial(n, p)
+\]</span></p>
+<p>where <span class="math inline">\(n\)</span> is the number of coins and <span class="math inline">\(p\)</span> is the probability of observing heads. Here <span class="math inline">\(n,\ p\)</span> are the <em>parameters</em> of the <em>binomial</em> distribution.</p>
+<p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_binom/" style="border: medium; width: 800px; height: 400px">
+</iframe>
+</p>
+<p>The binomial distribution can be used whenever you conduct an experiment composed of multiple trials where there are two or more possible outcomes, one of which is seen as “success”. The idea is based on the concept of <a href="https://en.wikipedia.org/wiki/Bernoulli_trial">Bernoulli trials</a>, which are basically a binomial distribution with <span class="math inline">\(n=1\)</span>. A binomial distribution can also be used for dice, if we are interested in the number of dice that show a particular value, say <span class="math inline">\(1\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li>Throw any number of dice, say <span class="math inline">\(5\)</span>.</li>
+<li>For each die check if it shows <span class="math inline">\(1\)</span>.</li>
+<li>If yes add 1, if no, do not add anything.</li>
+<li>The random variable is the final number and follows a binomial distribution with <span class="math inline">\(p = \frac{1}{6},\ n = 5\)</span>.</li>
+</ol>
+<p>So, given the parameters <span class="math inline">\(p,\ n\)</span> of the binomial distribution what are the expected value and the variance?</p>
+<p>Let’s start with the coin toss with a fair coin: Let <span class="math inline">\(p = 0.5,\ n = 1\)</span> and <span class="math inline">\(X_{0}\)</span> is again the number of heads observed. We sum over all possibilities and weigh by the probability:</p>
+<p><span class="math display">\[
+0.5 * 1 + 0.5 * 0 = 0.5 = \mathbb{E}[X_{0}]
+\]</span></p>
+<p>What happens if we change the probability of observing heads to <span class="math inline">\(0.8\)</span>? Then the random variable <span class="math inline">\(X_1\)</span> has expectation</p>
+<p><span class="math display">\[ 
+0.8 * 1 + 0.2 * 0 = 0.8 = \mathbb{E}[X_{1}]
+\]</span></p>
+<p>What happens if we change the number of coins to <span class="math inline">\(2\)</span> and keep <span class="math inline">\(p = 0.8\)</span>? Then the random variable <span class="math inline">\(X_2\)</span> has expectation</p>
+<p><span class="math display">\[
+\underbrace{0.8 * 1 + 0.2 * 0}_{\text{first coin}} + \underbrace{0.8 * 1 + 0.2 * 0}_{\text{second coin}} = 2 * 0.8 = 1.6 = \mathbb{E}[X_{2}]
+\]</span></p>
+<p>In general you can just sum up the probability of “success” of all the coins tossed. If <span class="math inline">\(X\sim binomial(n,\ p)\)</span> then</p>
+<p><span class="math display">\[
+\mathbb{E}[X] = n * p
+\]</span></p>
+<p>for any appropriate <span class="math inline">\(p\)</span> and <span class="math inline">\(n\)</span>.</p>
+<p>The variance is the expected squared deviation from the expected value. Let’s look at a single toss of a fair coin again (<span class="math inline">\(p = 0.5,\ n = 1\)</span>). We already know the expected value is <span class="math inline">\(\mathbb{E}[X_0] = 0.5\)</span>. When we toss the coin we could get heads such that <span class="math inline">\(x = 1\)</span> with probability <span class="math inline">\(p = 0.5\)</span> or we could get tails such that <span class="math inline">\(x = 0\)</span> with probability <span class="math inline">\(1-p = 0.5\)</span>. In either case we deviate from the expected value by <span class="math inline">\(0.5\)</span>. Now we use the definition of the expectation as the weighted sum and the fact that we are interested in the squared deviation</p>
+<p><span class="math display">\[
+Var(X_0) = 0.5 * (0.5^2) + 0.5 * (0.5^2) = 2 * 0.5 * (0.5^2) = 0.5 - 0.5^2 = 0.25
+\]</span></p>
+<p>What happens if we change the probability of observing heads to <span class="math inline">\(0.8\)</span>? Now the expected value is <span class="math inline">\(\mathbb{E}[X_{1}] = 0.8\)</span> and we deviate from it by <span class="math inline">\(0.2\)</span> if we get heads and by <span class="math inline">\(0.8\)</span> if we get tails. We get</p>
+<p><span class="math display">\[
+Var(X_1) = \underbrace{0.8}_{p(h)} * \underbrace{(0.2^2)}_{deviation} + 0.2 * (0.8^2) = 0.8 - 0.8^2 = 0.16
+\]</span></p>
+<p>Generally, for any <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>, the variance of the binomial distribution is given by</p>
+<p><span class="math display">\[
+Var(X_i) = n * (p-p^2)
+\]</span></p>
+<p>or, equivalently:</p>
+<p><span class="math display">\[
+n * (p - p^2) = np - np^2 = np * (1-p) = Var(X_i)
+\]</span></p>
+<p>The derivation of this equation can be found in the <a href="random-variables-probability-distributions.html#appendix">Appendix</a>.</p>
+<p>You can work with the binomial distribution in R using the <code>binom</code> family of functions. In R, a distribution usually has four different functions associated with it, differentiated by the letter it begins with. The four letters these functions start with are <code>r</code>, <code>q</code>, <code>p</code> and <code>d</code>.</p>
+<ul>
+<li><code>rbinom()</code>: Returns <code>r</code>andom draws from the binomial distribution with specified <span class="math inline">\(p\)</span> and <span class="math inline">\(n\)</span> values.</li>
+<li><code>pbinom()</code>: Returns the cumulative <code>p</code>robability of a value, i.e. how likely is the specified number or less, given <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>.</li>
+<li><code>qbinom()</code>: Returns the <code>q</code>uantile (See <a href="https://en.wikipedia.org/wiki/Quantile_function">Quantile Function</a>) of a specified probability value. This can be understood as the inverse of the <code>pbinom()</code> function.</li>
+<li><code>dbinom()</code>: Returns the value of the probability mass function, evaluated at the specified value (in case of a continuous distribution, it evaluates the probability <code>d</code>ensity function).</li>
+</ul>
+<iframe width="100%" height="600" src="https://rdrr.io/snippets/embed/?code=print(%22Random%20sample%20with%2010%20observations%3A%22)%0Arbinom(10%2C%202%2C%20%20prob%20%3D%200.8)%20%0Aprint(%22Quantile%20function%3A%22)%0Aqbinom(0.37%2C%202%2C%20prob%20%3D%200.8)%20%0Aprint(%22CDF%3A%22)%20%0Apbinom(1%2C%202%2C%20prob%20%3D%200.8)%0Aprint(%22PMF%3A%22)%20%0Adbinom(2%2C%202%2C%20prob%20%3D%200.8)%0A" frameborder="0">
+</iframe>
+</div>
+<div id="discrete-uniform-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.2.2</span> Discrete Uniform Distribution</h4>
+<p>The discrete uniform distribution assigns the same probability to all possible values. Below you can find the PMF and CDF of a uniform distribution that starts at one and goes to ten.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-102-2.png" width="672" /></p>
+<p>To calculate the expected value of this distribution let’s first look at how to easily sum the numbers from <span class="math inline">\(1\)</span> to some arbitrary <span class="math inline">\(N\)</span>. That is <span class="math inline">\(1 + 2 + 3 + \dots + N =\)</span> ?. Let <span class="math inline">\(S = 1 + 2 + 3 + \dots + N = \sum_{i = 1}^N i\)</span>. Then</p>
+<span class="math display">\[\begin{align*}
+S &amp;= 1 + 2 + 3 + \dots + (N-2) + (N-1) + N \\
+\text{This can be rearranged to:} \\
+S &amp;= N + (N-1) + (N-2) + \dots + 3 + 2 + 1 \\
+\text{Summing the two yields:} \\
+2 * S &amp;= (1 + N) + (2 + N - 1) + (3 + N - 2) + \dots + (N -2 + 3) + (N - 1 + 2) + (N + 1)\\
+&amp;= (1 + N) + (1+N) + (1+N) + \dots + (1+N) + (1+N) + (1+N) \\
+&amp;= N * (1 + N) = 2 * S \\
+\text{It follows that:}\\
+S&amp;= \frac{N * (1 + N)}{2}
+\end{align*}\]</span>
+<p>The weight given to each possible outcome must be equal and is thus <span class="math inline">\(p = \frac{1}{N}\)</span>. Recall that the expected value is the weighted sum of all possible outcomes. Thus if <span class="math inline">\(X \sim discrete\ uniform(N)\)</span> <span class="math display">\[
+\mathbb{E}[X] = \sum_{i = 1}^N p * i = \sum_{i = 1}^N \frac{1}{N}* i = \frac{1}{N} \sum_{i = 1}^N i = \frac{1}{N} * S = \frac{1}{N} * \frac{N * (1 + N)}{2} = \frac{(1 + N)}{2}
+\]</span></p>
+<p>Figuring out the variance is a bit more involved. Since we already know <span class="math inline">\(\mathbb{E}[X]\)</span> we still need <span class="math inline">\(\mathbb{E}[X^{2}]\)</span>. Again we apply our equal weight to all the elements and get</p>
+<p><span class="math display">\[
+\mathbb{E}[X^{2}] = \sum_{x = 1}^n x^2 * \frac{1}{N} = \frac{1}{N} \sum_{x = 1}^N x^2 
+\]</span></p>
+<p>Therefore we need to find out what <span class="math inline">\(1 + 4 + 9 + 16 + \dots + N^2\)</span> is equal to. Luckily, <a href="https://www.khanacademy.org/math/calculus-home/series-calc/series-basics-challenge/v/sum-n-squares-2">there exists a formula for that</a>:</p>
+<p><span class="math display">\[
+\sum_{x=1}^N x^2 = \frac{N * (N + 1) * (2*N + 1)}{6}
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+\mathbb{E}[X^{2}] = \frac{(N + 1) * (2*N + 1)}{6}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2 = \frac{(N + 1) * (2*N + 1)}{6} - \left(\frac{(1 + N)}{2}\right)^{2} = \frac{(N+1) * (N-1)}{12}
+\]</span></p>
+<p>Note that these derivations are only valid for a uniform distribution that starts at one. However the generalization to a distribution with an arbitrary starting point is <a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution">fairly straightforward</a>.</p>
+</div>
+</div>
+<div id="continuous-distributions" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Continuous Distributions</h3>
+<p>As mentioned in the last chapter, a distribution is continuous if the cumulative distribution function is a continuous function (no steps!).</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
+<p>As a consequence we cannot simply sum up values to get an expected value or a variance. We are now dealing with real numbers and thus there are infinitely many values between any two arbitrary numbers that are not equal.</p>
+<p>Therefore, instead of the sum we have to evaluate the integral of all the possible values weighted by the probability density function (the continuous equivalent to the probability mass function).</p>
+<p><span class="math display">\[
+\mathbb{E}[X] = \int_{-∞}^{∞} x f_{X}(x) dx
+\]</span></p>
+<p>where <span class="math inline">\(f_X(x)\)</span> is the density of the random variable <span class="math inline">\(X\)</span> evaluated at some point <span class="math inline">\(x\)</span> and the integral over <span class="math inline">\(x\)</span> (“<span class="math inline">\(dx\)</span>”) has the same purpose as the sum over <span class="math inline">\(x\)</span> before.</p>
+<div id="uniform-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.3.1</span> Uniform Distribution</h4>
+<p>To illustrate the concept of the integral the continuous uniform distribution provides a simple example. As in the discrete case it assigns equal weight to each equally sized interval in the area on which the variable is defined (<span class="math inline">\([a, b]\)</span>). Why each interval and not each value? Since there are infinitely many values between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> (again due to real numbers) each individual value cannot be assigned a probability small enough for all of the probabilities to sum to <span class="math inline">\(1\)</span> (which is a basic requirement of a probability). Thus we can only assign a probability to an interval, e.g. <span class="math inline">\([0, 0.001]\)</span>, of which only <em>finitely</em> many exist between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, e.g. <span class="math inline">\(a = -2\)</span> and <span class="math inline">\(b = 1\)</span>. In this example there exist <span class="math inline">\(3,000\)</span> intervals of values <span class="math inline">\([x, x + 0.001]\)</span>. Since we are dealing with intervals the probability density can be thought of as the area under the PDF for a given interval or the sum of the areas of <em>very small</em> intervals within the chosen interval.</p>
+<p>The PDF is defined as</p>
+<p><span class="math display">\[
+f_X(x) = \frac{1}{b-a} \text{ if } x \in [a, b], \ 0 \text{ otherwise}
+\]</span></p>
+<p>That is, the weight <span class="math inline">\(\frac{1}{b-a}\)</span> is assign to values in the interval of interest and all other values have weight <span class="math inline">\(0\)</span>. As already mentioned <em>all</em> values between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> have to be considered. Thus, in order to calculate the expected value and the variance we have to integrate over <span class="math inline">\(x\)</span>.</p>
+<p><span class="math display">\[
+\mathbb{E}[X] = ∫_a^b x * \frac{1}{b-a} dx = \frac{b+a}{2}
+\]</span></p>
+<p>If you plug in <span class="math inline">\(a = 1\)</span> in the formula above you can see the relation to the discrete uniform distribution and the similar role of integral and summation. Notice also how the expectation operator “translates” to the integral. For the expectation of <span class="math inline">\(X\)</span> we integrate over all <span class="math inline">\(x\)</span>, the possible realizations of <span class="math inline">\(X\)</span>, weighted by the PDF of <span class="math inline">\(X\)</span>. Now, in order to get the variance we want to calculate the expected squared deviation from the expected value.</p>
+<span class="math display">\[\begin{align*}
+Var(X) &amp;= \mathbb{E}\left[(X - \mathbb{E}[X])^{2} \right] = \mathbb{E}\left[\left(X - \frac{b+a}{2}\right)^2\right] \\
+&amp;= ∫_a^b \left(x - \frac{b+a}{2}\right)^2 * \frac{1}{b-a} dx = \frac{(b-a)^2}{12}
+\end{align*}\]</span>
+<p>Clearly the Uniform distribution can be used whenever we want to model a population in which all possible outcomes are equally likely.</p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_uniform/" style="border: none; width: 800px; height: 650px">
+</iframe>
+</div>
+<div id="normal-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.3.2</span> Normal distribution</h4>
+<p>The normal distribution is probably the most widely known one. Its PDF is the famous bell curve. It has two parameters <span class="math inline">\(\mu\)</span>, and <span class="math inline">\(\sigma^2\)</span>. <span class="math inline">\(\mu\)</span> is the mean and <span class="math inline">\(\sigma^2\)</span> the variance of the distribution. In the case of <span class="math inline">\(\mu = 0,\ \sigma^2 = 1\)</span> it is called the <em>standard normal distribution</em>.</p>
+<p>The Normal distribution has a few nice properties. It is symmetric around the mean which is nice whenever we want to express the believe that values are less likely the further we get away from the mean but we do not care in which direction. In addition, it can be used to approximate many other distributions including the Binomial distribution under certain conditions (see <a href="#central-limit-theorem">Central Limit Theorem</a>). The normal distribution can be <em>standardized</em>, i.e. given any random normal variable, <span class="math inline">\(X\sim N(\mu, \sigma^2)\)</span>, we can get a <em>standard normal</em> variable <span class="math inline">\(Y \sim N(0, 1)\)</span> where <span class="math inline">\(Y = \frac{X - \mu}{\sigma}\)</span>. This means that we can perform calculations using the standard normal distribution and then recover the results for any normal distribution since for a standard normal <span class="math inline">\(Y\sim N(0,1)\)</span> we can get to any <span class="math inline">\(X \sim N(\mu, \sigma^{2})\)</span> by defining <span class="math inline">\(X = \mu + \sigma * Y\)</span> by just rearranging the formula above. In the application below you can see the PDF and CDF of the normal distribution and set a mean and a standard deviation. Try to get an intuition about why this simple transformation works. First change only the mean and observe that the shape of the PDF stays the same and its <em>location</em> is shifted. Starting from a normal distribution with <span class="math inline">\(μ = 0\)</span> and setting <span class="math inline">\(\mu = 4\)</span> is equivalent to adding <span class="math inline">\(4\)</span> to each value (see table of percentiles). Similarly changing the standard deviation from <span class="math inline">\(σ = 1\)</span> to <span class="math inline">\(σ = 2,\ 3,\ 4, \dots\)</span> is equivalent to multiplying each value with <span class="math inline">\(2,\ 3,\ 4, \dots\)</span>.</p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_normal/" style="border: none; width: 800px; height: 550px">
+</iframe>
+<p>The normal PDF is defined as</p>
+<p><span class="math display">\[
+f(x | μ, σ) = \frac{1}{\sqrt{2πσ^{2}}} e^{-\frac{1}{2}\frac{(x-\mu)^2}{σ^2}}
+\]</span></p>
+<p>The first part <span class="math inline">\(\left(\frac{1}{\sqrt{2\piσ^2}}\right)\)</span> scales the density down at each point as the standard deviation is increased because <span class="math inline">\(\sigma\)</span> is in the denominator. When you increase the standard deviation in the application above you will see that the density gets lower on the whole range. Intuitively the total mass of <span class="math inline">\(1\)</span> needs to be distributed over more values and is thus less in each region. The second part <span class="math inline">\(\left(e^{-\frac{1}{2}\frac{(x-μ)^2}{\sigma^2}}\right)\)</span> re-scales regions based on how far they are away from the mean due to the <span class="math inline">\((x-\mu)^2\)</span> part. Notice that values further away from the mean are re-scaled more due to this. The negative sign in the exponent means that the scaling is downward. <span class="math inline">\(\sigma^2\)</span> in the denominator tells us that this scaling is reduced for higher <span class="math inline">\(\sigma^2\)</span> and “stronger” for lower <span class="math inline">\(\sigma^2\)</span>. In other words: as <span class="math inline">\(\sigma\)</span> is increased regions further away from the mean get more probability density. If the standard deviation is set to <span class="math inline">\(1\)</span> for example there is almost no mass for values that deviate from the mean by more than <span class="math inline">\(2\)</span>. However, if we set <span class="math inline">\(\sigma = 10\)</span> the 75th percentile is at <span class="math inline">\(6.75\)</span>. That is, 25% of values lie above that value. Equivalently, if we take the integral from <span class="math inline">\(6.75\)</span> to <span class="math inline">\(∞\)</span> we will get <span class="math inline">\(0.25\)</span>. Remember that the integral is just the surface area under the curve in that interval. This is also equivalent to saying that if we draw from a normal distribution with <span class="math inline">\(\mu=0,\ \sigma = 10\)</span> the probability of getting <em>at least</em> <span class="math inline">\(6.75\)</span> is 25%.</p>
+<p>The CDF is defined as</p>
+<p><span class="math display">\[
+P(X \leq x) = \frac{1}{\sqrt{2 \pi σ^2}} \int_{-∞}^x e^{-\frac{1}{2}\frac{-(t-μ)^2}{σ^2}} dt
+\]</span></p>
+<p>Notice that this is just the integral of the density up to a point <span class="math inline">\(x\)</span>.</p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_normal_integral/" style="border: none; width: 800px; height: 340px">
+</iframe>
+<p>When using the Normal distribution in R one has to specify the standard deviation <span class="math inline">\(\sigma\)</span> rather than the variance <span class="math inline">\(\sigma^2\)</span>. Of course sometimes it is easier to pass <code>sqrt(variance)</code> instead of typing in the standard deviation. For example if <span class="math inline">\(Var(X) = 2\)</span> then <span class="math inline">\(SD(X) = \sqrt{2} = 1.41421356\dots\)</span> and it is easier to call <code>rnorm(10, 0, sqrt(2))</code> to generate 10 random numbers from a Normal distribution with <span class="math inline">\(\mu = 0, \sigma^2 = 2\)</span>.</p>
+<iframe width="100%" height="600" src="https://rdrr.io/snippets/embed/?code=print(%22Random%20sample%3A%22)%0Arnorm(10%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22Quantile%20function%3A%22)%0Aqnorm(0.75%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22CDF%3A%22)%0Apnorm(6.75%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22PDF%3A%22)%0Adnorm(c(-10%2C%200%2C%2010)%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)" frameborder="0">
+</iframe>
+<!-- <iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 800px; height: 900px"></iframe> -->
+</div>
+<div id="chi2-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.3.3</span> <span class="math inline">\(\chi^2\)</span> Distribution</h4>
+<p>The <span class="math inline">\(\chi^2\)</span> (“Chi-Squared”) distribution has only one parameter, its <em>degrees of freedom</em>. The exact meaning of degrees of freedom will be discussed later when we are talking about hypothesis testing. Roughly they give the number of <em>independent</em> points of information that can be used to estimate a statistic. Naming the parameter of the <span class="math inline">\(\chi^2\)</span> distribution degrees of freedom reflects its importance for hypothesis testing. That is the case since many models assume the data to be normally distributed and the <span class="math inline">\(\chi^2\)</span> distribution is closely related to the normal distribution. Explicitly if <span class="math inline">\(X \sim N(0, 1)\)</span> then <span class="math inline">\(X^2 \sim \chi^2(1)\)</span>. That is, if we have one random variable with standard normal distribution and square it, we get a <span class="math inline">\(\chi^2\)</span> random variable with <span class="math inline">\(1\)</span> degree of freedom. How to exactly count the variables that go into a specific statistic will be discussed at a later point. If multiple squared independent standard normal variables are summed up the degrees of freedom increase accordingly.</p>
+<p><span class="math display">\[
+Q = ∑_{i = 1}^k X_i^2,\ X_{i} \sim N(0,1) \Rightarrow Q \sim \chi^2(k) 
+\]</span></p>
+<p>That is, if we square <span class="math inline">\(k\)</span> normal variables and sum them up the result is a <span class="math inline">\(\chi^2\)</span> variable with <span class="math inline">\(k\)</span> degrees of freedom</p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_chisq/" style="border: none; width: 800px; height: 550px">
+</iframe>
+<p>Calculating the expected value, using the properties of the standard normal distribution, is simple.</p>
+<p>Let <span class="math inline">\(X \sim N(0,1)\)</span>. Then <span class="math inline">\(Var(X) = \mathbb{E}[X^{2}] - \mathbb{E}[X]^2 = \sigma^2 = 1\)</span>. Also, <span class="math inline">\(\mathbb{E}[X] = \mu = 0\)</span>. Therefore, <span class="math inline">\(\mathbb{E}[X^{2}] = 1\)</span>. Thus, the expected value of one squared standard normal variable is <span class="math inline">\(1\)</span>. If we sum <span class="math inline">\(k\)</span> <em>independent</em> normal variables we get</p>
+<p><span class="math display">\[
+\mathbb{E}[Q] = \sum_{i = 1}^k \mathbb{E}[X^{2}] = \sum_{i = 1 }^k 1 = k
+\]</span></p>
+<p>The derivation of the variance is a bit more involved because it involves calculating</p>
+<p><span class="math display">\[
+\mathbb{E}[Q^{2}] = \mathbb{E}\left[\left(X^{2}\right)^2\right] = \mathbb{E}[X^{4}]
+\]</span></p>
+<p>where <span class="math inline">\(Q\sim \chi^2(1)\)</span> and <span class="math inline">\(X \sim N(0,1)\)</span>. However, above we claimed that the Normal distribution has only two parameters, <span class="math inline">\(\mu,\text{ and } \sigma^2\)</span>, for which we only need <span class="math inline">\(\mathbb{E}[X]\)</span> and <span class="math inline">\(\mathbb{E}[X^{2}]\)</span> to fully describe the Normal distribution. These are called the first and second <a target="_blank"  href="https://en.wikipedia.org/wiki/Moment_(mathematics)">moments</a> of the distribution. Equivalently, <span class="math inline">\(\mathbb{E}[X^{4}]\)</span> is the <span class="math inline">\(4^{th}\)</span> moment. We can express the <span class="math inline">\(4^th\)</span> moment in terms of the second moment for any variable that follows a Normal distribution. <span class="math inline">\(\mathbb{E}[X^{4}] = 3 * \sigma^2\)</span> for any Normal variable and thus <span class="math inline">\(\mathbb{E}[X^{4}] = 3\)</span> for Standard Normal variables. Therefore, <span class="math inline">\(\mathbb{E}[Q^{2}] = 3 - \mathbb{E}[Q]^2 = 2\)</span> for <span class="math inline">\(Q \sim \chi^2(1)\)</span>. In general <span class="math inline">\(Var(Q) = 2k\)</span> for <span class="math inline">\(Q \sim \chi^2(k)\)</span> due to the <em>variance sum law</em> which states that the variance of a sum of independent variables is equal to the sum of the variances. Notice that this does not hold if the variables are <strong>not</strong> independent which is why the independence of the Normal variables that go into the <span class="math inline">\(\chi^2\)</span> distribution has been emphasized.</p>
+</div>
+<div id="t-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.3.4</span> t-Distribution</h4>
+<p>Another important distribution for hypothesis testing is the t-distribution also called Student’s t-distribution. It is the distribution of the location of the mean of a sample from the normal distribution relative to the “true” mean (<span class="math inline">\(\mu\)</span>). Like the <span class="math inline">\(\chi^2\)</span> distribution it also has only one parameter called the degrees of freedom. However, in this case the degrees of freedom are the number of draws from the normal distribution minus 1. They are denoted by the Greek letter nu (<span class="math inline">\(\nu\)</span>). We take <span class="math inline">\(n\)</span> draws from a Normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma^2\)</span> and let <span class="math inline">\(\bar X = \frac{1}{n} \sum_{i = 1}^n x_i\)</span> the sample mean and <span class="math inline">\(S^{2} = \frac{1}{n-1}\sum_{i = 1}^n (x_i - \bar X)^2\)</span> the sample variance. Then</p>
+<p><span class="math display">\[
+ \frac{\bar X - \mu}{S/ \sqrt{n}}
+ \]</span></p>
+<p>has a t-distribution with <span class="math inline">\(\nu = n-1\)</span> degrees of freedom. Why <span class="math inline">\(n-1\)</span> and not <span class="math inline">\(n\)</span> as in the <span class="math inline">\(\chi^2\)</span> distribution? Recall that when constructing a <span class="math inline">\(\chi^2(k)\)</span> variable we sum up <span class="math inline">\(k\)</span> independent standard normally distributed variables but we have no intermediate calculations with these variables. In the case of the t-Distribution we “lose” a degree of freedom due to the intermediary calculations. We can notice this by multiplying and dividing the formula above by <span class="math inline">\(\sigma\)</span>, the “true” variance of the <span class="math inline">\(x_i\)</span>.</p>
+<span class="math display">\[\begin{align*}
+&amp; \frac{\bar X - \mu}{S/ \sqrt{n}} \\
+=&amp; \frac{\bar X - \mu}{S/ \sqrt{n}} \frac{\frac{1}{\sigma/\sqrt{n}}}{\frac{1}{\sigma/\sqrt{n}}}  = \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\frac{(S/\sqrt{n})}{(\sigma/\sqrt{n})}}\\
+=&amp; \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\frac{S}{\sigma}}\\
+=&amp; \frac{(\bar X - \mu)/(\sigma/\sqrt{n})}{\sqrt{S^2/\sigma^2}}
+\end{align*}\]</span>
+<p>Now recall the definition of <span class="math inline">\(S^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar X)^2\)</span> which is the sum of <span class="math inline">\(n-1\)</span> independent normally distributed variables, divided by <span class="math inline">\(n-1\)</span>. Only <span class="math inline">\(n-1\)</span> are independent since given an mean computed from <span class="math inline">\(n\)</span> variables only <span class="math inline">\(n-1\)</span> can be chosen arbitrarily.</p>
+<p>Let <span class="math inline">\(\bar X(n) = \frac{1}{n} \sum_{i=1}^n x_i\)</span> Then</p>
+<p><span class="math display">\[
+x_n = \bar X(n) - \sum_{i = 1}^{n-1} x_i
+\]</span></p>
+<p>and thus <span class="math inline">\(x_n\)</span> is not independent.</p>
+<p>We already know the distribution of <span class="math inline">\(n-1\)</span> squared standard normally distributed variables. We introduced the <span class="math inline">\(\sigma\)</span> term in order to normalize the variable. Therefore the denominator is</p>
+<p><span class="math display">\[
+\sqrt{\frac{\chi^2_{n-1}}{(n-1)}}
+\]</span></p>
+<p>Notice that as the degrees of freedom approach infinity the t-Distribution becomes the Standard Normal Distribution.</p>
+<iframe src="https://learn.wu.ac.at/shiny/imsm/dist_t/" style="border: none; width: 800px; height: 400px">
+</iframe>
+</div>
+<div id="f-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.3.5</span> F-Distribution</h4>
+<p>The F-Distribution is another derived distribution which is important for hypothesis testing. It can be used to compare the variability (i.e. variance) of two populations given that they are normally distributed and independent. Given samples from these two populations the F-Distribution is the distribution of</p>
+<p><span class="math display">\[
+\frac{S^2_1 / S^2_2}{\sigma^2_1/\sigma^2_2} = \frac{S^2_1/\sigma^{2}_1}{S^2_2/\sigma^2_2}
+\]</span></p>
+<p>As shown above both the numerator and the denominator are <span class="math inline">\(\chi^2(n-1)\)</span> divided by the degrees of freedom</p>
+<p><span class="math display">\[
+F_{n-1, m-1} = \frac{\chi^2_{n-1}/(n-1)}{\chi^2_{m-1}/(m-1)}
+\]</span></p>
+</div>
+</div>
+<div id="appendix" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> Appendix</h3>
+<div id="derivation-of-the-varaince-of-the-binomial-distribution" class="section level4">
+<h4><span class="header-section-number">4.2.4.1</span> Derivation of the varaince of the binomial distribution</h4>
+<p>Notice that the sum follows this pattern for <span class="math inline">\(n = 1\)</span> and any appropriate <span class="math inline">\(p\)</span>:</p>
+<p><span class="math display">\[
+Var(X_i) = p * (1-p)^2 + (1-p) * p^2 
+\]</span></p>
+<p>If we expand the squared term and simplify:</p>
+<span class="math display">\[\begin{align*}
+Var(X_i) &amp;= p * (1 - 2*p + p^2) + p^2 - p^3 \\
+&amp;= p - 2*p^2 + p^3 + p^2 - p^3 \\
+&amp;= p - p^2
+\end{align*}\]</span>
+<p>What happens if we change the number of coins to <span class="math inline">\(2\)</span> and keep <span class="math inline">\(p=0.8\)</span>?</p>
+<p><span class="math display">\[
+Var(X_2) = 0.8 * 0.2^2 + 0.2 * 0.8^2 + 0.8 * 0.2^2 + 0.2 * 0.8^2 = 2 * (0.8 * 0.2^2 + 0.2 * 0.8^2) = 2 * (0.8 - 0.8^2) = 0.32
+\]</span></p>
+<p>Since increasing <span class="math inline">\(n\)</span> further simply adds more of the same terms we can easily adapt the general formula above for any appropriate <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>:</p>
+<p><span class="math display">\[
+Var(X_i) = n * (p-p^2)
+\]</span></p>
+<p>Equivalently this formula can be written as:</p>
+<p><span class="math display">\[
+n * (p - p^2) = np - np^2 = np * (1-p) = Var(X_i)
+\]</span></p>
+
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-cbSI">
+<p>Casella, George, and Roger L Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Duxbury Pacific Grove, CA.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="writing-reports-using-r-markdown.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="summarizing-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
