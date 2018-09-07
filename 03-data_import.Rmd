@@ -8,7 +8,7 @@ output:
     toc: yes
 ---
 
-# Data import and export 
+## Data import and export 
 
 ```{r echo=FALSE, eval=FALSE}
 install.packages("rvest")
@@ -26,11 +26,11 @@ Before you can start your analysis in R, you first need to import the data you w
 
 In the previous chapter, we saw how we may use the keyboard to input data in R. In the following sections, we will learn how to import data from text files and other statistical software packages. 
 
-## Getting data for this course
+### Getting data for this course
 
 Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). There are two ways for you to obtain access to the data sets:
 
-### Directly import datasets from GitHub (recommended)
+#### Directly import datasets from GitHub (recommended)
 
 All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
 
@@ -40,7 +40,7 @@ test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/maste
                         header = TRUE)
 ```
 
-### Download and import datasets from "Learn\@WU"
+#### Download and import datasets from "Learn\@WU"
 
 It is also possible to download the data from the respective folder on the "Learn\@WU" platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
 
@@ -48,7 +48,7 @@ It is also possible to download the data from the respective folder on the "Lear
 test_data <- read.table("test_file.extension", header=TRUE)
 ```
 
-## Import data created by other software packages
+### Import data created by other software packages
 
 Sometimes, you may need to import data files created by other software packages, such as Excel or SPSS. In this section we will use the ```readxl``` and ```haven``` packages to do this. To import a certain file you should first make sure that the file is stored in your current working directory. You can list all file names in your working directory using the ```list.files()``` function. If the file is not there, either copy it to your current working directory, or set your working directory to the folder where the file is located using ```setwd("/path/to/file")```. This tells R the folder you are working in. Remember that you have to use ```/``` instead of ```\``` to specify the path (if you use Windows paths copied from the explorer they will not work). When your file is in your working directory you can simply enter the filename into the respective import command. The import commands offer various options. For more details enter ```?read_excel```, ```?read_spss``` after loading the packages.
 
@@ -70,7 +70,7 @@ head(test_data_spss)
 
 The import of other file formats works in a very similar way (e.g., Stata, SAS). Please refer to the respective help-files (e.g., ```?read_dta```, ```?read_sas``` ...) if you wish to import data created by other software packages. 
 
-## Export data
+### Export data
 
 Exporting to different formats is also easy, as you can just replace "read" with "write" in many of the previously discussed functions (e.g. ```write.table(object, "file_name")```). This will save the data file to the working directory. To check what the current working directory is you can use ```getwd()```. By default, the ```write.table(object, "file_name")```function includes the row number as the first variable. By specifying ```row.names = FALSE```, you may exclude this variable since it doesn't contain any useful information.  
 
@@ -80,9 +80,9 @@ write.table(test_data, "testData.csv", row.names = FALSE, sep = ",") #writes to 
 write_sav(test_data, "my_file.sav")
 ```
 
-## Import data from the Web
+### Import data from the Web
 
-### Scraping data from websites
+#### Scraping data from websites
 
 Sometimes you may come across interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the ```rvest``` package. Let's assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is ```<table>```. So let's read the entire website using ```read_html(url)``` and filter all tables using ```read_html(html_nodes(...,"table"))```.
 
@@ -121,9 +121,9 @@ Now the variable is of type "numeric" and could be used for analysis.
 class(population$Population)
 ```
 
-### Scraping data from APIs
+#### Scraping data from APIs
 
-#### Scraping data from APIs directly
+##### Scraping data from APIs directly
 
 Reading data from websites can be tricky since you need to analyze the page structure first. Many web-services (e.g., Facebook, Twitter, YouTube) actually have application programming interfaces (API's), which you can use to obtain data in a pre-structured format. JSON (JavaScript Object Notation) is a popular lightweight data-interchange format in which data can be obtained. The process of obtaining data is visualized in the following graphic:
 
@@ -147,7 +147,7 @@ str(ctrydata)
 head(ctrydata[[2]][,c("value","date")]) #checks if we scraped the desired data
 ```    
 
-#### Scraping data from APIs via R packages
+##### Scraping data from APIs via R packages
 
 An even more convenient way to obtain data from web APIs is to use existing R packages that someone else has already created. There are R packages available for various web-services. For example, the ```gtrendsR``` package can be used to conveniently obtain data from the <a href="https://trends.google.at/trends/" target="_blank">Google Trends</a> page. The ```gtrends()``` function is easy to use ans returns a list of elements (e.g., "interest over time", "interest by city", "related topics"), which can be inspected using the ```ls()``` function. The following example can be used to obtain data for the search term "data science" in the US between September 1 and October 6: 
 

@@ -16,11 +16,13 @@ opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE
 ```
 
 
-# Basic data handling
+# Data handling
 
 This chapter covers the basics of data handling in R
 
-## Creating objects
+## Basic data handling
+
+### Creating objects
 
 Anything created in R is an object. You can assign values to objects using the assignment operator ``` <-```:
 
@@ -70,7 +72,7 @@ y^2 + 3*x #adds the value of y squared and 3x the value of x together
 
 Please note that object names must start with a letter and can only contain letters, numbers, as well as the ```.```, and ```_``` separators. It is important to give your objects descriptive names and to be as consistent as possible with the naming structure. In this tutorial we will be using lower case words separated by underscores (e.g., ```object_name```). There are other naming conventions, such as using a ```.``` as a separator (e.g., ```object.name```), or using upper case letters (```objectName```). It doesn't really matter which one you choose, as long as you are consistent.
 
-## Data types
+### Data types
 
 The most important types of data are:
 
@@ -140,7 +142,7 @@ The video below gives a general overview of vectors and provides a more in-depth
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Xioc33EZxgU" frameborder="0" allowfullscreen></iframe>
 </div>
 
-## Data structures
+### Data structures
 
 Now let's create a table that contains the variables in columns and each observation in a row (like in SPSS or Excel). There are different data structures in R (e.g., Matrix, Vector, List, Array). In this course, we will mainly use <b>data frames</b>. 
 
@@ -157,7 +159,7 @@ music_data <- data.frame(top10_track_streams,
                          top10_track_explicit_1)
 ```
 
-### Accessing data in data frames
+#### Accessing data in data frames
 
 When entering the name of a data frame, R returns the entire data frame: 
 
@@ -202,7 +204,7 @@ You may also change the order of the variables in a data frame by using the ```o
 music_data[order(top10_artist_genre,-top10_track_streams),] 
 ```
 
-### Inspecting the content of a data frame
+#### Inspecting the content of a data frame
 The ```head()``` function displays the first X elements/rows of a vector, matrix, table, data frame or function.
 ```{r}
 head(music_data, 3) # returns the first X rows (here, the first 3 rows)
@@ -230,7 +232,7 @@ dim(music_data) # returns the dimensions of a data frame
 ls(music_data) # list all objects associated with an object
 ```
 
-### Append and delete variables to/from data frames
+#### Append and delete variables to/from data frames
 
 To call a certain column in a data frame, we may also use the ```$``` notation. For example, this returns all values associated with the variable "top10_track_streams":
   
@@ -268,3 +270,35 @@ The video below provides an overview of data frames, going into more detail on s
 <div align="center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/r3Izt1u20y0" frameborder="0" allowfullscreen></iframe>
 </div>
+
+```{r, echo=FALSE}
+library(knitr)
+library(dplyr)
+library(stringr)
+options(scipen = F)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=FALSE, rownames.print = FALSE, rows.print = 10, eval = TRUE, warning = FALSE, message = FALSE)
+
+
+top10_track_streams <- c(163608, 126687, 120480, 110022, 108630, 95639, 94690, 89011, 87869, 85599) 
+top10_artist_names <- c("Axwell /\\ Ingrosso", "Imagine Dragons", "J. Balvin", "Robin Schulz", "Jonas Blue", "David Guetta", "French Montana", "Calvin Harris", "Liam Payne", "Lauv") # Characters have to be put in ""
+top10_track_explicit <- c(0,0,0,0,0,0,1,1,0,0)
+top10_track_explicit <- factor(top10_track_explicit, 
+                               levels = c(0:1), 
+                               labels = c("not explicit", "explicit"))
+top10_artist_genre <- c("Dance","Alternative","Latino","Dance","Dance","Dance","Hip-Hop/Rap","Dance","Pop","Pop")
+top10_artist_genre <- as.factor(top10_artist_genre)
+top_10_track_release_date <- as.Date(c("2017-05-24", "2017-06-23", "2017-07-03", "2017-06-30", "2017-05-05", "2017-06-09", "2017-07-14", "2017-06-16", "2017-05-18", "2017-05-19"))
+top10_track_explicit_1 <- c(FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE)  
+
+music_data <- data.frame(top10_track_streams, 
+                         top10_artist_names, 
+                         top10_track_explicit, 
+                         top10_artist_genre, 
+                         top_10_track_release_date, 
+                         top10_track_explicit_1,
+                         stringsAsFactors = FALSE)
+
+```
+
+

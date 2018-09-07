@@ -12,7 +12,7 @@ library(Hmisc)
 library(knitr)
 ```
 
-# Data visualization
+## Data visualization
 
 This section discusses how to produce appropriate graphics to describe our data visually. While R includes tools to build plots, we will be using the ggplot2 package by Hadley Wickham. It has the advantage of being fairly straightforward to learn but being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham.
 
@@ -23,9 +23,9 @@ ggplot2 is built around the idea of constructing plots by stacking layers on top
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/ggplot1.JPG" alt="DSUR cover" height="250"  />
 </p>
 
-## Categorical variables
+### Categorical variables
 
-### Bar plot
+#### Bar plot
 
 To give you an example of how the graphics are composed, let's go back to the frequency table from the previous chapter, where we created this table:
 
@@ -158,7 +158,7 @@ ggplot(table_plot_cond_rel, aes(x = overall_knowledge_cat, y = Freq, fill = gend
   theme_bw() 
 ```
 
-### Covariation plots
+#### Covariation plots
 
 To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Let's use a different example. Say, we wanted to investigate the association between prior theoretical and prior practical knowledge in regression analysis. First, we need to make sure that the respective variables are coded as factors. 
 
@@ -194,9 +194,9 @@ ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regressio
   theme_bw()
 ```
 
-## Continuous variables
+### Continuous variables
 
-### Histogram
+#### Histogram
 
 Histograms can be plotted for continuous data using the ```geom_histogram()``` function. Note that the ```aes()``` function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let's consider a data set containing the advertising expenditures and product sales of a company selling products in two different stores: 
 
@@ -219,7 +219,7 @@ ggplot(adv_data,aes(sales)) +
   theme_bw()
 ```
 
-### Boxplot
+#### Boxplot
 
 Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom ```geom_boxplot()```. In our case we want to show the difference in distribution between the two stores in our sample, which is why the ```aes()``` function contains both an x and a y variable. 
 
@@ -253,7 +253,7 @@ ggplot(adv_data,aes(x = "", y = sales)) +
   theme_bw()
 ```
 
-### Plot of means
+#### Plot of means
 
 Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot's layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a ```geom_pointrange()``` layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in ```geom_bar()```, namely ```stat = ```, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. ```geom_bar()``` typically uses the ```count``` stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling ```geom_bar()``` explicitly that we want to use a different stat we can override its behavior, forcing it to create a bar plot of the means.
 
@@ -266,7 +266,7 @@ ggplot(adv_data,aes(store, sales)) +
   theme_bw()
 ```
 
-### Scatter plot
+#### Scatter plot
 
 The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The ```geom_smooth()``` function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument ```method = "lm"```). The "fill" and "alpha" arguments solely affect appearance, in our case the color and the opacity of the confidence interval, respectively.
 
@@ -280,7 +280,7 @@ ggplot(adv_data, aes(advertising, sales)) +
 
 As you can see, there appears to be a positive relationship between advertising and sales.
 
-#### Grouped scatter plot
+##### Grouped scatter plot
 
 It could be that customers from different store respond differently to advertising. We can visually capture such differences with a grouped scatter plot. By adding the argument ```colour = store``` to the aesthetic specification, ggplot automatically treats the two stores as distinct groups and plots accordingly. 
 
@@ -294,7 +294,7 @@ ggplot(adv_data, aes(advertising, sales, colour = store)) +
 
 It appears from the plot that customers in store 1 are more responsive to advertising. 
 
-#### Combination of scatter plot and histogram
+##### Combination of scatter plot and histogram
 
 Using the ```ggExtra()``` package, you may also augment the scatterplot with a histogram:
 
@@ -310,7 +310,7 @@ ggExtra::ggMarginal(p, type = "histogram")
 
 In this case, the ```type = "histogram"``` argument specifies that we would like to plot a histogram. However, you could also opt for ```type = "boxplot"``` or ```type = "density"``` to use a boxplot or density plot instead.
 
-### Line plot
+#### Line plot
 
 Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did in the previously).
 
@@ -335,7 +335,7 @@ ggplot(ctrydata_at, aes(x = date, y = value)) +
   theme_bw()
 ```    
 
-## Saving plots
+### Saving plots
 
 To save the last displayed plot, simply use the function ```ggsave()```, and it will save the plot to your working directory. Use the arguments ```height```and ```width``` to specify the size of the file. You may also choose the file format by adjusting the ending of the file name. E.g., ```file_name.jpg``` will create a file in JPG-format, whereas ```file_name.png``` saves the file in PNG-format, etc.. 
 
@@ -349,7 +349,7 @@ ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regressio
 ggsave("theory_practice_regression.jpg", height = 5, width = 7.5)
 ```
 
-## Additional options
+### Additional options
 
 Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of Shazam users from Germany. The data contains the latitude and longitude information where a music track was "shazamed". 
 

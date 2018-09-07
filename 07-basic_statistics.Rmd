@@ -8,8 +8,9 @@ output:
     toc: yes
 
 ---
+# Summarizing data
 
-# Summary statistics
+## Summary statistics
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 library(knitr)
@@ -37,7 +38,7 @@ test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/maste
 head(test_data)
 ```
 
-## Categorical variables
+### Categorical variables
 
 Categorical variables contain a finite number of categories or distinct groups and are also known as qualitative variables. There are different types of categorical variables:
 
@@ -95,9 +96,9 @@ Note that the above output shows the overall relative frequencies when male and 
 prop.table(table(test_data[,c("overall_knowledge_cat", "gender_cat")]), 2) #conditional relative frequencies
 ```
 
-## Continuous variables
+### Continuous variables
 
-### Descriptive statistics
+#### Descriptive statistics
 
 Continuous variables are numeric variables that can take on any value on a measurement scale (i.e., there is an infinite number of values between any two values). There are different types of continuous variables:
 
@@ -135,7 +136,7 @@ by(test_data[,c("duration", "overall_100")],test_data$gender_cat,stat.desc)
 
 These examples are meant to exemplify that there are often many different ways to reach a goal in R. Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences.
 
-### Creating subsets
+#### Creating subsets
 
 From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. You could easily create a subset of the original data, which you would then use for estimation using the ```subset()``` function. For example, the following code creates a subset that excludes all cases with a duration of more than 900 seconds (15 minutes): 
 
@@ -144,7 +145,7 @@ estimation_sample <- subset(test_data,duration < 900)
 psych::describe(estimation_sample[,c("duration", "overall_100")])
 ```
 
-### Confidence intervals
+#### Confidence intervals
 
 Finally, we could be interested the generalize the finding from our sample to the entire student population. We could ask: what is the likely range of values that the overall knowledge might take in the entire student population with a certain level of confidence (e.g., 95%). Confidence interval provide answers to this kind of questions. Remember the formula for the confidence interval:
 
