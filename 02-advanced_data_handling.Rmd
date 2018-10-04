@@ -49,9 +49,20 @@ This chapter covers more advanced techniques for handling data in R. It is prima
 
 ### The dplyr package
 
-There are many ways to achieve the same thing in R. Data transformation and handling tasks can be solved with the functions provided by base R (i.e. the functions that come with every R installation), but the ```dplyr```package offers a comprehensive suite of functions that makes many tasks easier, while keeping code very readable. As such we will be presenting it here, but keep in mind that all of these tasks could also be achieved without any packages. 
+There are many ways to achieve the same thing in R. Data transformation and handling tasks can be solved with the functions provided by base R (i.e. the functions that come with every R installation), but the ```dplyr```package offers a comprehensive suite of functions that makes many tasks easier, while keeping code very readable. As such, we will be presenting it here, but keep in mind that all of these tasks could also be achieved without any packages. 
 
 Before we continue, ensure that the ```dplyr()``` package is installed and loaded. 
+
+The ```dplyr()``` package includes six core functions that make many data handling tasks a lot easier:
+
+ * filter():	filter rows
+ * select():	select columns
+ * arrange():	re-order or arrange rows
+ * mutate():	create new columns
+ * summarise():	summarise values
+ * group_by():	allows for group operations
+
+Each of these functions will be discussed in the following in more detail.
 
 #### Filter rows
 
@@ -78,6 +89,7 @@ filter(music_data,  top10_track_streams > 100000 & top10_track_streams < 150000)
 ```
 
 The ```|``` symbol is the way R expresses "or". This way you can select observations that fulfill either one or the other condition. Say we would like to select all observations with less than 100000 or more than 150000 streams. The following code would do exactly that
+
 ```{r message=FALSE, warning=FALSE}
 filter(music_data,  top10_track_streams < 100000 | top10_track_streams > 150000)
 ```
@@ -87,11 +99,6 @@ A very useful feature of the ```filter()``` function is its ability to accept mu
 ```{r message=FALSE, warning=FALSE}
 filter(music_data, top10_track_explicit == "not explicit", top10_track_streams < 100000)
 ```
-
-Below is an interactive version of the last command with the data set preloaded. Feel free to experiment with various ways to specify rows to be extracted to get a feel for how the filter function works.
-
-<iframe src="http://localhost:3838/dplyr_filter/?showcase=0" width="800" height="500",  frameBorder = 0>
-</iframe>
 
 #### Select columns
 
@@ -120,19 +127,6 @@ select(music_data, 3:5)
 
 ```
 
-Below you will again find an interactive version to experiment with. 
-
-<iframe src="http://localhost:3838/dplyr_select/?showcase=0" width="800" height="500",  frameBorder = 0>
-</iframe>
-
-#### Rename columns
-
-Renaming of columns is done with a special version of the ```select()``` function called ```rename()```. The syntax may seem familiar at this point, with the first argument being the data frame to apply the function to and the following arguments being the transformations to apply. The example changes the names of the ```top10_track_explicit``` and ```top10_artist_names``` columns into ```explicit``` and ```names```, respectively.
-
-```{r message=FALSE, warning=FALSE}
-rename(music_data, explicit = top10_track_explicit, names = top10_artist_names)
-```
-
 #### Arrange rows
 
 If you just want to change the order of a data frame without discarding any observations or columns, you can use the ```arrange()``` function. It takes a data frame and a set of column names to order by, always in ascending order. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns.
@@ -147,16 +141,12 @@ If you wish to arrange them in descending order, you can wrap the column name in
 arrange(music_data, top10_artist_genre, desc(top10_track_streams))
 ```
 
-Below you will again find an interactive version of the ```arrange()``` function to experiment with. 
-
-<iframe src="http://localhost:3838/dplyr_arrange/?showcase=0" width="800" height="500",  frameBorder = 0>
-</iframe>
-
 #### Adding and changing variables
 
 There are two functions to create new variables based on other variables in the dplyr package, ```mutate()``` and ```transmute()```. They both do the same thing, with one key difference: ```mutate()``` returns both the newly created variables _and_ the ones previously contained in the data frame, while ```transmute()``` only returns the newly created variables. 
 
 Both functions take variables already present in the data set and apply a function to them to generate new variables. This can be something as simple as adding 1 to every entry in a column or more complex procedures, like standardizing variables. The syntax is fairly straightforward: The first argument is the data frame we wish to apply the transformation to, and all the following arguments are the new variables we want to create. An example will make this clearer. Say we (for some reason) want to add 10 to every entry of the ```top10_track_streams``` column in our data set. The code to do this would look as follows:
+
 ```{r, message=FALSE, warning=FALSE}
 mutate(music_data, streams_plus_10 = top10_track_streams + 10)
 ```
@@ -166,25 +156,24 @@ This code essentially defines a new column named ``` streams_plus_10```, which i
 As previously mentioned, we can also perform more complex operations, such as standardizing variables (i.e. subtracting the mean value and dividing by the standard deviation). Note that we are generating the mean and the standard deviation in our code by applying functions (```mean()``` and ```sd()```) to the entire column and then we use these values to perform the standardization on _each_ value of the column.
 
 ```{r, message=FALSE, warning=FALSE}
-mutate(music_data, streams_standardised = (top10_track_streams - mean(top10_track_streams))/ sd(top10_track_streams)) 
+mutate(music_data, streams_standardised = (top10_track_streams - mean(top10_track_streams))/ sd(top10_track_streams))
+```
+
+Note that you could also use the ```scale()``` function  to do the same:
+
+```{r, message=FALSE, warning=FALSE}
+mutate(music_data, streams_standardised = scale(top10_track_streams))
 ```
 
 You can also add other vectors to an existing data frame with mutate, given that it is the same length as the data frame you want to add it to. 
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE}
-set.seed(123)
-```
-
 ```{r, message=FALSE, warning=FALSE}
-# Generate random data with 10 rows
-extra_column <- rnorm(nrow(music_data))
-
+# create a vector of length 10
+extra_column <- c(1,2,3,4,5,6,7,8,9,10)
 mutate(music_data, new_data = extra_column) 
 ```
 
-#### Changing variables
-
-If you don't want to add a whole new variable and only want to edit a variable already present in the data frame, ```dplyr``` has you covered with the ```mutate_at()``` function. The practical thing about this function is that it can also be applied to a whole range of variables if you want to perform the same operation on multiple columns. To do this, you give the function not just a single column name, but a whole vector of column names. 
+If you don't want to add a new variable and only want to edit a variable already present in the data frame, ```dplyr``` has you covered with the ```mutate_at()``` function. The practical thing about this function is that it can also be applied to a whole range of variables if you want to perform the same operation on multiple columns. To do this, you give the function not just a single column name, but a whole vector of column names. 
 
 Say we first want to change the type of a single column. For example, maybe we want ```top10_track_explicit``` to be a character column and not a factor. We again tell ```mutate_at()``` which data frame we want to change, followed by the column(s) to change and finally the function we want to apply. You may have noticed that the column name is in quotation marks here, as opposed to the other functions we have met from the ```dplyr```package. This is a side effect of its ability to apply a function to a range of columns and not just a single one, as this can only be achieved via a character vector. So from a technical standpoint we are giving the ```mutate_at()``` function a character vector of length one, solely containing the element ```"top10_track_explicit"```.
 
@@ -200,15 +189,34 @@ columns <- c("top10_track_explicit", "top10_artist_genre", "top10_track_explicit
 mutate_at(music_data, columns, as.character)
 ```
 
-Below is again a version for you to experiment with. The vector ```extra_column``` from the last example has also been loaded into the environment, so you can try adding a whole new vector to the data frame. 
+Note that if you merely want to rename a variable without changing its content, you may use the ```rename()``` function to achieve this. The syntax may seem familiar at this point, with the first argument being the data frame to apply the function to and the following arguments being the transformations to apply. The example changes the names of the ```top10_track_explicit``` and ```top10_artist_names``` columns into ```explicit``` and ```names```, respectively.
 
-<iframe src="http://localhost:3838/dplyr_mutate/?showcase=0" width="800" height="500",  frameBorder = 0>
-</iframe>
+```{r message=FALSE, warning=FALSE}
+rename(music_data, explicit = top10_track_explicit, names = top10_artist_names)
+```
+
+#### Creating custom summaries
+
+The ```summarise()``` function lets you build customized summaries of your data. This can range from creating means and standard deviations of certain variables to simply counting how many observations are in a data frame. Say we want to find out the mean and standard deviation of the number of streams and also count the number of observations. With ```summarise()``` that would look as follows:
+
+```{r, message=FALSE, warning=FALSE}
+summarise(music_data, n_observations = n(), mean_streams = mean(top10_track_streams), sd_streams = sd(top10_track_streams))
+```
+
+On its own, this function is not that impressive. After all, we could just apply the ```mean()```, ```sd()``` and ```nrow()``` functions individually and would have gotten the same result, albeit not in such a nice format. However, when combined with the ```group_by()``` function, ```summarise()``` becomes very useful as we will see next.
+
+#### Group operations
+
+The ```group_by()``` splits a data frame into groups, by the values of a column in the data frame. Say we wanted to calculate the mean and standard deviation of explicit and non-explicit songs separately. 
+
+```{r, message=FALSE, warning=FALSE}
+music_data <- group_by(music_data, top10_track_explicit)
+summarise(music_data, n_observations = n(), mean_streams = mean(top10_track_streams), sd_streams = sd(top10_track_streams))
+```
 
 #### Pipes
 
 A very practical feature of the dplyr package are so called "pipes". Say you want to apply three of the previously mentioned functions to the same data frame. So far, the way we learned to do this would be as follows:
-
 
 ```{r, message=FALSE, warning=FALSE}
 # First use select() to take only certain columns
@@ -237,34 +245,6 @@ music_data_new
 ```
 
 Let's unpack what happened here. The first line "pipes" ```music_data``` into the first function, ```select()```, which is in the second line. Here we remove all columns except for ```top10_track_explicit_1```, ```top10_artist_names``` and ```top10_track_streams```. Then we take this data frame with the reduced columns and hand it to ```filter()```, which only selects observations with less than 100000 streams. Finally, we pass the filtered, column reduced data frame to arrange, which sorts the rows by the number of streams per track. The assignment operator (```<-```) at the top then saves this data frame in the environment as ```music_new_data```. Note that, in contrast to the previous examples, we no longer have to specify which data frame we want to apply the various functions to, as the pipes take care of this for us.
-
-Again, experiment with this feature below and it will quickly become very intuitive.
-
-<iframe src="http://localhost:3838/dplyr_pipes/?showcase=0" width="800" height="500",  frameBorder = 0>
-</iframe>
-
-#### Creating custom summaries
-
-The ```summarise()``` function lets you build customized summaries of your data. This can range from creating means and standard deviations of certain variables to simply counting how many observations are in a data frame. Say we want to find out the mean and standard deviation of the number of streams and also count the number of observations. With ```summarise()``` that would look as follows:
-
-```{r, message=FALSE, warning=FALSE}
-summarise(music_data, nObservations = n(), mean_streams = mean(top10_track_streams), sd_streams = sd(top10_track_streams))
-```
-
-On its own, this function is not that impressive. After all, we could just apply the ```mean()```, ```sd()``` and ```nrow()``` functions individually and would have gotten the same result, albeit not in such a nice format. 
-
-However, when combined with the ```group_by()``` function, ```summarise()``` becomes very useful. ```group_by()``` splits a data frame into groups, by the values of a column in the data frame. Say we wanted to calculate the mean and standard deviation of explicit and non-explicit songs separately. 
-
-```{r, message=FALSE, warning=FALSE}
-music_data %>%
-  group_by(top10_track_explicit) %>%
-  summarise(nObservations = n(), mean_streams = mean(top10_track_streams), sd_streams = sd(top10_track_streams))
-```
-
-This is a useful tool for getting a good overview of your data and potentially generating data for visualizations or tables. 
-
-<iframe src="http://localhost:3838/dplyr_summarize/?showcase=0" width="800" height="500",  frameBorder = 0>
-</iframe>
 
 ### Dealing with strings
 
@@ -443,7 +423,6 @@ As always, let's first load all the required libraries and the data set and take
 ```{r}
 library(dplyr)
 library(stringr)
-
 
 data <- read.csv("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/Survey_data.csv?token=AVa281hYEyEQbqaSBcQZcYU-da4rv9xkks5bXyUMwA%3D%3D", stringsAsFactors = FALSE)
 data

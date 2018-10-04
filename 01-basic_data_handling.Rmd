@@ -265,11 +265,19 @@ music_data <- plyr::rename(music_data, c(top10_artist_genre="genre",top_10_track
 head(music_data)
 ```
 
-The video below provides an overview of data frames, going into more detail on some points. 
+Note that the same can be achieved using:
 
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/r3Izt1u20y0" frameborder="0" allowfullscreen></iframe>
-</div>
+```{r, message=FALSE, warning=FALSE}
+names(music_data)[names(music_data)=="genre"] <- "top10_artist_genre"
+head(music_data)
+```
+
+Or by referring to the index of the variable:
+
+```{r, message=FALSE, warning=FALSE}
+names(music_data)[4] <- "genre"
+head(music_data)
+```
 
 ```{r, echo=FALSE}
 library(knitr)
