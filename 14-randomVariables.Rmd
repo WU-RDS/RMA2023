@@ -1,16 +1,17 @@
-# Random Variables & Probability Distributions
+# Appendix
 This chapter is primarily based on:
 
 * Casella, G., & Berger, R. L. (2002). Statistical inference (Vol. 2). Pacific Grove, CA: Duxbury (**chapters 1 & 3**).
 
+## Random Variables & Probability Distributions
 
-## Random Variables
+### Random variables
 
-### Why Random Variables?
+#### Why Random Variables?
 
 Random variables are used to extract and simplify information that we obtain from an experiment. For example, if we toss five coins it would be tedious to say "I have observed heads, heads, tails, heads, tails". With five coins this might still be a feasible way to convey the outcome of the experiment, but what about 500 coins? Instead, we naturally condense the information into a random variable (even though we might not call it that) and say "I have observed three heads" or we define another random variable and say "I have observed two tails". There are many ways to summarize the outcome of an experiment and hence we can define multiple random variables from the same experiment. We could also define a more "complicated" random variable that adds four points for each heads and one point for each tails. In general there are no restrictions on our function as long as it maps from the sample space to the real numbers. We distinguish two types of random variables, discrete and continuous, which are discussed in the following sections.  
 
-### Tossing coins
+#### Tossing coins
 As a first example of a random variable, assume you toss a chosen number of coins (between 1 and 20). The tossing is the experiment in this case. The [**sample space**](#definitions) consists of all the possible combinations of heads ("h") and tails ("t") given the number of coins. For a single coin: 
 
 $$
@@ -100,7 +101,7 @@ $$
 
 
 
-### Sum of two dice
+#### Sum of two dice
 
 Another example for a discrete random variable is the sum of two dice throws. Assume first that you have a six sided die. The six values it can take are all equally probable (if we assume that it is fair). Now if we throw two six sided dice and sum up the displayed dots, the possible values are no longer all equally probable. This is because some values can be produced by more combinations of throws. Consider the value 2. A 2 can only be produced by both dice displaying one dot. As the probability for a specific value on one die is $\frac{1}{6}$, the probability of both throws resulting in a 1 is $\frac{1}{6} * \frac{1}{6} = \frac{1}{36}$. Now consider the value 3. 3 can be produced by the first dice roll being a 1 and the second being a 2 and by the first roll being a 2 and the second a 1. While these may seem like the same thing, they are actually two distinct events. To calculate the probability of a 3 you sum the probabilities of these two possibilities together, i.e. $P\{1,2\} + P\{2,1\} = \frac{1}{6} * \frac{1}{6} + \frac{1}{6} * \frac{1}{6} = \frac{2}{36}$. This implies that a 3 is twice as probable as a 2. When done for all possible values of the sum of two dice you arrive at the following probabilities:
 
@@ -120,7 +121,7 @@ To see what this looks like in practice you can simulate dice throws below. The 
 
 <iframe src="https://learn.wu.ac.at/shiny/imsm/dice_throw/" width="800" height="650" frameBorder="0"></iframe>
 
-### Discrete Random Variables
+#### Discrete Random Variables
 
 Now that we have seen examples for discrete random variables, we can define them more formally. A random variable is discrete if its [**cumulative distribution function**](#definitions) is a step function as in the plot below. That is, the CDF shifts or jumps from one probability to the next at some point(s). Notice that the black dots indicate that at that specific point the probability is already at the higher step. More formally: the CDF is "right-continuous". That is the case for all CDFs. To illustrate this concept we explore the plot below. We have a discrete random variable as the CDF jumps rather than being one line. We can observe integer values between 0 and 10 whereas the probability of observing less than or equal to 0 is almost 0 and the probability of observing less than or equal to 10 is 1. The function is right continuous: Let's look at the values 4 and 5 for example. The probability of observing 4 or less than 4 is just under 0.4. The probability of observing 5 or less is just over 0.6. For further examples see [tossing coins](#tossing-coins) and [sum of two dice](#sum-of-two-dice)
 
@@ -150,7 +151,7 @@ ggplot(y, aes(x = x, y = y))+
   labs(x = "observed #", y = "Probability Mass", title = "Probability mass function of a discrete random variable")
 ```
 
-### Continuous Case
+#### Continuous Case
 
 The vigilant reader might have noticed that while the [definition of a random variable](#definitions) allows for the function to map to the real numbers the coin and dice examples only uses mapping to the [natural numbers](https://en.wikipedia.org/wiki/Natural_number). Just as with discrete random variables we can define continuous random variables by their cumulative distribution function. As you might have guessed the cumulative distribution function of a continuous random variable is *continuous*, i.e. there are no jumps. 
 
@@ -197,7 +198,7 @@ ggplot(profit_df, aes(x = profit))+
 
 ```
 
-### Definitions 
+#### Definitions 
 
 * **Sample Space**: The set of all possible outcomes of a particular experiment is called the sample space of the experiment [@cbSI, p. 1]. Denoted $S$.
 * **Random Variable**: A function from a sample space $\left(S\right)$ into the [real numbers](https://en.wikipedia.org/wiki/Real_number) [@cbSI, p. 27]. Denoted $X$.

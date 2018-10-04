@@ -1,5 +1,5 @@
 ---
-title: "03-summary statistics"
+title: "04-summary statistics"
 output:
   html_document:
     toc: yes
@@ -138,46 +138,17 @@ These examples are meant to exemplify that there are often many different ways t
 
 #### Creating subsets
 
-From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. You could easily create a subset of the original data, which you would then use for estimation using the ```subset()``` function. For example, the following code creates a subset that excludes all cases with a duration of more than 900 seconds (15 minutes): 
+From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let's check if potential ourliers exist in the data:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
-estimation_sample <- subset(test_data,duration < 900)
+test_data %>% mutate(duration_std = as.vector(scale(duration))) %>% filter(duration_std > 3)
+```
+
+Indeed, there appears to be one potential outlier, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the ```filter()``` function from the ```dplyr()``` package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3: 
+
+```{r message=FALSE, warning=FALSE, paged.print = FALSE}
+library(dplyr)
+estimation_sample <- test_data %>% mutate(duration_std = as.vector(scale(duration))) %>% filter(duration_std < 3)
 psych::describe(estimation_sample[,c("duration", "overall_100")])
 ```
-
-#### Confidence intervals
-
-Finally, we could be interested the generalize the finding from our sample to the entire student population. We could ask: what is the likely range of values that the overall knowledge might take in the entire student population with a certain level of confidence (e.g., 95%). Confidence interval provide answers to this kind of questions. Remember the formula for the confidence interval:
-
-\begin{equation} 
-\begin{split}
-CI = \overline{X}\pm(z*\frac{s}{\sqrt{n}})
-\end{split}
-(\#eq:confidence)
-\end{equation} 
-
-, where $\overline{x}$ is the sample mean, $\frac{s}{\sqrt{n}}$ is the standard error of the mean, and z is the critical z-score for a given level of confidence. If the interval is small, the sample must be very close to the population. Conversely, when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. We can obtain the critical z-score for the 95% CI using the ```qnorm()```-function. Using ```nrow(data_set)```, we can obtain the number ob rows (i.e., observations) in a data set. 
-
-```{r message=FALSE, warning=FALSE}
-mean(test_data$overall_100)
-error <- qnorm(0.975)*sd(test_data$overall_100)/sqrt(nrow(test_data))
-ci_lower <- mean(test_data$overall_100)-error
-ci_upper <- mean(test_data$overall_100)+error
-print(ci_lower)
-print(ci_upper)
-```
-
-Given our sample size and the variability in our data, we are 95% confident that the true level of overall statistical knowledge is between `r round(ci_lower,0)` and `r round(ci_upper,0)`!
-
-Note that the CI is also implicitly included in the summary statistics created by the ```stat.desc()``` function.  
-
-```{r message=FALSE, warning=FALSE}
-mean_x <- stat.desc(test_data$overall_100)["mean"]
-error_x <- stat.desc(test_data$overall_100)["CI.mean.0.95"]
-ci_lower_x <- mean_x - error_x
-ci_upper_x <- mean_x + error_x
-ci_lower_x
-ci_upper_x
-```
-
 

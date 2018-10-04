@@ -1,5 +1,5 @@
 ---
-title: "04-visualization"
+title: "05-visualization"
 output:
   html_document:
     toc: yes
@@ -10,6 +10,8 @@ output:
 ```{r, echo = FALSE, warning=FALSE, message=FALSE}
 library(Hmisc)
 library(knitr)
+library(ggmap)
+register_google(key = "AIzaSyDMxadfjNH489ueRgo9S62PuZU6PbwAyiM")
 ```
 
 ## Data visualization
@@ -362,72 +364,20 @@ geo_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master
 head(geo_data)
 ```
 
-There is a package called "ggmap", which is an augmentation for the ggplot packages. It lets you load maps from different web services (e.g., Google maps) and maps the user location within the coordination system of ggplot. With this information, you can create interesting plots like heat maps. We won't go into detail here but you may go through the following code on your own if you are interested. 
+There is a package called "ggmap", which is an augmentation for the ggplot packages. It lets you load maps from different web services (e.g., Google maps) and maps the user location within the coordination system of ggplot. With this information, you can create interesting plots like heat maps. We won't go into detail here but you may go through the following code on your own if you are interested. However, please note that you need to register an API with Google in order to make use of this package. 
 
-```{r notrun, echo=TRUE, eval=FALSE}
+```{r ggmaps, echo=TRUE, eval=TRUE,message=FALSE, warning=FALSE}
+#register_google(key = "your_api_key")
+
 # Download the base map
-de_map_g_str <- get_map(location = "Germany", zoom = 6)
+de_map_g_str <- get_map(location=c(10.018343,51.133481), zoom=6, scale=2) # results in below map (wohoo!)
+
 # Draw the heat map
-ggmap(de_map_g_str, extent = "device") +
-  geom_density2d(data = geo_data, aes(x = lon, y = lat), size = 0.3) +
-  stat_density2d(data = geo_data, aes(x = lon, y = lat, fill = ..level.., alpha = ..level..),
-                 size = 0.01, bins = 16, geom = "polygon") +
-  scale_fill_gradient(low = "green", high = "red") +
+ggmap(de_map_g_str, extent = "device") + 
+  geom_density2d(data = geo_data, aes(x = lon, y = lat), size = 0.3) + 
+  stat_density2d(data = geo_data, aes(x = lon, y = lat, fill = ..level.., alpha = ..level..), 
+                 size = 0.01, bins = 16, geom = "polygon") + 
+  scale_fill_gradient(low = "green", high = "red") + 
   scale_alpha(range = c(0, 0.3), guide = FALSE)
 
-```
-
-```{r run1,warning=FALSE, message=FALSE, eval = TRUE, echo = FALSE, fig.align="center", fig.cap ="Geo-location data (1)"}
-load(file = "./map_germany.rdata")    # Draw the heat map
-ger_center <- as.numeric(geocode("Germany"))
-#usac <- get_googlemap(center = ger_center, scale = 2, zoom = 6)
-#save(usac, file = "./usac.rdata")
-load(file = "./usac.rdata")
-
-ggmap(de_map_g_str, extent = "device") +
-      geom_density2d(data = geo_data, aes(x = lon, y = lat), size = 0.3) +
-      stat_density2d(data = geo_data, aes(x = lon, y = lat, fill = ..level.., alpha = ..level..),
-                     size = 0.01, bins = 16, geom = "polygon") +
-      scale_fill_gradient(low = "green", high = "red") +
-      scale_alpha(range = c(0, 0.3), guide = FALSE)
-  # Transform data
-    geo_data <- geo_data %>%
-      group_by(latlon) %>%
-      dplyr::summarise(sumCount = n(), lat = first(lat), lon = first(lon)) %>%
-      filter(!is.na(latlon)) %>%
-      as.data.frame()
-    
-    # Draw circle plot
-    circle_scale_amt = 0.15 # adjust circle size
-```
-
-```{r notrun2, eval = FALSE}
-# Transform data
-geo_data <- geo_data %>%
-  group_by(latlon) %>%
-  dplyr::summarise(sumCount = n(), lat = first(lat), lon = first(lon)) %>%
-  filter(!is.na(latlon)) %>%
-  as.data.frame()
-
-# Draw circle plot
-circle_scale_amt = 0.15 # adjust circle size
-
-ger_center = as.numeric(geocode("Germany"))
-
-ggmap(get_googlemap(center = usa_center, scale = 2, zoom = 6)) +
-  geom_point(aes(x = lon, y = lat), data = geo_data, col = "orange", alpha = 0.3,
-             size = geo_data$sumCount*circle_scale_amt) +
-  scale_size_continuous(range = range(geo_data$sumCount)) +
-  ylim(min(geo_data$lat), max(geo_data$lat)) +
-  xlim(min(geo_data$lon), max(geo_data$lon)) 
-```
-
-```{r run2, warning=FALSE, message=FALSE, eval = TRUE, echo = FALSE, fig.align="center", fig.cap = "Geo-location data (2)"}
-
-ggmap(usac, extent = "normal") +
-      geom_point(aes(x = lon, y = lat), data = geo_data, col = "orange", alpha = 0.3,
-                 size = geo_data$sumCount*circle_scale_amt) +
-      scale_size_continuous(range = range(geo_data$sumCount)) +
-      ylim(min(geo_data$lat), max(geo_data$lat)) +
-      xlim(min(geo_data$lon), max(geo_data$lon))
 ```

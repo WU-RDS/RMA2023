@@ -5,12 +5,12 @@ output:
   html_notebook: default
 ---
 
-## Probability Distributions
+### Probability Distributions
 This chapter is primarily based on:
 
 * Casella, G., & Berger, R. L. (2002). Statistical inference (Vol. 2). Pacific Grove, CA: Duxbury (**chapters 2&3**).
 
-### Introduction
+#### Introduction
 
 In the previous chapter we talked about probability density/mass functions (PDFs/PMFs) and cumulative distribution functions (CDFs). We also discussed plots of those functions. 
 A natural question to ask is "where do these distributions come from?". It turns out that many random variables follow well known distributions, the properties of which have been studied extensively. Furthermore, many observations in the real world (e.g. height data) can also be approximated with theoretical distributions. 
@@ -26,7 +26,7 @@ Two important properties of a distribution are the *expected value* and the *var
 
 We will now introduce common families of distributions, starting again with discrete examples and then moving on to the continuous case.
 
-### Discrete Distributions
+#### Discrete Distributions
 
 For discrete distributions the expected value is defined as the sum of all possible values weighted by their respective probability. Intuitively, values that are very unlikely get less weight and those that are very likely get more weight. This can be written as
 
@@ -48,7 +48,7 @@ This is the expected squared deviation from the expected value. Taking the squar
 
 <a id="binom"></a>
 
-#### Binomial Distribution
+##### Binomial Distribution
 
 Our first example of a discrete distribution has to do with coin tosses again. It turns out that the random variable "number of heads observed" follows a very common distribution, the **binomial distribution**. This can be written as follows: $X$ being the number of heads observed,
 
@@ -137,7 +137,7 @@ You can work with the binomial distribution in R using the ```binom``` family of
 
 <iframe width='100%' height='600' src='https://rdrr.io/snippets/embed/?code=print(%22Random%20sample%20with%2010%20observations%3A%22)%0Arbinom(10%2C%202%2C%20%20prob%20%3D%200.8)%20%0Aprint(%22Quantile%20function%3A%22)%0Aqbinom(0.37%2C%202%2C%20prob%20%3D%200.8)%20%0Aprint(%22CDF%3A%22)%20%0Apbinom(1%2C%202%2C%20prob%20%3D%200.8)%0Aprint(%22PMF%3A%22)%20%0Adbinom(2%2C%202%2C%20prob%20%3D%200.8)%0A' frameborder='0'></iframe>
 
-#### Discrete Uniform Distribution
+##### Discrete Uniform Distribution
 
 The discrete uniform distribution assigns the same probability to all possible values. Below you can find the PMF and CDF of a uniform distribution that starts at one and goes to ten.
 
@@ -211,7 +211,7 @@ $$
 
 Note that these derivations are only valid for a uniform distribution that starts at one. However the generalization to a distribution with an arbitrary starting point is [fairly straightforward](https://en.wikipedia.org/wiki/Discrete_uniform_distribution). 
 
-### Continuous Distributions
+#### Continuous Distributions
 
 As mentioned in the last chapter, a distribution is continuous if the cumulative distribution function is a continuous function (no steps!). 
 
@@ -243,7 +243,7 @@ $$
 
 where $f_X(x)$ is the density of the random variable $X$ evaluated at some point $x$ and the integral over $x$ ("$dx$") has the same purpose as the sum over $x$ before. 
 
-#### Uniform Distribution
+##### Uniform Distribution
 
 To illustrate the concept of the integral the continuous uniform distribution provides a simple example. As in the discrete case it assigns equal weight to each equally sized interval in the area on which the variable is defined ($[a, b]$). Why each interval and not each value? Since there are infinitely many values between $a$ and $b$ (again due to real numbers) each individual value cannot be assigned a probability small enough for all of the probabilities to sum to $1$ (which is a basic requirement of a probability). Thus we can only assign a probability to an interval, e.g. $[0, 0.001]$, of which only *finitely* many exist between $a$ and $b$, e.g. $a = -2$ and $b = 1$. In this example there exist $3,000$ intervals of values $[x, x + 0.001]$. Since we are dealing with intervals the probability density can be thought of as the area under the PDF for a given interval or the sum of the areas of *very small* intervals within the chosen interval. 
 
@@ -271,7 +271,7 @@ Clearly the Uniform distribution can be used whenever we want to model a populat
 
 <iframe src="https://learn.wu.ac.at/shiny/imsm/dist_uniform/" style="border: none; width: 800px; height: 650px"></iframe>
 
-#### Normal distribution
+##### Normal distribution
 
 The normal distribution is probably the most widely known one. Its PDF is the famous bell curve. It has two parameters $\mu$, and $\sigma^2$. $\mu$ is the mean and $\sigma^2$ the variance of the distribution. In the case of $\mu = 0,\ \sigma^2 = 1$ it is called the *standard normal distribution*.
 
@@ -302,7 +302,7 @@ When using the Normal distribution in R one has to specify the standard deviatio
 <iframe width='100%' height='600' src='https://rdrr.io/snippets/embed/?code=print(%22Random%20sample%3A%22)%0Arnorm(10%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22Quantile%20function%3A%22)%0Aqnorm(0.75%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22CDF%3A%22)%0Apnorm(6.75%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)%0Aprint(%22PDF%3A%22)%0Adnorm(c(-10%2C%200%2C%2010)%2C%20mean%20%3D%200%2C%20sd%20%3D%2010)' frameborder='0'></iframe>
 <!-- <iframe src="http://localhost:3838/learnNormaldens/normalCommands/" style="border: none; width: 800px; height: 900px"></iframe> -->
 
-#### $\chi^2$ Distribution
+##### $\chi^2$ Distribution
 
 The $\chi^2$ ("Chi-Squared") distribution has only one parameter, its *degrees of freedom*. The exact meaning of degrees of freedom will be discussed later when we are talking about hypothesis testing. Roughly they give the number of *independent* points of information that can be used to estimate a statistic. Naming the parameter of the $\chi^2$ distribution degrees of freedom reflects its importance for hypothesis testing. That is the case since many models assume the data to be normally distributed and the $\chi^2$ distribution is closely related to the normal distribution. Explicitly if $X \sim N(0, 1)$ then $X^2 \sim \chi^2(1)$. That is, if we have one random variable with standard normal distribution and square it, we get a $\chi^2$ random variable with $1$ degree of freedom. How to exactly count the variables that go into a specific statistic will be discussed at a later point. If multiple squared independent standard normal variables are summed up the degrees of freedom increase accordingly.
 
