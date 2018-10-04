@@ -1,8 +1,8 @@
-# Writing reports using R-Markdown
+## Writing reports using R-Markdown
 
 This page will guide you through creating and editing R-Markdown documents. This is a useful tool for reporting your analysis (e.g. for homework assignments). 
 
-## Creating a new R-Markdown document
+### Creating a new R-Markdown document
 
 0. If an R-Markdown file was provided to you, open it with R-Studio and skip to [step 4](#step4) after adding your answers.
 
@@ -29,7 +29,7 @@ This page will guide you through creating and editing R-Markdown documents. This
 5. Hand in appropriate file (ending in `.html`) on learn\@WU
 ![](./rmdExplain/handin.PNG)
 
-## Text and Equations
+### Text and Equations
 
 R-Markdown documents are plain text files that include both text and R-code. Using RStudio they can be converted ('knitted') to HTML or PDF files that include both the text and the results of the R-code. In fact this website is written using R-Markdown and RStudio. In order for RStudio to be able to interpret the document you have to use certain characters or combinations of characters when formatting text and including R-code to be evaluated. By default the document starts with the options for the text part. You can change the title, date, author and a few more advanced options. 
 
@@ -37,7 +37,7 @@ R-Markdown documents are plain text files that include both text and R-code. Usi
 
 The default is text mode, meaning that lines in an Rmd document will be interpreted as text, unless specified otherwise.
 
-### Headings
+#### Headings
 
 Usually you want to include some kind of heading to structure your text. A heading is created using `#` signs. A single `#` creates a first level heading, two `##` a second level and so on. 
 
@@ -45,7 +45,7 @@ Usually you want to include some kind of heading to structure your text. A headi
 
 It is important to note here that the ```#``` symbol means something different within the code chunks as opposed to outside of them. If you continue to put a ```#``` in front of all your regular text, it will all be interpreted as a first level heading, making your text very large.
 
-### Lists
+#### Lists
 
 Bullet point lists are created using `*`, `+` or `-`. Sub-items are created by indenting the item using 4 spaces or 2 tabs. 
 
@@ -80,7 +80,7 @@ Ordered lists can be created using numbers and letters. If you need sub-sub-item
 2. Second item
 
 
-### Text formatting
+#### Text formatting
 
 Text can be formatted in *italics* (`*italics*`) or **bold** (`**bold**`). In addition, you can ad block quotes with `>`
 
@@ -89,11 +89,11 @@ Text can be formatted in *italics* (`*italics*`) or **bold** (`**bold**`). In ad
 ````
 > Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.
 
-## R-Code
+### R-Code
 
 R-code is contained in so called "chunks". These chunks always start with three backticks and ```r``` in curly braces (``` ```{r} ```) and end with three backticks (``` ``` ```). Optionally, parameters can be added after the ```r``` to influence how a chunk behaves. Additionally, you can also give each chunk a name. Note that these have to be **unique**, otherwise R will refuse to knit your document.
 
-### Global and chunk options
+#### Global and chunk options
 
 The first chunk always looks as follows
 
@@ -140,7 +140,7 @@ plot(dist~speed, cars)
 
 A good overview of all available global/chunk options can be found [here](https://yihui.name/knitr/options/#chunk_options).
 
-## LaTeX Math
+### LaTeX Math
 
 Writing well formatted mathematical formulae is done the same way as in [LaTeX](https://en.wikipedia.org/wiki/LaTeX). Math mode is started and ended using `$$`. 
 ````
@@ -185,7 +185,7 @@ $$
 \end{align}
 $$
 
-### Important symbols
+#### Important symbols
 
 ```{r, echo=FALSE, include=TRUE, results="asis", warning = FALSE}
 library(knitr)
@@ -218,6 +218,6 @@ kable(mathy.df, escape=FALSE) %>%
   kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
-### Greek letters
+#### Greek letters
 
 [Greek letters](https://en.wikipedia.org/wiki/Greek_alphabet#Letters) are preceded by a `\` followed by their name (`$\beta$` = $\beta$). In order to capitalize them simply capitalize the first letter of the name (`$\Gamma$` = $\Gamma$).
