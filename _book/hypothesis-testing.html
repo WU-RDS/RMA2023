@@ -176,14 +176,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>5.1.3</b> Choosing the right test</a></li>
 <li class="chapter" data-level="5.1.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>5.2</b> One sample t-test</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#formulate-null-and-alternative-hypotheses"><i class="fa fa-check"></i><b>5.2.1</b> 1. Formulate null and alternative hypotheses</a></li>
-<li class="chapter" data-level="5.2.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#select-an-appropriate-test"><i class="fa fa-check"></i><b>5.2.2</b> 2. Select an appropriate test</a></li>
-<li class="chapter" data-level="5.2.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choose-the-level-of-significance"><i class="fa fa-check"></i><b>5.2.3</b> 3. Choose the level of significance</a></li>
-<li class="chapter" data-level="5.2.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#descriptive-statistics-and-data-visualization"><i class="fa fa-check"></i><b>5.2.4</b> 4. Descriptive statistics and data visualization</a></li>
-<li class="chapter" data-level="5.2.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#conduct-significance-test"><i class="fa fa-check"></i><b>5.2.5</b> 5. Conduct significance test</a></li>
-<li class="chapter" data-level="5.2.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#report-results-and-draw-a-marketing-conclusion"><i class="fa fa-check"></i><b>5.2.6</b> 6. Report results and draw a marketing conclusion</a></li>
-</ul></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>5.2</b> One sample t-test</a></li>
 <li class="chapter" data-level="5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>5.3</b> Comparing two means</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>5.3.1</b> Independent-means t-test</a></li>
 <li class="chapter" data-level="5.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>5.3.2</b> Dependent-means t-test</a></li>
@@ -461,24 +454,17 @@ H_1: \mu &gt; \mu_0
 <div id="one-sample-t-test" class="section level2">
 <h2><span class="header-section-number">5.2</span> One sample t-test</h2>
 <p>The example we used in the introduction was an example of the <strong>one sample t-test</strong> and we computed all statistics by hand to explain the underlying intuition. When you conduct hypothesis tests using R, you do not need to calculate these statistics by hand, since there are build-in routines to conduct the steps for you. Let us use the same example again to see how you would conduct hypothesis tests in R.</p>
-<div id="formulate-null-and-alternative-hypotheses" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> 1. Formulate null and alternative hypotheses</h3>
+<p><strong>1. Formulate null and alternative hypotheses</strong></p>
 <p>The null hypothesis states that there is no difference between the true population mean <span class="math inline">\(\mu\)</span> and the hypothesized value (i.e., <span class="math inline">\(10\)</span>), while the alternative hypothesis states the opposite:</p>
 <p><span class="math display">\[
 H_0: \mu = 10 \\
 H_1: \mu \neq 10
 \]</span></p>
-</div>
-<div id="select-an-appropriate-test" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> 2. Select an appropriate test</h3>
+<p><strong>2. Select an appropriate test</strong></p>
 <p>Because we would like to test if the mean of a variable is different from a specified threshold, the one-sample t-test is appropriate. The assumptions of the test are 1) that the variable is measured using an interval or ratio scale, and 2) that the sampling distribution is normal. Both assumptions are met since 1) listening time is a ratio scale, and 2) we deem the sample size (n = 50) large enough to assume a normal sampling distribution according to the central limit theorem.</p>
-</div>
-<div id="choose-the-level-of-significance" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> 3. Choose the level of significance</h3>
+<p><strong>3. Choose the level of significance</strong></p>
 <p>We choose the conventional 5% significance level.</p>
-</div>
-<div id="descriptive-statistics-and-data-visualization" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> 4. Descriptive statistics and data visualization</h3>
+<p><strong>4. Descriptive statistics and data visualization</strong></p>
 <p>Provide descriptive statistics using the <code>describe()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
 <span class="kw">describe</span>(student_sample)</code></pre></div>
@@ -496,9 +482,7 @@ H_1: \mu \neq 10
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Distribution of values in the sample&quot;</span>, 
         <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
-</div>
-<div id="conduct-significance-test" class="section level3">
-<h3><span class="header-section-number">5.2.5</span> 5. Conduct significance test</h3>
+<p><strong>5. Conduct significance test</strong></p>
 <p>In the beginning of the chapter, we saw, how you could conduct significance test by hand. However, R has built-in routines that you can use to conduct the analyses. The <code>t.test()</code> function can be used to conduct the test. To test if the listening time among WU students was 10, you can use the following code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">H_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">10</span>
 <span class="kw">t.test</span>(student_sample, <span class="dt">mu =</span> H_<span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre></div>
@@ -514,13 +498,10 @@ H_1: \mu \neq 10
 ## mean of x 
 ##  18.98914</code></pre>
 <p>Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument <code>alternative</code>from <code>'two.sided'</code> to either <code>less</code> or <code>'greater'</code>.</p>
-</div>
-<div id="report-results-and-draw-a-marketing-conclusion" class="section level3">
-<h3><span class="header-section-number">5.2.6</span> 6. Report results and draw a marketing conclusion</h3>
+<p><strong>6. Report results and draw a marketing conclusion</strong></p>
 <p>Note that the results are the same as above, when we computed the test by hand. You could summarize the results as follows:</p>
 <p>On average, the listening times in our sample were different form 10 hours per month (Mean = 18.99 hours). This difference was significant t(49) = 5.058, p &lt; .05 (95% CI = [15.42; 22.56]). Based on this evidence, we can conclude that the mean in our sample is significantly lower compared to the hypothesized population mean of <span class="math inline">\(10\)</span> hours, providing evidence against the null hypothesis.</p>
 <p>Note that in the reporting above, the number <code>49</code> in parenthesis refers to the degrees of freedom that are available from the output.</p>
-</div>
 </div>
 <div id="comparing-two-means" class="section level2">
 <h2><span class="header-section-number">5.3</span> Comparing two means</h2>
@@ -645,24 +626,17 @@ t_score</code></pre></div>
 <div id="application" class="section level4">
 <h4><span class="header-section-number">5.3.1.2</span> Application</h4>
 <p>The section above explained the theory behind the independent-means t-test and showed how to compute the statistics manually. Obviously you don’t have to compute these statistics by hand in this section shows you how to conduct an independent-means t-test in R using the example from above.</p>
-<div id="formulate-null-and-alternative-hypotheses-1" class="section level5">
-<h5><span class="header-section-number">5.3.1.2.1</span> 1. Formulate null and alternative hypotheses</h5>
+<p><strong>1. Formulate null and alternative hypotheses</strong></p>
 <p>We wish to analyze whether there is a significant difference in music listining times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:</p>
 <p><span class="math display">\[
 H_0: \mu_1=\mu_2\\
 H_1: \mu_1 \ne \mu_2
 \]</span></p>
-</div>
-<div id="select-an-appropriate-test-1" class="section level5">
-<h5><span class="header-section-number">5.3.1.2.2</span> 2. Select an appropriate test</h5>
+<p><strong>2. Select an appropriate test</strong></p>
 <p>Since we have a ratio scaled variable (i.e., listening times) and two independent groups, where the mean of one sample is independent of the group of the second sample (i.e., the goups contain different units), the independent-means t-test is appropriate.</p>
-</div>
-<div id="choose-the-level-of-significance-1" class="section level5">
-<h5><span class="header-section-number">5.3.1.2.3</span> 3. Choose the level of significance</h5>
+<p><strong>3. Choose the level of significance</strong></p>
 <p>We choose the conventional 5% significance level.</p>
-</div>
-<div id="descriptive-statistics-and-data-visualization-1" class="section level5">
-<h5><span class="header-section-number">5.3.1.2.4</span> 4. Descriptive statistics and data visualization</h5>
+<p><strong>4. Descriptive statistics and data visualization</strong></p>
 <p>We can compute the descriptive statistics for each group separately, using the <code>describeBy()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
 <span class="kw">describeBy</span>(hours_a_b<span class="op">$</span>hours, hours_a_b<span class="op">$</span>group)</code></pre></div>
@@ -695,9 +669,7 @@ H_1: \mu_1 \ne \mu_2
     <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-190-3.png" width="672" /></p>
-</div>
-<div id="conduct-significance-test-1" class="section level5">
-<h5><span class="header-section-number">5.3.1.2.5</span> 5. Conduct significance test</h5>
+<p><strong>5. Conduct significance test</strong></p>
 <p>To conduct the independent means t-test, we can use the <code>t.test()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> hours_a_b, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, 
     <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)</code></pre></div>
@@ -712,11 +684,8 @@ H_1: \mu_1 \ne \mu_2
 ## sample estimates:
 ## mean in group A mean in group B 
 ##        20.90816        26.42857</code></pre>
-</div>
-<div id="report-results-and-draw-a-marketing-conclusion-1" class="section level5">
-<h5><span class="header-section-number">5.3.1.2.6</span> 6. Report results and draw a marketing conclusion</h5>
+<p><strong>6. Report results and draw a marketing conclusion</strong></p>
 <p>The results showed that listening times were higher in the experimental group (Mean = 26.43, SE = 1.54) compared to the control group (Mean = 20.91, SE = 1.37). This means that the listening times were 5.52 hours higher on average in the experimental group, compared to the control group. An independent-means t-test showed that this difference is significant t(207) = 2.684, p &lt; .05 (95% CI = [1.46,9.58]).</p>
-</div>
 </div>
 </div>
 <div id="dependent-means-t-test" class="section level3">
@@ -784,24 +753,17 @@ t_score</code></pre></div>
 <div id="application-1" class="section level4">
 <h4><span class="header-section-number">5.3.2.2</span> Application</h4>
 <p>Again, we don’t have to compute all this by hand since the <code>t.test(...)</code> function can be used to do it for us. Now we have to use the argument <code>paired=TRUE</code> to let R know that we are working with dependent observations.</p>
-<div id="formulate-null-and-alternative-hypotheses-2" class="section level5">
-<h5><span class="header-section-number">5.3.2.2.1</span> 1. Formulate null and alternative hypotheses</h5>
+<p><strong>1. Formulate null and alternative hypotheses</strong></p>
 <p>We would like to the test if there is a difference in music listening times between the two consecutive months, so our null hypothesis is that there is no difference, while the alternative hypothesis states the opposite:</p>
 <p><span class="math display">\[
 H_0: \mu_D = 0 \\
 H_0: \mu_D \ne 0
 \]</span></p>
-</div>
-<div id="select-an-appropriate-test-2" class="section level5">
-<h5><span class="header-section-number">5.3.2.2.2</span> 2. Select an appropriate test</h5>
+<p><strong>2. Select an appropriate test</strong></p>
 <p>Since we have a ratio scaled variable (i.e., listening times) and two observations of the same group of users (i.e., the goups contain the same units), the dependent-means t-test is appropriate.</p>
-</div>
-<div id="choose-the-level-of-significance-2" class="section level5">
-<h5><span class="header-section-number">5.3.2.2.3</span> 3. Choose the level of significance</h5>
+<p><strong>3. Choose the level of significance</strong></p>
 <p>We choose the conventional 5% significance level.</p>
-</div>
-<div id="descriptive-statistics-and-data-visualization-2" class="section level5">
-<h5><span class="header-section-number">5.3.2.2.4</span> 4. Descriptive statistics and data visualization</h5>
+<p><strong>4. Descriptive statistics and data visualization</strong></p>
 <p>We can compute the descriptive statistics for each month separately, using the <code>describe()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
 <span class="kw">describe</span>(hours_a_b_paired)</code></pre></div>
@@ -862,9 +824,7 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
     <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-199-3.png" width="672" /></p>
-</div>
-<div id="conduct-significance-test-2" class="section level5">
-<h5><span class="header-section-number">5.3.2.2.5</span> 5. Conduct significance test</h5>
+<p><strong>5. Conduct significance test</strong></p>
 <p>To conduct the independent means t-test, we can use the <code>t.test()</code> function with the argument <code>paired = TRUE</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours_a_b_paired<span class="op">$</span>hours_a, hours_a_b_paired<span class="op">$</span>hours_b, 
     <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, 
@@ -880,11 +840,8 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 ## sample estimates:
 ## mean of the differences 
 ##                   -4.97</code></pre>
-</div>
-<div id="report-results-and-draw-a-marketing-conclusion-2" class="section level5">
-<h5><span class="header-section-number">5.3.2.2.6</span> 6. Report results and draw a marketing conclusion</h5>
+<p><strong>6. Report results and draw a marketing conclusion</strong></p>
 <p>On average, the same users used the service more when it included the new feature (M = 25.96, SE = 1.68) compared to the service without the feature (M = 20.99, SE = 1.34). This difference was significant t(99) = 2.3781, p &lt; .05 (95% CI = [0.82, 9.12]).</p>
-</div>
 </div>
 </div>
 <div id="significance-level-power-and-sample-size" class="section level3">

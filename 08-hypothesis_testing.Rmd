@@ -438,7 +438,7 @@ In the following, we will go through the individual steps using examples for dif
 
 The example we used in the introduction was an example of the **one sample t-test** and we computed all statistics by hand to explain the underlying intuition. When you conduct hypothesis tests using R, you do not need to calculate these statistics by hand, since there are build-in routines to conduct the steps for you. Let us use the same example again to see how you would conduct hypothesis tests in R.  
 
-### 1. Formulate null and alternative hypotheses
+**1. Formulate null and alternative hypotheses**
 
 The null hypothesis states that there is no difference between the true population mean $\mu$ and the hypothesized value (i.e., $10$), while the alternative hypothesis states the opposite: 
 
@@ -447,15 +447,15 @@ H_0: \mu = 10 \\
 H_1: \mu \neq 10
 $$
 
-### 2. Select an appropriate test
+**2. Select an appropriate test**
 
 Because we would like to test if the mean of a variable is different from a specified threshold, the one-sample t-test is appropriate. The assumptions of the test are 1) that the variable is measured using an interval or ratio scale, and 2) that the sampling distribution is normal. Both assumptions are met since 1) listening time is a ratio scale, and 2) we deem the sample size (n = 50) large enough to assume a normal sampling distribution according to the central limit theorem.  
 
-### 3. Choose the level of significance
+**3. Choose the level of significance**
 
 We choose the conventional 5% significance level. 
 
-### 4. Descriptive statistics and data visualization
+**4. Descriptive statistics and data visualization**
 
 Provide descriptive statistics using the ```describe()``` function: 
 
@@ -473,7 +473,7 @@ ggplot(data.frame(student_sample)) +
   labs(title = "Distribution of values in the sample",x = "Hours", y = "Frequency") 
 ```
 
-### 5. Conduct significance test
+**5. Conduct significance test**
 
 In the beginning of the chapter, we saw, how you could conduct significance test by hand. However, R has built-in routines that you can use to conduct the analyses. The ```t.test()``` function can be used to conduct the test. To test if the listening time among WU students was 10, you can use the following code:
 
@@ -484,7 +484,7 @@ t.test(student_sample, mu = H_0, alternative = 'two.sided')
 
 Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument ```alternative```from ```'two.sided'``` to either ```less``` or ```'greater'```.
 
-### 6. Report results and draw a marketing conclusion
+**6. Report results and draw a marketing conclusion**
 
 Note that the results are the same as above, when we computed the test by hand. You could summarize the results as follows:
 
@@ -637,7 +637,7 @@ Following the example of our one sample t-test above, we would now need to compa
 
 The section above explained the theory behind the independent-means t-test and showed how to compute the statistics manually. Obviously you don't have to compute these statistics by hand in this section shows you how to conduct an independent-means t-test in R using the example from above.  
 
-##### 1. Formulate null and alternative hypotheses
+**1. Formulate null and alternative hypotheses**
 
 We wish to analyze whether there is a significant difference in music listining times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:   
 
@@ -646,15 +646,15 @@ H_0: \mu_1=\mu_2\\
 H_1: \mu_1 \ne \mu_2
 $$
 
-##### 2. Select an appropriate test
+**2. Select an appropriate test**
 
 Since we have a ratio scaled variable (i.e., listening times) and two independent groups, where the mean of one sample is independent of the group of the second sample (i.e., the goups contain different units), the independent-means t-test is appropriate. 
 
-##### 3. Choose the level of significance
+**3. Choose the level of significance**
 
 We choose the conventional 5% significance level. 
 
-##### 4. Descriptive statistics and data visualization
+**4. Descriptive statistics and data visualization**
 
 We can compute the descriptive statistics for each group separately, using the ```describeBy()``` function:
 
@@ -687,7 +687,7 @@ ggplot(hours_a_b,aes(hours)) +
   theme_bw()
 ```
 
-##### 5. Conduct significance test
+**5. Conduct significance test**
 
 To conduct the independent means t-test, we can use the ```t.test()``` function:
 
@@ -695,7 +695,7 @@ To conduct the independent means t-test, we can use the ```t.test()``` function:
 t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided", conf.level = 0.95, var.equal = FALSE)
 ```
 
-##### 6. Report results and draw a marketing conclusion
+**6. Report results and draw a marketing conclusion**
 
 The results showed that listening times were higher in the experimental group (Mean = 26.43, SE = 1.54) compared to the control group (Mean = 20.91, SE = 1.37). This means that the listening times were `r abs(round(d,2))` hours higher on average in the experimental group, compared to the control group. An independent-means t-test showed that this difference is significant t(207) = 2.684, p < .05 (95% CI = [1.46,9.58]).
 
@@ -782,7 +782,7 @@ Note that in the case of the dependent-means t-test, we only base our hypothesis
 
 Again, we don't have to compute all this by hand since the ```t.test(...)``` function can be used to do it for us. Now we have to use the argument ```paired=TRUE``` to let R know that we are working with dependent observations. 
 
-##### 1. Formulate null and alternative hypotheses
+**1. Formulate null and alternative hypotheses**
 
 We would like to the test if there is a difference in music listening times between the two consecutive months, so our null hypothesis is that there is no difference, while the alternative hypothesis states the opposite:
 
@@ -791,15 +791,15 @@ H_0: \mu_D = 0 \\
 H_0: \mu_D \ne 0
 $$
 
-##### 2. Select an appropriate test
+**2. Select an appropriate test**
 
 Since we have a ratio scaled variable (i.e., listening times) and two observations of the same group of users (i.e., the goups contain the same units), the dependent-means t-test is appropriate. 
 
-##### 3. Choose the level of significance
+**3. Choose the level of significance**
 
 We choose the conventional 5% significance level. 
 
-##### 4. Descriptive statistics and data visualization
+**4. Descriptive statistics and data visualization**
 
 We can compute the descriptive statistics for each month separately, using the ```describe()``` function:
 
@@ -843,7 +843,7 @@ ggplot(hours_a_b_paired_long,aes(hours)) +
   theme_bw()
 ```
 
-##### 5. Conduct significance test
+**5. Conduct significance test**
 
 To conduct the independent means t-test, we can use the ```t.test()``` function with the argument ```paired = TRUE```:
 
@@ -852,7 +852,7 @@ t.test(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b, mu = 0, alternative =
 ```
 
 
-##### 6. Report results and draw a marketing conclusion
+**6. Report results and draw a marketing conclusion**
 
 On average, the same users used the service more when it included the new feature (M = 25.96, SE = 1.68) compared to the service without the feature (M = 20.99, SE = 1.34). This difference was significant t(99) = 2.3781, p < .05 (95% CI = [0.82, 9.12]).
 
