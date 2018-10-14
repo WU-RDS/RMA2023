@@ -12,6 +12,7 @@ output:
 library(knitr)
 #This code automatically tidies code so that it does not reach over the page
 opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+options(scipen = 999, digits = 7)
 ```
 
 # Hypothesis testing
@@ -20,235 +21,138 @@ This chapter is primarily based on Field, A., Miles J., & Field, Z. (2012): Disc
 
 ## Introduction
 
-### Why do we test hypotheses?
+We test hypotheses because we are confined to taking samples – we rarely work with the entire population. In the previous chapter, we introduced the standard error (i.e., the standard deviation of a large number of hypothetical samples) as an estimate of how well a particular sample represents the population. We also saw how we can construct confidence intervals around the sample mean $\bar x$ by computing $SE_{\bar x}$ as an estimate of $\sigma_{\bar x}$ using $s$ as an estimate of $\sigma$ and calculating the 95% CI as $\bar x \pm 1.96 x SE_{\bar x}$. Although we do not know the true population mean ($\mu$), we might have an hypothesis about it and this would tell us how the corresponding sampling distribution looks like. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample **assuming that the hypothesis is true**. 
 
-We test hypotheses because we are confined to taking samples – we rarely work with the entire population. A sample that we take is likely to be different from a second sample that we take from the same population, so we use hypothesis tests to generalize from the sample to the population. However, we need some measure of uncertainty we can assign to analytic results. We use the standard error (i.e., the standard deviation of a large number of hypothetical samples) to gauge how well a particular sample represents the population. This is shown in the following figure. 
+Let us again begin by assuming we know the entire population using the example of music listening times among students from the previous example. As a reminder, the following plot shows the distribution of music listening times in the population of WU students. 
 
-
-![Sampling distribution (source: Field, A. et al. (2012): Discovering Statistics Using R, p. 44)](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/samplingdistribution.JPG)
-
-Recall the definition of the standard error (SE):
-
-\begin{equation} 
-\begin{split}
-SE = \frac{s}{\sqrt{n}}
-\end{split}
-(\#eq:SE)
-\end{equation} 
-
-where ```s``` is the standard deviation and ```n``` is the number of observations in our sample. If the standard error is low, then we expect most samples to have similar means. If the standard error is large, large differences in sample means are more likely. If the difference in sample means is large, then we would expect based on the standard error that either the collected samples may be atypical of the population, or that the samples come from different populations but are typical of their respective population.
-
-Note that there is a relationship between the sample size and the standard error. The larger the sample size, the smaller the standard error. This can be attributed to the fact that with larger samples, there is less uncertainty that the sample is a good approximation of the entire population. 
-
-The following plot shows the relationship between the sample size and the standard error. A hypothetical population of 1,000,000 observations is simulated and samples of ascending size are randomly drawn from this population. You can see that the standard error is decreasing with the number of observations. 
-
-<br>
-
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE, fig.align="center", fig.cap="Relationship between the sample size and the standard error"}
+```{r, message = FALSE, warning=FALSE}
+library(tidyverse)
 library(ggplot2)
+library(latex2exp)
+set.seed(321)
+hours <- rgamma(25000, shape = 2, scale = 10)
+ggplot(data.frame(hours)) +
+  geom_histogram(aes(x = hours), bins = 30, fill='white', color='black') +
+    geom_vline(xintercept = mean(hours), size = 1)  +  theme_bw() +
+  labs(title = "Histogram of listening times",
+       subtitle = TeX(sprintf("Population mean ($\\mu$) = %.2f; population standard deviation ($\\sigma$) = %.2f",round(mean(hours),2),round(sd(hours),2))),
+       y = 'Number of students', 
+       x = 'Hours') 
+```
 
-n_pop <- 1000000
-y_pop <- rnorm(n_pop, 1, 5)
-R <- 1000
-sems <- numeric()
-replication <- numeric()
+In this example, the population mean ($\mu$) is equal to `r round(mean(hours),2)`, and the population standard deviation $\sigma$ is equal to `r round(sd(hours),2)`. 
 
-for (r in 10:R) {
-  y_sample <- sample(y_pop, r)
-  sem <- sd(y_sample)/sqrt(length(y_sample))
-  sems <- rbind(sems, sem)
-  replication <- rbind(replication, r)
-}
+### The null hypothesis
 
-df <- as.data.frame(cbind(replication, sems))
-ggplot(data=df, aes(y = sems, x = replication)) + 
-  geom_line() + 
-  ylab("Standard error of the mean") + 
-  xlab("Sample size") + 
+Let us assume that we were planning to take a random sample of 50 students from this population and our hypothesis was that the mean listening time is equal to some specific value $\mu_0$, say $10$. This would be our **null hypothesis**. The null hypothesis refers to the statement that is being tested and is usually a statement of the status quo, one of no difference or no effect. In our example, the null hypothesis would state that there is no difference between the true population mean $\mu$ and the hypothesized value $\mu_0$ (in our example $10$), which can be expressed as follows:
+
+$$
+H_0: \mu = \mu_0
+$$
+When conducting research, we are usually interested in providing evidence against the null hypothesis. If we then observe sufficient evidence against it and our estimate is said to be significant. If the null hypothesis is rejected, this is taken as support for the **alternative hypothesis**. The alternative hypothesis assumes that some difference exists, which can be expressed as follows: 
+
+$$
+H_1: \mu \neq \mu_0
+$$
+Accepting the alternative hypothesis in turn will often lead to changes in opinions or actions. Note that while the null hypothesis may be rejected, it can never be accepted based on a single test. If we fail to reject the null hypothesis, it means that we simply haven't collected enough evidence against the null hypothesis to disprove it. In classical hypothesis testing, there is no way to determine whether the null hypothesis is true. **Hypothesis testing** provides a means to quantify to what extent the data from our sample is in line with the null hypothesis.
+
+In order to quantify the concept of "sufficient evidence" we look at the theoretical distribution of the sample means given our null hypothesis and the sample standard error. Using the available information we can infer the sampling distribution for our null hypothesis. Recall that the standard deviation of the sampling distribution (i.e., the standard error of the mean) is given by $\sigma_{\bar x}={\sigma \over \sqrt{n}}$, and thus can be computed as follows:
+
+```{r}
+mean_pop <- mean(hours)
+sigma <- sd(hours) #population standard deviation
+n <- 50 #sample size
+standard_error <- sigma/sqrt(n) #standard error
+standard_error
+```
+
+Since we know from the central limit theorem that the sampling distribution is normal for large enough samples, we can now visualize the expected sampling distribution **if our null hypothesis was in fact true** (i.e., if the was no difference between the true population mean and the hypothesized mean of 10). 
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 4, fig.width = 8}
+library(latex2exp)
+H_0 <- 10
+p1 <- 0.025
+p2 <- 0.975
+min <- 0
+max <- 20
+norm1 <- round(qnorm(p1), digits = 3)
+norm2 <- round(qnorm(p2), digits = 3)
+ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(mean = H_0, sd = standard_error)) + 
+  stat_function(fun = dnorm, args = list(mean = H_0, sd = standard_error), xlim = c(min, qnorm(p1, mean = H_0, sd = standard_error)), geom = "area") +
+  stat_function(fun = dnorm, args = list(mean = H_0, sd = standard_error), xlim = c(max, qnorm(p2, mean = H_0, sd = standard_error)), geom = "area") +
+  scale_x_continuous(breaks=c(0,qnorm(p1, mean = H_0, sd = standard_error),10,qnorm(p2, mean = H_0, sd = standard_error),20), labels=c("0",TeX(sprintf("%.2f $* \\sigma_{\\bar x}$",qnorm(p1))),"10",TeX(sprintf("%.2f $* \\sigma_{\\bar x}$",qnorm(p2))),"20")) +
+  labs(title = TeX(sprintf("Theoretical density given null hypothesis $\\mu_0=$ 10 ($\\sigma_{\\bar x}$ = %.2f)",standard_error)),x = "Hours", y = "Density") +
+  theme(legend.position="none") + 
   theme_bw()
 ```
 
-Why is this important? Well, the generalized equation for calculating a test statistic is given by
+We also know that 95% of the probability is within `r round(qnorm(p2),2)` standard deviations from the mean. Values higher than that are rather unlikely, if our hypothesis about the population mean was indeed true. This is shown by the shaded area, also known as the "rejection region". To test our hypothesis that the population mean is equal to $10$, let us take a random sample from the population.
 
-\begin{equation} 
-\begin{split}
-test\ statistic = \frac{effect}{error}
-\end{split}
-(\#eq:teststatistic)
-\end{equation} 
-
-where ```effect``` denotes the effect that you are investigating (e.g., the mean difference in an outcome variable between two experimental groups), while ```error``` denotes the variation we would naturally expect to find based on the variability in the data and the sample size (e.g., the standard error of the mean difference). When the standard error is lower, the test statistic gets larger and you are more likely to obtain a significant test result. Hence - all else being equal - when you increase your sample size, this will increase the value of your test statistic (i.e., decrease the p-value). 
-
-<br>
-
-### The process of hypothesis testing
-
-The process of hypothesis testing consists of 6 consecutive steps:
-
-1. Formulate null and alternative hypotheses
-2. Select an appropriate test
-3. Choose the level of significance (&alpha;)
-4. Collect data and calculate the test statistic (T<sub>CAL</sub>)
-5. Reject or do not reject H<sub>0</sub>
-6. Report results and draw a marketing conclusion
-
-In the following, we will use an example to go through the individual steps. 
-
-## Parametric tests
-
-The first basic differentiation we can make is between parametric and non-parametric tests.
-
-<b>Parametric tests</b> require that variables are measured on an interval or ratio scale and that the data follows a known distribution. Particularly, tests based on the normal distribution (e.g., the t-test) require four basic assumptions:
-
-* A normally distributed sampling distribution
-* Interval or ratio data
-
-And in addition for independent tests:
-
-* Scores in different conditions are independent (because they come from different people)
-* Homogeneity of variance
-
-<b>Non-Parametric tests</b> on the other hand do not require the sampling distribution to be normally distributed (a.k.a. "assumption free tests"). These tests may be used when the variable of interest is measured on an ordinal scale or when the parametric assumptions do not hold. They often rely on ranking the data instead of analyzing the actual scores. By ranking the data, information on the magnitude of differences is lost. Thus, parametric tests are more powerful if the sampling distribution is normally distributed.
-
-### Independent-means t-test
-
-As an example of a parametric test, we will discuss the independent- and dependent-means t-test. The <b>independent-means t-test</b> is used when there are two experimental conditions and different units (e.g., participants, products) were assigned to each condition, while the <b>dependent-means t-test</b> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
-
-<b>Example case:</b> What is the effect of price promotions on the sales of music albums?
-
-<b>Experimental setup:</b> As a marketing manager of a music download store, you are interested in the effect of price on demand. In the music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assigned to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day. 
-
-Let's load and investigate the data first:    
-
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
-library(dplyr)
-library(psych)
-library(ggplot2)
-library(Hmisc)
-rm(music_sales)
-music_sales <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat", 
-                          sep = "\t", 
-                          header = TRUE) #read in data
-music_sales$group <- factor(music_sales$group, levels = c(1:2), labels = c("low_price", "high_price")) #convert grouping variable to factor
-str(music_sales) #inspect data
-head(music_sales) #inspect data
+```{r}
+set.seed(12567)
+student_sample <- sample(1:25000, size = 50, replace = FALSE)
+student_sample <- hours[student_sample]
+mean_sample <- mean(student_sample)
+ggplot(data.frame(student_sample)) + 
+  geom_histogram(aes(x = student_sample), fill = 'white', color = 'black', bins = 20) +
+  theme_bw() +  geom_vline(xintercept = mean(student_sample), color = 'black', size=1) +
+  labs(title = TeX(sprintf("Distribution of values in the sample ($n =$ %.0f, $\\bar{x] = $ %.2f, s = %.2f)",n,mean(student_sample),sd(student_sample))),x = "Hours", y = "Frequency") 
 ```
 
-Inspect frequencies.
+The mean listening time in the sample (black line) $\bar x$ is `r round(mean(student_sample),2)`. We can already see from the graphic above that such a value is rather unlikely under the hypothesis that the population mean is $10$. Intuitively, such a result would therefore provide evidence against our null hypothesis. But how could we quantify specifically how unlikely it is to obtain such a value and decide whether or not to reject the null hypothesis? Significance tests can be used to provide answers to these questions. 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
-table(music_sales$unit_sales, music_sales$group) #frequencies
+### Statistical inference on a sample
+
+#### Test statistic
+
+##### z-scores
+
+Let's go back to the sampling distribution above. We know that 95% of all values will fall within `r round(qnorm(p2),2)` standard deviations from the mean. So if we could express the distance between our sample mean and the null hypothesis in terms of standard deviations, we could make statements about the probability of getting a sample mean of the observed magnitude (or more extreme values). Essentially, we would like to know how many standard deviations ($\sigma_{\bar x}$) our sample mean ($\bar x$) is away from the population mean if the null hypothesis was true ($\mu_0$). This can be formally expressed as follows:
+
+$$
+\bar x-  \mu_0 = z \sigma_{\bar x}
+$$
+
+In this equation, ```z``` will tell us how many standard deviations the sample mean $\bar x$ is away from the null hypothesis $\mu_0$. Solving for ```z``` gives us:
+
+$$
+z = {\bar x-  \mu_0 \over \sigma_{\bar x}}={\bar x-  \mu_0 \over \sigma / \sqrt{n}}
+$$
+
+This standardized value (or "z-score") is also referred to as a **test statistic**. Let's compute the test statistic for our example above:
+
+```{r}
+z_score <- (mean_sample - H_0)/(sigma/sqrt(n))
+z_score
 ```
 
-Inspect descriptives (overall and by group).
+In order to make a decision on whether the difference can be deemed statistically significant, we now need to compare this calculated test statistic to a meaningful threshold. Recall that for the normal distribution, 95% of the total probability falls within `r round(qnorm(p2),2)` standard deviations of the mean, so that higher (absolute) values provide evidence against the null hypothesis. The critical value is therefore given by    
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE, paged.print = FALSE}
-psych::describe(music_sales$unit_sales) #overall descriptives
-describeBy(music_sales$unit_sales, music_sales$group) #descriptives by group
+```{r}
+z_crit <- qnorm(0.975)
+z_crit
 ```
 
-Create boxplot and plot of means.
+We use ```0.975``` and not ```0.95``` since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. Generally, we speak of a statistically significant effect if the (absolute) calculated test statistic is larger than the (absolute) critical value. We can easily check if this is the case in our example:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot","Plot of means","Histogram"), tidy = FALSE}
-ggplot(music_sales, aes(x = group, y = unit_sales)) + 
-  geom_boxplot() + 
-  labs(x = "Experimental group", y = "Number of sales") + 
-  theme_bw() 
-
-ggplot(music_sales, aes(group, unit_sales)) + 
-  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
-  geom_pointrange(stat = "summary") + 
-  labs(x = "Group", y = "Average number of sales") +
-  theme_bw()
-
-ggplot(music_sales,aes(unit_sales)) + 
-  geom_histogram(binwidth = 4, col = "black", fill = "darkblue") + 
-  facet_wrap(~group) +
-  labs(x = "Number of sales", y = "Frequency") + 
-  theme_bw()
+```{r}
+abs(z_score) > abs(z_crit)
 ```
 
-There appears to be a difference between the two groups. The question is: is this difference statistically significant, or would we expect to observe a difference of this magnitude by chance given the sample size and variability in the data? 
+Since the absolute value of the caluclated test statistic is larger than the critical value, we would reject $H_0$ and conclude that the true population mean $\mu$ is significantly different from the hypothesized value $\mu_0 = 10$.
 
-Let's test this using a statistical test!
+##### t-statistic
 
-#### Formulate null and alternative hypothesis
+You may have noticed that the formula for the z-score above assumes that we know the true population standard deviation ($\sigma$) when computing the standard deviation of the sampling distribution ($\sigma_{\bar x}$) in the denominator. However, the population standard deviation is usually not known in the real world and therefore represents another unknown population parameter which we have to estimate from the sample. We saw in the previous chapter that we usually use $s$ as an estimate of $\sigma$ and $SE_{\bar x}$ as and estimate of $\sigma_{\bar x}$. Intuitively, we should be more conservative regarding the critical value that we used above to assess whether we have a significant effect to reflect this uncertainty about the true population standard deviation. That is, the threshold for a "significant" effect should be higher to safeguard against falsely claiming a significant effect when there is none. If we replace $\sigma_{\bar x}$ by it's estimate $SE_{\bar x}$ in the formula for the z-score, we get a new test statistic (i.e, the **t-statistic**) with its own distribution (the **t-distribution**): 
 
-What do we mean by null and alternative hypothesis?
+$$
+t = {\bar x-  \mu_0 \over SE_{\bar x}}={\bar x-  \mu_0 \over s / \sqrt{n}}
+$$
 
-<b>Null Hypothesis (H<sub>0</sub>):</b>
+Here, $\bar X$ denotes the sample mean and $s$ the sample standard deviation. The t-distribution has more probability in its "tails", i.e. farther away from the mean. This reflects the higher uncertainty introduced by replacing the population standard deviation by its sample estimate. Intuitively, this is particularly relevant for small samples, since the uncertainty about the true population parameters decreases with increasing sample size. This is reflected by the fact that the exact shape of the t-distribution depends on the **degrees of freedom**, which is the sample size minus one (i.e., $n-1$). To see this, the following graph shows the t-distribution with different degrees of freedom for a two-tailed test and $\alpha = 0.05$. The grey curve shows the normal distribution. 
 
-* Is a statement of the status quo, one of no difference or no effect.
-* If the null hypothesis is not rejected, no changes will be made.
-* Refers to a specified value of the population parameter (e.g., &mu;), not a sample statistic, (e.g., $\large\overline{x}$)
-* The null hypothesis may be rejected, but it can never be accepted based on a single test. In classical hypothesis testing, there is no way to determine whether the null hypothesis is true.
-
-<b>Alternative Hypothesis (H<sub>1</sub>):</b>
-
-* Expects some difference or effect.
-* Accepting the alternative hypothesis will lead to changes in opinions or actions.  
-* Rejection of null hypothesis is taken as support for the experimental / alternative hypothesis.
-
-Furthermore, we can differentiate between directional and non-directional hypotheses:
-
-<b>Directional hypothesis:</b>
-
-* States the direction of the effect.
-* Leads to a <b>one-tailed test</b>:
-
-<p style="text-align:center;">
-$H_0: \mu_1 \le \mu_2$ <br>
-$H_1: \mu_1 > \mu_2$
-</p>
-
-Example: the mean sales of albums sold at 7.95€ are higher than the mean sales of albums sold at 9.95€.
-
-<b>Non-directional hypothesis:</b>
-
-* States that an effect will occur, but it does not state the direction of the effect.
-* Leads to a <b>two-tailed test</b>:
-
-<p style="text-align:center;">
-$H_0: \mu_1 = \mu_2$ <br>
-$H_1: \mu_1 \neq \mu_2$
-</p>
-
-Example: there is no difference between the mean sales for the two different download prices.
-
-In our example, a non-directional hypothesis would be appropriate. The reason is that we cannot be 100% certain about the direction that the effect might take. For example, although it might seem plausible that lower prices might lead to higher sales, it is also possible that price is perceived as a quality signal, making a product less attractive for certain consumer segments. 
-
-<p style="border:3px; border-style:solid; border-color:#808080; padding: 1em;">
-&#9889; Rejecting the null hypothesis does not prove the alternative hypothesis (we can merely provide support for it). Rather, think of it as the chance of obtaining the data we've collected assuming that the null hypothesis is true.</p>
-
-#### Select an appropriate test
-
-We fit a statistical model to the data in order to make predictions about the real world phenomenon. The test statistic measures how close the sample is to the null hypothesis. The test statistic often follows a well-known distribution (e.g., normal, t, or chi-square). To select the correct test, various factors need to be taken into consideration. Some examples are:
-
-* On what scale are your variables measured (categorical vs. continuous)?
-* Do you want to test for relationships or differences?
-* If you test for differences, how many groups would you like to test?
-* For parametric tests, are the assumptions fulfilled?
-
-The following flow chart provides a rough guideline on selecting the correct test:
-
-![Flowchart for selecting an appropriate test (source: McElreath, R. (2016): Statistical Rethinking, p. 2)](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/testselection.JPG)
-
-For a detailed overview of the different type of tests, please also refer to <a href="https://stats.idre.ucla.edu/other/mult-pkg/whatstat/" target="_blank">this overview</a> by the UCLA.
-
-In the present example, the t-test is appropriate since we would like to test for differences between two means of a single continuous variable (sales).
-
-Properties of the t-distribution:
-
-* Adequate when the mean for a normally distributed variable is estimated (Student's t-distribution).
-* Assumes that the mean is known and that the population variance is estimated from a normally distributed sample.
-* The t-distribution is similar to the normal distribution in appearance (bell-shaped and symmetric).
-* As the number of degrees of freedom increases, the t-distribution approaches the normal distribution.
-
-To see this, the following graph shows the t-distribution with different degrees of freedom for a two-tailed test and &alpha; = 0.05.
-
-<br>
-
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8, fig.cap="Critical values for t-distribution (two-tailed, alpha=0.05)"}
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 8, fig.width = 8}
 library(cowplot)
 library(gridExtra)
 library(grid)
@@ -261,9 +165,11 @@ max <- 5
 t1 <- round(qt(p1, df = df), digits = 3)
 t2 <- round(qt(p2, df = df), digits = 3)
 plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dnorm, color = "grey") + 
   stat_function(fun = dt, args = list(df = df)) + 
   stat_function(fun = dt, args = list(df = df), xlim = c(min, qt(p1, df = df)), geom = "area") +
   stat_function(fun = dt, args = list(df = df), xlim = c(max, qt(p2, df = df)), geom = "area") +
+  stat_function(fun = dnorm, color = "grey") + 
   scale_x_continuous(breaks = c(t1, 0, t2)) +
     labs(title = paste0("df= ", df),x = "x", y = "Density") +
   theme(legend.position="none") + 
@@ -277,6 +183,7 @@ max <- 5
 t1 <- round(qt(p1, df = df), digits = 3)
 t2 <- round(qt(p2, df = df), digits = 3)
 plot2 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dnorm, color = "grey") + 
   stat_function(fun = dt, args = list(df = df)) + 
   stat_function(fun = dt, args = list(df = df), xlim = c(min, qt(p1, df = df)), geom = "area") +
   stat_function(fun = dt, args = list(df = df), xlim = c(max, qt(p2, df = df)), geom = "area") +
@@ -293,6 +200,7 @@ max <- 5
 t1 <- round(qt(p1, df = df), digits = 3)
 t2 <- round(qt(p2, df = df), digits = 3)
 plot3 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dnorm, color = "grey") + 
   stat_function(fun = dt, args = list(df = df)) + 
   stat_function(fun = dt, args = list(df = df), xlim = c(min, qt(p1, df = df)), geom = "area") +
   stat_function(fun = dt, args = list(df = df), xlim = c(max, qt(p2, df = df)), geom = "area") +
@@ -310,6 +218,7 @@ max <- 5
 t1 <- round(qt(p1, df = df), digits = 3)
 t2 <- round(qt(p2, df = df), digits = 3)
 plot4 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dnorm, color = "grey") + 
   stat_function(fun = dt, args = list(df = df)) + 
   stat_function(fun = dt, args = list(df = df), xlim = c(min, qt(p1, df = df)), geom = "area") +
   stat_function(fun = dt, args = list(df = df), xlim = c(max, qt(p2, df = df)), geom = "area") +
@@ -319,29 +228,144 @@ plot4 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
   theme(legend.position = "none") + 
   theme_bw()
 
-p <- plot_grid(plot1, plot2, plot3, plot4, ncol = 2)
+p <- plot_grid(plot1, plot2, plot3, plot4, ncol = 2,
+           labels = c("A", "B","C","D"))
+title <- ggdraw() + draw_label('Degrees of freedom and the t-distribution', fontface='bold')
+p <- plot_grid(title, p, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 print(p)
-# now add the title
-#title <- ggdraw() + draw_label("", fontface='bold')
-#plot_grid(title, p, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+
 
 ```
-<br>
 
-You can see that the critical value (T<sub>CR</sub>) decreases as the degrees of freedom increase. This is due to the fact that larger degrees of freedom mean that you have more information available relative to the number of parameters that you would like to estimate.
+Notice that as $n$ gets larger, the t-distribution gets closer and closer to the normal distribution, reflecting the fact that the uncertainty introduced by $s$ is reduced. To summarize, we now have an estimate for the standard deviation of the distribution of the sample mean (i.e., $SE_{\bar x}$) and an appropriate distribution that takes into account the necessary uncertainty (i.e., the t-distribution). Let us now compute the t-statistic according to the formula above:
 
-Connected to the decision on how to phrase the hypotheses (directional vs. non-directional) is the choice of a one-tailed versus a two-tailed test. Let's first think about the meaning of a one-tailed test. Using a significance level of 0.05, a one-tailed test means that 5% of the total area under the probability distribution of our test statistic is located in one tail. Thus, under a one-tailed test, we test for the possibility of the relationship in one direction only, disregarding the possibility of a relationship in the other direction. In our example, a one-tailed test will test either if the mean sales level in the experimental condition is significantly larger or smaller compared to the control condition, but not both. Depending on the direction, the mean sales level of the experimental group is significantly larger (smaller) if the test statistic is located in the top (bottom) 5% of its probability distribution, resulting in a p-value smaller than 0.05. 
+```{r}
+SE <- (sd(student_sample)/sqrt(n))
+t_score <- (mean_sample - H_0)/SE
+t_score
+```
 
-The following graph shows the critical values that our test statistic would need to surpass so that the mean difference between the groups would be deemed statistically significant. It can be seen that under a one-sided test, the rejection region is at one end of the distribution or the other. In a two-sided test, the rejection region is split between the two tails. As a consequence, the critical value of the test statistic is smaller using a one-tailed test, meaning that it has more power to detect an effect.
+Notice that the value of the t-statistic is higher compared to the z-score (`r round(z_score,2)`). This can be attributed to the fact that by using the $s$ as and estimate of $\sigma$, we underestimate the true population standard deviation. Hence, the critical value would need to be larger to adjust for this. This is what the t-distribution does. Let us compute the critical value from the t-distribution with ```n - 1```degrees of freedom.     
 
-<br>
+```{r}
+df = n - 1
+t_crit <- qt(0.975, df = df)
+t_crit
+```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig2, fig.align="center", fig.height = 3, fig.width = 10, fig.cap="One-sided versus two-sided test (df=100, alpha=0.05)"}
+Again, we use ```0.975``` and not ```0.95``` since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. Notice that the new critical value based on the t-distributionis larger, to reflect the uncertainty when estimating $\sigma$ from $s$. Now we can see that the calculated test statistic is still larger than the critical value.  
+
+```{r}
+abs(t_score) > abs(t_crit)
+```
+
+The following graphics shows that the calculated test statistic (red line) falls into the rejection region so that in our example, we would reject the null hypothesis that the true population mean is equal to $10$. 
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
+p1 <- 0.025
+p2 <- 0.975
+min <- -6
+max <- 6
+t1 <- round(qt(p1, df = df), digits = 3)
+t2 <- round(qt(p2, df = df), digits = 3)
+ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = df)) + 
+  stat_function(fun = dt, args = list(df = df), xlim = c(min, qt(p1, df = df)), geom = "area") +
+  stat_function(fun = dt, args = list(df = df), xlim = c(max, qt(p2, df = df)), geom = "area") +
+  geom_vline(xintercept = t_score, color = 'red', size=1) +
+  scale_x_continuous(breaks = c(t1, 0, t2)) +
+    labs(title = "Theoretical density given null hypothesis 10 and sample t-statistic",
+         x = "x", y = "Density") +
+  theme(legend.position = "none") + 
+  theme_bw()
+```
+
+**Decision:** Reject $H_0$, given that the calculated test statistic is larger than critical value.
+
+Something to keep in mind here is the fact the test statistic is a function of the sample size. This, as $n$ gets large, the the test statistic gets larger as well and we are more likely to find a significant effect. This reflects the decrease in uncertainty about the true population mean as our sample size increases.  
+
+#### P-values
+
+In the previous section, we computed the test statistic, which tells us how close our sample is to the null hyposesis. The p-value corresponds to the probability that the test statistic would take a value as extreme or more extreme than the one that we actually observed, **assuming that the null hypothesis is true**. It is important to note that this is a **conditional probability**: we compute the probability of observing a sample mean (or a more extreme value) conditional on the assumption that the null hypothesis is true. The ```pnorm()```function can be used to compute this probability. It is the cumulative probability distribution function of the `normal distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value **less than or equal to** the calculated test statistic given the the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic **larger than or equal to** the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.  
+
+```{r}
+p_value <- 2*(1-pt(abs(t_score), df = df))
+p_value
+```
+
+This value corresponds to the probability of observing a mean equal to or larger than the one we obtained from our sample, if the null hypothesis was true. As you can see, this probability is very low. A small p-value signals that it is unlikely to observe the calculated test statistic under the null hypothesis. To decide whether or not to reject the null hypothesis, we would now compare this value to the level of significance ($\alpha$) that we chose for our test. For this example, we adopt the widely accepted significance level of 5%, so any test results with a p-value < 0.05 would be deemed statistically significant. Note that the p-value is directly related to the value of the test statistic. The relationship is such that the higher (lower) the value of the test statistic, the lower (higher) the p-value.   
+
+**Decision:** Reject $H_0$, given that the p-value of `r round(p_value,2)` is smaller than 0.05. 
+
+##### Confidence interval
+
+For a given statistic calculated for a sample of observations (e.g., listening times), a 95% confidence interval can be constructed such that in 95% of samples, the true value of the true population mean will fall within its limits. If the parameter value specified in the null hypothesis (here $10$) does not lie within the bounds, we reject $H_0$. Building on what we learned about confidence intervals in the previous chapter, the 95% confidence interval based on the t-distribution can be computed as follows:
+
+$$
+CI_{lower} = {\bar x} - t_{1-{\alpha \over 2}} * SE_{\bar x} \\
+CI_{upper} = {\bar x} + t_{1-{\alpha \over 2}} * SE_{\bar x}
+$$ 
+
+It is easy to compute this interval manually:
+
+```{r message=FALSE, warning=FALSE}
+ci_lower <- (mean_sample)-qt(0.975, df = df)*SE
+ci_upper <- (mean_sample)+qt(0.975, df = df)*SE
+ci_lower
+ci_upper
+```
+
+The interpretation of this interval is as follows: if we would (hypothetically) take 100 samples and calculated the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals. The CI is informative when reporting the result of your test, since it provides an estimate of the uncertainty associated with the test result. From the test statistic or the p-value alone, it is not easy to judge in which range the true population parameter is located.  The CI provides an estimate of this range. 
+
+**Decision:** Reject $H_0$, given that the parameter value from the null hypothesis ($10$) is not included in the interval. 
+
+To summarize, you can see that we arrive at the same conclusion (i.e., reject $H_0$), irrespective if we use the test statistic, the p-value, or the confidence interval. However, keep in mind that rejecting the null hypothesis does not prove the alternative hypothesis (we can merely provide support for it). Rather, think of the p-value as the chance of obtaining the data we've collected assuming that the null hypothesis is true. You should report the confidence interval to provide an estimate of the uncertainty associated with your test results.  
+
+### Choosing the right test
+
+The test statistic, as we have seen, measures how close the sample is to the null hypothesis and often follows a well-known distribution (e.g., normal, t, or chi-square). To select the correct test, various factors need to be taken into consideration. Some examples are:
+
+* On what scale are your variables measured (categorical vs. continuous)?
+* Do you want to test for relationships or differences?
+* If you test for differences, how many groups would you like to test?
+* For parametric tests, are the assumptions fulfilled?
+
+The previous discussion used a **one sample t-test** as an example, which requires that variable is measured on an interval or ratio scale. If you are confronted with other settings, the following flow chart provides a rough guideline on selecting the correct test:
+
+![Flowchart for selecting an appropriate test (source: McElreath, R. (2016): Statistical Rethinking, p. 2)](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/testselection.JPG)
+
+For a detailed overview over the different type of tests, please also refer to <a href="https://stats.idre.ucla.edu/other/mult-pkg/whatstat/" target="_blank">this overview</a> by the UCLA.
+
+#### Parametric vs. non-parametric tests
+
+A basic distinction can be made between parametric and non-parametric tests. **Parametric tests** require that variables are measured on an interval or ratio scale and that the sampling distribution follows a known distribution. **Non-Parametric tests** on the other hand do not require the sampling distribution to be normally distributed (a.k.a. "assumption free tests"). These tests may be used when the variable of interest is measured on an ordinal scale or when the parametric assumptions do not hold. They often rely on ranking the data instead of analyzing the actual scores. By ranking the data, information on the magnitude of differences is lost. Thus, parametric tests are more powerful if the sampling distribution is normally distributed. In this chapter, we will first focus on parametric tests and cover non-parametric tests later. 
+
+#### One-tailed vs. two-tailed test
+
+For some tests you may choose between a **one-tailed test** versus a **two-tailed test**. The choice depends on the hypothesis you specified, i.e., whether you specified a directional or a non-directional hypotheses. In the example above, we used a **non-directional hypothesis**. That is, we stated that the mean is different from the comparison value $\mu_0$, but we did not state the direction of the effect. A **directional hypothesis** states the direction of the effect. For example, we might test whether the population mean is smaller than a comparison value:
+
+$$
+H_0: \mu \ge \mu_0 \\
+H_1: \mu < \mu_0
+$$
+
+Similarly, we could test whether the population mean is larger than a comparison value:
+
+$$
+H_0: \mu \le \mu_0 \\
+H_1: \mu > \mu_0
+$$
+
+Connected to the decision of how to phrase the hypotheses (directional vs. non-directional) is the choice of a **one-tailed test** versus a **two-tailed test**. Let's first think about the meaning of a one-tailed test. Using a significance level of 0.05, a one-tailed test means that 5% of the total area under the probability distribution of our test statistic is located in one tail. Thus, under a one-tailed test, we test for the possibility of the relationship in one direction only, disregarding the possibility of a relationship in the other direction. In our example, a one-tailed test could test either if the mean listening time is significantly larger or smaller compared to the control condition, but not both. Depending on the direction, the mean listening time is significantly larger (smaller) if the test statistic is located in the top (bottom) 5% of its probability distribution. 
+
+The following graph shows the critical values that our test statistic would need to surpass so that the difference between the population mean and the comparison value would be deemed statistically significant. It can be seen that under a one-sided test, the rejection region is at one end of the distribution or the other. In a two-sided test, the rejection region is split between the two tails. As a consequence, the critical value of the test statistic is smaller using a one-tailed test, meaning that it has more power to detect an effect. Having said that, in most applications, we would like to be able catch effects in both directions, simply because we can often not rule out that an effect might exist that is not in the hypothesized direction. If we would conduct a one-tailed test, testing a one-directional hypothesis (), we       
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig2, fig.align="center", fig.height = 3, fig.width = 10}
 library(cowplot)
 library(gridExtra)
 library(grid)
 
-df <- 100
+df <- n-1
 p1 <- 0.025
 p2 <- 0.975
 min <- -5
@@ -354,12 +378,12 @@ plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
   stat_function(fun = dt, args = list(df = df), xlim = c(max, qt(p2, df = df)), geom = "area") +
   scale_x_continuous(breaks = c(t1, 0, t2)) +
     labs(title = paste0("Two-sided test"),
-         subtitle = "0.025 of total area on each side",
+         subtitle = "0.025 of total area on each side; df = 49",
          x = "x", y = "Density") +
   theme(legend.position = "none") + 
   theme_bw()
 
-df <- 100
+df <- n-1
 p1 <- 0.000
 p2 <- 0.950
 min <- -5
@@ -372,11 +396,11 @@ plot2 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
   stat_function(fun = dt, args = list(df = df), xlim = c(max,qt(p2,df=df)), geom = "area") +
   scale_x_continuous(breaks = c(t1,0,t2)) +
     labs(title = paste0("One-sided test (right)"),
-         subtitle = "0.05 of total area on the right",
+         subtitle = "0.05 of total area on the right; df = 49",
          x = "x", y = "Density") +
   theme(legend.position="none") + theme_bw()
 
-df <- 100
+df <- n-1
 p1 <- 0.000
 p2 <- 0.050
 min <- -5
@@ -389,49 +413,466 @@ plot3 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
   stat_function(fun = dt, args = list(df = df), xlim = c(min,qt(p2,df=df)), geom = "area") +
   scale_x_continuous(breaks = c(t1,0,t2)) +
   labs(title = paste0("One-sided test (left)"),
-         subtitle = "0.05 of total area on the left",
+         subtitle = "0.05 of total area on the left; df = 49",
          x = "x", y = "Density") +
   theme(legend.position="none") + theme_bw()
 
-#p <- plot_grid(plot1, plot2, ncol = 2)
 p <- plot_grid(plot3,plot1, plot2, ncol = 3)
 print(p)
-# now add the title
-#title <- ggdraw() + draw_label("", fontface='bold')
-#plot_full <- plot_grid(title, p, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
-#print(plot_full)
 ```
 
-<br>
+### Summary
 
-In our example, we used a non-directional hypothesis, meaning that a two-sided test is appropriate. Nevertheless, let's consider the consequences of using a directional hypothesis (one-sided test). If we assume a positive effect of price promotion on sales (reducing the price leads to higher sales), then we would expect the mean sales in the experimental group to be larger compared to the control group and, thus, derive a positive test statistic. Imagine a scenario where we need a test statistic bigger than 1.66 to find a significant effect at the 5% level under a directional hypothesis, but the test-statistic we get is actually -2.1. In this case, we would retain the null hypothesis although an effect exists and could have been detected using a two-sided test. So unless you consider the consequences of missing an effect in the untested direction negligible, you should use a two-sided test (non-directional hypothesis).      
+As we have seen, the process of hypothesis testing consists of various steps:
 
-Now we need to make a decision between the independent and the dependent t-test. As stated above, the independent-means t-test is used when there are two experimental conditions and different units were assigned to each condition, while the dependent-means t-test is used when there are two experimental conditions and the same units were observed in both conditions of the experiment. In our example, the <b>independent-means t-test</b> is appropriate since different music albums were randomly assigned to both experimental conditions.
+1. Formulate null and alternative hypotheses
+2. Select an appropriate test
+3. Choose the level of significance ($\alpha$)
+4. Descriptive statistics and data visualization
+5. Conduct significance test
+6. Report results and draw a marketing conclusion
 
-Finally, let's test if the assumptions of the chosen test are fulfilled:
+In the following, we will go through the individual steps using examples for different tests. 
 
-* A normally distributed sampling distribution (&#10004; - we can assume this since n > 30 per group)
-* Interval or ratio data (&#10004; - sales is on a ratio scale)
-* Scores in different conditions are independent (&#10004; - products were randomly assigned)
-* Homogeneity of variance: you don't have to worry about this assumption too much for three reasons: 1) violating this assumption only really matters if you have unequal group sizes - in our context, we have equal group sizes (n = 51 per group); 2) even if this assumption is violated, there is an adjustment (called Welch's t-test) which corrects for unequal variances and this is easily implemented in R (actually, it is the default setting); 3) the tests for homogeneity of variances tend to work better when group sizes are equal and samples are large (which is when we don't need it), and not so well with unequal group sizes and smaller samples (which is when you actually need it).
+## One sample t-test
 
-#### Choose the level of significance
+The example we used in the introduction was an example of the **one sample t-test** and we computed all statistics by hand to explain the underlying intuition. When you conduct hypothesis tests using R, you do not need to calculate these statistics by hand, since there are build-in routines to conduct the steps for you. Let us use the same example again to see how you would conduct hypothesis tests in R.  
 
-Next, we need to choose the level of significance (&alpha;). It is important to note that the choice of the significance level affects the type 1 and type 2 error:
+### 1. Formulate null and alternative hypotheses
 
-* Type I error: When we believe there is a genuine effect in our population, when in fact there isn't. Probability of type I error (&alpha;) = level of significance.
+The null hypothesis states that there is no difference between the true population mean $\mu$ and the hypothesized value (i.e., $10$), while the alternative hypothesis states the opposite: 
+
+$$
+H_0: \mu = 10 \\
+H_1: \mu \neq 10
+$$
+
+### 2. Select an appropriate test
+
+Because we would like to test if the mean of a variable is different from a specified threshold, the one-sample t-test is appropriate. The assumptions of the test are 1) that the variable is measured using an interval or ratio scale, and 2) that the sampling distribution is normal. Both assumptions are met since 1) listening time is a ratio scale, and 2) we deem the sample size (n = 50) large enough to assume a normal sampling distribution according to the central limit theorem.  
+
+### 3. Choose the level of significance
+
+We choose the conventional 5% significance level. 
+
+### 4. Descriptive statistics and data visualization
+
+Provide descriptive statistics using the ```describe()``` function: 
+
+```{r}
+library(psych)
+describe(student_sample)
+```
+
+From this, we can already see that the mean is different from the hypothesized value. The question however remains, whether this difference is significantly different, given the sample size and the variability in the data. Since we only have one continuous variable, we can visualize the distribution in a histogram. 
+
+```{r}
+ggplot(data.frame(student_sample)) + 
+  geom_histogram(aes(x = student_sample), fill = 'white', color = 'black', bins = 20) +
+  theme_bw() +
+  labs(title = "Distribution of values in the sample",x = "Hours", y = "Frequency") 
+```
+
+### 5. Conduct significance test
+
+In the beginning of the chapter, we saw, how you could conduct significance test by hand. However, R has built-in routines that you can use to conduct the analyses. The ```t.test()``` function can be used to conduct the test. To test if the listening time among WU students was 10, you can use the following code:
+
+```{r}
+H_0 <- 10
+t.test(student_sample, mu = H_0, alternative = 'two.sided')
+```
+
+Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument ```alternative```from ```'two.sided'``` to either ```less``` or ```'greater'```.
+
+### 6. Report results and draw a marketing conclusion
+
+Note that the results are the same as above, when we computed the test by hand. You could summarize the results as follows:
+
+On average, the listening times in our sample were different form 10 hours per month (Mean = 18.99 hours). This difference was significant t(49) = 5.058, p < .05 (95% CI = [15.42; 22.56]). Based on this evidence, we can conclude that the mean in our sample is significantly lower compared to the hypothesized population mean of $10$ hours, providing evidence against the null hypothesis. 
+
+Note that in the reporting above, the number ```49``` in parenthesis refers to the degrees of freedom that are available from the output. 
+
+## Comparing two means
+
+In the one-sample test above, we tested the hypothesis that the population mean has some specific value $\mu_0$ using data from only one sample. In marketing (as in many other disciplines), you will often be confronted with a situation where you wish to compare the means of two groups. For example, you may conduct an experiment and randomly split your sample into two groups, one of which receives a treatment (experimental group) while the other doesn't (control group). In this case, the units (e.g., participants, products) in each group are different ('between-subjects design') and the samples are said to be independent. Hence, we would use a **independent-means t-test**. If you run an experiment with two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same units in each group ('within-subjects design'). In this case, we would need to conduct an **dependent-means t-test**. Both tests are discribed in the following sections, beginning with the independent-means t-test.      
+
+### Independent-means t-test
+
+Using an independent-means t-test, we can compare the means of two possibly different populations. It is, for example, quite common for online companies to test new service features by running an experiment and randomly splitting their website visitors into two groups: one is exposed to the website with the new feature (experimental group) and the other group is not exposed to the new feature (control group). This is a typical A/B-Test scenario.
+
+As an example, imagine that a music streaming service would like to introduce a new playlist feature that let's their users access playlists created by other users. The goal is to analyse how the new service feature impacts the listening time of users. The service randomly splits a representative subset of their users into two groups and collects data about their listening times over one month. Let's create a data set to simulate such a scenario. 
+
+```{r, message = FALSE, warning=FALSE}
+set.seed(321)
+hours_population_1 <- rgamma(25000, shape = 2, scale = 10)
+set.seed(12567)
+sample_1 <- sample(1:25000, size = 98, replace = FALSE)
+sample_1_hours <- hours_population_1[sample_1]
+sample_1_df <- data.frame(hours = round(sample_1_hours,0), group = "A")
+set.seed(321)
+hours_population_2 <- rgamma(25000, shape = 2.5, scale = 11)
+set.seed(12567)
+sample_2 <- sample(1:25000, size = 112, replace = FALSE)
+sample_2_hours <- hours_population_2[sample_2]
+sample_2_df <- data.frame(hours = round(sample_2_hours,0), group = "B")
+hours_a_b <- rbind(sample_1_df,sample_2_df) 
+head(hours_a_b)
+```
+
+This data set contains two variables: the variable ```hours``` indicates the music listening times (in hours) and the variable ```group``` indicates from which group the observation comes, where 'A' refers to the control group (with the standard service) and 'B' refers to the experimental group (with the new playlist feature). Let's first look at the descriptive statistics by group using the ```describeBy``` function:
+
+```{r}
+library(psych)
+describeBy(hours_a_b$hours, hours_a_b$group)
+```
+
+From this, we can already see that there is a difference in means between groups A and B. We can also see that the number of observations is different, as is the standard deviation. The question that we would like to answer is whether there is a significant difference in mean listening times between the groups. Remember that different users are contained in each group ('between-subjects design') and that the observations in one group are independent of the observations in the other group. Before we will see how you can easily conduct an independent-means t-test, let's go over some theory first.
+
+#### Theory
+
+As a starting point, let us label the unknown population mean of group A (control group) in our experiment $\mu_1$, and that of group B (experimental group) $\mu_2$. In this setting, the null hypothesis would state that the the mean in group A is equal to the mean in group B:
+
+$$
+H_0: \mu_1=\mu_2
+$$
+
+This is equivalent to stating that the difference between the two groups ($\delta$) is zero:
+
+$$
+H_0: \mu_1 - \mu_2=0=\delta
+$$
+
+That is, $\delta$ is the new unknown population parameter, so that the null and alternative hypothesis become:   
+
+$$
+H_0: \delta = 0 \\
+H_1: \delta \ne 0
+$$
+
+Remember that we usually don't have access to the entire population so that we can not observe $\delta$ and have to estimate is from a sample statistic, which we define as $d = \bar x_1-\bar x_2$, i.e., the difference between the sample means from group a ($\bar x_1$) and group b ($\bar x_2$). But can we really estimate $d$ from $\delta$? Remember from the previous chapter, that we could estimate $\mu$ from $\bar x$, because if we (hypothetically) take a larger number of samples, the distribution of the means of these samples (the sampling distribution) will be normally distributed and its mean will be (in the limit) equal to the population mean. It turns out that we can use the same underlying logic here. The above samples were drawn from two different populations with $\mu_1$ and $\mu_2$. Let us compute the difference in means between these two populations:       
+
+```{r}
+delta_pop <- mean(hours_population_1)-mean(hours_population_2)
+delta_pop
+```
+
+This means that the true difference between the mean listening times of groups a and b is `r round(delta_pop,2)`. Let us now repeat the exercise from the previous chapter: let us repeatedly draw a large number of $20,000$ random samples of 100 users from each of these populations, compute the difference (i.e., $d$, our estimate of $\delta$), store the difference for each draw and create a histogram of $d$.
+
+```{r}
+set.seed(321)
+hours_population_1 <- rgamma(25000, shape = 2, scale = 10)
+hours_population_2 <- rgamma(25000, shape = 2.5, scale = 11)
+
+samples <- 20000
+mean_delta <- matrix(NA, nrow = samples)
+for (i in 1:samples){
+  student_sample <- sample(1:25000, size = 100, replace = FALSE)
+  mean_delta[i,] <- mean(hours_population_1[student_sample])-mean(hours_population_2[student_sample])
+}
+
+ggplot(data.frame(mean_delta)) +
+  geom_histogram(aes(x = mean_delta), bins = 30, fill='white', color='black') +
+  theme_bw() +
+  theme(legend.title = element_blank()) +
+  geom_vline(aes(xintercept = mean(mean_delta)), size=1) + xlab("d") +
+  ggtitle(TeX(sprintf("%d samples; $d_{\\bar{x}}$ = %.2f",samples, round(mean(mean_delta),2))))
+```
+
+This gives us the sampling distribution of the mean differences between the samples. You will notice that this distribution follows a normal distribution and is centered around the true difference between the populations. This means that, on average, the difference between two sample means $d$ is a good estimate of $\delta$. In our example, the difference between $\bar x_1$ and $\bar x_2$ is:
+
+```{r}
+mean_x1 <- mean(hours_a_b[hours_a_b$group=="A","hours"])
+mean_x2 <- mean(hours_a_b[hours_a_b$group=="B","hours"])
+d <- mean_x1-mean_x2
+d 
+```
+
+Now that we have $d$ as an estimate of $\delta$, how can we find out if the observed difference is significantly different from the null hypothesis (i.e., $\delta = 0$)?
+
+Recall from the previous section, that the standard deviation of the sampling distribution $\sigma_{\bar x}$ (i.e., the standard error) gives us indication about the precision of our estimate. Further recall that the standard error can be calculated as $\sigma_{\bar x}={\sigma \over \sqrt{n}}$. So how can we calculate the standard error of the difference between two population means? According to the **variance sum law**, to find the variance of the sampling distribution of differences, we merely need to add together the variances of the sampling distributions of the two populations that we are comparing. To find the standard error, we only need to take the square root of the variance (because the standard error is the standard deviation of the sampling distribution and the standard deviation is the square root of the variance), so that we get:
+
+$$
+\sigma_{\bar x_1-\bar x_2} = \sqrt{{\sigma_1^2 \over n_1}+{\sigma_2^2 \over n_2}}
+$$
+
+But recall that we don't actually know the true population standard deviation, so we use $SE_{\bar x_1-\bar x_2}$ as an estimate of $\sigma_{\bar x_1-\bar x_2}$:
+
+$$
+SE_{\bar x_1-\bar x_2} = \sqrt{{s_1^2 \over n_1}+{s_2^2 \over n_2}}
+$$
+
+Hence, for our example, we can calculate the standard error as follows: 
+
+```{r}
+n1 <- 98
+n2 <- 112
+s1 <- var(hours_a_b[hours_a_b$group=="A","hours"])
+s2 <- var(hours_a_b[hours_a_b$group=="B","hours"])
+SE_x1_x2 <- sqrt(s1/n1+s2/n2)
+SE_x1_x2
+```
+
+Recall from above that we can calculate the t-statistic as:
+
+$$
+t= {\bar x - \mu_0 \over {s \over \sqrt{n}}} 
+$$
+
+Exchanging $\bar x$ for $d$, we get
+
+$$
+t= {(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2) \over {\sqrt{{s_1^2 \over n_1}+{s_2^2 \over n_2}}}} 
+$$
+
+Note that according to our hypothesis $\mu_1-\mu_2=0$, so that we can calculate the t-statistic as: 
+
+```{r}
+t_score <- d/SE_x1_x2
+t_score
+```
+
+Following the example of our one sample t-test above, we would now need to compare this calculated test statistic to a critical value in order to assess if $d$ is sufficiently far away from the null hypothesis to be statistically significant. To do this, we would need to know the exact t-distribution, which depends on the degrees of freedom. The problem is that deriving the degrees of freedom in this case is not that obvious. If we were willing to assume that $\sigma_1=\sigma_2$, the correct t-distribution has $n_1 -1 + n_2-1$ degrees of freedom (i.e., the sum of the degrees of freedom of the two samples). However, because in real life we don not know if $\sigma_1=\sigma_2$, we need to account for this additional uncertainty. We will not go into detail here, but R automatically uses a sophisticated approach to correct the degrees of freedom called the Welch's correction, as we will see in the subsequent application. 
+
+#### Application
+
+The section above explained the theory behind the independent-means t-test and showed how to compute the statistics manually. Obviously you don't have to compute these statistics by hand in this section shows you how to conduct an independent-means t-test in R using the example from above.  
+
+##### 1. Formulate null and alternative hypotheses
+
+We wish to analyze whether there is a significant difference in music listining times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:   
+
+$$
+H_0: \mu_1=\mu_2\\
+H_1: \mu_1 \ne \mu_2
+$$
+
+##### 2. Select an appropriate test
+
+Since we have a ratio scaled variable (i.e., listening times) and two independent groups, where the mean of one sample is independent of the group of the second sample (i.e., the goups contain different units), the independent-means t-test is appropriate. 
+
+##### 3. Choose the level of significance
+
+We choose the conventional 5% significance level. 
+
+##### 4. Descriptive statistics and data visualization
+
+We can compute the descriptive statistics for each group separately, using the ```describeBy()``` function:
+
+```{r}
+library(psych)
+describeBy(hours_a_b$hours, hours_a_b$group)
+```
+
+This already shows us that the mean between groups A and B are different. We can visiualize the data using a plot of means, boxplot, and a histogram. 
+
+```{r, message = FALSE, warning=FALSE}
+ggplot(hours_a_b,aes(group, hours)) + 
+  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
+  geom_pointrange(stat = "summary") + 
+  labs(x = "Group", y = "Listening time (hours)") +
+  ggtitle("Means and standard errors of listining times") +
+  theme_bw()
+
+ggplot(hours_a_b, aes(x = group, y = hours)) + 
+  geom_boxplot() + 
+  labs(x = "Group", y = "Listening time (hours)") + 
+  ggtitle("Boxplot of listening times") +
+  theme_bw() 
+
+ggplot(hours_a_b,aes(hours)) + 
+  geom_histogram(col = "black", fill = "darkblue") + 
+  labs(x = "Listening time (hours)", y = "Frequency") + 
+  ggtitle("Histogram of listening times") +
+  facet_wrap(~group) +
+  theme_bw()
+```
+
+##### 5. Conduct significance test
+
+To conduct the independent means t-test, we can use the ```t.test()``` function:
+
+```{r}
+t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided", conf.level = 0.95, var.equal = FALSE)
+```
+
+##### 6. Report results and draw a marketing conclusion
+
+The results showed that listening times were higher in the experimental group (Mean = 26.43, SE = 1.54) compared to the control group (Mean = 20.91, SE = 1.37). This means that the listening times were `r abs(round(d,2))` hours higher on average in the experimental group, compared to the control group. An independent-means t-test showed that this difference is significant t(207) = 2.684, p < .05 (95% CI = [1.46,9.58]).
+
+
+### Dependent-means t-test
+
+While the independent-means t-test is used when different units (e.g., participants, products) were assigned to the different condition, the **dependent-means t-test** is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
+
+Imagine, for example, a slightly different experimental setup for the above experiment. Imagine that we do not assign different users to the groups, but that a sample of 100 users gets to use the music streaming service with the new feature for one month and we compare the music listening times of these users during the month of the experiment witht he listening time in the previous month. Let us generate data for this example: 
+
+```{r, message = FALSE, warning=FALSE}
+set.seed(321)
+hours_population_1 <- rgamma(25000, shape = 2, scale = 10)
+set.seed(12567)
+sample_1 <- sample(1:25000, size = 100, replace = FALSE)
+sample_1_hours <- hours_population_1[sample_1]
+set.seed(321)
+hours_population_2 <- rgamma(25000, shape = 2.5, scale = 11)
+set.seed(12567)
+sample_2 <- sample(1:25000, size = 100, replace = FALSE)
+sample_2_hours <- hours_population_2[sample_2]
+hours_a_b_paired <- data.frame(hours_a = round(sample_1_hours,0),hours_b = round(sample_2_hours,0)) 
+head(hours_a_b_paired)
+```
+
+Not that the data set has almost the same structure as before only that we know have two variables representing the listning times of each user in the month before the experiment and during the month of the experiment when the new feature was tested.
+
+#### Theory
+
+In this case, we want to test the hypothesis that there is no difference in mean the mean listening times between the two months. This can be expressed as follows:
+
+$$
+H_0: \mu_D = 0 \\
+$$
+Not that the hypothsis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace $\mu_D$ with $\delta$ and get:
+
+$$
+H_0: \delta = 0 \\
+H_1: \delta \neq 0
+$$
+
+where $\delta$ denotes the difference between the observed listening times from the two consecutive months **of the same users**. As is the previous example, since we do not observe the entire population, we estimate $\delta$ based on the sample using $d$, which is the difference in mean listening time between the two months for our sample. Note that we assume that everything else (e.g., number of new releases) remained constant over the two month to keep it simple. We can show as above that the sampling distribution follows a normal distribution with a mean that is (in the limit) the same as the population mean. This means, again, that the difference in sample means is a good estimate for the difference in population means. Let's compute a new variable $d$, which is the difference between two month. 
+
+```{r}
+hours_a_b_paired$d <- hours_a_b_paired$hours_a - hours_a_b_paired$hours_b
+head(hours_a_b_paired)
+```
+
+Note that we now have a new variable, which is the difference in listening times (in hours) between the two months. The mean of this difference is:
+
+```{r}
+mean_d <- mean(hours_a_b_paired$d)
+mean_d
+```
+
+Again, we use $SE_{\bar x}$ as an estimate of $\sigma_{\bar x}$:
+
+$$
+SE_{\bar d}={s \over \sqrt{n}}
+$$
+Hence, we can compute the standard error as:
+
+```{r}
+n <- nrow(hours_a_b_paired)
+SE_d <- sd(hours_a_b_paired$d)/sqrt(n)
+SE_d
+```
+
+The test statistic is therefore:
+
+$$
+t = {\bar d-  \mu_0 \over SE_{\bar d}}
+$$
+on 99 (i.e., n-1) degrees of freedom. Now we can compute the t-statistic as follows:
+
+```{r}
+t_score <- mean_d/SE_d
+t_score
+```
+
+Note that in the case of the dependent-means t-test, we only base our hypothesis on one population and hence there is only one population variance. This is because in the dependent sample test, the observations come from the same observational units (i.e., users). Hence, there is no unsystematic variation due to potential differences between users that were assigned to the experimental groups. This means that the influence of unobserved factors (unsystematic variation) relative to the variation due to the experimental manipulation (systematic variation) is not as strong in the dependent-means test compared to the independent-means test and we don't need to correct for differences in the population variances. 
+
+#### Application
+
+Again, we don't have to compute all this by hand since the ```t.test(...)``` function can be used to do it for us. Now we have to use the argument ```paired=TRUE``` to let R know that we are working with dependent observations. 
+
+##### 1. Formulate null and alternative hypotheses
+
+We would like to the test if there is a difference in music listening times between the two consecutive months, so our null hypothesis is that there is no difference, while the alternative hypothesis states the opposite:
+
+$$
+H_0: \mu_D = 0 \\
+H_0: \mu_D \ne 0
+$$
+
+##### 2. Select an appropriate test
+
+Since we have a ratio scaled variable (i.e., listening times) and two observations of the same group of users (i.e., the goups contain the same units), the dependent-means t-test is appropriate. 
+
+##### 3. Choose the level of significance
+
+We choose the conventional 5% significance level. 
+
+##### 4. Descriptive statistics and data visualization
+
+We can compute the descriptive statistics for each month separately, using the ```describe()``` function:
+
+```{r}
+library(psych)
+describe(hours_a_b_paired)
+```
+
+This already shows us that the mean between the two months are different. We can visiualize the data using a plot of means, boxplot, and a histogram. 
+
+To plot the data, we need to do some restructuring first, since the variables are now stored in two different columns ("hours_a" and "hours_b"). This is also known as the "wide" format. To plot the data we need all observations to be stored in one variable. This is also known as the "long" format. We can use the ```melt(...)``` function from the ```reshape2```package to "melt" the two variable into one column to plot the data. 
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "plot of means (dependent test)"}
+library(reshape2)
+hours_a_b_paired_long <- melt(hours_a_b_paired[, c("hours_a", "hours_b")]) 
+names(hours_a_b_paired_long) <- c("group","hours")
+head(hours_a_b_paired_long)
+```
+
+Now we are ready to plot the data:
+
+```{r, message = FALSE, warning=FALSE}
+ggplot(hours_a_b_paired_long,aes(group, hours)) + 
+  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
+  geom_pointrange(stat = "summary") + 
+  labs(x = "Group", y = "Listening time (hours)") +
+  ggtitle("Means and standard errors of listining times") +
+  theme_bw()
+
+ggplot(hours_a_b_paired_long, aes(x = group, y = hours)) + 
+  geom_boxplot() + 
+  labs(x = "Group", y = "Listening time (hours)") + 
+  ggtitle("Boxplot of listening times") +
+  theme_bw() 
+
+ggplot(hours_a_b_paired_long,aes(hours)) + 
+  geom_histogram(col = "black", fill = "darkblue") + 
+  labs(x = "Listening time (hours)", y = "Frequency") + 
+  ggtitle("Histogram of listening times") +
+  facet_wrap(~group) +
+  theme_bw()
+```
+
+##### 5. Conduct significance test
+
+To conduct the independent means t-test, we can use the ```t.test()``` function with the argument ```paired = TRUE```:
+
+```{r, message = FALSE, warning=FALSE}
+t.test(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b, mu = 0, alternative = "two.sided", conf.level = 0.95, paired=TRUE)
+```
+
+
+##### 6. Report results and draw a marketing conclusion
+
+On average, the same users used the service more when it included the new feature (M = 25.96, SE = 1.68) compared to the service without the feature (M = 20.99, SE = 1.34). This difference was significant t(99) = 2.3781, p < .05 (95% CI = [0.82, 9.12]).
+
+### Significance level, power, and sample size
+
+#### Type I and Type II Errors
+
+When choosing the level of significance ($\alpha$). It is important to note that the choice of the significance level affects the type 1 and type 2 error:
+
+* Type I error: When we believe there is a genuine effect in our population, when in fact there isn't. Probability of type I error ($\alpha$) = level of significance.
 * Type II error: When we believe that there is no effect in the population, when in fact there is. 
 
-This following table shows the possible outcomes of a test (retain vs. reject H<sub>0</sub>), depending on whether H<sub>0</sub> is true or false in reality.
-
-<br>
+This following table shows the possible outcomes of a test (retain vs. reject $H_0$), depending on whether $H_0$ is true or false in reality.
 
 &nbsp; | Retain <b>H<sub>0</sub></b>	 | Reject <b>H<sub>0</sub></b>	
 --------------- | -------------------------------------- | --------------------------------------
 <b>H<sub>0</sub> is true</b>  | Correct decision:<br>1-&alpha; (probability of correct retention); | Type 1 error:<br> &alpha; (level of significance)
 <b>H<sub>0</sub> is false</b>  | Type 2 error:<br>&beta; (type 2 error rate) | Correct decision:<br>1-&beta; (power of the test)
 
-<br>
+#### Sample size
 
 When you plan to conduct an experiment, there are some factors that are under direct control of the researcher:
 
@@ -468,332 +909,16 @@ Or we could ask, what is the power of our test with 51 observations in each grou
 pwr.t.test(n = 51, d = 0.6, sig.level = 0.05, type = c("two.sample"), alternative = c("two.sided"))
 ```
 
-#### Collect data and calculate the test statistic
-
-##### Step 1: Compute means and variances of samples {-}
-
-The two populations are sampled and the means and variances are computed based on samples of sizes n1 and n2.
-
-Mean of sample 1:
-\begin{equation} 
-\begin{split}
-\overline{X}_1=\frac{\sum_{i=1}^{n_1} X_i}{n_1} = \frac{427}{51} = 8.37
-\end{split}
-(\#eq:meansample1)
-\end{equation} 
-
-Variance of sample 1:
-\begin{equation} 
-\begin{split}
-s_1=\frac{\sum_{i=1}^{n_1} (X_i-\overline{X}_1)^2}{n_1-1}=41.52
-\end{split}
-(\#eq:variancesample1)
-\end{equation} 
-
-Mean of sample 2:
-\begin{equation} 
-\begin{split}
-\overline{X}_2=\frac{\sum_{i=1}^{n_2} X_i}{n_2} = \frac{564}{12} = 5.86
-\end{split}
-(\#eq:meansample2)
-\end{equation} 
-
-Variance of sample 2:
-\begin{equation} 
-\begin{split}
-s_2=\frac{\sum_{i=1}^{n_2} (X_i-\overline{X}_2)^2}{n_2-1}=34.48
-\end{split}
-(\#eq:variancesample2)
-\end{equation} 
-
-<br>
-Let's test if the calculated values are correct:
-
-```{r message=FALSE, warning=FALSE}
-mean_1 <- mean(music_sales[music_sales$group=="low_price","unit_sales"])
-mean_1
-var_1 <- var(music_sales[music_sales$group=="low_price","unit_sales"])
-var_1
-mean_2 <- mean(music_sales[music_sales$group=="high_price","unit_sales"])
-mean_2
-var_2 <- var(music_sales[music_sales$group=="high_price","unit_sales"])
-var_2
-```
-
-##### Step 2: Compute pooled variance estimate from the sample variances {-}
-
-When we compare two groups that contain different numbers of participants and the populations can be expected to have approximately the same variances, we apply a weighting of the variances of each sample to compute the <b>pooled variance</b>.
-
-\begin{equation} 
-\begin{split}
-s_p=\frac{\sum_{i=1}^{n_1}(X_i-\overline{X}_1)^2+\sum_{i=1}^{n_2}(X_i-\overline{X}_2)^2}{n_1+n_2-2}=\frac{(n_1-1)*s_1^2+(n_2-1)*s_2^2}{n_1+n_2-2}=37.99
-\end{split}
-(\#eq:pooledvariance)
-\end{equation} 
-
-<br>
-Let's test if the calculated value is correct:
-
-```{r message=FALSE, warning=FALSE}
-n_1 <- nrow(music_sales[music_sales$group=="low_price",])
-n_1
-n_2 <- nrow(music_sales[music_sales$group=="high_price",])
-n_2
-var_pooled <- ((n_1-1)*var_1+(n_2-1)*var_2)/(n_1+n_2-2)
-var_pooled
-```
-
-Note that in this case, both groups contain the same number of observations. Therefore, the weighting is not really needed. The weighting is only necessary to account for differences in sample size between groups. In our case, the following would yield the same result because the sample sizes are the same.
-
-```{r message=FALSE, warning=FALSE}
-var_non_pooled <- (var_1+var_2)/2
-var_non_pooled
-```
-
-##### Step 3: Compute the standard error of the differences {-}
-
-According to the variance sum law, to find the variance of the sampling distribution of differences, we merely need to add together the variances of the sampling distributions of the two populations that we are comparing:
-
-\begin{equation} 
-\begin{split}
-s_{\overline{X}_1-\overline{X}_2}^2={\frac{s_1^2}{N_1}+\frac{s_2^2}{N_2}}
-\end{split}
-(\#eq:addvariances)
-\end{equation} 
-
-Now we have the variance of the sampling distribution of differences. To find the standard error, we only need to take the square root of the variance (because the standard error is the standard deviation of the sampling distribution and the standard error is the square root of the variance):
-
-\begin{equation} 
-\begin{split}
-s_{\overline{X}_1-\overline{X}_2}=\sqrt{{\frac{s_1^2}{N_1}+\frac{s_2^2}{N_2}}}=\sqrt{{\frac{37.99}{51}+\frac{37.99}{51}}}=1.22
-\end{split}
-(\#eq:addvariances2)
-\end{equation} 
-
-<br>
-
-Let's check again if the result is correct:
-
-```{r message=FALSE, warning=FALSE}
-se_x1_x2 <- sqrt((var_pooled/n_1)+(var_pooled/n_2))
-se_x1_x2
-```
-
-##### Step 4: Compute the value of the test statistic {-}
-
-The test statistic can now be calculated as:
-<br>
-
-\begin{equation} 
-\begin{split}
-t=\frac{(\overline{X}_1-\overline{X}_2)-(\mu_1-\mu_2)}{\sqrt{{\frac{s_1^2}{N_1}+\frac{s_2^2}{N_2}}}}=\frac{(8.37-5.86)-0}{1.22}=2.06
-\end{split}
-(\#eq:tstat)
-\end{equation} 
-
-<br>
-
-Note that $(\mu_1-\mu_2)=0$, because $H_0: \mu_1=\mu_2$
-
-<br>
-And again, we check the result:
-
-```{r message=FALSE, warning=FALSE}
-t_cal <- (mean_1-mean_2)/se_x1_x2
-t_cal
-```
-
-Note that you don't have to compute these statistics manually! Luckily, there is a function for the t-test, which computes steps 1-4 for you in just one single line of code:
-
-```{r message=FALSE, warning=FALSE}
-t.test(unit_sales ~ group, data = music_sales)
-```
-
-Note that the degrees of freedom are not 100 (as we would expect), but 99.15 instead. This difference is because of the Welch correction, which adjusts the degrees of freedom based on the homogeneity of variance. R implements this correction by default and it is okay for you to report the adjusted results. However, you could also force R to assume equal variances to exactly replicate the results we derived through manual calculations using the ```var.equal=TRUE``` argument. In this case you would first need to test if this assumption is fulfilled using Levene's Test, which tests H<sub>0</sub> = group variances are equal; H<sub>1</sub> = group variances are not equal (the ```leveneTest(...)``` function is in the ```car``` package). 
-
-```{r message=FALSE, warning=FALSE, paged.print = FALSE}
-library(car)
-leveneTest(unit_sales ~ group, data = music_sales)
-```
-
-In this case, we fail to reject the Null of equal variances (p > 0.05), hence the variances are equal (however, see above regarding the concerns about this test). Now we run the t-test using the ```var.equal=TRUE``` argument:
-
-```{r message=FALSE, warning=FALSE, paged.print = FALSE}
-t.test(unit_sales ~ group, data = music_sales, var.equal=TRUE)
-```
-
-As you can see, the results are fairly similar and it is fine to rely solely on the corrected results (i.e., Welch's t-test). 
-
-##### Effect size {-}
-
-If you wish to obtain a standardized measure of the effect, you may compute the effect size (Cohen's d) as follows: 
-
-```{r message=FALSE, warning=FALSE}
-d <- (mean_1 - mean_2)/sqrt(var_pooled + var_pooled/2)
-d
-```
-
-According to the thresholds defined above, this effect would be judged to be a small-medium effect.
-
-#### Reject or do not reject H<sub>0</sub>
-
-There are different (albeit interrelated) ways of deciding whether a hypothesis should be rejected:
-
-##### p-value
-
-* Determine the probability associated with the test statistic TS<sub>CAL</sub> (p-value).
-* Compare the p-value with the level of significance, &alpha;.
-* The p-value is the likelihood of observing a result when the null hypothesis is true (probability of obtaining a particular value).
-* A small p-value signals that it is unlikely to observe TS<sub>CAL</sub> under the null hypothesis.
-* You reject H<sub>0</sub> if the p-value is smaller than &alpha;.
-
-The p-value is included in the output from the t-test above. However, you can calculate the p-value for T<sub>CAL</sub> manually as follows:
-
-```{r message=FALSE, warning=FALSE}
-df <- (n_1 + n_2 - 2)
-2*(1-pt(abs(t_cal), df))
-```
-
-Here, ```pt()``` is the cumulative probability distribution function of the t-distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value **less than or equal to** the calculated test statistic given the the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic **larger than or equal to** the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.  
-
-**Interpretation:** Under the assumption that the null hypothesis is true the probability of finding a difference of at least the observed magnitude is less than 5%.
-
-**Decision:** Reject H<sub>0</sub>, given that the p-value of `r round(2*(1-pt(abs(t_cal), df)),3)` is smaller than 0.05. 
-
-However, remember that the p-value does not tell us anything about the likelihood of the alternative hypothesis!
-
-##### t-value
-
-* Determine the critical value of the test statistic (TS<sub>CR</sub>) in order to define the rejection region and the non-rejection region.
-* Determine if TS<sub>CAL</sub> falls into rejection or non-rejection region.
-* If the (absolute) calculated value of the test statistic (T<sub>CAL</sub>) is greater than the (absolute) critical value of the test statistic (T<sub>CR</sub>), H<sub>0</sub> is rejected.
-* If the (absolute) calculated value of the test statistic (T<sub>CAL</sub>) is larger than the (absolute) critical value of the test statistic (T<sub>CR</sub>) , the null hypothesis can not be rejected.
-
-However, remember that this does not mean that the null hypothesis is true!
-
-The calculated test statistic is included in the output from the t-test above. In order to determine if the calculated test statistic is larger than the critical value, you can refer to the probability table of the t-distribution to look up the critical value for the given degrees of freedom. However, you can also test if the calculated test statistic is larger than the critical value manually using the ```qt()```-function:
-
-```{r message=FALSE, warning=FALSE}
-df <- (n_1 + n_2 - 2)
-t_cal > qt(0.975, df)
-```
-
-We use ```0.975``` and not ```0.95``` since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. The output suggests that the calculated t-value is larger than the critical value for the given level of &alpha;.
-
-<b>Interpretation:</b> The probability of observing a difference in means of this magnitude or larger is less than 5%.
-
-<b>Decision:</b> Reject H<sub>0</sub>, given that the calculated t-value (T<sub>CAL</sub>) of `r t_cal` is larger than critical value (T<sub>CR</sub>) of `r qt(0.975, df)`. 
-
-The following graph shows the test result.
-
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Visual depiction of the test result"}
-df <- 100
-p1 <- 0.025
-p2 <- 0.975
-min <- -5
-max <- 5
-t1 <- round(qt(p1,df=df), digits = 3)
-t2 <- round(qt(p2,df=df), digits = 3)
-plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
-  stat_function(fun = dt, args = list(df = df)) + 
-  stat_function(fun = dt, args = list(df = df), xlim = c(min,qt(p1,df=df)), geom = "area") +
-  stat_function(fun = dt, args = list(df = df), xlim = c(max,qt(p2,df=df)), geom = "area") +
-  scale_x_continuous(breaks = c(t1, 0, t2)) +
-  geom_vline(xintercept = t_cal, color = "red") +
-    labs(title = paste0("Result of two-sided test: reject H0"),
-         subtitle = paste0("Red line shows the calculated test statistic: ", round(t_cal, 3)),
-         x = "x", y = "Density") +
-  theme(legend.position="none") + 
-  theme_bw()
-plot1
-```
-
-You can see that the calculated test-statistic (red line) falls into the rejection region. 
-
-##### Confidence interval
-
-For a given statistic calculated for a sample of observations (e.g., difference in means), the confidence interval is a range around that statistic that is believed to contain, with a certain probability (e.g., 95%), the true value of that statistic under (hypothetical) repeated sampling. In our example, the 95% confidence interval is constructed such that in 95% of samples, the true value of the population mean difference will fall within its limits. 
-
-The computation of the 95% confidence interval for the t-test is:
-
-\begin{equation} 
-\begin{split}
-CI = (\overline{X}_1-\overline{X}_2)\pm t_{1-\frac{\alpha}{2}}*\sqrt{{\frac{s_p^2}{N_1}+\frac{s_p^2}{N_2}}}
-\end{split}
-(\#eq:confidence)
-\end{equation} 
-
-Luckily, the interval is already given in the output of the t-test above. However, we can also compute the interval manually:
-
-```{r message=FALSE, warning=FALSE}
-(mean_1-mean_2)-qt(0.975,df)*se_x1_x2
-(mean_1-mean_2)+qt(0.975,df)*se_x1_x2
-```
-
-If the parameter value specified in the null hypothesis (usually 0) does not lie within the bounds, we reject H<sub>0</sub>.
-
-<b>Interpretation:</b> With a 95% probability the mean difference between the populations will lie within [`r round((mean_1-mean_2)-qt(0.975,df)*se_x1_x2,2)`; `r round((mean_1-mean_2)+qt(0.975,df)*se_x1_x2,2)`].
-
-<b>Decision:</b> Reject H<sub>0</sub>, given that the true parameter (zero) is not included in the interval. 
-
-To illustrate this, we can randomly draw 100 samples from the two populations using simulated data, compute their means and construct confidence intervals around their mean difference. The result is shown in the following graph: 
-
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.height = 10, fig.width = 6,  fig.align="center", fig.cap = "Confidence Intervals"}
-plot_dat <- data.frame(count=NA,mean=NA,cil=NA,ciu=NA)
-library(ggplot2)
-set.seed(333)
-n_pop <- 1000000
-y_pop1 <- rnorm(n_pop, mean(music_sales[music_sales$group=="low_price",]$unit_sales), sd(music_sales[music_sales$group=="low_price",]$unit_sales))
-y_pop2 <- rnorm(n_pop, mean(music_sales[music_sales$group=="high_price",]$unit_sales), sd(music_sales[music_sales$group=="high_price",]$unit_sales))
-R <- 51
-
-for (i in 1:100) {
-  y_sample1 <- data.frame(y=sample(y_pop1, R))
-  y_sample2 <- data.frame(y=sample(y_pop2, R))
-  y_sample <- rbind(y_sample1,y_sample2)
-  y_sample$group <- as.factor(rep(1:2,each = 51))
-  testr <- t.test(y ~ group, data = y_sample, var.equal = TRUE)
-  testr$conf.int[1]
-  testr$conf.int[2]
-  plot_dat[i,"count"] <- i
-  plot_dat[i,"mean"] <- testr$estimate[1]-testr$estimate[2]
-  plot_dat[i,"cil"] <- testr$conf.int[1]
-  plot_dat[i,"ciu"] <- testr$conf.int[2] 
-}
-
-library(ggplot2)
-factorplot1 <- ggplot(plot_dat, aes(x = mean, y = count)) + geom_point() + geom_segment(aes(x = cil, xend = ciu, y = count, yend = count))
-factorplot1 <- factorplot1 + xlab("True parameter value") + ylab("Sample number") + theme_bw() + theme(axis.title.x=element_text(size=12, face="bold",margin=margin(10,0,0,0))) + scale_y_continuous(breaks = seq(1, 100, 1), labels = (seq(1, 100, 1))) 
-factorplot1 <- factorplot1 +    theme(axis.text=element_text(size=6)) +  geom_vline(aes(xintercept=mean(music_sales[music_sales$group=="low_price",]$unit_sales)-mean(music_sales[music_sales$group=="high_price",]$unit_sales)), colour="red", linetype="solid", size=0.5)
-factorplot1
-
-
-```
-
-You can see that for 5 out of 100 samples, the calculated confidence interval does not contain the true population mean (red line).
-
-#### Report results and draw a marketing conclusion
-
-The conclusion reached by hypothesis testing must finally be expressed in terms of the marketing research problem: 
-
-The test showed that the sales promotion increased sales by about `r round(mean_1-mean_2,2)` unit on average. This difference is significant t(100) = 2.056, p < .05 (95% CI = [`r round((mean_1-mean_2)-qt(0.975,df)*se_x1_x2,2)`,`r round((mean_1-mean_2)+qt(0.975,df)*se_x1_x2,2)`]).
-
-**The following video summarizes how to conduct an independent-means t-test in R**
-
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/KegcCmR3krY" frameborder="0" allowfullscreen></iframe>
-</div>
-
-#### A note on the interpretation of p-values
+#### P-values, stopping rules and p-hacking
 
 From my experience, students tend to place a lot of weight on p-values when interpreting their research findings. It is therefore important to note some points that hopefully help to put the meaning of a "significant" vs. "insignificant" test result into perspective.
 
-<b>Significant result</b>
+**Significant result**
 
 * Even if the probability of the effect being a chance result is small (e.g., less than .05) it doesn't necessarily mean that the effect is important. 
 * Very small and unimportant effects can turn out to be statistically significant if the sample size is large enough. 
 
-<b>Insignificant result</b>
+**Insignificant result**
 
 * If the probability of the effect occurring by chance is large (greater than .05), the alternative hypothesis is rejected. However, this does not mean that the null hypothesis is true.
 * Although an effect might not be large enough to be anything other than a chance finding, it doesn't mean that the effect is zero.
@@ -839,583 +964,3 @@ ggplot(data=df,aes(y=tvalues, x=replication,color = col)) +
   theme(legend.position="none") +scale_colour_gradientn(colours=c("black","red"))
 ```
 
-### Dependent-means t-test
-
-While the independent-means t-test is used when different units (e.g., participants, products) were assigned to the different condition, the <b>dependent-means t-test</b> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
-
-Imagine, for example, a slightly different experimental setup for the price experiment: 
-
-**Example case:** What is the effect of personalized, dynamic pricing on the sales of music albums?
-
-**Experimental setup:** In a music download store, new releases were either sold at a reduced price (i.e., 7.95€), or at the standard price (9.95€). Every time a customer came to the store, the prices were randomly determined for every new release. This means that the same 51 albums were either sold at the standard price or at the reduced price and this price was determined randomly. The sales were then recorded over one day. Note the difference to the previous case, where we randomly split the sample and assigned 50% of products to each condition. Now, we randomly vary prices for all albums between high and low prices.
-
-Let's load and inspect the data:
-
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
-rm(music_sales_dep)
-music_sales_dep <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment_dependent.dat", 
-                              sep = "\t", 
-                              header = TRUE) #read in data
-str(music_sales_dep) #inspect data
-head(music_sales_dep) #inspect data
-```
-
-The data are actually the same as before, only now we assume that the observations at different price points come from the same users. 
-
-Since we are working with the same data (in a different format), the descriptives are the same as before:
-
-```{r, paged.print = FALSE}
-table(music_sales_dep[, c("unit_sales_low_price")]) #frequencies low price
-table(music_sales_dep[, c("unit_sales_high_price")]) #frequencies high price
-psych::describe(music_sales_dep[, c("unit_sales_low_price", "unit_sales_high_price")]) #overall descriptives
-```
-
-To plot the data, we need to do some restructuring first, since the variables are now stored in two different columns ("unit_sales_low_price" and "unit_sales_high_price"). This is also known as the "wide" format. To plot the data we need all observations to be stored in one variable. This is also known as the "long" format. We can use the ```melt(...)``` function from the ```reshape2```package to "melt" the two variable into one column to plot the data. Since we are working with the same data as before, the plot is the same as before.  
-
-```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "plot of means (dependent test)"}
-library(reshape2)
-ggplot(data = melt(music_sales_dep[, c("unit_sales_low_price", "unit_sales_high_price")]), aes(x = variable, y = value)) +
-  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
-  geom_pointrange(stat = "summary") + 
-  labs(x = "Group", y = "Average number of sales") +
-  theme_bw()
-```
-
-Suppose we want to test the hypothesis that there is no difference in means between the two groups. 
-
-<p style="text-align:center;">
-$H_0: \mu_D = 0$ <br>
-$H_1: \mu_D \neq 0$
-</p>
-
-Where ```D``` denotes the difference between the observations from the two price groups. Let's compute a new variable which is the difference between the price groups. H<sub>0</sub> states that this difference should be 0. 
-
-```{r}
-music_sales_dep$difference <- music_sales_dep$unit_sales_low_price - music_sales_dep$unit_sales_high_price
-music_sales_dep
-```
-
-The mean of the paired differences is
-
-\begin{equation} 
-\begin{split}
-\overline{D}=\frac{\sum_{i=1}^{n}D_i}{n}=\frac{128}{51}=2.510
-\end{split}
-(\#eq:meandiff)
-\end{equation} 
-
-
-```{r}
-mean_d <- sum(music_sales_dep$difference)/length(music_sales_dep$difference)
-mean_d
-```
-
-The standard deviation of the paired differences is
-
-\begin{equation} 
-\begin{split}
-s_D = \sqrt\frac{\sum_{i=1}^{n}(D_i-\overline{D})^2}{n-1}=5.651
-\end{split}
-(\#eq:sddiff)
-\end{equation} 
-
-and the standard error of the paired differences is
-
-\begin{equation} 
-\begin{split}
-s_\overline{D} = \frac{s_D}{\sqrt{n}}=\frac{5.651}{\sqrt{51}}=0.791
-\end{split}
-(\#eq:sediff)
-\end{equation} 
-
-```{r}
-sd_d <- sd(music_sales_dep$difference) #standard deviation
-sd_d
-n_d <- nrow(music_sales_dep) #number of observations
-n_d
-se_d <- sd(music_sales_dep$difference)/sqrt(n_d) #standard error
-se_d
-```
-
-The test statistic is therefore:
-
-\begin{equation} 
-\begin{split}
-t = \frac{\overline{D}-\mu_d}{s_\overline{D}}=\frac{2.510-0}{0.791}=3.172
-\end{split}
-(\#eq:teststatpaired)
-\end{equation} 
-
-on 50 (i.e., n-1) degrees of freedom
-
-```{r}
-t_cal <- mean_d/se_d
-t_cal
-```
-
-Note that although we used the same data as before, the calculated test statistic is larger compared to the independent t-test. This is because in the dependent sample test, the observations come from the same observational units (i.e., products). Hence, there is no unsystematic variation due to potential differences between products that were assigned to the experimental groups. This means that the influence of unobserved factors (unsystematic variation) relative to the variation due to the experimental manipulation (systematic variation) is not as strong in the dependent-means test compared to the independent-means test. 
-
-The confidence interval can be computed as follows:
-
-```{r}
-df <- nrow(music_sales_dep)-1
-(mean_d)-qt(0.975,df)*se_d
-(mean_d)+qt(0.975,df)*se_d
-```
-
-Again, we don't have to compute all this by hand since the ```t.test(...)``` function can be used to do it for us. Now we have to use the argument ```paired=TRUE``` to let R know that we are working with dependent observations. 
-
-```{r}
-t.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_high_price, paired=TRUE)
-```
-
-The p-value associated with the test statistic is already reported in the output. However, we could still validate this result manually to see if the calculated test statistic is larger than the critical value:
-
-```{r message=FALSE, warning=FALSE}
-df <- (n_d - 1) #degrees of freedom
-qt(0.975, df) #critical value
-t_cal #calculated value
-t_cal > qt(0.975, df) #check if calculated value is larger than critical
-```
-
-Finally, we need to report the results:
-
-On average, the same music albums sold more units at the lower price point (M = 8.37, SE = 0.902) compared to the higher price point (M = 5.86, SE = 0.822). This difference was significant t(50) = 3.172, p < .01 (95% CI = [0.920, 4.099]).
-
-**The following video summarizes how to conduct an dependent-means t-test in R**
-
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/F0sGRYvgyBQ" frameborder="0" allowfullscreen></iframe>
-</div>
-
-### One-sample t-test
-
-If we are not interested in comparing groups, but would like to test if the mean of a variable is different from a specified threshold, we can use the one-sample t-test. Suppose we wanted to test the hypothesis that the overall mean sales in the “music_experiment.dat” exceeds 4.0 at a significance level of &alpha; = 0.05. The hypothesis would be:
-
-<p style="text-align:center;">
-$H_0: \mu \le 4.0$ <br>
-$H_1: \mu >  4.0$
-</p>
-
-The estimate of the standard error is simply the standard deviation over the square root of n:
-
-\begin{equation} 
-\begin{split}
-s_\overline{x}=\frac{s_x}{\sqrt{n}}=\frac{6.26}{\sqrt{102}}=0.62
-\end{split}
-(\#eq:teststatunpaired)
-\end{equation} 
-
-and the t-value is simply
-
-\begin{equation} 
-\begin{split}
-t=\frac{\overline{X}-\mu}{s_\overline{x}}=\frac{7.12-4}{0.62}=5.03
-\end{split}
-(\#eq:tunpaired)
-\end{equation} 
-
-The degrees of freedom for the t-statistic to test the hypothesis about one mean are n-1 (= 101). From the t distribution, the probability of getting a more extreme value than 5.03 is less than 0.05. Hence, H<sub>0</sub> is rejected. Alternatively, the critical t-value for 101 degrees of freedom and a significance level of 0.05 is 1.645. This implies that the average sales level exceeds 4.0. 
-
-This can be implemented using the ```t.test``` function and specifying ```mu``` as the threshold for your test and using the argument ```alternative``` to specify the direction in which we would like to test. 
-
-```{r message=FALSE, warning=FALSE}
-t.test(music_sales$unit_sales, mu = 4, alternative = "greater")
-```
-
-Report the results: 
-
-On average, the sales level in our sample exceeded the value 4.0 (M = 7.12, SE = 0.620). This difference was significant t(101) = 5.028, p < .05. 
-
-## Non-parametric tests
-
-When should you use non-parametric tests?
-
-* When your DV is measured on an ordinal scale.
-* When your data is better represented by the median (e.g., there are outliers that you can’t remove).
-* When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution).
-* You have a very small sample size (i.e., the central limit theorem does not apply).
-
-### Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)
-
-The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale, the data is not normally distributed or if the variances can not be assumed to be homogeneous. The following assumptions must be fulfilled for the test to be applicable:
-
-* The dependent variable is at least ordinally scaled (i.e. a ranking between values can be established).
-* The independent variable has only two levels. 
-* A between-subjects design is used. 
-* The subjects are not matched across conditions. 
-
-Intuitively, the test compares the frequency of low and high ranks between groups. Under the null hypothesis, the amount of high and low ranks should be roughly equal in the two groups. This is achieved through comparing the expected sum of ranks to the actual sum of ranks. 
-
-The test is implemented in R as the function ```wilcox.test()``` and there is no need to compute the ranks before you run the test as the function does this for you. Using the same data on music sales as before the test could be executed as follows:
-
-```{r message=FALSE, warning=FALSE}
-wilcox.test(unit_sales ~ group, data = music_sales) #Mann-Whitney U Test
-```
-
-The p-value is smaller than 0.05, which leads us to reject the null hypothesis, i.e. the test yields evidence that the price promotion lead to higher sales.
-
-### Wilcoxon signed-rank test
-
-The Wilcoxon signed-rank test is a non-parametric test used to analyze the difference between paired observations, analogously to the paired t-test. It can be used when measurements come from the same observational units but the distributional assumptions of the paired t-test do not hold, since it does not require any assumptions about the distribution of the measurements. Since we subtract two values, however, the test requires that the dependent variable is at least interval scaled, meaning that intervals have the same meaning for different points on our measurement scale. 
-
-Under the null hypothesis, the differences of the measurements should follow a symmetric distribution around 0, meaning that, on average, there is no difference between the two matched samples. H<sub>1</sub> states that the distributions mean is non-zero.
-
-The test can be performed with the same command as the Mann-Whitney U test, provided that the argument ```paired``` is set to ```TRUE```.
-
-```{r message=FALSE, warning=FALSE}
-wilcox.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_high_price, paired = TRUE) #Wilcoxon signed-rank test
-```
-
-Using the 95% confidence level, the result would suggest a significant effect of price on sales (i.e., p < 0.05).
-
-**The following video summarizes how to conduct non-parametric tests in R**
-
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/OMQJuXanw-g" frameborder="0" allowfullscreen></iframe>
-</div>
-
-## Categorical data
-
-### Comparing proportions
-
-In some instances, you will be confronted with differences between proportions, rather than differences between means. For example, you may conduct an A/B-Test and wish to compare the conversion rates between two advertising campaigns. In this case, your data is binary (0 = no conversion, 1 = conversion) and the sampling distribution for such data is binomial. While binomial probabilities are difficult to calculate, we can use a Normal approximation to the binomial when ```n``` is large (>100) and the true likelihood of a 1 is not too close to 0 or 1. 
-
-Let's use an example: assume a call center where service agents call potential customers to sell a product. We consider two call center agents:
-
-* Service agent 1 talks to 300 customers and gets 200 of them to buy (conversion rate=2/3)
-* Service agent 2 talks to 300 customers and gets 100 of them to buy (conversion rate=1/3)
-
-As always, we load the data first:
-
-```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-call_center <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat", 
-                          sep = "\t", 
-                          header = TRUE) #read in data
-call_center$conversion <- factor(call_center$conversion , levels = c(0:1), labels = c("no", "yes")) #convert to factor
-call_center$agent <- factor(call_center$agent , levels = c(0:1), labels = c("agent_1", "agent_2")) #convert to factor
-```
-
-Next, we create a table to check the relative frequencies:
-
-```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-rel_freq_table <- as.data.frame(prop.table(table(call_center), 2)) #conditional relative frequencies
-rel_freq_table
-```
-
-We could also plot the data to visualize the frequencies using ggplot:
-
-```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "proportion of conversions per agent (stacked bar chart)"}
-ggplot(rel_freq_table, aes(x = agent, y = Freq, fill = conversion)) + #plot data
-  geom_col(width = .7) + #position
-  geom_text(aes(label = paste0(round(Freq*100,0),"%")), position = position_stack(vjust = 0.5), size = 4) + #add percentages
-  ylab("Proportion of conversions") + xlab("Agent") + # specify axis labels
-  theme_bw()
-```
-
-... or using the ```mosaicplot()``` function:
-
-```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "proportion of conversions per agent (mosaic plot)"}
-contigency_table <- table(call_center)
-mosaicplot(contigency_table, main = "Proportion of conversions by agent")
-```
-
-Recall that we can use confidence intervals to determine the range of values that the true population parameter will take with a certain level of confidence based on the sample. Similar to the confidence interval for means, we can compute a confidence interval for proportions. The (1-&alpha;)% confidence interval for proportions is approximately 
-
-\begin{equation} 
-\begin{split}
-CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
-\end{split}
-(\#eq:CIdiff)
-\end{equation} 
-
-where $\sqrt{p(1-p)}$ is the equivalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:
-
-```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-n1 <- nrow(subset(call_center,agent=="agent_1")) #number of observations for agent 1
-n2 <- nrow(subset(call_center,agent=="agent_2")) #number of observations for agent 1
-n1_conv <- nrow(subset(call_center,agent=="agent_1" & conversion=="yes")) #number of conversions for agent 1
-n2_conv <- nrow(subset(call_center,agent=="agent_2" & conversion=="yes")) #number of conversions for agent 2
-p1 <- n1_conv/n1  #proportion of conversions for agent 1
-p2 <- n2_conv/n2  #proportion of conversions for agent 2
-
-error1 <- qnorm(0.975)*sqrt((p1*(1-p1))/n1)
-ci_lower1 <- p1 - error1
-ci_upper1 <- p1 + error1
-ci_lower1
-ci_upper1
-
-error2 <- qnorm(0.975)*sqrt((p2*(1-p2))/n2)
-ci_lower2 <- p2 - error2
-ci_upper2 <- p2 + error2
-ci_lower2
-ci_upper2
-```
-
-Similar to testing for differences in means, we could also ask: Is agent 1 twice as likely as agent 2 to convert a customer? Or, to state it mathematically:
-
-<p style="text-align:center;">
-$H_0: p_1=p_2$<br>
-$H_1: p_1\ne p_2$
-</p> 
-
-One approach to test this is based on confidence intervals to estimate the difference between two populations. We can compute an approximate confidence interval for the difference between the proportion of successes in group 1 and group 2, as:
-
-\begin{equation} 
-\begin{split}
-CI = p_1-p_2\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p_1*(1-p_1)}{n_1}+\frac{p_2*(1-p_2)}{n_2}}
-\end{split}
-(\#eq:CIdiff)
-\end{equation} 
-
-If the confidence interval includes zero, then the data does not suggest a difference between the groups. Let's compute the confidence interval for differences in the proportions by hand first:
-
-```{r}
-ci_lower <- p1 - p2 - qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI lower bound
-ci_upper <- p1 - p2 + qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI upper bound
-ci_lower
-ci_upper
-```
-
-Now we can see that the 95% confidence interval estimate of the difference between the proportion of conversions for agent 1 and the proportion of conversions for agent 2 is between `r round(ci_lower*100,0)`% and `r round(ci_upper*100,0)`%. This interval tells us the range of plausible values for the difference between the two population proportions. According to this interval, zero is not a plausible value for the difference (i.e., interval does not cross zero), so we reject the null hypothesis that the population proportions are the same.
-
-Instead of computing the intervals by hand, we could also use the ```prop.test()``` function:
-
-```{r}
-prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)
-```
-
-Note that the ```prop.test()``` function uses a slightly different (more accurate) way to compute the confidence interval (Wilson's score method is used). It is particularly a better approximation for smaller N. That's why the confidence interval in the output slightly deviates from the manual computation above, which uses the Wald interval. 
-
-You can also see that the output from the ```prop.test()``` includes the results from a &chi;<sup>2</sup> test for the equality of proportions (which will be  discussed below) and the associated p-value. Since the p-value is less than 0.05, we reject the null hypothesis of equal probability. Thus, the reporting would be: 
-
-The test showed that the conversion rate for agent 1 was higher by `r round(((prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[1])-(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[2]))*100,0)`%. This difference is significant &chi; (1) = 70, p < .05 (95% CI = [`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[1],2)`,`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[2],2)`]).
-
-To <b>calculate the required sample size</b> when comparing proportions, the ```power.prop.test()``` function can be used. For example, we could ask how large our sample needs to be if we would like to compare two groups with probabilities of 10% and 15%, respectively using the conventional settings for &alpha; and &beta;:
-
-```{r}
-power.prop.test(p1=0.01,p2=0.15,sig.level=0.05,power=0.8)
-```
-
-The output tells us that we need `r round(power.prop.test(p1=0.01,p2=0.15,sig.level=0.05,power=0.8)$n,0)` observations per group to detect a difference of the desired size.
-
-### Chi-square test
-
-We came across the &chi;<sup>2</sup> test in the previous section when we used it to test for the equality of proportions. Whenever you would like to investigate the relationship between two categorical variables, the &chi;<sup>2</sup> test may be used to test whether the variables are independent of each other. It achieves this by comparing the expected number of observations in a group to the actual values. Consider the data set below, where each survey participant either owns an expensive car (coded as a 1) or doesn't, and either is college educated (coded as a 1) or not. Let's create the contingency table first: 
-
-```{r message=FALSE, warning=FALSE}
-cross_tab <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/cross_tab.dat", 
-                        sep = "\t", 
-                        header = TRUE) #read data
-cross_tab$College <- factor(cross_tab$College , levels = c(0:1), labels = c("no", "yes")) #convert to factor
-cross_tab$CarOwnership <- factor(cross_tab$CarOwnership , levels = c(0:1), labels = c("no", "yes")) #convert to factor
-cont_table <- table(cross_tab) #create contigency table
-cont_table #view table
-```
-
-To get a first impression regarding the association between the two variable, we compute the conditional relative frequencies and plot the observed shares by group:
-
-```{r message=FALSE, warning=FALSE, fig.align="center", fig.cap = "Expensive car ownership conditional on college education"}
-cont_table_df <- as.data.frame(prop.table(table(cross_tab),1)) #conditional relative frequencies
-cont_table_df
-ggplot(cont_table_df, aes(x = College, y = Freq, fill = CarOwnership)) + #plot data
-  geom_col(width = .7) + #position
-  geom_text(aes(label = paste0(round(Freq*100,0),"%")), position = position_stack(vjust = 0.5), size = 4) + #add percentages
-  ylab("Expensive car ownership (proportion)") + xlab("College degree") + # specify axis labels
-  theme_bw()
-```
-
-Under the null hypothesis, the two variables are independent (i.e., there is no relationship). This means that the frequency in each field will be roughly proportional to the probability of an observation being in that category, calculated under the assumption that they are independent. The difference between that expected quantity and the actual quantity can be used to construct the test statistic. The test statistic is computed as follows:
-
-\begin{equation} 
-\begin{split}
-\chi^2=\sum_{i=1}^{J}\frac{(f_o-f_e)^2}{f_e}
-\end{split}
-(\#eq:Chisq)
-\end{equation} 
-
-where $J$ is the number of cells in the contingency table, $f_o$ are the observed cell frequencies and $f_e$ are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value. 
-
-The observed cell frequencies can easily be seen from the contingency table: 
-
-```{r message=FALSE, warning=FALSE}
-obs_cell1 <- cont_table[1,1]
-obs_cell2 <- cont_table[1,2]
-obs_cell3 <- cont_table[2,1]
-obs_cell4 <- cont_table[2,2]
-```
-
-The expected cell frequencies can be calculated as follows:
-
-\begin{equation} 
-\begin{split}
-f_e=\frac{(n_r*n_c)}{n}
-\end{split}
-(\#eq:fe)
-\end{equation} 
-
-where $n_r$ are the total observed frequencies per row, $n_c$ are the total observed frequencies per column, and $n$ is the total number of observations. Thus, the expected cell frequencies under the assumption of independence can be calculated as: 
-
-```{r message=FALSE, warning=FALSE}
-n <- nrow(cross_tab)
-exp_cell1 <- (nrow(cross_tab[cross_tab$College=="no",])*nrow(cross_tab[cross_tab$CarOwnership=="no",]))/n
-exp_cell2 <- (nrow(cross_tab[cross_tab$College=="no",])*nrow(cross_tab[cross_tab$CarOwnership=="yes",]))/n
-exp_cell3 <- (nrow(cross_tab[cross_tab$College=="yes",])*nrow(cross_tab[cross_tab$CarOwnership=="no",]))/n
-exp_cell4 <- (nrow(cross_tab[cross_tab$College=="yes",])*nrow(cross_tab[cross_tab$CarOwnership=="yes",]))/n
-```
-
-To sum up, these are the expected cell frequencies
-
-```{r message=FALSE, warning=FALSE, paged.print = FALSE}
-data.frame(Car_no = rbind(exp_cell1,exp_cell2),Car_yes = rbind(exp_cell3,exp_cell4), row.names = c("College_no","College_yes")) 
-```
-
-... and these are the observed cell frequencies
-
-```{r message=FALSE, warning=FALSE, paged.print = FALSE}
-data.frame(Car_no = rbind(obs_cell1,obs_cell2),Car_yes = rbind(obs_cell3,obs_cell4), row.names = c("College_no","College_yes")) 
-```
-
-To obtain the test statistic, we simply plug the values into the formula: 
-
-```{r message=FALSE, warning=FALSE}
-chisq_cal <-  sum(((obs_cell1 - exp_cell1)^2/exp_cell1),
-                  ((obs_cell2 - exp_cell2)^2/exp_cell2),
-                  ((obs_cell3 - exp_cell3)^2/exp_cell3),
-                  ((obs_cell4 - exp_cell4)^2/exp_cell4))
-chisq_cal
-```
-
-The test statistic is $\chi^2$ distributed. The chi-square distribution is a non-symmetric distribution. Actually, there are many different chi-square distributions, one for each degree of freedom as show in the following figure. 
-
-```{r echo = F, message=FALSE, warning=FALSE, eval=T, fig.align="center", fig.cap = "The chi-square distribution"}
-library(ggplot2)
-a <- seq(2,10, 2)
-ggplot(data.frame(x=c(0,20)), aes(x))+
-  stat_function(fun = dchisq, args = list(8), aes(colour = '8'))+
-  stat_function(fun = dchisq, args = list(1), aes(colour = '1'))+
-  stat_function(fun = dchisq, args = list(2), aes(colour = '2'))+
-  stat_function(fun = dchisq, args = list(4), aes(colour = '4'))+
-  stat_function(fun = dchisq, args = list(6), aes(colour = '6'))+
-  stat_function(fun = dchisq, args = list(15), aes(colour = '15'))+
-  ylim(min=0, max=0.6) +
-  labs(colour = 'Degrees of Freedom', x = 'Value', y = 'Density') + theme_bw()
-```
-
-You can see that as the degrees of freedom increase, the chi-square curve approaches a normal distribution. To find the critical value, we need to specify the corresponding degrees of freedom, given by:
-
-\begin{equation} 
-df=(r-1)*(c-1)
-(\#eq:dfchi)
-\end{equation} 
-
-where $r$ is the number of rows and $c$ is the number of columns in the contingency table. Recall that degrees of freedom are generally the number of values that can vary freely when calculating a statistic. In a 2 by 2 table as in our case, we have 2 variables (or two samples) with 2 levels and in each one we have 1 that vary freely. Hence, in our example the degrees of freedom can be calculated as:
-
-```{r message=FALSE, warning=FALSE}
-df <-  (nrow(cont_table) - 1) * (ncol(cont_table) -1)
-df
-```
-
-Now, we can derive the critical value given the degrees of freedom and the level of confidence using the ```qchisq()``` function and test if the calculated test statistic is larger than the critical value:
-
-```{r message=FALSE, warning=FALSE}
-chisq_crit <- qchisq(0.95, df)
-chisq_crit
-chisq_cal > chisq_crit
-```
-
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Visual depiction of the test result"}
-df <- 1
-p <- 0.95
-min <- 0
-max <- 15
-chsq1 <- round(qchisq(p,df=df), digits = 3)
-t2 <- round(qt(p2,df=df), digits = 3)
-plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
-  stat_function(fun = dchisq, args = list(df))+
-  stat_function(fun = dchisq, args = list(df), xlim = c(qchisq(p,df=df),max), geom = "area") +
-  scale_x_continuous(breaks = c(0, chsq1, chisq_cal)) +
-  geom_vline(xintercept = chisq_cal, color = "red") +
-  labs(title = paste0("Result of chi-square test: reject H0"),
-         subtitle = paste0("Red line: Calculated test statistic;"," Black area: Rejection region"),
-         x = "x", y = "Density") +
-  theme(legend.position="none") + 
-  theme_bw()
-plot1
-```
-
-We could also compute the p-value using the ```pchisq()``` function, which tells us the probability of the observed cell frequencies if the null hypothesis was true (i.e., there was no association):
-
-```{r message=FALSE, warning=FALSE}
-p_val <- 1-pchisq(chisq_cal,df)
-p_val
-```
-
-The test statistic can also be calculated in R directly on the contingency table with the function ```chisq.test()```.
-
-```{r message=FALSE, warning=FALSE}
-chisq.test(cont_table, correct = FALSE)
-```
-
-Since the p-value is smaller than 0.05 (i.e., the calculated test statistic is larger than the critical value), we reject H<sub>0</sub> that the two variables are independent. 
-
-Note that the test statistic is sensitive to the sample size. To see this, lets assume that we have a sample of 100 observations instead of 1000 observations:
-
-```{r message=FALSE, warning=FALSE}
-chisq.test(cont_table/10, correct = FALSE)
-```
-
-You can see that even though the proportions haven't changed, the test is insignificant now. The following equation let's you compute a measure of the effect size, which is insensitive to sample size: 
-
-\begin{equation} 
-\begin{split}
-\phi=\sqrt{\frac{\chi^2}{n}}
-\end{split}
-(\#eq:fe)
-\end{equation} 
-
-The following guidelines are used to determine the magnitude of the effect size (Cohen, 1988): 
-
-* 0.1 (small effect)
-* 0.3 (medium effect)
-* 0.5 (large effect)
-
-In our example, we can compute the effect sizes for the large and small samples as follows:
-
-```{r message=FALSE, warning=FALSE}
-test_stat <- chisq.test(cont_table, correct = FALSE)$statistic
-phi1 <- sqrt(test_stat/n)
-test_stat <- chisq.test(cont_table/10, correct = FALSE)$statistic
-phi2 <- sqrt(test_stat/(n/10))
-phi1
-phi2
-```
-
-You can see that the statistic is insensitive to the sample size. 
-
-Note that the &Phi; coefficient is appropriate for two dichotomous variables (resulting from a 2 x 2 table as above). If any your nominal variables has more than two categories, Cramér's V should be used instead:
-
-\begin{equation} 
-\begin{split}
-V=\sqrt{\frac{\chi^2}{n*df_{min}}}
-\end{split}
-(\#eq:cramer)
-\end{equation} 
-
-where $df_{min}$ refers to the degrees of freedom associated with the variable that has fewer categories (e.g., if we have two nominal variables with 3 and 4 categories, $df_{min}$ would be 3 - 1 = 2). The degrees of freedom need to be taken into account when judging the magnitude of the effect sizes (see e.g., <a href="http://www.real-statistics.com/chi-square-and-f-distributions/effect-size-chi-square/" target="_blank">here</a>). 
-
-Note that the ```correct = FALSE``` argument above ensures that the test statistic is computed in the same way as we have done by hand above. By default, ```chisq.test()``` applies a correction to prevent overestimation of statistical significance for small data (called the Yates' correction). The correction is implemented by subtracting the value 0.5 from the computed difference between the observed and expected cell counts in the numerator of the test statistic (see Equation \@ref(eq:Chisq)). This means that the calculated test statistic will be smaller (i.e., more conservative). Although the adjustment may go too far in some instances, you should generally rely on the adjusted results, which can be computed as follows:
-
-```{r message=FALSE, warning=FALSE}
-chisq.test(cont_table)
-```
-
-As you can see, the results don't change much in our example, since the differences between the observed and expected cell frequencies are fairly large relative to the correction.
-
-Caution is warranted when the cell counts in the contingency table are small. The usual rule of thumb is that all cell counts should be at least 5 (this may be a little too stringent though). When some cell counts are too small, you can use Fisher's exact test using the ```fisher.test()``` function. 
-
-```{r message=FALSE, warning=FALSE}
-fisher.test(cont_table)
-```
-
-The Fisher test, while more conservative, also shows a significant difference between the proportions (p < 0.05). This is not surprising since the cell counts in our example are fairly large.

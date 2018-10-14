@@ -1,0 +1,433 @@
+---
+title: "10-non-parametric-tests"
+output:
+  html_document:
+    toc: yes
+  html_notebook: default
+  pdf_document:
+    toc: yes
+---
+
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+```
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
+library(dplyr)
+library(psych)
+library(ggplot2)
+library(Hmisc)
+rm(music_sales)
+music_sales <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+music_sales$group <- factor(music_sales$group, levels = c(1:2), labels = c("low_price", "high_price")) #convert grouping variable to factor
+str(music_sales) #inspect data
+head(music_sales) #inspect data
+```
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
+rm(music_sales_dep)
+music_sales_dep <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment_dependent.dat", 
+                              sep = "\t", 
+                              header = TRUE) #read in data
+str(music_sales_dep) #inspect data
+head(music_sales_dep) #inspect data
+```
+
+## Non-parametric tests
+
+**Non-Parametric tests** on the other hand do not require the sampling distribution to be normally distributed (a.k.a. "assumption free tests"). These tests may be used when the variable of interest is measured on an ordinal scale or when the parametric assumptions do not hold. They often rely on ranking the data instead of analyzing the actual scores. By ranking the data, information on the magnitude of differences is lost. Thus, parametric tests are more powerful if the sampling distribution is normally distributed.
+
+When should you use non-parametric tests?
+
+* When your DV is measured on an ordinal scale.
+* When your data is better represented by the median (e.g., there are outliers that you can’t remove).
+* When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution).
+* You have a very small sample size (i.e., the central limit theorem does not apply).
+
+### Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)
+
+The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale, the data is not normally distributed or if the variances can not be assumed to be homogeneous. The following assumptions must be fulfilled for the test to be applicable:
+
+* The dependent variable is at least ordinally scaled (i.e. a ranking between values can be established).
+* The independent variable has only two levels. 
+* A between-subjects design is used. 
+* The subjects are not matched across conditions. 
+
+Intuitively, the test compares the frequency of low and high ranks between groups. Under the null hypothesis, the amount of high and low ranks should be roughly equal in the two groups. This is achieved through comparing the expected sum of ranks to the actual sum of ranks. 
+
+The test is implemented in R as the function ```wilcox.test()``` and there is no need to compute the ranks before you run the test as the function does this for you. Using the same data on music sales as before the test could be executed as follows:
+
+```{r message=FALSE, warning=FALSE}
+wilcox.test(unit_sales ~ group, data = music_sales) #Mann-Whitney U Test
+```
+
+The p-value is smaller than 0.05, which leads us to reject the null hypothesis, i.e. the test yields evidence that the price promotion lead to higher sales.
+
+### Wilcoxon signed-rank test
+
+The Wilcoxon signed-rank test is a non-parametric test used to analyze the difference between paired observations, analogously to the paired t-test. It can be used when measurements come from the same observational units but the distributional assumptions of the paired t-test do not hold, since it does not require any assumptions about the distribution of the measurements. Since we subtract two values, however, the test requires that the dependent variable is at least interval scaled, meaning that intervals have the same meaning for different points on our measurement scale. 
+
+Under the null hypothesis, the differences of the measurements should follow a symmetric distribution around 0, meaning that, on average, there is no difference between the two matched samples. H<sub>1</sub> states that the distributions mean is non-zero.
+
+The test can be performed with the same command as the Mann-Whitney U test, provided that the argument ```paired``` is set to ```TRUE```.
+
+```{r message=FALSE, warning=FALSE}
+wilcox.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_high_price, paired = TRUE) #Wilcoxon signed-rank test
+```
+
+Using the 95% confidence level, the result would suggest a significant effect of price on sales (i.e., p < 0.05).
+
+**The following video summarizes how to conduct non-parametric tests in R**
+
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OMQJuXanw-g" frameborder="0" allowfullscreen></iframe>
+</div>
+
+## Categorical data
+
+### Comparing proportions
+
+In some instances, you will be confronted with differences between proportions, rather than differences between means. For example, you may conduct an A/B-Test and wish to compare the conversion rates between two advertising campaigns. In this case, your data is binary (0 = no conversion, 1 = conversion) and the sampling distribution for such data is binomial. While binomial probabilities are difficult to calculate, we can use a Normal approximation to the binomial when ```n``` is large (>100) and the true likelihood of a 1 is not too close to 0 or 1. 
+
+Let's use an example: assume a call center where service agents call potential customers to sell a product. We consider two call center agents:
+
+* Service agent 1 talks to 300 customers and gets 200 of them to buy (conversion rate=2/3)
+* Service agent 2 talks to 300 customers and gets 100 of them to buy (conversion rate=1/3)
+
+As always, we load the data first:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+call_center <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+call_center$conversion <- factor(call_center$conversion , levels = c(0:1), labels = c("no", "yes")) #convert to factor
+call_center$agent <- factor(call_center$agent , levels = c(0:1), labels = c("agent_1", "agent_2")) #convert to factor
+```
+
+Next, we create a table to check the relative frequencies:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+rel_freq_table <- as.data.frame(prop.table(table(call_center), 2)) #conditional relative frequencies
+rel_freq_table
+```
+
+We could also plot the data to visualize the frequencies using ggplot:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "proportion of conversions per agent (stacked bar chart)"}
+ggplot(rel_freq_table, aes(x = agent, y = Freq, fill = conversion)) + #plot data
+  geom_col(width = .7) + #position
+  geom_text(aes(label = paste0(round(Freq*100,0),"%")), position = position_stack(vjust = 0.5), size = 4) + #add percentages
+  ylab("Proportion of conversions") + xlab("Agent") + # specify axis labels
+  theme_bw()
+```
+
+... or using the ```mosaicplot()``` function:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "proportion of conversions per agent (mosaic plot)"}
+contigency_table <- table(call_center)
+mosaicplot(contigency_table, main = "Proportion of conversions by agent")
+```
+
+Recall that we can use confidence intervals to determine the range of values that the true population parameter will take with a certain level of confidence based on the sample. Similar to the confidence interval for means, we can compute a confidence interval for proportions. The (1-&alpha;)% confidence interval for proportions is approximately 
+
+\begin{equation} 
+\begin{split}
+CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
+\end{split}
+(\#eq:CIdiff)
+\end{equation} 
+
+where $\sqrt{p(1-p)}$ is the equivalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+n1 <- nrow(subset(call_center,agent=="agent_1")) #number of observations for agent 1
+n2 <- nrow(subset(call_center,agent=="agent_2")) #number of observations for agent 1
+n1_conv <- nrow(subset(call_center,agent=="agent_1" & conversion=="yes")) #number of conversions for agent 1
+n2_conv <- nrow(subset(call_center,agent=="agent_2" & conversion=="yes")) #number of conversions for agent 2
+p1 <- n1_conv/n1  #proportion of conversions for agent 1
+p2 <- n2_conv/n2  #proportion of conversions for agent 2
+
+error1 <- qnorm(0.975)*sqrt((p1*(1-p1))/n1)
+ci_lower1 <- p1 - error1
+ci_upper1 <- p1 + error1
+ci_lower1
+ci_upper1
+
+error2 <- qnorm(0.975)*sqrt((p2*(1-p2))/n2)
+ci_lower2 <- p2 - error2
+ci_upper2 <- p2 + error2
+ci_lower2
+ci_upper2
+```
+
+Similar to testing for differences in means, we could also ask: Is agent 1 twice as likely as agent 2 to convert a customer? Or, to state it mathematically:
+
+<p style="text-align:center;">
+$H_0: p_1=p_2$<br>
+$H_1: p_1\ne p_2$
+</p> 
+
+One approach to test this is based on confidence intervals to estimate the difference between two populations. We can compute an approximate confidence interval for the difference between the proportion of successes in group 1 and group 2, as:
+
+\begin{equation} 
+\begin{split}
+CI = p_1-p_2\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p_1*(1-p_1)}{n_1}+\frac{p_2*(1-p_2)}{n_2}}
+\end{split}
+(\#eq:CIdiff)
+\end{equation} 
+
+If the confidence interval includes zero, then the data does not suggest a difference between the groups. Let's compute the confidence interval for differences in the proportions by hand first:
+
+```{r}
+ci_lower <- p1 - p2 - qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI lower bound
+ci_upper <- p1 - p2 + qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI upper bound
+ci_lower
+ci_upper
+```
+
+Now we can see that the 95% confidence interval estimate of the difference between the proportion of conversions for agent 1 and the proportion of conversions for agent 2 is between `r round(ci_lower*100,0)`% and `r round(ci_upper*100,0)`%. This interval tells us the range of plausible values for the difference between the two population proportions. According to this interval, zero is not a plausible value for the difference (i.e., interval does not cross zero), so we reject the null hypothesis that the population proportions are the same.
+
+Instead of computing the intervals by hand, we could also use the ```prop.test()``` function:
+
+```{r}
+prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)
+```
+
+Note that the ```prop.test()``` function uses a slightly different (more accurate) way to compute the confidence interval (Wilson's score method is used). It is particularly a better approximation for smaller N. That's why the confidence interval in the output slightly deviates from the manual computation above, which uses the Wald interval. 
+
+You can also see that the output from the ```prop.test()``` includes the results from a &chi;<sup>2</sup> test for the equality of proportions (which will be  discussed below) and the associated p-value. Since the p-value is less than 0.05, we reject the null hypothesis of equal probability. Thus, the reporting would be: 
+
+The test showed that the conversion rate for agent 1 was higher by `r round(((prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[1])-(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[2]))*100,0)`%. This difference is significant &chi; (1) = 70, p < .05 (95% CI = [`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[1],2)`,`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[2],2)`]).
+
+To <b>calculate the required sample size</b> when comparing proportions, the ```power.prop.test()``` function can be used. For example, we could ask how large our sample needs to be if we would like to compare two groups with probabilities of 10% and 15%, respectively using the conventional settings for &alpha; and &beta;:
+
+```{r}
+power.prop.test(p1=0.01,p2=0.15,sig.level=0.05,power=0.8)
+```
+
+The output tells us that we need `r round(power.prop.test(p1=0.01,p2=0.15,sig.level=0.05,power=0.8)$n,0)` observations per group to detect a difference of the desired size.
+
+### Chi-square test
+
+We came across the &chi;<sup>2</sup> test in the previous section when we used it to test for the equality of proportions. Whenever you would like to investigate the relationship between two categorical variables, the &chi;<sup>2</sup> test may be used to test whether the variables are independent of each other. It achieves this by comparing the expected number of observations in a group to the actual values. Consider the data set below, where each survey participant either owns an expensive car (coded as a 1) or doesn't, and either is college educated (coded as a 1) or not. Let's create the contingency table first: 
+
+```{r message=FALSE, warning=FALSE}
+cross_tab <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/cross_tab.dat", 
+                        sep = "\t", 
+                        header = TRUE) #read data
+cross_tab$College <- factor(cross_tab$College , levels = c(0:1), labels = c("no", "yes")) #convert to factor
+cross_tab$CarOwnership <- factor(cross_tab$CarOwnership , levels = c(0:1), labels = c("no", "yes")) #convert to factor
+cont_table <- table(cross_tab) #create contigency table
+cont_table #view table
+```
+
+To get a first impression regarding the association between the two variable, we compute the conditional relative frequencies and plot the observed shares by group:
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.cap = "Expensive car ownership conditional on college education"}
+cont_table_df <- as.data.frame(prop.table(table(cross_tab),1)) #conditional relative frequencies
+cont_table_df
+ggplot(cont_table_df, aes(x = College, y = Freq, fill = CarOwnership)) + #plot data
+  geom_col(width = .7) + #position
+  geom_text(aes(label = paste0(round(Freq*100,0),"%")), position = position_stack(vjust = 0.5), size = 4) + #add percentages
+  ylab("Expensive car ownership (proportion)") + xlab("College degree") + # specify axis labels
+  theme_bw()
+```
+
+Under the null hypothesis, the two variables are independent (i.e., there is no relationship). This means that the frequency in each field will be roughly proportional to the probability of an observation being in that category, calculated under the assumption that they are independent. The difference between that expected quantity and the actual quantity can be used to construct the test statistic. The test statistic is computed as follows:
+
+\begin{equation} 
+\begin{split}
+\chi^2=\sum_{i=1}^{J}\frac{(f_o-f_e)^2}{f_e}
+\end{split}
+(\#eq:Chisq)
+\end{equation} 
+
+where $J$ is the number of cells in the contingency table, $f_o$ are the observed cell frequencies and $f_e$ are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value. 
+
+The observed cell frequencies can easily be seen from the contingency table: 
+
+```{r message=FALSE, warning=FALSE}
+obs_cell1 <- cont_table[1,1]
+obs_cell2 <- cont_table[1,2]
+obs_cell3 <- cont_table[2,1]
+obs_cell4 <- cont_table[2,2]
+```
+
+The expected cell frequencies can be calculated as follows:
+
+\begin{equation} 
+\begin{split}
+f_e=\frac{(n_r*n_c)}{n}
+\end{split}
+(\#eq:fe)
+\end{equation} 
+
+where $n_r$ are the total observed frequencies per row, $n_c$ are the total observed frequencies per column, and $n$ is the total number of observations. Thus, the expected cell frequencies under the assumption of independence can be calculated as: 
+
+```{r message=FALSE, warning=FALSE}
+n <- nrow(cross_tab)
+exp_cell1 <- (nrow(cross_tab[cross_tab$College=="no",])*nrow(cross_tab[cross_tab$CarOwnership=="no",]))/n
+exp_cell2 <- (nrow(cross_tab[cross_tab$College=="no",])*nrow(cross_tab[cross_tab$CarOwnership=="yes",]))/n
+exp_cell3 <- (nrow(cross_tab[cross_tab$College=="yes",])*nrow(cross_tab[cross_tab$CarOwnership=="no",]))/n
+exp_cell4 <- (nrow(cross_tab[cross_tab$College=="yes",])*nrow(cross_tab[cross_tab$CarOwnership=="yes",]))/n
+```
+
+To sum up, these are the expected cell frequencies
+
+```{r message=FALSE, warning=FALSE, paged.print = FALSE}
+data.frame(Car_no = rbind(exp_cell1,exp_cell2),Car_yes = rbind(exp_cell3,exp_cell4), row.names = c("College_no","College_yes")) 
+```
+
+... and these are the observed cell frequencies
+
+```{r message=FALSE, warning=FALSE, paged.print = FALSE}
+data.frame(Car_no = rbind(obs_cell1,obs_cell2),Car_yes = rbind(obs_cell3,obs_cell4), row.names = c("College_no","College_yes")) 
+```
+
+To obtain the test statistic, we simply plug the values into the formula: 
+
+```{r message=FALSE, warning=FALSE}
+chisq_cal <-  sum(((obs_cell1 - exp_cell1)^2/exp_cell1),
+                  ((obs_cell2 - exp_cell2)^2/exp_cell2),
+                  ((obs_cell3 - exp_cell3)^2/exp_cell3),
+                  ((obs_cell4 - exp_cell4)^2/exp_cell4))
+chisq_cal
+```
+
+The test statistic is $\chi^2$ distributed. The chi-square distribution is a non-symmetric distribution. Actually, there are many different chi-square distributions, one for each degree of freedom as show in the following figure. 
+
+```{r echo = F, message=FALSE, warning=FALSE, eval=T, fig.align="center", fig.cap = "The chi-square distribution"}
+library(ggplot2)
+a <- seq(2,10, 2)
+ggplot(data.frame(x=c(0,20)), aes(x))+
+  stat_function(fun = dchisq, args = list(8), aes(colour = '8'))+
+  stat_function(fun = dchisq, args = list(1), aes(colour = '1'))+
+  stat_function(fun = dchisq, args = list(2), aes(colour = '2'))+
+  stat_function(fun = dchisq, args = list(4), aes(colour = '4'))+
+  stat_function(fun = dchisq, args = list(6), aes(colour = '6'))+
+  stat_function(fun = dchisq, args = list(15), aes(colour = '15'))+
+  ylim(min=0, max=0.6) +
+  labs(colour = 'Degrees of Freedom', x = 'Value', y = 'Density') + theme_bw()
+```
+
+You can see that as the degrees of freedom increase, the chi-square curve approaches a normal distribution. To find the critical value, we need to specify the corresponding degrees of freedom, given by:
+
+\begin{equation} 
+df=(r-1)*(c-1)
+(\#eq:dfchi)
+\end{equation} 
+
+where $r$ is the number of rows and $c$ is the number of columns in the contingency table. Recall that degrees of freedom are generally the number of values that can vary freely when calculating a statistic. In a 2 by 2 table as in our case, we have 2 variables (or two samples) with 2 levels and in each one we have 1 that vary freely. Hence, in our example the degrees of freedom can be calculated as:
+
+```{r message=FALSE, warning=FALSE}
+df <-  (nrow(cont_table) - 1) * (ncol(cont_table) -1)
+df
+```
+
+Now, we can derive the critical value given the degrees of freedom and the level of confidence using the ```qchisq()``` function and test if the calculated test statistic is larger than the critical value:
+
+```{r message=FALSE, warning=FALSE}
+chisq_crit <- qchisq(0.95, df)
+chisq_crit
+chisq_cal > chisq_crit
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Visual depiction of the test result"}
+df <- 1
+p <- 0.95
+min <- 0
+max <- 15
+chsq1 <- round(qchisq(p,df=df), digits = 3)
+t2 <- round(qt(p2,df=df), digits = 3)
+plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dchisq, args = list(df))+
+  stat_function(fun = dchisq, args = list(df), xlim = c(qchisq(p,df=df),max), geom = "area") +
+  scale_x_continuous(breaks = c(0, chsq1, chisq_cal)) +
+  geom_vline(xintercept = chisq_cal, color = "red") +
+  labs(title = paste0("Result of chi-square test: reject H0"),
+         subtitle = paste0("Red line: Calculated test statistic;"," Black area: Rejection region"),
+         x = "x", y = "Density") +
+  theme(legend.position="none") + 
+  theme_bw()
+plot1
+```
+
+We could also compute the p-value using the ```pchisq()``` function, which tells us the probability of the observed cell frequencies if the null hypothesis was true (i.e., there was no association):
+
+```{r message=FALSE, warning=FALSE}
+p_val <- 1-pchisq(chisq_cal,df)
+p_val
+```
+
+The test statistic can also be calculated in R directly on the contingency table with the function ```chisq.test()```.
+
+```{r message=FALSE, warning=FALSE}
+chisq.test(cont_table, correct = FALSE)
+```
+
+Since the p-value is smaller than 0.05 (i.e., the calculated test statistic is larger than the critical value), we reject H<sub>0</sub> that the two variables are independent. 
+
+Note that the test statistic is sensitive to the sample size. To see this, lets assume that we have a sample of 100 observations instead of 1000 observations:
+
+```{r message=FALSE, warning=FALSE}
+chisq.test(cont_table/10, correct = FALSE)
+```
+
+You can see that even though the proportions haven't changed, the test is insignificant now. The following equation let's you compute a measure of the effect size, which is insensitive to sample size: 
+
+\begin{equation} 
+\begin{split}
+\phi=\sqrt{\frac{\chi^2}{n}}
+\end{split}
+(\#eq:fe)
+\end{equation} 
+
+The following guidelines are used to determine the magnitude of the effect size (Cohen, 1988): 
+
+* 0.1 (small effect)
+* 0.3 (medium effect)
+* 0.5 (large effect)
+
+In our example, we can compute the effect sizes for the large and small samples as follows:
+
+```{r message=FALSE, warning=FALSE}
+test_stat <- chisq.test(cont_table, correct = FALSE)$statistic
+phi1 <- sqrt(test_stat/n)
+test_stat <- chisq.test(cont_table/10, correct = FALSE)$statistic
+phi2 <- sqrt(test_stat/(n/10))
+phi1
+phi2
+```
+
+You can see that the statistic is insensitive to the sample size. 
+
+Note that the &Phi; coefficient is appropriate for two dichotomous variables (resulting from a 2 x 2 table as above). If any your nominal variables has more than two categories, Cramér's V should be used instead:
+
+\begin{equation} 
+\begin{split}
+V=\sqrt{\frac{\chi^2}{n*df_{min}}}
+\end{split}
+(\#eq:cramer)
+\end{equation} 
+
+where $df_{min}$ refers to the degrees of freedom associated with the variable that has fewer categories (e.g., if we have two nominal variables with 3 and 4 categories, $df_{min}$ would be 3 - 1 = 2). The degrees of freedom need to be taken into account when judging the magnitude of the effect sizes (see e.g., <a href="http://www.real-statistics.com/chi-square-and-f-distributions/effect-size-chi-square/" target="_blank">here</a>). 
+
+Note that the ```correct = FALSE``` argument above ensures that the test statistic is computed in the same way as we have done by hand above. By default, ```chisq.test()``` applies a correction to prevent overestimation of statistical significance for small data (called the Yates' correction). The correction is implemented by subtracting the value 0.5 from the computed difference between the observed and expected cell counts in the numerator of the test statistic (see Equation \@ref(eq:Chisq)). This means that the calculated test statistic will be smaller (i.e., more conservative). Although the adjustment may go too far in some instances, you should generally rely on the adjusted results, which can be computed as follows:
+
+```{r message=FALSE, warning=FALSE}
+chisq.test(cont_table)
+```
+
+As you can see, the results don't change much in our example, since the differences between the observed and expected cell frequencies are fairly large relative to the correction.
+
+Caution is warranted when the cell counts in the contingency table are small. The usual rule of thumb is that all cell counts should be at least 5 (this may be a little too stringent though). When some cell counts are too small, you can use Fisher's exact test using the ```fisher.test()``` function. 
+
+```{r message=FALSE, warning=FALSE}
+fisher.test(cont_table)
+```
+
+The Fisher test, while more conservative, also shows a significant difference between the proportions (p < 0.05). This is not surprising since the cell counts in our example are fairly large.

@@ -5,6 +5,7 @@ output: html_document
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options(digits = 7)
 ```
 
 # Introduction to Statistical Inference
@@ -52,18 +53,73 @@ Standard error | $SE_{\bar x} = {s \over \sqrt{n}}$  | $\sigma_{\bar x} = {\sigm
 
 ### Sampling from a known population
 
-In the first step towards a realistic reasearch setting, let us take samples from this distribution and calculate the mean in each sample to get an idea of how much uncertainty we introduce by only knowing a part of the population. 
+In the first step towards a realistic reasearch setting, let us take one sample from this population and calculate the mean listening time. We can simply sample the row numbers of students and then subset the ```hours``` vector with the sampled rownumbers. The ```sample()``` function wil be used to draw a sample of size 100 from the population of 25,000 students, and one student can only be drawn once (i.e., ```replace = FALSE```). The following plot shows the distribution of listining times for our sample.
 
-Let us first randomly sample 100 students without replacement (that is, once a student has been drawn she or he is removed from the pool and cannot be drawn again) and calculate the mean. We can simply sample the row numbers of students and then subset the ```hours``` vector with the sampled rownumbers. The ```sample()``` function wil be used to draw a sample of size 100 from the population of 25,000 students, and one student can only be drawn once (i.e., ```replace = FALSE```).
-
-```{r}
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 4, fig.width = 6}
 student_sample <- sample(1:25000, size = 100, replace = FALSE)
-(m1 <- mean(hours[student_sample]))
+sample_1 <- hours[student_sample]
+ggplot(data.frame(sample_1)) +
+  geom_histogram(aes(x = sample_1), bins = 30, fill='white', color='black') +
+  theme_bw() + xlab("Hours") +
+  geom_vline(aes(xintercept = mean(sample_1)), size=1) +
+  ggtitle(TeX(sprintf("Distribution of listening times ($\\bar{x}$ = %.2f)",round(mean(sample_1),2))))
 ```
 
-Observe that in this first draw the mean is quite close to the actual mean. It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. So in order to make sure that the first draw is not just pure luck and the sample mean is in fact a good estimate for the population mean, let us take **many** (e.g. $20,000$) different random samples and calculate their means. This will show us a range within which the sample mean of any sample we take is likely going to be. We are going to store the means of all the samples in a matrix and then plot a histogram of the means to observe the likely values. The sample size is $100$ for each sample that we take. 
+Observe that in this first draw the mean ($\bar x =$ `r round(mean(sample_1),2)`) is quite close to the actual mean ($\mu = $`r mean(hours)`). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.  
 
-```{r}
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
+#student_sample <- sample(1:25000, size = 100, replace = FALSE)
+#means <- hours[student_sample]
+library(cowplot)
+set.seed(8830)
+student_sample <- sample(1:25000, size = 100, replace = FALSE)
+means1 <- hours[student_sample]
+plot1 <- ggplot(data.frame(means1)) +
+  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
+  theme_bw() + xlab("Hours") +
+  geom_vline(aes(xintercept = mean(means1)), size=1) +
+ ggtitle(TeX(sprintf("$\\bar{x}_1$ = %.2f",round(mean(means1),2))))
+
+set.seed(6789)
+student_sample <- sample(1:25000, size = 100, replace = FALSE)
+means1 <- hours[student_sample]
+plot2 <- ggplot(data.frame(means1)) +
+  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
+  theme_bw() + xlab("Hours") +
+  geom_vline(aes(xintercept = mean(means1)), size=1) +
+ ggtitle(TeX(sprintf("$\\bar{x}_2$ = %.2f",round(mean(means1),2))))
+
+set.seed(3904)
+student_sample <- sample(1:25000, size = 100, replace = FALSE)
+means1 <- hours[student_sample]
+plot3 <- ggplot(data.frame(means1)) +
+  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
+  theme_bw() + xlab("Hours") +
+  geom_vline(aes(xintercept = mean(means1)), size=1) +
+ ggtitle(TeX(sprintf("$\\bar{x}_3$ = %.2f",round(mean(means1),2))))
+
+set.seed(3333)
+student_sample <- sample(1:25000, size = 100, replace = FALSE)
+means1 <- hours[student_sample]
+plot4 <- ggplot(data.frame(means1)) +
+  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
+  theme_bw() + xlab("Hours") +
+  geom_vline(aes(xintercept = mean(means1)), size=1) +
+ ggtitle(TeX(sprintf("$\\bar{x}_4$ = %.2f",round(mean(means1),2))))
+
+p <- plot_grid(plot1, plot2, plot3, plot4, ncol = 2,
+           labels = c("A", "B","C","D"))
+title <- ggdraw() + draw_label('Distribution of listening times in four different samples', fontface='bold')
+p <- plot_grid(title, p, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+print(p)
+
+```
+
+It becomes clear that the mean is slightly different for each sample. This is referred to as **sampling variation** and it is completely fine to get a slightly different mean every time we take a sample. We just need to find a way of expressing the uncertainty associated with the fact that we only have data from one sample, because in a realistic setting you are most likely only going to have access to a single sample. 
+
+So in order to make sure that the first draw is not just pure luck and the sample mean is in fact a good estimate for the population mean, let us take **many** (e.g. $20,000$) different samples from the population. That is, we repeatedly draw 100 students randomly from the population without replacement (that is, once a student has been drawn she or he is removed from the pool and cannot be drawn again) and calculate the mean of each sample. This will show us a range within which the sample mean of any sample we take is likely going to be. We are going to store the means of all the samples in a matrix and then plot a histogram of the means to observe the likely values. 
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 4, fig.width = 6}
 set.seed(12345)
 samples <- 20000
 means <- matrix(NA, nrow = samples)
@@ -80,72 +136,19 @@ ggplot(data.frame(means)) +
   geom_vline(data = meansdf, aes(xintercept = value, color = key, linetype = key), size=1) +
   scale_color_discrete(labels = c("Mean of sample means", "Population mean")) +
   scale_linetype_discrete(labels = c("Mean of sample means", "Population mean")) +
-  theme(legend.title = element_blank()) +
-  ggtitle('Distribution of sample means')
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") +
+  labs(title = "Histogram of listening times",
+       subtitle = TeX(sprintf("Population mean ($\\mu$) = %.2f; population standard deviation ($\\sigma$) = %.2f",round(mean(hours),2),round(sd(hours),2))),
+       y = 'Number of students', 
+       x = 'Hours') 
 ```
 
-As you can see, on average the sample mean ("mean of sample means") is extremely close to the population mean, despite only sampling $100$ people at a time. This distribution of sample means is also referred to as **sampling distribution** of the sample mean. However, there is some uncertainty, as visualized by the histogram. Let's look at the means from the first $5$ samples, as well as the minimum, the maximum, and the mean of the sample means:
+As you can see, on average the sample mean ("mean of sample means") is extremely close to the population mean, despite only sampling $100$ people at a time. This distribution of sample means is also referred to as **sampling distribution** of the sample mean. However, there is some uncertainty, and the means are slightly different for the different samples and range from `r round(min(means),2)` to `r round(max(means),2)`. 
 
-```{r}
-head(means, 5)
-min(means)
-max(means)
-mean(means)
-```
+### Standard error of the mean
 
-As you can see, the means are slightly different for the different samples and range from `r round(min(means),2)` to `r round(max(means),2)`. The following plot shows the distribution of listening times for four different samples from the population, each containing responses from 100 randomly drawn students.  
-
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
-#student_sample <- sample(1:25000, size = 100, replace = FALSE)
-#means <- hours[student_sample]
-library(cowplot)
-set.seed(8830)
-student_sample <- sample(1:25000, size = 100, replace = FALSE)
-means1 <- hours[student_sample]
-plot1 <- ggplot(data.frame(means1)) +
-  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
-  theme_bw() + xlab("Hours") +
-  geom_vline(aes(xintercept = mean(means1)), size=1) +
- ggtitle(TeX(sprintf("$\\bar{x}$ = %.2f",round(mean(means1),2))))
-
-set.seed(6789)
-student_sample <- sample(1:25000, size = 100, replace = FALSE)
-means1 <- hours[student_sample]
-plot2 <- ggplot(data.frame(means1)) +
-  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
-  theme_bw() + xlab("Hours") +
-  geom_vline(aes(xintercept = mean(means1)), size=1) +
- ggtitle(TeX(sprintf("$\\bar{x}$ = %.2f",round(mean(means1),2))))
-
-set.seed(3904)
-student_sample <- sample(1:25000, size = 100, replace = FALSE)
-means1 <- hours[student_sample]
-plot3 <- ggplot(data.frame(means1)) +
-  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
-  theme_bw() + xlab("Hours") +
-  geom_vline(aes(xintercept = mean(means1)), size=1) +
- ggtitle(TeX(sprintf("$\\bar{x}$ = %.2f",round(mean(means1),2))))
-
-set.seed(3333)
-student_sample <- sample(1:25000, size = 100, replace = FALSE)
-means1 <- hours[student_sample]
-plot4 <- ggplot(data.frame(means1)) +
-  geom_histogram(aes(x = means1), bins = 30, fill='white', color='black') +
-  theme_bw() + xlab("Hours") +
-  geom_vline(aes(xintercept = mean(means1)), size=1) +
- ggtitle(TeX(sprintf("$\\bar{x}$ = %.2f",round(mean(means1),2))))
-
-p <- plot_grid(plot1, plot2, plot3, plot4, ncol = 2,
-           labels = c("A", "B","C","D"))
-title <- ggdraw() + draw_label('Distribution of listening times in four different samples', fontface='bold')
-p <- plot_grid(title, p, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
-print(p)
-
-```
-
-Again, it becomes clear that the mean is slightly different for each sample. This is referred to as **sampling variation** and it is completely fine to get a slightly different mean every time we take a sample. We just need to find a way of expressing the uncertainty associated with the fact that we only have data from one sample, because in a realistic setting, you are most likely only going to have access to a single sample. 
-
-Due to the variation in the sample means shown in our simulation, it is never possible to say exactly what the population mean is based on a single sample. However, even with a single sample we can infer a range of values within which the population mean is likely contained. In order to do so, notice that the sample means are approximately normally distributed. Another interesting fact is that the mean of sample means (i.e., $49.94$) is roughly equal to the population mean (i.e., $49.93$). This tells us already that generally the sample mean is a good approximation of the population mean. However, in order to make statements about the expected range of possible values, we would need to know the standard deviation of the sampling distribution. , as represented by the sampling distribution, the formal representation of the standard deviation of the sample means is
+Due to the variation in the sample means shown in our simulation, it is never possible to say exactly what the population mean is based on a single sample. However, even with a single sample we can infer a range of values within which the population mean is likely contained. In order to do so, notice that the sample means are approximately normally distributed. Another interesting fact is that the mean of sample means (i.e., `r mean(means)`) is roughly equal to the population mean (i.e., `r mean(hours)`). This tells us already that generally the sample mean is a good approximation of the population mean. However, in order to make statements about the expected range of possible values, we would need to know the standard deviation of the sampling distribution. The formal representation of the standard deviation of the sample means is
 
 $$
 \sigma_{\bar x} = {\sigma \over \sqrt{n}}
@@ -153,7 +156,33 @@ $$
 
 where $\sigma$ is the population SD and $n$ is the sample size. $\sigma_{\bar{x}}$ is referred to as the **Standard Error** of the mean and it expresses the variation in sample means we should expect given the number of observations in our sample and the population SD.  
 
-The first thing to notice here is that an increase in the **number of observations per sample** $n$ decreases the range of possible sample means (i.e., the standard error). This makes intuitive sense. Think of the two extremes: sample size $1$ and sample size $25,000$. With a single person in the sample we do not gain a lot of information and our estimate is very uncertain, which is expressed through a larger standard deviation. Looking at the first histogram showing the number of students for each of the listening times, clearly we would get values below $25$ or above $75$ for some samples. This is way farther away from the population mean than the minimum and the maximum of our $100$ person samples. On the other hand, if we sample every student we get the population mean every time and thus we do not have any uncertainty (assuming the population does not change). Even if we only sample, say $24,000$ people every time, we gain a lot of information about the population and the sample means would not be very different from each other since only up to $1,000$ people are potentially different in any given sample.
+#### Sample size
+
+The first thing to notice here is that an increase in the **number of observations per sample** $n$ decreases the range of possible sample means (i.e., the standard error). This makes intuitive sense. Think of the two extremes: sample size $1$ and sample size $25,000$. With a single person in the sample we do not gain a lot of information and our estimate is very uncertain, which is expressed through a larger standard deviation. Looking at the first histogram showing the number of students for each of the listening times, clearly we would get values below $25$ or above $75$ for some samples. This is way farther away from the population mean than the minimum and the maximum of our $100$ person samples. On the other hand, if we sample every student we get the population mean every time and thus we do not have any uncertainty (assuming the population does not change). Even if we only sample, say $24,000$ people every time, we gain a lot of information about the population and the sample means would not be very different from each other since only up to $1,000$ people are potentially different in any given sample. Thus, with larger (smaller) samples, there is less (more) uncertainty that the sample is a good approximation of the entire population. The following plot shows the relationship between the sample size and the standard error. Samples of ascending size are randomly drawn from the population of WU students. You can see that the standard error is decreasing with the number of observations. 
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE, fig.align="center", fig.cap="Relationship between the sample size and the standard error"}
+set.seed(321)
+hours <- rnorm(25000, 50, 10)
+
+R <- 1000
+sems <- numeric()
+replication <- numeric()
+
+for (r in 10:R) {
+  y_sample <- sample(hours, r)
+  sem <- sd(hours)/sqrt(length(y_sample))
+  sems <- rbind(sems, sem)
+  replication <- rbind(replication, r)
+}
+
+df <- as.data.frame(cbind(replication, sems))
+ggplot(data=df, aes(y = sems, x = replication)) + 
+  geom_line() + 
+  ylab("Standard error of the mean") + 
+  xlab("Sample size") + 
+  ggtitle('Relationship between sample size and standard error') +
+  theme_bw()
+```
 
 The following plots show the relationship between the sample size and the range of sample means resulting from the repeated sampling process. Notice that the more students are contained in the individual samples, the less uncertainty there is when estimating the population mean from a sample (i.e., the possible values are more closely centered around the mean). So when the sample size is small, the sample mean can expected to be very different the next time we take a sample. When the sample size is large, we can expect the sample means to be more similar every time we take a sample.
 
@@ -234,7 +263,7 @@ plot4 <- ggplot(data.frame(means)) +
 
 p <- plot_grid(plot1, plot2, plot3, plot4, ncol = 2,
            labels = c("A", "B","C","D"))
-title <- ggdraw() + draw_label('Distribution of sample means', fontface='bold')
+title <- ggdraw() + draw_label('Relationship between sample size and standard error', fontface='bold')
 p <- plot_grid(title, p, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 print(p)
 # now add the title
@@ -244,6 +273,8 @@ print(p)
 ```
 
 As you can see, the standard deviation of the sample means ($\sigma_{\bar x}$) decreases as the sample size increases as a consequence of the reduced uncertainty about the true sample mean when we take larger samples. 
+
+#### Population standard deviation
 
 A second factor determining the standard deviation of the distribution of sample means ($\sigma_{\bar x}$) is the standard deviation associated with the population parameter ($\sigma$). Again, looking at the extremes illustrates this well. If all WU students listened to music for approximately the same amount of time, the samples would not differ much from each other. In other words, if the standard deviation in the population is lower, we expect the standard deviation of the sample means to be lower as well. This is illustrated by the following plots.    
 
@@ -292,7 +323,7 @@ plot2 <- ggplot(data.frame(means)) +
 
 p <- plot_grid(plot1, plot2, ncol = 2, 
            labels = c("A", "B"))
-title <- ggdraw() + draw_label('Distribution of sample means', fontface='bold')
+title <- ggdraw() + draw_label('Relationship between population SD and standard error', fontface='bold')
 p <- plot_grid(title, p, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 print(p)
 # now add the title
@@ -324,7 +355,7 @@ ggplot(data.frame(hours)) +
 
 ```
 
-The vertical black line represents the population mean ($\mu$), which is `r round(mean(hours),2)` hours. The following plot depicts the historam of listening times of one random sample of 100 students from the population: 
+The vertical black line represents the population mean ($\mu$), which is `r round(mean(hours),2)` hours. The following plot depicts the historam of listening times of four random samples from the population, each consisting of 100 students: 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
 #student_sample <- sample(1:25000, size = 100, replace = FALSE)
@@ -516,7 +547,7 @@ ci_upper
 ci_lower
 ```
 
-such that if the collected 100 samples and computed the mean and confidence interval for each of them, in $95\%$ of the cases, the true population mean is going to be within this interval bewteen `r round(ci_lower,2)` and `r round(ci_upper,2)`. This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:
+such that if the collected 100 samples and computed the mean and confidence interval for each of them, in $95\%$ of the cases, the true population mean is going to be within this interval between `r round(ci_lower,2)` and `r round(ci_upper,2)`. This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:
 
 ```{r, fig.height = 15, fig.width=10}
 set.seed(12)
