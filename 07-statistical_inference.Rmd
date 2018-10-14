@@ -65,7 +65,7 @@ ggplot(data.frame(sample_1)) +
   ggtitle(TeX(sprintf("Distribution of listening times ($\\bar{x}$ = %.2f)",round(mean(sample_1),2))))
 ```
 
-Observe that in this first draw the mean ($\bar x =$ `r round(mean(sample_1),2)`) is quite close to the actual mean ($\mu = $`r mean(hours)`). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.  
+Observe that in this first draw the mean ($\bar x =$ `r round(mean(sample_1),2)`) is quite close to the actual mean ($\mu = $ `r round(mean(hours),2)`). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.  
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
 #student_sample <- sample(1:25000, size = 100, replace = FALSE)
@@ -148,17 +148,17 @@ As you can see, on average the sample mean ("mean of sample means") is extremely
 
 ### Standard error of the mean
 
-Due to the variation in the sample means shown in our simulation, it is never possible to say exactly what the population mean is based on a single sample. However, even with a single sample we can infer a range of values within which the population mean is likely contained. In order to do so, notice that the sample means are approximately normally distributed. Another interesting fact is that the mean of sample means (i.e., `r mean(means)`) is roughly equal to the population mean (i.e., `r mean(hours)`). This tells us already that generally the sample mean is a good approximation of the population mean. However, in order to make statements about the expected range of possible values, we would need to know the standard deviation of the sampling distribution. The formal representation of the standard deviation of the sample means is
+Due to the variation in the sample means shown in our simulation, it is never possible to say exactly what the population mean is based on a single sample. However, even with a single sample we can infer a range of values within which the population mean is likely contained. In order to do so, notice that the sample means are approximately normally distributed. Another interesting fact is that the mean of sample means (i.e., `r round(mean(means),2)`) is roughly equal to the population mean (i.e., `r round(mean(hours),2)`). This tells us already that generally the sample mean is a good approximation of the population mean. However, in order to make statements about the expected range of possible values, we would need to know the standard deviation of the sampling distribution. The formal representation of the standard deviation of the sample means is
 
 $$
 \sigma_{\bar x} = {\sigma \over \sqrt{n}}
 $$
 
-where $\sigma$ is the population SD and $n$ is the sample size. $\sigma_{\bar{x}}$ is referred to as the **Standard Error** of the mean and it expresses the variation in sample means we should expect given the number of observations in our sample and the population SD.  
+where $\sigma$ is the population SD and $n$ is the sample size. $\sigma_{\bar{x}}$ is referred to as the **Standard Error** of the mean and it expresses the variation in sample means we should expect given the number of observations in our sample and the population SD. That is, it provides a measure of how precisely we can estimate the populationmean from the sample mean.   
 
 #### Sample size
 
-The first thing to notice here is that an increase in the **number of observations per sample** $n$ decreases the range of possible sample means (i.e., the standard error). This makes intuitive sense. Think of the two extremes: sample size $1$ and sample size $25,000$. With a single person in the sample we do not gain a lot of information and our estimate is very uncertain, which is expressed through a larger standard deviation. Looking at the first histogram showing the number of students for each of the listening times, clearly we would get values below $25$ or above $75$ for some samples. This is way farther away from the population mean than the minimum and the maximum of our $100$ person samples. On the other hand, if we sample every student we get the population mean every time and thus we do not have any uncertainty (assuming the population does not change). Even if we only sample, say $24,000$ people every time, we gain a lot of information about the population and the sample means would not be very different from each other since only up to $1,000$ people are potentially different in any given sample. Thus, with larger (smaller) samples, there is less (more) uncertainty that the sample is a good approximation of the entire population. The following plot shows the relationship between the sample size and the standard error. Samples of ascending size are randomly drawn from the population of WU students. You can see that the standard error is decreasing with the number of observations. 
+The first thing to notice here is that an increase in the **number of observations per sample** $n$ decreases the range of possible sample means (i.e., the standard error). This makes intuitive sense. Think of the two extremes: sample size $1$ and sample size $25,000$. With a single person in the sample we do not gain a lot of information and our estimate is very uncertain, which is expressed through a larger standard deviation. Looking at the histogram at the beginning of this chapter showing the number of students for each of the listening times, clearly we would get values below $25$ or above $75$ for some samples. This is way farther away from the population mean than the minimum and the maximum of our $100$ person samples. On the other hand, if we sample every student we get the population mean every time and thus we do not have any uncertainty (assuming the population does not change). Even if we only sample, say $24,000$ people every time, we gain a lot of information about the population and the sample means would not be very different from each other since only up to $1,000$ people are potentially different in any given sample. Thus, with larger (smaller) samples, there is less (more) uncertainty that the sample is a good approximation of the entire population. The following plot shows the relationship between the sample size and the standard error. Samples of increasing size are randomly drawn from the population of WU students. You can see that the standard error is decreasing with the number of observations. 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE, fig.align="center", fig.cap="Relationship between the sample size and the standard error"}
 set.seed(321)
@@ -184,7 +184,7 @@ ggplot(data=df, aes(y = sems, x = replication)) +
   theme_bw()
 ```
 
-The following plots show the relationship between the sample size and the range of sample means resulting from the repeated sampling process. Notice that the more students are contained in the individual samples, the less uncertainty there is when estimating the population mean from a sample (i.e., the possible values are more closely centered around the mean). So when the sample size is small, the sample mean can expected to be very different the next time we take a sample. When the sample size is large, we can expect the sample means to be more similar every time we take a sample.
+The following plots show the relationship between the sample size and the standard error in a slightly different way. The plots show the range of sample means resulting from the repeated sampling process for different sample sizes. Notice that the more students are contained in the individual samples, the less uncertainty there is when estimating the population mean from a sample (i.e., the possible values are more closely centered around the mean). So when the sample size is small, the sample mean can expected to be very different the next time we take a sample. When the sample size is large, we can expect the sample means to be more similar every time we take a sample.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
 library(cowplot)
@@ -336,9 +336,9 @@ In the first plot (panel A), we assume a much smaller population standard deviat
 
 ## The Central Limit Theorem
 
-The attentive reader might have noticed that the population above was generated using a normal density. It would be very restrictive if we could only analyze populations whose values are normally distributed. Furthermore, we are unable in reality to check whether the population values are normally distributed since we do not know the entire population. However, it turns out that the results generalize to any distribution for which the mean exists. This is described by the **Central Limit Theorem**. 
+The attentive reader might have noticed that the population above was generated using a normal distribution function. It would be very restrictive if we could only analyze populations whose values are normally distributed. Furthermore, we are unable in reality to check whether the population values are normally distributed since we do not know the entire population. However, it turns out that the results generalize to many other distributions. This is described by the **Central Limit Theorem**. 
 
-The central limit theorem states that if **(1)** the population distribution has a mean (there are examples of distributions that don't have a mean , but we will ignore these here), and **(2)** we take a large enough sample, then the sampling distribution of the sample mean is approximatelly normally distributed. What exactly "large enough" means depends on the setting, but the interactive element at the end of this chapter illustrates how the sample size influences how accurately we can estimate the population parameters from the sample statistics.
+The central limit theorem states that if **(1)** the population distribution has a mean (there are examples of distributions that don't have a mean , but we will ignore these here), and **(2)** we take a large enough sample, then the sampling distribution of the sample mean is approximately normally distributed. What exactly "large enough" means depends on the setting, but the interactive element at the end of this chapter illustrates how the sample size influences how accurately we can estimate the population parameters from the sample statistics.
 
 To illustrate this, let's repeat the analysis above with a population from a gamma distribution. In the previous example, we assumed a normal distribution so it was more likely for a given student to spend around 50 hours per week listening to music. The following example depicts the case in which most students have a similar music listening time while thate are a few students who rarely listen to music and some music enthusiasts who have a much higher listening time. Here is a histogram of the listening times in the population:
 
@@ -483,11 +483,11 @@ print(p)
 
 Two things are worth noting: **(1)** The more (hypothetical) samples we take, the more the sampling distribution approaches a normal distribution. **(2)** The mean of the sampling distribution of the sample mean ($\mu_{\bar x}$) is very similar to the population mean ($\mu$). From this we can see that the mean of a sample is a good estimate of the population mean. 
 
-In summary, it is important to distinguish two types of variation: **(1)** For each individual sample that we may take in real life, the standard deviation ($s$) is used to describe the **natural variation** in the data and the data may follow a non-normal distribution. **(2)** If we would (hypothetically!) repeat the study many time, the sampling distribution of the sample mean follows a normal distribution for large samples sizes (even if data from each individual study are non-normal), and the standard error ($\sigma_{\bar x}$) is used to describe the **variation bewtween study results**. This is an important feature, since many parametric statistical tests assume a normally distributed sampling distribution. As we have seen, this does **not** mean that your data needs to follow a normal distribution.
+In summary, it is important to distinguish two types of variation: **(1)** For each individual sample that we may take in real life, the standard deviation ($s$) is used to describe the **natural variation** in the data and the data may follow a non-normal distribution. **(2)** If we would (hypothetically!) repeat the study many times, the sampling distribution of the sample mean follows a normal distribution for large samples sizes (even if data from each individual study are non-normal), and the standard error ($\sigma_{\bar x}$) is used to describe the **variation bewtween study results**. This is an important feature, since many statistical tests assume that the sampling distribution is normally distributed. As we have seen, this does **not** mean that the data from one particular sample needs to follow a normal distribution.
 
 ## Using what we actually know
 
-So far we have assumed to know the population standard deviation ($\sigma$). This an unrealistic assumption since we do not know the entire population. The best guess for the population standard deviation we have is the sample standard deviation, denoted $s$. Thus, the **Standard Error (SE)** of the mean is usually estimated from the sample standard deviation: 
+So far we have assumed to know the population standard deviation ($\sigma$). This an unrealistic assumption since we do not know the entire population. The best guess for the population standard deviation we have is the sample standard deviation, denoted $s$. Thus, the standard error of the mean is usually estimated from the sample standard deviation: 
 
 $$
 \sigma_{\bar x} \approx SE_{\bar x}={s \over \sqrt{n}}
@@ -495,13 +495,13 @@ $$
 
 Note that $s$ itself is a sample estimate of the population parameter $\sigma$. This additional estimation introduces new uncertainty. You can see in the interactive element below that the sample SD, on average, provides a good estimate of the population SD. That is, the distribution of sample SDs that we get by drawing many samples is centered around the population value. Again, the larger the sample, the closer any given sample SD is going to be to the population parameter and we introduce less uncertainty. One conclusion is that your sample needs to be large enough to provide a reliable estimate of the population parameters. What exactly "large enough" means depends on the setting, but the interactive element illustrates how the remaining values change as a function of the sample size.
 
-We will not go into detail about the importance of random samples but basically the correctness of your estimate depends crucially on having a sample at hand that actually represents the population. Unfortunatelly we will usually not notice if the sample is non-random. Our statistics are still a good approximation of "a" population parameter, namely the one for the population that we actually sampled but not the one we are interested in. To illustrate this uncheck the "Random Sample" box below. The new sample will be only from the top $50\%$ music listeners (but this generalizes to different types of non-random samples).
+We will not go into detail about the importance of random samples but basically the correctness of your estimate depends crucially on having a sample at hand that actually represents the population. Unfortunately, we will usually not notice if the sample is non-random. Our statistics are still a good approximation of "a" population parameter, namely the one for the population that we actually sampled but not the one we are interested in. To illustrate this uncheck the "Random Sample" box below. The new sample will be only from the top $50\%$ music listeners (but this generalizes to different types of non-random samples).
 
 <iframe src="https://learn.wu.ac.at/shiny/imsm/clt/" style="border: none; width: 800px; height: 1265px"></iframe>
 
 ### Confidence Intervals for the Sample Mean
 
-When we try to estimate parameters of populations (e.g., the population mean $\mu$) from a sample, the average value from a sample (e.g., the sample mean $\bar x$) only provides an estimate of what the real population parameter is. The next time you collect a sample of the same size, you could get a different average (i.e., sampling variation). Hence, coming up with an exact estimate (i.e., a **point estimate**) for a particular population parameter is difficult. That is why it is often informative to construct a range around that statistic (i.e., an **interval estimate**) that likely contains the population parameter with a certain level of confidence. That is, we construct an interval such that for a large share (say 95%) of the sample means we could potentially get, the population mean is within that interval.
+When we try to estimate parameters of populations (e.g., the population mean $\mu$) from a sample, the average value from a sample (e.g., the sample mean $\bar x$) only provides an estimate of what the real population parameter is. The next time you collect a sample of the same size, you could get a different average. This is sampling variation and it is completely fine to get a slightly different sample mean every time we take a sample as we have see above. However, this inherent uncertainty about the true population parameter means that coming up with an exact estimate (i.e., a **point estimate**) for a particular population parameter is really difficult. That is why it is often informative to construct a range around that statistic (i.e., an **interval estimate**) that likely contains the population parameter with a certain level of confidence. That is, we construct an interval such that for a large share (say 95%) of the sample means we could potentially get, the population mean is within that interval.
 
 Let us consider one random sample of 100 students from our population above. 
 
@@ -518,7 +518,7 @@ plot2 <- ggplot(data.frame(hours_s)) +
   geom_histogram(aes(x = hours_s), bins = 30, fill='white', color='black') +
   theme_bw() + xlab("Hours") +
   geom_vline(aes(xintercept = mean(hours_s)), size=1) +
- ggtitle(TeX(sprintf("$n$ = %d; $\\bar{x}$ = %.2f; $s$ = %.2f",sample_size,round(mean(hours_s),2),round(sd(hours_s),2))))
+ ggtitle(TeX(sprintf("Random sample; $n$ = %d; $\\bar{x}$ = %.2f; $s$ = %.2f",sample_size,round(mean(hours_s),2),round(sd(hours_s),2))))
 plot2
 ```
 
@@ -526,25 +526,26 @@ From the central limit theorem we know that the sampling distribution of the sam
 
 ```{r, fig.height = 4, fig.width=6}
 qnorm(0.975)
-qnorm(0.025)
 ```
 
-We can see that 95% of the values are roughly within 1.96 standard deviations from the mean. Since we know the sample mean ($\bar x$) and we can estimate the standard deviation of the sampling distribution ($\sigma_{\bar x} \approx {s \over \sqrt{n}}$), we can now easily calculate the lower and upper boudaries of our confidence interval as:
+We use ```0.975``` (and not ```0.95```) to account for the probability at each end of the distribution (i.e., 2.5% at the lower end and 2.5% at the upper end). We can see that 95% of the values are roughly within `r round(qnorm(0.975),2)` standard deviations from the mean. Since we know the sample mean ($\bar x$) and we can estimate the standard deviation of the sampling distribution ($\sigma_{\bar x} \approx {s \over \sqrt{n}}$), we can now easily calculate the lower and upper boudaries of our confidence interval as:
 
 $$
-CI_{lower} = {\bar x} - 1.96 * \sigma_{\bar x} \\
-CI_{upper} = {\bar x} + 1.96 * \sigma_{\bar x}
+CI_{lower} = {\bar x} - z_{1-{\alpha \over 2}} * \sigma_{\bar x} \\
+CI_{upper} = {\bar x} + z_{1-{\alpha \over 2}} * \sigma_{\bar x}
 $$ 
+
+Here, $\alpha$ refers to the significance level. You can find a detailed discussion of this point at the end of the next chapter. For now, we will adopt the widely accepted significance level of 5% and set $\alpha$ to 0.05. Thus, $\pm z_{1-{\alpha \over 2}}$ gives us the z-scores (i.e., number of standard deviations from the mean) within which range 95% of the probability density lies. 
 
 Plugging in the values from our sample, we get:
 
 ```{r, fig.height = 4, fig.width=6}
 sample_mean <- mean(hours_s)
 se <- sd(hours_s)/sqrt(sample_size)
-ci_upper <- sample_mean + qnorm(0.975)*se
 ci_lower <- sample_mean - qnorm(0.975)*se
-ci_upper
+ci_upper <- sample_mean + qnorm(0.975)*se
 ci_lower
+ci_upper
 ```
 
 such that if the collected 100 samples and computed the mean and confidence interval for each of them, in $95\%$ of the cases, the true population mean is going to be within this interval between `r round(ci_lower,2)` and `r round(ci_upper,2)`. This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:

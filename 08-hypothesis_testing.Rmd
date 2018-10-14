@@ -21,7 +21,7 @@ This chapter is primarily based on Field, A., Miles J., & Field, Z. (2012): Disc
 
 ## Introduction
 
-We test hypotheses because we are confined to taking samples – we rarely work with the entire population. In the previous chapter, we introduced the standard error (i.e., the standard deviation of a large number of hypothetical samples) as an estimate of how well a particular sample represents the population. We also saw how we can construct confidence intervals around the sample mean $\bar x$ by computing $SE_{\bar x}$ as an estimate of $\sigma_{\bar x}$ using $s$ as an estimate of $\sigma$ and calculating the 95% CI as $\bar x \pm 1.96 x SE_{\bar x}$. Although we do not know the true population mean ($\mu$), we might have an hypothesis about it and this would tell us how the corresponding sampling distribution looks like. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample **assuming that the hypothesis is true**. 
+We test hypotheses because we are confined to taking samples – we rarely work with the entire population. In the previous chapter, we introduced the standard error (i.e., the standard deviation of a large number of hypothetical samples) as an estimate of how well a particular sample represents the population. We also saw how we can construct confidence intervals around the sample mean $\bar x$ by computing $SE_{\bar x}$ as an estimate of $\sigma_{\bar x}$ using $s$ as an estimate of $\sigma$ and calculating the 95% CI as $\bar x \pm 1.96 * SE_{\bar x}$. Although we do not know the true population mean ($\mu$), we might have an hypothesis about it and this would tell us how the corresponding sampling distribution looks like. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample **assuming that the hypothesis is true**. 
 
 Let us again begin by assuming we know the entire population using the example of music listening times among students from the previous example. As a reminder, the following plot shows the distribution of music listening times in the population of WU students. 
 
@@ -127,14 +127,14 @@ z_score <- (mean_sample - H_0)/(sigma/sqrt(n))
 z_score
 ```
 
-In order to make a decision on whether the difference can be deemed statistically significant, we now need to compare this calculated test statistic to a meaningful threshold. Recall that for the normal distribution, 95% of the total probability falls within `r round(qnorm(p2),2)` standard deviations of the mean, so that higher (absolute) values provide evidence against the null hypothesis. The critical value is therefore given by    
+To make a decision on whether the difference can be deemed statistically significant, we now need to compare this calculated test statistic to a meaningful threshold. In order to do so, we need to decide on a significance level $\alpha$, which expresses the probability of finding an effect that does not actually exist (i.e., Type I Error). You can find a detailed discussion of this point at the end of this chapter. For now, we will adopt the widely accepted significance level of 5% and set $\alpha$ to 0.05. The critical value for the normal distribution and $\alpha$ = 0.05 can be computed using the ```qnorm()``` function as follows:
 
 ```{r}
 z_crit <- qnorm(0.975)
 z_crit
 ```
 
-We use ```0.975``` and not ```0.95``` since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. Generally, we speak of a statistically significant effect if the (absolute) calculated test statistic is larger than the (absolute) critical value. We can easily check if this is the case in our example:
+We use ```0.975``` and not ```0.95``` since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. Recall that for the normal distribution, 95% of the total probability falls within `r round(qnorm(0.975),2)` standard deviations of the mean, so that higher (absolute) values provide evidence against the null hypothesis. Generally, we speak of a statistically significant effect if the (absolute) calculated test statistic is larger than the (absolute) critical value. We can easily check if this is the case in our example:
 
 ```{r}
 abs(z_score) > abs(z_crit)
@@ -295,9 +295,9 @@ p_value
 
 This value corresponds to the probability of observing a mean equal to or larger than the one we obtained from our sample, if the null hypothesis was true. As you can see, this probability is very low. A small p-value signals that it is unlikely to observe the calculated test statistic under the null hypothesis. To decide whether or not to reject the null hypothesis, we would now compare this value to the level of significance ($\alpha$) that we chose for our test. For this example, we adopt the widely accepted significance level of 5%, so any test results with a p-value < 0.05 would be deemed statistically significant. Note that the p-value is directly related to the value of the test statistic. The relationship is such that the higher (lower) the value of the test statistic, the lower (higher) the p-value.   
 
-**Decision:** Reject $H_0$, given that the p-value of `r round(p_value,2)` is smaller than 0.05. 
+**Decision:** Reject $H_0$, given that the p-value is smaller than 0.05. 
 
-##### Confidence interval
+#### Confidence interval
 
 For a given statistic calculated for a sample of observations (e.g., listening times), a 95% confidence interval can be constructed such that in 95% of samples, the true value of the true population mean will fall within its limits. If the parameter value specified in the null hypothesis (here $10$) does not lie within the bounds, we reject $H_0$. Building on what we learned about confidence intervals in the previous chapter, the 95% confidence interval based on the t-distribution can be computed as follows:
 
@@ -358,7 +358,7 @@ $$
 
 Connected to the decision of how to phrase the hypotheses (directional vs. non-directional) is the choice of a **one-tailed test** versus a **two-tailed test**. Let's first think about the meaning of a one-tailed test. Using a significance level of 0.05, a one-tailed test means that 5% of the total area under the probability distribution of our test statistic is located in one tail. Thus, under a one-tailed test, we test for the possibility of the relationship in one direction only, disregarding the possibility of a relationship in the other direction. In our example, a one-tailed test could test either if the mean listening time is significantly larger or smaller compared to the control condition, but not both. Depending on the direction, the mean listening time is significantly larger (smaller) if the test statistic is located in the top (bottom) 5% of its probability distribution. 
 
-The following graph shows the critical values that our test statistic would need to surpass so that the difference between the population mean and the comparison value would be deemed statistically significant. It can be seen that under a one-sided test, the rejection region is at one end of the distribution or the other. In a two-sided test, the rejection region is split between the two tails. As a consequence, the critical value of the test statistic is smaller using a one-tailed test, meaning that it has more power to detect an effect. Having said that, in most applications, we would like to be able catch effects in both directions, simply because we can often not rule out that an effect might exist that is not in the hypothesized direction. If we would conduct a one-tailed test, testing a one-directional hypothesis (), we       
+The following graph shows the critical values that our test statistic would need to surpass so that the difference between the population mean and the comparison value would be deemed statistically significant.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig2, fig.align="center", fig.height = 3, fig.width = 10}
 library(cowplot)
@@ -421,6 +421,8 @@ p <- plot_grid(plot3,plot1, plot2, ncol = 3)
 print(p)
 ```
 
+It can be seen that under a one-sided test, the rejection region is at one end of the distribution or the other. In a two-sided test, the rejection region is split between the two tails. As a consequence, the critical value of the test statistic is smaller using a one-tailed test, meaning that it has more power to detect an effect. Having said that, in most applications, we would like to be able catch effects in both directions, simply because we can often not rule out that an effect might exist that is not in the hypothesized direction. For example, if we would conduct a one-tailed test for a mean larger than some specified value but the mean turns out to be substantially smaller, then testing a one-directional hypothesis ($H_0: \mu \le \mu_0 $) would not allow us to conclude that there is a significant effect because there is not rejection at this end of the distribution.   
+
 ### Summary
 
 As we have seen, the process of hypothesis testing consists of various steps:
@@ -482,7 +484,7 @@ H_0 <- 10
 t.test(student_sample, mu = H_0, alternative = 'two.sided')
 ```
 
-Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument ```alternative```from ```'two.sided'``` to either ```less``` or ```'greater'```.
+Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument ```alternative```from ```'two.sided'``` to either ```'less'``` or ```'greater'```.
 
 **6. Report results and draw a marketing conclusion**
 
@@ -730,7 +732,7 @@ In this case, we want to test the hypothesis that there is no difference in mean
 $$
 H_0: \mu_D = 0 \\
 $$
-Not that the hypothsis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace $\mu_D$ with $\delta$ and get:
+Note that the hypothsis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace $\mu_D$ with $\delta$ and get:
 
 $$
 H_0: \delta = 0 \\
@@ -856,7 +858,7 @@ t.test(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b, mu = 0, alternative =
 
 On average, the same users used the service more when it included the new feature (M = 25.96, SE = 1.68) compared to the service without the feature (M = 20.99, SE = 1.34). This difference was significant t(99) = 2.3781, p < .05 (95% CI = [0.82, 9.12]).
 
-### Significance level, power, and sample size
+### Further considerations
 
 #### Type I and Type II Errors
 
@@ -872,17 +874,17 @@ This following table shows the possible outcomes of a test (retain vs. reject $H
 <b>H<sub>0</sub> is true</b>  | Correct decision:<br>1-&alpha; (probability of correct retention); | Type 1 error:<br> &alpha; (level of significance)
 <b>H<sub>0</sub> is false</b>  | Type 2 error:<br>&beta; (type 2 error rate) | Correct decision:<br>1-&beta; (power of the test)
 
-#### Sample size
+#### Significance level, sample size, power, and effect size
 
 When you plan to conduct an experiment, there are some factors that are under direct control of the researcher:
 
-* <b>Significance level (&alpha;)</b>: The probability of finding an effect that does not genuinely exist.
-* <b>Sample size (n)</b>: The number of observations in each group of the experimental design.
+* **Significance level ($\alpha$)**: The probability of finding an effect that does not genuinely exist.
+* **Sample size (n)**: The number of observations in each group of the experimental design.
 
 Unlike &alpha; and n, which are specified by the researcher, the magnitude of &beta; depends on the actual value of the population parameter. In addition, &beta; is influenced by the effect size (e.g., Cohen’s d), which can be used to determine a standardized measure of the magnitude of an observed effect. The following parameters are affected more indirectly:
 
-* <b>Power (1-&beta;)</b>: The probability of finding an effect that does genuinely exists. 
-* <b>Effect size (d)</b>: Standardized measure of the effect size under the alternate hypothesis. 
+* **Power (1-&beta;)**: The probability of finding an effect that does genuinely exists. 
+* **Effect size (d)**: Standardized measure of the effect size under the alternate hypothesis. 
 
 Although &beta; is unknown, it is related to &alpha;. For example, if we would like to be absolutely sure that we do not falsely identify an effect which does not exist (i.e., make a type I error), this means that the probability of identifying an effect that does exist (i.e., 1-&beta;) decreases and vice versa. Thus, an extremely low value of &alpha; (e.g., &alpha; = 0.0001) will result in intolerably high &beta; errors. A common approach is to set &alpha;=0.05 and &beta;=0.80. 
 
@@ -893,7 +895,16 @@ Unlike the t-value of our test, the effect size (d) is unaffected by the sample 
 * 0.8 (large effect)
 
 In order to test more subtle effects (smaller effect sizes), you need a larger sample size compared to the test of more obvious effects. In <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2205186" target="_blank">this paper</a>, you can find a list of examples for different effect sizes and the number of observations you need to reliably find an effect of that magnitude. Although the exact effect size is unknown before the experiment, you might be able to make a guess about the effect size (e.g., based on previous studies).   
-  
+
+If you wish to obtain a standardized measure of the effect, you may compute the effect size (Cohen's d) using the ```cohensD()``` function from the ```lsr``` package. Using the example from the independent-means t-test above, we would use: 
+
+```{r message=FALSE, warning=FALSE}
+library(lsr)
+cohensD(hours ~ group, data = hours_a_b)
+```
+
+According to the thresholds defined above, this effect would be judged to be a small-medium effect.
+
 When constructing an experimental design, your goal should be to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible. To achieve this goal, you may use the ```pwr``` package, which let's you compute ```n```, ```d```, ```alpha```, and ```power```. You only need to specify three of the four input variables to get the fourth.
 
 For example, what sample size do we need (per group) to identify an effect with d = 0.6, &alpha; = 0.05, and power = 0.8:

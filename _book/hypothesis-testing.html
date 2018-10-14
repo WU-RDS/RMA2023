@@ -180,7 +180,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>5.3</b> Comparing two means</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>5.3.1</b> Independent-means t-test</a></li>
 <li class="chapter" data-level="5.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>5.3.2</b> Dependent-means t-test</a></li>
-<li class="chapter" data-level="5.3.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#significance-level-power-and-sample-size"><i class="fa fa-check"></i><b>5.3.3</b> Significance level, power, and sample size</a></li>
+<li class="chapter" data-level="5.3.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#further-considerations"><i class="fa fa-check"></i><b>5.3.3</b> Further considerations</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>5.4</b> Comparing several means</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>5.4.1</b> Introduction</a></li>
@@ -272,7 +272,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This chapter is primarily based on Field, A., Miles J., &amp; Field, Z. (2012): Discovering Statistics Using R. Sage Publications, <strong>chapters 5, 9, 15, 18</strong>.</p>
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">5.1</span> Introduction</h2>
-<p>We test hypotheses because we are confined to taking samples – we rarely work with the entire population. In the previous chapter, we introduced the standard error (i.e., the standard deviation of a large number of hypothetical samples) as an estimate of how well a particular sample represents the population. We also saw how we can construct confidence intervals around the sample mean <span class="math inline">\(\bar x\)</span> by computing <span class="math inline">\(SE_{\bar x}\)</span> as an estimate of <span class="math inline">\(\sigma_{\bar x}\)</span> using <span class="math inline">\(s\)</span> as an estimate of <span class="math inline">\(\sigma\)</span> and calculating the 95% CI as <span class="math inline">\(\bar x \pm 1.96 x SE_{\bar x}\)</span>. Although we do not know the true population mean (<span class="math inline">\(\mu\)</span>), we might have an hypothesis about it and this would tell us how the corresponding sampling distribution looks like. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample <strong>assuming that the hypothesis is true</strong>.</p>
+<p>We test hypotheses because we are confined to taking samples – we rarely work with the entire population. In the previous chapter, we introduced the standard error (i.e., the standard deviation of a large number of hypothetical samples) as an estimate of how well a particular sample represents the population. We also saw how we can construct confidence intervals around the sample mean <span class="math inline">\(\bar x\)</span> by computing <span class="math inline">\(SE_{\bar x}\)</span> as an estimate of <span class="math inline">\(\sigma_{\bar x}\)</span> using <span class="math inline">\(s\)</span> as an estimate of <span class="math inline">\(\sigma\)</span> and calculating the 95% CI as <span class="math inline">\(\bar x \pm 1.96 * SE_{\bar x}\)</span>. Although we do not know the true population mean (<span class="math inline">\(\mu\)</span>), we might have an hypothesis about it and this would tell us how the corresponding sampling distribution looks like. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample <strong>assuming that the hypothesis is true</strong>.</p>
 <p>Let us again begin by assuming we know the entire population using the example of music listening times among students from the previous example. As a reminder, the following plot shows the distribution of music listening times in the population of WU students.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(ggplot2)
@@ -337,11 +337,11 @@ z = {\bar x-  \mu_0 \over \sigma_{\bar x}}={\bar x-  \mu_0 \over \sigma / \sqrt{
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_score &lt;-<span class="st"> </span>(mean_sample <span class="op">-</span><span class="st"> </span>H_<span class="dv">0</span>)<span class="op">/</span>(sigma<span class="op">/</span><span class="kw">sqrt</span>(n))
 z_score</code></pre></div>
 <pre><code>## [1] 4.490887</code></pre>
-<p>In order to make a decision on whether the difference can be deemed statistically significant, we now need to compare this calculated test statistic to a meaningful threshold. Recall that for the normal distribution, 95% of the total probability falls within 1.96 standard deviations of the mean, so that higher (absolute) values provide evidence against the null hypothesis. The critical value is therefore given by</p>
+<p>To make a decision on whether the difference can be deemed statistically significant, we now need to compare this calculated test statistic to a meaningful threshold. In order to do so, we need to decide on a significance level <span class="math inline">\(\alpha\)</span>, which expresses the probability of finding an effect that does not actually exist (i.e., Type I Error). You can find a detailed discussion of this point at the end of this chapter. For now, we will adopt the widely accepted significance level of 5% and set <span class="math inline">\(\alpha\)</span> to 0.05. The critical value for the normal distribution and <span class="math inline">\(\alpha\)</span> = 0.05 can be computed using the <code>qnorm()</code> function as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_crit &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)
 z_crit</code></pre></div>
 <pre><code>## [1] 1.959964</code></pre>
-<p>We use <code>0.975</code> and not <code>0.95</code> since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. Generally, we speak of a statistically significant effect if the (absolute) calculated test statistic is larger than the (absolute) critical value. We can easily check if this is the case in our example:</p>
+<p>We use <code>0.975</code> and not <code>0.95</code> since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. Recall that for the normal distribution, 95% of the total probability falls within 1.96 standard deviations of the mean, so that higher (absolute) values provide evidence against the null hypothesis. Generally, we speak of a statistically significant effect if the (absolute) calculated test statistic is larger than the (absolute) critical value. We can easily check if this is the case in our example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">abs</span>(z_score) <span class="op">&gt;</span><span class="st"> </span><span class="kw">abs</span>(z_crit)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Since the absolute value of the caluclated test statistic is larger than the critical value, we would reject <span class="math inline">\(H_0\)</span> and conclude that the true population mean <span class="math inline">\(\mu\)</span> is significantly different from the hypothesized value <span class="math inline">\(\mu_0 = 10\)</span>.</p>
@@ -380,9 +380,10 @@ t_crit</code></pre></div>
 p_value</code></pre></div>
 <pre><code>## [1] 0.000006336847</code></pre>
 <p>This value corresponds to the probability of observing a mean equal to or larger than the one we obtained from our sample, if the null hypothesis was true. As you can see, this probability is very low. A small p-value signals that it is unlikely to observe the calculated test statistic under the null hypothesis. To decide whether or not to reject the null hypothesis, we would now compare this value to the level of significance (<span class="math inline">\(\alpha\)</span>) that we chose for our test. For this example, we adopt the widely accepted significance level of 5%, so any test results with a p-value &lt; 0.05 would be deemed statistically significant. Note that the p-value is directly related to the value of the test statistic. The relationship is such that the higher (lower) the value of the test statistic, the lower (higher) the p-value.</p>
-<p><strong>Decision:</strong> Reject <span class="math inline">\(H_0\)</span>, given that the p-value of 0 is smaller than 0.05.</p>
-<div id="confidence-interval" class="section level5">
-<h5><span class="header-section-number">5.1.2.2.1</span> Confidence interval</h5>
+<p><strong>Decision:</strong> Reject <span class="math inline">\(H_0\)</span>, given that the p-value is smaller than 0.05.</p>
+</div>
+<div id="confidence-interval" class="section level4">
+<h4><span class="header-section-number">5.1.2.3</span> Confidence interval</h4>
 <p>For a given statistic calculated for a sample of observations (e.g., listening times), a 95% confidence interval can be constructed such that in 95% of samples, the true value of the true population mean will fall within its limits. If the parameter value specified in the null hypothesis (here <span class="math inline">\(10\)</span>) does not lie within the bounds, we reject <span class="math inline">\(H_0\)</span>. Building on what we learned about confidence intervals in the previous chapter, the 95% confidence interval based on the t-distribution can be computed as follows:</p>
 <p><span class="math display">\[
 CI_{lower} = {\bar x} - t_{1-{\alpha \over 2}} * SE_{\bar x} \\
@@ -398,7 +399,6 @@ ci_lower</code></pre></div>
 <p>The interpretation of this interval is as follows: if we would (hypothetically) take 100 samples and calculated the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals. The CI is informative when reporting the result of your test, since it provides an estimate of the uncertainty associated with the test result. From the test statistic or the p-value alone, it is not easy to judge in which range the true population parameter is located. The CI provides an estimate of this range.</p>
 <p><strong>Decision:</strong> Reject <span class="math inline">\(H_0\)</span>, given that the parameter value from the null hypothesis (<span class="math inline">\(10\)</span>) is not included in the interval.</p>
 <p>To summarize, you can see that we arrive at the same conclusion (i.e., reject <span class="math inline">\(H_0\)</span>), irrespective if we use the test statistic, the p-value, or the confidence interval. However, keep in mind that rejecting the null hypothesis does not prove the alternative hypothesis (we can merely provide support for it). Rather, think of the p-value as the chance of obtaining the data we’ve collected assuming that the null hypothesis is true. You should report the confidence interval to provide an estimate of the uncertainty associated with your test results.</p>
-</div>
 </div>
 </div>
 <div id="choosing-the-right-test" class="section level3">
@@ -433,8 +433,9 @@ H_0: \mu \le \mu_0 \\
 H_1: \mu &gt; \mu_0
 \]</span></p>
 <p>Connected to the decision of how to phrase the hypotheses (directional vs. non-directional) is the choice of a <strong>one-tailed test</strong> versus a <strong>two-tailed test</strong>. Let’s first think about the meaning of a one-tailed test. Using a significance level of 0.05, a one-tailed test means that 5% of the total area under the probability distribution of our test statistic is located in one tail. Thus, under a one-tailed test, we test for the possibility of the relationship in one direction only, disregarding the possibility of a relationship in the other direction. In our example, a one-tailed test could test either if the mean listening time is significantly larger or smaller compared to the control condition, but not both. Depending on the direction, the mean listening time is significantly larger (smaller) if the test statistic is located in the top (bottom) 5% of its probability distribution.</p>
-<p>The following graph shows the critical values that our test statistic would need to surpass so that the difference between the population mean and the comparison value would be deemed statistically significant. It can be seen that under a one-sided test, the rejection region is at one end of the distribution or the other. In a two-sided test, the rejection region is split between the two tails. As a consequence, the critical value of the test statistic is smaller using a one-tailed test, meaning that it has more power to detect an effect. Having said that, in most applications, we would like to be able catch effects in both directions, simply because we can often not rule out that an effect might exist that is not in the hypothesized direction. If we would conduct a one-tailed test, testing a one-directional hypothesis (), we</p>
+<p>The following graph shows the critical values that our test statistic would need to surpass so that the difference between the population mean and the comparison value would be deemed statistically significant.</p>
 <p><img src="_main_files/figure-html/fig2-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>It can be seen that under a one-sided test, the rejection region is at one end of the distribution or the other. In a two-sided test, the rejection region is split between the two tails. As a consequence, the critical value of the test statistic is smaller using a one-tailed test, meaning that it has more power to detect an effect. Having said that, in most applications, we would like to be able catch effects in both directions, simply because we can often not rule out that an effect might exist that is not in the hypothesized direction. For example, if we would conduct a one-tailed test for a mean larger than some specified value but the mean turns out to be substantially smaller, then testing a one-directional hypothesis ($H_0: _0 $) would not allow us to conclude that there is a significant effect because there is not rejection at this end of the distribution.</p>
 </div>
 </div>
 <div id="summary-1" class="section level3">
@@ -497,7 +498,7 @@ H_1: \mu \neq 10
 ## sample estimates:
 ## mean of x 
 ##  18.98914</code></pre>
-<p>Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument <code>alternative</code>from <code>'two.sided'</code> to either <code>less</code> or <code>'greater'</code>.</p>
+<p>Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument <code>alternative</code>from <code>'two.sided'</code> to either <code>'less'</code> or <code>'greater'</code>.</p>
 <p><strong>6. Report results and draw a marketing conclusion</strong></p>
 <p>Note that the results are the same as above, when we computed the test by hand. You could summarize the results as follows:</p>
 <p>On average, the listening times in our sample were different form 10 hours per month (Mean = 18.99 hours). This difference was significant t(49) = 5.058, p &lt; .05 (95% CI = [15.42; 22.56]). Based on this evidence, we can conclude that the mean in our sample is significantly lower compared to the hypothesized population mean of <span class="math inline">\(10\)</span> hours, providing evidence against the null hypothesis.</p>
@@ -716,7 +717,7 @@ hours_a_b_paired &lt;-<span class="st"> </span><span class="kw">data.frame</span
 <p>In this case, we want to test the hypothesis that there is no difference in mean the mean listening times between the two months. This can be expressed as follows:</p>
 <p><span class="math display">\[
 H_0: \mu_D = 0 \\
-\]</span> Not that the hypothsis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace <span class="math inline">\(\mu_D\)</span> with <span class="math inline">\(\delta\)</span> and get:</p>
+\]</span> Note that the hypothsis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace <span class="math inline">\(\mu_D\)</span> with <span class="math inline">\(\delta\)</span> and get:</p>
 <p><span class="math display">\[
 H_0: \delta = 0 \\
 H_1: \delta \neq 0
@@ -844,8 +845,8 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 <p>On average, the same users used the service more when it included the new feature (M = 25.96, SE = 1.68) compared to the service without the feature (M = 20.99, SE = 1.34). This difference was significant t(99) = 2.3781, p &lt; .05 (95% CI = [0.82, 9.12]).</p>
 </div>
 </div>
-<div id="significance-level-power-and-sample-size" class="section level3">
-<h3><span class="header-section-number">5.3.3</span> Significance level, power, and sample size</h3>
+<div id="further-considerations" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> Further considerations</h3>
 <div id="type-i-and-type-ii-errors" class="section level4">
 <h4><span class="header-section-number">5.3.3.1</span> Type I and Type II Errors</h4>
 <p>When choosing the level of significance (<span class="math inline">\(\alpha\)</span>). It is important to note that the choice of the significance level affects the type 1 and type 2 error:</p>
@@ -881,17 +882,17 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 </tbody>
 </table>
 </div>
-<div id="sample-size-1" class="section level4">
-<h4><span class="header-section-number">5.3.3.2</span> Sample size</h4>
+<div id="significance-level-sample-size-power-and-effect-size" class="section level4">
+<h4><span class="header-section-number">5.3.3.2</span> Significance level, sample size, power, and effect size</h4>
 <p>When you plan to conduct an experiment, there are some factors that are under direct control of the researcher:</p>
 <ul>
-<li><b>Significance level (α)</b>: The probability of finding an effect that does not genuinely exist.</li>
-<li><b>Sample size (n)</b>: The number of observations in each group of the experimental design.</li>
+<li><strong>Significance level (<span class="math inline">\(\alpha\)</span>)</strong>: The probability of finding an effect that does not genuinely exist.</li>
+<li><strong>Sample size (n)</strong>: The number of observations in each group of the experimental design.</li>
 </ul>
 <p>Unlike α and n, which are specified by the researcher, the magnitude of β depends on the actual value of the population parameter. In addition, β is influenced by the effect size (e.g., Cohen’s d), which can be used to determine a standardized measure of the magnitude of an observed effect. The following parameters are affected more indirectly:</p>
 <ul>
-<li><b>Power (1-β)</b>: The probability of finding an effect that does genuinely exists.</li>
-<li><b>Effect size (d)</b>: Standardized measure of the effect size under the alternate hypothesis.</li>
+<li><strong>Power (1-β)</strong>: The probability of finding an effect that does genuinely exists.</li>
+<li><strong>Effect size (d)</strong>: Standardized measure of the effect size under the alternate hypothesis.</li>
 </ul>
 <p>Although β is unknown, it is related to α. For example, if we would like to be absolutely sure that we do not falsely identify an effect which does not exist (i.e., make a type I error), this means that the probability of identifying an effect that does exist (i.e., 1-β) decreases and vice versa. Thus, an extremely low value of α (e.g., α = 0.0001) will result in intolerably high β errors. A common approach is to set α=0.05 and β=0.80.</p>
 <p>Unlike the t-value of our test, the effect size (d) is unaffected by the sample size and can be categorized as follows (see Cohen, J. 1988):</p>
@@ -901,6 +902,11 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 <li>0.8 (large effect)</li>
 </ul>
 <p>In order to test more subtle effects (smaller effect sizes), you need a larger sample size compared to the test of more obvious effects. In <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2205186" target="_blank">this paper</a>, you can find a list of examples for different effect sizes and the number of observations you need to reliably find an effect of that magnitude. Although the exact effect size is unknown before the experiment, you might be able to make a guess about the effect size (e.g., based on previous studies).</p>
+<p>If you wish to obtain a standardized measure of the effect, you may compute the effect size (Cohen’s d) using the <code>cohensD()</code> function from the <code>lsr</code> package. Using the example from the independent-means t-test above, we would use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lsr)
+<span class="kw">cohensD</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> hours_a_b)</code></pre></div>
+<pre><code>## [1] 0.366668</code></pre>
+<p>According to the thresholds defined above, this effect would be judged to be a small-medium effect.</p>
 <p>When constructing an experimental design, your goal should be to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible. To achieve this goal, you may use the <code>pwr</code> package, which let’s you compute <code>n</code>, <code>d</code>, <code>alpha</code>, and <code>power</code>. You only need to specify three of the four input variables to get the fourth.</p>
 <p>For example, what sample size do we need (per group) to identify an effect with d = 0.6, α = 0.05, and power = 0.8:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pwr)
@@ -952,8 +958,8 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 <li>You stop when you have a significant effect</li>
 </ul>
 <p>This is called p-hacking and should be avoided at all costs. Assuming that both groups come from the same population (i.e., there is <strong>no difference</strong> in the means): What is the likelihood that the result will be significant at some point? In other words, what is the likelihood that you will draw the wrong conclusion from your data that there is an effect, while there is none? This is shown in the following graph using simulated data - the color red indicates significant test results that arise although there is no effect (i.e., false positives).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-203"></span>
-<img src="_main_files/figure-html/unnamed-chunk-203-1.png" alt="p-hacking (red indicates false positives)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-204"></span>
+<img src="_main_files/figure-html/unnamed-chunk-204-1.png" alt="p-hacking (red indicates false positives)" width="672" />
 <p class="caption">
 Figure 5.1: p-hacking (red indicates false positives)
 </p>
@@ -1046,8 +1052,8 @@ online_store_promo<span class="op">$</span>Promotion &lt;-<span class="st"> </sp
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Sales (thsd. units)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-207"></span>
-<img src="_main_files/figure-html/unnamed-chunk-207-1.png" alt="Plot of means" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-208"></span>
+<img src="_main_files/figure-html/unnamed-chunk-208-1.png" alt="Plot of means" width="672" />
 <p class="caption">
 Figure 5.2: Plot of means
 </p>
@@ -1103,8 +1109,8 @@ SS_T= SS_M+SS_R
 ## online_store_promo$Promotion: low
 ## [1] 3.7</code></pre>
 <p>To see how each variance component can be derived, let’s look at the data again. The following graph shows the individual observations by experimental group:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-210"></span>
-<img src="_main_files/figure-html/unnamed-chunk-210-1.png" alt="Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-211"></span>
+<img src="_main_files/figure-html/unnamed-chunk-211-1.png" alt="Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.3: Sum of Squares
 </p>
@@ -1112,8 +1118,8 @@ Figure 5.3: Sum of Squares
 <div id="total-sum-of-squares" class="section level4">
 <h4><span class="header-section-number">5.4.2.1</span> Total sum of squares</h4>
 <p>To compute the total variation in the data, we consider the difference between each observation and the grand mean. The grand mean is the mean over all observations in the data set. The vertical lines in the following plot measure how far each observation is away from the grand mean:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-211"></span>
-<img src="_main_files/figure-html/unnamed-chunk-211-1.png" alt="Total Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-212"></span>
+<img src="_main_files/figure-html/unnamed-chunk-212-1.png" alt="Total Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.4: Total Sum of Squares
 </p>
@@ -1149,8 +1155,8 @@ df_T = N-1=30-1=29
 <div id="model-sum-of-squares" class="section level4">
 <h4><span class="header-section-number">5.4.2.2</span> Model sum of squares</h4>
 <p>Now we know that there are 185.867 units of total variation in our data. Next, we compute how much of the total variation can be explained by the differences between groups (i.e., our experimental manipulation). To compute the explained variation in the data, we consider the difference between the values predicted by our model for each observation (i.e., the group mean) and the grand mean. The group mean refers to the mean value within the experimental group. The vertical lines in the following plot measure how far the predicted value for each observation (i.e., the group mean) is away from the grand mean:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-213"></span>
-<img src="_main_files/figure-html/unnamed-chunk-213-1.png" alt="Model Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-214"></span>
+<img src="_main_files/figure-html/unnamed-chunk-214-1.png" alt="Model Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.5: Model Sum of Squares
 </p>
@@ -1185,8 +1191,8 @@ df_M= c-1=3-1=2
 <div id="residual-sum-of-squares" class="section level4">
 <h4><span class="header-section-number">5.4.2.3</span> Residual sum of squares</h4>
 <p>Lastly, we calculate the amount of variation that cannot be explained by our model. In ANOVA, this is the sum of squared distances between what the model predicts for each data point (i.e., the group means) and the observed values. In other words, this refers to the amount of variation that is caused by extraneous factors, such as differences between product characteristics of the products in the different experimental groups. The vertical lines in the following plot measure how far each observation is away from the group mean:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-215"></span>
-<img src="_main_files/figure-html/unnamed-chunk-215-1.png" alt="Residual Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-216"></span>
+<img src="_main_files/figure-html/unnamed-chunk-216-1.png" alt="Residual Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.6: Residual Sum of Squares
 </p>
@@ -1276,8 +1282,8 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{106.067}{(3-1)}}{\frac{79.8}{(
 f_ratio</code></pre></div>
 <pre><code>## [1] 17.94361</code></pre>
 <p>This statistic follows the F distribution with (m = c – 1) and (n = N – c) degrees of freedom. This means that, like the <span class="math inline">\(\chi^2\)</span> distribution, the shape of the F-distribution depends on the degrees of freedom. In this case, the shape depends on the degrees of freedom associated with the numerator and denominator used to compute the F-ratio. The following figure shows the shape of the F-distribution for different degrees of freedom:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-219"></span>
-<img src="_main_files/figure-html/unnamed-chunk-219-1.png" alt="The F distribution" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-220"></span>
+<img src="_main_files/figure-html/unnamed-chunk-220-1.png" alt="The F distribution" width="672" />
 <p class="caption">
 Figure 5.7: The F distribution
 </p>
@@ -1294,8 +1300,8 @@ f_crit</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_ratio <span class="op">&gt;</span><span class="st"> </span>f_crit  <span class="co">#test if calculated test statistic is larger than critical value</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The output tells us that the calculated test statistic exceeds the critical value. We can also show the test result visually:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-221"></span>
-<img src="_main_files/figure-html/unnamed-chunk-221-1.png" alt="Visual depiction of the test result" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-222"></span>
+<img src="_main_files/figure-html/unnamed-chunk-222-1.png" alt="Visual depiction of the test result" width="672" />
 <p class="caption">
 Figure 5.8: Visual depiction of the test result
 </p>
@@ -1347,8 +1353,8 @@ Figure 5.8: Visual depiction of the test result
 <span class="st">    &quot;low&quot;</span>, ]<span class="op">$</span>Sales)
 <span class="kw">qqline</span>(online_store_promo[online_store_promo<span class="op">$</span>Promotion <span class="op">==</span><span class="st"> </span>
 <span class="st">    &quot;low&quot;</span>, ]<span class="op">$</span>Sales)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
-<img src="_main_files/figure-html/unnamed-chunk-223-1.png" alt="Q-Q plot 1" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
+<img src="_main_files/figure-html/unnamed-chunk-224-1.png" alt="Q-Q plot 1" width="672" />
 <p class="caption">
 Figure 5.9: Q-Q plot 1
 </p>
@@ -1357,8 +1363,8 @@ Figure 5.9: Q-Q plot 1
 <span class="st">    &quot;medium&quot;</span>, ]<span class="op">$</span>Sales)
 <span class="kw">qqline</span>(online_store_promo[online_store_promo<span class="op">$</span>Promotion <span class="op">==</span><span class="st"> </span>
 <span class="st">    &quot;medium&quot;</span>, ]<span class="op">$</span>Sales)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
-<img src="_main_files/figure-html/unnamed-chunk-223-2.png" alt="Q-Q plot 2" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
+<img src="_main_files/figure-html/unnamed-chunk-224-2.png" alt="Q-Q plot 2" width="672" />
 <p class="caption">
 Figure 5.9: Q-Q plot 2
 </p>
@@ -1367,8 +1373,8 @@ Figure 5.9: Q-Q plot 2
 <span class="st">    &quot;high&quot;</span>, ]<span class="op">$</span>Sales)
 <span class="kw">qqline</span>(online_store_promo[online_store_promo<span class="op">$</span>Promotion <span class="op">==</span><span class="st"> </span>
 <span class="st">    &quot;high&quot;</span>, ]<span class="op">$</span>Sales)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
-<img src="_main_files/figure-html/unnamed-chunk-223-3.png" alt="Q-Q plot 3" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
+<img src="_main_files/figure-html/unnamed-chunk-224-3.png" alt="Q-Q plot 3" width="672" />
 <p class="caption">
 Figure 5.9: Q-Q plot 3
 </p>
@@ -1402,11 +1408,11 @@ Figure 5.9: Q-Q plot 3
 <p>The <code>aov()</code> function also automatically generates some plots that you can use to judge if the model assumptions are met. We will inspect two of the plots here.</p>
 <p>We will use the first plot to inspect if the residual variances are equal across the experimental groups:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">1</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-227-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-228-1.png" width="672" /></p>
 <p>Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels of our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is highest for the “low” group and lowest for the “high” group. However, the differences are not that large and since the Levene’s test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case.</p>
 <p>The second plot can be used to test the assumption that the residuals are approximately normally distributed. We use a Q-Q plot to test this assumption:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">2</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-228-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-229-1.png" width="672" /></p>
 <p>The plot suggests that the residuals are approximately normally distributed. We could also test this by extracting the residuals from the anova output using the <code>resid()</code> function and using the Shapiro-Wilk test:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</code></pre></div>
 <pre><code>## 
@@ -1558,8 +1564,8 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span cla
 ## low - medium == 0  -2.5000  -4.4065 -0.5935</code></pre>
 <p>We may also plot the result for the mean differences incl. their confidence intervals:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tukeys)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
-<img src="_main_files/figure-html/unnamed-chunk-236-1.png" alt="Tukey's HSD" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
+<img src="_main_files/figure-html/unnamed-chunk-237-1.png" alt="Tukey's HSD" width="672" />
 <p class="caption">
 Figure 5.10: Tukey’s HSD
 </p>
@@ -1672,8 +1678,8 @@ online_store_promo</code></pre></div>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-241"></span>
-<img src="_main_files/figure-html/unnamed-chunk-241-1.png" alt="Plot of means (in-store promotion)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-242"></span>
+<img src="_main_files/figure-html/unnamed-chunk-242-1.png" alt="Plot of means (in-store promotion)" width="672" />
 <p class="caption">
 Figure 5.11: Plot of means (in-store promotion)
 </p>
@@ -1685,8 +1691,8 @@ Figure 5.11: Plot of means (in-store promotion)
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (newsletter)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-242"></span>
-<img src="_main_files/figure-html/unnamed-chunk-242-1.png" alt="Plot of means (newsletter)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-243"></span>
+<img src="_main_files/figure-html/unnamed-chunk-243-1.png" alt="Plot of means (newsletter)" width="672" />
 <p class="caption">
 Figure 5.12: Plot of means (newsletter)
 </p>
@@ -1696,8 +1702,8 @@ Figure 5.12: Plot of means (newsletter)
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-243"></span>
-<img src="_main_files/figure-html/unnamed-chunk-243-1.png" alt="Plot of means (interaction)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-244"></span>
+<img src="_main_files/figure-html/unnamed-chunk-244-1.png" alt="Plot of means (interaction)" width="672" />
 <p class="caption">
 Figure 5.13: Plot of means (interaction)
 </p>
@@ -1718,8 +1724,8 @@ SS_M= SS_{X_1}+SS_{X_2}+SS_{X_1X_2}
 \end{equation}\]</span>
 <p>That is, we can further decompose the explained variance into the variance explained by the first factor (X<sub>1</sub>), the variance explained by the second factor (X<sub>2</sub>), and the variance explained by the interaction of these factors (X<sub>1</sub>X<sub>2</sub>). The interaction will tell us if the effect of one factor depends on the level of the second factor and vice versa. Because we now have more information available (the manipulation of the second factor), we would expect the amount of explained variance to increase relative to the amount of unexplained variance.</p>
 <p>To visualize this, we can include this new information in the plot that we used before to inspect the model sum of squares:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-244"></span>
-<img src="_main_files/figure-html/unnamed-chunk-244-1.png" alt="Sum of Squares (N-way ANOVA)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-245"></span>
+<img src="_main_files/figure-html/unnamed-chunk-245-1.png" alt="Sum of Squares (N-way ANOVA)" width="672" />
 <p class="caption">
 Figure 5.14: Sum of Squares (N-way ANOVA)
 </p>
@@ -1753,9 +1759,9 @@ Figure 5.14: Sum of Squares (N-way ANOVA)
 <pre><code>## [1] 0.8751793</code></pre>
 <p>As in the one-way ANOVA, we check the residuals plots generated by R to see if the residuals are approximately normally distributed and whether the residual variance is similar across groups.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">1</span>)  <span class="co">#homogeneity of variances</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">2</span>)  <span class="co">#normal distribution of residuals</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-247-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-248-2.png" width="672" /></p>
 <p>Reporting:</p>
 <ul>
 <li>There was a significant main effect of promotion on sales, F(2,24) = 53.03, p &lt; 0.05.</li>
@@ -1785,8 +1791,8 @@ Figure 5.14: Sum of Squares (N-way ANOVA)
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-249"></span>
-<img src="_main_files/figure-html/unnamed-chunk-249-1.png" alt="Boxplot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-250"></span>
+<img src="_main_files/figure-html/unnamed-chunk-250-1.png" alt="Boxplot" width="672" />
 <p class="caption">
 Figure 5.15: Boxplot
 </p>
@@ -1911,8 +1917,8 @@ rel_freq_table</code></pre></div>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Agent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-258"></span>
-<img src="_main_files/figure-html/unnamed-chunk-258-1.png" alt="proportion of conversions per agent (stacked bar chart)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-259"></span>
+<img src="_main_files/figure-html/unnamed-chunk-259-1.png" alt="proportion of conversions per agent (stacked bar chart)" width="672" />
 <p class="caption">
 Figure 5.16: proportion of conversions per agent (stacked bar chart)
 </p>
@@ -1920,8 +1926,8 @@ Figure 5.16: proportion of conversions per agent (stacked bar chart)
 <p>… or using the <code>mosaicplot()</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">contigency_table &lt;-<span class="st"> </span><span class="kw">table</span>(call_center)
 <span class="kw">mosaicplot</span>(contigency_table, <span class="dt">main =</span> <span class="st">&quot;Proportion of conversions by agent&quot;</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-259"></span>
-<img src="_main_files/figure-html/unnamed-chunk-259-1.png" alt="proportion of conversions per agent (mosaic plot)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-260"></span>
+<img src="_main_files/figure-html/unnamed-chunk-260-1.png" alt="proportion of conversions per agent (mosaic plot)" width="672" />
 <p class="caption">
 Figure 5.17: proportion of conversions per agent (mosaic plot)
 </p>
@@ -2039,8 +2045,8 @@ cont_table_df</code></pre></div>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Expensive car ownership (proportion)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;College degree&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-265"></span>
-<img src="_main_files/figure-html/unnamed-chunk-265-1.png" alt="Expensive car ownership conditional on college education" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-266"></span>
+<img src="_main_files/figure-html/unnamed-chunk-266-1.png" alt="Expensive car ownership conditional on college education" width="672" />
 <p class="caption">
 Figure 5.18: Expensive car ownership conditional on college education
 </p>
@@ -2098,8 +2104,8 @@ exp_cell4 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(cross_tab[
 chisq_cal</code></pre></div>
 <pre><code>## [1] 11.69591</code></pre>
 <p>The test statistic is <span class="math inline">\(\chi^2\)</span> distributed. The chi-square distribution is a non-symmetric distribution. Actually, there are many different chi-square distributions, one for each degree of freedom as show in the following figure.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-271"></span>
-<img src="_main_files/figure-html/unnamed-chunk-271-1.png" alt="The chi-square distribution" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-272"></span>
+<img src="_main_files/figure-html/unnamed-chunk-272-1.png" alt="The chi-square distribution" width="672" />
 <p class="caption">
 Figure 5.19: The chi-square distribution
 </p>
@@ -2120,8 +2126,8 @@ chisq_crit</code></pre></div>
 <pre><code>## [1] 3.841459</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chisq_cal <span class="op">&gt;</span><span class="st"> </span>chisq_crit</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-274"></span>
-<img src="_main_files/figure-html/unnamed-chunk-274-1.png" alt="Visual depiction of the test result" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-275"></span>
+<img src="_main_files/figure-html/unnamed-chunk-275-1.png" alt="Visual depiction of the test result" width="672" />
 <p class="caption">
 Figure 5.20: Visual depiction of the test result
 </p>
