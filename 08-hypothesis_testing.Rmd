@@ -459,11 +459,11 @@ We choose the conventional 5% significance level.
 
 **4. Descriptive statistics and data visualization**
 
-Provide descriptive statistics using the ```describe()``` function: 
+Provide descriptive statistics using the ```stat.desc()``` function: 
 
-```{r}
-library(psych)
-describe(student_sample)
+```{r, message = FALSE, warning=FALSE}
+library(pastecs)
+stat.desc(student_sample)
 ```
 
 From this, we can already see that the mean is different from the hypothesized value. The question however remains, whether this difference is significantly different, given the sample size and the variability in the data. Since we only have one continuous variable, we can visualize the distribution in a histogram. 
@@ -490,7 +490,7 @@ Note that if you would have stated a directional hypothesis (i.e., the mean is e
 
 Note that the results are the same as above, when we computed the test by hand. You could summarize the results as follows:
 
-On average, the listening times in our sample were different form 10 hours per month (Mean = 18.99 hours). This difference was significant t(49) = 5.058, p < .05 (95% CI = [15.42; 22.56]). Based on this evidence, we can conclude that the mean in our sample is significantly lower compared to the hypothesized population mean of $10$ hours, providing evidence against the null hypothesis. 
+On average, the listening times in our sample were different form 10 hours per month (Mean = 18.99 hours, SE = 1.78). This difference was significant t(49) = 5.058, p < .05 (95% CI = [15.42; 22.56]). Based on this evidence, we can conclude that the mean in our sample is significantly lower compared to the hypothesized population mean of $10$ hours, providing evidence against the null hypothesis. 
 
 Note that in the reporting above, the number ```49``` in parenthesis refers to the degrees of freedom that are available from the output. 
 
@@ -584,7 +584,9 @@ This gives us the sampling distribution of the mean differences between the samp
 
 ```{r}
 mean_x1 <- mean(hours_a_b[hours_a_b$group=="A","hours"])
+mean_x1
 mean_x2 <- mean(hours_a_b[hours_a_b$group=="B","hours"])
+mean_x2
 d <- mean_x1-mean_x2
 d 
 ```
@@ -609,7 +611,9 @@ Hence, for our example, we can calculate the standard error as follows:
 n1 <- 98
 n2 <- 112
 s1 <- var(hours_a_b[hours_a_b$group=="A","hours"])
+s1
 s2 <- var(hours_a_b[hours_a_b$group=="B","hours"])
+s2
 SE_x1_x2 <- sqrt(s1/n1+s2/n2)
 SE_x1_x2
 ```
@@ -776,6 +780,7 @@ on 99 (i.e., n-1) degrees of freedom. Now we can compute the t-statistic as foll
 ```{r}
 t_score <- mean_d/SE_d
 t_score
+qt(0.975,df=99)
 ```
 
 Note that in the case of the dependent-means t-test, we only base our hypothesis on one population and hence there is only one population variance. This is because in the dependent sample test, the observations come from the same observational units (i.e., users). Hence, there is no unsystematic variation due to potential differences between users that were assigned to the experimental groups. This means that the influence of unobserved factors (unsystematic variation) relative to the variation due to the experimental manipulation (systematic variation) is not as strong in the dependent-means test compared to the independent-means test and we don't need to correct for differences in the population variances. 
@@ -896,7 +901,7 @@ Unlike the t-value of our test, the effect size (d) is unaffected by the sample 
 
 In order to test more subtle effects (smaller effect sizes), you need a larger sample size compared to the test of more obvious effects. In <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2205186" target="_blank">this paper</a>, you can find a list of examples for different effect sizes and the number of observations you need to reliably find an effect of that magnitude. Although the exact effect size is unknown before the experiment, you might be able to make a guess about the effect size (e.g., based on previous studies).   
 
-If you wish to obtain a standardized measure of the effect, you may compute the effect size (Cohen's d) using the ```cohensD()``` function from the ```lsr``` package. Using the example from the independent-means t-test above, we would use: 
+If you wish to obtain a standardized measure of the effect, you may compute the effect size (Cohen's d) using the ```cohensD()``` function from the ```lsr``` package. Using the examples from the independent-means t-test above, we would use: 
 
 ```{r message=FALSE, warning=FALSE}
 library(lsr)
@@ -904,6 +909,14 @@ cohensD(hours ~ group, data = hours_a_b)
 ```
 
 According to the thresholds defined above, this effect would be judged to be a small-medium effect.
+
+For the dependent-means t-test, we would use: 
+
+```{r message=FALSE, warning=FALSE}
+cohensD(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b, method="paired")
+```
+
+According to the thresholds defined above, this effect would also be judged to be a small-medium effect.
 
 When constructing an experimental design, your goal should be to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible. To achieve this goal, you may use the ```pwr``` package, which let's you compute ```n```, ```d```, ```alpha```, and ```power```. You only need to specify three of the four input variables to get the fourth.
 
