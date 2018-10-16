@@ -87,6 +87,39 @@ Using the 95% confidence level, the result would suggest a significant effect of
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OMQJuXanw-g" frameborder="0" allowfullscreen></iframe>
 </div>
 
+
+### Kruskal-Wallis test
+
+When should you use non-parametric tests?
+
+* When the dependent variable is measured at an ordinal scale and we want to compare more than 2 means
+* When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)
+
+The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the ```kruskal.test()``` function. Using the same data as before, we type: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+kruskal.test(Sales ~ Promotion, data = online_store_promo) 
+```
+
+The test-statistic follows a chi-square distribution and since the test is significant (p < 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. To get a first impression, we can plot the data using a boxplot:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
+#Boxplot
+ggplot(online_store_promo, aes(x = Promotion, y = Sales)) + 
+  geom_boxplot() + 
+  labs(x = "Experimental group (promotion level)", y = "Number of sales") + 
+  theme_bw() 
+```
+
+To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the ```PMCMR``` package.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(PMCMR)
+posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
+```
+
+The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we loose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met. 
+
 ## Categorical data
 
 ### Comparing proportions
@@ -134,12 +167,9 @@ mosaicplot(contigency_table, main = "Proportion of conversions by agent")
 
 Recall that we can use confidence intervals to determine the range of values that the true population parameter will take with a certain level of confidence based on the sample. Similar to the confidence interval for means, we can compute a confidence interval for proportions. The (1-&alpha;)% confidence interval for proportions is approximately 
 
-\begin{equation} 
-\begin{split}
+$$
 CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
-\end{split}
-(\#eq:CIdiff)
-\end{equation} 
+$$
 
 where $\sqrt{p(1-p)}$ is the equivalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:
 
@@ -173,12 +203,9 @@ $H_1: p_1\ne p_2$
 
 One approach to test this is based on confidence intervals to estimate the difference between two populations. We can compute an approximate confidence interval for the difference between the proportion of successes in group 1 and group 2, as:
 
-\begin{equation} 
-\begin{split}
+$$
 CI = p_1-p_2\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p_1*(1-p_1)}{n_1}+\frac{p_2*(1-p_2)}{n_2}}
-\end{split}
-(\#eq:CIdiff)
-\end{equation} 
+$$ 
 
 If the confidence interval includes zero, then the data does not suggest a difference between the groups. Let's compute the confidence interval for differences in the proportions by hand first:
 
@@ -239,12 +266,9 @@ ggplot(cont_table_df, aes(x = College, y = Freq, fill = CarOwnership)) + #plot d
 
 Under the null hypothesis, the two variables are independent (i.e., there is no relationship). This means that the frequency in each field will be roughly proportional to the probability of an observation being in that category, calculated under the assumption that they are independent. The difference between that expected quantity and the actual quantity can be used to construct the test statistic. The test statistic is computed as follows:
 
-\begin{equation} 
-\begin{split}
+$$
 \chi^2=\sum_{i=1}^{J}\frac{(f_o-f_e)^2}{f_e}
-\end{split}
-(\#eq:Chisq)
-\end{equation} 
+$$
 
 where $J$ is the number of cells in the contingency table, $f_o$ are the observed cell frequencies and $f_e$ are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value. 
 
@@ -259,12 +283,9 @@ obs_cell4 <- cont_table[2,2]
 
 The expected cell frequencies can be calculated as follows:
 
-\begin{equation} 
-\begin{split}
+$$
 f_e=\frac{(n_r*n_c)}{n}
-\end{split}
-(\#eq:fe)
-\end{equation} 
+$$
 
 where $n_r$ are the total observed frequencies per row, $n_c$ are the total observed frequencies per column, and $n$ is the total number of observations. Thus, the expected cell frequencies under the assumption of independence can be calculated as: 
 
@@ -316,10 +337,9 @@ ggplot(data.frame(x=c(0,20)), aes(x))+
 
 You can see that as the degrees of freedom increase, the chi-square curve approaches a normal distribution. To find the critical value, we need to specify the corresponding degrees of freedom, given by:
 
-\begin{equation} 
+$$
 df=(r-1)*(c-1)
-(\#eq:dfchi)
-\end{equation} 
+$$
 
 where $r$ is the number of rows and $c$ is the number of columns in the contingency table. Recall that degrees of freedom are generally the number of values that can vary freely when calculating a statistic. In a 2 by 2 table as in our case, we have 2 variables (or two samples) with 2 levels and in each one we have 1 that vary freely. Hence, in our example the degrees of freedom can be calculated as:
 
@@ -379,12 +399,9 @@ chisq.test(cont_table/10, correct = FALSE)
 
 You can see that even though the proportions haven't changed, the test is insignificant now. The following equation let's you compute a measure of the effect size, which is insensitive to sample size: 
 
-\begin{equation} 
-\begin{split}
+$$
 \phi=\sqrt{\frac{\chi^2}{n}}
-\end{split}
-(\#eq:fe)
-\end{equation} 
+$$
 
 The following guidelines are used to determine the magnitude of the effect size (Cohen, 1988): 
 
@@ -407,12 +424,9 @@ You can see that the statistic is insensitive to the sample size.
 
 Note that the &Phi; coefficient is appropriate for two dichotomous variables (resulting from a 2 x 2 table as above). If any your nominal variables has more than two categories, Cramér's V should be used instead:
 
-\begin{equation} 
-\begin{split}
+$$
 V=\sqrt{\frac{\chi^2}{n*df_{min}}}
-\end{split}
-(\#eq:cramer)
-\end{equation} 
+$$
 
 where $df_{min}$ refers to the degrees of freedom associated with the variable that has fewer categories (e.g., if we have two nominal variables with 3 and 4 categories, $df_{min}$ would be 3 - 1 = 2). The degrees of freedom need to be taken into account when judging the magnitude of the effect sizes (see e.g., <a href="http://www.real-statistics.com/chi-square-and-f-distributions/effect-size-chi-square/" target="_blank">here</a>). 
 

@@ -187,11 +187,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>5.4.2</b> Decomposing variance</a></li>
 <li class="chapter" data-level="5.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>5.4.3</b> One-way ANOVA</a></li>
 <li class="chapter" data-level="5.4.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#n-way-anova"><i class="fa fa-check"></i><b>5.4.4</b> N-way ANOVA</a></li>
-<li class="chapter" data-level="5.4.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>5.4.5</b> Non-parametric tests</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests-1"><i class="fa fa-check"></i><b>5.5</b> Non-parametric tests</a><ul>
+<li class="chapter" data-level="5.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>5.5</b> Non-parametric tests</a><ul>
 <li class="chapter" data-level="5.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>5.5.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
 <li class="chapter" data-level="5.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>5.5.2</b> Wilcoxon signed-rank test</a></li>
+<li class="chapter" data-level="5.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>5.5.3</b> Kruskal-Wallis test</a></li>
 </ul></li>
 <li class="chapter" data-level="5.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>5.6</b> Categorical data</a><ul>
 <li class="chapter" data-level="5.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-proportions"><i class="fa fa-check"></i><b>5.6.1</b> Comparing proportions</a></li>
@@ -246,8 +246,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1.1" data-path="appendix.html"><a href="appendix.html#random-variables"><i class="fa fa-check"></i><b>8.1.1</b> Random variables</a></li>
 <li class="chapter" data-level="8.1.2" data-path="appendix.html"><a href="appendix.html#probability-distributions"><i class="fa fa-check"></i><b>8.1.2</b> Probability Distributions</a></li>
 <li class="chapter" data-level="8.1.3" data-path="appendix.html"><a href="appendix.html#appendix-1"><i class="fa fa-check"></i><b>8.1.3</b> Appendix</a></li>
-<li class="chapter" data-level="8.1.4" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>8.1.4</b> Linear regression</a></li>
-<li class="chapter" data-level="8.1.5" data-path="appendix.html"><a href="appendix.html#logistic-regression-1"><i class="fa fa-check"></i><b>8.1.5</b> Logistic regression</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="appendix.html"><a href="appendix.html#regression-2"><i class="fa fa-check"></i><b>8.2</b> Regression</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>8.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="8.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-1"><i class="fa fa-check"></i><b>8.2.2</b> Logistic regression</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -1037,9 +1039,11 @@ online_store_promo<span class="op">$</span>Promotion &lt;-<span class="st"> </sp
 ## 29   9       low          0     1
 ## 30  10       low          0     2</code></pre>
 <p>The null hypothesis, typically, is that all means are equal (non-directional hypothesis). Hence, in our case:</p>
-<p style="text-align:center;">
-<span class="math inline">\(H_0: \mu_1 = \mu_2 = \mu_3\)</span> <br>
-</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 = \mu_3\]</span></p>
+<p>The alternative hypothesis is simply that the means are not all equal, i.e.,</p>
+<p><span class="math display">\[H_1: \textrm{Means are not all equal}\]</span></p>
+<p>If you wanted to put this in mathematical notation, you could also write:</p>
+<p><span class="math display">\[H_1: \exists {i,j}: {\mu_i \ne \mu_j} \]</span></p>
 <p>To get a first impression if there are any differences in sales across the experimental groups, we use the <code>describeBy(...)</code> function from the <code>psych</code> package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
 <span class="kw">describeBy</span>(online_store_promo<span class="op">$</span>Sales, online_store_promo<span class="op">$</span>Promotion)  <span class="co">#inspect data</span></code></pre></div>
@@ -1094,12 +1098,7 @@ Figure 5.2: Plot of means
 <p class="caption">Decomposing variance</p>
 </div>
 <p>The total variation is determined by the variation between the categories (due to our experimental manipulation) and the within-category variation that is due to extraneous factors (e.g., differences between the products that are included in each group):</p>
-<span class="math display" id="eq:vardecomp">\[\begin{equation} 
-\begin{split}
-SS_T= SS_M+SS_R
-\end{split}
-\tag{5.1}
-\end{equation}\]</span>
+<p><span class="math display">\[SS_T= SS_M+SS_R\]</span></p>
 <p>To get a better feeling how this relates to our data set, we can look at the data in a slightly different way. Specifically, we can use the <code>dcast(...)</code> function from the <code>reshape2</code> package to convert the data to wide format:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
 <span class="kw">dcast</span>(online_store_promo, Obs <span class="op">~</span><span class="st"> </span>Promotion, <span class="dt">value.var =</span> <span class="st">&quot;Sales&quot;</span>)</code></pre></div>
@@ -1138,19 +1137,16 @@ Figure 5.4: Total Sum of Squares
 </p>
 </div>
 <p>The formal representation of the total sum of squares (SS<sub>T</sub>) is:</p>
-<span class="math display" id="eq:sumsquares">\[\begin{equation} 
-\begin{split}
-SS_T= \sum_{i=1}^{N} (Y_i-\overline{Y})^2
-\end{split}
-\tag{5.2}
-\end{equation}\]</span>
+<p><span class="math display">\[
+SS_T= \sum_{i=1}^{N} (Y_i-\bar{Y})^2
+\]</span></p>
 <p>This means that we need to subtract the grand mean from each individual data point, square the difference, and sum up over all the squared differences. Thus, in our example, the total sum of squares can be calculated as:</p>
 <p><span class="math display">\[ 
 \begin{align}
 SS_T =&amp;(10−6.067)^2 + (9−6.067)^2 + … + (7−6.067)^2\\
       &amp;+(8−6.067)^2 + (8−6.067)^2 + … + (4−6.067)^2\\
       &amp;+(5−6.067)^2 + (7−6.067)^2 + … + (2−6.067)^2\\ 
-     =&amp; 185.867
+      &amp;= 185.867
 \end{align}
 \]</span></p>
 <p>You could also compute this in R using:</p>
@@ -1162,7 +1158,7 @@ SST</code></pre></div>
 \begin{split}
 df_T = N-1=30-1=29
 \end{split}
-\tag{5.3}
+\tag{5.1}
 \end{equation}\]</span>
 </div>
 <div id="model-sum-of-squares" class="section level4">
@@ -1175,12 +1171,9 @@ Figure 5.5: Model Sum of Squares
 </p>
 </div>
 <p>The formal representation of the model sum of squares (SS<sub>M</sub>) is:</p>
-<span class="math display" id="eq:modelsumsquares">\[\begin{equation} 
-\begin{split}
-SS_M= \sum_{j=1}^{c} n_j(\overline{Y}_j-\overline{Y})^2
-\end{split}
-\tag{5.4}
-\end{equation}\]</span>
+<p><span class="math display">\[
+SS_M= \sum_{j=1}^{c} n_j(\bar{Y}_j-\bar{Y})^2
+\]</span></p>
 <p>where c denotes the number of categories (experimental groups). This means that we need to subtract the grand mean from each group mean, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:</p>
 <p><span class="math display">\[ 
 \begin{align}
@@ -1194,12 +1187,9 @@ SS_M &amp;= 10*(8.3−6.067)^2 + 10*(6.2−6.067)^2 + 10*(3.7−6.067)^2 \\
 SSM</code></pre></div>
 <pre><code>## [1] 106.0667</code></pre>
 <p>In this case, we used the three group means to calculate the sum of squares, so the model degrees of freedom (df<sub>M</sub>) are:</p>
-<span class="math display" id="eq:dfM">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 df_M= c-1=3-1=2
-\end{split}
-\tag{5.5}
-\end{equation}\]</span>
+\]</span></p>
 </div>
 <div id="residual-sum-of-squares" class="section level4">
 <h4><span class="header-section-number">5.4.2.3</span> Residual sum of squares</h4>
@@ -1211,18 +1201,15 @@ Figure 5.6: Residual Sum of Squares
 </p>
 </div>
 <p>The formal representation of the residual sum of squares (SS<sub>R</sub>) is:</p>
-<span class="math display" id="eq:sumsquaresresid">\[\begin{equation} 
-\begin{split}
-SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\overline{Y}_{j})^2
-\end{split}
-\tag{5.6}
-\end{equation}\]</span>
+<p><span class="math display">\[
+SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\bar{Y}_{j})^2
+\]</span></p>
 <p>This means that we need to subtract the group mean from each individual observation, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:</p>
 <p><span class="math display">\[ 
 \begin{align}
 SS_R =&amp; (10−8.3)^2 + (9−8.3)^2 + … + (6−8.3)^2 \\
-     &amp;+(8−6.2)^2 + (8−6.2)^2 + … + (4−6.2)^2 \\
-     &amp;+ (5−3.7)^2 + (7−3.7)^2 + … + (2−3.7)^2 \\
+     +&amp;(8−6.2)^2 + (8−6.2)^2 + … + (4−6.2)^2 \\
+     +&amp; (5−3.7)^2 + (7−3.7)^2 + … + (2−3.7)^2 \\
      =&amp; 79.8
 \end{align}
 \]</span></p>
@@ -1232,23 +1219,19 @@ SS_R =&amp; (10−8.3)^2 + (9−8.3)^2 + … + (6−8.3)^2 \\
 SSR</code></pre></div>
 <pre><code>## [1] 79.8</code></pre>
 <p>In this case, we used the 10 values for each of the SS for each group, so the residual degrees of freedom (df<sub>R</sub>) are:</p>
-<span class="math display" id="eq:dfR">\[\begin{equation} 
-\begin{split}
-df_R= (n_1-1)+(n_2-1)+(n_3-1) \\
-=(10-1)+(10-1)+(10-1)=27
-\end{split}
-\tag{5.7}
-\end{equation}\]</span>
+<p><span class="math display">\[
+\begin{align}
+df_R=&amp; (n_1-1)+(n_2-1)+(n_3-1) \\
+    =&amp;(10-1)+(10-1)+(10-1)=27
+\end{align}
+\]</span></p>
 </div>
 <div id="effect-strength" class="section level4">
 <h4><span class="header-section-number">5.4.2.4</span> Effect strength</h4>
 <p>Once you have computed the different sum of squares, you can investigate the effect strength. Eta<sup>2</sup> is a measure of the variation in Y that is explained by X:</p>
-<span class="math display" id="eq:eta">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 \eta^2= \frac{SS_M}{SS_T}=\frac{106.067}{185.876}=0.571
-\end{split}
-\tag{5.8}
-\end{equation}\]</span>
+\]</span></p>
 <p>To compute this in R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eta &lt;-<span class="st"> </span>SSM<span class="op">/</span>SST
 eta</code></pre></div>
@@ -1270,26 +1253,17 @@ eta</code></pre></div>
 </p>
 <p>However, since these are summed values, their magnitude is influenced by the number of scores that were summed. For example, to calculate SS<sub>M</sub> we only used the sum of 3 values (the group means), while we used 30 and 27 values to calculate SS<sub>T</sub> and SS<sub>R</sub>, respectively. Thus, we calculate the average sum of squares (“mean square”) to compare the average amount of systematic vs. unsystematic variation by dividing the SS values by the degrees of freedom associated with the respective statistic.</p>
 <p>Mean square due to X:</p>
-<span class="math display" id="eq:MSM">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{106.067}{(3-1)}
-\end{split}
-\tag{5.9}
-\end{equation}\]</span>
+\]</span></p>
 <p>Mean square due to error:</p>
-<span class="math display" id="eq:MSR">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{79.8}{(30-3)}
-\end{split}
-\tag{5.10}
-\end{equation}\]</span>
+\]</span></p>
 <p>Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-radio can be derived as follows:</p>
-<span class="math display" id="eq:Fstat">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{106.067}{(3-1)}}{\frac{79.8}{(30-3)}}=17.944
-\end{split}
-\tag{5.11}
-\end{equation}\]</span>
+\]</span></p>
 <p>You can easily compute this in R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_ratio &lt;-<span class="st"> </span>(SSM<span class="op">/</span><span class="dv">2</span>)<span class="op">/</span>(SSR<span class="op">/</span><span class="dv">27</span>)
 f_ratio</code></pre></div>
@@ -1449,31 +1423,20 @@ Figure 5.9: Q-Q plot 3
 <p>Provided that significant differences were detected by the overall ANOVA you can find out which group means are different using post hoc procedures. Post hoc procedures are designed to conduct pairwise comparisons of all different combinations of the treatment groups by correcting the level of significance for each test such that the overall Type I error rate (α) across all comparisons remains at 0.05.</p>
 <p>In other words, we rejected H<sub>0</sub>: μ<sub>1</sub>= μ<sub>2</sub>= μ<sub>3</sub>, and now we would like to test:</p>
 <p>Test1:</p>
-<p style="text-align:center;">
-<span class="math inline">\(H_0: \mu_1 = \mu_2\)</span> <br>
-</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2\]</span></p>
 <p>Test2:</p>
-<p style="text-align:center;">
-<span class="math inline">\(H_0: \mu_1 = \mu_3\)</span> <br>
-</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_3\]</span></p>
 <p>Test3:</p>
-<p style="text-align:center;">
-<span class="math inline">\(H_0: \mu_2 = \mu_3\)</span> <br>
-</p>
+<p><span class="math display">\[H_0: \mu_2 = \mu_3\]</span></p>
 <p>There are several post hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey’s HSD (“honest significant differences”). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’ HSDs is better when testing large numbers of means.</p>
 <div id="bonferroni" class="section level5">
 <h5><span class="header-section-number">5.4.3.2.1</span> Bonferroni</h5>
 <p>One of the most popular (and easiest) methods to correct for the family-wise error rate is to conduct the individual t-tests and divide α by the number of comparisons („k“):</p>
-<span class="math display" id="eq:pCR">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 p_{CR}= \frac{\alpha}{k}
-\end{split}
-\tag{5.12}
-\end{equation}\]</span>
+\]</span></p>
 <p>In our example with three groups:</p>
-<p style="text-align:center;">
-<span class="math inline">\(p_{CR}= \frac{0.05}{3}=0.017\)</span> <br>
-</p>
+<p><span class="math display">\[p_{CR}= \frac{0.05}{3}=0.017\]</span></p>
 <p>Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., the critical t value is higher). You can implement the Bonferroni procedure in R using:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairwise.t.test</span>(online_store_promo<span class="op">$</span>Sales, online_store_promo<span class="op">$</span>Promotion, 
     <span class="dt">data =</span> online_store_promo, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</code></pre></div>
@@ -1513,7 +1476,7 @@ p_{CR}= \frac{\alpha}{k}
 \begin{split}
 HSD= q\sqrt{\frac{MS_R}{n_c}}
 \end{split}
-\tag{5.13}
+\tag{5.2}
 \end{equation}\]</span>
 <p>where:</p>
 <ul>
@@ -1522,17 +1485,13 @@ HSD= q\sqrt{\frac{MS_R}{n_c}}
 <li>n<sub>c</sub> = number of observations per group</li>
 <li>Decision: Reject H<sub>0</sub> if</li>
 </ul>
-<p style="text-align:center;">
-<span class="math inline">\(|\overline{Y}_i-\overline{Y}_j | &gt; HSD\)</span> , <br>
-</p>
+<p><span class="math display">\[|\bar{Y}_i-\bar{Y}_j | &gt; HSD\]</span></p>
 <p>The value from the studentized range table can be obtained using the <code>qtukey()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q &lt;-<span class="st"> </span><span class="kw">qtukey</span>(<span class="fl">0.95</span>, <span class="dt">nm =</span> <span class="dv">3</span>, <span class="dt">df =</span> <span class="dv">27</span>)
 q</code></pre></div>
 <pre><code>## [1] 3.506426</code></pre>
 <p>Hence:</p>
-<p style="text-align:center;">
-<span class="math inline">\(HSD= 3.506\sqrt{\frac{2.96}{10}}=1.906\)</span> <br>
-</p>
+<p><span class="math display">\[HSD= 3.506\sqrt{\frac{2.96}{10}}=1.906\]</span></p>
 <p>Or, in R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hsd &lt;-<span class="st"> </span>q <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Mean Sq&quot;</span>[<span class="dv">2</span>]<span class="op">/</span><span class="dv">10</span>)
 hsd</code></pre></div>
@@ -1726,14 +1685,14 @@ Figure 5.13: Plot of means (interaction)
 \begin{split}
 SS_T= SS_M+SS_R
 \end{split}
-\tag{5.1}
+\tag{5.3}
 \end{equation}\]</span>
 <p>The main difference is that in an N-way ANOVA the model sum of squares SS<sub>M</sub> consists of different components. In our case:</p>
 <span class="math display" id="eq:SSMn">\[\begin{equation} 
 \begin{split}
 SS_M= SS_{X_1}+SS_{X_2}+SS_{X_1X_2}
 \end{split}
-\tag{5.14}
+\tag{5.4}
 \end{equation}\]</span>
 <p>That is, we can further decompose the explained variance into the variance explained by the first factor (X<sub>1</sub>), the variance explained by the second factor (X<sub>2</sub>), and the variance explained by the interaction of these factors (X<sub>1</sub>X<sub>2</sub>). The interaction will tell us if the effect of one factor depends on the level of the second factor and vice versa. Because we now have more information available (the manipulation of the second factor), we would expect the amount of explained variance to increase relative to the amount of unexplained variance.</p>
 <p>To visualize this, we can include this new information in the plot that we used before to inspect the model sum of squares:</p>
@@ -1758,12 +1717,9 @@ Figure 5.14: Sum of Squares (N-way ANOVA)
 <p>The Levene’s Test indicates that the variances of the groups are not significantly different. Theoretically, you would also need to test the distributional assumptions for each group again, but we skip this step here.</p>
 <p>The ANOVA output shows us that the two main effects are significant, while the interaction is not. This means that online promotions and newsletter features result in higher sales. However, the effect of each factor is independent of the other. Note that in the presence of significant interaction effects, it would make no sense to interpret the main effects! If this would be the case, we would only conclude that the effect of one factor depends on the other factor. If the interaction effect is insignificant (as in our case), you could also conduct post hoc tests for each individual factor. However, you only need to conduct post hoc tests for factors with more than 2 levels (i.e., not for the newsletter factor) since there is no family-wise error for variables with two categories.</p>
 <p>In an N-way ANOVA, the multiple η<sup>2</sup> measures the strength of the joint effect of two factors (also called the overall effect). To compute the multiple η<sup>2</sup>, the revised equation is:</p>
-<span class="math display" id="eq:etan">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 \eta^2= \frac{SS_{X_1}+SS_{X_2}+SS_{X_1X_2}}{SS_T}
-\end{split}
-\tag{5.15}
-\end{equation}\]</span>
+\]</span></p>
 <p>From the output, we can extract the relevant sum of squares as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Sum Sq&quot;</span>[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Sum Sq&quot;</span>[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Sum Sq&quot;</span>[<span class="dv">3</span>])<span class="op">/</span>(<span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Sum Sq&quot;</span>[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
@@ -1783,49 +1739,6 @@ Figure 5.14: Sum of Squares (N-way ANOVA)
 </li>
 <li>The effect of each factor is independent of the other since the interaction effect between the level of promotion and direct mailing was insignificant, F(2,24) = 3.27, p &gt; 0.05.</li>
 </ul>
-</div>
-<div id="non-parametric-tests" class="section level3">
-<h3><span class="header-section-number">5.4.5</span> Non-parametric tests</h3>
-<p>When should you use non-parametric tests?</p>
-<ul>
-<li>When the dependent variable is measured at an ordinal scale and we want to compare more than 2 means</li>
-<li>When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)</li>
-</ul>
-<p>The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the <code>kruskal.test()</code> function. Using the same data as before, we type:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kruskal.test</span>(Sales <span class="op">~</span><span class="st"> </span>Promotion, <span class="dt">data =</span> online_store_promo)</code></pre></div>
-<pre><code>## 
-##  Kruskal-Wallis rank sum test
-## 
-## data:  Sales by Promotion
-## Kruskal-Wallis chi-squared = 16.529, df = 2, p-value = 0.0002575</code></pre>
-<p>The test-statistic follows a chi-square distribution and since the test is significant (p &lt; 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. To get a first impression, we can plot the data using a boxplot:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Boxplot</span>
-<span class="kw">ggplot</span>(online_store_promo, <span class="kw">aes</span>(<span class="dt">x =</span> Promotion, <span class="dt">y =</span> Sales)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-251"></span>
-<img src="_main_files/figure-html/unnamed-chunk-251-1.png" alt="Boxplot" width="672" />
-<p class="caption">
-Figure 5.15: Boxplot
-</p>
-</div>
-<p>To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the <code>PMCMR</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PMCMR)
-<span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> online_store_promo<span class="op">$</span>Sales, 
-    <span class="dt">g =</span> online_store_promo<span class="op">$</span>Promotion, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</code></pre></div>
-<pre><code>## 
-##  Pairwise comparisons using Tukey and Kramer (Nemenyi) test  
-##                    with Tukey-Dist approximation for independent samples 
-## 
-## data:  online_store_promo$Sales and online_store_promo$Promotion 
-## 
-##        high    medium 
-## medium 0.09887 -      
-## low    0.00016 0.11683
-## 
-## P value adjustment method: none</code></pre>
-<p>The results reveal that there is a significant difference between the “low” and “high” promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we loose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met.</p>
 
 <pre><code>## &#39;data.frame&#39;:    102 obs. of  3 variables:
 ##  $ product_id: int  1 2 3 4 5 6 7 8 9 10 ...
@@ -1847,7 +1760,7 @@ Figure 5.15: Boxplot
 </div>
 </div>
 </div>
-<div id="non-parametric-tests-1" class="section level2">
+<div id="non-parametric-tests" class="section level2">
 <h2><span class="header-section-number">5.5</span> Non-parametric tests</h2>
 <p><strong>Non-Parametric tests</strong> on the other hand do not require the sampling distribution to be normally distributed (a.k.a. “assumption free tests”). These tests may be used when the variable of interest is measured on an ordinal scale or when the parametric assumptions do not hold. They often rely on ranking the data instead of analyzing the actual scores. By ranking the data, information on the magnitude of differences is lost. Thus, parametric tests are more powerful if the sampling distribution is normally distributed.</p>
 <p>When should you use non-parametric tests?</p>
@@ -1896,6 +1809,49 @@ Figure 5.15: Boxplot
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OMQJuXanw-g" frameborder="0" allowfullscreen>
 </iframe>
 </div>
+</div>
+<div id="kruskal-wallis-test" class="section level3">
+<h3><span class="header-section-number">5.5.3</span> Kruskal-Wallis test</h3>
+<p>When should you use non-parametric tests?</p>
+<ul>
+<li>When the dependent variable is measured at an ordinal scale and we want to compare more than 2 means</li>
+<li>When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)</li>
+</ul>
+<p>The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the <code>kruskal.test()</code> function. Using the same data as before, we type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kruskal.test</span>(Sales <span class="op">~</span><span class="st"> </span>Promotion, <span class="dt">data =</span> online_store_promo)</code></pre></div>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  Sales by Promotion
+## Kruskal-Wallis chi-squared = 16.529, df = 2, p-value = 0.0002575</code></pre>
+<p>The test-statistic follows a chi-square distribution and since the test is significant (p &lt; 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. To get a first impression, we can plot the data using a boxplot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Boxplot</span>
+<span class="kw">ggplot</span>(online_store_promo, <span class="kw">aes</span>(<span class="dt">x =</span> Promotion, <span class="dt">y =</span> Sales)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-256"></span>
+<img src="_main_files/figure-html/unnamed-chunk-256-1.png" alt="Boxplot" width="672" />
+<p class="caption">
+Figure 5.15: Boxplot
+</p>
+</div>
+<p>To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the <code>PMCMR</code> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PMCMR)
+<span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> online_store_promo<span class="op">$</span>Sales, 
+    <span class="dt">g =</span> online_store_promo<span class="op">$</span>Promotion, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using Tukey and Kramer (Nemenyi) test  
+##                    with Tukey-Dist approximation for independent samples 
+## 
+## data:  online_store_promo$Sales and online_store_promo$Promotion 
+## 
+##        high    medium 
+## medium 0.09887 -      
+## low    0.00016 0.11683
+## 
+## P value adjustment method: none</code></pre>
+<p>The results reveal that there is a significant difference between the “low” and “high” promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we loose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met.</p>
 </div>
 </div>
 <div id="categorical-data" class="section level2">
@@ -1946,12 +1902,9 @@ Figure 5.17: proportion of conversions per agent (mosaic plot)
 </p>
 </div>
 <p>Recall that we can use confidence intervals to determine the range of values that the true population parameter will take with a certain level of confidence based on the sample. Similar to the confidence interval for means, we can compute a confidence interval for proportions. The (1-α)% confidence interval for proportions is approximately</p>
-<span class="math display" id="eq:CIdiff">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
-\end{split}
-\tag{5.16}
-\end{equation}\]</span>
+\]</span></p>
 <p>where <span class="math inline">\(\sqrt{p(1-p)}\)</span> is the equivalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_1&quot;</span>))  <span class="co">#number of observations for agent 1</span>
 n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_2&quot;</span>))  <span class="co">#number of observations for agent 1</span>
@@ -1981,12 +1934,9 @@ ci_lower2</code></pre></div>
 <span class="math inline">\(H_0: p_1=p_2\)</span><br> <span class="math inline">\(H_1: p_1\ne p_2\)</span>
 </p>
 <p>One approach to test this is based on confidence intervals to estimate the difference between two populations. We can compute an approximate confidence interval for the difference between the proportion of successes in group 1 and group 2, as:</p>
-<span class="math display" id="eq:CIdiff">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 CI = p_1-p_2\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p_1*(1-p_1)}{n_1}+\frac{p_2*(1-p_2)}{n_2}}
-\end{split}
-\tag{5.16}
-\end{equation}\]</span>
+\]</span></p>
 <p>If the confidence interval includes zero, then the data does not suggest a difference between the groups. Let’s compute the confidence interval for differences in the proportions by hand first:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_lower &lt;-<span class="st"> </span>p1 <span class="op">-</span><span class="st"> </span>p2 <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>
 <span class="st">    </span>p1)<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>p2 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p2)<span class="op">/</span>n2)  <span class="co">#95% CI lower bound</span>
@@ -2065,12 +2015,9 @@ Figure 5.18: Expensive car ownership conditional on college education
 </p>
 </div>
 <p>Under the null hypothesis, the two variables are independent (i.e., there is no relationship). This means that the frequency in each field will be roughly proportional to the probability of an observation being in that category, calculated under the assumption that they are independent. The difference between that expected quantity and the actual quantity can be used to construct the test statistic. The test statistic is computed as follows:</p>
-<span class="math display" id="eq:Chisq">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 \chi^2=\sum_{i=1}^{J}\frac{(f_o-f_e)^2}{f_e}
-\end{split}
-\tag{5.17}
-\end{equation}\]</span>
+\]</span></p>
 <p>where <span class="math inline">\(J\)</span> is the number of cells in the contingency table, <span class="math inline">\(f_o\)</span> are the observed cell frequencies and <span class="math inline">\(f_e\)</span> are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value.</p>
 <p>The observed cell frequencies can easily be seen from the contingency table:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs_cell1 &lt;-<span class="st"> </span>cont_table[<span class="dv">1</span>, <span class="dv">1</span>]
@@ -2078,12 +2025,9 @@ obs_cell2 &lt;-<span class="st"> </span>cont_table[<span class="dv">1</span>, <s
 obs_cell3 &lt;-<span class="st"> </span>cont_table[<span class="dv">2</span>, <span class="dv">1</span>]
 obs_cell4 &lt;-<span class="st"> </span>cont_table[<span class="dv">2</span>, <span class="dv">2</span>]</code></pre></div>
 <p>The expected cell frequencies can be calculated as follows:</p>
-<span class="math display" id="eq:fe">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 f_e=\frac{(n_r*n_c)}{n}
-\end{split}
-\tag{5.18}
-\end{equation}\]</span>
+\]</span></p>
 <p>where <span class="math inline">\(n_r\)</span> are the total observed frequencies per row, <span class="math inline">\(n_c\)</span> are the total observed frequencies per column, and <span class="math inline">\(n\)</span> is the total number of observations. Thus, the expected cell frequencies under the assumption of independence can be calculated as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(cross_tab)
 exp_cell1 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(cross_tab[cross_tab<span class="op">$</span>College <span class="op">==</span><span class="st"> &quot;no&quot;</span>, 
@@ -2124,10 +2068,9 @@ Figure 5.19: The chi-square distribution
 </p>
 </div>
 <p>You can see that as the degrees of freedom increase, the chi-square curve approaches a normal distribution. To find the critical value, we need to specify the corresponding degrees of freedom, given by:</p>
-<span class="math display" id="eq:dfchi">\[\begin{equation} 
+<p><span class="math display">\[
 df=(r-1)*(c-1)
-\tag{5.19}
-\end{equation}\]</span>
+\]</span></p>
 <p>where <span class="math inline">\(r\)</span> is the number of rows and <span class="math inline">\(c\)</span> is the number of columns in the contingency table. Recall that degrees of freedom are generally the number of values that can vary freely when calculating a statistic. In a 2 by 2 table as in our case, we have 2 variables (or two samples) with 2 levels and in each one we have 1 that vary freely. Hence, in our example the degrees of freedom can be calculated as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(cont_table) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">ncol</span>(cont_table) <span class="op">-</span><span class="st"> </span>
 <span class="st">    </span><span class="dv">1</span>)
@@ -2165,12 +2108,9 @@ p_val</code></pre></div>
 ## data:  cont_table/10
 ## X-squared = 1.1696, df = 1, p-value = 0.2795</code></pre>
 <p>You can see that even though the proportions haven’t changed, the test is insignificant now. The following equation let’s you compute a measure of the effect size, which is insensitive to sample size:</p>
-<span class="math display" id="eq:fe">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 \phi=\sqrt{\frac{\chi^2}{n}}
-\end{split}
-\tag{5.18}
-\end{equation}\]</span>
+\]</span></p>
 <p>The following guidelines are used to determine the magnitude of the effect size (Cohen, 1988):</p>
 <ul>
 <li>0.1 (small effect)</li>
@@ -2190,14 +2130,11 @@ phi1</code></pre></div>
 ## 0.1081476</code></pre>
 <p>You can see that the statistic is insensitive to the sample size.</p>
 <p>Note that the Φ coefficient is appropriate for two dichotomous variables (resulting from a 2 x 2 table as above). If any your nominal variables has more than two categories, Cramér’s V should be used instead:</p>
-<span class="math display" id="eq:cramer">\[\begin{equation} 
-\begin{split}
+<p><span class="math display">\[
 V=\sqrt{\frac{\chi^2}{n*df_{min}}}
-\end{split}
-\tag{5.20}
-\end{equation}\]</span>
+\]</span></p>
 <p>where <span class="math inline">\(df_{min}\)</span> refers to the degrees of freedom associated with the variable that has fewer categories (e.g., if we have two nominal variables with 3 and 4 categories, <span class="math inline">\(df_{min}\)</span> would be 3 - 1 = 2). The degrees of freedom need to be taken into account when judging the magnitude of the effect sizes (see e.g., <a href="http://www.real-statistics.com/chi-square-and-f-distributions/effect-size-chi-square/" target="_blank">here</a>).</p>
-<p>Note that the <code>correct = FALSE</code> argument above ensures that the test statistic is computed in the same way as we have done by hand above. By default, <code>chisq.test()</code> applies a correction to prevent overestimation of statistical significance for small data (called the Yates’ correction). The correction is implemented by subtracting the value 0.5 from the computed difference between the observed and expected cell counts in the numerator of the test statistic (see Equation <a href="hypothesis-testing.html#eq:Chisq">(5.17)</a>). This means that the calculated test statistic will be smaller (i.e., more conservative). Although the adjustment may go too far in some instances, you should generally rely on the adjusted results, which can be computed as follows:</p>
+<p>Note that the <code>correct = FALSE</code> argument above ensures that the test statistic is computed in the same way as we have done by hand above. By default, <code>chisq.test()</code> applies a correction to prevent overestimation of statistical significance for small data (called the Yates’ correction). The correction is implemented by subtracting the value 0.5 from the computed difference between the observed and expected cell counts in the numerator of the test statistic (see Equation <a href="#eq:Chisq">(<strong>??</strong>)</a>). This means that the calculated test statistic will be smaller (i.e., more conservative). Although the adjustment may go too far in some instances, you should generally rely on the adjusted results, which can be computed as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(cont_table)</code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction

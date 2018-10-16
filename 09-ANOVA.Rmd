@@ -41,9 +41,15 @@ print(online_store_promo) #inspect data
 
 The null hypothesis, typically, is that all means are equal (non-directional hypothesis). Hence, in our case:
 
-<p style="text-align:center;">
-$H_0: \mu_1 = \mu_2 = \mu_3$ <br>
-</p>
+$$H_0: \mu_1 = \mu_2 = \mu_3$$
+
+The alternative hypothesis is simply that the means are not all equal, i.e., 
+
+$$H_1: \textrm{Means are not all equal}$$  
+
+If you wanted to put this in mathematical notation, you could also write:
+
+$$H_1: \exists {i,j}: {\mu_i \ne \mu_j} $$  
 
 To get a first impression if there are any differences in sales across the experimental groups, we use the ```describeBy(...)``` function from the ```psych``` package:
 
@@ -89,12 +95,7 @@ The following figure shows the different variance components using a generalized
 
 The total variation is determined by the variation between the categories (due to our experimental manipulation) and the within-category variation that is due to extraneous factors (e.g., differences between the products that are included in each group):   
 
-\begin{equation} 
-\begin{split}
-SS_T= SS_M+SS_R
-\end{split}
-(\#eq:vardecomp)
-\end{equation} 
+$$SS_T= SS_M+SS_R$$
 
 To get a better feeling how this relates to our data set, we can look at the data in a slightly different way. Specifically, we can use the ```dcast(...)``` function from the ```reshape2``` package to convert the data to wide format: 
 
@@ -156,12 +157,9 @@ ggplot(d, aes(x=count,y=sales,color=promotion)) +
 
 The formal representation of the total sum of squares (SS<sub>T</sub>) is:
 
-\begin{equation} 
-\begin{split}
-SS_T= \sum_{i=1}^{N} (Y_i-\overline{Y})^2
-\end{split}
-(\#eq:sumsquares)
-\end{equation} 
+$$
+SS_T= \sum_{i=1}^{N} (Y_i-\bar{Y})^2
+$$
 
 This means that we need to subtract the grand mean from each individual data point, square the difference, and sum up over all the squared differences. Thus, in our example, the total sum of squares can be calculated as:
 
@@ -170,7 +168,7 @@ $$
 SS_T =&(10−6.067)^2 + (9−6.067)^2 + … + (7−6.067)^2\\
       &+(8−6.067)^2 + (8−6.067)^2 + … + (4−6.067)^2\\
       &+(5−6.067)^2 + (7−6.067)^2 + … + (2−6.067)^2\\ 
-     =& 185.867
+      &= 185.867
 \end{align}
 $$
 
@@ -209,12 +207,9 @@ ggplot(d, aes(x=count,y=sales,color=promotion)) +
 
 The formal representation of the model sum of squares (SS<sub>M</sub>) is:
 
-\begin{equation} 
-\begin{split}
-SS_M= \sum_{j=1}^{c} n_j(\overline{Y}_j-\overline{Y})^2
-\end{split}
-(\#eq:modelsumsquares)
-\end{equation} 
+$$
+SS_M= \sum_{j=1}^{c} n_j(\bar{Y}_j-\bar{Y})^2
+$$
 
 where c denotes the number of categories (experimental groups). This means that we need to subtract the grand mean from each group mean, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:
 
@@ -234,12 +229,9 @@ SSM
 
 In this case, we used the three group means to calculate the sum of squares, so the model degrees of freedom (df<sub>M</sub>) are:
 
-\begin{equation} 
-\begin{split}
+$$
 df_M= c-1=3-1=2
-\end{split}
-(\#eq:dfM)
-\end{equation} 
+$$
 
 #### Residual sum of squares
 
@@ -259,20 +251,17 @@ ggplot(d, aes(x=count,y=sales,color=promotion)) +
 
 The formal representation of the residual sum of squares (SS<sub>R</sub>) is:
 
-\begin{equation} 
-\begin{split}
-SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\overline{Y}_{j})^2
-\end{split}
-(\#eq:sumsquaresresid)
-\end{equation} 
+$$
+SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\bar{Y}_{j})^2
+$$
 
 This means that we need to subtract the group mean from each individual observation, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:
 
 $$ 
 \begin{align}
 SS_R =& (10−8.3)^2 + (9−8.3)^2 + … + (6−8.3)^2 \\
-     &+(8−6.2)^2 + (8−6.2)^2 + … + (4−6.2)^2 \\
-     &+ (5−3.7)^2 + (7−3.7)^2 + … + (2−3.7)^2 \\
+     +&(8−6.2)^2 + (8−6.2)^2 + … + (4−6.2)^2 \\
+     +& (5−3.7)^2 + (7−3.7)^2 + … + (2−3.7)^2 \\
      =& 79.8
 \end{align}
 $$
@@ -286,24 +275,20 @@ SSR
 
 In this case, we used the 10 values for each of the SS for each group, so the residual degrees of freedom (df<sub>R</sub>) are:
 
-\begin{equation} 
-\begin{split}
-df_R= (n_1-1)+(n_2-1)+(n_3-1) \\
-=(10-1)+(10-1)+(10-1)=27
-\end{split}
-(\#eq:dfR)
-\end{equation} 
+$$
+\begin{align}
+df_R=& (n_1-1)+(n_2-1)+(n_3-1) \\
+    =&(10-1)+(10-1)+(10-1)=27
+\end{align}
+$$
 
 #### Effect strength
 
 Once you have computed the different sum of squares, you can investigate the effect strength. Eta<sup>2</sup> is a measure of the variation in Y that is explained by X:
 
-\begin{equation} 
-\begin{split}
+$$
 \eta^2= \frac{SS_M}{SS_T}=\frac{106.067}{185.876}=0.571
-\end{split}
-(\#eq:eta)
-\end{equation} 
+$$
 
 To compute this in R:
 
@@ -333,30 +318,21 @@ However, since these are summed values, their magnitude is influenced by the num
 
 Mean square due to X:
 
-\begin{equation} 
-\begin{split}
+$$
 MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{106.067}{(3-1)}
-\end{split}
-(\#eq:MSM)
-\end{equation} 
+$$
 
 Mean square due to error:
 
-\begin{equation} 
-\begin{split}
+$$
 MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{79.8}{(30-3)}
-\end{split}
-(\#eq:MSR)
-\end{equation} 
+$$
 
 Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-radio can be derived as follows:
 
-\begin{equation} 
-\begin{split}
+$$
 F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{106.067}{(3-1)}}{\frac{79.8}{(30-3)}}=17.944
-\end{split}
-(\#eq:Fstat)
-\end{equation} 
+$$
 
 You can easily compute this in R:
 
@@ -534,21 +510,15 @@ In other words, we rejected H<sub>0</sub>: &mu;<sub>1</sub>= &mu;<sub>2</sub>= &
 
 Test1: 
 
-<p style="text-align:center;">
-$H_0: \mu_1 = \mu_2$ <br>
-</p>
+$$H_0: \mu_1 = \mu_2$$
 
 Test2: 
 
-<p style="text-align:center;">
-$H_0: \mu_1 = \mu_3$ <br>
-</p>
+$$H_0: \mu_1 = \mu_3$$
 
 Test3: 
 
-<p style="text-align:center;">
-$H_0: \mu_2 = \mu_3$ <br>
-</p>
+$$H_0: \mu_2 = \mu_3$$
 
 There are several post hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey's HSD ("honest significant differences"). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’ HSDs is better when testing large numbers of means. 
 
@@ -556,18 +526,13 @@ There are several post hoc procedures available to choose from. In this tutorial
 
 One of the most popular (and easiest) methods to correct for the family-wise error rate is to conduct the individual t-tests and divide &alpha; by the number of comparisons („k“):
 
-\begin{equation} 
-\begin{split}
+$$
 p_{CR}= \frac{\alpha}{k}
-\end{split}
-(\#eq:pCR)
-\end{equation} 
+$$ 
 
 In our example with three groups:
 
-<p style="text-align:center;">
-$p_{CR}= \frac{0.05}{3}=0.017$ <br>
-</p>
+$$p_{CR}= \frac{0.05}{3}=0.017$$
 
 Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., the critical t value is higher). You can implement the Bonferroni procedure in R using:
 
@@ -606,9 +571,7 @@ where:
 * n<sub>c</sub> = number of observations per group
 * Decision: Reject H<sub>0</sub> if
 
-<p style="text-align:center;">
-$|\overline{Y}_i-\overline{Y}_j | > HSD$ , <br>
-</p>
+$$|\bar{Y}_i-\bar{Y}_j | > HSD$$
 
 The value from the studentized range table can be obtained using the ```qtukey()``` function.
 
@@ -619,9 +582,7 @@ q
 
 Hence:
 
-<p style="text-align:center;">
-$HSD= 3.506\sqrt{\frac{2.96}{10}}=1.906$ <br>
-</p>
+$$HSD= 3.506\sqrt{\frac{2.96}{10}}=1.906$$
 
 Or, in R:
 
@@ -804,12 +765,9 @@ The ANOVA output shows us that the two main effects are significant, while the i
 
 In an N-way ANOVA, the multiple &eta;<sup>2</sup> measures the strength of the joint effect of two factors (also called the overall effect). To compute the multiple &eta;<sup>2</sup>, the revised equation is:
 
-\begin{equation} 
-\begin{split}
+$$
 \eta^2= \frac{SS_{X_1}+SS_{X_2}+SS_{X_1X_2}}{SS_T}
-\end{split}
-(\#eq:etan)
-\end{equation}
+$$
 
 From the output, we can extract the relevant sum of squares as follows:
 
@@ -831,34 +789,3 @@ Reporting:
 * There was a significant main effect of newsletter features on sales levels, F(1,24) = 53.33, p < 0.05.  
 * The effect of each factor is independent of the other since the interaction effect between the level of promotion and direct mailing was insignificant, F(2,24) = 3.27, p > 0.05.
 
-### Non-parametric tests
-
-When should you use non-parametric tests?
-
-* When the dependent variable is measured at an ordinal scale and we want to compare more than 2 means
-* When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)
-
-The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the ```kruskal.test()``` function. Using the same data as before, we type: 
-
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-kruskal.test(Sales ~ Promotion, data = online_store_promo) 
-```
-
-The test-statistic follows a chi-square distribution and since the test is significant (p < 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. To get a first impression, we can plot the data using a boxplot:
-
-```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
-#Boxplot
-ggplot(online_store_promo, aes(x = Promotion, y = Sales)) + 
-  geom_boxplot() + 
-  labs(x = "Experimental group (promotion level)", y = "Number of sales") + 
-  theme_bw() 
-```
-
-To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the ```PMCMR``` package.
-
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-library(PMCMR)
-posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
-```
-
-The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we loose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met. 
