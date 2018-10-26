@@ -254,15 +254,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="assignments.html"><a href="assignments.html"><i class="fa fa-check"></i><b>9</b> Assignments</a><ul>
-<li class="chapter" data-level="9.1" data-path="assignments.html"><a href="assignments.html#assignment-2-hypothesis-testing"><i class="fa fa-check"></i><b>9.1</b> Assignment 2 (Hypothesis Testing)</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="assignments.html"><a href="assignments.html#load-and-inspect-data"><i class="fa fa-check"></i><b>9.1.1</b> Load and inspect data</a></li>
-<li class="chapter" data-level="9.1.2" data-path="assignments.html"><a href="assignments.html#load-packages"><i class="fa fa-check"></i><b>9.1.2</b> Load packages</a></li>
-<li class="chapter" data-level="9.1.3" data-path="assignments.html"><a href="assignments.html#question-1"><i class="fa fa-check"></i><b>9.1.3</b> Question 1</a></li>
-<li class="chapter" data-level="9.1.4" data-path="assignments.html"><a href="assignments.html#question-2"><i class="fa fa-check"></i><b>9.1.4</b> Question 2</a></li>
-<li class="chapter" data-level="9.1.5" data-path="assignments.html"><a href="assignments.html#question-3"><i class="fa fa-check"></i><b>9.1.5</b> Question 3</a></li>
-<li class="chapter" data-level="9.1.6" data-path="assignments.html"><a href="assignments.html#question-4"><i class="fa fa-check"></i><b>9.1.6</b> Question 4</a></li>
-<li class="chapter" data-level="9.1.7" data-path="assignments.html"><a href="assignments.html#question-5"><i class="fa fa-check"></i><b>9.1.7</b> Question 5</a></li>
-</ul></li>
+<li class="chapter" data-level="9.1" data-path="assignments.html"><a href="assignments.html#assignment-2-hypothesis-testing"><i class="fa fa-check"></i><b>9.1</b> Assignment 2 (Hypothesis Testing)</a></li>
 </ul></li>
 </ul>
 
@@ -314,107 +306,139 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Finally, don’t forget to report your research conclusion in an appropriate way</li>
 </ul>
 <p>When you are done with your analysis, click on “Knit to HTML” button above the code editor. This will create a HTML document of your results in the folder where the “assignment.Rmd” file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn@WU. The file name should be “assignment2_studendID_name.html”.</p>
-<div id="load-and-inspect-data" class="section level3">
-<h3><span class="header-section-number">9.1.1</span> Load and inspect data</h3>
+<p><strong>Load and inspect data</strong></p>
+<p>Let´s load the data first and inspect the contained variables:</p>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["streams_sd"],"name":[1],"type":["int"],"align":["right"]},{"label":["online_advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["customer_rating"],"name":[3],"type":["int"],"align":["right"]},{"label":["streams_hd"],"name":[4],"type":["int"],"align":["right"]},{"label":["movieID"],"name":[5],"type":["int"],"align":["right"]},{"label":["genre"],"name":[6],"type":["int"],"align":["right"]},{"label":["academy_award"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"3375","2":"0","3":"4","4":"2156","5":"1","6":"1","7":"1"},{"1":"2945","2":"0","3":"4","4":"1856","5":"2","6":"1","7":"1"},{"1":"3395","2":"1","3":"4","4":"2073","5":"3","6":"1","7":"1"},{"1":"3927","2":"1","3":"4","4":"1123","5":"4","6":"1","7":"0"},{"1":"3259","2":"1","3":"3","4":"3092","5":"5","6":"1","7":"1"},{"1":"1463","2":"0","3":"3","4":"1630","5":"6","6":"1","7":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["movieID"],"name":[1],"type":["int"],"align":["right"]},{"label":["online_advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams_sd"],"name":[3],"type":["int"],"align":["right"]},{"label":["streams_hd"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"2365","4":"1432"},{"1":"2","2":"0","3":"1752","4":"2305"},{"1":"3","2":"0","3":"1351","4":"1197"},{"1":"4","2":"0","3":"2495","4":"1112"},{"1":"5","2":"0","3":"3883","4":"1364"},{"1":"6","2":"1","3":"3933","4":"1202"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre><code>## &#39;data.frame&#39;:    200 obs. of  7 variables:
-##  $ streams_sd        : int  3375 2945 3395 3927 3259 1463 2482 2962 2496 3670 ...
-##  $ online_advertising: int  0 0 1 1 1 0 1 0 0 1 ...
-##  $ customer_rating   : int  4 4 4 4 3 3 4 5 5 5 ...
-##  $ streams_hd        : int  2156 1856 2073 1123 3092 1630 2412 1935 1097 2248 ...
+<pre><code>## &#39;data.frame&#39;:    200 obs. of  4 variables:
 ##  $ movieID           : int  1 2 3 4 5 6 7 8 9 10 ...
-##  $ genre             : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ academy_award     : int  1 1 1 0 1 1 1 1 1 0 ...</code></pre>
-</div>
-<div id="load-packages" class="section level3">
-<h3><span class="header-section-number">9.1.2</span> Load packages</h3>
-<p>First let´s load all required packages</p>
-</div>
-<div id="question-1" class="section level3">
-<h3><span class="header-section-number">9.1.3</span> Question 1</h3>
-<p>To compute the confidence intervals for SD and HD streams we will need the mean, standard deviation, standard error, degrees of freedom and the critical value for a t-distribution (we will use a t-distribution, because we are not sure of the variance in the population).</p>
+##  $ online_advertising: int  0 0 0 0 0 1 1 1 0 1 ...
+##  $ streams_sd        : int  2365 1752 1351 2495 3883 3933 3849 2770 1146 3033 ...
+##  $ streams_hd        : int  1432 2305 1197 1112 1364 1202 1363 3502 2047 1104 ...</code></pre>
+<p><strong>Load packages</strong></p>
+<p>Next, we load the packages that we will be using to answer the questions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pastecs)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(psych)
+<span class="kw">library</span>(pwr)
+<span class="kw">library</span>(lsr)
+<span class="kw">library</span>(reshape2)</code></pre></div>
+<p><strong>Question 1</strong></p>
+<p>To compute the confidence intervals for SD and HD streams we will need three things: 1) the mean <span class="math inline">\(\bar x\)</span>, 2) the standard error (<span class="math inline">\(s \over \sqrt{n}\)</span>), and 3) the critical value for a t-distribution (<span class="math inline">\(t_{crit}\)</span>; we will use a t-distribution, because we are not sure of the variance in the population).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Calculate components of confidence interval formula </span>
+mean_sd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_sd)
+mean_hd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_hd)
+
+sd_sd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_sd)
+sd_hd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_hd)
+
+n &lt;-<span class="st"> </span><span class="kw">nrow</span>(movie_data)
+se_sd &lt;-<span class="st"> </span>sd_sd<span class="op">/</span><span class="kw">sqrt</span>(n)
+se_hd &lt;-<span class="st"> </span>sd_hd<span class="op">/</span><span class="kw">sqrt</span>(n)
+
+df &lt;-<span class="st"> </span>n<span class="op">-</span><span class="dv">1</span>
+t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, df)</code></pre></div>
+<p>Now the confidence intervals for streams in SD and HD quality can be computed as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Interval for SD moviess</span>
+ci_lower_sd &lt;-<span class="st"> </span>mean_sd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd
+ci_upper_sd &lt;-<span class="st"> </span>mean_sd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd
+
+<span class="co">#Interval for HD movies</span>
+ci_lower_hd &lt;-<span class="st"> </span>mean_hd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd
+ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</code></pre></div>
 <p>Hence, the CI for SD movies is given by:</p>
-<pre><code>## [1] 2589</code></pre>
-<pre><code>## [1] 2883</code></pre>
-<p>Thus, <span class="math inline">\(CI_{SD} = [2589.21,2883.83]\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_lower_sd</code></pre></div>
+<pre><code>## [1] 2527.979</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_upper_sd</code></pre></div>
+<pre><code>## [1] 2827.851</code></pre>
+<p><span class="math inline">\(CI_{SD} = [2527.97,2827.85]\)</span></p>
 <p>Similarly, the CI for HD movies is given by</p>
-<pre><code>## [1] 1758</code></pre>
-<pre><code>## [1] 1939</code></pre>
-<p>Thus, <span class="math inline">\(CI_{HD} = [1757.72,1939.11]\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_lower_hd</code></pre></div>
+<pre><code>## [1] 1728.51</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_upper_hd</code></pre></div>
+<pre><code>## [1] 1940.52</code></pre>
+<p><span class="math inline">\(CI_{HD} = [1728.51,1940.52]\)</span></p>
 <p>The intervals can be interpreted as follows: If we would take 100 samples, calculate the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals.</p>
-</div>
-<div id="question-2" class="section level3">
-<h3><span class="header-section-number">9.1.4</span> Question 2</h3>
-<p>To find out whether our data for SD and HD streams differs significantly from the previous week (2600 for SD; 1700 for HD) we will conduct a one sample t-test. This is appropiate, because 1) our data is on an interval scale, and 2) the sampling distribution can be considered as normally distributed due to the fairly large sample size (n=200; see central limit theorem).</p>
+<p><strong>Question 2</strong></p>
+<p>To find out whether our data for SD and HD streams differs significantly from the previous week (2600 for SD; 1700 for HD), we will conduct a one sample t-test. This is appropriate, because 1) our data is on an interval scale, and 2) the sampling distribution can be considered as normally distributed due to the fairly large sample size (n=200; see central limit theorem).</p>
 <p>Our null hypothesis states that there is no difference between the quantity of SD/HD streams watched in the current week, compared to the previous week. Rejecting the null hypotheses/accepting the alternative hypothesis would mean that there indeed was a difference between the two weeks.</p>
 <p>So for our SD streams we could formulate our hypothesis as follows:</p>
 <p><span class="math display">\[H_0: \mu_0 = 2600 \\ H_1: \mu_0 \neq 2600 \]</span></p>
 <p>The same approach can be used for our HD streams:</p>
 <p><span class="math display">\[H_0: \mu_0 = 1700 \\ H_1: \mu_0 \neq 1700 \]</span></p>
 <p>We can first have a quick look at the descriptive statistics:</p>
-<pre><code>## movie_data$streams_sd 
-##        n  missing distinct     Info     Mean      Gmd      .05      .10 
-##      200        0      195        1     2736     1201     1071     1271 
-##      .25      .50      .75      .90      .95 
-##     1942     2683     3486     4208     4463 
-## 
-## lowest :  852  972  982  992  995, highest: 5042 5252 5359 5509 5622</code></pre>
-<pre><code>## movie_data$streams_hd 
-##        n  missing distinct     Info     Mean      Gmd      .05      .10 
-##      200        0      195        1     1848    742.5    843.2   1089.6 
-##      .25      .50      .75      .90      .95 
-##   1348.5   1765.5   2379.0   2743.8   2992.1 
-## 
-## lowest :  605  610  649  680  681, highest: 3092 3124 3240 3414 3726</code></pre>
-<p>As we can see, the differences between SD/HD and the week before don´t seem to be extraordinary high. For both SD and HD streams the absolute difference compared to the previous week are around 150, while the relative difference appears to be larger for the HD movies.</p>
-<p>To visualize the distribution of the data, we can create histograms:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-437-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-437-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vars"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["trimmed"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mad"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["min"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["range"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["skew"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["kurtosis"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"200","3":"2677.915","4":"1075.285","5":"2732","6":"2653.675","7":"1064.507","8":"654","9":"5709","10":"5055","11":"0.2000027","12":"-0.4113307","13":"76.03412"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vars"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["trimmed"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mad"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["min"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["range"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["skew"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["kurtosis"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"200","3":"1834.515","4":"760.2271","5":"1668.5","6":"1761.9","7":"578.214","8":"246","9":"4305","10":"4059","11":"0.8477227","12":"0.4158568","13":"53.75617"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>As we can see, the differences between SD/HD and the week before don´t seem to be extraordinary high. To visualize the distribution of the data, we can create histograms:</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-441-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-441-2.png" width="672" /></p>
 <p>We can now conduct a one sample t-test to test for significance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_sd, <span class="dt">mu =</span> <span class="dv">2600</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
 ## data:  movie_data$streams_sd
-## t = 2, df = 200, p-value = 0.07
+## t = 1.0247, df = 199, p-value = 0.3067
 ## alternative hypothesis: true mean is not equal to 2600
 ## 95 percent confidence interval:
-##  2589 2883
+##  2527.979 2827.851
 ## sample estimates:
 ## mean of x 
-##      2736</code></pre>
+##  2677.915</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_hd, <span class="dt">mu =</span> <span class="dv">1700</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
 ## data:  movie_data$streams_hd
-## t = 3, df = 200, p-value = 0.001
+## t = 2.5023, df = 199, p-value = 0.01314
 ## alternative hypothesis: true mean is not equal to 1700
 ## 95 percent confidence interval:
-##  1758 1939
+##  1728.51 1940.52
 ## sample estimates:
 ## mean of x 
-##      1848</code></pre>
-<p>For SD streams we can conclude that the average number of SD streams watched in this week (<span class="math inline">\(2736\)</span>) were not significantly different from the <span class="math inline">\(2600\)</span> streams watched in the previous week, t(199) = 1.827, p &gt; .05 (95% CI = [2589; 2883]). This can be seen from the fact that the p-value is larger than 0.05. This is also evidenced by the fact that the null hypothesis (<span class="math inline">\(2600\)</span>) is included in the range of plausible values given by the confidence interval.</p>
-<p>However for HD streams we see that the perceived mean in our sample (<span class="math inline">\(1848\)</span>) is significantly higher compared to the previous week t(199) = 3.227, p &lt;.05 (95% CI = [1758; 1939]). This can be seen from the fact that the p-value is smaller than 0.05. This is also evidenced by the fact that the null hypothesis (<span class="math inline">\(1700\)</span>) is not included in the range of plausible values given by the confidence interval.</p>
-</div>
-<div id="question-3" class="section level3">
-<h3><span class="header-section-number">9.1.5</span> Question 3</h3>
-<p>First we will analyse whether the advertising campaign had an effect on SD streams. We need to formulate a hypothesis which we can test. In this case the null hypothesis is that the campaign had no effect on the mean number of streams, i.e. that there is no difference in the mean number of streams between the two populations. The alternative hypothesis states that the campaign <em>did</em> have an effect, meaning that there is a difference in the mean number of streams between the populations. In more formal notation this is:</p>
+##  1834.515</code></pre>
+<p>For SD streams, we can conclude that the average number of SD streams watched in this week (2677.92) were not significantly different from the 2600 streams watched in the previous week, t(199) = 1.025, p &gt; .05 (95% CI = [2528; 2828]). This can be seen from the fact that the p-value is larger than 0.05. This is also evidenced by the fact that the null hypothesis (2600) is included in the range of plausible values given by the confidence interval.</p>
+<p>However for HD streams we see that the perceived mean in our sample (1834.52) is significantly higher compared to the previous week t(199) = 2.502, p &lt;.05 (95% CI = [1729; 1941]). This can be seen from the fact that the p-value is smaller than 0.05. This is also evidenced by the fact that the null hypothesis (1700) is not included in the range of plausible values given by the confidence interval.</p>
+<p><strong>Question 3</strong></p>
+<p>First we will analyse whether the advertising campaign had an effect on SD streams. We need to formulate a hypothesis which we can test. In this case, the null hypothesis is that the campaign had no effect on the mean number of streams, i.e. that there is no difference in the mean number of streams between the two populations. The alternative hypothesis states that the campaign <em>did</em> have an effect, meaning that there is a difference in the mean number of streams between the populations. In more formal notation this is:</p>
 <p><span class="math display">\[H_0: \mu_0 = \mu_1 \\ H_1: \mu_0 \neq \mu_1\]</span></p>
-<p>We need to transform the variable online_advertising into a factor variable for some of our applications.</p>
-<p>A good way to get a feeling for the data is to create descriptive statistics and appropriate plots. Since we are testing differences in means, a plot of means would be appropriate.</p>
+<p>We need to transform the variable online_advertising into a factor variable for some of our analyses:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transform into factor variable</span>
+movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </span><span class="kw">factor</span>(movie_data<span class="op">$</span>online_advertising, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</code></pre></div>
+<p>A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means would be appropriate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Descriptive statistics for SD streams, split by online advertising</span>
+<span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>online_advertising)</code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no
-##    vars   n mean  sd median trimmed mad min  max range skew kurtosis   se
-## X1    1 100 2107 791   2122    2070 957 852 4205  3353 0.28    -0.79 79.1
+##    vars   n    mean    sd median trimmed    mad min  max range skew
+## X1    1 100 2150.24 897.3 2088.5 2112.99 1188.3 705 4170  3465 0.25
+##    kurtosis    se
+## X1    -1.02 89.73
 ## -------------------------------------------------------- 
 ## group: yes
-##    vars   n mean  sd median trimmed mad  min  max range skew kurtosis   se
-## X1    1 100 3365 896   3388    3346 949 1545 5622  4077 0.22    -0.41 89.6</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-439-1.png" width="672" /></p>
+##    vars   n    mean     sd median trimmed    mad min  max range skew
+## X1    1 100 3205.59 978.01   3147 3193.69 966.66 654 5709  5055 0.08
+##    kurtosis   se
+## X1     0.04 97.8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of means</span>
+<span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
+    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of SD streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-443-1.png" width="672" /></p>
 <p>As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = “yes”, i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a <strong>two sample t-test</strong>. We use an inpependent-means t-test because we have different movies in each group (i.e., the movies in one condition are <em>indpendent</em> of the movies in the other condition). The requirements are clearly met:</p>
 <ul>
 <li>Our dependent variable is on an interval scale</li>
@@ -423,85 +447,115 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>R automatically performs Welch’s t-test, which corrects for unequal variance</li>
 </ul>
 <p>Thus we can perform the test in R</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
 ## data:  streams_sd by online_advertising
-## t = -10, df = 200, p-value &lt;0.0000000000000002
+## t = -7.9513, df = 196.55, p-value = 0.0000000000001418
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1494 -1023
+##  -1317.1019  -793.5981
 ## sample estimates:
 ##  mean in group no mean in group yes 
-##              2107              3365</code></pre>
-<p>The test is significant, since the p-value is smaller than 0.05, leading us to reject the null hypothesis that there is no difference in the mean number of streams. The p-value states the probability of finding a difference of the observed magnitude or higher, if the null hypothesis was in fact true (i.e., if there was no difference between the populations). In effect, this means that the advertising campaign had an effect on the average number of times a video was streamed. Another thing we can extract from this test result is the confidence interval around the difference in means. Since <span class="math inline">\(0\)</span> is not included in the interval, it is not a plausible value.</p>
+##           2150.24           3205.59</code></pre>
+<p>The test is significant, since the p-value is smaller than 0.05, leading us to reject the null hypothesis that there is no difference in the mean number of streams. The p-value states the probability of finding a difference of the observed magnitude or higher, if the null hypothesis was in fact true (i.e., if there was in fact no difference between the populations). In effect, this means that the advertising campaign had an effect on the average number of times a video was streamed. Another thing we can extract from this test result is the confidence interval around the difference in means. Since 0 is not included in the interval, it is not a plausible value, cofirming the conclusion to reject the null hypothesis.</p>
 <p>The standardized effect size can be computed using the <code>cohensD</code> function:</p>
-<pre><code>## [1] 1.49</code></pre>
-<p>This maginitude of the effect size (1.49) suggests that the effect of online advertising on the number of SD streams is large.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cohensD</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</code></pre></div>
+<pre><code>## [1] 1.124481</code></pre>
+<p>This maginitude of the effect size (1.12) suggests that the effect of online advertising on the number of SD streams is large.</p>
 <p>The same can be done analogously for HD streams:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Descriptive statistics for HD streams, split by online advertising</span>
+stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_hd, movie_data<span class="op">$</span>online_advertising)
+<span class="kw">print</span>(stats)</code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no
-##    vars   n mean  sd median trimmed mad min  max range skew kurtosis se
-## X1    1 100 1522 420   1510    1517 416 605 2517  1912 0.13    -0.27 42
+##    vars   n    mean     sd median trimmed    mad min  max range  skew
+## X1    1 100 1475.55 395.04   1483 1490.08 436.63 246 2305  2059 -0.34
+##    kurtosis   se
+## X1     -0.2 39.5
 ## -------------------------------------------------------- 
 ## group: yes
-##    vars   n mean  sd median trimmed mad min  max range  skew kurtosis   se
-## X1    1 100 2174 678   2332    2202 650 649 3726  3077 -0.33    -0.68 67.8</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-442-1.png" width="672" /></p>
+##    vars   n    mean     sd median trimmed    mad min  max range skew
+## X1    1 100 2193.48 863.34   2133  2179.2 962.95 585 4305  3720 0.21
+##    kurtosis    se
+## X1    -0.73 86.33</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of means</span>
+<span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
+    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of HD streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-446-1.png" width="672" /></p>
 <p>Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is signficant (note that <em>two sample t-test</em> means the same as <em>independent-means t-test</em>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
 ## data:  streams_hd by online_advertising
-## t = -8, df = 200, p-value = 0.00000000000007
+## t = -7.5617, df = 138.71, p-value = 0.00000000000494
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -809 -495
+##  -905.6522 -530.2078
 ## sample estimates:
 ##  mean in group no mean in group yes 
-##              1522              2174</code></pre>
-<p>Again, the p-value is so low that any sensible signifcance level would lead us to reject the null hypothesis, leading us to the conclusion that there is a difference in mean number of streams between videos included in the campaign and those that aren’t.</p>
+##           1475.55           2193.48</code></pre>
+<p>Again, the p-value is so low that any sensible signifcance level would lead us to reject the null hypothesis, suggesting that there is a difference in mean the number of streams between videos included in the campaign and those that aren’t.</p>
 <p>Calculate the standardized effect size:</p>
-<pre><code>## [1] 1.16</code></pre>
-<p>The meagnitude of the effect size indicates again that this effect is large, although it is a little smaller than for SD streams.</p>
-</div>
-<div id="question-4" class="section level3">
-<h3><span class="header-section-number">9.1.6</span> Question 4</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cohensD</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</code></pre></div>
+<pre><code>## [1] 1.069388</code></pre>
+<p>The meagnitude of the effect size indicates again that this effect is large, although it is somewhat smaller than for SD streams.</p>
+<p><strong>Question 4</strong></p>
 <p>Next we want to examine whether HD and SD streams have similar numbers on average. The null hypothesis here is that there is no difference in the mean number of HD streams and the mean number of SD streams for the same movies. Because the observations come from the same population of movies, we refer to the difference in the means for the same populaltion as <span class="math inline">\(\mu_D\)</span> when stating our hypotheses. The alternative hypothesis states that that there is a difference between the streams in HD and SD quality for the same movies. In mathematical notation this can be written as</p>
 <p><span class="math display">\[H_0: \mu_D = 0 \\ H_1: \mu_D \neq 0\]</span></p>
 <p>Again, we start with descriptive statistics to get a feel for the data.</p>
-<pre><code>##    vars   n mean   sd median trimmed  mad min  max range skew kurtosis
-## X1    1 200 2736 1053   2683    2705 1152 852 5622  4770 0.27    -0.45
-##      se
-## X1 74.5</code></pre>
-<pre><code>##    vars   n mean  sd median trimmed mad min  max range skew kurtosis se
-## X1    1 200 1848 650   1766    1826 690 605 3726  3121 0.33    -0.63 46</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-445-1.png" width="672" /></p>
-<p>As in question one, it appears that there is a difference in the means. To test whether it is significant we again need a t-test, with one important distinction: The same movies are observed for HD and SD streams, since the movies are available in both formats. This means that we need a <strong>dependent means t-test</strong>. The other assumptions are virtually identical to the regular t-test . The test can be executed in R by adding <code>paired = TRUE</code> to the code.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Descriptive statistics for HD and SD streams</span>
+psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</code></pre></div>
+<pre><code>##    vars   n    mean      sd median trimmed     mad min  max range skew
+## X1    1 200 2677.91 1075.28   2732 2653.68 1064.51 654 5709  5055  0.2
+##    kurtosis    se
+## X1    -0.41 76.03</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</code></pre></div>
+<pre><code>##    vars   n    mean     sd median trimmed    mad min  max range skew
+## X1    1 200 1834.52 760.23 1668.5  1761.9 578.21 246 4305  4059 0.85
+##    kurtosis    se
+## X1     0.42 53.76</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of means</span>
+movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie_data[, <span class="kw">c</span>(<span class="st">&quot;streams_sd&quot;</span>, <span class="st">&quot;streams_hd&quot;</span>)])
+<span class="kw">names</span>(movie_data_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;stream&quot;</span>, <span class="st">&quot;number&quot;</span>)
+
+<span class="kw">ggplot</span>(movie_data_long, <span class="kw">aes</span>(stream, number)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, 
+        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-450-1.png" width="672" /></p>
+<p>It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same movies are observed for HD and SD streams (i.e., the same movies are available in both formats). This means that we need a <strong>dependent means t-test</strong>. This test is also knownas the <strong>paired samples t-test</strong>. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding <code>paired = TRUE</code> to the code.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  movie_data$streams_hd and movie_data$streams_sd
-## t = -10, df = 200, p-value &lt;0.0000000000000002
+## t = -11.214, df = 199, p-value &lt; 0.00000000000000022
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1036  -739
+##  -991.7133 -695.0867
 ## sample estimates:
 ## mean of the differences 
-##                    -888</code></pre>
-<p>The p-value is again lower than any sensible signifance level (p &lt; .05), which means that we reject the null hypothesis that there is no difference in the mean number of streams.</p>
+##                  -843.4</code></pre>
+<p>The p-value is again lower than the chosen signifance level of 5% (i.e., p &lt; .05), which means that we reject the null hypothesis that there is no difference in the mean number of streams in HD and SD quality. Make sure you interpret the p-value correctly. It refers to the probability of observing a difference of the observed magnitude (or larger) between streams in HD and SD quality, assuming that there was in fact no difference between the formats. The confidence interval confirms the conclusion to reject the null hypothesis since <span class="math inline">\(0\)</span> is not contained in the range of plausible values.</p>
 <p>Now let’s find out how strong this effect is.</p>
-<pre><code>## [1] 1.01</code></pre>
-<p>A standardized effect size of 1.0 tells us that this effect is large.</p>
-</div>
-<div id="question-5" class="section level3">
-<h3><span class="header-section-number">9.1.7</span> Question 5</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cohensD</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>streams_hd)</code></pre></div>
+<pre><code>## [1] 0.9057351</code></pre>
+<p>A standardized effect size of approx. 0.9 tells us that this effect is large.</p>
+<p><strong>Question 5</strong></p>
 <p>The question of how many movies we would need to include in each sample of our experiment can be answered quite comfortably with a power calculation function in R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.3</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</code></pre></div>
 <pre><code>## 
 ##      Two-sample t test power calculation 
 ## 
-##               n = 175
+##               n = 175.3847
 ##               d = 0.3
 ##       sig.level = 0.05
 ##           power = 0.8
@@ -513,7 +567,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="refs" class="references">
 <div>
 <p>Casella, George, and Roger L Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Duxbury Pacific Grove, CA.</p>
-</div>
 </div>
 </div>
 </div>
