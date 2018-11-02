@@ -43,6 +43,12 @@ When you are done with your analysis, click on "Knit to HTML" button above the c
 
 Let´s load the data first and inspect the contained variables:
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# unload all packages to create clean working environment
+try(lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE))
+```
+
+
 ```{r load_data}
 movie_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat", 
                           sep = "\t", 
@@ -138,15 +144,16 @@ $$H_0: \mu_0 = 1700 \\ H_1: \mu_0 \neq 1700 $$
 We can first have a quick look at the descriptive statistics:
 
 ```{r warning=F, message=F, echo=F, eval=T}
-if("package:Hmisc" %in% search()) detach("package:Hmisc", unload=TRUE)
+# make sure describe comes from psych package
+describe <- get("describe", pos = "package:psych")
 ```
 
-```{r warning=F, message=F, echo=T, eval=T}
+```{r eval=T, echo=T, message=F, warning=F, paged.print=FALSE}
 describe(movie_data$streams_sd)
 describe(movie_data$streams_hd)
 ```
 
-```{r warning=F, message=F, echo=F, eval=T}
+```{r eval=T, echo=F, message=F, warning=F, paged.print=FALSE}
 library(Hmisc)
 ```
 

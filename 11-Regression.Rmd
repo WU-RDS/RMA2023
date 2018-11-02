@@ -1359,85 +1359,92 @@ ggplot(data = non_linear_reg) +
   geom_line(data = non_linear_reg,aes(x=advertising,y=exp(pred_log_reg)),color="red", size=1.05) + theme_bw()
 ```
 
-Another way of modelling non-linearities is including a squared term if there are decreasing or increasing effects. In fact, we can model non-constant slopes as long as the form is a linear combination of exponentials of the explanatory variables. Usually we do not expect *many* inflection points so squared or third power terms suffice. Note that the degree of the polynomial has to be equal to the number of inflection points.  
+Another way of modelling non-linearities is including a squared term if there are decreasing or increasing effects. In fact, we can model non-constant slopes as long as the form is a linear combination of exponentials (i.e. squared, cubed, ...) of the explanatory variables. Usually we do not expect *many* inflection points so squared or third power terms suffice. Note that the degree of the polynomial has to be equal to the number of inflection points.  
 
-A common example is the number of cooks in a kitchen and the meals cooked. If there are only two cooks each can have their own equipment and stove, etc. As more cooks are added to the kitchen they will have to share some of the equipment as well as the space and the meals cooked per cook will decline. At some point an additional cook will just stand in the way of all the other cooks and the output will actually decline. 
+When using squared terms we can model diminshing and eventually negative returns. Think about advertisment spending. If a brand is not well known, spending on ads will increase brand awareness and have a large effect on sales. In a regression model this translates to a steep slope for spending at the origin (i.e. for lower spending). However, as more and more people will already know the brand we expect that an additional Euro spent on advertisement will have less and less of an effect the more the company spends. We say that the returns are diminishing. Eventually, if they keep putting more and more ads out, people get annoyed and some will stop buying from the company. In that case the return might even get negative. To model such a situation we need a linear as well as a squared term in the regression.
 
-```lm(...)``` can take squared (or any power) terms as input by adding ```I(X^2)``` as explanatory variable. In the example below we see a clear quadratic relationship with an inflection point at around 3500. If we try to model this using the level of the covariates without the quadratic term we do not get a very good fit. We can think of the following example as a profit function. If we do not produce anything a loss is incurred due to fixed cost. When we start producing each unit has a positive contribution margin and thus we start making a profit. However, the more pieces we produce the higher the marginal cost. This could be due to more people working overtime or an additional machine that has to be maintained. At some point (here around 3500) the production of an additional unit costs more than the sales price and the profit starts falling again and would eventually become negative. 
-
+```lm(...)``` can take squared (or any power) terms as input by adding ```I(X^2)``` as explanatory variable. In the example below we see a clear quadratic relationship with an inflection point at around 70. If we try to model this using the level of the covariates without the quadratic term we do not get a very good fit. 
 
 ```{r}
 set.seed(1234)
-X <- as.integer(runif(1000, 0, 10000))
-Y <- -50000 + 70*X - .01*(X^2) + rnorm(1000, 0, 15000)
-modLinear <- lm(Y ~ X)
-profitData <- data.frame(Profit = Y, Production = X, Prediction = fitted(modLinear))
-ggplot(profitData) +
-  geom_point(aes(x = Production, y = Profit, color = "Data")) +
-  geom_line(aes(x = Production, y = Prediction, color = "Prediction")) +
+X <- as.integer(runif(1000, 0, 12000))
+Y <- 80000 + 140 * X - 0.01 * (X^2) + rnorm(1000, 0,
+                                           35000)
+modLinear <- lm(Y/100000 ~ X)
+sales_quad <- data.frame(sales = Y/100000, advertising = X*0.01,
+                        Prediction = fitted(modLinear))
+ggplot(sales_quad) +
+  geom_point(aes(x = advertising, y = sales, color = "Data")) +
+  geom_line(aes(x = advertising, y = Prediction, color = "Prediction")) +
   theme_bw() +
   ggtitle("Linear Predictor") +
   theme(legend.title = element_blank())
 ```
 
-The graph above clearly shows that a production of between 2500 and 5000 pieces is profitable and producing nothing would lead to a loss. Let's see which production level showed the highest profit. It is clear that the profit is highest when producing a little over 3500 pieces. 
+The graph above clearly shows that advertising spending of between 0 and 50 increases sales. However, the marginal increase (i.e. the slope of the data curve) is decreasing. Around 70 there is an inflection point. After that point additional ad-spending actually decreases sales (e.g. people get annoyed). 
+Notice that the prediction line is straight, that is, the marginal increase of sales due to additional spending on advertising is the same for any amount of spending. This shows the danger of basing business decisions on wrongly specified models. But even in the area in which the sign of the prediction is correct, we are quite far off. Lets take a look at the top 5 sales values and the corresponding predictions:
 
 ```{r}
-top5 <- which(profitData$Profit %in% head(sort(profitData$Profit, decreasing = TRUE), 5))
-dplyr::arrange(profitData[top5, ], desc(profitData[top5, 1]))
-```
-
-However, if we look at the prediction using just the number of pieces produced the maximum is at $3$, the minimum production level observed. Clearly, this is not a desired result.
-
-```{r}
-top5prediction <- which(profitData$Prediction %in% head(sort(profitData$Prediction, decreasing = TRUE), 5))
-# Sorting by predicted profit:
-dplyr::arrange(profitData[top5prediction, ], desc(profitData[top5prediction, 3]))
-
-# Equivalent to just sorting by production level:
-head(profitData[order(profitData$Production),], 5)
+top5 <- which(sales_quad$sales %in% head(sort(sales_quad$sales, decreasing = TRUE), 5))
+dplyr::arrange(sales_quad[top5, ], desc(sales_quad[top5, 1]))
 ```
 
 By including a quadratic term we can fit the data very well. This is still a linear model since the outcome variable is still explained by a linear combination of regressors even though one of the regressors is now just a non-linear function of the same variable (i.e. the squared value).
 
 ```{r}
-mod <- lm(Profit ~ Production + I(Production^2), data = profitData)
-summary(mod)
-# Replace prediction:
-profitData$Prediction <- fitted(mod)
-ggplot(profitData) +
-  geom_point(aes(x = Production, y = Profit, color = "Data")) +
-  geom_line(aes(x = Production, y = Prediction, color = "Prediction")) +
-  theme_bw() +
-  ggtitle("Quadratic Model") +
-  theme(legend.title = element_blank())
+quad_mod <- lm(sales ~ advertising + I(advertising^2), data = sales_quad)
+summary(quad_mod)
+confint(quad_mod)
+sales_quad$Prediction <- predict(quad_mod)
+ggplot(data = sales_quad, aes(x = Prediction, y = sales)) + 
+  geom_point(shape=1) + 
+  geom_smooth(method = "lm", fill = "blue", alpha=0.1) +
+  theme_bw()
+
+plot(quad_mod,1)
+plot(quad_mod,2)
+shapiro.test(resid(quad_mod))
+
+sales_quad$pred_lin_reg <- predict(modLinear)
+ggplot(data = sales_quad) +
+  geom_point(aes(x = advertising, y = sales),shape=1) + 
+  geom_line(data = sales_quad,aes(x=advertising,y=pred_lin_reg),color="blue", size=1.05) + 
+  geom_line(data = sales_quad,aes(x=advertising,y=Prediction),color="red", size=1.05) + theme_bw() + xlab("Advertising (thsd. Euro)") + ylab("Sales (million units)") 
 ```
 
 Now the prediction of the model is very close to the actual data and we could base our production decisions on that model.
 
 ```{r}
-top5prediction <- which(profitData$Prediction %in% head(sort(profitData$Prediction, decreasing = TRUE), 5))
-# Sorting by predicted profit:
-dplyr::arrange(profitData[top5prediction, ], desc(profitData[top5prediction, 3]))
+top5 <- which(sales_quad$sales %in% head(sort(sales_quad$sales, decreasing = TRUE), 5))
+dplyr::arrange(sales_quad[top5, ], desc(sales_quad[top5, 1]))
 ```
 
-When interpreting the coefficients of the predictor in this model we have to be careful. Since we included the squared term the slope is now different at each level of production (this can be seen in the graph above). This can easily be seen by calculating the derivative of the model with respect to production. 
+When interpreting the coefficients of the predictor in this model we have to be careful. Since we included the squared term the slope is now different at each level of production (this can be seen in the graph above). That is, we do not have a single coefficient to interpret as the slope anymore. This can easily be shown by calculating the derivative of the model with respect to production. 
 
 $$
-\text{Profit} = \alpha + \beta_1 \text{ Production} + \beta_2 \text{ Production}^2 + \varepsilon\\
-{\delta \text{ Profit} \over \delta \text{ Production}} = \beta_1 + 2 \beta_2 \text{ Production} \equiv \text{Slope}
+\text{Sales} = \alpha + \beta_1 \text{ Advertising} + \beta_2 \text{ Advertising}^2 + \varepsilon\\
+{\delta \text{ Sales} \over \delta \text{ Advertising}} = \beta_1 + 2 \beta_2 \text{ Advertising} \equiv \text{Slope}
 $$
 
-Intuitively, this means that the change of profit due to one more piece being produced depends on the current production level. At the maximum predicted value the slope is close to $0$ (theoretically it is equal to $0$ but this would require decimals and we can only sell whole pieces). Above we only calculated the prediction for the observed data, so let's first predict the profit for all possible values between $1$ and $10,000$ to get the optimal production level according to our model. 
+Intuitively, this means that the change of sales due to an additional Euro spent on advertising depends on the current level of advertising. $\alpha$, the intercept can still be interpreted as the expected value of sales given that we do not advertise at all (set advertising to 0 in the model). The sign of the squared term ($\beta_2$) can be used to determine the curvature of the funciton. If the sign is positive, the function is convex (curvature is upwards), if it is negative it is concave curvature is downwards). We can interpret $\beta_1$ and $\beta_2$ separately in terms of their influence on the *slope*. By setting advertising to $0$ we observe that $\beta_1$ is the slope at the origin. By taking the derivative of the slope with respect to advertising we see that the change of the slope due to additional spending on advertising is two times $\beta_2$. 
+
+$$
+{\delta Slope \over \delta Advertising} = 2\beta_2
+$$
+
+
+At the maximum predicted value the slope is close to $0$ (theoretically it is equal to $0$ but this would require decimals and we can only sell whole pieces). Above we only calculated the prediction for the observed data, so let's first predict the profit for all possible values between $1$ and $200$ to get the optimal production level according to our model. 
 
 ```{r}
-predictionAll<- predict(mod, newdata = data.frame(Production = 1:10000))
-optimalProduction <- as.integer(which.max(predictionAll))
+predictionAll<- predict(quad_mod, newdata = data.frame(advertising = 1:200))
+(optimalAdvertising <- as.integer(which.max(predictionAll)))
+
 #Slope at optimum:
-coef(mod)[["Production"]] + 2 * coef(mod)[["I(Production^2)"]] * optimalProduction
+coef(quad_mod)[["advertising"]] + 2 * coef(quad_mod)[["I(advertising^2)"]] * optimalAdvertising
 ```
 
-For all other levels of production we insert the pieces produced into the formula to obtain the slope at that point. In the following example you can choose the level of production and to illustrate the change in the slope
+For all other levels of advertising we insert the pieces produced into the formula to obtain the slope at that point. In the following example you can choose the level of advertising.
 
 <p><iframe src="https://learn.wu.ac.at/shiny/imsm/sqrag/" style="border: medium none; width: 100%; height: 650px; transform: scale(1.0);"></iframe></p>
+
 

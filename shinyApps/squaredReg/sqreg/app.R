@@ -13,11 +13,11 @@ ui <- fluidPage(
   withMathJax(),
    sidebarLayout(
       sidebarPanel(
-         sliderInput("production",
-                     "Pieces Produced:",
+         sliderInput("advertising",
+                     "Advertising (thsd. Euro):",
                      min = 0,
-                     max = 10000,
-                     value = 3491),
+                     max = 120,
+                     value = 50),
          uiOutput("formula")
       ),
       mainPanel(
@@ -29,21 +29,24 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   set.seed(1234)
-  X <- as.integer(runif(1000, 0, 10000))
-  Y <- -50000 + 70*X - .01*(X^2) + rnorm(1000, 0, 15000)
-  profitData <- data.frame(Profit = Y, Production = X)
-  mod <- lm(Profit ~ Production + I(Production^2), data = profitData)
-  profitData$Prediction <- fitted(mod)
+  X <- as.integer(runif(1000, 0, 12000))
+  Y <- 80000 + 140 * X - 0.01 * (X^2) + rnorm(1000, 0,
+                                              35000)
+
+  salesData <- data.frame(sales = Y/100000, advertising = X*0.01)
+  mod <- lm(sales ~ advertising + I(advertising^2), data = salesData)
+  salesData$Prediction <- fitted(mod)
   output$Plot <- renderPlot({
-    slope <- coef(mod)[["Production"]] + 2 * coef(mod)[["I(Production^2)"]] * input$production
-    y0 <- predict(mod, newdata = data.frame(Production = input$production))
-    len <- 3000
+    optimalAdvertising <- as.integer(which.max(predictionAll))
+    slope <- coef(quad_mod)[["advertising"]] + 2 * coef(quad_mod)[["I(advertising^2)"]] * input$advertising
+    y0 <- predict(mod, newdata = data.frame(advertising = input$advertising))
+    len <- 20
     y <- y0+(-len:len * slope)
-    x <- input$production+(-len:len)
+    x <- input$advertising+(-len:len)
     vals <- data.frame(y = y, x = x)
-    ggplot(profitData) +
-      geom_point(aes(x = Production, y = Profit, color = "Data")) +
-      geom_line(aes(x = Production, y = Prediction, color = "Prediction")) +
+    ggplot(salesData) +
+      geom_point(aes(x = advertising, y = sales, color = "Data")) +
+      geom_line(aes(x = advertising, y = Prediction, color = "Prediction")) +
       geom_line(data = vals, aes(x = x, y = y, color = "Slope")) +
       theme_bw() +
       theme(legend.title = element_blank())
@@ -52,12 +55,12 @@ server <- function(input, output) {
 
   
   output$formula <- renderUI({
-    cSlope <- as.character(round(coef(mod)[["Production"]] + 
-                             2 * coef(mod)[["I(Production^2)"]] * input$production, 2))
-    cProd <- as.character(input$production)
-    cB1 <- as.character(round(coef(mod)["Production"], 2))
-    cB2 <- as.character(round(coef(mod)["I(Production^2)"], 2))
-    string <- paste0("$$ \\text{Slope} = \\beta_1 + 2 \\beta_2 \\text{ Production} \\\\ =", cB1,"+ 2 * (", cB2,") * ", cProd, " = ", cSlope, "$$") 
+    cSlope <- as.character(round(coef(mod)[["advertising"]] + 
+                             2 * coef(mod)[["I(advertising^2)"]] * input$advertising, 3))
+    cProd <- as.character(input$advertising)
+    cB1 <- as.character(round(coef(mod)["advertising"], 3))
+    cB2 <- as.character(round(coef(mod)["I(advertising^2)"], 3))
+    string <- paste0("$$ \\text{Slope} = \\beta_1 + 2 \\beta_2 \\text{ advertising} \\\\ =", cB1,"+ 2 * (", cB2,") * ", cProd, " = ", cSlope, "$$") 
     withMathJax(helpText(string))
   })
 }
