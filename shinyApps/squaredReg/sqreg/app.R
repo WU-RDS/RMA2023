@@ -34,10 +34,10 @@ server <- function(input, output) {
                                               35000)
 
   salesData <- data.frame(sales = Y/100000, advertising = X*0.01)
-  mod <- lm(sales ~ advertising + I(advertising^2), data = salesData)
+  mod <- quad_mod <- lm(sales ~ advertising + I(advertising^2), data = salesData)
   salesData$Prediction <- fitted(mod)
   output$Plot <- renderPlot({
-    optimalAdvertising <- as.integer(which.max(predictionAll))
+    optimalAdvertising <- as.integer(which.max(salesData$Prediction))
     slope <- coef(quad_mod)[["advertising"]] + 2 * coef(quad_mod)[["I(advertising^2)"]] * input$advertising
     y0 <- predict(mod, newdata = data.frame(advertising = input$advertising))
     len <- 20
@@ -51,20 +51,20 @@ server <- function(input, output) {
       theme_bw() +
       theme(legend.title = element_blank())
    })
-  
 
-  
+
+
   output$formula <- renderUI({
-    cSlope <- as.character(round(coef(mod)[["advertising"]] + 
+    cSlope <- as.character(round(coef(mod)[["advertising"]] +
                              2 * coef(mod)[["I(advertising^2)"]] * input$advertising, 3))
     cProd <- as.character(input$advertising)
     cB1 <- as.character(round(coef(mod)["advertising"], 3))
     cB2 <- as.character(round(coef(mod)["I(advertising^2)"], 3))
-    string <- paste0("$$ \\text{Slope} = \\beta_1 + 2 \\beta_2 \\text{ advertising} \\\\ =", cB1,"+ 2 * (", cB2,") * ", cProd, " = ", cSlope, "$$") 
+    string <- paste0("$$ \\text{Slope} = \\beta_1 + 2 \\beta_2 \\text{ advertising} \\\\ =", cB1,"+ 2 * (", cB2,") * ", cProd, " = ", cSlope, "$$")
     withMathJax(helpText(string))
   })
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
 
