@@ -10,7 +10,7 @@ output:
 ---
 
 
-```{r, echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
 library(dplyr)
 library(stringr)
@@ -49,7 +49,7 @@ This chapter covers more advanced techniques for handling data in R. It is prima
 
 ### The dplyr package
 
-There are many ways to achieve the same thing in R. Data transformation and handling tasks can be solved with the functions provided by base R (i.e. the functions that come with every R installation), but the ```dplyr```package offers a comprehensive suite of functions that makes many tasks easier, while keeping code very readable. As such, we will be presenting it here, but keep in mind that all of these tasks could also be achieved without any packages. 
+There are many ways to achieve the same thing in R. Data transformation and handling tasks can be solved with the functions provided by base R (i.e. the functions that come with every R installation), but the ```dplyr```package offers a comprehensive suite of functions that makes many tasks easier, while keeping code very readable. As such, we will be presenting it here, but keep in mind that all of these tasks could also be achieved without any additional packages. In addition to this section, take a look at [the "Data Wrangling" cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), for more information on dplyr's functionality.
 
 Before we continue, ensure that the ```dplyr()``` package is installed and loaded. 
 
@@ -82,7 +82,7 @@ Another way to filter observations is to choose all observations where one colum
 filter(music_data, top10_track_streams < 100000)
 ```
 
-You can enforce multiple conditions with ```&```. The following example selects all observations with less than 150000 but more than 100000 streams.
+You can enforce multiple conditions with ```&```. The following example selects all observations with less than 150000 but more than 100000 streams. 
 
 ```{r message=FALSE, warning=FALSE}
 filter(music_data,  top10_track_streams > 100000 & top10_track_streams < 150000)
@@ -94,7 +94,7 @@ The ```|``` symbol is the way R expresses "or". This way you can select observat
 filter(music_data,  top10_track_streams < 100000 | top10_track_streams > 150000)
 ```
 
-A very useful feature of the ```filter()``` function is its ability to accept multiple criteria at once. Say we want to select all tracks marked as ```"not explicit"``` with less than 100000 streams. This can be achieved by simply supplying the function with additional arguments, as in the example below. 
+A very useful feature of the ```filter()``` function is its ability to accept multiple criteria at once. Say we want to select all tracks marked as ```"not explicit"``` with less than 100000 streams. This can be achieved by simply supplying the function with additional arguments, as in the example below. Notice that this is equivalent to using the ```&``` operator. 
 
 ```{r message=FALSE, warning=FALSE}
 filter(music_data, top10_track_explicit == "not explicit", top10_track_streams < 100000)
@@ -254,7 +254,7 @@ Strings (which is short for "character strings"), can be tough to deal with. The
 
 A very accessible package for manipulating strings is the ```stringr``` package. It is designed to be as uniform as possible, meaning that once you have understood the basic syntax of any one of its functions it is very easy to apply all of them. It sacrifices some flexibility for this simplicity, so if you ever encounter a task you can not easily solve with ```stringr``` it is worth checking out the package it is built on, ```stringi```. For now, however, ```stringr``` will be more than sufficient. 
 
-The majority of functions in ```stringr``` are built around two core arguments: a string to be worked on and a pattern. There are quite a few that aren't, such as ```str_length()```, but these are (for the most part) fairly self explanatory and will not be explained further here. A good overview of the included functions can be found [here](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf).
+The majority of functions in ```stringr``` are built around two core arguments: a string to be worked on and a pattern. There are quite a few that aren't, such as ```str_length()```, but these are (for the most part) fairly self explanatory and will not be explained further here. A good overview of the included functions can be found [here (downloads a pdf)](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf).
 
 The string to be worked on can either be an individual string in quotation marks or an entire vector or column of strings that the same operation should be applied to. The pattern can _technically_ also be a vector of patterns to look for, however, in this tutorial we will only use single patterns. 
 
@@ -300,7 +300,7 @@ This result may be somewhat surprising. Why did the function replace _every_ cha
 
 #### A crash course in regex
 
-Behind the scenes ```stringr``` uses something called regex (short for "regular expressions") to match patterns. regex allows you to match not just individual letters, but more abstract patterns. It does this by using special characters that do not match literally. You have already met the first such special character ".", which is regex's version of a wildcard, meaning that it matches _any_ other character. That's why, when we told stringr to replace all dots with commas, it replaced every character with a comma. 
+Behind the scenes ```stringr``` uses something called regex (short for "regular expressions") to match patterns ( [see cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf) ). Regex allows you to match not just individual letters, but more abstract patterns. It does this by using special characters that do not match literally. You have already met the first such special character ".", which is regex's version of a wildcard, meaning that it matches _any_ other character. That's why, when we told stringr to replace all dots with commas, it replaced every character with a comma. 
 
 This raises the question of what to do if we want to literally match a dot and not any character. There are two ways to go about this. First, we could *escape* the wildcard character. What this means is that we use another special character to tell regex that the next character is meant to be taken literally and not as a wildcard. The symbol for this is a double back slash "\\\\". So, if we wanted to change only the dot to a comma we would write
 
@@ -487,7 +487,7 @@ The problems can be grouped roughly into two categories:
 * _Additional symbols:_ Some respondents added additional symbols or text that we need to get rid of.
 * _Wrong decimal separator:_ R needs all decimal separators to be ```.``` and not ```,```, so we need to make sure all of them are dots. 
 
-We will tackle both of these problems with ```mutate_at()``` and the the ```stringr``` package. First we will strip out any character that isn't a number, a comma or a dot. ```str_remove_all``` removes all instances of characters that are matched by the expression given in "pattern". Note that the function ```str_remove_all``` is called without parentheses. Its argument(s) are passed directly to ```mutate_at()```, separated by commas. The pattern we use here is ```[^0-9,\\.]```, which can be read as "match all characters that are not (remember that a ```^``` in square brackets means 'everything but') ```0-9``` a comma (```,```) or a dot (```\\.```)". Remember that the dot is a special character and therefore has to be escaped with the double backslash. 
+We will tackle both of these problems with ```mutate_at()``` and the ```stringr``` package. First we will strip out any character that isn't a number, a comma or a dot. ```str_remove_all``` removes all instances of characters that are matched by the expression given in "pattern". Note that the function ```str_remove_all``` is called without parentheses. Its argument(s) are passed directly to ```mutate_at()```, separated by commas. The pattern we use here is ```[^0-9,\\.]```, which can be read as "match all characters that are not (remember that a ```^``` in square brackets means 'everything but') ```0-9``` a comma (```,```) or a dot (```\\.```)". Remember that the dot is a special character and therefore has to be escaped with the double backslash. 
 
 ```{r}
 data <- data %>%
@@ -514,7 +514,7 @@ data %>%
 
 ```
 
-As a final step we want to convert all variables that we want to work with into numeric variables. Again, we use ```mutate_at()```, this time coupled with the ```as.numeric()``` function.
+As a final step we want to convert all variables that we want to work with into numeric variables. Again, we use ```mutate_at()```, this time coupled with the ```as.numeric()``` function. Values that cannot be converted to numbers such as empty strings or strings that contain characters will be set to ```NA``` and the warning "NAs introduced by coercion" is shown. This is not a big deal, but you might have to exclude those observations from the dataset depending on your analysis.
 
 ```{r}
 data <- data %>% 

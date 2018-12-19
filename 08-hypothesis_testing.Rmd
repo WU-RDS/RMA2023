@@ -91,6 +91,7 @@ We also know that 95% of the probability is within `r round(qnorm(p2),2)` standa
 
 ```{r}
 set.seed(12567)
+H_0 <- 10
 student_sample <- sample(1:25000, size = 50, replace = FALSE)
 student_sample <- hours[student_sample]
 mean_sample <- mean(student_sample)
@@ -140,7 +141,7 @@ We use ```0.975``` and not ```0.95``` since we are running a two-sided test and 
 abs(z_score) > abs(z_crit)
 ```
 
-Since the absolute value of the caluclated test statistic is larger than the critical value, we would reject $H_0$ and conclude that the true population mean $\mu$ is significantly different from the hypothesized value $\mu_0 = 10$.
+Since the absolute value of the calculated test statistic is larger than the critical value, we would reject $H_0$ and conclude that the true population mean $\mu$ is significantly different from the hypothesized value $\mu_0 = 10$.
 
 ##### t-statistic
 
@@ -282,11 +283,11 @@ ggplot(data.frame(x = c(min, max)), aes(x = x)) +
 
 **Decision:** Reject $H_0$, given that the calculated test statistic is larger than critical value.
 
-Something to keep in mind here is the fact the test statistic is a function of the sample size. This, as $n$ gets large, the the test statistic gets larger as well and we are more likely to find a significant effect. This reflects the decrease in uncertainty about the true population mean as our sample size increases.  
+Something to keep in mind here is the fact the test statistic is a function of the sample size. This, as $n$ gets large, the test statistic gets larger as well and we are more likely to find a significant effect. This reflects the decrease in uncertainty about the true population mean as our sample size increases.  
 
 #### P-values
 
-In the previous section, we computed the test statistic, which tells us how close our sample is to the null hyposesis. The p-value corresponds to the probability that the test statistic would take a value as extreme or more extreme than the one that we actually observed, **assuming that the null hypothesis is true**. It is important to note that this is a **conditional probability**: we compute the probability of observing a sample mean (or a more extreme value) conditional on the assumption that the null hypothesis is true. The ```pnorm()```function can be used to compute this probability. It is the cumulative probability distribution function of the `normal distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value **less than or equal to** the calculated test statistic given the the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic **larger than or equal to** the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.  
+In the previous section, we computed the test statistic, which tells us how close our sample is to the null hypothesis. The p-value corresponds to the probability that the test statistic would take a value as extreme or more extreme than the one that we actually observed, **assuming that the null hypothesis is true**. It is important to note that this is a **conditional probability**: we compute the probability of observing a sample mean (or a more extreme value) conditional on the assumption that the null hypothesis is true. The ```pnorm()```function can be used to compute this probability. It is the cumulative probability distribution function of the `normal distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value **less than or equal to** the calculated test statistic given the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic **larger than or equal to** the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.  
 
 ```{r}
 p_value <- 2*(1-pt(abs(t_score), df = df))
@@ -496,7 +497,7 @@ Note that in the reporting above, the number ```49``` in parenthesis refers to t
 
 ## Comparing two means
 
-In the one-sample test above, we tested the hypothesis that the population mean has some specific value $\mu_0$ using data from only one sample. In marketing (as in many other disciplines), you will often be confronted with a situation where you wish to compare the means of two groups. For example, you may conduct an experiment and randomly split your sample into two groups, one of which receives a treatment (experimental group) while the other doesn't (control group). In this case, the units (e.g., participants, products) in each group are different ('between-subjects design') and the samples are said to be independent. Hence, we would use a **independent-means t-test**. If you run an experiment with two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same units in each group ('within-subjects design'). In this case, we would need to conduct an **dependent-means t-test**. Both tests are discribed in the following sections, beginning with the independent-means t-test.      
+In the one-sample test above, we tested the hypothesis that the population mean has some specific value $\mu_0$ using data from only one sample. In marketing (as in many other disciplines), you will often be confronted with a situation where you wish to compare the means of two groups. For example, you may conduct an experiment and randomly split your sample into two groups, one of which receives a treatment (experimental group) while the other doesn't (control group). In this case, the units (e.g., participants, products) in each group are different ('between-subjects design') and the samples are said to be independent. Hence, we would use a **independent-means t-test**. If you run an experiment with two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same units in each group ('within-subjects design'). In this case, we would need to conduct an **dependent-means t-test**. Both tests are described in the following sections, beginning with the independent-means t-test.      
 
 ### Independent-means t-test
 
@@ -532,7 +533,7 @@ From this, we can already see that there is a difference in means between groups
 
 #### Theory
 
-As a starting point, let us label the unknown population mean of group A (control group) in our experiment $\mu_1$, and that of group B (experimental group) $\mu_2$. In this setting, the null hypothesis would state that the the mean in group A is equal to the mean in group B:
+As a starting point, let us label the unknown population mean of group A (control group) in our experiment $\mu_1$, and that of group B (experimental group) $\mu_2$. In this setting, the null hypothesis would state that the mean in group A is equal to the mean in group B:
 
 $$
 H_0: \mu_1=\mu_2
@@ -645,7 +646,7 @@ The section above explained the theory behind the independent-means t-test and s
 
 **1. Formulate null and alternative hypotheses**
 
-We wish to analyze whether there is a significant difference in music listining times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:   
+We wish to analyze whether there is a significant difference in music listening times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:   
 
 $$
 H_0: \mu_1=\mu_2\\
@@ -654,7 +655,7 @@ $$
 
 **2. Select an appropriate test**
 
-Since we have a ratio scaled variable (i.e., listening times) and two independent groups, where the mean of one sample is independent of the group of the second sample (i.e., the goups contain different units), the independent-means t-test is appropriate. 
+Since we have a ratio scaled variable (i.e., listening times) and two independent groups, where the mean of one sample is independent of the group of the second sample (i.e., the groups contain different units), the independent-means t-test is appropriate. 
 
 **3. Choose the level of significance**
 
@@ -669,14 +670,14 @@ library(psych)
 describeBy(hours_a_b$hours, hours_a_b$group)
 ```
 
-This already shows us that the mean between groups A and B are different. We can visiualize the data using a plot of means, boxplot, and a histogram. 
+This already shows us that the mean between groups A and B are different. We can visualize the data using a plot of means, boxplot, and a histogram. 
 
 ```{r, message = FALSE, warning=FALSE}
 ggplot(hours_a_b,aes(group, hours)) + 
   geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
   geom_pointrange(stat = "summary") + 
   labs(x = "Group", y = "Listening time (hours)") +
-  ggtitle("Means and standard errors of listining times") +
+  ggtitle("Means and standard errors of listening times") +
   theme_bw()
 
 ggplot(hours_a_b, aes(x = group, y = hours)) + 
@@ -710,7 +711,7 @@ The results showed that listening times were higher in the experimental group (M
 
 While the independent-means t-test is used when different units (e.g., participants, products) were assigned to the different condition, the **dependent-means t-test** is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.
 
-Imagine, for example, a slightly different experimental setup for the above experiment. Imagine that we do not assign different users to the groups, but that a sample of 100 users gets to use the music streaming service with the new feature for one month and we compare the music listening times of these users during the month of the experiment witht he listening time in the previous month. Let us generate data for this example: 
+Imagine, for example, a slightly different experimental setup for the above experiment. Imagine that we do not assign different users to the groups, but that a sample of 100 users gets to use the music streaming service with the new feature for one month and we compare the music listening times of these users during the month of the experiment with the listening time in the previous month. Let us generate data for this example: 
 
 ```{r, message = FALSE, warning=FALSE}
 set.seed(321)
@@ -727,7 +728,7 @@ hours_a_b_paired <- data.frame(hours_a = round(sample_1_hours,0),hours_b = round
 head(hours_a_b_paired)
 ```
 
-Not that the data set has almost the same structure as before only that we know have two variables representing the listning times of each user in the month before the experiment and during the month of the experiment when the new feature was tested.
+Not that the data set has almost the same structure as before only that we know have two variables representing the listening times of each user in the month before the experiment and during the month of the experiment when the new feature was tested.
 
 #### Theory
 
@@ -736,7 +737,7 @@ In this case, we want to test the hypothesis that there is no difference in mean
 $$
 H_0: \mu_D = 0 \\
 $$
-Note that the hypothsis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace $\mu_D$ with $\delta$ and get:
+Note that the hypothesis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace $\mu_D$ with $\delta$ and get:
 
 $$
 H_0: \delta = 0 \\
@@ -800,7 +801,7 @@ $$
 
 **2. Select an appropriate test**
 
-Since we have a ratio scaled variable (i.e., listening times) and two observations of the same group of users (i.e., the goups contain the same units), the dependent-means t-test is appropriate. 
+Since we have a ratio scaled variable (i.e., listening times) and two observations of the same group of users (i.e., the groups contain the same units), the dependent-means t-test is appropriate. 
 
 **3. Choose the level of significance**
 

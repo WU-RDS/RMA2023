@@ -18,9 +18,9 @@ opts_chunk$set(tidy.opts=list(width.cutoff=75),tidy=FALSE, rownames.print = FALS
 
 ### Motivation and intuition
 
-In the last section we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. A more usefull method is the logistic regression. In particular we are going to have a look at the logit model. In the following dataset we are trying to predict whether a song will be a top-10 hit on a popular music streaming platform. In a first step we are going to use only the danceability index as a predictor. Later we are going to add more independent variables. 
+In the last section we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. A more useful method is the logistic regression. In particular we are going to have a look at the logit model. In the following dataset we are trying to predict whether a song will be a top-10 hit on a popular music streaming platform. In a first step we are going to use only the danceability index as a predictor. Later we are going to add more independent variables. 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Simulated binary outcome data"}
+```{r, echo=TRUE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Simulated binary outcome data"}
 library(ggplot2)
 library(gridExtra)
 
@@ -33,9 +33,9 @@ head(chart_data)
 str(chart_data)
 ```
 
-Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a __logistic regression model__. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. Notice that songs with a higher dancability index (on the right of the x-axis) seem to cluster more at $1$ and those with a lower more at $0$ so we expect a positive influence of dancability on the probability of a song to become a top-10 hit. 
+Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a __logistic regression model__. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. Notice that songs with a higher danceability index (on the right of the x-axis) seem to cluster more at $1$ and those with a lower more at $0$ so we expect a positive influence of danceability on the probability of a song to become a top-10 hit. 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="The same binary data explained by two models; A linear probabilty model (on the left) and a logistic regression model (on the right)"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="The same binary data explained by two models; A linear probability model (on the left) and a logistic regression model (on the right)"}
 #Scatterplot showing the association between two variables using a linear model
 plt.lin <- ggplot(chart_data,aes(danceability,top10)) +  
   geom_point(shape=1) +
@@ -99,7 +99,7 @@ logit_model <- glm(top10 ~ danceability,family=binomial(link='logit'),data=chart
 summary(logit_model )
 ```
 
-Noticably this output does not include an $R^2$ value to asses model fit. Multiple "Pseudo $R^2$s", similar to the one used in OLS, have been developed. There are packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. We define the function ```logisticPseudoR2s()``` that takes a logit model as an input and returns three popular pseudo $R^2$ values.
+Noticeably this output does not include an $R^2$ value to asses model fit. Multiple "Pseudo $R^2$s", similar to the one used in OLS, have been developed. There are packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. We define the function ```logisticPseudoR2s()``` that takes a logit model as an input and returns three popular pseudo $R^2$ values.
 
 ```{r}
 logisticPseudoR2s <- function(LogModel) {
@@ -153,9 +153,9 @@ library(mfx)
 logitmfx(logit_model, data = chart_data, atmean = FALSE)
 ```
 
-This now gives the average partial effects in percentage points. An additional point on the dancability scale (from $1$ to $100$), on average, makes it $1.57%$ more likely for a song to become at top-10 hit.
+This now gives the average partial effects in percentage points. An additional point on the danceability scale (from $1$ to $100$), on average, makes it $1.57%$ more likely for a song to become at top-10 hit.
 
-To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value $+1$. For example if we are interested in how much more likely a song with 51 compared to 50 dancability is to become a hit we can simply calculate the following
+To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value $+1$. For example if we are interested in how much more likely a song with 51 compared to 50 danceability is to become a hit we can simply calculate the following
 
 ```{r}
 #Probability of a top 10 hit with a danceability of 50
@@ -198,7 +198,6 @@ The question remains, whether a variable *should* be added to the model. We will
 For example, consider the following model, where we exclude the ```followers``` covariate. Seeing as it was able to contribute significantly to the explanatory power of the model, the AIC increases, indicating that the model including ```followers``` is better suited to explain the data. We always want the lowest possible AIC. 
 
 ```{r, message = FALSE, warning = FALSE}
-# Take "religious" out. Compare AIC to full model!
 multiple_logit_model2 <- glm(top10 ~ danceability_100 + weeks_since_release,family=binomial(link='logit'),data=chart_data)
 
 summary(multiple_logit_model2)
@@ -234,7 +233,7 @@ Given this error, one should not use the output of the ```glm(...)``` function f
 
 ##### Example
 
-In this example data $Y = 0$ if $x_1 <0$ and $Y=1$ if $x_1>0$ and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are $1$ despite $x_1$ being a predictor of $Y$. Thus we turn to the penalized-likelihood version. This model correctly indicates that $x_1$ is in fact a predictor for $Y$ as the coefficient is significant.  
+In this example data $Y = 0$ if $x_1 <0$ and $Y=1$ if $x_1>0$ and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are $1$ despite $x_1$ being a predictor of $Y$. Thus, we turn to the penalized-likelihood version. This model correctly indicates that $x_1$ is in fact a predictor for $Y$ as the coefficient is significant.  
 
 ```{r, message = FALSE, warning = FALSE}
 Y <- c(0,0,0,0,1,1,1,1)

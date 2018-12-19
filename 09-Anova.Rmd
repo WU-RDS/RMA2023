@@ -375,22 +375,25 @@ This statistic follows the F distribution with (m = c – 1) and (n = N – c) d
 
 ```{r echo = F, message=FALSE, warning=FALSE, eval=T, fig.align="center", fig.cap = "The F distribution"}
 library(ggplot2)
-a <- seq(0,4, 2)
-ggplot(data.frame(x=c(0,4)), aes(x))+
-  stat_function(fun = df, args = list(2,2), aes(colour = paste0("m = 2",", n = 2"))) +
-  stat_function(fun = df, args = list(2,5), aes(colour = paste0("m = 2",", n = 5")))+
-  stat_function(fun = df, args = list(2,10), aes(colour = paste0("m = 2",", n = 10")))+
-  stat_function(fun = df, args = list(5,2), aes(colour = paste0("m = 5",", n = 2")))+
-  stat_function(fun = df, args = list(5,5), aes(colour = paste0("m = 5",", n = 5")))+
-  stat_function(fun = df, args = list(5,10), aes(colour = paste0("m = 5",", n = 10")))+
-  stat_function(fun = df, args = list(10,2), aes(colour = paste0("m = 10",", n = 2")))+
-  stat_function(fun = df, args = list(10,5), aes(colour = paste0("m = 10",", n = 5")))+
-  stat_function(fun = df, args = list(10,10), aes(colour = paste0("m = 10",", n = 10")))+
-  stat_function(fun = df, args = list(20,20), aes(colour = paste0("m = 20",", n = 20")))+
-  stat_function(fun = df, args = list(2, 297), aes(color = "Our Model:\n m = 2, n = 297")) +
-  ylim(min=0, max=1) +
-  labs(colour = 'Degrees of Freedom', x = 'Value', y = 'Density') + theme_bw()
+# a <- seq(0,4, 2)
+# ggplot(data.frame(x=c(0,4)), aes(x))+
+#   stat_function(fun = df, args = list(2,2), aes(colour = paste0("m = 2",", n = 2"))) +
+#   stat_function(fun = df, args = list(2,5), aes(colour = paste0("m = 2",", n = 5")))+
+#   stat_function(fun = df, args = list(2,10), aes(colour = paste0("m = 2",", n = 10")))+
+#   stat_function(fun = df, args = list(5,2), aes(colour = paste0("m = 5",", n = 2")))+
+#   stat_function(fun = df, args = list(5,5), aes(colour = paste0("m = 5",", n = 5")))+
+#   stat_function(fun = df, args = list(5,10), aes(colour = paste0("m = 5",", n = 10")))+
+#   stat_function(fun = df, args = list(10,2), aes(colour = paste0("m = 10",", n = 2")))+
+#   stat_function(fun = df, args = list(10,5), aes(colour = paste0("m = 10",", n = 5")))+
+#   stat_function(fun = df, args = list(10,10), aes(colour = paste0("m = 10",", n = 10")))+
+#   stat_function(fun = df, args = list(20,20), aes(colour = paste0("m = 20",", n = 20")))+
+#   stat_function(fun = df, args = list(2, 297), aes(color = "Our Model:\n m = 2, n = 297")) +
+#   ylim(min=0, max=1) +
+#   labs(colour = 'Degrees of Freedom', x = 'Value', y = 'Density') + theme_bw()
+# ggsave("fdistributions.png")
 ```
+
+![The F distribution]("./fdistributions.png")
 
 The outcome of the test is one of the following:
 
@@ -415,18 +418,21 @@ min <- 0
 max <- 20
 f_crit <- round(qf(p,df1=df1,df2=df2), digits = 3)
 f_cal <- f_ratio
-plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
-  stat_function(fun = df, args = list(df1,df2))+
-  stat_function(fun = df, args = list(df1,df2), xlim = c(qf(p,df1=df1,df2=df2),max), geom = "area") +
-  scale_x_continuous(breaks = c(round(f_crit, 2), round(f_cal, 2))) +
-  geom_vline(xintercept = f_cal, color = "red") +
-  labs(title = paste0("Result of F-test: reject H0"),
-         subtitle = paste0("Red line: Calculated test statistic;"," Black area: Rejection region"),
-         x = "x", y = "Density") +
-  theme(legend.position="none") + 
-  theme_bw()
-plot1
+# plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+#   stat_function(fun = df, args = list(df1,df2))+
+#   stat_function(fun = df, args = list(df1,df2), xlim = c(qf(p,df1=df1,df2=df2),max), geom = "area") +
+#   scale_x_continuous(breaks = c(round(f_crit, 2), round(f_cal, 2))) +
+#   geom_vline(xintercept = f_cal, color = "red") +
+#   labs(title = paste0("Result of F-test: reject H0"),
+#          subtitle = paste0("Red line: Calculated test statistic;"," Black area: Rejection region"),
+#          x = "x", y = "Density") +
+#   theme(legend.position="none") + 
+#   theme_bw()
+# ggsave("ftest.png")
+# plot1
 ```
+
+![Visual depiction of the test result]("./ftest.png")
 
 Thus, we conclude that because F<sub>CAL</sub> = `r round(f_cal,2)` > F<sub>CR</sub> = 3.03, H<sub>0</sub> is rejected!
 

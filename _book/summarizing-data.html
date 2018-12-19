@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Marketing Research Design &amp; Analysis 2018</title>
+  <title>Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2018" />
+  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2018" />
+  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2019" />
   
   <meta name="twitter:description" content="An Introduction to Statistics Using R" />
   
@@ -266,7 +266,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2018</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2019</a>
           </h1>
         </div>
 
@@ -492,7 +492,7 @@ psych<span class="op">::</span><span class="kw">describe</span>(test_data[,<span
 </div>
 <div id="creating-subsets" class="section level4">
 <h4><span class="header-section-number">3.1.2.2</span> Creating subsets</h4>
-<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is 2.9 days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential ourliers exist in the data:</p>
+<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is 2.9 days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">duration_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(duration))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">abs</span>(duration_std) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</code></pre></div>
 <pre><code>##          startdate          enddate    ipaddress duration experience
 ## 1 11.09.2017 16:15 14.09.2017 13:43 86.56.146.66   250092          1
@@ -565,7 +565,7 @@ table_plot_rel &lt;-<span class="st"> </span>plyr<span class="op">::</span><span
 {"columns":[{"label":["overall_knowledge"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"none","2":"0.18181818"},{"1":"basic","2":"0.58181818"},{"1":"intermediate","2":"0.16363636"},{"1":"advanced","2":"0.07272727"},{"1":"proficient","2":"0.00000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Once we have our data set we can begin constructing the plot. As mentioned previously, we start with the <code>ggplot()</code> function, with the argument specifying the data set to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, We would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis).</p>
+<p>Once we have our data set we can begin constructing the plot. As mentioned previously, we start with the <code>ggplot()</code> function, with the argument specifying the data set to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, we would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 bar_chart &lt;-<span class="st"> </span><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge,<span class="dt">y =</span> Freq))
 bar_chart</code></pre></div>
@@ -734,7 +734,7 @@ adv_data<span class="op">$</span>store &lt;-<span class="st"> </span><span class
 {"columns":[{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["store"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"133553","2":"1841","3":"store1"},{"1":"119778","2":"1782","3":"store1"},{"1":"147097","2":"1782","3":"store1"},{"1":"55589","2":"573","3":"store1"},{"1":"109886","2":"1877","3":"store1"},{"1":"150285","2":"1907","3":"store1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Now we can create the histogram using <code>geom_histogram()</code>. The argument <code>binwidth</code> specifies the range that each bar spans, <code>col = &quot;black&quot;</code> specifies the border to be black and <code>fill = &quot;darkblue&quot;</code> sets the inner color of the bars to dark blue. The For brevity we have now also started naming the x and y axis with the single function <code>labs()</code>, instead of using the two distinct functions <code>xlab()</code> and <code>ylab()</code>.</p>
+<p>Now we can create the histogram using <code>geom_histogram()</code>. The argument <code>binwidth</code> specifies the range that each bar spans, <code>col = &quot;black&quot;</code> specifies the border to be black and <code>fill = &quot;darkblue&quot;</code> sets the inner color of the bars to dark blue. For brevity, we have now also started naming the x and y axis with the single function <code>labs()</code>, instead of using the two distinct functions <code>xlab()</code> and <code>ylab()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data,<span class="kw">aes</span>(sales)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of sales&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
@@ -855,7 +855,7 @@ Figure 3.20: Scatter plot with histogram
 </div>
 <div id="line-plot" class="section level4">
 <h4><span class="header-section-number">3.2.2.5</span> Line plot</h4>
-<p>Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did in the previously).</p>
+<p>Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did previously).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(jsonlite)
 <span class="co">#specifies url</span>
 url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span> 
@@ -930,7 +930,7 @@ de_map_g_str &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span
 </div>
 <div id="writing-reports-using-r-markdown" class="section level2">
 <h2><span class="header-section-number">3.3</span> Writing reports using R-Markdown</h2>
-<p>This page will guide you through creating and editing R-Markdown documents. This is a useful tool for reporting your analysis (e.g. for homework assignments).</p>
+<p>This page will guide you through creating and editing R-Markdown documents. This is a useful tool for reporting your analysis (e.g. for homework assignments). Of course, there is also <a href="https://www.rstudio.org/links/r_markdown_cheat_sheet">a cheat sheet for R-Markdown</a></p>
 <div id="creating-a-new-r-markdown-document" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Creating a new R-Markdown document</h3>
 <ol start="0" style="list-style-type: decimal">

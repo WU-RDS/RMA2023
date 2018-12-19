@@ -254,7 +254,7 @@ You can see that the statistic is calculated for the entire matrix and for each 
 
 ### Deriving factors
 
-After testing that the data can be used for PCA, we can move on to conducting PCA. Conducting PCA is fairly simple in R using the ```pricipal()``` function from the ```psych``` package. However, before the apply the function to our data, it is useful to reflect on the goals of PCA again. The goal is to explain the maximum amount of total variance in a correlation matrix by transforming the original variables into a smaller set of linear components (factors). So the first decision we have to make is how many factors we should extract. There are different methods that can be used to decide on the appropriate number of factors, including: 
+After testing that the data can be used for PCA, we can move on to conducting PCA. Conducting PCA is fairly simple in R using the ```principal()``` function from the ```psych``` package. However, before the apply the function to our data, it is useful to reflect on the goals of PCA again. The goal is to explain the maximum amount of total variance in a correlation matrix by transforming the original variables into a smaller set of linear components (factors). So the first decision we have to make is how many factors we should extract. There are different methods that can be used to decide on the appropriate number of factors, including: 
 
 * **A priori determination**: Requires prior knowledge
 * **Determination based on percentage of variance**: When cumulative percentage of variance extracted by the factors reaches a satisfactory level (e.g., factors extracted should account for at least 60% of the variance)
@@ -339,7 +339,7 @@ This means that our mean residual is 0.055 and this value should be as low as po
 
 Finally, we need to validate if the residuals are approximately normally distributed, which we do by using a histogram, a Q-Q plot and the Shapiro test. 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE, fig.align="center", fig.cap="Hinstogram of residuals"}
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE, fig.align="center", fig.cap="Histogram of residuals"}
 hist(residuals)
 ```
 
@@ -380,7 +380,7 @@ As an example, we could name our factors as follows:
 * **Factor 3:** fear of maths
 * **Factor 4:** Peer evaluation
 
-The previous type of rotation (i.e., "varimax") assumed that the the factors are independent. Oblique rotation is another type of rotation that can handle correlation between the factors. The command for an oblique rotation is very similar to that for an orthogonal rotation – we just change the rotate option from “varimax” to “oblimin”.
+The previous type of rotation (i.e., "varimax") assumed that the factors are independent. Oblique rotation is another type of rotation that can handle correlation between the factors. The command for an oblique rotation is very similar to that for an orthogonal rotation – we just change the rotate option from “varimax” to “oblimin”.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 pc4 <- principal(raq_data, nfactors = 4, rotate = "oblimin", scores = TRUE)

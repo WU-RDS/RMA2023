@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Marketing Research Design &amp; Analysis 2018</title>
+  <title>Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2018" />
+  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2018" />
+  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2019" />
   
   <meta name="twitter:description" content="An Introduction to Statistics Using R" />
   
@@ -266,7 +266,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2018</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2019</a>
           </h1>
         </div>
 
@@ -315,6 +315,7 @@ standard_error</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-167-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>We also know that 95% of the probability is within 1.96 standard deviations from the mean. Values higher than that are rather unlikely, if our hypothesis about the population mean was indeed true. This is shown by the shaded area, also known as the “rejection region”. To test our hypothesis that the population mean is equal to <span class="math inline">\(10\)</span>, let us take a random sample from the population.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12567</span>)
+H_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">10</span>
 student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 student_sample &lt;-<span class="st"> </span>hours[student_sample]
 mean_sample &lt;-<span class="st"> </span><span class="kw">mean</span>(student_sample)
@@ -350,7 +351,7 @@ z_crit</code></pre></div>
 <p>We use <code>0.975</code> and not <code>0.95</code> since we are running a two-sided test and need to account for the rejection region at the other end of the distribution. Recall that for the normal distribution, 95% of the total probability falls within 1.96 standard deviations of the mean, so that higher (absolute) values provide evidence against the null hypothesis. Generally, we speak of a statistically significant effect if the (absolute) calculated test statistic is larger than the (absolute) critical value. We can easily check if this is the case in our example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">abs</span>(z_score) <span class="op">&gt;</span><span class="st"> </span><span class="kw">abs</span>(z_crit)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p>Since the absolute value of the caluclated test statistic is larger than the critical value, we would reject <span class="math inline">\(H_0\)</span> and conclude that the true population mean <span class="math inline">\(\mu\)</span> is significantly different from the hypothesized value <span class="math inline">\(\mu_0 = 10\)</span>.</p>
+<p>Since the absolute value of the calculated test statistic is larger than the critical value, we would reject <span class="math inline">\(H_0\)</span> and conclude that the true population mean <span class="math inline">\(\mu\)</span> is significantly different from the hypothesized value <span class="math inline">\(\mu_0 = 10\)</span>.</p>
 </div>
 <div id="t-statistic" class="section level5">
 <h5><span class="header-section-number">5.1.2.1.2</span> t-statistic</h5>
@@ -376,12 +377,12 @@ t_crit</code></pre></div>
 <p>The following graphics shows that the calculated test statistic (red line) falls into the rejection region so that in our example, we would reject the null hypothesis that the true population mean is equal to <span class="math inline">\(10\)</span>.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-176-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p><strong>Decision:</strong> Reject <span class="math inline">\(H_0\)</span>, given that the calculated test statistic is larger than critical value.</p>
-<p>Something to keep in mind here is the fact the test statistic is a function of the sample size. This, as <span class="math inline">\(n\)</span> gets large, the the test statistic gets larger as well and we are more likely to find a significant effect. This reflects the decrease in uncertainty about the true population mean as our sample size increases.</p>
+<p>Something to keep in mind here is the fact the test statistic is a function of the sample size. This, as <span class="math inline">\(n\)</span> gets large, the test statistic gets larger as well and we are more likely to find a significant effect. This reflects the decrease in uncertainty about the true population mean as our sample size increases.</p>
 </div>
 </div>
 <div id="p-values" class="section level4">
 <h4><span class="header-section-number">5.1.2.2</span> P-values</h4>
-<p>In the previous section, we computed the test statistic, which tells us how close our sample is to the null hyposesis. The p-value corresponds to the probability that the test statistic would take a value as extreme or more extreme than the one that we actually observed, <strong>assuming that the null hypothesis is true</strong>. It is important to note that this is a <strong>conditional probability</strong>: we compute the probability of observing a sample mean (or a more extreme value) conditional on the assumption that the null hypothesis is true. The <code>pnorm()</code>function can be used to compute this probability. It is the cumulative probability distribution function of the `normal distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value <strong>less than or equal to</strong> the calculated test statistic given the the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic <strong>larger than or equal to</strong> the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.</p>
+<p>In the previous section, we computed the test statistic, which tells us how close our sample is to the null hypothesis. The p-value corresponds to the probability that the test statistic would take a value as extreme or more extreme than the one that we actually observed, <strong>assuming that the null hypothesis is true</strong>. It is important to note that this is a <strong>conditional probability</strong>: we compute the probability of observing a sample mean (or a more extreme value) conditional on the assumption that the null hypothesis is true. The <code>pnorm()</code>function can be used to compute this probability. It is the cumulative probability distribution function of the `normal distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value <strong>less than or equal to</strong> the calculated test statistic given the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic <strong>larger than or equal to</strong> the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_value &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">pt</span>(<span class="kw">abs</span>(t_score), <span class="dt">df =</span> df))
 p_value</code></pre></div>
 <pre><code>## [1] 0.000006336847</code></pre>
@@ -510,7 +511,7 @@ H_1: \mu \neq 10
 </div>
 <div id="comparing-two-means" class="section level2">
 <h2><span class="header-section-number">5.3</span> Comparing two means</h2>
-<p>In the one-sample test above, we tested the hypothesis that the population mean has some specific value <span class="math inline">\(\mu_0\)</span> using data from only one sample. In marketing (as in many other disciplines), you will often be confronted with a situation where you wish to compare the means of two groups. For example, you may conduct an experiment and randomly split your sample into two groups, one of which receives a treatment (experimental group) while the other doesn’t (control group). In this case, the units (e.g., participants, products) in each group are different (‘between-subjects design’) and the samples are said to be independent. Hence, we would use a <strong>independent-means t-test</strong>. If you run an experiment with two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same units in each group (‘within-subjects design’). In this case, we would need to conduct an <strong>dependent-means t-test</strong>. Both tests are discribed in the following sections, beginning with the independent-means t-test.</p>
+<p>In the one-sample test above, we tested the hypothesis that the population mean has some specific value <span class="math inline">\(\mu_0\)</span> using data from only one sample. In marketing (as in many other disciplines), you will often be confronted with a situation where you wish to compare the means of two groups. For example, you may conduct an experiment and randomly split your sample into two groups, one of which receives a treatment (experimental group) while the other doesn’t (control group). In this case, the units (e.g., participants, products) in each group are different (‘between-subjects design’) and the samples are said to be independent. Hence, we would use a <strong>independent-means t-test</strong>. If you run an experiment with two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same units in each group (‘within-subjects design’). In this case, we would need to conduct an <strong>dependent-means t-test</strong>. Both tests are described in the following sections, beginning with the independent-means t-test.</p>
 <div id="independent-means-t-test" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Independent-means t-test</h3>
 <p>Using an independent-means t-test, we can compare the means of two possibly different populations. It is, for example, quite common for online companies to test new service features by running an experiment and randomly splitting their website visitors into two groups: one is exposed to the website with the new feature (experimental group) and the other group is not exposed to the new feature (control group). This is a typical A/B-Test scenario.</p>
@@ -553,7 +554,7 @@ hours_a_b &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_1_d
 <p>From this, we can already see that there is a difference in means between groups A and B. We can also see that the number of observations is different, as is the standard deviation. The question that we would like to answer is whether there is a significant difference in mean listening times between the groups. Remember that different users are contained in each group (‘between-subjects design’) and that the observations in one group are independent of the observations in the other group. Before we will see how you can easily conduct an independent-means t-test, let’s go over some theory first.</p>
 <div id="theory" class="section level4">
 <h4><span class="header-section-number">5.3.1.1</span> Theory</h4>
-<p>As a starting point, let us label the unknown population mean of group A (control group) in our experiment <span class="math inline">\(\mu_1\)</span>, and that of group B (experimental group) <span class="math inline">\(\mu_2\)</span>. In this setting, the null hypothesis would state that the the mean in group A is equal to the mean in group B:</p>
+<p>As a starting point, let us label the unknown population mean of group A (control group) in our experiment <span class="math inline">\(\mu_1\)</span>, and that of group B (experimental group) <span class="math inline">\(\mu_2\)</span>. In this setting, the null hypothesis would state that the mean in group A is equal to the mean in group B:</p>
 <p><span class="math display">\[
 H_0: \mu_1=\mu_2
 \]</span></p>
@@ -638,13 +639,13 @@ t_score</code></pre></div>
 <h4><span class="header-section-number">5.3.1.2</span> Application</h4>
 <p>The section above explained the theory behind the independent-means t-test and showed how to compute the statistics manually. Obviously you don’t have to compute these statistics by hand in this section shows you how to conduct an independent-means t-test in R using the example from above.</p>
 <p><strong>1. Formulate null and alternative hypotheses</strong></p>
-<p>We wish to analyze whether there is a significant difference in music listining times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:</p>
+<p>We wish to analyze whether there is a significant difference in music listening times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:</p>
 <p><span class="math display">\[
 H_0: \mu_1=\mu_2\\
 H_1: \mu_1 \ne \mu_2
 \]</span></p>
 <p><strong>2. Select an appropriate test</strong></p>
-<p>Since we have a ratio scaled variable (i.e., listening times) and two independent groups, where the mean of one sample is independent of the group of the second sample (i.e., the goups contain different units), the independent-means t-test is appropriate.</p>
+<p>Since we have a ratio scaled variable (i.e., listening times) and two independent groups, where the mean of one sample is independent of the group of the second sample (i.e., the groups contain different units), the independent-means t-test is appropriate.</p>
 <p><strong>3. Choose the level of significance</strong></p>
 <p>We choose the conventional 5% significance level.</p>
 <p><strong>4. Descriptive statistics and data visualization</strong></p>
@@ -664,12 +665,12 @@ H_1: \mu_1 \ne \mu_2
 ## X1    1 112 26.43 16.28   24.5    24.8 14.83   3  82    79 0.96     0.99
 ##      se
 ## X1 1.54</code></pre>
-<p>This already shows us that the mean between groups A and B are different. We can visiualize the data using a plot of means, boxplot, and a histogram.</p>
+<p>This already shows us that the mean between groups A and B are different. We can visualize the data using a plot of means, boxplot, and a histogram.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b,<span class="kw">aes</span>(group, hours)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listining times&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listening times&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> hours)) <span class="op">+</span><span class="st"> </span>
@@ -706,7 +707,7 @@ H_1: \mu_1 \ne \mu_2
 <div id="dependent-means-t-test" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> Dependent-means t-test</h3>
 <p>While the independent-means t-test is used when different units (e.g., participants, products) were assigned to the different condition, the <strong>dependent-means t-test</strong> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.</p>
-<p>Imagine, for example, a slightly different experimental setup for the above experiment. Imagine that we do not assign different users to the groups, but that a sample of 100 users gets to use the music streaming service with the new feature for one month and we compare the music listening times of these users during the month of the experiment witht he listening time in the previous month. Let us generate data for this example:</p>
+<p>Imagine, for example, a slightly different experimental setup for the above experiment. Imagine that we do not assign different users to the groups, but that a sample of 100 users gets to use the music streaming service with the new feature for one month and we compare the music listening times of these users during the month of the experiment with the listening time in the previous month. Let us generate data for this example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">10</span>)
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
@@ -724,13 +725,13 @@ hours_a_b_paired &lt;-<span class="st"> </span><span class="kw">data.frame</span
 {"columns":[{"label":["hours_a"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["hours_b"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"15","2":"18"},{"1":"18","2":"14"},{"1":"27","2":"33"},{"1":"14","2":"42"},{"1":"29","2":"38"},{"1":"23","2":"27"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>Not that the data set has almost the same structure as before only that we know have two variables representing the listning times of each user in the month before the experiment and during the month of the experiment when the new feature was tested.</p>
+<p>Not that the data set has almost the same structure as before only that we know have two variables representing the listening times of each user in the month before the experiment and during the month of the experiment when the new feature was tested.</p>
 <div id="theory-1" class="section level4">
 <h4><span class="header-section-number">5.3.2.1</span> Theory</h4>
 <p>In this case, we want to test the hypothesis that there is no difference in mean the mean listening times between the two months. This can be expressed as follows:</p>
 <p><span class="math display">\[
 H_0: \mu_D = 0 \\
-\]</span> Note that the hypothsis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace <span class="math inline">\(\mu_D\)</span> with <span class="math inline">\(\delta\)</span> and get:</p>
+\]</span> Note that the hypothesis only refers to one population, since both observations come from the same units (i.e., users). To use consistent notation, we replace <span class="math inline">\(\mu_D\)</span> with <span class="math inline">\(\delta\)</span> and get:</p>
 <p><span class="math display">\[
 H_0: \delta = 0 \\
 H_1: \delta \neq 0
@@ -776,7 +777,7 @@ H_0: \mu_D = 0 \\
 H_0: \mu_D \ne 0
 \]</span></p>
 <p><strong>2. Select an appropriate test</strong></p>
-<p>Since we have a ratio scaled variable (i.e., listening times) and two observations of the same group of users (i.e., the goups contain the same units), the dependent-means t-test is appropriate.</p>
+<p>Since we have a ratio scaled variable (i.e., listening times) and two observations of the same group of users (i.e., the groups contain the same units), the dependent-means t-test is appropriate.</p>
 <p><strong>3. Choose the level of significance</strong></p>
 <p>We choose the conventional 5% significance level.</p>
 <p><strong>4. Descriptive statistics and data visualization</strong></p>
@@ -1265,11 +1266,9 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.
 f_ratio</code></pre></div>
 <pre><code>## [1] 243.4389</code></pre>
 <p>This statistic follows the F distribution with (m = c – 1) and (n = N – c) degrees of freedom. This means that, like the <span class="math inline">\(\chi^2\)</span> distribution, the shape of the F-distribution depends on the degrees of freedom. In this case, the shape depends on the degrees of freedom associated with the numerator and denominator used to compute the F-ratio. The following figure shows the shape of the F-distribution for different degrees of freedom:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-222"></span>
-<img src="_main_files/figure-html/unnamed-chunk-222-1.png" alt="The F distribution" width="672" />
-<p class="caption">
-Figure 5.7: The F distribution
-</p>
+<div class="figure">
+<embed src="%22./fdistributions.png%22" />
+<p class="caption">The F distribution</p>
 </div>
 <p>The outcome of the test is one of the following:</p>
 <ul>
@@ -1283,11 +1282,9 @@ f_crit </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_ratio <span class="op">&gt;</span><span class="st"> </span>f_crit <span class="co">#test if calculated test statistic is larger than critical value</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The output tells us that the calculated test statistic exceeds the critical value. We can also show the test result visually:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
-<img src="_main_files/figure-html/unnamed-chunk-224-1.png" alt="Visual depiction of the test result" width="672" />
-<p class="caption">
-Figure 5.8: Visual depiction of the test result
-</p>
+<div class="figure">
+<embed src="%22./ftest.png%22" />
+<p class="caption">Visual depiction of the test result</p>
 </div>
 <p>Thus, we conclude that because F<sub>CAL</sub> = 243.44 &gt; F<sub>CR</sub> = 3.03, H<sub>0</sub> is rejected!</p>
 <p>Interpretation: one or more of the differences between means are statistically significant.</p>
@@ -1342,7 +1339,7 @@ hours_fewobs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<s
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
 <img src="_main_files/figure-html/unnamed-chunk-226-1.png" alt="Q-Q plot 1" width="672" />
 <p class="caption">
-Figure 5.9: Q-Q plot 1
+Figure 5.7: Q-Q plot 1
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;B&quot;</span>,]<span class="op">$</span>hours) 
@@ -1350,7 +1347,7 @@ Figure 5.9: Q-Q plot 1
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
 <img src="_main_files/figure-html/unnamed-chunk-226-2.png" alt="Q-Q plot 2" width="672" />
 <p class="caption">
-Figure 5.9: Q-Q plot 2
+Figure 5.7: Q-Q plot 2
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;C&quot;</span>,]<span class="op">$</span>hours) 
@@ -1358,7 +1355,7 @@ Figure 5.9: Q-Q plot 2
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
 <img src="_main_files/figure-html/unnamed-chunk-226-3.png" alt="Q-Q plot 3" width="672" />
 <p class="caption">
-Figure 5.9: Q-Q plot 3
+Figure 5.7: Q-Q plot 3
 </p>
 </div>
 <p>The Q-Q plots suggest an approximately Normal distribution. If the assumption had been violated, you might consider transforming your data or resort to a non-parametric test.</p>
@@ -1534,7 +1531,7 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span cla
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
 <img src="_main_files/figure-html/unnamed-chunk-239-1.png" alt="Tukey's HSD" width="672" />
 <p class="caption">
-Figure 5.10: Tukey’s HSD
+Figure 5.8: Tukey’s HSD
 </p>
 </div>
 <p>You can see that the CIs do not cross zero, which means that the true difference between group means is unlikely zero.</p>
@@ -1612,7 +1609,7 @@ ci_low_med_lower</code></pre></div>
 <li>A between-subjects design is used (i.e., the subjects are not matched across conditions)</li>
 </ul>
 <p>Intuitively, the test compares the frequency of low and high ranks between groups. Under the null hypothesis, the amount of high and low ranks should be roughly equal in the two groups. This is achieved through comparing the expected sum of ranks to the actual sum of ranks.</p>
-<p>As an example, we will be using data obtained from a field experiment with random assignment. In a music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assinged to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day.</p>
+<p>As an example, we will be using data obtained from a field experiment with random assignment. In a music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assigned to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day.</p>
 <p>Let’s load and investigate the data first:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
 <span class="kw">library</span>(ggplot2)
@@ -1655,10 +1652,10 @@ music_sales<span class="op">$</span>group &lt;-<span class="st"> </span><span cl
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-244"></span>
 <img src="_main_files/figure-html/unnamed-chunk-244-1.png" alt="Boxplot" width="672" />
 <p class="caption">
-Figure 5.11: Boxplot
+Figure 5.9: Boxplot
 </p>
 </div>
-<p>Let’s assume that one of the prarametric assumptions has been violated and we needed to conduct a non-parametric test. Then, the Mann-Whitney U test is implemented in R using the function <code>wilcox.test()</code>. Using the ranking data as an independent variable and the listening time as a dependend variable, the test could be executed as follows:</p>
+<p>Let’s assume that one of the parametric assumptions has been violated and we needed to conduct a non-parametric test. Then, the Mann-Whitney U test is implemented in R using the function <code>wilcox.test()</code>. Using the ranking data as an independent variable and the listening time as a dependent variable, the test could be executed as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(unit_sales <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> music_sales) <span class="co">#Mann-Whitney U Test</span></code></pre></div>
 <pre><code>## 
 ##  Wilcoxon rank sum test with continuity correction
@@ -1722,7 +1719,7 @@ music_sales_dep &lt;-<span class="st"> </span><span class="kw">read.table</span>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-249"></span>
 <img src="_main_files/figure-html/unnamed-chunk-249-1.png" alt="Boxplot" width="672" />
 <p class="caption">
-Figure 5.12: Boxplot
+Figure 5.10: Boxplot
 </p>
 </div>
 <p>To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the <code>PMCMR</code> package.</p>
@@ -1739,7 +1736,7 @@ Figure 5.12: Boxplot
 ## low    0.00016 0.11683
 ## 
 ## P value adjustment method: none</code></pre>
-<p>The results reveal that there is a significant difference between the “low” and “high” promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we loose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met.</p>
+<p>The results reveal that there is a significant difference between the “low” and “high” promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we lose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met.</p>
 </div>
 </div>
 <div id="categorical-data" class="section level2">
@@ -1773,7 +1770,7 @@ rel_freq_table</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-253"></span>
 <img src="_main_files/figure-html/unnamed-chunk-253-1.png" alt="proportion of conversions per agent (stacked bar chart)" width="672" />
 <p class="caption">
-Figure 5.13: proportion of conversions per agent (stacked bar chart)
+Figure 5.11: proportion of conversions per agent (stacked bar chart)
 </p>
 </div>
 <p>… or using the <code>mosaicplot()</code> function:</p>
@@ -1782,7 +1779,7 @@ Figure 5.13: proportion of conversions per agent (stacked bar chart)
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-254"></span>
 <img src="_main_files/figure-html/unnamed-chunk-254-1.png" alt="proportion of conversions per agent (mosaic plot)" width="672" />
 <p class="caption">
-Figure 5.14: proportion of conversions per agent (mosaic plot)
+Figure 5.12: proportion of conversions per agent (mosaic plot)
 </p>
 </div>
 <div id="confidence-intervals-for-proportions" class="section level3">
@@ -1889,7 +1886,7 @@ chisq_cal</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-263"></span>
 <img src="_main_files/figure-html/unnamed-chunk-263-1.png" alt="The chi-square distribution" width="672" />
 <p class="caption">
-Figure 5.15: The chi-square distribution
+Figure 5.13: The chi-square distribution
 </p>
 </div>
 <p>You can see that as the degrees of freedom increase, the chi-square curve approaches a normal distribution. To find the critical value, we need to specify the corresponding degrees of freedom, given by:</p>
@@ -1909,7 +1906,7 @@ chisq_crit</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-266"></span>
 <img src="_main_files/figure-html/unnamed-chunk-266-1.png" alt="Visual depiction of the test result" width="672" />
 <p class="caption">
-Figure 5.16: Visual depiction of the test result
+Figure 5.14: Visual depiction of the test result
 </p>
 </div>
 <p>We could also compute the p-value using the <code>pchisq()</code> function, which tells us the probability of the observed cell frequencies if the null hypothesis was true (i.e., there was no association):</p>
@@ -1924,14 +1921,14 @@ p_val</code></pre></div>
 ## data:  contigency_table
 ## X-squared = 66.667, df = 1, p-value = 0.0000000000000003215</code></pre>
 <p>Since the p-value is smaller than 0.05 (i.e., the calculated test statistic is larger than the critical value), we reject H<sub>0</sub> that the two variables are independent.</p>
-<p>Note that the test statistic is sensitive to the sample size. To see this, lets assume that we have a sample of 100 observations instead of 1000 observations:</p>
+<p>Note that the test statistic is sensitive to the sample size. To see this, let’s assume that we have a sample of 100 observations instead of 1000 observations:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(contigency_table<span class="op">/</span><span class="dv">10</span>, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  contigency_table/10
 ## X-squared = 6.6667, df = 1, p-value = 0.009823</code></pre>
-<p>You can see that even though the proportions haven’t changed, the test is insignificant now. The following equation let’s you compute a measure of the effect size, which is insensitive to sample size:</p>
+<p>You can see that even though the proportions haven’t changed, the test is insignificant now. The following equation lets you compute a measure of the effect size, which is insensitive to sample size:</p>
 <p><span class="math display">\[
 \phi=\sqrt{\frac{\chi^2}{n}}
 \]</span></p>

@@ -138,7 +138,7 @@ These examples are meant to exemplify that there are often many different ways t
 
 #### Creating subsets
 
-From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let's check if potential ourliers exist in the data:
+From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let's check if potential outliers exist in the data:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 test_data %>% mutate(duration_std = as.vector(scale(duration))) %>% filter(abs(duration_std) > 3)

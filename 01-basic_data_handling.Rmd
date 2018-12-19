@@ -95,9 +95,9 @@ print(y)
 
 Notice how the value is in quotation marks since it is now of type character. 
 
-Entering a vector of data into R can be done with the ``` c(x1,x2,..,x_n)``` ("concatenate") command. In order to be able to use our vector (or any other variable) later on we want to assign it a name using the assignment operator ``` <-```. You can choose names arbitrarily. Just make sure they are descriptive and unique. Assigning the same name to two variables (e.g. vectors) will result in deletion of the first.   
+Entering a vector of data into R can be done with the ``` c(x1,x2,..,x_n)``` ("concatenate") command. In order to be able to use our vector (or any other variable) later on we want to assign it a name using the assignment operator ``` <-```. You can choose names arbitrarily (but the first character of a name cannot be a number). Just make sure they are descriptive and unique. Assigning the same name to two variables (e.g. vectors) will result in deletion of the first. Instead of converting a variable we can also create a new one and use an existing one as input. In this case we ommit the ```as.``` and simply use the name of the type (e.g. ```factor()```). There is a subtle difference between the two: When converting a variable, with e.g. ```as.factor()```, we can only pass the variable we want to convert without additional arguments and R determines the factor levels by the existing unique values in the variable or just returns the variable itself if it is a factor already. When we specifically create a variable (just ```factor()```, ```matrix()```, etc.), we can and should set the options of this type explicitly. For a factor variable these could be the labels and levels, for a matrix the number of rows and columns and so on.  
 
-```{r}
+```{r }
 #Numeric:
 top10_track_streams <- c(163608, 126687, 120480, 110022, 108630, 95639, 94690, 89011, 87869, 85599) 
 
@@ -107,7 +107,7 @@ top10_artist_names <- c("Axwell /\\ Ingrosso", "Imagine Dragons", "J. Balvin", "
 #Factor variable with two categories:
 top10_track_explicit <- c(0,0,0,0,0,0,1,1,0,0)
 top10_track_explicit <- factor(top10_track_explicit, 
-                               levels = c(0:1), 
+                               levels = 0:1, 
                                labels = c("not explicit", "explicit"))
 
 #Factor variable with more than two categories:
@@ -172,9 +172,9 @@ Hint: You may also use the ```View()```-function to view the data in a table for
 Sometimes it is convenient to return only specific values instead of the entire data frame. There are a variety of ways to identify the elements of a data frame. One easy way is to explicitly state, which rows and columns you wish to view. The general form of the command is ```data.frame[rows,columns]```. By leaving one of the arguments of ```data.frame[rows,columns]``` blank (e.g., ```data.frame[rows,]```) we tell R that we want to access either all rows or columns, respectively. Here are some examples:  
 
 ```{r}
-music_data[,2:4] # all rows and columns 2,3,4
-music_data[,c("top10_artist_names", "top_10_track_release_date")] # all rows and columns "top10_artist_names" and "top_10_track_release_date"
-music_data[c(1:5), c("top10_artist_names", "top_10_track_release_date")] # rows 1 to 5 and columns "top10_artist_names"" and "top_10_track_release_date"
+music_data[ , 2:4] # all rows and columns 2,3,4
+music_data[ ,c("top10_artist_names", "top_10_track_release_date")] # all rows and columns "top10_artist_names" and "top_10_track_release_date"
+music_data[1:5, c("top10_artist_names", "top_10_track_release_date")] # rows 1 to 5 and columns "top10_artist_names"" and "top_10_track_release_date"
 ```
 
 You may also create subsets of the data frame, e.g., using mathematical expressions:
@@ -279,7 +279,7 @@ names(music_data)[4] <- "genre"
 head(music_data)
 ```
 
-```{r, echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
 library(dplyr)
 library(stringr)
@@ -292,7 +292,7 @@ top10_track_streams <- c(163608, 126687, 120480, 110022, 108630, 95639, 94690, 8
 top10_artist_names <- c("Axwell /\\ Ingrosso", "Imagine Dragons", "J. Balvin", "Robin Schulz", "Jonas Blue", "David Guetta", "French Montana", "Calvin Harris", "Liam Payne", "Lauv") # Characters have to be put in ""
 top10_track_explicit <- c(0,0,0,0,0,0,1,1,0,0)
 top10_track_explicit <- factor(top10_track_explicit, 
-                               levels = c(0:1), 
+                               levels = 0:1, 
                                labels = c("not explicit", "explicit"))
 top10_artist_genre <- c("Dance","Alternative","Latino","Dance","Dance","Dance","Hip-Hop/Rap","Dance","Pop","Pop")
 top10_artist_genre <- as.factor(top10_artist_genre)

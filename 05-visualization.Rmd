@@ -61,7 +61,7 @@ table_plot_rel <- plyr::rename(table_plot_rel, c(Var1="overall_knowledge"))
 head(table_plot_rel)
 ```
 
-Once we have our data set we can begin constructing the plot. As mentioned previously, we start with the ```ggplot()``` function, with the argument specifying the data set to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, We would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis). 
+Once we have our data set we can begin constructing the plot. As mentioned previously, we start with the ```ggplot()``` function, with the argument specifying the data set to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, we would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis). 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (step 1)"}
 library(ggplot2)
@@ -212,7 +212,7 @@ adv_data$store <- factor(adv_data$store, levels = c(1:2), labels = c("store1", "
 head(adv_data)
 ```
 
-Now we can create the histogram using ```geom_histogram()```. The argument ```binwidth``` specifies the range that each bar spans, ```col = "black"``` specifies the border to be black and ```fill = "darkblue"``` sets the inner color of the bars to dark blue. The For brevity we have now also started naming the x and y axis with the single function ```labs()```, instead of using the two distinct functions ```xlab()``` and ```ylab()```.
+Now we can create the histogram using ```geom_histogram()```. The argument ```binwidth``` specifies the range that each bar spans, ```col = "black"``` specifies the border to be black and ```fill = "darkblue"``` sets the inner color of the bars to dark blue. For brevity, we have now also started naming the x and y axis with the single function ```labs()```, instead of using the two distinct functions ```xlab()``` and ```ylab()```.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Histogram"}
 ggplot(adv_data,aes(sales)) + 
@@ -314,7 +314,7 @@ In this case, the ```type = "histogram"``` argument specifies that we would like
 
 #### Line plot
 
-Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did in the previously).
+Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did previously).
 
 ```{r message=FALSE, warning=FALSE}
 library(jsonlite)

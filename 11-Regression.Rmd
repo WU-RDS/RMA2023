@@ -88,9 +88,9 @@ ggplot(att_data) +
   theme_bw()
 ```
 
-We can see that there is indeed some co-movement here. The variables <b>covary</b> because respondents who have an above (below) average attitude towards the city also appear to have been living in the city for an above (below) average amount of time and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterpot to visualize the relationship between two metric variables:
+We can see that there is indeed some co-movement here. The variables <b>covary</b> because respondents who have an above (below) average attitude towards the city also appear to have been living in the city for an above (below) average amount of time and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterplot to visualize the relationship between two metric variables:
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scatterplot for durationand attitute variables"}
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scatterplot for duration and attitute variables"}
 ggplot(att_data) + 
   geom_point(size = 3, aes(duration, attitude)) + 
   labs(x = "Duration",y = "Attitude", size = 11) +
@@ -396,7 +396,7 @@ You may also verify this based on a scatterplot of the data. The following plot 
 ggplot(regression, mapping = aes(adspend, sales)) + 
   geom_point(shape = 1) +
   geom_smooth(method = "lm", fill = "blue", alpha = 0.1) + 
-  labs(x = "Advertising expenditures (EUR)", y = "Number of sales", colour = "store") + 
+  labs(x = "Advertising expenditures (EUR)", y = "Number of sales") + 
   theme_bw()
 ```
 
@@ -640,7 +640,7 @@ To account for this, there exists a test statistic closely related to the R<sup>
 (\#eq:adjustedR2)
 \end{equation} 
 
-where ```n``` is the total number of observations and ```k``` is the total number of explanatory variables. The adjusted adjusted R<sup>2</sup> is equal to or less than the regular R<sup>2</sup> and can be negative. It will only increase if the added variable adds more explanatory power than one expect by pure chance. Essentially, it contains a "penalty" for including unnecessary variables and therefore favors more parsimonious models. As such, it is a measure of suitability, good for comparing different models and is very useful in the model selection stage of a project. In R, the standard ```lm()``` function automatically also reports the adjusted R<sup>2</sup>.
+where ```n``` is the total number of observations and ```k``` is the total number of explanatory variables. The adjusted R<sup>2</sup> is equal to or less than the regular R<sup>2</sup> and can be negative. It will only increase if the added variable adds more explanatory power than one expect by pure chance. Essentially, it contains a "penalty" for including unnecessary variables and therefore favors more parsimonious models. As such, it is a measure of suitability, good for comparing different models and is very useful in the model selection stage of a project. In R, the standard ```lm()``` function automatically also reports the adjusted R<sup>2</sup>.
 
 ##### F-test {-}
 
@@ -759,9 +759,9 @@ p
 
 Like in the bivariate case, the plane is fitted to the data with the aim to predict the observed data as good as possible. The deviation of the observations from the plane represent the residuals (the error we make in predicting the observed data from the model). Note that this is conceptually the same as in the bivariate case, except that the computation is more complex (we won't go into details here). The model is fairly easy to plot using a 3-D scatterplot, because we only have two predictors. While multiple regression models that have more than two predictors are not as easy to visualize, you may apply the same principles when interpreting the model outcome:
 
-* Total sum of squares (SS<sub>T</sub>) is still the difference between the observed data and the mean value of of Y (total variation)
+* Total sum of squares (SS<sub>T</sub>) is still the difference between the observed data and the mean value of Y (total variation)
 * Residual sum of squares (SS<sub>R</sub>) is still the difference between the observed data and the values predicted by the model (unexplained variation)
-* Model sum of squares (SS<sub>M</sub>) is still the difference between the values predicted by the model and the mean value of of Y (explained variation)
+* Model sum of squares (SS<sub>M</sub>) is still the difference between the values predicted by the model and the mean value of Y (explained variation)
 * R measures the multiple correlation between the predictors and the outcome
 * R<sup>2</sup> is the amount of variation in the outcome variable explained by the model
 
@@ -1029,7 +1029,7 @@ library(car)
 vif(multiple_regression)
 ```
 
-As you can see the values are well below the cutoff, indicating that we don not have to worry about multicollinearity in our example.  
+As you can see the values are well below the cutoff, indicating that we do not have to worry about multicollinearity in our example.  
 
 ### Omitted Variables
 
@@ -1052,7 +1052,7 @@ head(concerts)
 
 The data set contains three variables:
 
- * **avg_rating**: The average rating a band has, resulting from a ten point scale.
+ * **avg_rating**: The average rating a band has, resulting from a ten-point scale.
  * **followers**: The number of followers the band has at the time of the concert.
  * **concert_visitors**: The number of tickets sold for the concert. 
 
@@ -1234,7 +1234,7 @@ summary(multiple_regression) #summary of results
 
 How can we interpret the coefficient? The ```adspend``` main effect tells you the effect of advertising for the reference group that has the factor level zero. In our example, it is the advertising effect for local artist. This means that for local artists, spending an additional 1,000 Euros on advertising will result in approximately 89 additional unit sales. The interaction effect tells you by how much the effect differs for the other group (i.e., international artists) and whether this difference is significant. In our example, it means that the effect for international artists can be computed as: 0.0885 - 0.0347 = 0.0538. This means that for international artists, spending an additional 1,000 Euros on advertising will result in approximately 54 additional unit sales. Since the interaction effect is significant (p < 0.05) we can conclude that advertising is less effective for international artists.
 
-The above example showed the interaction between a categorical variable (i.e., "country") and a continuous variable (i.e., "adspend"). However, interaction effects can be defined for different combinations of variable types. For example, you might just as well specify an interaction between two continuous variables. In our example, you might suspect that there are synergy effects between advertising expenditures and ratio airplay. It could be that advertising is more effective when an artists receives a large number of radio plays. In this case, we would specify our model as:
+The above example showed the interaction between a categorical variable (i.e., "country") and a continuous variable (i.e., "adspend"). However, interaction effects can be defined for different combinations of variable types. For example, you might just as well specify an interaction between two continuous variables. In our example, you might suspect that there are synergy effects between advertising expenditures and ratio airplay. It could be that advertising is more effective when an artist receives a large number of radio plays. In this case, we would specify our model as:
 
 \begin{align}
 Sales =\beta_0 &+\beta_1*adspend\\
@@ -1296,7 +1296,7 @@ To test if the linear specification is appropriate, let's inspect some of the pl
 plot(linear_reg,1)
 ```
 
-The plot suggests that the assumption of homescedasticity is violated (i.e., the spread of values on the y-axis is different for different levels of the fitted values). In addition, the red line deviates from the dashed grey line, suggesting that the relationship might not be linear. Finally, the Q-Q plot of the residuals suggests that the residuals are not normally distributed. 
+The plot suggests that the assumption of homoscedasticity is violated (i.e., the spread of values on the y-axis is different for different levels of the fitted values). In addition, the red line deviates from the dashed grey line, suggesting that the relationship might not be linear. Finally, the Q-Q plot of the residuals suggests that the residuals are not normally distributed. 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE,fig.align="center", fig.cap = "Q-Q plot"}
 plot(linear_reg,2)
@@ -1361,7 +1361,7 @@ ggplot(data = non_linear_reg) +
 
 Another way of modelling non-linearities is including a squared term if there are decreasing or increasing effects. In fact, we can model non-constant slopes as long as the form is a linear combination of exponentials (i.e. squared, cubed, ...) of the explanatory variables. Usually we do not expect *many* inflection points so squared or third power terms suffice. Note that the degree of the polynomial has to be equal to the number of inflection points.  
 
-When using squared terms we can model diminshing and eventually negative returns. Think about advertisment spending. If a brand is not well known, spending on ads will increase brand awareness and have a large effect on sales. In a regression model this translates to a steep slope for spending at the origin (i.e. for lower spending). However, as more and more people will already know the brand we expect that an additional Euro spent on advertisement will have less and less of an effect the more the company spends. We say that the returns are diminishing. Eventually, if they keep putting more and more ads out, people get annoyed and some will stop buying from the company. In that case the return might even get negative. To model such a situation we need a linear as well as a squared term in the regression.
+When using squared terms we can model diminishing and eventually negative returns. Think about advertisement spending. If a brand is not well known, spending on ads will increase brand awareness and have a large effect on sales. In a regression model this translates to a steep slope for spending at the origin (i.e. for lower spending). However, as more and more people will already know the brand we expect that an additional Euro spent on advertisement will have less and less of an effect the more the company spends. We say that the returns are diminishing. Eventually, if they keep putting more and more ads out, people get annoyed and some will stop buying from the company. In that case the return might even get negative. To model such a situation we need a linear as well as a squared term in the regression.
 
 ```lm(...)``` can take squared (or any power) terms as input by adding ```I(X^2)``` as explanatory variable. In the example below we see a clear quadratic relationship with an inflection point at around 70. If we try to model this using the level of the covariates without the quadratic term we do not get a very good fit. 
 
@@ -1419,14 +1419,14 @@ top5 <- which(sales_quad$sales %in% head(sort(sales_quad$sales, decreasing = TRU
 dplyr::arrange(sales_quad[top5, ], desc(sales_quad[top5, 1]))
 ```
 
-When interpreting the coefficients of the predictor in this model we have to be careful. Since we included the squared term the slope is now different at each level of production (this can be seen in the graph above). That is, we do not have a single coefficient to interpret as the slope anymore. This can easily be shown by calculating the derivative of the model with respect to production. 
+When interpreting the coefficients of the predictor in this model we have to be careful. Since we included the squared term, the slope is now different at each level of production (this can be seen in the graph above). That is, we do not have a single coefficient to interpret as the slope anymore. This can easily be shown by calculating the derivative of the model with respect to production. 
 
 $$
 \text{Sales} = \alpha + \beta_1 \text{ Advertising} + \beta_2 \text{ Advertising}^2 + \varepsilon\\
 {\delta \text{ Sales} \over \delta \text{ Advertising}} = \beta_1 + 2 \beta_2 \text{ Advertising} \equiv \text{Slope}
 $$
 
-Intuitively, this means that the change of sales due to an additional Euro spent on advertising depends on the current level of advertising. $\alpha$, the intercept can still be interpreted as the expected value of sales given that we do not advertise at all (set advertising to 0 in the model). The sign of the squared term ($\beta_2$) can be used to determine the curvature of the funciton. If the sign is positive, the function is convex (curvature is upwards), if it is negative it is concave curvature is downwards). We can interpret $\beta_1$ and $\beta_2$ separately in terms of their influence on the *slope*. By setting advertising to $0$ we observe that $\beta_1$ is the slope at the origin. By taking the derivative of the slope with respect to advertising we see that the change of the slope due to additional spending on advertising is two times $\beta_2$. 
+Intuitively, this means that the change of sales due to an additional Euro spent on advertising depends on the current level of advertising. $\alpha$, the intercept can still be interpreted as the expected value of sales given that we do not advertise at all (set advertising to 0 in the model). The sign of the squared term ($\beta_2$) can be used to determine the curvature of the function. If the sign is positive, the function is convex (curvature is upwards), if it is negative it is concave curvature is downwards). We can interpret $\beta_1$ and $\beta_2$ separately in terms of their influence on the *slope*. By setting advertising to $0$ we observe that $\beta_1$ is the slope at the origin. By taking the derivative of the slope with respect to advertising we see that the change of the slope due to additional spending on advertising is two times $\beta_2$. 
 
 $$
 {\delta Slope \over \delta Advertising} = 2\beta_2

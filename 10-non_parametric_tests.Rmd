@@ -39,7 +39,7 @@ The Mann-Whitney U test is a non-parametric test of differences between groups, 
 
 Intuitively, the test compares the frequency of low and high ranks between groups. Under the null hypothesis, the amount of high and low ranks should be roughly equal in the two groups. This is achieved through comparing the expected sum of ranks to the actual sum of ranks. 
 
-As an example, we will be using data obtained from a field experiment with random assignment. In a music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assinged to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day. 
+As an example, we will be using data obtained from a field experiment with random assignment. In a music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assigned to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day. 
 
 Let's load and investigate the data first:    
 
@@ -72,7 +72,7 @@ ggplot(music_sales, aes(group, unit_sales)) +
   theme_bw()
 ```
 
-Let's assume that one of the prarametric assumptions has been violated and we needed to conduct a non-parametric test. Then, the  Mann-Whitney U test is implemented in R using the function ```wilcox.test()```. Using the ranking data as an independent variable and the listening time as a dependend variable, the test could be executed as follows:
+Let's assume that one of the parametric assumptions has been violated and we needed to conduct a non-parametric test. Then, the  Mann-Whitney U test is implemented in R using the function ```wilcox.test()```. Using the ranking data as an independent variable and the listening time as a dependent variable, the test could be executed as follows:
 
 ```{r message=FALSE, warning=FALSE}
 wilcox.test(unit_sales ~ group, data = music_sales) #Mann-Whitney U Test
@@ -139,7 +139,7 @@ library(PMCMR)
 posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
 ```
 
-The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we loose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met. 
+The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we lose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met. 
 
 ## Categorical data
 
@@ -379,13 +379,13 @@ chisq.test(contigency_table, correct = FALSE)
 
 Since the p-value is smaller than 0.05 (i.e., the calculated test statistic is larger than the critical value), we reject H<sub>0</sub> that the two variables are independent. 
 
-Note that the test statistic is sensitive to the sample size. To see this, lets assume that we have a sample of 100 observations instead of 1000 observations:
+Note that the test statistic is sensitive to the sample size. To see this, let's assume that we have a sample of 100 observations instead of 1000 observations:
 
 ```{r message=FALSE, warning=FALSE}
 chisq.test(contigency_table/10, correct = FALSE)
 ```
 
-You can see that even though the proportions haven't changed, the test is insignificant now. The following equation let's you compute a measure of the effect size, which is insensitive to sample size: 
+You can see that even though the proportions haven't changed, the test is insignificant now. The following equation lets you compute a measure of the effect size, which is insensitive to sample size: 
 
 $$
 \phi=\sqrt{\frac{\chi^2}{n}}
