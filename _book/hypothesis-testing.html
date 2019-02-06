@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Marketing Research Design &amp; Analysis 2019</title>
+  <title>5 Hypothesis testing | Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2019" />
+  <meta property="og:title" content="5 Hypothesis testing | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2019" />
+  <meta name="twitter:title" content="5 Hypothesis testing | Marketing Research Design &amp; Analysis 2019" />
   
   <meta name="twitter:description" content="An Introduction to Statistics Using R" />
   
@@ -34,6 +34,7 @@
 <link rel="next" href="regression.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -277,6 +278,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="hypothesis-testing" class="section level1">
 <h1><span class="header-section-number">5</span> Hypothesis testing</h1>
 <p>This chapter is primarily based on Field, A., Miles J., &amp; Field, Z. (2012): Discovering Statistics Using R. Sage Publications, <strong>chapters 5, 9, 15, 18</strong>.</p>
+<p><a href="./Code/07-hypothesis_testing%20(2).R">You can download the corresponding R-Code here</a></p>
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">5.1</span> Introduction</h2>
 <p>We test hypotheses because we are confined to taking samples – we rarely work with the entire population. In the previous chapter, we introduced the standard error (i.e., the standard deviation of a large number of hypothetical samples) as an estimate of how well a particular sample represents the population. We also saw how we can construct confidence intervals around the sample mean <span class="math inline">\(\bar x\)</span> by computing <span class="math inline">\(SE_{\bar x}\)</span> as an estimate of <span class="math inline">\(\sigma_{\bar x}\)</span> using <span class="math inline">\(s\)</span> as an estimate of <span class="math inline">\(\sigma\)</span> and calculating the 95% CI as <span class="math inline">\(\bar x \pm 1.96 * SE_{\bar x}\)</span>. Although we do not know the true population mean (<span class="math inline">\(\mu\)</span>), we might have an hypothesis about it and this would tell us how the corresponding sampling distribution looks like. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample <strong>assuming that the hypothesis is true</strong>.</p>
@@ -520,15 +522,15 @@ H_1: \mu \neq 10
 hours_population_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">10</span>)
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
 sample_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">98</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-sample_1_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
-sample_1_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_1_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
+sample_<span class="dv">1</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
+sample_<span class="dv">1</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="fl">2.5</span>, <span class="dt">scale =</span> <span class="dv">11</span>)
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
 sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">112</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-sample_2_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
-sample_2_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_2_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
-hours_a_b &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_1_df,sample_2_df) 
+sample_<span class="dv">2</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
+sample_<span class="dv">2</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
+hours_a_b &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_<span class="dv">1</span>_df,sample_<span class="dv">2</span>_df) 
 <span class="kw">head</span>(hours_a_b)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -712,13 +714,13 @@ H_1: \mu_1 \ne \mu_2
 hours_population_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">10</span>)
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
 sample_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-sample_1_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
+sample_<span class="dv">1</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="fl">2.5</span>, <span class="dt">scale =</span> <span class="dv">11</span>)
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
 sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-sample_2_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
-hours_a_b_paired &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours_a =</span> <span class="kw">round</span>(sample_1_hours,<span class="dv">0</span>),<span class="dt">hours_b =</span> <span class="kw">round</span>(sample_2_hours,<span class="dv">0</span>)) 
+sample_<span class="dv">2</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
+hours_a_b_paired &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours_a =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours,<span class="dv">0</span>),<span class="dt">hours_b =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours,<span class="dv">0</span>)) 
 <span class="kw">head</span>(hours_a_b_paired)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -990,6 +992,7 @@ Figure 5.1: p-hacking (red indicates false positives)
 <div id="comparing-several-means" class="section level2">
 <h2><span class="header-section-number">5.4</span> Comparing several means</h2>
 <p>This chapter is primarily based on Field, A., Miles J., &amp; Field, Z. (2012): Discovering Statistics Using R. Sage Publications, <strong>chapters 10 &amp; 12</strong>.</p>
+<p><a href="./Code/08-anova%20(1).R">You can download the corresponding R-Code here</a></p>
 <div id="introduction-1" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Introduction</h3>
 <p>In the previous section we learned how to compare means using a t-test. The t-test has some limitations since it only lets you compare 2 means and you can only use it with one independent variable. However, often we would like to compare means from 3 or more groups. In addition, there may be instances in which you manipulate more than one independent variable. For these applications, ANOVA (ANalysis Of VAriance) can be used. Hence, to conduct ANOVA you need:</p>
@@ -1004,24 +1007,24 @@ As always, we load and inspect the data first:</p>
 hours_population_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">25000</span>, <span class="dv">15</span>, <span class="dv">5</span>)
 <span class="kw">set.seed</span>(<span class="dv">125671</span>)
 sample_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-sample_1_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
-sample_1_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_1_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
-sample_1_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
+sample_<span class="dv">1</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
+sample_<span class="dv">1</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
+sample_<span class="dv">1</span>_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">25000</span>, <span class="dv">25</span>, <span class="dv">6</span>)
 <span class="kw">set.seed</span>(<span class="dv">125672</span>)
 sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-sample_2_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
-sample_2_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_2_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
-sample_2_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
+sample_<span class="dv">2</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
+sample_<span class="dv">2</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
+sample_<span class="dv">2</span>_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">25000</span>, <span class="dv">35</span>, <span class="dv">6</span>)
 <span class="kw">set.seed</span>(<span class="dv">125678</span>)
 sample_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-sample_3_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">3</span>[sample_<span class="dv">3</span>]
-sample_3_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_3_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;C&quot;</span>)
-sample_3_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
-hours_abc &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_1_df, sample_2_df, sample_3_df)
+sample_<span class="dv">3</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">3</span>[sample_<span class="dv">3</span>]
+sample_<span class="dv">3</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">3</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;C&quot;</span>)
+sample_<span class="dv">3</span>_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
+hours_abc &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_<span class="dv">1</span>_df, sample_<span class="dv">2</span>_df, sample_<span class="dv">3</span>_df)
 <span class="kw">head</span>(hours_abc)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1600,6 +1603,7 @@ ci_low_med_lower</code></pre></div>
 <li>When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)</li>
 <li>You have a very small sample size (i.e., the central limit theorem does not apply)</li>
 </ul>
+<p><a href="./Code/09-non_parametric%20(1).R">You can download the corresponding R-Code here</a></p>
 <div id="mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test" class="section level3">
 <h3><span class="header-section-number">5.5.1</span> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</h3>
 <p>The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale. The following assumptions must be fulfilled for the test to be applicable:</p>
@@ -1748,6 +1752,7 @@ Figure 5.10: Boxplot
 <li>Service agent 2 talks to 300 customers and gets 100 of them to buy (conversion rate=1/3)</li>
 </ul>
 <p>As always, we load the data first:</p>
+<p><a href="./Code/10-categorical_data%20(1).R">You can download the corresponding R-Code here</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">call_center &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat&quot;</span>, 
                           <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
                           <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
@@ -1763,7 +1768,7 @@ rel_freq_table</code></pre></div>
 </div>
 <p>We could also plot the data to visualize the frequencies using ggplot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(rel_freq_table, <span class="kw">aes</span>(<span class="dt">x =</span> agent, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> conversion)) <span class="op">+</span><span class="st"> </span><span class="co">#plot data</span>
-<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> .<span class="dv">7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">.7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Agent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
@@ -1894,7 +1899,7 @@ Figure 5.13: The chi-square distribution
 df=(r-1)*(c-1)
 \]</span></p>
 <p>where <span class="math inline">\(r\)</span> is the number of rows and <span class="math inline">\(c\)</span> is the number of columns in the contingency table. Recall that degrees of freedom are generally the number of values that can vary freely when calculating a statistic. In a 2 by 2 table as in our case, we have 2 variables (or two samples) with 2 levels and in each one we have 1 that vary freely. Hence, in our example the degrees of freedom can be calculated as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st">  </span>(<span class="kw">nrow</span>(contigency_table) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">ncol</span>(contigency_table) <span class="op">-</span><span class="dv">1</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st">  </span>(<span class="kw">nrow</span>(contigency_table) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">ncol</span>(contigency_table) <span class="dv">-1</span>)
 df</code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>Now, we can derive the critical value given the degrees of freedom and the level of confidence using the <code>qchisq()</code> function and test if the calculated test statistic is larger than the critical value:</p>
@@ -2024,7 +2029,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -2034,6 +2039,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -2051,7 +2060,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
