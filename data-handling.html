@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>01-basic data handling</title>
+  <meta name="description" content="01-basic data handling">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="01-basic data handling" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="01-basic data handling" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">MRDA 2018</a></strong></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path=""><a href="#data-handling"><i class="fa fa-check"></i><b>1</b> Data handling</a><ul>
+<li class="chapter" data-level="1.1" data-path=""><a href="#basic-data-handling"><i class="fa fa-check"></i><b>1.1</b> Basic data handling</a><ul>
+<li class="chapter" data-level="1.1.1" data-path=""><a href="#creating-objects"><i class="fa fa-check"></i><b>1.1.1</b> Creating objects</a></li>
+<li class="chapter" data-level="1.1.2" data-path=""><a href="#data-types"><i class="fa fa-check"></i><b>1.1.2</b> Data types</a></li>
+<li class="chapter" data-level="1.1.3" data-path=""><a href="#data-structures"><i class="fa fa-check"></i><b>1.1.3</b> Data structures</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">01-basic data handling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">01-basic data handling</h1>
+</div>
+<div id="data-handling" class="section level1">
+<h1><span class="header-section-number">1</span> Data handling</h1>
+<p>This chapter covers the basics of data handling in R</p>
+<div id="basic-data-handling" class="section level2">
+<h2><span class="header-section-number">1.1</span> Basic data handling</h2>
+<p><a href="./Code/01-basic_data_handling%20(1).R">You can find the corresponding R-Code here</a></p>
+<div id="creating-objects" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Creating objects</h3>
+<p>Anything created in R is an object. You can assign values to objects using the assignment operator <code>&lt;-</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> &quot;hello world&quot;</span> <span class="co">#assigns the words &quot;hello world&quot; to the object x</span>
+<span class="co">#this is a comment</span></code></pre></div>
+<p>Note that comments may be included in the code after a <code>#</code>. The text after <code>#</code> is not evaluated when the code is run; they can be written directly after the code or in a separate line.</p>
+<p>To see the value of an object, simply type its name into the console and hit enter:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="co">#print the value of x to the console</span></code></pre></div>
+<pre><code>## [1] &quot;hello world&quot;</code></pre>
+<p>You can also explicitly tell R to print the value of an object:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(x) <span class="co">#print the value of x to the console</span></code></pre></div>
+<pre><code>## [1] &quot;hello world&quot;</code></pre>
+<p>Note that because we assign characters in this case (as opposed to e.g., numeric values), we need to wrap the words in quotation marks, which must always come in pairs. Although RStudio automatically adds a pair of quotation marks (i.e., opening and closing marks) when you enter the opening marks it could be that you end up with a mismatch by accident (e.g., <code>x &lt;- &quot;hello</code>). In this case, R will show you the continuation character “+”. The same could happen if you did not execute the full command by accident. The “+” means that R is expecting more input. If this happens, either add the missing pair, or press ESCAPE to abort the expression and try again.</p>
+<p>To change the value of an object, you can simply overwrite the previous value. For example, you could also assign a numeric value to “x” to perform some basic operations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co">#assigns the value of 2 to the object x</span>
+<span class="kw">print</span>(x)</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">==</span><span class="st"> </span><span class="dv">2</span>  <span class="co">#checks whether the value of x is equal to 2</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">!=</span><span class="st"> </span><span class="dv">3</span>  <span class="co">#checks whether the value of x is NOT equal to 3</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>   <span class="co">#checks whether the value of x is less than 3</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>   <span class="co">#checks whether the value of x is greater than 3</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Note that the name of the object is completely arbitrary. We could also define a second object “y”, assign it a different value and use it to perform some basic mathematical operations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">5</span> <span class="co">#assigns the value of 2 to the object x</span>
+x <span class="op">==</span><span class="st"> </span>y <span class="co">#checks whether the value of x to the value of y</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x<span class="op">*</span>y <span class="co">#multiplication of x and y</span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span>y <span class="co">#adds the values of x and y together</span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>x <span class="co">#adds the value of y squared and 3x the value of x together</span></code></pre></div>
+<pre><code>## [1] 31</code></pre>
+<p><b>Object names</b></p>
+<p>Please note that object names must start with a letter and can only contain letters, numbers, as well as the <code>.</code>, and <code>_</code> separators. It is important to give your objects descriptive names and to be as consistent as possible with the naming structure. In this tutorial we will be using lower case words separated by underscores (e.g., <code>object_name</code>). There are other naming conventions, such as using a <code>.</code> as a separator (e.g., <code>object.name</code>), or using upper case letters (<code>objectName</code>). It doesn’t really matter which one you choose, as long as you are consistent.</p>
+</div>
+<div id="data-types" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> Data types</h3>
+<p>The most important types of data are:</p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="84%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Numeric</td>
+<td>Approximations of the real numbers, <span class="math inline">\(\normalsize\mathbb{R}\)</span> (e.g., mileage a car gets: 23.6, 20.9, etc.)</td>
+</tr>
+<tr class="even">
+<td>Integer</td>
+<td>Whole numbers, <span class="math inline">\(\normalsize\mathbb{Z}\)</span> (e.g., number of sales: 7, 0, 120, 63, etc.)</td>
+</tr>
+<tr class="odd">
+<td>Character</td>
+<td>Text data (strings, e.g., product names)</td>
+</tr>
+<tr class="even">
+<td>Factor</td>
+<td>Categorical data for classification (e.g., product groups)</td>
+</tr>
+<tr class="odd">
+<td>Logical</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr class="even">
+<td>Date</td>
+<td>Date variables (e.g., sales dates: 21-06-2015, 06-21-15, 21-Jun-2015, etc.)</td>
+</tr>
+</tbody>
+</table>
+<p>Variables can be converted from one type to another using the appropriate functions (e.g., <code>as.numeric()</code>,<code>as.integer()</code>,<code>as.character()</code>, <code>as.factor()</code>,<code>as.logical()</code>, <code>as.Date()</code>). For example, we could convert the object <code>y</code> to character as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">as.character</span>(y)
+<span class="kw">print</span>(y)</code></pre></div>
+<pre><code>## [1] &quot;5&quot;</code></pre>
+<p>Notice how the value is in quotation marks since it is now of type character.</p>
+<p>Entering a vector of data into R can be done with the <code>c(x1,x2,..,x_n)</code> (“concatenate”) command. In order to be able to use our vector (or any other variable) later on we want to assign it a name using the assignment operator <code>&lt;-</code>. You can choose names arbitrarily (but the first character of a name cannot be a number). Just make sure they are descriptive and unique. Assigning the same name to two variables (e.g. vectors) will result in deletion of the first. Instead of converting a variable we can also create a new one and use an existing one as input. In this case we ommit the <code>as.</code> and simply use the name of the type (e.g. <code>factor()</code>). There is a subtle difference between the two: When converting a variable, with e.g. <code>as.factor()</code>, we can only pass the variable we want to convert without additional arguments and R determines the factor levels by the existing unique values in the variable or just returns the variable itself if it is a factor already. When we specifically create a variable (just <code>factor()</code>, <code>matrix()</code>, etc.), we can and should set the options of this type explicitly. For a factor variable these could be the labels and levels, for a matrix the number of rows and columns and so on.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Numeric:</span>
+top10_track_streams &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">163608</span>, <span class="dv">126687</span>, <span class="dv">120480</span>, <span class="dv">110022</span>, <span class="dv">108630</span>, <span class="dv">95639</span>, <span class="dv">94690</span>, <span class="dv">89011</span>, <span class="dv">87869</span>, <span class="dv">85599</span>) 
+
+<span class="co">#Character:</span>
+top10_artist_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axwell /</span><span class="ch">\\</span><span class="st"> Ingrosso&quot;</span>, <span class="st">&quot;Imagine Dragons&quot;</span>, <span class="st">&quot;J. Balvin&quot;</span>, <span class="st">&quot;Robin Schulz&quot;</span>, <span class="st">&quot;Jonas Blue&quot;</span>, <span class="st">&quot;David Guetta&quot;</span>, <span class="st">&quot;French Montana&quot;</span>, <span class="st">&quot;Calvin Harris&quot;</span>, <span class="st">&quot;Liam Payne&quot;</span>, <span class="st">&quot;Lauv&quot;</span>) <span class="co"># Characters have to be put in &quot;&quot;</span>
+
+<span class="co">#Factor variable with two categories:</span>
+top10_track_explicit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+top10_track_explicit &lt;-<span class="st"> </span><span class="kw">factor</span>(top10_track_explicit, 
+                               <span class="dt">levels =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, 
+                               <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;not explicit&quot;</span>, <span class="st">&quot;explicit&quot;</span>))
+
+<span class="co">#Factor variable with more than two categories:</span>
+top10_artist_genre &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Dance&quot;</span>,<span class="st">&quot;Alternative&quot;</span>,<span class="st">&quot;Latino&quot;</span>,<span class="st">&quot;Dance&quot;</span>,<span class="st">&quot;Dance&quot;</span>,<span class="st">&quot;Dance&quot;</span>,<span class="st">&quot;Hip-Hop/Rap&quot;</span>,<span class="st">&quot;Dance&quot;</span>,<span class="st">&quot;Pop&quot;</span>,<span class="st">&quot;Pop&quot;</span>)
+top10_artist_genre &lt;-<span class="st"> </span><span class="kw">as.factor</span>(top10_artist_genre)
+
+<span class="co">#Date:</span>
+top_10_track_release_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">c</span>(<span class="st">&quot;2017-05-24&quot;</span>, <span class="st">&quot;2017-06-23&quot;</span>, <span class="st">&quot;2017-07-03&quot;</span>, <span class="st">&quot;2017-06-30&quot;</span>, <span class="st">&quot;2017-05-05&quot;</span>, <span class="st">&quot;2017-06-09&quot;</span>, <span class="st">&quot;2017-07-14&quot;</span>, <span class="st">&quot;2017-06-16&quot;</span>, <span class="st">&quot;2017-05-18&quot;</span>, <span class="st">&quot;2017-05-19&quot;</span>))
+
+<span class="co">#Logical</span>
+top10_track_explicit_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>)  </code></pre></div>
+<p>In order to “call” a vector we can now simply enter its name:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top10_track_streams</code></pre></div>
+<pre><code>##  [1] 163608 126687 120480 110022 108630  95639  94690  89011  87869  85599</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top_10_track_release_date</code></pre></div>
+<pre><code>##  [1] &quot;2017-05-24&quot; &quot;2017-06-23&quot; &quot;2017-07-03&quot; &quot;2017-06-30&quot; &quot;2017-05-05&quot;
+##  [6] &quot;2017-06-09&quot; &quot;2017-07-14&quot; &quot;2017-06-16&quot; &quot;2017-05-18&quot; &quot;2017-05-19&quot;</code></pre>
+<p>In order to check the type of a variable the <code>class()</code> function is used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(top_10_track_release_date)</code></pre></div>
+<pre><code>## [1] &quot;Date&quot;</code></pre>
+<p>The video below gives a general overview of vectors and provides a more in-depth discussion.</p>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Xioc33EZxgU" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+</div>
+<div id="data-structures" class="section level3">
+<h3><span class="header-section-number">1.1.3</span> Data structures</h3>
+<p>Now let’s create a table that contains the variables in columns and each observation in a row (like in SPSS or Excel). There are different data structures in R (e.g., Matrix, Vector, List, Array). In this course, we will mainly use <b>data frames</b>.</p>
+<p style="text-align:center;">
+<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/dataframe.JPG" alt="data types" height="320">
+</p>
+<p>Data frames are similar to matrices but are more flexible in the sense that they may contain different data types (e.g., numeric, character, etc.), where all values of vectors and matrices have to be of the same type (e.g. character). It is often more convenient to use characters instead of numbers (e.g. when indicating a persons sex: “F”, “M” instead of 1 for female , 2 for male). Thus we would like to combine both numeric and character values while retaining the respective desired features. This is where “data frames” come into play. Data frames can have different types of data in each column. For example, we can combine the vectors created above in one data frame using <code>data.frame()</code>. This creates a separate column for each vector, which is usually what we want (similar to SPSS or Excel).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">music_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(top10_track_streams, 
+                         top10_artist_names, 
+                         top10_track_explicit, 
+                         top10_artist_genre, 
+                         top_10_track_release_date, 
+                         top10_track_explicit_<span class="dv">1</span>)</code></pre></div>
+<div id="accessing-data-in-data-frames" class="section level4">
+<h4><span class="header-section-number">1.1.3.1</span> Accessing data in data frames</h4>
+<p>When entering the name of a data frame, R returns the entire data frame:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">music_data <span class="co"># Returns the entire data frame</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE"},{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"},{"1":"87869","2":"Liam Payne","3":"not explicit","4":"Pop","5":"2017-05-18","6":"FALSE"},{"1":"85599","2":"Lauv","3":"not explicit","4":"Pop","5":"2017-05-19","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Hint: You may also use the <code>View()</code>-function to view the data in a table format (like in SPSS or Excel), i.e. enter the command <code>View(data)</code>. Note that you can achieve the same by clicking on the small table icon next to the data frame in the “Environment”-window on the right in RStudio.</p>
+<p>Sometimes it is convenient to return only specific values instead of the entire data frame. There are a variety of ways to identify the elements of a data frame. One easy way is to explicitly state, which rows and columns you wish to view. The general form of the command is <code>data.frame[rows,columns]</code>. By leaving one of the arguments of <code>data.frame[rows,columns]</code> blank (e.g., <code>data.frame[rows,]</code>) we tell R that we want to access either all rows or columns, respectively. Here are some examples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">music_data[ , <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>] <span class="co"># all rows and columns 2,3,4</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_artist_names"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"Axwell /\\\\ Ingrosso","2":"not explicit","3":"Dance"},{"1":"Imagine Dragons","2":"not explicit","3":"Alternative"},{"1":"J. Balvin","2":"not explicit","3":"Latino"},{"1":"Robin Schulz","2":"not explicit","3":"Dance"},{"1":"Jonas Blue","2":"not explicit","3":"Dance"},{"1":"David Guetta","2":"not explicit","3":"Dance"},{"1":"French Montana","2":"explicit","3":"Hip-Hop/Rap"},{"1":"Calvin Harris","2":"explicit","3":"Dance"},{"1":"Liam Payne","2":"not explicit","3":"Pop"},{"1":"Lauv","2":"not explicit","3":"Pop"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">music_data[ ,<span class="kw">c</span>(<span class="st">&quot;top10_artist_names&quot;</span>, <span class="st">&quot;top_10_track_release_date&quot;</span>)] <span class="co"># all rows and columns &quot;top10_artist_names&quot; and &quot;top_10_track_release_date&quot;</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_artist_names"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[2],"type":["date"],"align":["right"]}],"data":[{"1":"Axwell /\\\\ Ingrosso","2":"2017-05-24"},{"1":"Imagine Dragons","2":"2017-06-23"},{"1":"J. Balvin","2":"2017-07-03"},{"1":"Robin Schulz","2":"2017-06-30"},{"1":"Jonas Blue","2":"2017-05-05"},{"1":"David Guetta","2":"2017-06-09"},{"1":"French Montana","2":"2017-07-14"},{"1":"Calvin Harris","2":"2017-06-16"},{"1":"Liam Payne","2":"2017-05-18"},{"1":"Lauv","2":"2017-05-19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">music_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="kw">c</span>(<span class="st">&quot;top10_artist_names&quot;</span>, <span class="st">&quot;top_10_track_release_date&quot;</span>)] <span class="co"># rows 1 to 5 and columns &quot;top10_artist_names&quot;&quot; and &quot;top_10_track_release_date&quot;</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_artist_names"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[2],"type":["date"],"align":["right"]}],"data":[{"1":"Axwell /\\\\ Ingrosso","2":"2017-05-24"},{"1":"Imagine Dragons","2":"2017-06-23"},{"1":"J. Balvin","2":"2017-07-03"},{"1":"Robin Schulz","2":"2017-06-30"},{"1":"Jonas Blue","2":"2017-05-05"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>You may also create subsets of the data frame, e.g., using mathematical expressions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  music_data[top10_track_explicit <span class="op">==</span><span class="st"> &quot;explicit&quot;</span>,] <span class="co"># show only tracks with explicit lyrics  </span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  music_data[top10_track_streams <span class="op">&gt;</span><span class="st"> </span><span class="dv">100000</span>,] <span class="co"># show only tracks with more than 100,000 streams  </span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  music_data[top10_artist_names <span class="op">==</span><span class="st"> &#39;Robin Schulz&#39;</span>,] <span class="co"># returns all observations from artist &quot;Robin Schulz&quot;</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  music_data[top10_track_explicit <span class="op">==</span><span class="st"> &quot;explicit&quot;</span>,] <span class="co"># show only explicit tracks</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>The same can be achieved using the <code>subset()</code>-function</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">subset</span>(music_data,top10_track_explicit <span class="op">==</span><span class="st"> &quot;explicit&quot;</span>) <span class="co"># selects subsets of observations in a data frame</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#creates a new data frame that only contains tracks from genre &quot;Dance&quot; </span>
+  music_data_dance &lt;-<span class="st"> </span><span class="kw">subset</span>(music_data,top10_artist_genre <span class="op">==</span><span class="st"> &quot;Dance&quot;</span>) 
+  music_data_dance</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">rm</span>(music_data_dance) <span class="co"># removes an object from the workspace</span></code></pre></div>
+<p>You may also change the order of the variables in a data frame by using the <code>order()</code>-function</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Orders by genre (ascending) and streams (descending)</span>
+music_data[<span class="kw">order</span>(top10_artist_genre,<span class="op">-</span>top10_track_streams),] </code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE"},{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"},{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE"},{"1":"87869","2":"Liam Payne","3":"not explicit","4":"Pop","5":"2017-05-18","6":"FALSE"},{"1":"85599","2":"Lauv","3":"not explicit","4":"Pop","5":"2017-05-19","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="inspecting-the-content-of-a-data-frame" class="section level4">
+<h4><span class="header-section-number">1.1.3.2</span> Inspecting the content of a data frame</h4>
+<p>The <code>head()</code> function displays the first X elements/rows of a vector, matrix, table, data frame or function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_data, <span class="dv">3</span>) <span class="co"># returns the first X rows (here, the first 3 rows)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>The <code>tail()</code> function is similar, except it displays the last elements/rows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(music_data, <span class="dv">3</span>) <span class="co"># returns the last X rows (here, the last 3 rows)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"},{"1":"87869","2":"Liam Payne","3":"not explicit","4":"Pop","5":"2017-05-18","6":"FALSE"},{"1":"85599","2":"Lauv","3":"not explicit","4":"Pop","5":"2017-05-19","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><code>names()</code> returns the names of an R object. When, for example, it is called on a data frame, it returns the names of the columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(music_data) <span class="co"># returns the names of the variables in the data frame</span></code></pre></div>
+<pre><code>## [1] &quot;top10_track_streams&quot;       &quot;top10_artist_names&quot;       
+## [3] &quot;top10_track_explicit&quot;      &quot;top10_artist_genre&quot;       
+## [5] &quot;top_10_track_release_date&quot; &quot;top10_track_explicit_1&quot;</code></pre>
+<p><code>str()</code> displays the internal structure of an R object. In the case of a data frame, it returns the class (e.g., numeric, factor, etc.) of each variable, as well as the number of observations and the number of variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(music_data) <span class="co"># returns the structure of the data frame</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  6 variables:
+##  $ top10_track_streams      : num  163608 126687 120480 110022 108630 ...
+##  $ top10_artist_names       : Factor w/ 10 levels &quot;Axwell /\\ Ingrosso&quot;,..: 1 5 6 10 7 3 4 2 9 8
+##  $ top10_track_explicit     : Factor w/ 2 levels &quot;not explicit&quot;,..: 1 1 1 1 1 1 2 2 1 1
+##  $ top10_artist_genre       : Factor w/ 5 levels &quot;Alternative&quot;,..: 2 1 4 2 2 2 3 2 5 5
+##  $ top_10_track_release_date: Date, format: &quot;2017-05-24&quot; &quot;2017-06-23&quot; ...
+##  $ top10_track_explicit_1   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</code></pre>
+<p><code>nrow()</code> and <code>ncol()</code> return the rows and columns of a data frame or matrix, respectively. <code>dim()</code> displays the dimensions of an R object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(music_data) <span class="co"># returns the number of rows </span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(music_data) <span class="co"># returns the number of columns </span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(music_data) <span class="co"># returns the dimensions of a data frame</span></code></pre></div>
+<pre><code>## [1] 10  6</code></pre>
+<p><code>ls()</code> can be used to list all objects that are associated with an R object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>(music_data) <span class="co"># list all objects associated with an object</span></code></pre></div>
+<pre><code>## [1] &quot;top_10_track_release_date&quot; &quot;top10_artist_genre&quot;       
+## [3] &quot;top10_artist_names&quot;        &quot;top10_track_explicit&quot;     
+## [5] &quot;top10_track_explicit_1&quot;    &quot;top10_track_streams&quot;</code></pre>
+</div>
+<div id="append-and-delete-variables-tofrom-data-frames" class="section level4">
+<h4><span class="header-section-number">1.1.3.3</span> Append and delete variables to/from data frames</h4>
+<p>To call a certain column in a data frame, we may also use the <code>$</code> notation. For example, this returns all values associated with the variable “top10_track_streams”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">music_data<span class="op">$</span>top10_track_streams</code></pre></div>
+<pre><code>##  [1] 163608 126687 120480 110022 108630  95639  94690  89011  87869  85599</code></pre>
+<p>Assume that you wanted to add an additional variable to the data frame. You may use the <code>$</code> notation to achieve this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create new variable as the log of the number of streams </span>
+music_data<span class="op">$</span>log_streams &lt;-<span class="st"> </span><span class="kw">log</span>(music_data<span class="op">$</span>top10_track_streams) 
+<span class="co"># Create an ascending count variable which might serve as an ID</span>
+music_data<span class="op">$</span>obs_number &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(music_data)
+<span class="kw">head</span>(music_data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["log_streams"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["obs_number"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"12.00523","8":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"11.74947","8":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"11.69924","8":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"11.60844","8":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"11.59570","8":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"11.46834","8":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>To delete a variable, you can simply create a <code>subset</code> of the full data frame that excludes the variables that you wish to drop:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">music_data &lt;-<span class="st"> </span><span class="kw">subset</span>(music_data,<span class="dt">select =</span> <span class="op">-</span><span class="kw">c</span>(log_streams)) <span class="co"># deletes the variable log streams </span>
+<span class="kw">head</span>(music_data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>You can also rename variables in a data frame, e.g., using the <code>rename()</code>-function from the <code>plyr</code> package. In the following code “::” signifies that the function “rename” should be taken from the package “plyr”. This can be useful if multiple packages have a function with the same name. Calling a function this way also means that you can access a function without loading the entire package via <code>library()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(plyr)
+music_data &lt;-<span class="st"> </span>plyr<span class="op">::</span><span class="kw">rename</span>(music_data, <span class="kw">c</span>(<span class="dt">top10_artist_genre=</span><span class="st">&quot;genre&quot;</span>,<span class="dt">top_10_track_release_date=</span><span class="st">&quot;release_date&quot;</span>))
+<span class="kw">head</span>(music_data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Note that the same can be achieved using:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(music_data)[<span class="kw">names</span>(music_data)<span class="op">==</span><span class="st">&quot;genre&quot;</span>] &lt;-<span class="st"> &quot;top10_artist_genre&quot;</span>
+<span class="kw">head</span>(music_data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Or by referring to the index of the variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(music_data)[<span class="dv">4</span>] &lt;-<span class="st"> &quot;genre&quot;</span>
+<span class="kw">head</span>(music_data)</code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["genre"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
