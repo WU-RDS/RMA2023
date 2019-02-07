@@ -5,6 +5,11 @@ output:
   html_notebook: default
 ---
 
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(digits = 7)
+```
+
 ## Regression
 
 ### Linear regression 
@@ -25,7 +30,7 @@ $$
 
 where $\tilde{Y_{i}}$ is the residual from the regression of $Y$ on all variables except for the i-th and $\tilde{X_i}$ is the residual from the regression of $X_i$ on all other variables. Let's illustrate this with an example.
 
-```{r }
+```{r, echo=TRUE}
 x1 <- rnorm(100, 5, 15)
 x2 <- rnorm(100, 20, 10) + 3*x1
 
