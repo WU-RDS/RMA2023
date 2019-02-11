@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Marketing Research Design &amp; Analysis 2019</title>
+  <title>3 Summarizing data | Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2019" />
+  <meta property="og:title" content="3 Summarizing data | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2019" />
+  <meta name="twitter:title" content="3 Summarizing data | Marketing Research Design &amp; Analysis 2019" />
   
   <meta name="twitter:description" content="An Introduction to Statistics Using R" />
   
@@ -34,6 +34,7 @@
 <link rel="next" href="introduction-to-statistical-inference.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -278,7 +279,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">3</span> Summarizing data</h1>
 <div id="summary-statistics" class="section level2">
 <h2><span class="header-section-number">3.1</span> Summary statistics</h2>
-<p>This section discusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible. <br> <br></p>
+<p>This section discusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible.</p>
+<p><a href="./Code/04-basic_statistics%20(1).R">You can download the corresponding R-Code here</a></p>
+<p><br> <br></p>
 <table>
 <thead>
 <tr class="header">
@@ -493,7 +496,8 @@ psych<span class="op">::</span><span class="kw">describe</span>(test_data[,<span
 <div id="creating-subsets" class="section level4">
 <h4><span class="header-section-number">3.1.2.2</span> Creating subsets</h4>
 <p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is 2.9 days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">duration_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(duration))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">abs</span>(duration_std) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+test_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">duration_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(duration))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">abs</span>(duration_std) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</code></pre></div>
 <pre><code>##          startdate          enddate    ipaddress duration experience
 ## 1 11.09.2017 16:15 14.09.2017 13:43 86.56.146.66   250092          1
 ##   theory_ht theory_anova theory_reg theory_fa pract_ht pract_anova
@@ -523,6 +527,7 @@ psych<span class="op">::</span><span class="kw">describe</span>(estimation_sampl
 <div id="data-visualization" class="section level2">
 <h2><span class="header-section-number">3.2</span> Data visualization</h2>
 <p>This section discusses how to produce appropriate graphics to describe our data visually. While R includes tools to build plots, we will be using the ggplot2 package by Hadley Wickham. It has the advantage of being fairly straightforward to learn but being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book “Discovering Statistics Using R” by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">“R for Data science”</a> by Hadley Wickham.</p>
+<p><a href="./Code/05-visualization%20(1).R">You can download the corresponding R-Code here</a></p>
 <p>ggplot2 is built around the idea of constructing plots by stacking layers on top of one another. Every plot starts with the <code>ggplot(data)</code> function, after which layers can be added with the “+” symbol. The following figures show the layered structure of creating plots with ggplot.</p>
 <p style="text-align:center;">
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/ggplot2.JPG" alt="DSUR cover" height="250"  />    <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/ggplot1.JPG" alt="DSUR cover" height="250"  />
@@ -1307,7 +1312,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1317,6 +1322,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -1334,7 +1343,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

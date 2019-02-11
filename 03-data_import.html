@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>02-importing and exporting data</title>
+  <meta name="description" content="02-importing and exporting data">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="02-importing and exporting data" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="02-importing and exporting data" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">MRDA 2018</a></strong></li>
+<li class="divider"></li>
+<li class="chapter" data-level="0.1" data-path=""><a href="#data-import-and-export"><i class="fa fa-check"></i><b>0.1</b> Data import and export</a><ul>
+<li class="chapter" data-level="0.1.1" data-path=""><a href="#getting-data-for-this-course"><i class="fa fa-check"></i><b>0.1.1</b> Getting data for this course</a></li>
+<li class="chapter" data-level="0.1.2" data-path=""><a href="#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>0.1.2</b> Import data created by other software packages</a></li>
+<li class="chapter" data-level="0.1.3" data-path=""><a href="#export-data"><i class="fa fa-check"></i><b>0.1.3</b> Export data</a></li>
+<li class="chapter" data-level="0.1.4" data-path=""><a href="#import-data-from-the-web"><i class="fa fa-check"></i><b>0.1.4</b> Import data from the Web</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">02-importing and exporting data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">02-importing and exporting data</h1>
+</div>
+<div id="data-import-and-export" class="section level2">
+<h2><span class="header-section-number">0.1</span> Data import and export</h2>
+<p>Before you can start your analysis in R, you first need to import the data you wish to perform the analysis on. You will often be faced with different types of data formats (usually produced by some other statistical software like SPSS or Excel or a text editor). Fortunately, R is fairly flexible with respect to the sources from which data may be imported and you can import the most common data formats into R with the help of a few packages. R can, among others, handle data from the following sources:</p>
+<div class="figure">
+<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/data_import.JPG" />
+
+</div>
+<p>In the previous chapter, we saw how we may use the keyboard to input data in R. In the following sections, we will learn how to import data from text files and other statistical software packages.</p>
+<div id="getting-data-for-this-course" class="section level3">
+<h3><span class="header-section-number">0.1.1</span> Getting data for this course</h3>
+<p>Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). There are two ways for you to obtain access to the data sets:</p>
+<p><a href="./Code/03-data_import%20(2).R">You can download the corresponding R-Code here</a></p>
+<div id="directly-import-datasets-from-github-recommended" class="section level4">
+<h4><span class="header-section-number">0.1.1.1</span> Directly import datasets from GitHub (recommended)</h4>
+<p>All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the <code>read.table()</code> function. The <code>header=TRUE</code> argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The <code>sep=&quot;\t&quot;</code>-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat&quot;</span>, 
+                        <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+                        <span class="dt">header =</span> <span class="ot">TRUE</span>)</code></pre></div>
+</div>
+<div id="download-and-import-datasets-from-learnwu" class="section level4">
+<h4><span class="header-section-number">0.1.1.2</span> Download and import datasets from “Learn@WU”</h4>
+<p>It is also possible to download the data from the respective folder on the “Learn@WU” platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please <strong>remember to put the data file in the working directory first</strong>. If the import is not working, check your working directory setting using <code>getwd()</code>. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;test_file.extension&quot;</span>, <span class="dt">header=</span><span class="ot">TRUE</span>)</code></pre></div>
+</div>
+</div>
+<div id="import-data-created-by-other-software-packages" class="section level3">
+<h3><span class="header-section-number">0.1.2</span> Import data created by other software packages</h3>
+<p>Sometimes, you may need to import data files created by other software packages, such as Excel or SPSS. In this section we will use the <code>readxl</code> and <code>haven</code> packages to do this. To import a certain file you should first make sure that the file is stored in your current working directory. You can list all file names in your working directory using the <code>list.files()</code> function. If the file is not there, either copy it to your current working directory, or set your working directory to the folder where the file is located using <code>setwd(&quot;/path/to/file&quot;)</code>. This tells R the folder you are working in. Remember that you have to use <code>/</code> instead of <code>\</code> to specify the path (if you use Windows paths copied from the explorer they will not work). When your file is in your working directory you can simply enter the filename into the respective import command. The import commands offer various options. For more details enter <code>?read_excel</code>, <code>?read_spss</code> after loading the packages.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list.files</span>() <span class="co">#lists all files in the current working directory</span>
+<span class="co">#setwd(&quot;/path/to/file&quot;) #may be used to change the working directory to the folder that contains the desired file</span>
+
+<span class="co">#import excel files</span>
+<span class="kw">library</span>(readxl) <span class="co">#load package to import Excel files</span>
+<span class="kw">excel_sheets</span>(<span class="st">&quot;test_data.xlsx&quot;</span>)
+test_data_excel &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test_data.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;mrda_2016_survey&quot;</span>) <span class="co"># &quot;sheet=x&quot;&quot; specifies which sheet to import</span>
+<span class="kw">head</span>(test_data_excel)
+
+<span class="kw">library</span>(haven) <span class="co">#load package to import SPSS files</span>
+<span class="co">#import SPSS files</span>
+test_data_spss &lt;-<span class="st"> </span><span class="kw">read_sav</span>(<span class="st">&quot;test_data.sav&quot;</span>)
+<span class="kw">head</span>(test_data_spss)</code></pre></div>
+<p>The import of other file formats works in a very similar way (e.g., Stata, SAS). Please refer to the respective help-files (e.g., <code>?read_dta</code>, <code>?read_sas</code> …) if you wish to import data created by other software packages.</p>
+</div>
+<div id="export-data" class="section level3">
+<h3><span class="header-section-number">0.1.3</span> Export data</h3>
+<p>Exporting to different formats is also easy, as you can just replace “read” with “write” in many of the previously discussed functions (e.g. <code>write.table(object, &quot;file_name&quot;)</code>). This will save the data file to the working directory. To check what the current working directory is you can use <code>getwd()</code>. By default, the <code>write.table(object, &quot;file_name&quot;)</code>function includes the row number as the first variable. By specifying <code>row.names = FALSE</code>, you may exclude this variable since it doesn’t contain any useful information.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write.table</span>(test_data, <span class="st">&quot;testData.dat&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>) <span class="co">#writes to a tab-delimited text file</span>
+<span class="kw">write.table</span>(test_data, <span class="st">&quot;testData.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>) <span class="co">#writes to a comma-separated value file </span>
+<span class="kw">write_sav</span>(test_data, <span class="st">&quot;my_file.sav&quot;</span>)</code></pre></div>
+</div>
+<div id="import-data-from-the-web" class="section level3">
+<h3><span class="header-section-number">0.1.4</span> Import data from the Web</h3>
+<div id="scraping-data-from-websites" class="section level4">
+<h4><span class="header-section-number">0.1.4.1</span> Scraping data from websites</h4>
+<p>Sometimes you may come across interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the <code>rvest</code> package. Let’s assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is <code>&lt;table&gt;</code>. So let’s read the entire website using <code>read_html(url)</code> and filter all tables using <code>read_html(html_nodes(...,&quot;table&quot;))</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population&quot;</span>
+population &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) 
+population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(population, <span class="st">&quot;table.wikitable&quot;</span>)
+<span class="kw">print</span>(population)</code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;table class=&quot;wikitable sortable&quot; style=&quot;text-align:right&quot;&gt;&lt;tbody&gt;\n ...</code></pre>
+<p>The output shows that there are two tables on the website and the first one appears to contain the relevant information. So let’s read the first table using the <code>html_table()</code> function. Note that <code>population</code> is of class “list”. A list is a vector that has other R objects (e.g., other vectors, data frames, matrices, etc.) as its elements. If we want to access the data of one of the elements, we have to use two square brackets on each side instead of just one (e.g., <code>population[[1]]</code> gets us the first table from the list of tables on the website; the argument <code>fill = TRUE</code> ensures that empty cells are replaced with missing values when reading the table).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">population &lt;-<span class="st"> </span>population[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_table</span>(<span class="dt">fill =</span> <span class="ot">TRUE</span>)
+<span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,394,400,000","4":"February 1, 2019","5":"18.2%","6":"Official population clock","_rn_":"1"},{"1":"2","2":"India[Note 3]","3":"1,342,910,000","4":"February 1, 2019","5":"17.5%","6":"Official population clock","_rn_":"2"},{"1":"3","2":"United States[Note 4]","3":"328,621,000","4":"February 1, 2019","5":"4.28%","6":"Official population clock","_rn_":"3"},{"1":"4","2":"Indonesia","3":"268,074,600","4":"July 1, 2018","5":"3.49%","6":"Official annual projection","_rn_":"4"},{"1":"5","2":"Brazil","3":"210,189,000","4":"February 1, 2019","5":"2.74%","6":"Official population clock","_rn_":"5"},{"1":"6","2":"Pakistan","3":"203,533,000","4":"February 1, 2019","5":"2.65%","6":"Official population clock","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>You can see that population is read as a character variable because of the commas.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(population<span class="op">$</span>Population)</code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<p>If we wanted to use this variable for some kind of analysis, we would first need to convert it to numeric format using the <code>as.numeric()</code> function. However, before we can do this, we can use the <code>str_replace_all()</code> function from the stringr package, which replaces all matches of a string. In our case, we would like to replace the commas (<code>&quot;,&quot;</code>) with nothing (<code>&quot;&quot;</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)
+population<span class="op">$</span>Population &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">str_replace_all</span>(population<span class="op">$</span>Population, <span class="dt">pattern =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>)) <span class="co">#convert to numeric</span>
+<span class="kw">head</span>(population) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1394400000","4":"February 1, 2019","5":"18.2%","6":"Official population clock","_rn_":"1"},{"1":"2","2":"India[Note 3]","3":"1342910000","4":"February 1, 2019","5":"17.5%","6":"Official population clock","_rn_":"2"},{"1":"3","2":"United States[Note 4]","3":"328621000","4":"February 1, 2019","5":"4.28%","6":"Official population clock","_rn_":"3"},{"1":"4","2":"Indonesia","3":"268074600","4":"July 1, 2018","5":"3.49%","6":"Official annual projection","_rn_":"4"},{"1":"5","2":"Brazil","3":"210189000","4":"February 1, 2019","5":"2.74%","6":"Official population clock","_rn_":"5"},{"1":"6","2":"Pakistan","3":"203533000","4":"February 1, 2019","5":"2.65%","6":"Official population clock","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Now the variable is of type “numeric” and could be used for analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(population<span class="op">$</span>Population)</code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+</div>
+<div id="scraping-data-from-apis" class="section level4">
+<h4><span class="header-section-number">0.1.4.2</span> Scraping data from APIs</h4>
+<div id="scraping-data-from-apis-directly" class="section level5">
+<h5><span class="header-section-number">0.1.4.2.1</span> Scraping data from APIs directly</h5>
+<p>Reading data from websites can be tricky since you need to analyze the page structure first. Many web-services (e.g., Facebook, Twitter, YouTube) actually have application programming interfaces (API’s), which you can use to obtain data in a pre-structured format. JSON (JavaScript Object Notation) is a popular lightweight data-interchange format in which data can be obtained. The process of obtaining data is visualized in the following graphic:</p>
+<div class="figure">
+<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/API.JPG" alt="Obtaining data from APIs" />
+<p class="caption">Obtaining data from APIs</p>
+</div>
+<p>The process of obtaining data from APIs consists of the following steps:</p>
+<ul>
+<li>Identify an API that has enough data to be relevant and reliable (e.g., <a href="http://www.programmableweb.com:" target="_blank">www.programmableweb.com</a> has &gt;12,000 open web APIs in 63 categories).</li>
+<li>Request information by calling (or, more technically speaking, creating a request to) the API (e.g., R, python, php or JavaScript).</li>
+<li>Receive response messages, which is usually in JavaScript Object Notation (JSON) or Extensible Markup Language (XML) format.</li>
+<li>Write a parser to pull out the elements you want and put them into a of simpler format</li>
+<li>Store, process or analyze data according the marketing research question.</li>
+</ul>
+<p>Let’s assume that you would like to obtain population data again. The World Bank has an API that allows you to easily obtain this kind of data. The details are usually provided in the API reference, e.g., <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-api-documentation" target="_blank">here</a>. You simply “call” the API for the desired information and get a structured JSON file with the desired key-value pairs in return. For example, the population for Austria from 1960 to 2016 can be obtained using <a href="http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&format=json&per_page=100" target="_blank">this call</a>. The file can be easily read into R using the <code>fromJSON()</code>-function from the <code>jsonlite</code>-package. Again, the result is a list and the second element <code>ctrydata[[2]]</code> contains the desired data, from which we select the “value” and “data” columns using the square brackets as usual <code>[,c(&quot;value&quot;,&quot;date&quot;)]</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(jsonlite)
+url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span> <span class="co">#specifies url</span>
+ctrydata &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url) <span class="co">#parses the data </span>
+<span class="kw">str</span>(ctrydata)</code></pre></div>
+<pre><code>## List of 2
+##  $ :List of 4
+##   ..$ page    : int 1
+##   ..$ pages   : int 1
+##   ..$ per_page: chr &quot;100&quot;
+##   ..$ total   : int 57
+##  $ :&#39;data.frame&#39;:    57 obs. of  5 variables:
+##   ..$ indicator:&#39;data.frame&#39;:    57 obs. of  2 variables:
+##   .. ..$ id   : chr [1:57] &quot;SP.POP.TOTL&quot; &quot;SP.POP.TOTL&quot; &quot;SP.POP.TOTL&quot; &quot;SP.POP.TOTL&quot; ...
+##   .. ..$ value: chr [1:57] &quot;Population, total&quot; &quot;Population, total&quot; &quot;Population, total&quot; &quot;Population, total&quot; ...
+##   ..$ country  :&#39;data.frame&#39;:    57 obs. of  2 variables:
+##   .. ..$ id   : chr [1:57] &quot;AT&quot; &quot;AT&quot; &quot;AT&quot; &quot;AT&quot; ...
+##   .. ..$ value: chr [1:57] &quot;Austria&quot; &quot;Austria&quot; &quot;Austria&quot; &quot;Austria&quot; ...
+##   ..$ value    : chr [1:57] &quot;8736668&quot; &quot;8642699&quot; &quot;8546356&quot; &quot;8479823&quot; ...
+##   ..$ decimal  : chr [1:57] &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; ...
+##   ..$ date     : chr [1:57] &quot;2016&quot; &quot;2015&quot; &quot;2014&quot; &quot;2013&quot; ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(ctrydata[[<span class="dv">2</span>]][,<span class="kw">c</span>(<span class="st">&quot;value&quot;</span>,<span class="st">&quot;date&quot;</span>)]) <span class="co">#checks if we scraped the desired data</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["value"],"name":[1],"type":["chr"],"align":["left"]},{"label":["date"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"8736668","2":"2016","_rn_":"1"},{"1":"8642699","2":"2015","_rn_":"2"},{"1":"8546356","2":"2014","_rn_":"3"},{"1":"8479823","2":"2013","_rn_":"4"},{"1":"8429991","2":"2012","_rn_":"5"},{"1":"8391643","2":"2011","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="scraping-data-from-apis-via-r-packages" class="section level5">
+<h5><span class="header-section-number">0.1.4.2.2</span> Scraping data from APIs via R packages</h5>
+<p>An even more convenient way to obtain data from web APIs is to use existing R packages that someone else has already created. There are R packages available for various web-services. For example, the <code>gtrendsR</code> package can be used to conveniently obtain data from the <a href="https://trends.google.at/trends/" target="_blank">Google Trends</a> page. The <code>gtrends()</code> function is easy to use and returns a list of elements (e.g., “interest over time”, “interest by city”, “related topics”), which can be inspected using the <code>ls()</code> function. The following example can be used to obtain data for the search term “data science” in the US between September 1 and October 6:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gtrendsR)
+index =<span class="st"> </span><span class="dv">1</span>
+success =<span class="st"> </span><span class="ot">FALSE</span>
+<span class="cf">while</span>(<span class="op">!</span>(success <span class="op">|</span><span class="st"> </span>index <span class="op">==</span><span class="st"> </span><span class="dv">10</span>)){
+  google_trends &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">gtrends</span>(<span class="st">&quot;data science&quot;</span>, <span class="dt">geo =</span> <span class="kw">c</span>(<span class="st">&quot;US&quot;</span>), <span class="dt">gprop =</span> <span class="kw">c</span>(<span class="st">&quot;web&quot;</span>), <span class="dt">time =</span> <span class="st">&quot;2017-09-01 2017-10-06&quot;</span>), <span class="dt">silent =</span> <span class="ot">TRUE</span>)
+  
+  <span class="cf">if</span>(<span class="op">!</span><span class="kw">is</span>(google_trends, <span class="st">&quot;try-error&quot;</span>)){
+    <span class="kw">ls</span>(google_trends)
+    <span class="kw">head</span>(google_trends<span class="op">$</span>interest_over_time)
+    success =<span class="st"> </span><span class="ot">TRUE</span>
+  }<span class="cf">else</span>{
+  index =<span class="st"> </span>index <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+  <span class="kw">Sys.sleep</span>(<span class="kw">runif</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>))}
+}
+<span class="cf">if</span>(success <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){
+  <span class="kw">warning</span>(<span class="st">&quot;Google Trends has exited unsuccessfully&quot;</span>)
+}</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

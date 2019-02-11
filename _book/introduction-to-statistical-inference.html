@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Marketing Research Design &amp; Analysis 2019</title>
+  <title>4 Introduction to Statistical Inference | Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Marketing Research Design &amp; Analysis 2019" />
+  <meta property="og:title" content="4 Introduction to Statistical Inference | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Marketing Research Design &amp; Analysis 2019" />
+  <meta name="twitter:title" content="4 Introduction to Statistical Inference | Marketing Research Design &amp; Analysis 2019" />
   
   <meta name="twitter:description" content="An Introduction to Statistics Using R" />
   
@@ -34,6 +34,7 @@
 <link rel="next" href="hypothesis-testing.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -277,6 +278,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-to-statistical-inference" class="section level1">
 <h1><span class="header-section-number">4</span> Introduction to Statistical Inference</h1>
 <p>This chapter will provide you with a basic intuition on statistical inference. As marketing researchers we are usually faced with “imperfect” data in the sense that we cannot collect <strong>all</strong> the data we would like. Imagine you are interested in the average amount of time WU students spend listening to music every month. Ideally, we could force all WU students to fill out our survey. Realistically we will only be able to observe a small fraction of students (maybe 500 out of the <span class="math inline">\(25.000+\)</span>). With the data from this small fraction at hand, we want to make an inference about the true average listening time of all WU students. We are going to start with the assumption that we know everything. That is, we first assume that we know all WU students’ listening times and analyze the distribution of the listening time in the entire population. Subsequently, we are going to look at the uncertainty that is introduced by only knowing some of the students’ listening times (i.e., a sample from the population) and how that influences our analysis.</p>
+<p><a href="./Code/06-statistical_inference%20(2).R">You can download the corresponding R-Code here</a></p>
 <div id="if-we-knew-it-all" class="section level2">
 <h2><span class="header-section-number">4.1</span> If we knew it all</h2>
 <p>Assume there are <span class="math inline">\(25,000\)</span> students at WU and every single one has kindly provided us with the hours they listened to music in the past month. In this case, we know the true mean (<span class="math inline">\(49.93\)</span> hours) and the true standard deviation (SD = <span class="math inline">\(10.02\)</span>) and thus we can easily summarize the entire distribution. Since the data follows a normal distribution, roughly 95% of the values lie within 2 standard deviations from the mean, as the following plot shows:</p>
@@ -301,7 +303,7 @@ hours &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="d
 <span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">mean</span>(hours), <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">yend =</span> <span class="dv">1100</span>, <span class="dt">xend =</span> (<span class="kw">mean</span>(hours) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">sd</span>(hours))), <span class="dt">lineend =</span> <span class="st">&quot;butt&quot;</span>, <span class="dt">linejoin =</span> <span class="st">&quot;round&quot;</span>,
      <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;inches&quot;</span>))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="kw">mean</span>(hours) <span class="op">+</span><span class="st"> </span><span class="dv">28</span>, <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">label =</span> <span class="st">&quot;Mean + 2 * SD&quot;</span> )<span class="op">+</span>
-<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="kw">mean</span>(hours) <span class="op">-</span><span class="dv">28</span>, <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">label =</span> <span class="st">&quot;Mean - 2 * SD&quot;</span> )</code></pre></div>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="kw">mean</span>(hours) <span class="dv">-28</span>, <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">label =</span> <span class="st">&quot;Mean - 2 * SD&quot;</span> )</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
 <p>In this case, we refere to all WU students as <strong>the population</strong>. In general, the population is the entire group we are interested in. This group does not have to necessarily consist of people, but could also be companies, stores, animals, etc.. The parameters of the distribution of population values (in hour case: “hours”) are called population parameters. As already mentioned, we do not usually know population parameters but use inferential statistics to infer them based on our sample from the population, i.e., we measure statistics from a sample (e.g., the sample mean <span class="math inline">\(\bar x\)</span>) to estimate population parameters (the population mean <span class="math inline">\(\mu\)</span>). Here, we will use the following notation to refer to either the population parameters or the sample statistic:</p>
 <table>
@@ -320,8 +322,8 @@ hours &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="d
 <tbody>
 <tr class="odd">
 <td>Size</td>
-<td>N</td>
 <td>n</td>
+<td>N</td>
 </tr>
 <tr class="even">
 <td>Mean</td>
@@ -511,7 +513,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -521,6 +523,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -538,7 +544,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
