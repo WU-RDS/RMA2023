@@ -288,13 +288,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(latex2exp)
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">10</span>)
-<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hours), <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill=</span><span class="st">&#39;white&#39;</span>, <span class="dt">color=</span><span class="st">&#39;black&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours), <span class="dt">size =</span> <span class="dv">1</span>)  <span class="op">+</span><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of listening times&quot;</span>,
-       <span class="dt">subtitle =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Population mean ($</span><span class="ch">\\</span><span class="st">mu$) = %.2f; population standard deviation ($</span><span class="ch">\\</span><span class="st">sigma$) = %.2f&quot;</span>,<span class="kw">round</span>(<span class="kw">mean</span>(hours),<span class="dv">2</span>),<span class="kw">round</span>(<span class="kw">sd</span>(hours),<span class="dv">2</span>))),
-       <span class="dt">y =</span> <span class="st">&#39;Number of students&#39;</span>, 
-       <span class="dt">x =</span> <span class="st">&#39;Hours&#39;</span>) </code></pre></div>
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hours), 
+    <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours), 
+    <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of listening times&quot;</span>, 
+    <span class="dt">subtitle =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Population mean ($</span><span class="ch">\\</span><span class="st">mu$) = %.2f; population standard deviation ($</span><span class="ch">\\</span><span class="st">sigma$) = %.2f&quot;</span>, 
+        <span class="kw">round</span>(<span class="kw">mean</span>(hours), <span class="dv">2</span>), <span class="kw">round</span>(<span class="kw">sd</span>(hours), <span class="dv">2</span>))), 
+    <span class="dt">y =</span> <span class="st">&quot;Number of students&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
 <p>In this example, the population mean (<span class="math inline">\(\mu\)</span>) is equal to 19.98, and the population standard deviation <span class="math inline">\(\sigma\)</span> is equal to 14.15.</p>
 <div id="the-null-hypothesis" class="section level3">
@@ -308,9 +307,9 @@ H_1: \mu \neq \mu_0
 \]</span> Accepting the alternative hypothesis in turn will often lead to changes in opinions or actions. Note that while the null hypothesis may be rejected, it can never be accepted based on a single test. If we fail to reject the null hypothesis, it means that we simply haven’t collected enough evidence against the null hypothesis to disprove it. In classical hypothesis testing, there is no way to determine whether the null hypothesis is true. <strong>Hypothesis testing</strong> provides a means to quantify to what extent the data from our sample is in line with the null hypothesis.</p>
 <p>In order to quantify the concept of “sufficient evidence” we look at the theoretical distribution of the sample means given our null hypothesis and the sample standard error. Using the available information we can infer the sampling distribution for our null hypothesis. Recall that the standard deviation of the sampling distribution (i.e., the standard error of the mean) is given by <span class="math inline">\(\sigma_{\bar x}={\sigma \over \sqrt{n}}\)</span>, and thus can be computed as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_pop &lt;-<span class="st"> </span><span class="kw">mean</span>(hours)
-sigma &lt;-<span class="st"> </span><span class="kw">sd</span>(hours) <span class="co">#population standard deviation</span>
-n &lt;-<span class="st"> </span><span class="dv">50</span> <span class="co">#sample size</span>
-standard_error &lt;-<span class="st"> </span>sigma<span class="op">/</span><span class="kw">sqrt</span>(n) <span class="co">#standard error</span>
+sigma &lt;-<span class="st"> </span><span class="kw">sd</span>(hours)  <span class="co">#population standard deviation</span>
+n &lt;-<span class="st"> </span><span class="dv">50</span>  <span class="co">#sample size</span>
+standard_error &lt;-<span class="st"> </span>sigma<span class="op">/</span><span class="kw">sqrt</span>(n)  <span class="co">#standard error</span>
 standard_error</code></pre></div>
 <pre><code>## [1] 2.001639</code></pre>
 <p>Since we know from the central limit theorem that the sampling distribution is normal for large enough samples, we can now visualize the expected sampling distribution <strong>if our null hypothesis was in fact true</strong> (i.e., if the was no difference between the true population mean and the hypothesized mean of 10).</p>
@@ -321,10 +320,12 @@ H_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">10</s
 student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">50</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 student_sample &lt;-<span class="st"> </span>hours[student_sample]
 mean_sample &lt;-<span class="st"> </span><span class="kw">mean</span>(student_sample)
-<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(student_sample)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> student_sample), <span class="dt">fill =</span> <span class="st">&#39;white&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(student_sample), <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Distribution of values in the sample ($n =$ %.0f, $</span><span class="ch">\\</span><span class="st">bar{x] = $ %.2f, s = %.2f)&quot;</span>,n,<span class="kw">mean</span>(student_sample),<span class="kw">sd</span>(student_sample))),<span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) </code></pre></div>
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(student_sample)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> student_sample), 
+    <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(student_sample), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, 
+        <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Distribution of values in the sample ($n =$ %.0f, $</span><span class="ch">\\</span><span class="st">bar{x] = $ %.2f, s = %.2f)&quot;</span>, 
+    n, <span class="kw">mean</span>(student_sample), <span class="kw">sd</span>(student_sample))), 
+    <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
 <p>The mean listening time in the sample (black line) <span class="math inline">\(\bar x\)</span> is 18.99. We can already see from the graphic above that such a value is rather unlikely under the hypothesis that the population mean is <span class="math inline">\(10\)</span>. Intuitively, such a result would therefore provide evidence against our null hypothesis. But how could we quantify specifically how unlikely it is to obtain such a value and decide whether or not to reject the null hypothesis? Significance tests can be used to provide answers to these questions.</p>
 </div>
@@ -385,7 +386,7 @@ t_crit</code></pre></div>
 <div id="p-values" class="section level4">
 <h4><span class="header-section-number">5.1.2.2</span> P-values</h4>
 <p>In the previous section, we computed the test statistic, which tells us how close our sample is to the null hypothesis. The p-value corresponds to the probability that the test statistic would take a value as extreme or more extreme than the one that we actually observed, <strong>assuming that the null hypothesis is true</strong>. It is important to note that this is a <strong>conditional probability</strong>: we compute the probability of observing a sample mean (or a more extreme value) conditional on the assumption that the null hypothesis is true. The <code>pnorm()</code>function can be used to compute this probability. It is the cumulative probability distribution function of the `normal distribution. Cumulative probability means that the function returns the probability that the test statistic will take a value <strong>less than or equal to</strong> the calculated test statistic given the degrees of freedom. However, we are interested in obtaining the probability of observing a test statistic <strong>larger than or equal to</strong> the calculated test statistic under the null hypothesis (i.e., the p-value). Thus, we need to subtract the cumulative probability from 1. In addition, since we are running a two-sided test, we need to multiply the probability by 2 to account for the rejection region at the other side of the distribution.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_value &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">pt</span>(<span class="kw">abs</span>(t_score), <span class="dt">df =</span> df))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_value &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(t_score), <span class="dt">df =</span> df))
 p_value</code></pre></div>
 <pre><code>## [1] 0.000006336847</code></pre>
 <p>This value corresponds to the probability of observing a mean equal to or larger than the one we obtained from our sample, if the null hypothesis was true. As you can see, this probability is very low. A small p-value signals that it is unlikely to observe the calculated test statistic under the null hypothesis. To decide whether or not to reject the null hypothesis, we would now compare this value to the level of significance (<span class="math inline">\(\alpha\)</span>) that we chose for our test. For this example, we adopt the widely accepted significance level of 5%, so any test results with a p-value &lt; 0.05 would be deemed statistically significant. Note that the p-value is directly related to the value of the test statistic. The relationship is such that the higher (lower) the value of the test statistic, the lower (higher) the p-value.</p>
@@ -399,8 +400,8 @@ CI_{lower} = {\bar x} - t_{1-{\alpha \over 2}} * SE_{\bar x} \\
 CI_{upper} = {\bar x} + t_{1-{\alpha \over 2}} * SE_{\bar x}
 \]</span></p>
 <p>It is easy to compute this interval manually:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_lower &lt;-<span class="st"> </span>(mean_sample)<span class="op">-</span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> df)<span class="op">*</span>SE
-ci_upper &lt;-<span class="st"> </span>(mean_sample)<span class="op">+</span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> df)<span class="op">*</span>SE
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_lower &lt;-<span class="st"> </span>(mean_sample) <span class="op">-</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> df) <span class="op">*</span><span class="st"> </span>SE
+ci_upper &lt;-<span class="st"> </span>(mean_sample) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> df) <span class="op">*</span><span class="st"> </span>SE
 ci_lower</code></pre></div>
 <pre><code>## [1] 15.41775</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_upper</code></pre></div>
@@ -485,15 +486,15 @@ H_1: \mu \neq 10
 ## CI.mean.0.95          var      std.dev     coef.var 
 ##    3.5713831  157.9189875   12.5665822    0.6617775</code></pre>
 <p>From this, we can already see that the mean is different from the hypothesized value. The question however remains, whether this difference is significantly different, given the sample size and the variability in the data. Since we only have one continuous variable, we can visualize the distribution in a histogram.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(student_sample)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> student_sample), <span class="dt">fill =</span> <span class="st">&#39;white&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Distribution of values in the sample&quot;</span>,<span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(student_sample)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> student_sample), 
+    <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Distribution of values in the sample&quot;</span>, 
+        <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
 <p><strong>5. Conduct significance test</strong></p>
 <p>In the beginning of the chapter, we saw, how you could conduct significance test by hand. However, R has built-in routines that you can use to conduct the analyses. The <code>t.test()</code> function can be used to conduct the test. To test if the listening time among WU students was 10, you can use the following code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">H_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">10</span>
-<span class="kw">t.test</span>(student_sample, <span class="dt">mu =</span> H_<span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&#39;two.sided&#39;</span>)</code></pre></div>
+<span class="kw">t.test</span>(student_sample, <span class="dt">mu =</span> H_<span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -523,14 +524,16 @@ hours_population_<span class="dv">1</span> &lt;-<span class="st"> </span><span c
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
 sample_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">98</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 sample_<span class="dv">1</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
-sample_<span class="dv">1</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
+sample_<span class="dv">1</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours, 
+    <span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="fl">2.5</span>, <span class="dt">scale =</span> <span class="dv">11</span>)
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
 sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">112</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 sample_<span class="dv">2</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
-sample_<span class="dv">2</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
-hours_a_b &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_<span class="dv">1</span>_df,sample_<span class="dv">2</span>_df) 
+sample_<span class="dv">2</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours, 
+    <span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
+hours_a_b &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_<span class="dv">1</span>_df, sample_<span class="dv">2</span>_df)
 <span class="kw">head</span>(hours_a_b)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -570,7 +573,7 @@ H_0: \delta = 0 \\
 H_1: \delta \ne 0
 \]</span></p>
 <p>Remember that we usually don’t have access to the entire population so that we can not observe <span class="math inline">\(\delta\)</span> and have to estimate is from a sample statistic, which we define as <span class="math inline">\(d = \bar x_1-\bar x_2\)</span>, i.e., the difference between the sample means from group a (<span class="math inline">\(\bar x_1\)</span>) and group b (<span class="math inline">\(\bar x_2\)</span>). But can we really estimate <span class="math inline">\(d\)</span> from <span class="math inline">\(\delta\)</span>? Remember from the previous chapter, that we could estimate <span class="math inline">\(\mu\)</span> from <span class="math inline">\(\bar x\)</span>, because if we (hypothetically) take a larger number of samples, the distribution of the means of these samples (the sampling distribution) will be normally distributed and its mean will be (in the limit) equal to the population mean. It turns out that we can use the same underlying logic here. The above samples were drawn from two different populations with <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span>. Let us compute the difference in means between these two populations:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">delta_pop &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_population_<span class="dv">1</span>)<span class="op">-</span><span class="kw">mean</span>(hours_population_<span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">delta_pop &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_population_<span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(hours_population_<span class="dv">2</span>)
 delta_pop</code></pre></div>
 <pre><code>## [1] -7.422855</code></pre>
 <p>This means that the true difference between the mean listening times of groups a and b is -7.42. Let us now repeat the exercise from the previous chapter: let us repeatedly draw a large number of <span class="math inline">\(20,000\)</span> random samples of 100 users from each of these populations, compute the difference (i.e., <span class="math inline">\(d\)</span>, our estimate of <span class="math inline">\(\delta\)</span>), store the difference for each draw and create a histogram of <span class="math inline">\(d\)</span>.</p>
@@ -580,27 +583,27 @@ hours_population_<span class="dv">2</span> &lt;-<span class="st"> </span><span c
 
 samples &lt;-<span class="st"> </span><span class="dv">20000</span>
 mean_delta &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> samples)
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples){
-  student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-  mean_delta[i,] &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_population_<span class="dv">1</span>[student_sample])<span class="op">-</span><span class="kw">mean</span>(hours_population_<span class="dv">2</span>[student_sample])
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples) {
+    student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
+    mean_delta[i, ] &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_population_<span class="dv">1</span>[student_sample]) <span class="op">-</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mean</span>(hours_population_<span class="dv">2</span>[student_sample])
 }
 
-<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(mean_delta)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mean_delta), <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill=</span><span class="st">&#39;white&#39;</span>, <span class="dt">color=</span><span class="st">&#39;black&#39;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(mean_delta)), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;d&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%d samples; $d_{</span><span class="ch">\\</span><span class="st">bar{x}}$ = %.2f&quot;</span>,samples, <span class="kw">round</span>(<span class="kw">mean</span>(mean_delta),<span class="dv">2</span>))))</code></pre></div>
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(mean_delta)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mean_delta), 
+    <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>()) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(mean_delta)), 
+    <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;d&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%d samples; $d_{</span><span class="ch">\\</span><span class="st">bar{x}}$ = %.2f&quot;</span>, 
+    samples, <span class="kw">round</span>(<span class="kw">mean</span>(mean_delta), <span class="dv">2</span>))))</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 <p>This gives us the sampling distribution of the mean differences between the samples. You will notice that this distribution follows a normal distribution and is centered around the true difference between the populations. This means that, on average, the difference between two sample means <span class="math inline">\(d\)</span> is a good estimate of <span class="math inline">\(\delta\)</span>. In our example, the difference between <span class="math inline">\(\bar x_1\)</span> and <span class="math inline">\(\bar x_2\)</span> is:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_x1 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_a_b[hours_a_b<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;A&quot;</span>,<span class="st">&quot;hours&quot;</span>])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_x1 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_a_b[hours_a_b<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, <span class="st">&quot;hours&quot;</span>])
 mean_x1</code></pre></div>
 <pre><code>## [1] 20.90816</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_x2 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_a_b[hours_a_b<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;B&quot;</span>,<span class="st">&quot;hours&quot;</span>])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_x2 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_a_b[hours_a_b<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, <span class="st">&quot;hours&quot;</span>])
 mean_x2</code></pre></div>
 <pre><code>## [1] 26.42857</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span>mean_x1<span class="op">-</span>mean_x2
-d </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span>mean_x1 <span class="op">-</span><span class="st"> </span>mean_x2
+d</code></pre></div>
 <pre><code>## [1] -5.520408</code></pre>
 <p>Now that we have <span class="math inline">\(d\)</span> as an estimate of <span class="math inline">\(\delta\)</span>, how can we find out if the observed difference is significantly different from the null hypothesis (i.e., <span class="math inline">\(\delta = 0\)</span>)?</p>
 <p>Recall from the previous section, that the standard deviation of the sampling distribution <span class="math inline">\(\sigma_{\bar x}\)</span> (i.e., the standard error) gives us indication about the precision of our estimate. Further recall that the standard error can be calculated as <span class="math inline">\(\sigma_{\bar x}={\sigma \over \sqrt{n}}\)</span>. So how can we calculate the standard error of the difference between two population means? According to the <strong>variance sum law</strong>, to find the variance of the sampling distribution of differences, we merely need to add together the variances of the sampling distributions of the two populations that we are comparing. To find the standard error, we only need to take the square root of the variance (because the standard error is the standard deviation of the sampling distribution and the standard deviation is the square root of the variance), so that we get:</p>
@@ -614,13 +617,13 @@ SE_{\bar x_1-\bar x_2} = \sqrt{{s_1^2 \over n_1}+{s_2^2 \over n_2}}
 <p>Hence, for our example, we can calculate the standard error as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="dv">98</span>
 n2 &lt;-<span class="st"> </span><span class="dv">112</span>
-s1 &lt;-<span class="st"> </span><span class="kw">var</span>(hours_a_b[hours_a_b<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;A&quot;</span>,<span class="st">&quot;hours&quot;</span>])
+s1 &lt;-<span class="st"> </span><span class="kw">var</span>(hours_a_b[hours_a_b<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, <span class="st">&quot;hours&quot;</span>])
 s1</code></pre></div>
 <pre><code>## [1] 182.8471</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s2 &lt;-<span class="st"> </span><span class="kw">var</span>(hours_a_b[hours_a_b<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;B&quot;</span>,<span class="st">&quot;hours&quot;</span>])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s2 &lt;-<span class="st"> </span><span class="kw">var</span>(hours_a_b[hours_a_b<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, <span class="st">&quot;hours&quot;</span>])
 s2</code></pre></div>
 <pre><code>## [1] 264.9678</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SE_x1_x2 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(s1<span class="op">/</span>n1<span class="op">+</span>s2<span class="op">/</span>n2)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SE_x1_x2 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(s1<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>s2<span class="op">/</span>n2)
 SE_x1_x2</code></pre></div>
 <pre><code>## [1] 2.057078</code></pre>
 <p>Recall from above that we can calculate the t-statistic as:</p>
@@ -641,7 +644,7 @@ t_score</code></pre></div>
 <h4><span class="header-section-number">5.3.1.2</span> Application</h4>
 <p>The section above explained the theory behind the independent-means t-test and showed how to compute the statistics manually. Obviously you don’t have to compute these statistics by hand in this section shows you how to conduct an independent-means t-test in R using the example from above.</p>
 <p><strong>1. Formulate null and alternative hypotheses</strong></p>
-<p>We wish to analyze whether there is a significant difference in music listening times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is not difference), while the alternative hypothesis states the opposite:</p>
+<p>We wish to analyze whether there is a significant difference in music listening times between groups A and B. So our null hypothesis is that the means from the two populations are the same (i.e., there is no difference), while the alternative hypothesis states the opposite:</p>
 <p><span class="math display">\[
 H_0: \mu_1=\mu_2\\
 H_1: \mu_1 \ne \mu_2
@@ -668,29 +671,25 @@ H_1: \mu_1 \ne \mu_2
 ##      se
 ## X1 1.54</code></pre>
 <p>This already shows us that the mean between groups A and B are different. We can visualize the data using a plot of means, boxplot, and a histogram.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b,<span class="kw">aes</span>(group, hours)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listening times&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(group, hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
+    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> hours)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Boxplot of listening times&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Boxplot of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-190-2.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b,<span class="kw">aes</span>(hours)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Listening time (hours)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
+    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Listening time (hours)&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-190-3.png" width="672" /></p>
 <p><strong>5. Conduct significance test</strong></p>
 <p>To conduct the independent means t-test, we can use the <code>t.test()</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> hours_a_b, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> hours_a_b, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, 
+    <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -720,7 +719,8 @@ hours_population_<span class="dv">2</span> &lt;-<span class="st"> </span><span c
 <span class="kw">set.seed</span>(<span class="dv">12567</span>)
 sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 sample_<span class="dv">2</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
-hours_a_b_paired &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours_a =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours,<span class="dv">0</span>),<span class="dt">hours_b =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours,<span class="dv">0</span>)) 
+hours_a_b_paired &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours_a =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours, 
+    <span class="dv">0</span>), <span class="dt">hours_b =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours, <span class="dv">0</span>))
 <span class="kw">head</span>(hours_a_b_paired)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -765,7 +765,7 @@ t = {\bar d-  \mu_0 \over SE_{\bar d}}
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t_score &lt;-<span class="st"> </span>mean_d<span class="op">/</span>SE_d
 t_score</code></pre></div>
 <pre><code>## [1] -2.378136</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qt</span>(<span class="fl">0.975</span>,<span class="dt">df=</span><span class="dv">99</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">99</span>)</code></pre></div>
 <pre><code>## [1] 1.984217</code></pre>
 <p>Note that in the case of the dependent-means t-test, we only base our hypothesis on one population and hence there is only one population variance. This is because in the dependent sample test, the observations come from the same observational units (i.e., users). Hence, there is no unsystematic variation due to potential differences between users that were assigned to the experimental groups. This means that the influence of unobserved factors (unsystematic variation) relative to the variation due to the experimental manipulation (systematic variation) is not as strong in the dependent-means test compared to the independent-means test and we don’t need to correct for differences in the population variances.</p>
 </div>
@@ -817,8 +817,9 @@ H_0: \mu_D \ne 0
 <p>This already shows us that the mean between the two months are different. We can visiualize the data using a plot of means, boxplot, and a histogram.</p>
 <p>To plot the data, we need to do some restructuring first, since the variables are now stored in two different columns (“hours_a” and “hours_b”). This is also known as the “wide” format. To plot the data we need all observations to be stored in one variable. This is also known as the “long” format. We can use the <code>melt(...)</code> function from the <code>reshape2</code>package to “melt” the two variable into one column to plot the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
-hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>(hours_a_b_paired[, <span class="kw">c</span>(<span class="st">&quot;hours_a&quot;</span>, <span class="st">&quot;hours_b&quot;</span>)]) 
-<span class="kw">names</span>(hours_a_b_paired_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;group&quot;</span>,<span class="st">&quot;hours&quot;</span>)
+hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>(hours_a_b_paired[, <span class="kw">c</span>(<span class="st">&quot;hours_a&quot;</span>, 
+    <span class="st">&quot;hours_b&quot;</span>)])
+<span class="kw">names</span>(hours_a_b_paired_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&quot;hours&quot;</span>)
 <span class="kw">head</span>(hours_a_b_paired_long)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -826,29 +827,27 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
   </script>
 </div>
 <p>Now we are ready to plot the data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b_paired_long,<span class="kw">aes</span>(group, hours)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>,  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listining times&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b_paired_long, <span class="kw">aes</span>(group, hours)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, 
+        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listining times&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b_paired_long, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> hours)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Boxplot of listening times&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() </code></pre></div>
+<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Boxplot of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-199-2.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b_paired_long,<span class="kw">aes</span>(hours)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Listening time (hours)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b_paired_long, <span class="kw">aes</span>(hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
+    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Listening time (hours)&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-199-3.png" width="672" /></p>
 <p><strong>5. Conduct significance test</strong></p>
 <p>To conduct the independent means t-test, we can use the <code>t.test()</code> function with the argument <code>paired = TRUE</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours_a_b_paired<span class="op">$</span>hours_a, hours_a_b_paired<span class="op">$</span>hours_b, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">paired=</span><span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours_a_b_paired<span class="op">$</span>hours_a, hours_a_b_paired<span class="op">$</span>hours_b, 
+    <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, 
+    <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -927,13 +926,15 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 <pre><code>## [1] 0.366668</code></pre>
 <p>According to the thresholds defined above, this effect would be judged to be a small-medium effect.</p>
 <p>For the dependent-means t-test, we would use:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cohensD</span>(hours_a_b_paired<span class="op">$</span>hours_a, hours_a_b_paired<span class="op">$</span>hours_b, <span class="dt">method=</span><span class="st">&quot;paired&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cohensD</span>(hours_a_b_paired<span class="op">$</span>hours_a, hours_a_b_paired<span class="op">$</span>hours_b, 
+    <span class="dt">method =</span> <span class="st">&quot;paired&quot;</span>)</code></pre></div>
 <pre><code>## [1] 0.2378136</code></pre>
 <p>According to the thresholds defined above, this effect would also be judged to be a small-medium effect.</p>
 <p>When constructing an experimental design, your goal should be to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible. To achieve this goal, you may use the <code>pwr</code> package, which let’s you compute <code>n</code>, <code>d</code>, <code>alpha</code>, and <code>power</code>. You only need to specify three of the four input variables to get the fourth.</p>
 <p>For example, what sample size do we need (per group) to identify an effect with d = 0.6, α = 0.05, and power = 0.8:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pwr)
-<span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.6</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</code></pre></div>
+<span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.6</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, 
+    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</code></pre></div>
 <pre><code>## 
 ##      Two-sample t test power calculation 
 ## 
@@ -945,7 +946,8 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 ## 
 ## NOTE: n is number in *each* group</code></pre>
 <p>Or we could ask, what is the power of our test with 51 observations in each group, d = 0.6, and α = 0.05:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.t.test</span>(<span class="dt">n =</span> <span class="dv">51</span>, <span class="dt">d =</span> <span class="fl">0.6</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.t.test</span>(<span class="dt">n =</span> <span class="dv">51</span>, <span class="dt">d =</span> <span class="fl">0.6</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), 
+    <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</code></pre></div>
 <pre><code>## 
 ##      Two-sample t test power calculation 
 ## 
@@ -1008,21 +1010,24 @@ hours_population_<span class="dv">1</span> &lt;-<span class="st"> </span><span c
 <span class="kw">set.seed</span>(<span class="dv">125671</span>)
 sample_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 sample_<span class="dv">1</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">1</span>[sample_<span class="dv">1</span>]
-sample_<span class="dv">1</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
+sample_<span class="dv">1</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">1</span>_hours, 
+    <span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;A&quot;</span>)
 sample_<span class="dv">1</span>_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">25000</span>, <span class="dv">25</span>, <span class="dv">6</span>)
 <span class="kw">set.seed</span>(<span class="dv">125672</span>)
 sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 sample_<span class="dv">2</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">2</span>[sample_<span class="dv">2</span>]
-sample_<span class="dv">2</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
+sample_<span class="dv">2</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">2</span>_hours, 
+    <span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;B&quot;</span>)
 sample_<span class="dv">2</span>_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours_population_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">25000</span>, <span class="dv">35</span>, <span class="dv">6</span>)
 <span class="kw">set.seed</span>(<span class="dv">125678</span>)
 sample_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 sample_<span class="dv">3</span>_hours &lt;-<span class="st"> </span>hours_population_<span class="dv">3</span>[sample_<span class="dv">3</span>]
-sample_<span class="dv">3</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">3</span>_hours,<span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;C&quot;</span>)
+sample_<span class="dv">3</span>_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">round</span>(sample_<span class="dv">3</span>_hours, 
+    <span class="dv">0</span>), <span class="dt">group =</span> <span class="st">&quot;C&quot;</span>)
 sample_<span class="dv">3</span>_df<span class="op">$</span>index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>
 hours_abc &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_<span class="dv">1</span>_df, sample_<span class="dv">2</span>_df, sample_<span class="dv">3</span>_df)
 <span class="kw">head</span>(hours_abc)</code></pre></div>
@@ -1045,7 +1050,7 @@ hours_abc &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_<sp
 <p><span class="math display">\[H_1: \exists {i,j}: {\mu_i \ne \mu_j} \]</span></p>
 <p>To get a first impression if there are any differences in listening times across the experimental groups, we use the <code>describeBy(...)</code> function from the <code>psych</code> package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
-<span class="kw">describeBy</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group) <span class="co">#inspect data</span></code></pre></div>
+<span class="kw">describeBy</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group)  <span class="co">#inspect data</span></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: A
@@ -1111,9 +1116,9 @@ Figure 5.2: Plot of means
   </script>
 </div>
 <p>In this example, X<sub>1</sub> from the generalized data matrix above would refer to the factor level “A”, X<sub>2</sub> to the level “B”, and X<sub>3</sub> to the level “C”. Y<sub>11</sub> refers to the first data point in the first row (i.e., “13”), Y<sub>12</sub> to the second data point in the first row (i.e., “21”), etc.. The grand mean (<span class="math inline">\(\overline{Y}\)</span>) and the category means (<span class="math inline">\(\overline{Y}_c\)</span>) can be easily computed:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(hours_abc<span class="op">$</span>hours) <span class="co">#grand mean</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(hours_abc<span class="op">$</span>hours)  <span class="co">#grand mean</span></code></pre></div>
 <pre><code>## [1] 24.67</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">by</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, mean) <span class="co">#category mean</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">by</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, mean)  <span class="co">#category mean</span></code></pre></div>
 <pre><code>## hours_abc$group: A
 ## [1] 15.47
 ## -------------------------------------------------------- 
@@ -1184,7 +1189,8 @@ SS_M &amp;= 100*(15.47−24.67)^2 + 100*(24.88−24.67)^2 + 100*(33.66−24.67)^
 \end{align}
 \]</span></p>
 <p>You could also compute this manually in R using:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSM &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="dv">100</span><span class="op">*</span>(<span class="kw">by</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, mean) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(hours_abc<span class="op">$</span>hours))<span class="op">^</span><span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSM &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">by</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, 
+    mean) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(hours_abc<span class="op">$</span>hours))<span class="op">^</span><span class="dv">2</span>)
 SSM</code></pre></div>
 <pre><code>## [1] 16550.42</code></pre>
 <p>In this case, we used the three group means to calculate the sum of squares, so the model degrees of freedom (df<sub>M</sub>) are:</p>
@@ -1215,7 +1221,8 @@ SS_R =&amp; (13−15.47)^2 + (14−15.47)^2 + … + (2−15.47)^2 \\
 \end{align}
 \]</span></p>
 <p>You could also compute this in R using:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSR &lt;-<span class="st"> </span><span class="kw">sum</span>((hours_abc<span class="op">$</span>hours <span class="op">-</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">by</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, mean), <span class="dt">each =</span> <span class="dv">100</span>))<span class="op">^</span><span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSR &lt;-<span class="st"> </span><span class="kw">sum</span>((hours_abc<span class="op">$</span>hours <span class="op">-</span><span class="st"> </span><span class="kw">rep</span>(<span class="kw">by</span>(hours_abc<span class="op">$</span>hours, 
+    hours_abc<span class="op">$</span>group, mean), <span class="dt">each =</span> <span class="dv">100</span>))<span class="op">^</span><span class="dv">2</span>)
 SSR</code></pre></div>
 <pre><code>## [1] 10095.91</code></pre>
 <p>In this case, we used the 10 values for each of the SS for each group, so the residual degrees of freedom (df<sub>R</sub>) are:</p>
@@ -1279,10 +1286,10 @@ f_ratio</code></pre></div>
 <li>If the null hypothesis is rejected, then the effect of the independent variable is significant</li>
 </ul>
 <p>For 2 and 297 degrees of freedom, the critical value of F is 3.026 for α=0.05. As usual, you can either look up these values in a table or use the appropriate function in R:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_crit &lt;-<span class="st"> </span><span class="kw">qf</span>(.<span class="dv">95</span>, <span class="dt">df1 =</span> <span class="dv">2</span>, <span class="dt">df2 =</span> <span class="dv">297</span>) <span class="co">#critical value</span>
-f_crit </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_crit &lt;-<span class="st"> </span><span class="kw">qf</span>(<span class="fl">0.95</span>, <span class="dt">df1 =</span> <span class="dv">2</span>, <span class="dt">df2 =</span> <span class="dv">297</span>)  <span class="co">#critical value</span>
+f_crit</code></pre></div>
 <pre><code>## [1] 3.026153</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_ratio <span class="op">&gt;</span><span class="st"> </span>f_crit <span class="co">#test if calculated test statistic is larger than critical value</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_ratio <span class="op">&gt;</span><span class="st"> </span>f_crit  <span class="co">#test if calculated test statistic is larger than critical value</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The output tells us that the calculated test statistic exceeds the critical value. We can also show the test result visually:</p>
 <div class="figure">
@@ -1309,8 +1316,9 @@ f_crit </code></pre></div>
 <h5>Distributional assumptions</h5>
 <p>ANOVA is relatively immune to violations to the normality assumption when sample sizes are large due to the Central Limit Theorem. However, if your sample is small (i.e., n &lt; 30 per group) you may nevertheless want to check the normality of your data, e.g., by using the Shapiro-Wilk test or QQ-Plot. In our example, we have 100 observations in each group which is plenty but let’s create another example with only 10 observations in each group. In the latter case we cannot rely on the Central Limit Theorem and we should test the normality of our data. This can be done using the Shapiro-Wilk Test, which has the Null Hypothesis that the data is normally distributed. Hence, an insignificant test results means that the data can be assumed to be approximately normally distributed:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">321</span>)
-hours_fewobs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">60</span>, <span class="dv">5</span>)),
-                          <span class="dt">group =</span>  <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;A&#39;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&#39;B&#39;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&#39;C&#39;</span>, <span class="dv">10</span>)))
+hours_fewobs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">20</span>, 
+    <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">60</span>, <span class="dv">5</span>)), <span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, 
+    <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;C&quot;</span>, <span class="dv">10</span>)))
 <span class="kw">by</span>(hours_fewobs<span class="op">$</span>hours, hours_fewobs<span class="op">$</span>group, shapiro.test)</code></pre></div>
 <pre><code>## hours_fewobs$group: A
 ## 
@@ -1337,24 +1345,24 @@ hours_fewobs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<s
 <p>Since the test result is insignificant for all groups, we can conclude that the data approximately follow a normal distribution.</p>
 <p>We could also test the distributional assumptions visually using a Q-Q plot (i.e., quantile-quantile plot). This plot can be used to assess if a set of data plausibly came from some theoretical distribution such as the Normal distribution. Since this is just a visual check, it is somewhat subjective. But it may help us to judge if our assumption is plausible, and if not, which data points contribute to the violation. A Q-Q plot is a scatterplot created by plotting two sets of quantiles against one another. If both sets of quantiles came from the same distribution, we should see the points forming a line that’s roughly straight. In other words, Q-Q plots take your sample data, sort it in ascending order, and then plot them versus quantiles calculated from a theoretical distribution. Quantiles are often referred to as “percentiles” and refer to the points in your data below which a certain proportion of your data fall. Recall, for example, the standard Normal distribution with a mean of 0 and a standard deviation of 1. Since the 50th percentile (or 0.5 quantile) is 0, half the data lie below 0. The 95th percentile (or 0.95 quantile), is about 1.64, which means that 95 percent of the data lie below 1.64. The 97.5th quantile is about 1.96, which means that 97.5% of the data lie below 1.96. In the Q-Q plot, the number of quantiles is selected to match the size of your sample data.</p>
 <p>To create the Q-Q plot for the normal distribution, you may use the <code>qqnorm()</code> function, which takes the data to be tested as an argument. Using the <code>qqline()</code> function subsequently on the data creates the line on which the data points should fall based on the theoretical quantiles. If the individual data points deviate a lot from this line, it means that the data is not likely to follow a normal distribution.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;A&quot;</span>,]<span class="op">$</span>hours) 
-<span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;A&quot;</span>,]<span class="op">$</span>hours)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, ]<span class="op">$</span>hours)
+<span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, ]<span class="op">$</span>hours)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
 <img src="_main_files/figure-html/unnamed-chunk-226-1.png" alt="Q-Q plot 1" width="672" />
 <p class="caption">
 Figure 5.7: Q-Q plot 1
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;B&quot;</span>,]<span class="op">$</span>hours) 
-<span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;B&quot;</span>,]<span class="op">$</span>hours)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, ]<span class="op">$</span>hours)
+<span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, ]<span class="op">$</span>hours)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
 <img src="_main_files/figure-html/unnamed-chunk-226-2.png" alt="Q-Q plot 2" width="672" />
 <p class="caption">
 Figure 5.7: Q-Q plot 2
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;C&quot;</span>,]<span class="op">$</span>hours) 
-<span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;C&quot;</span>,]<span class="op">$</span>hours)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, ]<span class="op">$</span>hours)
+<span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, ]<span class="op">$</span>hours)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
 <img src="_main_files/figure-html/unnamed-chunk-226-3.png" alt="Q-Q plot 3" width="672" />
 <p class="caption">
@@ -1383,16 +1391,17 @@ Figure 5.7: Q-Q plot 3
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>You can see that the p-value is smaller than 0.05. This means that, if there really was no difference between the population means (i.e., the Null hypothesis was true), the probability of the observed differences (or larger differences) is less than 5%.</p>
 <p>To compute η<sup>2</sup> from the output, we can extract the relevant sum of squares as follows</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&#39;Sum Sq&#39;</span>[<span class="dv">1</span>]<span class="op">/</span>(<span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&#39;Sum Sq&#39;</span>[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&#39;Sum Sq&#39;</span>[<span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Sum Sq&quot;</span>[<span class="dv">1</span>]<span class="op">/</span>(<span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Sum Sq&quot;</span>[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Sum Sq&quot;</span>[<span class="dv">2</span>])</code></pre></div>
 <pre><code>## [1] 0.6211144</code></pre>
 <p>You can see that the results match the results from our manual computation above (<span class="math inline">\(\eta^2 =\)</span> 0.62).</p>
 <p>The <code>aov()</code> function also automatically generates some plots that you can use to judge if the model assumptions are met. We will inspect two of the plots here.</p>
 <p>We will use the first plot to inspect if the residual variances are equal across the experimental groups:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov,<span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">1</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-230-1.png" width="672" /></p>
 <p>Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels of our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is higher in group “B” than in group “C”. However, the differences are not that large and since the Levene’s test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case.</p>
 <p>The second plot can be used to test the assumption that the residuals are approximately normally distributed. We use a Q-Q plot to test this assumption:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov,<span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">2</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
 <p>The plot suggests that, the residuals are approximately normally distributed. We could also test this by extracting the residuals from the anova output using the <code>resid()</code> function and using the Shapiro-Wilk test:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</code></pre></div>
@@ -1433,7 +1442,8 @@ p_{CR}= \frac{\alpha}{k}
 <p>In our example with three groups:</p>
 <p><span class="math display">\[p_{CR}= \frac{0.05}{3}=0.017\]</span></p>
 <p>Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., the critical t value is higher). You can implement the Bonferroni procedure in R using:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bonferroni &lt;-<span class="st"> </span><span class="kw">pairwise.t.test</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, <span class="dt">data =</span> hours_abc, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bonferroni &lt;-<span class="st"> </span><span class="kw">pairwise.t.test</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, 
+    <span class="dt">data =</span> hours_abc, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)
 bonferroni</code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
@@ -1448,7 +1458,8 @@ bonferroni</code></pre></div>
 <p>In the output, you will get the corrected p-values for the individual tests. In our example, we can reject H<sub>0</sub> of equal means for all three tests, since p &lt; 0.05 for all combinations of groups.</p>
 <p>Note the difference between the results from the post-hoc test compared to individual t-tests. For example, when we test the “B” vs. “C” groups, the result from a t-test would be:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data_subset &lt;-<span class="st"> </span><span class="kw">subset</span>(hours_abc, group <span class="op">!=</span><span class="st"> &quot;A&quot;</span>)
-ttest &lt;-<span class="st"> </span><span class="kw">t.test</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> data_subset, <span class="dt">var.equal=</span> <span class="ot">TRUE</span>)
+ttest &lt;-<span class="st"> </span><span class="kw">t.test</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> data_subset, 
+    <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)
 ttest</code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
@@ -1488,7 +1499,7 @@ q</code></pre></div>
 <p>Hence:</p>
 <p><span class="math display">\[HSD= 3.33\sqrt{\frac{33.99}{100}}=1.94\]</span></p>
 <p>Or, in R:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hsd &lt;-<span class="st"> </span>q <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&#39;Mean Sq&#39;</span>[<span class="dv">2</span>]<span class="op">/</span><span class="dv">100</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hsd &lt;-<span class="st"> </span>q <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]<span class="op">$</span><span class="st">&quot;Mean Sq&quot;</span>[<span class="dv">2</span>]<span class="op">/</span><span class="dv">100</span>)
 hsd</code></pre></div>
 <pre><code>## [1] 1.942214</code></pre>
 <p>Since all mean differences between groups are larger than 1.906, we can reject the null hypothesis for all individual tests, confirming the results from the Bonferroni test. To compute Tukey’s HSD, we can use the appropriate function from the <code>multcomp</code> package.</p>
@@ -1538,41 +1549,41 @@ Figure 5.8: Tukey’s HSD
 </p>
 </div>
 <p>You can see that the CIs do not cross zero, which means that the true difference between group means is unlikely zero.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean1 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;A&quot;</span>,<span class="st">&quot;hours&quot;</span>]) <span class="co">#mean group &quot;A&quot;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean1 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;A&#39;</span>
 mean1</code></pre></div>
 <pre><code>## [1] 15.47</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean2 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;B&quot;</span>,<span class="st">&quot;hours&quot;</span>]) <span class="co">#mean group &quot;B&quot;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean2 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;B&#39;</span>
 mean2</code></pre></div>
 <pre><code>## [1] 24.88</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean3 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group<span class="op">==</span><span class="st">&quot;C&quot;</span>,<span class="st">&quot;hours&quot;</span>]) <span class="co">#mean group &quot;C&quot;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean3 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;C&#39;</span>
 mean3</code></pre></div>
 <pre><code>## [1] 33.66</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#CI high vs. medium</span>
-mean_diff_high_med &lt;-<span class="st"> </span>mean2<span class="op">-</span>mean1
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># CI high vs. medium</span>
+mean_diff_high_med &lt;-<span class="st"> </span>mean2 <span class="op">-</span><span class="st"> </span>mean1
 mean_diff_high_med</code></pre></div>
 <pre><code>## [1] 9.41</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_med_high_lower &lt;-<span class="st"> </span>mean_diff_high_med<span class="op">-</span>hsd
-ci_med_high_upper &lt;-<span class="st"> </span>mean_diff_high_med<span class="op">+</span>hsd
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_med_high_lower &lt;-<span class="st"> </span>mean_diff_high_med <span class="op">-</span><span class="st"> </span>hsd
+ci_med_high_upper &lt;-<span class="st"> </span>mean_diff_high_med <span class="op">+</span><span class="st"> </span>hsd
 ci_med_high_lower</code></pre></div>
 <pre><code>## [1] 7.467786</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_med_high_upper</code></pre></div>
 <pre><code>## [1] 11.35221</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#CI high vs.low</span>
-mean_diff_high_low &lt;-<span class="st"> </span>mean3<span class="op">-</span>mean1
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># CI high vs.low</span>
+mean_diff_high_low &lt;-<span class="st"> </span>mean3 <span class="op">-</span><span class="st"> </span>mean1
 mean_diff_high_low</code></pre></div>
 <pre><code>## [1] 18.19</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_low_high_lower &lt;-<span class="st"> </span>mean_diff_high_low<span class="op">-</span>hsd
-ci_low_high_upper &lt;-<span class="st"> </span>mean_diff_high_low<span class="op">+</span>hsd
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_low_high_lower &lt;-<span class="st"> </span>mean_diff_high_low <span class="op">-</span><span class="st"> </span>hsd
+ci_low_high_upper &lt;-<span class="st"> </span>mean_diff_high_low <span class="op">+</span><span class="st"> </span>hsd
 ci_low_high_lower</code></pre></div>
 <pre><code>## [1] 16.24779</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_low_high_upper</code></pre></div>
 <pre><code>## [1] 20.13221</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#CI medium vs.low</span>
-mean_diff_med_low &lt;-<span class="st"> </span>mean3<span class="op">-</span>mean2
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># CI medium vs.low</span>
+mean_diff_med_low &lt;-<span class="st"> </span>mean3 <span class="op">-</span><span class="st"> </span>mean2
 mean_diff_med_low</code></pre></div>
 <pre><code>## [1] 8.78</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_low_med_lower &lt;-<span class="st"> </span>mean_diff_med_low<span class="op">-</span>hsd
-ci_low_med_upper &lt;-<span class="st"> </span>mean_diff_med_low<span class="op">+</span>hsd
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_low_med_lower &lt;-<span class="st"> </span>mean_diff_med_low <span class="op">-</span><span class="st"> </span>hsd
+ci_low_med_upper &lt;-<span class="st"> </span>mean_diff_med_low <span class="op">+</span><span class="st"> </span>hsd
 ci_low_med_lower</code></pre></div>
 <pre><code>## [1] 6.837786</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_low_med_upper</code></pre></div>
@@ -1619,25 +1630,25 @@ ci_low_med_lower</code></pre></div>
 <span class="kw">library</span>(ggplot2)
 <span class="kw">rm</span>(music_sales)
 music_sales &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat&quot;</span>, 
-                          <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
-                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
-music_sales<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">factor</span>(music_sales<span class="op">$</span>group, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low_price&quot;</span>, <span class="st">&quot;high_price&quot;</span>)) <span class="co">#convert grouping variable to factor</span>
-<span class="kw">str</span>(music_sales) <span class="co">#inspect data</span></code></pre></div>
+    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
+music_sales<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">factor</span>(music_sales<span class="op">$</span>group, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), 
+    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low_price&quot;</span>, <span class="st">&quot;high_price&quot;</span>))  <span class="co">#convert grouping variable to factor</span>
+<span class="kw">str</span>(music_sales)  <span class="co">#inspect data</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    102 obs. of  3 variables:
 ##  $ product_id: int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ unit_sales: int  6 27 30 24 21 11 18 15 18 13 ...
 ##  $ group     : Factor w/ 2 levels &quot;low_price&quot;,&quot;high_price&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales) <span class="co">#inspect data</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales)  <span class="co">#inspect data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["product_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["unit_sales"],"name":[2],"type":["int"],"align":["right"]},{"label":["group"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"1","2":"6","3":"low_price"},{"1":"2","2":"27","3":"low_price"},{"1":"3","2":"30","3":"low_price"},{"1":"4","2":"24","3":"low_price"},{"1":"5","2":"21","3":"low_price"},{"1":"6","2":"11","3":"low_price"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Inspect descriptives (overall and by group).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">describe</span>(music_sales<span class="op">$</span>unit_sales) <span class="co">#overall descriptives</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">describe</span>(music_sales<span class="op">$</span>unit_sales)  <span class="co">#overall descriptives</span></code></pre></div>
 <pre><code>##    vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
 ## X1    1 102 7.12 6.26      6     6.1 4.45   0  30    30 1.71     3.02 0.62</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(music_sales<span class="op">$</span>unit_sales, music_sales<span class="op">$</span>group) <span class="co">#descriptives by group</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(music_sales<span class="op">$</span>unit_sales, music_sales<span class="op">$</span>group)  <span class="co">#descriptives by group</span></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: low_price
@@ -1660,7 +1671,7 @@ Figure 5.9: Boxplot
 </p>
 </div>
 <p>Let’s assume that one of the parametric assumptions has been violated and we needed to conduct a non-parametric test. Then, the Mann-Whitney U test is implemented in R using the function <code>wilcox.test()</code>. Using the ranking data as an independent variable and the listening time as a dependent variable, the test could be executed as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(unit_sales <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> music_sales) <span class="co">#Mann-Whitney U Test</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(unit_sales <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> music_sales)  <span class="co">#Mann-Whitney U Test</span></code></pre></div>
 <pre><code>## 
 ##  Wilcoxon rank sum test with continuity correction
 ## 
@@ -1677,21 +1688,21 @@ Figure 5.9: Boxplot
 <p>Let’s load and investigate the data first:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(music_sales_dep)
 music_sales_dep &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment_dependent.dat&quot;</span>, 
-                              <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
-                              <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
-<span class="kw">str</span>(music_sales_dep) <span class="co">#inspect data</span></code></pre></div>
+    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
+<span class="kw">str</span>(music_sales_dep)  <span class="co">#inspect data</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    51 obs. of  3 variables:
 ##  $ product_id           : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ unit_sales_low_price : int  6 27 30 24 21 11 18 15 18 13 ...
 ##  $ unit_sales_high_price: int  9 12 30 18 20 15 2 3 3 9 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales_dep) <span class="co">#inspect data</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_sales_dep)  <span class="co">#inspect data</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["product_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["unit_sales_low_price"],"name":[2],"type":["int"],"align":["right"]},{"label":["unit_sales_high_price"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"6","3":"9"},{"1":"2","2":"27","3":"12"},{"1":"3","2":"30","3":"30"},{"1":"4","2":"24","3":"18"},{"1":"5","2":"21","3":"20"},{"1":"6","2":"11","3":"15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Again, let’s assume that one of the prarametric assumptions has been violated and we needed to conduct a non-parametric test. Then the Wilcoxon signed-rank test can be performed with the same command as the Mann-Whitney U test, provided that the argument <code>paired</code> is set to <code>TRUE</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(music_sales_dep<span class="op">$</span>unit_sales_low_price, music_sales_dep<span class="op">$</span>unit_sales_high_price, <span class="dt">paired =</span> <span class="ot">TRUE</span>) <span class="co">#Wilcoxon signed-rank test</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(music_sales_dep<span class="op">$</span>unit_sales_low_price, music_sales_dep<span class="op">$</span>unit_sales_high_price, 
+    <span class="dt">paired =</span> <span class="ot">TRUE</span>)  <span class="co">#Wilcoxon signed-rank test</span></code></pre></div>
 <pre><code>## 
 ##  Wilcoxon signed rank test with continuity correction
 ## 
@@ -1708,7 +1719,7 @@ music_sales_dep &lt;-<span class="st"> </span><span class="kw">read.table</span>
 <li>When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)</li>
 </ul>
 <p>The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the <code>kruskal.test()</code> function. Using the same data as before, we type:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kruskal.test</span>(Sales <span class="op">~</span><span class="st"> </span>Promotion, <span class="dt">data =</span> online_store_promo) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kruskal.test</span>(Sales <span class="op">~</span><span class="st"> </span>Promotion, <span class="dt">data =</span> online_store_promo)</code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
@@ -1728,7 +1739,8 @@ Figure 5.10: Boxplot
 </div>
 <p>To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the <code>PMCMR</code> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PMCMR)
-<span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> online_store_promo<span class="op">$</span>Sales, <span class="dt">g =</span> online_store_promo<span class="op">$</span>Promotion, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</code></pre></div>
+<span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> online_store_promo<span class="op">$</span>Sales, 
+    <span class="dt">g =</span> online_store_promo<span class="op">$</span>Promotion, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using Tukey and Kramer (Nemenyi) test  
 ##                    with Tukey-Dist approximation for independent samples 
@@ -1754,12 +1766,14 @@ Figure 5.10: Boxplot
 <p>As always, we load the data first:</p>
 <p><a href="./Code/10-categorical_data%20(1).R">You can download the corresponding R-Code here</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">call_center &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat&quot;</span>, 
-                          <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
-                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
-call_center<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>conversion , <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)) <span class="co">#convert to factor</span>
-call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent , <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>)) <span class="co">#convert to factor</span></code></pre></div>
+    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
+call_center<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>conversion, 
+    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))  <span class="co">#convert to factor</span>
+call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), 
+    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>))  <span class="co">#convert to factor</span></code></pre></div>
 <p>Next, we create a table to check the relative frequencies:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(call_center), <span class="dv">2</span>)) <span class="co">#conditional relative frequencies</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(call_center), 
+    <span class="dv">2</span>))  <span class="co">#conditional relative frequencies</span>
 rel_freq_table</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1794,21 +1808,23 @@ Figure 5.12: proportion of conversions per agent (mosaic plot)
 CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
 \]</span></p>
 <p>where <span class="math inline">\(\sqrt{p(1-p)}\)</span> is the equivalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_1&quot;</span>)) <span class="co">#number of observations for agent 1</span>
-n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_2&quot;</span>)) <span class="co">#number of observations for agent 1</span>
-n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>conversion<span class="op">==</span><span class="st">&quot;yes&quot;</span>)) <span class="co">#number of conversions for agent 1</span>
-n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center,agent<span class="op">==</span><span class="st">&quot;agent_2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>conversion<span class="op">==</span><span class="st">&quot;yes&quot;</span>)) <span class="co">#number of conversions for agent 2</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_1&quot;</span>))  <span class="co">#number of observations for agent 1</span>
+n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_2&quot;</span>))  <span class="co">#number of observations for agent 1</span>
+n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;yes&quot;</span>))  <span class="co">#number of conversions for agent 1</span>
+n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(call_center, agent <span class="op">==</span><span class="st"> &quot;agent_2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;yes&quot;</span>))  <span class="co">#number of conversions for agent 2</span>
 p1 &lt;-<span class="st"> </span>n1_conv<span class="op">/</span>n1  <span class="co">#proportion of conversions for agent 1</span>
 p2 &lt;-<span class="st"> </span>n2_conv<span class="op">/</span>n2  <span class="co">#proportion of conversions for agent 2</span>
 
-error1 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sqrt</span>((p1<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p1))<span class="op">/</span>n1)
+error1 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((p1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p1))<span class="op">/</span>n1)
 ci_lower1 &lt;-<span class="st"> </span>p1 <span class="op">-</span><span class="st"> </span>error1
 ci_upper1 &lt;-<span class="st"> </span>p1 <span class="op">+</span><span class="st"> </span>error1
 ci_lower1</code></pre></div>
 <pre><code>## [1] 0.6133232</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_upper1</code></pre></div>
 <pre><code>## [1] 0.7200101</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">error2 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sqrt</span>((p2<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p2))<span class="op">/</span>n2)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">error2 &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((p2 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p2))<span class="op">/</span>n2)
 ci_lower2 &lt;-<span class="st"> </span>p2 <span class="op">-</span><span class="st"> </span>error2
 ci_upper2 &lt;-<span class="st"> </span>p2 <span class="op">+</span><span class="st"> </span>error2
 ci_lower2</code></pre></div>
@@ -1823,8 +1839,10 @@ H_1: \pi_1\ne \pi_2\]</span></p>
 CI = p_1-p_2\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p_1*(1-p_1)}{n_1}+\frac{p_2*(1-p_2)}{n_2}}
 \]</span></p>
 <p>If the confidence interval includes zero, then the data does not suggest a difference between the groups. Let’s compute the confidence interval for differences in the proportions by hand first:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_lower &lt;-<span class="st"> </span>p1 <span class="op">-</span><span class="st"> </span>p2 <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sqrt</span>(p1<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p1)<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>p2<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p2)<span class="op">/</span>n2) <span class="co">#95% CI lower bound</span>
-ci_upper &lt;-<span class="st"> </span>p1 <span class="op">-</span><span class="st"> </span>p2 <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sqrt</span>(p1<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p1)<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>p2<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p2)<span class="op">/</span>n2) <span class="co">#95% CI upper bound</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_lower &lt;-<span class="st"> </span>p1 <span class="op">-</span><span class="st"> </span>p2 <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>
+<span class="st">    </span>p1)<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>p2 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p2)<span class="op">/</span>n2)  <span class="co">#95% CI lower bound</span>
+ci_upper &lt;-<span class="st"> </span>p1 <span class="op">-</span><span class="st"> </span>p2 <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(p1 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>
+<span class="st">    </span>p1)<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>p2 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p2)<span class="op">/</span>n2)  <span class="co">#95% CI upper bound</span>
 ci_lower</code></pre></div>
 <pre><code>## [1] 0.2578943</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_upper</code></pre></div>
@@ -1856,35 +1874,46 @@ ci_lower</code></pre></div>
 \]</span></p>
 <p>where <span class="math inline">\(J\)</span> is the number of cells in the contingency table, <span class="math inline">\(f_o\)</span> are the observed cell frequencies and <span class="math inline">\(f_e\)</span> are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value.</p>
 <p>The observed cell frequencies can easily be seen from the contingency table:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs_cell1 &lt;-<span class="st"> </span>contigency_table[<span class="dv">1</span>,<span class="dv">1</span>]
-obs_cell2 &lt;-<span class="st"> </span>contigency_table[<span class="dv">1</span>,<span class="dv">2</span>]
-obs_cell3 &lt;-<span class="st"> </span>contigency_table[<span class="dv">2</span>,<span class="dv">1</span>]
-obs_cell4 &lt;-<span class="st"> </span>contigency_table[<span class="dv">2</span>,<span class="dv">2</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs_cell1 &lt;-<span class="st"> </span>contigency_table[<span class="dv">1</span>, <span class="dv">1</span>]
+obs_cell2 &lt;-<span class="st"> </span>contigency_table[<span class="dv">1</span>, <span class="dv">2</span>]
+obs_cell3 &lt;-<span class="st"> </span>contigency_table[<span class="dv">2</span>, <span class="dv">1</span>]
+obs_cell4 &lt;-<span class="st"> </span>contigency_table[<span class="dv">2</span>, <span class="dv">2</span>]</code></pre></div>
 <p>The expected cell frequencies can be calculated as follows:</p>
 <p><span class="math display">\[
 f_e=\frac{(n_r*n_c)}{n}
 \]</span></p>
 <p>where <span class="math inline">\(n_r\)</span> are the total observed frequencies per row, <span class="math inline">\(n_c\)</span> are the total observed frequencies per column, and <span class="math inline">\(n\)</span> is the total number of observations. Thus, the expected cell frequencies under the assumption of independence can be calculated as:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(call_center)
-exp_cell1 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent<span class="op">==</span><span class="st">&quot;agent_1&quot;</span>,])<span class="op">*</span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion<span class="op">==</span><span class="st">&quot;no&quot;</span>,]))<span class="op">/</span>n
-exp_cell2 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent<span class="op">==</span><span class="st">&quot;agent_1&quot;</span>,])<span class="op">*</span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion<span class="op">==</span><span class="st">&quot;yes&quot;</span>,]))<span class="op">/</span>n
-exp_cell3 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent<span class="op">==</span><span class="st">&quot;agent_2&quot;</span>,])<span class="op">*</span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion<span class="op">==</span><span class="st">&quot;no&quot;</span>,]))<span class="op">/</span>n
-exp_cell4 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent<span class="op">==</span><span class="st">&quot;agent_2&quot;</span>,])<span class="op">*</span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion<span class="op">==</span><span class="st">&quot;yes&quot;</span>,]))<span class="op">/</span>n</code></pre></div>
+exp_cell1 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;agent_1&quot;</span>, ]) <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;no&quot;</span>, ]))<span class="op">/</span>n
+exp_cell2 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;agent_1&quot;</span>, ]) <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;yes&quot;</span>, ]))<span class="op">/</span>n
+exp_cell3 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;agent_2&quot;</span>, ]) <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;no&quot;</span>, ]))<span class="op">/</span>n
+exp_cell4 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>agent <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;agent_2&quot;</span>, ]) <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(call_center[call_center<span class="op">$</span>conversion <span class="op">==</span><span class="st"> </span>
+<span class="st">    &quot;yes&quot;</span>, ]))<span class="op">/</span>n</code></pre></div>
 <p>To sum up, these are the expected cell frequencies</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">conversion_no =</span> <span class="kw">rbind</span>(exp_cell1,exp_cell3),<span class="dt">conversion_yes =</span> <span class="kw">rbind</span>(exp_cell2,exp_cell4), <span class="dt">row.names =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>,<span class="st">&quot;agent_2&quot;</span>)) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">conversion_no =</span> <span class="kw">rbind</span>(exp_cell1, exp_cell3), 
+    <span class="dt">conversion_yes =</span> <span class="kw">rbind</span>(exp_cell2, exp_cell4), <span class="dt">row.names =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, 
+        <span class="st">&quot;agent_2&quot;</span>))</code></pre></div>
 <pre><code>##         conversion_no conversion_yes
 ## agent_1           150            150
 ## agent_2           150            150</code></pre>
 <p>… and these are the observed cell frequencies</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">conversion_no =</span> <span class="kw">rbind</span>(obs_cell1,obs_cell2),<span class="dt">conversion_yes =</span> <span class="kw">rbind</span>(obs_cell3,obs_cell4), <span class="dt">row.names =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>,<span class="st">&quot;agent_2&quot;</span>)) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">conversion_no =</span> <span class="kw">rbind</span>(obs_cell1, obs_cell2), 
+    <span class="dt">conversion_yes =</span> <span class="kw">rbind</span>(obs_cell3, obs_cell4), <span class="dt">row.names =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, 
+        <span class="st">&quot;agent_2&quot;</span>))</code></pre></div>
 <pre><code>##         conversion_no conversion_yes
 ## agent_1           100            200
 ## agent_2           200            100</code></pre>
 <p>To obtain the test statistic, we simply plug the values into the formula:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chisq_cal &lt;-<span class="st">  </span><span class="kw">sum</span>(((obs_cell1 <span class="op">-</span><span class="st"> </span>exp_cell1)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell1),
-                  ((obs_cell2 <span class="op">-</span><span class="st"> </span>exp_cell2)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell2),
-                  ((obs_cell3 <span class="op">-</span><span class="st"> </span>exp_cell3)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell3),
-                  ((obs_cell4 <span class="op">-</span><span class="st"> </span>exp_cell4)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell4))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chisq_cal &lt;-<span class="st"> </span><span class="kw">sum</span>(((obs_cell1 <span class="op">-</span><span class="st"> </span>exp_cell1)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell1), 
+    ((obs_cell2 <span class="op">-</span><span class="st"> </span>exp_cell2)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell2), ((obs_cell3 <span class="op">-</span><span class="st"> </span>
+<span class="st">        </span>exp_cell3)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell3), ((obs_cell4 <span class="op">-</span><span class="st"> </span>exp_cell4)<span class="op">^</span><span class="dv">2</span><span class="op">/</span>exp_cell4))
 chisq_cal</code></pre></div>
 <pre><code>## [1] 66.66667</code></pre>
 <p>The test statistic is <span class="math inline">\(\chi^2\)</span> distributed. The chi-square distribution is a non-symmetric distribution. Actually, there are many different chi-square distributions, one for each degree of freedom as show in the following figure.</p>
@@ -1899,7 +1928,8 @@ Figure 5.13: The chi-square distribution
 df=(r-1)*(c-1)
 \]</span></p>
 <p>where <span class="math inline">\(r\)</span> is the number of rows and <span class="math inline">\(c\)</span> is the number of columns in the contingency table. Recall that degrees of freedom are generally the number of values that can vary freely when calculating a statistic. In a 2 by 2 table as in our case, we have 2 variables (or two samples) with 2 levels and in each one we have 1 that vary freely. Hence, in our example the degrees of freedom can be calculated as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st">  </span>(<span class="kw">nrow</span>(contigency_table) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">ncol</span>(contigency_table) <span class="dv">-1</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(contigency_table) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">ncol</span>(contigency_table) <span class="op">-</span><span class="st"> </span>
+<span class="st">    </span><span class="dv">1</span>)
 df</code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>Now, we can derive the critical value given the degrees of freedom and the level of confidence using the <code>qchisq()</code> function and test if the calculated test statistic is larger than the critical value:</p>
@@ -1915,7 +1945,7 @@ Figure 5.14: Visual depiction of the test result
 </p>
 </div>
 <p>We could also compute the p-value using the <code>pchisq()</code> function, which tells us the probability of the observed cell frequencies if the null hypothesis was true (i.e., there was no association):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_val &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span><span class="kw">pchisq</span>(chisq_cal,df)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_val &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(chisq_cal, df)
 p_val</code></pre></div>
 <pre><code>## [1] 0.0000000000000003330669</code></pre>
 <p>The test statistic can also be calculated in R directly on the contingency table with the function <code>chisq.test()</code>.</p>
@@ -1986,7 +2016,8 @@ V=\sqrt{\frac{\chi^2}{n*df_{min}}}
 <div id="sample-size-1" class="section level3">
 <h3><span class="header-section-number">5.6.3</span> Sample size</h3>
 <p>To <strong>calculate the required sample size</strong> when comparing proportions, the <code>power.prop.test()</code> function can be used. For example, we could ask how large our sample needs to be if we would like to compare two groups with conversion rates of 2% and 2.5%, respectively using the conventional settings for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power.prop.test</span>(<span class="dt">p1=</span><span class="fl">0.02</span>,<span class="dt">p2=</span><span class="fl">0.025</span>,<span class="dt">sig.level=</span><span class="fl">0.05</span>,<span class="dt">power=</span><span class="fl">0.8</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power.prop.test</span>(<span class="dt">p1 =</span> <span class="fl">0.02</span>, <span class="dt">p2 =</span> <span class="fl">0.025</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, 
+    <span class="dt">power =</span> <span class="fl">0.8</span>)</code></pre></div>
 <pre><code>## 
 ##      Two-sample comparison of proportions power calculation 
 ## 
