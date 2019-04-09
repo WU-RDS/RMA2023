@@ -311,7 +311,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><strong>Load and inspect data</strong></p>
 <p>Let´s load the data first and inspect the contained variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">movie_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
+                          <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
+                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
 <span class="kw">head</span>(movie_data)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -334,8 +335,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(reshape2)</code></pre></div>
 <p><strong>Question 1</strong></p>
 <p>To compute the confidence intervals for SD and HD streams we will need three things: 1) the mean <span class="math inline">\(\bar x\)</span>, 2) the standard error (<span class="math inline">\(s \over \sqrt{n}\)</span>), and 3) the critical value for a t-distribution (<span class="math inline">\(t_{crit}\)</span>; we will use a t-distribution, because we are not sure of the variance in the population).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate components of confidence interval</span>
-<span class="co"># formula</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Calculate components of confidence interval formula </span>
 mean_sd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_sd)
 mean_hd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_hd)
 
@@ -346,14 +346,14 @@ n &lt;-<span class="st"> </span><span class="kw">nrow</span>(movie_data)
 se_sd &lt;-<span class="st"> </span>sd_sd<span class="op">/</span><span class="kw">sqrt</span>(n)
 se_hd &lt;-<span class="st"> </span>sd_hd<span class="op">/</span><span class="kw">sqrt</span>(n)
 
-df &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+df &lt;-<span class="st"> </span>n<span class="dv">-1</span>
 t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, df)</code></pre></div>
 <p>Now the confidence intervals for streams in SD and HD quality can be computed as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Interval for SD moviess</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Interval for SD moviess</span>
 ci_lower_sd &lt;-<span class="st"> </span>mean_sd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd
 ci_upper_sd &lt;-<span class="st"> </span>mean_sd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd
 
-<span class="co"># Interval for HD movies</span>
+<span class="co">#Interval for HD movies</span>
 ci_lower_hd &lt;-<span class="st"> </span>mean_hd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd
 ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</code></pre></div>
 <p>Hence, the CI for SD movies is given by:</p>
@@ -388,13 +388,15 @@ ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span
 ##    kurtosis    se
 ## X1     0.42 53.76</code></pre>
 <p>As we can see, the differences between SD/HD and the week before don´t seem to be extraordinary high. To visualize the distribution of the data, we can create histograms:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
-    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of SD stremas&quot;</span>, 
-    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data,<span class="kw">aes</span>(streams_sd)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of SD stremas&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-438-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
-    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of HD streams&quot;</span>, 
-    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data,<span class="kw">aes</span>(streams_hd)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of HD streams&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-438-2.png" width="672" /></p>
 <p>We can now conduct a one sample t-test to test for significance.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_sd, <span class="dt">mu =</span> <span class="dv">2600</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre></div>
@@ -428,11 +430,9 @@ ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span
 <p><span class="math display">\[H_0: \mu_0 = \mu_1 \\ H_1: \mu_0 \neq \mu_1\]</span></p>
 <p>We need to transform the variable online_advertising into a factor variable for some of our analyses:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transform into factor variable</span>
-movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </span><span class="kw">factor</span>(movie_data<span class="op">$</span>online_advertising, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</code></pre></div>
+movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </span><span class="kw">factor</span>(movie_data<span class="op">$</span>online_advertising, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</code></pre></div>
 <p>A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means would be appropriate.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Descriptive statistics for SD streams, split by</span>
-<span class="co"># online advertising</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Descriptive statistics for SD streams, split by online advertising</span>
 <span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>online_advertising)</code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
@@ -448,11 +448,10 @@ movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </s
 ##    kurtosis   se
 ## X1     0.04 97.8</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of means</span>
-<span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_sd)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, 
-        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of SD streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
+    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of SD streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-441-1.png" width="672" /></p>
 <p>As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = “yes”, i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a <strong>two sample t-test</strong>. We use an inpependent-means t-test because we have different movies in each group (i.e., the movies in one condition are <em>indpendent</em> of the movies in the other condition). The requirements are clearly met:</p>
 <ul>
@@ -480,8 +479,7 @@ movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </s
 <pre><code>## [1] 1.124481</code></pre>
 <p>This maginitude of the effect size (1.12) suggests that the effect of online advertising on the number of SD streams is large.</p>
 <p>The same can be done analogously for HD streams:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Descriptive statistics for HD streams, split by</span>
-<span class="co"># online advertising</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Descriptive statistics for HD streams, split by online advertising</span>
 stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_hd, movie_data<span class="op">$</span>online_advertising)
 <span class="kw">print</span>(stats)</code></pre></div>
 <pre><code>## 
@@ -498,11 +496,10 @@ stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_dat
 ##    kurtosis    se
 ## X1    -0.73 86.33</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of means</span>
-<span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_hd)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, 
-        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of HD streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
+    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of HD streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-444-1.png" width="672" /></p>
 <p>Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is signficant (note that <em>two sample t-test</em> means the same as <em>independent-means t-test</em>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</code></pre></div>
@@ -538,19 +535,18 @@ psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span 
 ##    kurtosis    se
 ## X1     0.42 53.76</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of means</span>
-movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie_data[, <span class="kw">c</span>(<span class="st">&quot;streams_sd&quot;</span>, 
-    <span class="st">&quot;streams_hd&quot;</span>)])
+movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie_data[, <span class="kw">c</span>(<span class="st">&quot;streams_sd&quot;</span>, <span class="st">&quot;streams_hd&quot;</span>)])
 <span class="kw">names</span>(movie_data_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;stream&quot;</span>, <span class="st">&quot;number&quot;</span>)
 
-<span class="kw">ggplot</span>(movie_data_long, <span class="kw">aes</span>(stream, number)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
-    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, 
-    <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="kw">ggplot</span>(movie_data_long, <span class="kw">aes</span>(stream, number)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, 
+        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-448-1.png" width="672" /></p>
 <p>It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same movies are observed for HD and SD streams (i.e., the same movies are available in both formats). This means that we need a <strong>dependent means t-test</strong>. This test is also knownas the <strong>paired samples t-test</strong>. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding <code>paired = TRUE</code> to the code.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, 
-    <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -569,8 +565,7 @@ movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie
 <p>A standardized effect size of approx. 0.9 tells us that this effect is large.</p>
 <p><strong>Question 5</strong></p>
 <p>The question of how many movies we would need to include in each sample of our experiment can be answered quite comfortably with a power calculation function in R.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.3</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, 
-    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.3</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</code></pre></div>
 <pre><code>## 
 ##      Two-sample t test power calculation 
 ## 
@@ -616,7 +611,8 @@ movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie
 <p><strong>Load data</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())
 customer_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span>
+                          <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, 
+                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
 <span class="kw">head</span>(customer_data)</code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -638,13 +634,9 @@ customer_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<
 <span class="kw">library</span>(psych)
 <span class="kw">library</span>(Hmisc)</code></pre></div>
 <p>Next we are going to recode some of the variables into factors and give them more descriptive level names.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">customer_data<span class="op">$</span>retargeting &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>retargeting, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no retargeting&quot;</span>, 
-        <span class="st">&quot;generic retargeting&quot;</span>, <span class="st">&quot;dynamic retargeting&quot;</span>))
-customer_data<span class="op">$</span>gender &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>gender, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>))
-customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>conversion, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;conversion&quot;</span>, <span class="st">&quot;no conversion&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">customer_data<span class="op">$</span>retargeting &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>retargeting, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no retargeting&quot;</span>, <span class="st">&quot;generic retargeting&quot;</span>, <span class="st">&quot;dynamic retargeting&quot;</span>))
+customer_data<span class="op">$</span>gender &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>gender, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>,<span class="st">&quot;male&quot;</span>))
+customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>conversion, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;conversion&quot;</span>,<span class="st">&quot;no conversion&quot;</span>))</code></pre></div>
 <p><strong>Question 1</strong></p>
 <p>To answer whether the type of advertising has an effect on revenue we need to formulate a testable null hypothesis. In our case the null hypothesis is stating that the average level of sales is equal for all advertising types. In mathematical notation this implies:</p>
 <p><span class="math display">\[H_0: \mu_1 = \mu_2 = \mu_3 \]</span></p>
@@ -654,7 +646,7 @@ customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><
 <p><span class="math display">\[H_1: \exists {i,j}: {\mu_i \ne \mu_j} \]</span></p>
 <p>The appropriate test for such a hypothesis is one-way ANOVA since we have a metric scales dependent variable and a categorical independent variable with more than two levels.</p>
 <p>Next we will calculate summary statistics for the data and produce an approppriate plot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(customer_data<span class="op">$</span>revenue,customer_data<span class="op">$</span>retargeting)</code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no retargeting
@@ -675,10 +667,10 @@ customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><
 ##    kurtosis    se
 ## X1    -0.51 79.68</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(customer_data, <span class="kw">aes</span>(retargeting, revenue)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;White&quot;</span>, 
-        <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, 
-    <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, 
-    <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;White&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-456-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Both the summary statistics and the plot hint at the fact that the means may not be equal. Especially the difference between dynamic retargeting and no retargeting/ generic regtargeting seem to be quite high. Before we move to the formal test, we need to see if a series of assumptions are met, namely:</p>
 <ul>
@@ -687,25 +679,24 @@ customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><
 <li>Independence of observations</li>
 </ul>
 <p>The last assumption is satisfied due to the fact that the observations were randomly assigned to the advertisement groups. To see if we need to worry about distributional assumptions we first take a look at the number of observations in each advertising group.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check number of observations by group</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check number of observations by group</span>
 <span class="kw">table</span>(customer_data<span class="op">$</span>retargeting)</code></pre></div>
 <pre><code>## 
 ##      no retargeting generic retargeting dynamic retargeting 
 ##                 106                  90                 100</code></pre>
 <p>Due to the fact that there are always more than 30 observations in each group we can rely on the central limit theorem to satisfy the distributional assumptions.</p>
 <p>Homogeneity of variances can be checked with Levene’s test (implemented as <code>leveneTest()</code> from the <code>car</code> package). The null hypothesis of this test is that the variances are equal, with the alternative hypothesis being that the variances are not all equal.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Homogeneity of variances test:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Homogeneity of variances test:</span>
 <span class="kw">library</span>(car)
-<span class="kw">leveneTest</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data, 
-    <span class="dt">center =</span> mean)</code></pre></div>
+<span class="kw">leveneTest</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data=</span>customer_data, <span class="dt">center=</span>mean)</code></pre></div>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = mean)
 ##        Df F value Pr(&gt;F)
 ## group   2  1.2455 0.2893
 ##       293</code></pre>
 <p>The test result is insignificant (for a signifcance level of 5 %), meaning that we do not reject the null hypothesis of equal variances and can operate under the assumption that the variances are equal.</p>
 <p>Since all assumptions are fulfilled we can move on to conducting the actual ANOVA using the <code>aov()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Anova:</span>
-aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Anova:</span>
+aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue<span class="op">~</span>retargeting, <span class="dt">data =</span> customer_data)
 <span class="kw">summary</span>(aov)</code></pre></div>
 <pre><code>##              Df    Sum Sq  Mean Sq F value            Pr(&gt;F)    
 ## retargeting   2  37966043 18983022   35.26 0.000000000000019 ***
@@ -714,11 +705,11 @@ aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span clas
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The p-value is smaller than 0.05, which we chose as our significance level, meaning that we reject the null hypothesis of the means being equal in the three advertising groups.</p>
 <p>Next we will briefly inspect the residuals of the ANOVA to see if the assumptions of the test really are justified.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Inspect residuals</span>
-<span class="kw">plot</span>(aov, <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Inspect residuals</span>
+<span class="kw">plot</span>(aov,<span class="dv">1</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-460-1.png" width="672" /></p>
 <p>The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov,<span class="dv">2</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-461-1.png" width="672" /></p>
 <p>The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behaviour here may indicate problems with the model specification.</p>
 <p>To further confirm that the residuals are roughly normally distributed we employ the Shapiro-Wilk test. The null hypothesis is that the distribution of the data is normal, with the alternative hypothesis positing that the data is not normally distributed.</p>
@@ -734,9 +725,8 @@ aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span clas
 2) H_0: \mu_2 = \mu_3; H_1 = \mu_2 \neq \mu_3 \\
 3) H_0: \mu_1 = \mu_3; H_1 = \mu_1 \neq \mu_3 \]</span></p>
 <p>Here we will conduct both the Bonferroni correction as well as Tukey’s HSD test, however either would be sufficient for your homework. Bonferroni’s correction conducts multiple pairwise t-tests, with the null hypothesis being that of equal means in each case and the alternative hypothesis stating that the means are unequal.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># bonferroni</span>
-<span class="kw">pairwise.t.test</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting, 
-    <span class="dt">data =</span> customer_data, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#bonferroni</span>
+<span class="kw">pairwise.t.test</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting, <span class="dt">data=</span>customer_data, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -753,7 +743,7 @@ dynamic regargeting vs. no retargeting<br />
 dynamic regargeting vs. generig retargeting</p>
 <p>But there seems to be no difference in the means of generic retargeting vs. no retargeting.</p>
 <p>Tukey’s HSD similarly compares pairwise means, corrected for family-wise errors (both of the post hoc tests would have been considered correct).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tukey correction using the mult-comp package</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#tukey correction using the mult-comp package</span>
 <span class="kw">library</span>(multcomp)
 tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">retargeting =</span> <span class="st">&quot;Tukey&quot;</span>))
 <span class="kw">summary</span>(tukeys)</code></pre></div>
@@ -801,10 +791,7 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span cla
 ## generic retargeting - no retargeting == 0       336.0251
 ## dynamic retargeting - no retargeting == 0      1034.8806
 ## dynamic retargeting - generic retargeting == 0  956.7388</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The mar parameter changes the margins around</span>
-<span class="co"># created plots. This is done so the labels on the</span>
-<span class="co"># side of the Tukey plot are visible (however, this</span>
-<span class="co"># was not expected).</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The mar parameter changes the margins around created plots. This is done so the labels on the side of the Tukey plot are visible (however, this was not expected). </span>
 <span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(tukeys)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-465-1.png" width="672" /></p>
@@ -816,11 +803,13 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span cla
 <p><span class="math display">\[H_1: \exists {i,j}: {\bar \mu_i \ne \bar \mu_j} \]</span></p>
 <p>A good way to visualize ordinal data is through a boxplot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> customer_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> rank)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-466-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The boxplot seems to indicate that the medians are unequal. At least for dynamic retargeting our customer ranks seem to be lower than the ones of no retargeting or generic retargeting.</p>
 <p>The only assumption that we require for this test is that the dependent variable is at least ordinal, which is fulfilled for customer ranks. Hence we can move on to performing the test in R.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ordinal data so we use a non-parametric test</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#ordinal data so we use a non-parametric test</span>
 <span class="kw">kruskal.test</span>(rank <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
@@ -831,8 +820,7 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span cla
 <p>The p-value is below any sensible signifcance level and thus we reject the null hypothesis of equal medians. This means that the median rank of customers is different for different types of retargeting, implying that the type of retargeting has an effect on the customer rank.</p>
 <p>To further see which of the medians are unequeal we perform the Nemenyi post hoc test, which can be found in the <code>PCMCR</code> package in R. The null hyptohesis is that the pairwise medians are equal, while the alternative hypothesis is that the pairwise medians are unequal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PMCMR)
-<span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> customer_data<span class="op">$</span>rank, 
-    <span class="dt">g =</span> customer_data<span class="op">$</span>retargeting, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</code></pre></div>
+<span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> customer_data<span class="op">$</span>rank, <span class="dt">g =</span> customer_data<span class="op">$</span>retargeting, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using Tukey and Kramer (Nemenyi) test  
 ##                    with Tukey-Dist approximation for independent samples 
@@ -866,12 +854,10 @@ rel_freq_table</code></pre></div>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
 <p><img src="_main_files/figure-html/question_3_1-1.png" width="672" /></p>
 <p>We see that our conversion seems to be better for our female customers, but letÂ´s check whether these proportions are significantly different.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>))  <span class="co">#number of observations for females</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>)) <span class="co">#number of observations for females</span>
 n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>))  <span class="co">#number of observations for males</span>
-n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">&amp;</span><span class="st"> </span>
-<span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for females</span>
-n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span>
-<span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for males</span>
+n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">&amp;</span><span class="st"> </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for females</span>
+n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for males</span>
 
 <span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(n1_conv, n2_conv), <span class="dt">n =</span> <span class="kw">c</span>(n1, n2), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</code></pre></div>
 <pre><code>## 
