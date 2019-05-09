@@ -50,50 +50,76 @@
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -282,28 +308,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="if-we-knew-it-all" class="section level2">
 <h2><span class="header-section-number">4.1</span> If we knew it all</h2>
 <p>Assume there are <span class="math inline">\(25,000\)</span> students at WU and every single one has kindly provided us with the hours they listened to music in the past month. In this case, we know the true mean (<span class="math inline">\(49.93\)</span> hours) and the true standard deviation (SD = <span class="math inline">\(10.02\)</span>) and thus we can easily summarize the entire distribution. Since the data follows a normal distribution, roughly 95% of the values lie within 2 standard deviations from the mean, as the following plot shows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(latex2exp)
 <span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">25000</span>, <span class="dv">50</span>, <span class="dv">10</span>)
 
-<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(hours), <span class="dt">bins =</span> <span class="dv">50</span>, <span class="dt">fill =</span> <span class="st">&#39;white&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of listening times&quot;</span>,
-       <span class="dt">subtitle =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Population mean ($</span><span class="ch">\\</span><span class="st">mu$) = %.2f; population standard deviation ($</span><span class="ch">\\</span><span class="st">sigma$) = %.2f&quot;</span>,<span class="kw">round</span>(<span class="kw">mean</span>(hours),<span class="dv">2</span>),<span class="kw">round</span>(<span class="kw">sd</span>(hours),<span class="dv">2</span>))),
-       <span class="dt">y =</span> <span class="st">&#39;Number of students&#39;</span>, 
-       <span class="dt">x =</span> <span class="st">&#39;Hours&#39;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours), <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours)<span class="op">+</span><span class="dv">2</span><span class="op">*</span><span class="kw">sd</span>(hours), <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours)<span class="op">-</span><span class="dv">2</span><span class="op">*</span><span class="kw">sd</span>(hours), <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">mean</span>(hours), <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">yend =</span> <span class="dv">1100</span>, <span class="dt">xend =</span> (<span class="kw">mean</span>(hours) <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">sd</span>(hours))), <span class="dt">lineend =</span> <span class="st">&quot;butt&quot;</span>, <span class="dt">linejoin =</span> <span class="st">&quot;round&quot;</span>,
-     <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;inches&quot;</span>))) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">mean</span>(hours), <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">yend =</span> <span class="dv">1100</span>, <span class="dt">xend =</span> (<span class="kw">mean</span>(hours) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">sd</span>(hours))), <span class="dt">lineend =</span> <span class="st">&quot;butt&quot;</span>, <span class="dt">linejoin =</span> <span class="st">&quot;round&quot;</span>,
-     <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;inches&quot;</span>))) <span class="op">+</span>
-<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="kw">mean</span>(hours) <span class="op">+</span><span class="st"> </span><span class="dv">28</span>, <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">label =</span> <span class="st">&quot;Mean + 2 * SD&quot;</span> )<span class="op">+</span>
-<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="kw">mean</span>(hours) <span class="dv">-28</span>, <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">label =</span> <span class="st">&quot;Mean - 2 * SD&quot;</span> )</code></pre></div>
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(hours), 
+    <span class="dt">bins =</span> <span class="dv">50</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of listening times&quot;</span>, 
+    <span class="dt">subtitle =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Population mean ($</span><span class="ch">\\</span><span class="st">mu$) = %.2f; population standard deviation ($</span><span class="ch">\\</span><span class="st">sigma$) = %.2f&quot;</span>, 
+        <span class="kw">round</span>(<span class="kw">mean</span>(hours), <span class="dv">2</span>), <span class="kw">round</span>(<span class="kw">sd</span>(hours), <span class="dv">2</span>))), 
+    <span class="dt">y =</span> <span class="st">&quot;Number of students&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours), <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours) <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(hours), 
+        <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours) <span class="op">-</span><span class="st"> </span>
+<span class="st">    </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(hours), <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">mean</span>(hours), 
+    <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">yend =</span> <span class="dv">1100</span>, <span class="dt">xend =</span> (<span class="kw">mean</span>(hours) <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">sd</span>(hours))), <span class="dt">lineend =</span> <span class="st">&quot;butt&quot;</span>, <span class="dt">linejoin =</span> <span class="st">&quot;round&quot;</span>, 
+    <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;inches&quot;</span>))) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">mean</span>(hours), <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">yend =</span> <span class="dv">1100</span>, 
+        <span class="dt">xend =</span> (<span class="kw">mean</span>(hours) <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(hours))), <span class="dt">lineend =</span> <span class="st">&quot;butt&quot;</span>, 
+        <span class="dt">linejoin =</span> <span class="st">&quot;round&quot;</span>, <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.2</span>, 
+            <span class="st">&quot;inches&quot;</span>))) <span class="op">+</span><span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="kw">mean</span>(hours) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="dv">28</span>, <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">label =</span> <span class="st">&quot;Mean + 2 * SD&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, 
+    <span class="dt">x =</span> <span class="kw">mean</span>(hours) <span class="op">-</span><span class="st"> </span><span class="dv">28</span>, <span class="dt">y =</span> <span class="dv">1100</span>, <span class="dt">label =</span> <span class="st">&quot;Mean - 2 * SD&quot;</span>)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
 <p>In this case, we refere to all WU students as <strong>the population</strong>. In general, the population is the entire group we are interested in. This group does not have to necessarily consist of people, but could also be companies, stores, animals, etc.. The parameters of the distribution of population values (in hour case: “hours”) are called population parameters. As already mentioned, we do not usually know population parameters but use inferential statistics to infer them based on our sample from the population, i.e., we measure statistics from a sample (e.g., the sample mean <span class="math inline">\(\bar x\)</span>) to estimate population parameters (the population mean <span class="math inline">\(\mu\)</span>). Here, we will use the following notation to refer to either the population parameters or the sample statistic:</p>
 <table>
@@ -351,12 +379,12 @@ hours &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="d
 <h3><span class="header-section-number">4.1.1</span> Sampling from a known population</h3>
 <p>In the first step towards a realistic research setting, let us take one sample from this population and calculate the mean listening time. We can simply sample the row numbers of students and then subset the <code>hours</code> vector with the sampled rownumbers. The <code>sample()</code> function will be used to draw a sample of size 100 from the population of 25,000 students, and one student can only be drawn once (i.e., <code>replace = FALSE</code>). The following plot shows the distribution of listening times for our sample.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-151-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Observe that in this first draw the mean (<span class="math inline">\(\bar x =\)</span> 50.28) is quite close to the actual mean ($= $ 49.93). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.</p>
+<p>Observe that in this first draw the mean (<span class="math inline">\(\bar x =\)</span> 49.67) is quite close to the actual mean ($= $ 49.93). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-152-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>It becomes clear that the mean is slightly different for each sample. This is referred to as <strong>sampling variation</strong> and it is completely fine to get a slightly different mean every time we take a sample. We just need to find a way of expressing the uncertainty associated with the fact that we only have data from one sample, because in a realistic setting you are most likely only going to have access to a single sample.</p>
 <p>So in order to make sure that the first draw is not just pure luck and the sample mean is in fact a good estimate for the population mean, let us take <strong>many</strong> (e.g., <span class="math inline">\(20,000\)</span>) different samples from the population. That is, we repeatedly draw 100 students randomly from the population without replacement (that is, once a student has been drawn she or he is removed from the pool and cannot be drawn again) and calculate the mean of each sample. This will show us a range within which the sample mean of any sample we take is likely going to be. We are going to store the means of all the samples in a matrix and then plot a histogram of the means to observe the likely values.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-153-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>As you can see, on average the sample mean (“mean of sample means”) is extremely close to the population mean, despite only sampling <span class="math inline">\(100\)</span> people at a time. This distribution of sample means is also referred to as <strong>sampling distribution</strong> of the sample mean. However, there is some uncertainty, and the means are slightly different for the different samples and range from 46 to 54.64.</p>
+<p>As you can see, on average the sample mean (“mean of sample means”) is extremely close to the population mean, despite only sampling <span class="math inline">\(100\)</span> people at a time. This distribution of sample means is also referred to as <strong>sampling distribution</strong> of the sample mean. However, there is some uncertainty, and the means are slightly different for the different samples and range from 45.95 to 54.31.</p>
 </div>
 <div id="standard-error-of-the-mean" class="section level3">
 <h3><span class="header-section-number">4.1.2</span> Standard error of the mean</h3>
@@ -391,15 +419,14 @@ Figure 4.1: Relationship between the sample size and the standard error
 <p>The attentive reader might have noticed that the population above was generated using a normal distribution function. It would be very restrictive if we could only analyze populations whose values are normally distributed. Furthermore, we are unable in reality to check whether the population values are normally distributed since we do not know the entire population. However, it turns out that the results generalize to many other distributions. This is described by the <strong>Central Limit Theorem</strong>.</p>
 <p>The central limit theorem states that if <strong>(1)</strong> the population distribution has a mean (there are examples of distributions that don’t have a mean , but we will ignore these here), and <strong>(2)</strong> we take a large enough sample, then the sampling distribution of the sample mean is approximately normally distributed. What exactly “large enough” means depends on the setting, but the interactive element at the end of this chapter illustrates how the sample size influences how accurately we can estimate the population parameters from the sample statistics.</p>
 <p>To illustrate this, let’s repeat the analysis above with a population from a gamma distribution. In the previous example, we assumed a normal distribution so it was more likely for a given student to spend around 50 hours per week listening to music. The following example depicts the case in which most students spend a similar amount of time listening to music, but there are a few students who very rarely listen to music, and some music enthusiasts with a very high level of listening time. Here is a histogram of the listening times in the population:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">321</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">10</span>)
-<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hours), <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill=</span><span class="st">&#39;white&#39;</span>, <span class="dt">color=</span><span class="st">&#39;black&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours), <span class="dt">size =</span> <span class="dv">1</span>)  <span class="op">+</span><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of listening times&quot;</span>,
-       <span class="dt">subtitle =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Population mean ($</span><span class="ch">\\</span><span class="st">mu$) = %.2f; population standard deviation ($</span><span class="ch">\\</span><span class="st">sigma$) = %.2f&quot;</span>,<span class="kw">round</span>(<span class="kw">mean</span>(hours),<span class="dv">2</span>),<span class="kw">round</span>(<span class="kw">sd</span>(hours),<span class="dv">2</span>))),
-       <span class="dt">y =</span> <span class="st">&#39;Number of students&#39;</span>, 
-       <span class="dt">x =</span> <span class="st">&#39;Hours&#39;</span>) </code></pre></div>
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hours), 
+    <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours), 
+    <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of listening times&quot;</span>, 
+    <span class="dt">subtitle =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Population mean ($</span><span class="ch">\\</span><span class="st">mu$) = %.2f; population standard deviation ($</span><span class="ch">\\</span><span class="st">sigma$) = %.2f&quot;</span>, 
+        <span class="kw">round</span>(<span class="kw">mean</span>(hours), <span class="dv">2</span>), <span class="kw">round</span>(<span class="kw">sd</span>(hours), <span class="dv">2</span>))), 
+    <span class="dt">y =</span> <span class="st">&quot;Number of students&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>)</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-157-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The vertical black line represents the population mean (<span class="math inline">\(\mu\)</span>), which is 19.98 hours. The following plot depicts the histogram of listening times of four random samples from the population, each consisting of 100 students:</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-158-1.png" width="768" style="display: block; margin: auto;" /></p>
@@ -423,23 +450,25 @@ hours &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="
 <h3><span class="header-section-number">4.3.1</span> Confidence Intervals for the Sample Mean</h3>
 <p>When we try to estimate parameters of populations (e.g., the population mean <span class="math inline">\(\mu\)</span>) from a sample, the average value from a sample (e.g., the sample mean <span class="math inline">\(\bar x\)</span>) only provides an estimate of what the real population parameter is. The next time you collect a sample of the same size, you could get a different average. This is sampling variation and it is completely fine to get a slightly different sample mean every time we take a sample as we have seen above. However, this inherent uncertainty about the true population parameter means that coming up with an exact estimate (i.e., a <strong>point estimate</strong>) for a particular population parameter is really difficult. That is why it is often informative to construct a range around that statistic (i.e., an <strong>interval estimate</strong>) that likely contains the population parameter with a certain level of confidence. That is, we construct an interval such that for a large share (say 95%) of the sample means we could potentially get, the population mean is within that interval.</p>
 <p>Let us consider one random sample of 100 students from our population above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">321</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">321</span>)
 hours &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">10</span>)
 
 <span class="kw">set.seed</span>(<span class="dv">6789</span>)
 sample_size &lt;-<span class="st"> </span><span class="dv">100</span>
-student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> sample_size, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
+student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> sample_size, 
+    <span class="dt">replace =</span> <span class="ot">FALSE</span>)
 hours_s &lt;-<span class="st"> </span>hours[student_sample]
 
-plot2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours_s)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hours_s), <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill=</span><span class="st">&#39;white&#39;</span>, <span class="dt">color=</span><span class="st">&#39;black&#39;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Hours&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours_s)), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
-<span class="st"> </span><span class="kw">ggtitle</span>(<span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Random sample; $n$ = %d; $</span><span class="ch">\\</span><span class="st">bar{x}$ = %.2f; $s$ = %.2f&quot;</span>,sample_size,<span class="kw">round</span>(<span class="kw">mean</span>(hours_s),<span class="dv">2</span>),<span class="kw">round</span>(<span class="kw">sd</span>(hours_s),<span class="dv">2</span>))))
-plot2</code></pre></div>
+plot2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(hours_s)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hours_s), 
+    <span class="dt">bins =</span> <span class="dv">30</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Hours&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours_s)), 
+    <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Random sample; $n$ = %d; $</span><span class="ch">\\</span><span class="st">bar{x}$ = %.2f; $s$ = %.2f&quot;</span>, 
+    sample_size, <span class="kw">round</span>(<span class="kw">mean</span>(hours_s), <span class="dv">2</span>), <span class="kw">round</span>(<span class="kw">sd</span>(hours_s), 
+        <span class="dv">2</span>))))
+plot2</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-160-1.png" width="576" /></p>
 <p>From the central limit theorem we know that the sampling distribution of the sample mean is approximately normal and we know that for the normal distribution, 95% of the values lie within about 2 standard deviations from the mean. Actually, it is not exactly 2 standard deviations from the mean. To get the exact number, we can use the quantile function for the normal distribution <code>qnorm()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(<span class="fl">0.975</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(<span class="fl">0.975</span>)</code></pre>
 <pre><code>## [1] 1.959964</code></pre>
 <p>We use <code>0.975</code> (and not <code>0.95</code>) to account for the probability at each end of the distribution (i.e., 2.5% at the lower end and 2.5% at the upper end). We can see that 95% of the values are roughly within 1.96 standard deviations from the mean. Since we know the sample mean (<span class="math inline">\(\bar x\)</span>) and we can estimate the standard deviation of the sampling distribution (<span class="math inline">\(\sigma_{\bar x} \approx {s \over \sqrt{n}}\)</span>), we can now easily calculate the lower and upper boundaries of our confidence interval as:</p>
 <p><span class="math display">\[
@@ -448,35 +477,37 @@ CI_{upper} = {\bar x} + z_{1-{\alpha \over 2}} * \sigma_{\bar x}
 \]</span></p>
 <p>Here, <span class="math inline">\(\alpha\)</span> refers to the significance level. You can find a detailed discussion of this point at the end of the next chapter. For now, we will adopt the widely accepted significance level of 5% and set <span class="math inline">\(\alpha\)</span> to 0.05. Thus, <span class="math inline">\(\pm z_{1-{\alpha \over 2}}\)</span> gives us the z-scores (i.e., number of standard deviations from the mean) within which range 95% of the probability density lies.</p>
 <p>Plugging in the values from our sample, we get:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_s)
+<pre class="sourceCode r"><code class="sourceCode r">sample_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_s)
 se &lt;-<span class="st"> </span><span class="kw">sd</span>(hours_s)<span class="op">/</span><span class="kw">sqrt</span>(sample_size)
-ci_lower &lt;-<span class="st"> </span>sample_mean <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span>se
-ci_upper &lt;-<span class="st"> </span>sample_mean <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span>se
-ci_lower</code></pre></div>
-<pre><code>## [1] 18.5929</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ci_upper</code></pre></div>
-<pre><code>## [1] 24.81597</code></pre>
-<p>such that if we collected 100 samples and computed the mean and confidence interval for each of them, in <span class="math inline">\(95\%\)</span> of the cases, the true population mean is going to be within this interval between 18.59 and 24.82. This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12</span>)
+ci_lower &lt;-<span class="st"> </span>sample_mean <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span>se
+ci_upper &lt;-<span class="st"> </span>sample_mean <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span>se
+ci_lower</code></pre>
+<pre><code>## [1] 17.67089</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">ci_upper</code></pre>
+<pre><code>## [1] 23.1592</code></pre>
+<p>such that if we collected 100 samples and computed the mean and confidence interval for each of them, in <span class="math inline">\(95\%\)</span> of the cases, the true population mean is going to be within this interval between 17.67 and 23.16. This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12</span>)
 samples &lt;-<span class="st"> </span><span class="dv">100</span>
 hours &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="dv">25000</span>, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">10</span>)
 means &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> samples)
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples){
-  student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
-  means[i,] &lt;-<span class="st"> </span><span class="kw">mean</span>(hours[student_sample])
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples) {
+    student_sample &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25000</span>, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
+    means[i, ] &lt;-<span class="st"> </span><span class="kw">mean</span>(hours[student_sample])
 }
 
-means_sd &lt;-<span class="st"> </span><span class="kw">data.frame</span>(means, <span class="dt">lower =</span>  means <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">sd</span>(hours)<span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">100</span>)), <span class="dt">upper =</span> means <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">sd</span>(hours)<span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">100</span>)), <span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)
-means_sd<span class="op">$</span>diff &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">ifelse</span>(means_sd<span class="op">$</span>lower <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(hours) <span class="op">|</span><span class="st"> </span>means_sd<span class="op">$</span>upper <span class="op">&lt;</span><span class="st"> </span><span class="kw">mean</span>(hours), <span class="st">&#39;No&#39;</span>, <span class="st">&#39;Yes&#39;</span>))
+means_sd &lt;-<span class="st"> </span><span class="kw">data.frame</span>(means, <span class="dt">lower =</span> means <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span>
+<span class="st">    </span>(<span class="kw">sd</span>(hours)<span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">100</span>)), <span class="dt">upper =</span> means <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>) <span class="op">*</span><span class="st"> </span>
+<span class="st">    </span>(<span class="kw">sd</span>(hours)<span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">100</span>)), <span class="dt">y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)
+means_sd<span class="op">$</span>diff &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">ifelse</span>(means_sd<span class="op">$</span>lower <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(hours) <span class="op">|</span><span class="st"> </span>
+<span class="st">    </span>means_sd<span class="op">$</span>upper <span class="op">&lt;</span><span class="st"> </span><span class="kw">mean</span>(hours), <span class="st">&quot;No&quot;</span>, <span class="st">&quot;Yes&quot;</span>))
 
-ggplot2<span class="op">::</span><span class="kw">ggplot</span>(means_sd, <span class="kw">aes</span>(<span class="dt">y =</span> y)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">1</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="fl">0.005</span>,<span class="fl">0.005</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> means, <span class="dt">color =</span> diff)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> lower, <span class="dt">xmax =</span> upper, <span class="dt">color =</span> diff)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;True mean in CI&quot;</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
+ggplot2<span class="op">::</span><span class="kw">ggplot</span>(means_sd, <span class="kw">aes</span>(<span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1</span>, 
+    <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">1</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="fl">0.005</span>, <span class="fl">0.005</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> means, 
+    <span class="dt">color =</span> diff)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> lower, 
+    <span class="dt">xmax =</span> upper, <span class="dt">color =</span> diff)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(hours)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;True mean in CI&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-163-1.png" width="960" /></p>
 <p>Note that this does <strong>not</strong> mean that for a specific sample there is a <span class="math inline">\(95\%\)</span> chance that the population mean lies within its confidence interval. The statement depends on the large number of samples we do not actually draw in a real setting. You can view the set of all possible confidence intervals similarly to the sides of a coin or a die. If we throw a coin many times, we are going to observe head roughly half of the times. This does not, however, exclude the possibility of observing tails for the first 10 throws. Similarly, any specific confidence interval might or might not include the population mean but if we take many samples on average <span class="math inline">\(95\%\)</span> of the confidence intervals are going to include the population mean.</p>
 </div>
@@ -543,7 +574,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
