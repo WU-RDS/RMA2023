@@ -34,12 +34,16 @@ median and percentiles  | No  | Yes  | Yes  | Yes
 mean, standard deviation, standard error of the mean | No  | No  | Yes  | Yes
 ratio, or coefficient of variation  | No  | No  | No  | Yes
 
-As an example data set, we will be using the MRDA course survey data. Let's load and inspect the data first.
+As an example data set, we will be using the Spotify music data. Let's load and inspect the data first.
 
 ```{r message=FALSE, warning=FALSE}
-test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat", 
-                        sep = "\t", header = TRUE)
-head(test_data)
+music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
+                          sep = ",", 
+                          header = TRUE,
+                          stringsAsFactors = FALSE) #read in data
+
+
+head(music_data)
 ```
 
 ### Categorical variables
@@ -51,53 +55,57 @@ Categorical variables contain a finite number of categories or distinct groups a
 
 For this example, we are interested in the following two variables
 
-* "overall_knowledge": measures the self-reported prior knowledge of marketing students in statistics before taking the marketing research class on a 5-point scale with the categories "none", "basic", "intermediate","advanced", and "proficient".
-* "gender": the gender of the students (1 = male, 2 = female)
+* "genre": the music genre the artist is associated with. subsetted for the five most frequent genres.  
+* "explicit": whether the lyrics of the tracks are explicit or not (0 = not explicit, 1 = explicit)
+
+[You can find a full description of the variables here:](https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/) 
 
 In a first step, we convert the variables to factor variables using the ```factor()``` function to assign appropriate labels according to the scale points:
 
 ```{r}
-test_data$overall_knowledge_cat <- factor(test_data$overall_knowledge, levels = c(1:5), labels = c("none", "basic", "intermediate","advanced","proficient"))
-test_data$gender_cat <- factor(test_data$gender, levels = c(1:2), labels = c("male", "female"))
+s.genre <- c("pop","hip hop","rock","rap","indie")
+music_data <- subset(music_data, top.genre %in% s.genre)
+
+music_data$genre_cat <- as.factor(music_data$top.genre)
+music_data$explicit_cat <- as.factor(music_data$explicit)
 ```
 
 The ```table()``` function creates a frequency table. Let's start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:
 
 ```{r}
-table(test_data[,c("overall_knowledge_cat")]) #absolute frequencies
-table(test_data[,c("gender_cat")]) #absolute frequencies
+table(music_data[,c("genre_cat")]) #absolute frequencies
+table(music_data[,c("explicit_cat")]) #absolute frequencies
 ```
 
-It is obvious that there are more female than male students. For variables with more categories, it might be less obvious and we might compute the median category using the ```median()``` function, or the ```summary()``` function, which produces further statistics. 
+It is obvious that there are more tracks with non-explicit lyrics than songs with explicit lyrics. For variables with more categories, it might be less obvious and we might use the ```summary()``` function, which produces further statistics. 
 
 ```{r}
-median((test_data[,c("overall_knowledge")]))
-summary((test_data[,c("overall_knowledge")]))
+summary((music_data[,c("genre_cat")]))
 ```
 
 Often, we are interested in the relative frequencies, which can be obtained by using the ```prop.table()``` function.
 
 ```{r}
-prop.table(table(test_data[,c("overall_knowledge_cat")])) #relative frequencies
-prop.table(table(test_data[,c("gender_cat")])) #relative frequencies
+prop.table(table(music_data[,c("genre_cat")])) #relative frequencies
+prop.table(table(music_data[,c("explicit_cat")])) #relative frequencies
 ```
 
-Now let's investigate if the prior knowledge differs by gender. To do this, we simply apply the ```table()``` function to both variables:
+Now let's investigate if the genre differs by expliciteness. To do this, we simply apply the ```table()``` function to both variables:
 
 ```{r}
-table(test_data[,c("overall_knowledge_cat", "gender_cat")]) #absolute frequencies
+table(music_data[,c("genre_cat", "explicit_cat")]) #absolute frequencies
 ```
 
 Again, it might be more meaningful to look at the relative frequencies using ```prop.table()```:
 
 ```{r}
-prop.table(table(test_data[,c("overall_knowledge_cat", "gender_cat")])) #relative frequencies
+prop.table(table(music_data[,c("genre_cat", "explicit_cat")])) #relative frequencies
 ```
 
 Note that the above output shows the overall relative frequencies when male and female respondents are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a ```,2``` to the ```prop.table()``` command, which tells R to compute the relative frequencies by the columns (which is in our case the gender variable): 
 
 ```{r}
-prop.table(table(test_data[,c("overall_knowledge_cat", "gender_cat")]), 2) #conditional relative frequencies
+prop.table(table(music_data[,c("genre_cat", "explicit_cat")]),2) #conditional relative frequencies
 ```
 
 ### Continuous variables
@@ -106,54 +114,54 @@ prop.table(table(test_data[,c("overall_knowledge_cat", "gender_cat")]), 2) #cond
 
 Continuous variables are numeric variables that can take on any value on a measurement scale (i.e., there is an infinite number of values between any two values). There are different types of continuous variables:
 
-* **Interval variables**: while the zero point is arbitrary, equal intervals on the scale represent equal differences in the property being measured. E.g., on a temperature scale measured in Celsius the difference between a temperature of 15 degrees and  25 degrees is the same difference as between 25 degrees and 35 degrees but the zero point is arbitrary. 
+* **Interval variables**: while the zero point is arbitrary, equal intervals on the scale represent equal differences in the property being measured. E.g., on a temperature scale measured in Celsius the difference between a temperature of 15 degrees and 25 degrees is the same difference as between 25 degrees and 35 degrees but the zero point is arbitrary. 
 * **Ratio variables**: has all the properties of an interval variable, but also has an absolute zero point. When the variable equals 0.0, it means that there is none of that variable (e.g., number of products sold, willingness-to-pay, mileage a car gets). 
 
 Computing descriptive statistics in R is easy and there are many functions from different packages that let you calculate summary statistics (including the ```summary()``` function from the ```base``` package). In this tutorial, we will use the ```describe()``` function from the ```psych``` package:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(psych)
-psych::describe(test_data[,c("duration", "overall_100")])
+psych::describe(music_data[,c("trackPopularity", "total_releases")])
 ```
 
 In the above command, we used the ```psych::``` prefix to avoid confusion and to make sure that R uses the ```describe()``` function from the ```psych``` package since there are many other packages that also contain a ```desribe()``` function. Note that you could also compute these statistics separately by using the respective functions (e.g., ```mean()```, ```sd()```, ```median()```, ```min()```, ```max()```, etc.). 
 
-The ```psych``` package also contains the ```describeBy()``` function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by gender as follows: 
+The ```psych``` package also contains the ```describeBy()``` function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by expliciteness as follows: 
 
 ```{r message=FALSE, warning=FALSE}
-describeBy(test_data[,c("duration","overall_100")], test_data$gender_cat)
+describeBy(music_data[,c("trackPopularity", "total_releases")], music_data$explicit_cat)
 ```
 
 Note that you could just as well use other packages to compute the descriptive statistics. For example, you could have used the ```stat.desc()``` function from the ```pastecs``` package:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(pastecs)
-stat.desc(test_data[,c("duration", "overall_100")])
+stat.desc(music_data[,c("trackPopularity", "total_releases")])
 ```
 
 Computing statistics by group is also possible by using the wrapper function ```by()```. Within the function, you first specify the data on which you would like to perform the grouping ```test_data[,c("duration", "overall_100")]```, followed by the grouping variable ```test_data$gender_cat``` and the function that you would like to execute (e.g., ```stat.desc()```):
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(pastecs)
-by(test_data[,c("duration", "overall_100")],test_data$gender_cat,stat.desc)
+by(music_data[,c("trackPopularity", "total_releases")],music_data$explicit_cat,stat.desc)
 ```
 
 These examples are meant to exemplify that there are often many different ways to reach a goal in R. Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences.
 
 #### Creating subsets
 
-From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is `r round(max(test_data$duration)/60/60/24,1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let's check if potential outliers exist in the data:
+From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum number of total releases is `r round(max(music_data$total_releases),1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let's check if potential outliers exist in the data:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(dplyr)
-test_data %>% mutate(duration_std = as.vector(scale(duration))) %>% filter(abs(duration_std) > 3)
+#music_data %>% mutate(total_releases_std = as.vector(scale(total_releases))) %>% filter(abs(total_releases_std) > 3)
 ```
 
 Indeed, there appears to be one potential outlier, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the ```filter()``` function from the ```dplyr()``` package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3: 
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(dplyr)
-estimation_sample <- test_data %>% mutate(duration_std = as.vector(scale(duration))) %>% filter(abs(duration_std) < 3)
-psych::describe(estimation_sample[,c("duration", "overall_100")])
+estimation_sample <- music_data %>% mutate(total_releases_std = as.vector(scale(total_releases))) %>% filter(abs(total_releases_std) < 3)
+psych::describe(estimation_sample[,c("trackPopularity", "total_releases")])
 ```
 
