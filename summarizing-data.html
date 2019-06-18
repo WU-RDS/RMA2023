@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>04-summary statistics</title>
+  <meta name="description" content="04-summary statistics" />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="04-summary statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="04-summary statistics" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">MRDA 2019</a></strong></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path=""><a href="#summarizing-data"><i class="fa fa-check"></i><b>1</b> Summarizing data</a><ul>
+<li class="chapter" data-level="1.1" data-path=""><a href="#summary-statistics"><i class="fa fa-check"></i><b>1.1</b> Summary statistics</a><ul>
+<li class="chapter" data-level="1.1.1" data-path=""><a href="#categorical-variables"><i class="fa fa-check"></i><b>1.1.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="1.1.2" data-path=""><a href="#continuous-variables"><i class="fa fa-check"></i><b>1.1.2</b> Continuous variables</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">04-summary statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">04-summary statistics</h1>
+</div>
+<div id="summarizing-data" class="section level1">
+<h1><span class="header-section-number">1</span> Summarizing data</h1>
+<div id="summary-statistics" class="section level2">
+<h2><span class="header-section-number">1.1</span> Summary statistics</h2>
+<p>This section discusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible.</p>
+<p><a href="./Code/04-basic_statistics%20(1).R">You can download the corresponding R-Code here</a></p>
+<p><br>
+<br></p>
+<table>
+<thead>
+<tr class="header">
+<th>OK to compute….</th>
+<th>Nominal</th>
+<th>Ordinal</th>
+<th>Interval</th>
+<th>Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>frequency distribution</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>median and percentiles</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td>mean, standard deviation, standard error of the mean</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td>ratio, or coefficient of variation</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>As an example data set, we will be using the Spotify music data. Let’s load and inspect the data first.</p>
+<pre class="sourceCode r"><code class="sourceCode r">music_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv&quot;</span>, 
+    <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)  <span class="co">#read in data</span>
+
+
+<span class="kw">head</span>(music_data)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["isrc"],"name":[3],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[4],"type":["int"],"align":["right"]},{"label":["trackPopularity"],"name":[5],"type":["int"],"align":["right"]},{"label":["primary_artistName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["primary_artistID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[8],"type":["chr"],"align":["left"]},{"label":["artistIDs"],"name":[9],"type":["chr"],"align":["left"]},{"label":["albumName"],"name":[10],"type":["chr"],"align":["left"]},{"label":["albumID"],"name":[11],"type":["chr"],"align":["left"]},{"label":["available_markets"],"name":[12],"type":["chr"],"align":["left"]},{"label":["n_available_markets"],"name":[13],"type":["int"],"align":["right"]},{"label":["releaseDate"],"name":[14],"type":["chr"],"align":["left"]},{"label":["releaseDate_precision"],"name":[15],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[18],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[20],"type":["int"],"align":["right"]},{"label":["speechiness"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["time_signature"],"name":[28],"type":["int"],"align":["right"]},{"label":["uri"],"name":[29],"type":["chr"],"align":["left"]},{"label":["analysis_url"],"name":[30],"type":["chr"],"align":["left"]},{"label":["followers"],"name":[31],"type":["int"],"align":["right"]},{"label":["type"],"name":[32],"type":["chr"],"align":["left"]},{"label":["popularity"],"name":[33],"type":["int"],"align":["right"]},{"label":["primary_genre"],"name":[34],"type":["chr"],"align":["left"]},{"label":["genres"],"name":[35],"type":["chr"],"align":["left"]},{"label":["n_genres"],"name":[36],"type":["int"],"align":["right"]},{"label":["total_releases"],"name":[37],"type":["int"],"align":["right"]},{"label":["n_album"],"name":[38],"type":["int"],"align":["right"]},{"label":["n_single"],"name":[39],"type":["int"],"align":["right"]},{"label":["n_appears_on"],"name":[40],"type":["int"],"align":["right"]},{"label":["n_compilation"],"name":[41],"type":["int"],"align":["right"]},{"label":["mstreams"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[43],"type":["chr"],"align":["left"]},{"label":["adv_spending"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["top.genre"],"name":[45],"type":["chr"],"align":["left"]}],"data":[{"1":"5aAx2yezTd8zXrkmtKl66Z","2":"Starboy","3":"USUG11600976","4":"1","5":"22","6":"The Weeknd","7":"1Xyo4u8uXC1ZmMpatF05PJ","8":"The Weeknd feat. Daft Punk","9":"1Xyo4u8uXC1ZmMpatF05PJ,4tZwfgrHOc3mvqYlEYSvVi","10":"Starboy","11":"09fggMHib4YkOtwQNXEBII","12":"","13":"0","14":"2016-11-25","15":"day","16":"0.681","17":"0.594","18":"7","19":"-7.028","20":"1","21":"0.2820","22":"0.1650","23":"0.00000349","24":"0.134","25":"0.535","26":"186.054","27":"230453","28":"4","29":"spotify:track:5aAx2yezTd8zXrkmtKl66Z","30":"https://api.spotify.com/v1/audio-analysis/5aAx2yezTd8zXrkmtKl66Z","31":"15222808","32":"artist","33":"91","34":"canadian contemporary r&b","35":"canadian contemporary r&b, canadian pop, pop, rap","36":"4","37":"124","38":"13","39":"20","40":"91","41":"0","42":"357336.0","43":"us","44":"4538745582809720084335652681802192354751872961846816542356290991840842800362708869311675467455586767281244340224","45":"pop"},{"1":"7BKLCZ1jbUBVqRi2FVlTVw","2":"Closer","3":"USQX91601347","4":"0","5":"86","6":"The Chainsmokers","7":"69GGBxA162lTqCwzJG5jLp","8":"The Chainsmokers feat. Halsey","9":"69GGBxA162lTqCwzJG5jLp,26VFTg2z8YR0cCuwLzESi2","10":"Closer","11":"0rSLgV8p5FzfnqlEk4GzxE","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2016-07-29","15":"day","16":"0.748","17":"0.524","18":"8","19":"-5.599","20":"1","21":"0.0338","22":"0.4140","23":"0.00000000","24":"0.111","25":"0.661","26":"95.010","27":"244960","28":"4","29":"spotify:track:7BKLCZ1jbUBVqRi2FVlTVw","30":"https://api.spotify.com/v1/audio-analysis/7BKLCZ1jbUBVqRi2FVlTVw","31":"11565104","32":"artist","33":"90","34":"dance pop","35":"dance pop, electropop, pop, tropical house","36":"4","37":"96","38":"2","39":"59","40":"35","41":"0","42":"323081.4","43":"us","44":"87296125002616694828879835742568772595201488756664067891719260959953504690764846096364552367775131489311653888","45":"pop"},{"1":"4pdPtRcBmOSQDlJ3Fk945m","2":"Let Me Love You","3":"QMZSY1600015","4":"0","5":"27","6":"DJ Snake","7":"540vIaP2JwjQb9dm3aArA4","8":"DJ Snake feat. Justin Bieber","9":"540vIaP2JwjQb9dm3aArA4,1uNFoZAHBGtllmzznpCI3s","10":"Encore","11":"55bbXORm6ZrVq52zfZnxBf","12":"","13":"0","14":"2016-08-05","15":"day","16":"0.476","17":"0.718","18":"8","19":"-5.309","20":"1","21":"0.0576","22":"0.0784","23":"0.00000000","24":"0.122","25":"0.142","26":"199.864","27":"205947","28":"4","29":"spotify:track:4pdPtRcBmOSQDlJ3Fk945m","30":"https://api.spotify.com/v1/audio-analysis/4pdPtRcBmOSQDlJ3Fk945m","31":"4345960","32":"artist","33":"86","34":"dance pop","35":"dance pop, edm, electronic trap, pop, tropical house","36":"5","37":"85","38":"2","39":"38","40":"45","41":"0","42":"264546.4","43":"us","44":"4052673829394860012092441543505898027168278466357604061531255984953722983872577825913849720641449881585582080","45":"pop"},{"1":"5knuzwU65gJK7IF5yJsuaW","2":"Rockabye (feat. Sean Paul & Anne-Marie)","3":"GBAHS1600363","4":"0","5":"81","6":"Clean Bandit","7":"6MDME20pz9RveH9rEXvrOM","8":"Clean Bandit feat. Sean Paul feat. Anne-Marie","9":"6MDME20pz9RveH9rEXvrOM,3Isy6kedDrgPYoTS1dazA9,1zNqDE7qDGCsyzJwohVaoX","10":"Rockabye (feat. Sean Paul & Anne-Marie)","11":"3meZFplbMmji648oWUNEfQ","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"78","14":"2016-10-21","15":"day","16":"0.720","17":"0.763","18":"9","19":"-4.068","20":"0","21":"0.0523","22":"0.4060","23":"0.00000000","24":"0.180","25":"0.742","26":"101.965","27":"251088","28":"4","29":"spotify:track:5knuzwU65gJK7IF5yJsuaW","30":"https://api.spotify.com/v1/audio-analysis/5knuzwU65gJK7IF5yJsuaW","31":"2504254","32":"artist","33":"84","34":"dance pop","35":"dance pop, edm, pop, tropical house, uk funky","36":"5","37":"97","38":"2","39":"73","40":"22","41":"0","42":"299399.5","43":"us","44":"63076779883569398413334987328546550614768141860947245086927001088783215597781844192705652165114862194747506688","45":"pop"},{"1":"1xznGGDReH1oQq0xzbwXa3","2":"One Dance","3":"USCM51600028","4":"0","5":"25","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake feat. WizKid feat. Kyla","9":"3TVXtAsR1Inumwj472S9r4,3tVQdUvClmAT7URs9V3rsp,77DAFfvm3O9zT5dIoG0eIO","10":"Views","11":"3hARKC8cinq3mZLLAEaBh9","12":"","13":"0","14":"2016-05-06","15":"day","16":"0.791","17":"0.619","18":"1","19":"-5.886","20":"1","21":"0.0532","22":"0.0078","23":"0.00420000","24":"0.351","25":"0.371","26":"103.989","27":"173987","28":"4","29":"spotify:track:1xznGGDReH1oQq0xzbwXa3","30":"https://api.spotify.com/v1/audio-analysis/1xznGGDReH1oQq0xzbwXa3","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"265877.0","43":"us","44":"4668617894331640150713528913482931563888378169191399287770456451298974376421383853327796314422734196333084672","45":"pop"},{"1":"343YBumqHu19cGoGARUTsd","2":"Fake Love","3":"USCM51700084","4":"1","5":"76","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake","9":"3TVXtAsR1Inumwj472S9r4","10":"More Life","11":"1lXY618HWkwYKJWBRYR4MK","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2017-03-18","15":"day","16":"0.927","17":"0.488","18":"9","19":"-9.433","20":"0","21":"0.4200","22":"0.1080","23":"0.00000000","24":"0.196","25":"0.605","26":"133.987","27":"210937","28":"4","29":"spotify:track:343YBumqHu19cGoGARUTsd","30":"https://api.spotify.com/v1/audio-analysis/343YBumqHu19cGoGARUTsd","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"425740.1","43":"us","44":"34419285169424099063603169706763167298974920345850885001633591652364254906722960776146634654951625345242828374016","45":"pop"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div id="categorical-variables" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Categorical variables</h3>
+<p>Categorical variables contain a finite number of categories or distinct groups and are also known as qualitative variables. There are different types of categorical variables:</p>
+<ul>
+<li><strong>Nominal variables</strong>: variables that have two or more categories but no logical order (e.g., music genres). A dichotomous variables is simply a nominal variable that only has two categories (e.g., gender).</li>
+<li><strong>Ordinal variables</strong>: variables that have two or more categories that can also be ordered or ranked (e.g., income groups).</li>
+</ul>
+<p>For this example, we are interested in the following two variables</p>
+<ul>
+<li>“overall_knowledge”: measures the self-reported prior knowledge of marketing students in statistics before taking the marketing research class on a 5-point scale with the categories “none”, “basic”, “intermediate”,“advanced”, and “proficient”.</li>
+<li>“gender”: the gender of the students (1 = male, 2 = female)</li>
+</ul>
+<p>In a first step, we convert the variables to factor variables using the <code>factor()</code> function to assign appropriate labels according to the scale points:</p>
+<pre class="sourceCode r"><code class="sourceCode r">s.genre &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;pop&quot;</span>, <span class="st">&quot;hip hop&quot;</span>, <span class="st">&quot;rock&quot;</span>, <span class="st">&quot;rap&quot;</span>, <span class="st">&quot;indie&quot;</span>)
+music_data &lt;-<span class="st"> </span><span class="kw">subset</span>(music_data, top.genre <span class="op">%in%</span><span class="st"> </span>s.genre)
+
+music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)
+music_data<span class="op">$</span>explicit_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>explicit)</code></pre>
+<p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
+<pre><code>## 
+## hip hop   indie     pop     rap    rock 
+##    9907     528   28448    1180    1839</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;explicit_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
+<pre><code>## 
+##     0     1 
+## 30204 11698</code></pre>
+<p>It is obvious that there are more tracks with non-explicit lyrics than songs with explicit lyrics. For variables with more categories, it might be less obvious and we might use the <code>summary()</code> function, which produces further statistics.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>((music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)]))</code></pre>
+<pre><code>## hip hop   indie     pop     rap    rock 
+##    9907     528   28448    1180    1839</code></pre>
+<p>Often, we are interested in the relative frequencies, which can be obtained by using the <code>prop.table()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
+<pre><code>## 
+##    hip hop      indie        pop        rap       rock 
+## 0.23643263 0.01260083 0.67891747 0.02816095 0.04388812</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;explicit_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
+<pre><code>## 
+##         0         1 
+## 0.7208248 0.2791752</code></pre>
+<p>Now let’s investigate if the genre differs by expliciteness. To do this, we simply apply the <code>table()</code> function to both variables:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
+<pre><code>##          explicit_cat
+## genre_cat     0     1
+##   hip hop  3515  6392
+##   indie     495    33
+##   pop     23881  4567
+##   rap       536   644
+##   rock     1777    62</code></pre>
+<p>Again, it might be more meaningful to look at the relative frequencies using <code>prop.table()</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
+<pre><code>##          explicit_cat
+## genre_cat            0            1
+##   hip hop 0.0838862107 0.1525464178
+##   indie   0.0118132786 0.0007875519
+##   pop     0.5699250632 0.1089924109
+##   rap     0.0127917522 0.0153691948
+##   rock    0.0424084769 0.0014796430</code></pre>
+<p>Note that the above output shows the overall relative frequencies when male and female respondents are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a <code>,2</code> to the <code>prop.table()</code> command, which tells R to compute the relative frequencies by the columns (which is in our case the gender variable):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)]), 
+    <span class="dv">2</span>)  <span class="co">#conditional relative frequencies</span></code></pre>
+<pre><code>##          explicit_cat
+## genre_cat           0           1
+##   hip hop 0.116375315 0.546418191
+##   indie   0.016388558 0.002820995
+##   pop     0.790656867 0.390408617
+##   rap     0.017745994 0.055052146
+##   rock    0.058833267 0.005300051</code></pre>
+</div>
+<div id="continuous-variables" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> Continuous variables</h3>
+<div id="descriptive-statistics" class="section level4">
+<h4><span class="header-section-number">1.1.2.1</span> Descriptive statistics</h4>
+<p>Continuous variables are numeric variables that can take on any value on a measurement scale (i.e., there is an infinite number of values between any two values). There are different types of continuous variables:</p>
+<ul>
+<li><strong>Interval variables</strong>: while the zero point is arbitrary, equal intervals on the scale represent equal differences in the property being measured. E.g., on a temperature scale measured in Celsius the difference between a temperature of 15 degrees and 25 degrees is the same difference as between 25 degrees and 35 degrees but the zero point is arbitrary.</li>
+<li><strong>Ratio variables</strong>: has all the properties of an interval variable, but also has an absolute zero point. When the variable equals 0.0, it means that there is none of that variable (e.g., number of products sold, willingness-to-pay, mileage a car gets).</li>
+</ul>
+<p>Computing descriptive statistics in R is easy and there are many functions from different packages that let you calculate summary statistics (including the <code>summary()</code> function from the <code>base</code> package). In this tutorial, we will use the <code>describe()</code> function from the <code>psych</code> package:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
+psych<span class="op">::</span><span class="kw">describe</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;total_releases&quot;</span>)])</code></pre>
+<pre><code>##                 vars     n  mean    sd median trimmed   mad min  max range
+## trackPopularity    1 41902 42.19 21.93     46   43.32 20.76   0  100   100
+## total_releases     2 41902 58.98 96.39     31   39.54 28.17   0 1861  1861
+##                  skew kurtosis   se
+## trackPopularity -0.46    -0.57 0.11
+## total_releases   5.71    51.82 0.47</code></pre>
+<p>In the above command, we used the <code>psych::</code> prefix to avoid confusion and to make sure that R uses the <code>describe()</code> function from the <code>psych</code> package since there are many other packages that also contain a <code>desribe()</code> function. Note that you could also compute these statistics separately by using the respective functions (e.g., <code>mean()</code>, <code>sd()</code>, <code>median()</code>, <code>min()</code>, <code>max()</code>, etc.).</p>
+<p>The <code>psych</code> package also contains the <code>describeBy()</code> function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by expliciteness as follows:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;total_releases&quot;</span>)], 
+    music_data<span class="op">$</span>explicit_cat)</code></pre>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: 0
+##                 vars     n  mean    sd median trimmed   mad min  max range
+## trackPopularity    1 30204 41.08 21.48     44   42.02 20.76   0  100   100
+## total_releases     2 30204 49.17 74.37     28   35.26 25.20   0 1861  1861
+##                  skew kurtosis   se
+## trackPopularity -0.39    -0.61 0.12
+## total_releases   7.45   113.41 0.43
+## -------------------------------------------------------- 
+## group: 1
+##                 vars     n  mean     sd median trimmed   mad min  max
+## trackPopularity    1 11698 45.07  22.81     50   46.71 19.27   0   98
+## total_releases     2 11698 84.32 134.56     40   52.41 37.06   0 1102
+##                 range  skew kurtosis   se
+## trackPopularity    98 -0.67    -0.38 0.21
+## total_releases   1102  3.87    18.44 1.24</code></pre>
+<p>Note that you could just as well use other packages to compute the descriptive statistics. For example, you could have used the <code>stat.desc()</code> function from the <code>pastecs</code> package:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pastecs)
+<span class="kw">stat.desc</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;total_releases&quot;</span>)])</code></pre>
+<pre><code>##              trackPopularity  total_releases
+## nbr.val        41902.0000000   41902.0000000
+## nbr.null        2718.0000000     299.0000000
+## nbr.na             0.0000000       0.0000000
+## min                0.0000000       0.0000000
+## max              100.0000000    1861.0000000
+## range            100.0000000    1861.0000000
+## sum          1767874.0000000 2471459.0000000
+## median            46.0000000      31.0000000
+## mean              42.1906830      58.9818863
+## SE.mean            0.1071435       0.4708648
+## CI.mean.0.95       0.2100034       0.9229047
+## var              481.0231842    9290.2458951
+## std.dev           21.9322407      96.3859217
+## coef.var           0.5198361       1.6341614</code></pre>
+<p>Computing statistics by group is also possible by using the wrapper function <code>by()</code>. Within the function, you first specify the data on which you would like to perform the grouping <code>test_data[,c(&quot;duration&quot;, &quot;overall_100&quot;)]</code>, followed by the grouping variable <code>test_data$gender_cat</code> and the function that you would like to execute (e.g., <code>stat.desc()</code>):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pastecs)
+<span class="kw">by</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;total_releases&quot;</span>)], 
+    music_data<span class="op">$</span>explicit_cat, stat.desc)</code></pre>
+<pre><code>## music_data$explicit_cat: 0
+##              trackPopularity  total_releases
+## nbr.val        30204.0000000   30204.0000000
+## nbr.null        1777.0000000     252.0000000
+## nbr.na             0.0000000       0.0000000
+## min                0.0000000       0.0000000
+## max              100.0000000    1861.0000000
+## range            100.0000000    1861.0000000
+## sum          1240696.0000000 1485028.0000000
+## median            44.0000000      28.0000000
+## mean              41.0772083      49.1666005
+## SE.mean            0.1235926       0.4279287
+## CI.mean.0.95       0.2422467       0.8387585
+## var              461.3697298    5531.0473021
+## std.dev           21.4795188      74.3710112
+## coef.var           0.5229060       1.5126328
+## -------------------------------------------------------- 
+## music_data$explicit_cat: 1
+##              trackPopularity total_releases
+## nbr.val        11698.0000000   11698.000000
+## nbr.null         941.0000000      47.000000
+## nbr.na             0.0000000       0.000000
+## min                0.0000000       0.000000
+## max               98.0000000    1102.000000
+## range             98.0000000    1102.000000
+## sum           527178.0000000  986431.000000
+## median            50.0000000      40.000000
+## mean              45.0656522      84.324756
+## SE.mean            0.2109063       1.244122
+## CI.mean.0.95       0.4134115       2.438687
+## var              520.3441548   18106.638732
+## std.dev           22.8110533     134.560911
+## coef.var           0.5061738       1.595746</code></pre>
+<p>These examples are meant to exemplify that there are often many different ways to reach a goal in R. Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences.</p>
+</div>
+<div id="creating-subsets" class="section level4">
+<h4><span class="header-section-number">1.1.2.2</span> Creating subsets</h4>
+<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum number of total releases is 1861 days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="co"># music_data %&gt;% mutate(total_releases_std =</span>
+<span class="co"># as.vector(scale(total_releases))) %&gt;%</span>
+<span class="co"># filter(abs(total_releases_std) &gt; 3)</span></code></pre>
+<p>Indeed, there appears to be one potential outlier, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the <code>filter()</code> function from the <code>dplyr()</code> package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+estimation_sample &lt;-<span class="st"> </span>music_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">total_releases_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(total_releases))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(total_releases_std) <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>)
+psych<span class="op">::</span><span class="kw">describe</span>(estimation_sample[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, 
+    <span class="st">&quot;total_releases&quot;</span>)])</code></pre>
+<pre><code>##                 vars     n  mean    sd median trimmed   mad min max range
+## trackPopularity    1 41089 42.03 21.86     45   43.14 20.76   0 100   100
+## total_releases     2 41089 48.75 55.22     30   37.70 26.69   0 346   346
+##                  skew kurtosis   se
+## trackPopularity -0.45    -0.56 0.11
+## total_releases   2.64     8.48 0.27</code></pre>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>
