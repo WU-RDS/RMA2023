@@ -2,7 +2,7 @@
 #---------------------Descriptive statistics------------------------#
 #-------------------------------------------------------------------#
 # The following code is taken from the fourth chapter of the online script, which provides more detailed explanations:
-# https://imsmwu.github.io/MRDA2017/_book/summary-statistics.html
+# https://imsmwu.github.io/MRDA2019/_book/summary-statistics.html
 
 #-------------------------------------------------------------------#
 #---------------------Install missing packages----------------------#
@@ -22,39 +22,45 @@ options(scipen = 999, digits = 2)
 
 # Load data
 ## ------------------------------------------------------------------------
-test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat", 
-                        sep = "\t", header = TRUE)
-head(test_data)
+music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
+                       sep = ",", 
+                       header = TRUE,
+                       stringsAsFactors = FALSE) #read in data
+head(music_data)
 
-# The factor function can transform variables into factors
+# The as.factor function can transform characters into factors
 ## ------------------------------------------------------------------------
-test_data$overall_knowledge_cat <- factor(test_data$overall_knowledge, levels = c(1:5), labels = c("none", "basic", "intermediate","advanced","proficient"))
-test_data$gender_cat <- factor(test_data$gender, levels = c(1:2), labels = c("male", "female"))
+s.genre <- c("pop","hip hop","rock","rap","indie")
+music_data <- subset(music_data, top.genre %in% s.genre)
+
+music_data$genre_cat <- as.factor(music_data$top.genre)
+music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1), 
+                                  labels = c("not explicit", "explicit"))
 
 # The table function creates frequency tables
 ## ------------------------------------------------------------------------
-table(test_data[,c("overall_knowledge_cat")]) #absolute frequencies
-table(test_data[,c("gender_cat")]) #absolute frequencies
+table(music_data[,c("genre_cat")]) #absolute frequencies
+table(music_data[,c("explicit_cat")]) #absolute frequencies
 
 # The median and summary function produce various summary statistics 
 ## ------------------------------------------------------------------------
-median((test_data[,c("overall_knowledge")]))
-summary((test_data[,c("overall_knowledge")]))
+median((music_data[,c("explicit")]))
+summary((music_data[,c("explicit")]))
 
 # The prop.table function produces relative frequency tables
 ## ------------------------------------------------------------------------
-prop.table(table(test_data[,c("overall_knowledge_cat")])) #relative frequencies
-prop.table(table(test_data[,c("gender_cat")])) #relative frequencies
+prop.table(table(music_data[,c("genre_cat")])) #relative frequencies
+prop.table(table(music_data[,c("explicit_cat")])) #relative frequencies
 
-# By adding a second column we can investigate the frequency table by gender
+# By adding a second column we can investigate the frequency table by explicitness
 ## ------------------------------------------------------------------------
-table(test_data[,c("overall_knowledge_cat", "gender_cat")]) #absolute frequencies
-
-## ------------------------------------------------------------------------
-prop.table(table(test_data[,c("overall_knowledge_cat", "gender_cat")])) #relative frequencies
+table(music_data[,c("genre_cat", "explicit_cat")]) #absolute frequencies
 
 ## ------------------------------------------------------------------------
-prop.table(table(test_data[,c("overall_knowledge_cat", "gender_cat")]), 2) #conditional relative frequencies
+prop.table(table(music_data[,c("genre_cat", "explicit_cat")])) #relative frequencies
+
+## ------------------------------------------------------------------------
+prop.table(table(music_data[,c("genre_cat", "explicit_cat")]),2) #conditional relative frequencies
 
 
 #-------------------------------------------------------------------#
@@ -65,20 +71,20 @@ prop.table(table(test_data[,c("overall_knowledge_cat", "gender_cat")]), 2) #cond
 # the simple summary function contained in base R
 ## ------------------------------------------------------------------------
 library(psych)
-psych::describe(test_data[,c("duration", "overall_100")])
+psych::describe(music_data[,c("trackPopularity", "total_releases")])
 
-# describeBy produces the summary statistics grouped by a grouping variable, in our case this is gender
+# describeBy produces the summary statistics grouped by a grouping variable, in our case this is explicitness
 ## ------------------------------------------------------------------------
-describeBy(test_data[,c("duration","overall_100")], test_data$gender_cat)
+describeBy(music_data[,c("trackPopularity", "total_releases")], music_data$explicit_cat)
 
 # The same could have been achieved by the stat.desc function from the pastecs package
 ## ------------------------------------------------------------------------
 library(pastecs)
-stat.desc(test_data[,c("duration", "overall_100")])
+stat.desc(music_data[,c("trackPopularity", "total_releases")])
 
 # The by function applies a function to data, grouped by a factor variable
 ## ------------------------------------------------------------------------
-by(test_data[,c("duration", "overall_100")],test_data$gender_cat,stat.desc)
+by(music_data[,c("trackPopularity", "total_releases")],music_data$explicit_cat,stat.desc)
 
 #-------------------------------------------------------------------#
 #------------------------Creating subsets---------------------------#
@@ -86,10 +92,10 @@ by(test_data[,c("duration", "overall_100")],test_data$gender_cat,stat.desc)
 
 # Check for outliers in the data
 # Compute standardized duration variable using the scale function and filter values > 3
-test_data$duration_std <- scale(test_data$duration)
-subset(test_data,abs(duration_std) > 3)
+music_data$total_releases_sd <- scale(music_data$total_releases)
+subset(music_data,abs(total_releases_sd) > 3)
 
 # Create subsets by excluding outliers
-estimation_sample <- subset(test_data,abs(duration_std) < 3)
-psych::describe(estimation_sample[, c("duration", "overall_100")])
+estimation_sample <- subset(music_data,abs(total_releases_sd) > 3)
+psych::describe(estimation_sample[,c("trackPopularity", "total_releases")])
 

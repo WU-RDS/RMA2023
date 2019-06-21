@@ -67,7 +67,8 @@ s.genre <- c("pop","hip hop","rock","rap","indie")
 music_data <- subset(music_data, top.genre %in% s.genre)
 
 music_data$genre_cat <- as.factor(music_data$top.genre)
-music_data$explicit_cat <- as.factor(music_data$explicit)
+music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1), 
+    labels = c("not explicit", "explicit"))
 ```
 
 The ```table()``` function creates a frequency table. Let's start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:
@@ -102,7 +103,7 @@ Again, it might be more meaningful to look at the relative frequencies using ```
 prop.table(table(music_data[,c("genre_cat", "explicit_cat")])) #relative frequencies
 ```
 
-Note that the above output shows the overall relative frequencies when male and female respondents are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a ```,2``` to the ```prop.table()``` command, which tells R to compute the relative frequencies by the columns (which is in our case the gender variable): 
+Note that the above output shows the overall relative frequencies when explicit and non-explicit songs are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a ```,2``` to the ```prop.table()``` command, which tells R to compute the relative frequencies by the columns (which is in our case the explicit variable): 
 
 ```{r}
 prop.table(table(music_data[,c("genre_cat", "explicit_cat")]),2) #conditional relative frequencies
@@ -139,7 +140,7 @@ library(pastecs)
 stat.desc(music_data[,c("trackPopularity", "total_releases")])
 ```
 
-Computing statistics by group is also possible by using the wrapper function ```by()```. Within the function, you first specify the data on which you would like to perform the grouping ```test_data[,c("duration", "overall_100")]```, followed by the grouping variable ```test_data$gender_cat``` and the function that you would like to execute (e.g., ```stat.desc()```):
+Computing statistics by group is also possible by using the wrapper function ```by()```. Within the function, you first specify the data on which you would like to perform the grouping ```music_data[,c("trackPopularity", "total_releases")]```, followed by the grouping variable ```music_data$explicit_cat``` and the function that you would like to execute (e.g., ```stat.desc()```):
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(pastecs)
@@ -154,7 +155,7 @@ From the above statistics it is clear that the data set contains some severe out
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(dplyr)
-#music_data %>% mutate(total_releases_std = as.vector(scale(total_releases))) %>% filter(abs(total_releases_std) > 3)
+music_data %>% mutate(total_releases_std = as.vector(scale(total_releases))) %>% filter(abs(total_releases_std) < 3)
 ```
 
 Indeed, there appears to be one potential outlier, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the ```filter()``` function from the ```dplyr()``` package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3: 

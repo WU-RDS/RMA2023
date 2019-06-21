@@ -37,7 +37,7 @@ Most of the data sets we will be working with in this course will be stored in t
 
 All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
 
-```{r}
+```{r, include=FALSE}
 music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
                         sep = "\t", 
                         header = TRUE)
@@ -48,9 +48,6 @@ music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/mus
                           sep = ",", 
                           header = TRUE,
                           stringsAsFactors = FALSE) #read in data
-#music_data <- na.omit(music_data[,c(1,16:26)])
-nsongs <- length(unique(music_data$id))
-nsongs <- formatC(nsongs, big.mark=".")
 ```
 
 
