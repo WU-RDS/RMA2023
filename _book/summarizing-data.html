@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Summarizing data | Marketing Research Design &amp; Analysis 2019</title>
-  <meta name="description" content="An Introduction to Statistics Using R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="An Introduction to Statistics Using R" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Summarizing data | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
@@ -25,11 +24,11 @@
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="data-handling.html">
 <link rel="next" href="introduction-to-statistical-inference.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -350,13 +349,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>As an example data set, we will be using the MRDA course survey data. Let’s load and inspect the data first.</p>
-<pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
-<span class="kw">head</span>(test_data)</code></pre>
+<p>As an example data set, we will be using the Spotify music data. Let’s load and inspect the data first.</p>
+<pre class="sourceCode r"><code class="sourceCode r">music_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv&quot;</span>, 
+    <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)  <span class="co">#read in data</span>
+
+
+<span class="kw">head</span>(music_data)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["startdate"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["enddate"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ipaddress"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["duration"],"name":[4],"type":["int"],"align":["right"]},{"label":["experience"],"name":[5],"type":["int"],"align":["right"]},{"label":["theory_ht"],"name":[6],"type":["int"],"align":["right"]},{"label":["theory_anova"],"name":[7],"type":["int"],"align":["right"]},{"label":["theory_reg"],"name":[8],"type":["int"],"align":["right"]},{"label":["theory_fa"],"name":[9],"type":["int"],"align":["right"]},{"label":["pract_ht"],"name":[10],"type":["int"],"align":["right"]},{"label":["pract_anova"],"name":[11],"type":["int"],"align":["right"]},{"label":["pract_reg"],"name":[12],"type":["int"],"align":["right"]},{"label":["pract_fa"],"name":[13],"type":["int"],"align":["right"]},{"label":["overall_knowledge"],"name":[14],"type":["int"],"align":["right"]},{"label":["multi_1"],"name":[15],"type":["int"],"align":["right"]},{"label":["multi_2"],"name":[16],"type":["int"],"align":["right"]},{"label":["multi_3"],"name":[17],"type":["int"],"align":["right"]},{"label":["multi_4"],"name":[18],"type":["int"],"align":["right"]},{"label":["overall_100"],"name":[19],"type":["int"],"align":["right"]},{"label":["prior_SPSS"],"name":[20],"type":["int"],"align":["right"]},{"label":["prior_R"],"name":[21],"type":["int"],"align":["right"]},{"label":["prior_Stata"],"name":[22],"type":["int"],"align":["right"]},{"label":["prior_Excel"],"name":[23],"type":["int"],"align":["right"]},{"label":["prior_SAS"],"name":[24],"type":["int"],"align":["right"]},{"label":["software_preference"],"name":[25],"type":["int"],"align":["right"]},{"label":["future_importance"],"name":[26],"type":["int"],"align":["right"]},{"label":["gender"],"name":[27],"type":["int"],"align":["right"]},{"label":["country"],"name":[28],"type":["int"],"align":["right"]},{"label":["group"],"name":[29],"type":["int"],"align":["right"]},{"label":["lat"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[31],"type":["dbl"],"align":["right"]}],"data":[{"1":"04.09.2017 21:03","2":"04.09.2017 21:05","3":"188.23.190.194","4":"136","5":"3","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"3","13":"3","14":"2","15":"2","16":"2","17":"4","18":"3","19":"25","20":"1","21":"1","22":"1","23":"5","24":"1","25":"5","26":"4","27":"1","28":"1","29":"1","30":"48.30000","31":"16.350006"},{"1":"04.09.2017 21:07","2":"04.09.2017 21:12","3":"93.10.250.2","4":"297","5":"3","6":"1","7":"3","8":"3","9":"3","10":"1","11":"1","12":"1","13":"1","14":"2","15":"2","16":"2","17":"2","18":"4","19":"15","20":"1","21":"1","22":"1","23":"4","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"43.71671","31":"7.366699"},{"1":"04.09.2017 21:09","2":"04.09.2017 21:13","3":"91.0.18.86","4":"237","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2","15":"3","16":"3","17":"3","18":"3","19":"30","20":"1","21":"1","22":"1","23":"2","24":"1","25":"5","26":"4","27":"2","28":"2","29":"2","30":"50.91330","31":"6.815201"},{"1":"04.09.2017 21:14","2":"04.09.2017 21:23","3":"37.116.255.55","4":"579","5":"1","6":"3","7":"3","8":"3","9":"2","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"3","18":"2","19":"65","20":"1","21":"1","22":"1","23":"3","24":"1","25":"3","26":"4","27":"2","28":"2","29":"1","30":"45.50000","31":"11.399994"},{"1":"04.09.2017 21:25","2":"04.09.2017 21:30","3":"178.165.131.208","4":"290","5":"1","6":"3","7":"3","8":"2","9":"2","10":"5","11":"5","12":"4","13":"3","14":"3","15":"4","16":"3","17":"4","18":"2","19":"70","20":"3","21":"1","22":"1","23":"3","24":"1","25":"1","26":"4","27":"2","28":"1","29":"1","30":"48.20869","31":"16.240707"},{"1":"04.09.2017 21:42","2":"04.09.2017 21:46","3":"212.28.68.81","4":"205","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1","15":"3","16":"3","17":"2","18":"4","19":"0","20":"1","21":"1","22":"1","23":"1","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"47.00560","31":"28.857498"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["isrc"],"name":[3],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[4],"type":["int"],"align":["right"]},{"label":["trackPopularity"],"name":[5],"type":["int"],"align":["right"]},{"label":["primary_artistName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["primary_artistID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[8],"type":["chr"],"align":["left"]},{"label":["artistIDs"],"name":[9],"type":["chr"],"align":["left"]},{"label":["albumName"],"name":[10],"type":["chr"],"align":["left"]},{"label":["albumID"],"name":[11],"type":["chr"],"align":["left"]},{"label":["available_markets"],"name":[12],"type":["chr"],"align":["left"]},{"label":["n_available_markets"],"name":[13],"type":["int"],"align":["right"]},{"label":["releaseDate"],"name":[14],"type":["chr"],"align":["left"]},{"label":["releaseDate_precision"],"name":[15],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[18],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[20],"type":["int"],"align":["right"]},{"label":["speechiness"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["time_signature"],"name":[28],"type":["int"],"align":["right"]},{"label":["uri"],"name":[29],"type":["chr"],"align":["left"]},{"label":["analysis_url"],"name":[30],"type":["chr"],"align":["left"]},{"label":["followers"],"name":[31],"type":["int"],"align":["right"]},{"label":["type"],"name":[32],"type":["chr"],"align":["left"]},{"label":["popularity"],"name":[33],"type":["int"],"align":["right"]},{"label":["primary_genre"],"name":[34],"type":["chr"],"align":["left"]},{"label":["genres"],"name":[35],"type":["chr"],"align":["left"]},{"label":["n_genres"],"name":[36],"type":["int"],"align":["right"]},{"label":["total_releases"],"name":[37],"type":["int"],"align":["right"]},{"label":["n_album"],"name":[38],"type":["int"],"align":["right"]},{"label":["n_single"],"name":[39],"type":["int"],"align":["right"]},{"label":["n_appears_on"],"name":[40],"type":["int"],"align":["right"]},{"label":["n_compilation"],"name":[41],"type":["int"],"align":["right"]},{"label":["mstreams"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[43],"type":["chr"],"align":["left"]},{"label":["adv_spending"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["top.genre"],"name":[45],"type":["chr"],"align":["left"]}],"data":[{"1":"5aAx2yezTd8zXrkmtKl66Z","2":"Starboy","3":"USUG11600976","4":"1","5":"22","6":"The Weeknd","7":"1Xyo4u8uXC1ZmMpatF05PJ","8":"The Weeknd feat. Daft Punk","9":"1Xyo4u8uXC1ZmMpatF05PJ,4tZwfgrHOc3mvqYlEYSvVi","10":"Starboy","11":"09fggMHib4YkOtwQNXEBII","12":"","13":"0","14":"2016-11-25","15":"day","16":"0.681","17":"0.594","18":"7","19":"-7.028","20":"1","21":"0.2820","22":"0.1650","23":"0.00000349","24":"0.134","25":"0.535","26":"186.054","27":"230453","28":"4","29":"spotify:track:5aAx2yezTd8zXrkmtKl66Z","30":"https://api.spotify.com/v1/audio-analysis/5aAx2yezTd8zXrkmtKl66Z","31":"15222808","32":"artist","33":"91","34":"canadian contemporary r&b","35":"canadian contemporary r&b, canadian pop, pop, rap","36":"4","37":"124","38":"13","39":"20","40":"91","41":"0","42":"357336.0","43":"us","44":"4538745582809720084335652681802192354751872961846816542356290991840842800362708869311675467455586767281244340224","45":"pop"},{"1":"7BKLCZ1jbUBVqRi2FVlTVw","2":"Closer","3":"USQX91601347","4":"0","5":"86","6":"The Chainsmokers","7":"69GGBxA162lTqCwzJG5jLp","8":"The Chainsmokers feat. Halsey","9":"69GGBxA162lTqCwzJG5jLp,26VFTg2z8YR0cCuwLzESi2","10":"Closer","11":"0rSLgV8p5FzfnqlEk4GzxE","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2016-07-29","15":"day","16":"0.748","17":"0.524","18":"8","19":"-5.599","20":"1","21":"0.0338","22":"0.4140","23":"0.00000000","24":"0.111","25":"0.661","26":"95.010","27":"244960","28":"4","29":"spotify:track:7BKLCZ1jbUBVqRi2FVlTVw","30":"https://api.spotify.com/v1/audio-analysis/7BKLCZ1jbUBVqRi2FVlTVw","31":"11565104","32":"artist","33":"90","34":"dance pop","35":"dance pop, electropop, pop, tropical house","36":"4","37":"96","38":"2","39":"59","40":"35","41":"0","42":"323081.4","43":"us","44":"87296125002616694828879835742568772595201488756664067891719260959953504690764846096364552367775131489311653888","45":"pop"},{"1":"4pdPtRcBmOSQDlJ3Fk945m","2":"Let Me Love You","3":"QMZSY1600015","4":"0","5":"27","6":"DJ Snake","7":"540vIaP2JwjQb9dm3aArA4","8":"DJ Snake feat. Justin Bieber","9":"540vIaP2JwjQb9dm3aArA4,1uNFoZAHBGtllmzznpCI3s","10":"Encore","11":"55bbXORm6ZrVq52zfZnxBf","12":"","13":"0","14":"2016-08-05","15":"day","16":"0.476","17":"0.718","18":"8","19":"-5.309","20":"1","21":"0.0576","22":"0.0784","23":"0.00000000","24":"0.122","25":"0.142","26":"199.864","27":"205947","28":"4","29":"spotify:track:4pdPtRcBmOSQDlJ3Fk945m","30":"https://api.spotify.com/v1/audio-analysis/4pdPtRcBmOSQDlJ3Fk945m","31":"4345960","32":"artist","33":"86","34":"dance pop","35":"dance pop, edm, electronic trap, pop, tropical house","36":"5","37":"85","38":"2","39":"38","40":"45","41":"0","42":"264546.4","43":"us","44":"4052673829394860012092441543505898027168278466357604061531255984953722983872577825913849720641449881585582080","45":"pop"},{"1":"5knuzwU65gJK7IF5yJsuaW","2":"Rockabye (feat. Sean Paul & Anne-Marie)","3":"GBAHS1600363","4":"0","5":"81","6":"Clean Bandit","7":"6MDME20pz9RveH9rEXvrOM","8":"Clean Bandit feat. Sean Paul feat. Anne-Marie","9":"6MDME20pz9RveH9rEXvrOM,3Isy6kedDrgPYoTS1dazA9,1zNqDE7qDGCsyzJwohVaoX","10":"Rockabye (feat. Sean Paul & Anne-Marie)","11":"3meZFplbMmji648oWUNEfQ","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"78","14":"2016-10-21","15":"day","16":"0.720","17":"0.763","18":"9","19":"-4.068","20":"0","21":"0.0523","22":"0.4060","23":"0.00000000","24":"0.180","25":"0.742","26":"101.965","27":"251088","28":"4","29":"spotify:track:5knuzwU65gJK7IF5yJsuaW","30":"https://api.spotify.com/v1/audio-analysis/5knuzwU65gJK7IF5yJsuaW","31":"2504254","32":"artist","33":"84","34":"dance pop","35":"dance pop, edm, pop, tropical house, uk funky","36":"5","37":"97","38":"2","39":"73","40":"22","41":"0","42":"299399.5","43":"us","44":"63076779883569398413334987328546550614768141860947245086927001088783215597781844192705652165114862194747506688","45":"pop"},{"1":"1xznGGDReH1oQq0xzbwXa3","2":"One Dance","3":"USCM51600028","4":"0","5":"25","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake feat. WizKid feat. Kyla","9":"3TVXtAsR1Inumwj472S9r4,3tVQdUvClmAT7URs9V3rsp,77DAFfvm3O9zT5dIoG0eIO","10":"Views","11":"3hARKC8cinq3mZLLAEaBh9","12":"","13":"0","14":"2016-05-06","15":"day","16":"0.791","17":"0.619","18":"1","19":"-5.886","20":"1","21":"0.0532","22":"0.0078","23":"0.00420000","24":"0.351","25":"0.371","26":"103.989","27":"173987","28":"4","29":"spotify:track:1xznGGDReH1oQq0xzbwXa3","30":"https://api.spotify.com/v1/audio-analysis/1xznGGDReH1oQq0xzbwXa3","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"265877.0","43":"us","44":"4668617894331640150713528913482931563888378169191399287770456451298974376421383853327796314422734196333084672","45":"pop"},{"1":"343YBumqHu19cGoGARUTsd","2":"Fake Love","3":"USCM51700084","4":"1","5":"76","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake","9":"3TVXtAsR1Inumwj472S9r4","10":"More Life","11":"1lXY618HWkwYKJWBRYR4MK","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2017-03-18","15":"day","16":"0.927","17":"0.488","18":"9","19":"-9.433","20":"0","21":"0.4200","22":"0.1080","23":"0.00000000","24":"0.196","25":"0.605","26":"133.987","27":"210937","28":"4","29":"spotify:track:343YBumqHu19cGoGARUTsd","30":"https://api.spotify.com/v1/audio-analysis/343YBumqHu19cGoGARUTsd","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"425740.1","43":"us","44":"34419285169424099063603169706763167298974920345850885001633591652364254906722960776146634654951625345242828374016","45":"pop"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <div id="categorical-variables" class="section level3">
@@ -368,68 +369,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>For this example, we are interested in the following two variables</p>
 <ul>
-<li>“overall_knowledge”: measures the self-reported prior knowledge of marketing students in statistics before taking the marketing research class on a 5-point scale with the categories “none”, “basic”, “intermediate”,“advanced”, and “proficient”.</li>
-<li>“gender”: the gender of the students (1 = male, 2 = female)</li>
+<li>“genre”: the music genre the artist is associated with. subsetted for the five most frequent genres.<br />
+</li>
+<li>“explicit”: whether the lyrics of the tracks are explicit or not (0 = not explicit, 1 = explicit)</li>
 </ul>
+<p><a href="https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/">You can find a full description of the variables here:</a></p>
 <p>In a first step, we convert the variables to factor variables using the <code>factor()</code> function to assign appropriate labels according to the scale points:</p>
-<pre class="sourceCode r"><code class="sourceCode r">test_data<span class="op">$</span>overall_knowledge_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(test_data<span class="op">$</span>overall_knowledge, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;intermediate&quot;</span>, 
-        <span class="st">&quot;advanced&quot;</span>, <span class="st">&quot;proficient&quot;</span>))
-test_data<span class="op">$</span>gender_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(test_data<span class="op">$</span>gender, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), 
-    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">s.genre &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;pop&quot;</span>, <span class="st">&quot;hip hop&quot;</span>, <span class="st">&quot;rock&quot;</span>, <span class="st">&quot;rap&quot;</span>, <span class="st">&quot;indie&quot;</span>)
+music_data &lt;-<span class="st"> </span><span class="kw">subset</span>(music_data, top.genre <span class="op">%in%</span><span class="st"> </span>s.genre)
+
+music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)
+music_data<span class="op">$</span>explicit_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(music_data<span class="op">$</span>explicit, 
+    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;not explicit&quot;</span>, <span class="st">&quot;explicit&quot;</span>))</code></pre>
 <p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;overall_knowledge_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
 <pre><code>## 
-##         none        basic intermediate     advanced   proficient 
-##           10           32            9            4            0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;gender_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
+## hip hop   indie     pop     rap    rock 
+##    9907     528   28448    1180    1839</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;explicit_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
 <pre><code>## 
-##   male female 
-##     14     41</code></pre>
-<p>It is obvious that there are more female than male students. For variables with more categories, it might be less obvious and we might compute the median category using the <code>median()</code> function, or the <code>summary()</code> function, which produces further statistics.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>((test_data[, <span class="kw">c</span>(<span class="st">&quot;overall_knowledge&quot;</span>)]))</code></pre>
-<pre><code>## [1] 2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>((test_data[, <span class="kw">c</span>(<span class="st">&quot;overall_knowledge&quot;</span>)]))</code></pre>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   1.000   2.000   2.000   2.127   2.000   4.000</code></pre>
+## not explicit     explicit 
+##        30204        11698</code></pre>
+<p>It is obvious that there are more tracks with non-explicit lyrics than songs with explicit lyrics. For variables with more categories, it might be less obvious and we might use the <code>summary()</code> function, which produces further statistics.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>((music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)]))</code></pre>
+<pre><code>## hip hop   indie     pop     rap    rock 
+##    9907     528   28448    1180    1839</code></pre>
 <p>Often, we are interested in the relative frequencies, which can be obtained by using the <code>prop.table()</code> function.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;overall_knowledge_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
 <pre><code>## 
-##         none        basic intermediate     advanced   proficient 
-##   0.18181818   0.58181818   0.16363636   0.07272727   0.00000000</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;gender_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
+##    hip hop      indie        pop        rap       rock 
+## 0.23643263 0.01260083 0.67891747 0.02816095 0.04388812</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;explicit_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
 <pre><code>## 
-##      male    female 
-## 0.2545455 0.7454545</code></pre>
-<p>Now let’s investigate if the prior knowledge differs by gender. To do this, we simply apply the <code>table()</code> function to both variables:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;overall_knowledge_cat&quot;</span>, <span class="st">&quot;gender_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
-<pre><code>##                      gender_cat
-## overall_knowledge_cat male female
-##          none            1      9
-##          basic           8     24
-##          intermediate    4      5
-##          advanced        1      3
-##          proficient      0      0</code></pre>
+## not explicit     explicit 
+##    0.7208248    0.2791752</code></pre>
+<p>Now let’s investigate if the genre differs by expliciteness. To do this, we simply apply the <code>table()</code> function to both variables:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
+<pre><code>##          explicit_cat
+## genre_cat not explicit explicit
+##   hip hop         3515     6392
+##   indie            495       33
+##   pop            23881     4567
+##   rap              536      644
+##   rock            1777       62</code></pre>
 <p>Again, it might be more meaningful to look at the relative frequencies using <code>prop.table()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;overall_knowledge_cat&quot;</span>, 
-    <span class="st">&quot;gender_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
-<pre><code>##                      gender_cat
-## overall_knowledge_cat       male     female
-##          none         0.01818182 0.16363636
-##          basic        0.14545455 0.43636364
-##          intermediate 0.07272727 0.09090909
-##          advanced     0.01818182 0.05454545
-##          proficient   0.00000000 0.00000000</code></pre>
-<p>Note that the above output shows the overall relative frequencies when male and female respondents are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a <code>,2</code> to the <code>prop.table()</code> command, which tells R to compute the relative frequencies by the columns (which is in our case the gender variable):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;overall_knowledge_cat&quot;</span>, 
-    <span class="st">&quot;gender_cat&quot;</span>)]), <span class="dv">2</span>)  <span class="co">#conditional relative frequencies</span></code></pre>
-<pre><code>##                      gender_cat
-## overall_knowledge_cat       male     female
-##          none         0.07142857 0.21951220
-##          basic        0.57142857 0.58536585
-##          intermediate 0.28571429 0.12195122
-##          advanced     0.07142857 0.07317073
-##          proficient   0.00000000 0.00000000</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
+<pre><code>##          explicit_cat
+## genre_cat not explicit     explicit
+##   hip hop 0.0838862107 0.1525464178
+##   indie   0.0118132786 0.0007875519
+##   pop     0.5699250632 0.1089924109
+##   rap     0.0127917522 0.0153691948
+##   rock    0.0424084769 0.0014796430</code></pre>
+<p>Note that the above output shows the overall relative frequencies when explicit and non-explicit songs are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a <code>,2</code> to the <code>prop.table()</code> command, which tells R to compute the relative frequencies by the columns (which is in our case the explicit variable):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)]), 
+    <span class="dv">2</span>)  <span class="co">#conditional relative frequencies</span></code></pre>
+<pre><code>##          explicit_cat
+## genre_cat not explicit    explicit
+##   hip hop  0.116375315 0.546418191
+##   indie    0.016388558 0.002820995
+##   pop      0.790656867 0.390408617
+##   rap      0.017745994 0.055052146
+##   rock     0.058833267 0.005300051</code></pre>
 </div>
 <div id="continuous-variables" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Continuous variables</h3>
@@ -442,120 +443,272 @@ test_data<span class="op">$</span>gender_cat &lt;-<span class="st"> </span><span
 </ul>
 <p>Computing descriptive statistics in R is easy and there are many functions from different packages that let you calculate summary statistics (including the <code>summary()</code> function from the <code>base</code> package). In this tutorial, we will use the <code>describe()</code> function from the <code>psych</code> package:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
-psych<span class="op">::</span><span class="kw">describe</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;duration&quot;</span>, <span class="st">&quot;overall_100&quot;</span>)])</code></pre>
-<pre><code>##             vars  n    mean       sd median trimmed   mad min    max
-## duration       1 55 4977.16 33672.62    237  271.20 93.40 107 250092
-## overall_100    2 55   39.18    20.43     40   38.89 29.65   0     80
-##              range skew kurtosis      se
-## duration    249985 7.01    48.05 4540.41
-## overall_100     80 0.12    -1.13    2.75</code></pre>
+psych<span class="op">::</span><span class="kw">describe</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)])</code></pre>
+<pre><code>##                 vars     n
+## trackPopularity    1 41902
+## adv_spending       2  4040
+##                                                                                                                                               mean
+## trackPopularity                                                                                                                              42.19
+## adv_spending    1663861998635444585799602166412216556576766983815898539262112991801036926040046455146949703012774025143762194963165646424113152.00
+##                                                                                                                                                  sd
+## trackPopularity                                                                                                                               21.93
+## adv_spending    90388285514975490271795863003907786255407670856965955656109222016563254125189143073145303108376541058461249614948556335979954176.00
+##                                                                                                                        median
+## trackPopularity                                                                                                            46
+## adv_spending    8053950811694375076647952760936325412330582286337524164369343773718646589908344175161847915011555945745481728
+##                                                                                                                              trimmed
+## trackPopularity                                                                                                                43.32
+## adv_spending    14312549466936196760783481604417957757777576101710492679466473955070433986974341367139670520283693558159388966912.00
+##                                                                                                                               mad
+## trackPopularity                                                                                                             20.76
+## adv_spending    11939965425569067043575351803658340312697485103812437558690892244534581568569211936813173116078062282177773568.00
+##                                                                                                                     min
+## trackPopularity                                                                                                       0
+## adv_spending    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880
+##                                                                                                                                                max
+## trackPopularity                                                                                                                                100
+## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
+##                                                                                                                                              range
+## trackPopularity                                                                                                                                100
+## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
+##                  skew kurtosis
+## trackPopularity -0.46    -0.57
+## adv_spending      NaN      NaN
+##                                                                                                                                                 se
+## trackPopularity                                                                                                                               0.11
+## adv_spending    1422071609643704026249753197586951515463142435487387848863024692896229474709084513620890368357693259819763446809306914447425536.00</code></pre>
 <p>In the above command, we used the <code>psych::</code> prefix to avoid confusion and to make sure that R uses the <code>describe()</code> function from the <code>psych</code> package since there are many other packages that also contain a <code>desribe()</code> function. Note that you could also compute these statistics separately by using the respective functions (e.g., <code>mean()</code>, <code>sd()</code>, <code>median()</code>, <code>min()</code>, <code>max()</code>, etc.).</p>
-<p>The <code>psych</code> package also contains the <code>describeBy()</code> function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by gender as follows:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;duration&quot;</span>, <span class="st">&quot;overall_100&quot;</span>)], 
-    test_data<span class="op">$</span>gender_cat)</code></pre>
+<p>The <code>psych</code> package also contains the <code>describeBy()</code> function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by expliciteness as follows:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describeBy</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)], 
+    music_data<span class="op">$</span>explicit_cat)</code></pre>
 <pre><code>## 
 ##  Descriptive statistics by group 
-## group: male
-##             vars  n     mean       sd median trimmed    mad min    max
-## duration       1 14 18073.86 66779.48  238.5  236.25 132.69 107 250092
-## overall_100    2 14    43.93    18.52   42.5   44.17  18.53  10     75
-##              range skew kurtosis       se
-## duration    249985 2.98     7.41 17847.57
-## overall_100     65 0.00    -1.19     4.95
+## group: not explicit
+##                 vars     n
+## trackPopularity    1 30204
+## adv_spending       2  1615
+##                                                                                                                                            mean
+## trackPopularity                                                                                                                           41.08
+## adv_spending    5172168603099718432851297255956777123746053276240670083946866176769415706160674361986120612129653589692122257714508906627072.00
+##                                                                                                                                                sd
+## trackPopularity                                                                                                                             21.48
+## adv_spending    193381855610632447547751245383868977151535263730018200292784367391663701087958346550985189639430024775385068674556835013853184.00
+##                                                                                                                        median
+## trackPopularity                                                                                                            44
+## adv_spending    2559156059025929783904012511794850814137726896451867630430204094110902960084686675151033589613010052068671488
+##                                                                                                                             trimmed
+## trackPopularity                                                                                                               42.02
+## adv_spending    1552391850272417551260541218699560271374285287324560765205145708945175757017623622955337963329647931986729238528.00
+##                                                                                                                              mad
+## trackPopularity                                                                                                            20.76
+## adv_spending    3793573264280055573989692432837769198694619592855876753447158169066569246652547100784541204811141925908250624.00
+##                                                                                                                     min
+## trackPopularity                                                                                                       0
+## adv_spending    1788886480907749967800767903198959017803271330687803346259775343201180214710951059799925207252972077056
+##                                                                                                                                             max
+## trackPopularity                                                                                                                             100
+## adv_spending    7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608
+##                                                                                                                                           range
+## trackPopularity                                                                                                                             100
+## adv_spending    7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608
+##                  skew kurtosis
+## trackPopularity -0.39    -0.61
+## adv_spending      NaN      NaN
+##                                                                                                                                              se
+## trackPopularity                                                                                                                            0.12
+## adv_spending    4812042561069334413658881832064407463280356005964057426447789336055491389549994156940560612380176530567396576327037806968832.00
 ## -------------------------------------------------------- 
-## group: female
-##             vars  n   mean     sd median trimmed   mad min  max range skew
-## duration       1 41 505.12 906.32    237  283.42 93.40 114 4735  4621 3.70
-## overall_100    2 41  37.56  21.01     30   36.97 22.24   0   80    80 0.21
-##             kurtosis     se
-## duration       13.09 141.54
-## overall_100    -1.17   3.28</code></pre>
+## group: explicit
+##                 vars     n
+## trackPopularity    1 11698
+## adv_spending       2  2425
+##                                                                                                                                               mean
+## trackPopularity                                                                                                                              45.07
+## adv_spending    2768515225646676246676162821451682216828911935149173871155142886219560271694665145879934665093000158200648550487804638174117888.00
+##                                                                                                                                                   sd
+## trackPopularity                                                                                                                                22.81
+## adv_spending    116663137947801986765276655850226354566622102326259874731241693256319504071284192300331944346479806044416809616292599765294645248.00
+##                                                                                                                         median
+## trackPopularity                                                                                                             50
+## adv_spending    16277273105159300279201836045070017442893414952768978834780850370041112632978214969084537078780304893170155520
+##                                                                                                                              trimmed
+## trackPopularity                                                                                                                46.71
+## adv_spending    56023009135510243088914501309015842274125585498928715915763841732567728568664908564405876699413058364659027935232.00
+##                                                                                                                               mad
+## trackPopularity                                                                                                             19.27
+## adv_spending    24131787940269998252417729231936258902038709675525474818134710775231449898917202835217367263874142969297633280.00
+##                                                                                                                     min
+## trackPopularity                                                                                                       0
+## adv_spending    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880
+##                                                                                                                                                max
+## trackPopularity                                                                                                                                 98
+## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
+##                                                                                                                                              range
+## trackPopularity                                                                                                                                 98
+## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
+##                  skew kurtosis
+## trackPopularity -0.67    -0.38
+## adv_spending      NaN      NaN
+##                                                                                                                                                 se
+## trackPopularity                                                                                                                               0.21
+## adv_spending    2369069394555102609637929516509963472253684191870489391436065904037937544068666190710539940555492676837585516201848155007877120.00</code></pre>
 <p>Note that you could just as well use other packages to compute the descriptive statistics. For example, you could have used the <code>stat.desc()</code> function from the <code>pastecs</code> package:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pastecs)
-<span class="kw">stat.desc</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;duration&quot;</span>, <span class="st">&quot;overall_100&quot;</span>)])</code></pre>
-<pre><code>##                       duration  overall_100
-## nbr.val              55.000000   55.0000000
-## nbr.null              0.000000    1.0000000
-## nbr.na                0.000000    0.0000000
-## min                 107.000000    0.0000000
-## max              250092.000000   80.0000000
-## range            249985.000000   80.0000000
-## sum              273744.000000 2155.0000000
-## median              237.000000   40.0000000
-## mean               4977.163636   39.1818182
-## SE.mean            4540.414684    2.7547438
-## CI.mean.0.95       9102.983359    5.5229288
-## var          1133845102.435690  417.3737374
-## std.dev           33672.616507   20.4297268
-## coef.var              6.765423    0.5214083</code></pre>
-<p>Computing statistics by group is also possible by using the wrapper function <code>by()</code>. Within the function, you first specify the data on which you would like to perform the grouping <code>test_data[,c(&quot;duration&quot;, &quot;overall_100&quot;)]</code>, followed by the grouping variable <code>test_data$gender_cat</code> and the function that you would like to execute (e.g., <code>stat.desc()</code>):</p>
+<span class="kw">stat.desc</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)])</code></pre>
+<pre><code>##              trackPopularity
+## nbr.val        41902.0000000
+## nbr.null        2718.0000000
+## nbr.na             0.0000000
+## min                0.0000000
+## max              100.0000000
+## range            100.0000000
+## sum          1767874.0000000
+## median            46.0000000
+## mean              42.1906830
+## SE.mean            0.1071435
+## CI.mean.0.95       0.2100034
+## var              481.0231842
+## std.dev           21.9322407
+## coef.var           0.5198361
+##                                                                                                                                                                                                                                                                        adv_spending
+## nbr.val                                                                                                                                                                                                                                                                  4040.00000
+## nbr.null                                                                                                                                                                                                                                                                    0.00000
+## nbr.na                                                                                                                                                                                                                                                                  37862.00000
+## min                                                                                                                                                                   1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880.00000
+## max                                                                                                                                        5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
+## range                                                                                                                                      5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
+## sum                                                                                                                                        6722002474487196114605854728503328761775997959054824518455441836465591443180457904548766591584811831046660395921173452029910056960.00000
+## median                                                                                                                                                          8053950811694375076647952760936325412330582286337524164369343773718646589908344175161847915011555945745481728.00000
+## mean                                                                                                                                          1663861998635444585799602166412216556576766983815898539262112991801036926040046455146949703012774025143762194963165646424113152.00000
+## SE.mean                                                                                                                                       1422071609643704026249753197586951515463142435487387848863024692896229474709084513620890368357693259819763446809306914447425536.00000
+## CI.mean.0.95                                                                                                                                  2788044625723915458338140131640119709214076421615346353356072322387958038678787605544590167698011636706189948644072160285949952.00000
+## var          8170042158336727985584155358928501945007069761199404624925743472097598574696898704016127391582732374381167474204966413129492906943119588228618671677530711768615870910780816611902644306269116306238204414786201181630868688547307884340558060241671993551749120.00000
+## std.dev                                                                                                                                      90388285514975490271795863003907786255407670856965955656109222016563254125189143073145303108376541058461249614948556335979954176.00000
+## coef.var                                                                                                                                                                                                                                                                   54.32439</code></pre>
+<p>Computing statistics by group is also possible by using the wrapper function <code>by()</code>. Within the function, you first specify the data on which you would like to perform the grouping <code>music_data[,c(&quot;trackPopularity&quot;, &quot;adv_spending&quot;)]</code>, followed by the grouping variable <code>music_data$explicit_cat</code> and the function that you would like to execute (e.g., <code>stat.desc()</code>):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pastecs)
-<span class="kw">by</span>(test_data[, <span class="kw">c</span>(<span class="st">&quot;duration&quot;</span>, <span class="st">&quot;overall_100&quot;</span>)], test_data<span class="op">$</span>gender_cat, 
-    stat.desc)</code></pre>
-<pre><code>## test_data$gender_cat: male
-##                       duration overall_100
-## nbr.val              14.000000   14.000000
-## nbr.null              0.000000    0.000000
-## nbr.na                0.000000    0.000000
-## min                 107.000000   10.000000
-## max              250092.000000   75.000000
-## range            249985.000000   65.000000
-## sum              253034.000000  615.000000
-## median              238.500000   42.500000
-## mean              18073.857143   43.928571
-## SE.mean           17847.566755    4.949708
-## CI.mean.0.95      38557.323811   10.693194
-## var          4459498946.901099  342.994505
-## std.dev           66779.479984   18.520111
-## coef.var              3.694811    0.421596
+<span class="kw">by</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)], 
+    music_data<span class="op">$</span>explicit_cat, stat.desc)</code></pre>
+<pre><code>## music_data$explicit_cat: not explicit
+##              trackPopularity
+## nbr.val        30204.0000000
+## nbr.null        1777.0000000
+## nbr.na             0.0000000
+## min                0.0000000
+## max              100.0000000
+## range            100.0000000
+## sum          1240696.0000000
+## median            44.0000000
+## mean              41.0772083
+## SE.mean            0.1235926
+## CI.mean.0.95       0.2422467
+## var              461.3697298
+## std.dev           21.4795188
+## coef.var           0.5229060
+##                                                                                                                                                                                                                                                                   adv_spending
+## nbr.val                                                                                                                                                                                                                                                             1615.00000
+## nbr.null                                                                                                                                                                                                                                                               0.00000
+## nbr.na                                                                                                                                                                                                                                                             28589.00000
+## min                                                                                                                                                              1788886480907749967800767903198959017803271330687803346259775343201180214710951059799925207252972077056.00000
+## max                                                                                                                                      7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608.00000
+## range                                                                                                                                    7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608.00000
+## sum                                                                                                                                      8353052294006045667719948494228385489089207346118642582596301552669904418012131512200066801794173825315682422023419223873683456.00000
+## median                                                                                                                                                     2559156059025929783904012511794850814137726896451867630430204094110902960084686675151033589613010052068671488.00000
+## mean                                                                                                                                        5172168603099718432851297255956777123746053276240670083946866176769415706160674361986120612129653589692122257714508906627072.00000
+## SE.mean                                                                                                                                     4812042561069334413658881832064407463280356005964057426447789336055491389549994156940560612380176530567396576327037806968832.00000
+## CI.mean.0.95                                                                                                                                9438508110504072852885928339809330319134619407745960075370646187395180949376531142479041917389950218916856573259053550010368.00000
+## var          37396542079411498131144847226849996155181511245711451108004567056052469842579858325289647196214991357585017871776703544624605350369380232968427943372525647378365511581576534322270648662714037140428215378691051777969660175102626842598364003455668846592.00000
+## std.dev                                                                                                                                   193381855610632447547751245383868977151535263730018200292784367391663701087958346550985189639430024775385068674556835013853184.00000
+## coef.var                                                                                                                                                                                                                                                              37.38893
 ## -------------------------------------------------------- 
-## test_data$gender_cat: female
-##                   duration overall_100
-## nbr.val          41.000000   41.000000
-## nbr.null          0.000000    1.000000
-## nbr.na            0.000000    0.000000
-## min             114.000000    0.000000
-## max            4735.000000   80.000000
-## range          4621.000000   80.000000
-## sum           20710.000000 1540.000000
-## median          237.000000   30.000000
-## mean            505.121951   37.560976
-## SE.mean         141.543022    3.281145
-## CI.mean.0.95    286.069118    6.631442
-## var          821411.509756  441.402439
-## std.dev         906.317555   21.009580
-## coef.var          1.794255    0.559346</code></pre>
+## music_data$explicit_cat: explicit
+##              trackPopularity
+## nbr.val        11698.0000000
+## nbr.null         941.0000000
+## nbr.na             0.0000000
+## min                0.0000000
+## max               98.0000000
+## range             98.0000000
+## sum           527178.0000000
+## median            50.0000000
+## mean              45.0656522
+## SE.mean            0.2109063
+## CI.mean.0.95       0.4134115
+## var              520.3441548
+## std.dev           22.8110533
+## coef.var           0.5061738
+##                                                                                                                                                                                                                                                                         adv_spending
+## nbr.val                                                                                                                                                                                                                                                                   2425.00000
+## nbr.null                                                                                                                                                                                                                                                                     0.00000
+## nbr.na                                                                                                                                                                                                                                                                    9273.00000
+## min                                                                                                                                                                    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880.00000
+## max                                                                                                                                         5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
+## range                                                                                                                                       5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
+## sum                                                                                                                                         6713649422193189931858401308666002530833705278308682262009006520232107325319286346644590146893552029132161575776970374238055694336.00000
+## median                                                                                                                                                          16277273105159300279201836045070017442893414952768978834780850370041112632978214969084537078780304893170155520.00000
+## mean                                                                                                                                           2768515225646676246676162821451682216828911935149173871155142886219560271694665145879934665093000158200648550487804638174117888.00000
+## SE.mean                                                                                                                                        2369069394555102609637929516509963472253684191870489391436065904037937544068666190710539940555492676837585516201848155007877120.00000
+## CI.mean.0.95                                                                                                                                   4645610341497686096375959094522914490123115368707138744568977581813844053362617607728462666908133765731575094148070415890644992.00000
+## var          13610287755827875778719137998489737662204122359063366245590425994016353278686815344510450706245734240054198519332236460396884299911014786837337577757197426556095328982688792166566100303033028214504872905181222266141011080120924423714229442433473368788303872.00000
+## std.dev                                                                                                                                      116663137947801986765276655850226354566622102326259874731241693256319504071284192300331944346479806044416809616292599765294645248.00000
+## coef.var                                                                                                                                                                                                                                                                    42.13924</code></pre>
 <p>These examples are meant to exemplify that there are often many different ways to reach a goal in R. Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences.</p>
 </div>
 <div id="creating-subsets" class="section level4">
 <h4><span class="header-section-number">3.1.2.2</span> Creating subsets</h4>
-<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum duration is 2.9 days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
+<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum amount of spending on advertisment is 5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848 units. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-test_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">duration_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(duration))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(duration_std) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</code></pre>
-<pre><code>##          startdate          enddate    ipaddress duration experience
-## 1 11.09.2017 16:15 14.09.2017 13:43 86.56.146.66   250092          1
-##   theory_ht theory_anova theory_reg theory_fa pract_ht pract_anova
-## 1         3            3          2         1        4           4
-##   pract_reg pract_fa overall_knowledge multi_1 multi_2 multi_3 multi_4
-## 1         3        2                 3       4       4       3       2
-##   overall_100 prior_SPSS prior_R prior_Stata prior_Excel prior_SAS
-## 1          55          3       1           1           2         1
-##   software_preference future_importance gender country group      lat
-## 1                   1                 4      1       1     2 48.20869
-##       long overall_knowledge_cat gender_cat duration_std
-## 1 16.24071          intermediate       male     7.279352</code></pre>
-<p>Indeed, there appears to be one potential outlier, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the <code>filter()</code> function from the <code>dplyr()</code> package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3:</p>
+music_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">adv_spending_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(adv_spending))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(adv_spending_std) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(id, 
+    trackName, adv_spending, adv_spending_std)</code></pre>
+<pre><code>##                       id      trackName
+## 1 0bAkKNCQfWkexHFn7fIKns In My Feelings
+## 2 14msK75pk3pA33pzPVNtBF        7 rings
+##                                                                                                                         adv_spending
+## 1 5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
+## 2 1008045200855339985506099626093469373657702595188240563099650156263206208729900580754972649351671901885944441510877466710761275392
+##   adv_spending_std
+## 1         62.55845
+## 2         11.13398</code></pre>
+<p>Indeed, there appear to be two potential outliers, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the <code>filter()</code> function from the <code>dplyr()</code> package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-estimation_sample &lt;-<span class="st"> </span>test_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">duration_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(duration))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(duration_std) <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>)
-psych<span class="op">::</span><span class="kw">describe</span>(estimation_sample[, <span class="kw">c</span>(<span class="st">&quot;duration&quot;</span>, <span class="st">&quot;overall_100&quot;</span>)])</code></pre>
-<pre><code>##             vars  n   mean     sd median trimmed   mad min  max range skew
-## duration       1 54 438.00 797.83  235.5  261.45 91.18 107 4735  4628 4.35
-## overall_100    2 54  38.89  20.50   37.5   38.52 25.95   0   80    80 0.16
-##             kurtosis     se
-## duration       18.77 108.57
-## overall_100    -1.12   2.79</code></pre>
+estimation_sample &lt;-<span class="st"> </span>music_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">adv_spending_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(adv_spending))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(adv_spending_std) <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>)
+psych<span class="op">::</span><span class="kw">describe</span>(estimation_sample[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, 
+    <span class="st">&quot;adv_spending&quot;</span>)])</code></pre>
+<pre><code>##                 vars    n
+## trackPopularity    1 4038
+## adv_spending       2 4038
+##                                                                                                                                            mean
+## trackPopularity                                                                                                                            56.1
+## adv_spending    14299852780120468657410877578753089676587084887750699460926288114711048967760614101945583734512264829226601349227020116033536.0
+##                                                                                                                                                sd
+## trackPopularity                                                                                                                             25.75
+## adv_spending    514033938921804019020429914640731768428064760933988323242505729121815072331089459342804092286099409142425572854198998732374016.00
+##                                                                                                                        median
+## trackPopularity                                                                                                            65
+## adv_spending    7953461129902340059156517311538987796994400935131065747107576361659234914000790092783078003022891724281217024
+##                                                                                                                              trimmed
+## trackPopularity                                                                                                                59.04
+## adv_spending    14094605684355323875805003735879490584491469607097240346557008438931548607721069633165388848472810487877239570432.00
+##                                                                                                                               mad
+## trackPopularity                                                                                                             16.31
+## adv_spending    11790995100996427476047494673272810230694477221730052628311320123674956042955025475269224785384581086989778944.00
+##                                                                                                                     min
+## trackPopularity                                                                                                       0
+## adv_spending    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880
+##                                                                                                                                              max
+## trackPopularity                                                                                                                              100
+## adv_spending    23007897832533398424219963588429175658686192709157713192410586014575505712381615201439302030465371774372780167264980048950591488
+##                                                                                                                                            range
+## trackPopularity                                                                                                                              100
+## adv_spending    23007897832533398424219963588429175658686192709157713192410586014575505712381615201439302030465371774372780167264980048950591488
+##                  skew kurtosis
+## trackPopularity -0.98    -0.27
+## adv_spending      NaN      NaN
+##                                                                                                                                              se
+## trackPopularity                                                                                                                            0.41
+## adv_spending    8089257063071855260006040258716645323204110342931098549534787199311347707475638991808748465408187718329609987958599659290624.00</code></pre>
 
 </div>
 </div>
@@ -574,100 +727,100 @@ psych<span class="op">::</span><span class="kw">describe</span>(estimation_sampl
 <div id="bar-plot" class="section level4">
 <h4><span class="header-section-number">3.2.1.1</span> Bar plot</h4>
 <p>To give you an example of how the graphics are composed, let’s go back to the frequency table from the previous chapter, where we created this table:</p>
-<pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
-<span class="kw">head</span>(test_data)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">music_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv&quot;</span>, 
+    <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)  <span class="co">#read in data</span>
+<span class="kw">head</span>(music_data)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["startdate"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["enddate"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ipaddress"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["duration"],"name":[4],"type":["int"],"align":["right"]},{"label":["experience"],"name":[5],"type":["int"],"align":["right"]},{"label":["theory_ht"],"name":[6],"type":["int"],"align":["right"]},{"label":["theory_anova"],"name":[7],"type":["int"],"align":["right"]},{"label":["theory_reg"],"name":[8],"type":["int"],"align":["right"]},{"label":["theory_fa"],"name":[9],"type":["int"],"align":["right"]},{"label":["pract_ht"],"name":[10],"type":["int"],"align":["right"]},{"label":["pract_anova"],"name":[11],"type":["int"],"align":["right"]},{"label":["pract_reg"],"name":[12],"type":["int"],"align":["right"]},{"label":["pract_fa"],"name":[13],"type":["int"],"align":["right"]},{"label":["overall_knowledge"],"name":[14],"type":["int"],"align":["right"]},{"label":["multi_1"],"name":[15],"type":["int"],"align":["right"]},{"label":["multi_2"],"name":[16],"type":["int"],"align":["right"]},{"label":["multi_3"],"name":[17],"type":["int"],"align":["right"]},{"label":["multi_4"],"name":[18],"type":["int"],"align":["right"]},{"label":["overall_100"],"name":[19],"type":["int"],"align":["right"]},{"label":["prior_SPSS"],"name":[20],"type":["int"],"align":["right"]},{"label":["prior_R"],"name":[21],"type":["int"],"align":["right"]},{"label":["prior_Stata"],"name":[22],"type":["int"],"align":["right"]},{"label":["prior_Excel"],"name":[23],"type":["int"],"align":["right"]},{"label":["prior_SAS"],"name":[24],"type":["int"],"align":["right"]},{"label":["software_preference"],"name":[25],"type":["int"],"align":["right"]},{"label":["future_importance"],"name":[26],"type":["int"],"align":["right"]},{"label":["gender"],"name":[27],"type":["int"],"align":["right"]},{"label":["country"],"name":[28],"type":["int"],"align":["right"]},{"label":["group"],"name":[29],"type":["int"],"align":["right"]},{"label":["lat"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[31],"type":["dbl"],"align":["right"]}],"data":[{"1":"04.09.2017 21:03","2":"04.09.2017 21:05","3":"188.23.190.194","4":"136","5":"3","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"3","13":"3","14":"2","15":"2","16":"2","17":"4","18":"3","19":"25","20":"1","21":"1","22":"1","23":"5","24":"1","25":"5","26":"4","27":"1","28":"1","29":"1","30":"48.30000","31":"16.350006"},{"1":"04.09.2017 21:07","2":"04.09.2017 21:12","3":"93.10.250.2","4":"297","5":"3","6":"1","7":"3","8":"3","9":"3","10":"1","11":"1","12":"1","13":"1","14":"2","15":"2","16":"2","17":"2","18":"4","19":"15","20":"1","21":"1","22":"1","23":"4","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"43.71671","31":"7.366699"},{"1":"04.09.2017 21:09","2":"04.09.2017 21:13","3":"91.0.18.86","4":"237","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2","15":"3","16":"3","17":"3","18":"3","19":"30","20":"1","21":"1","22":"1","23":"2","24":"1","25":"5","26":"4","27":"2","28":"2","29":"2","30":"50.91330","31":"6.815201"},{"1":"04.09.2017 21:14","2":"04.09.2017 21:23","3":"37.116.255.55","4":"579","5":"1","6":"3","7":"3","8":"3","9":"2","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"3","18":"2","19":"65","20":"1","21":"1","22":"1","23":"3","24":"1","25":"3","26":"4","27":"2","28":"2","29":"1","30":"45.50000","31":"11.399994"},{"1":"04.09.2017 21:25","2":"04.09.2017 21:30","3":"178.165.131.208","4":"290","5":"1","6":"3","7":"3","8":"2","9":"2","10":"5","11":"5","12":"4","13":"3","14":"3","15":"4","16":"3","17":"4","18":"2","19":"70","20":"3","21":"1","22":"1","23":"3","24":"1","25":"1","26":"4","27":"2","28":"1","29":"1","30":"48.20869","31":"16.240707"},{"1":"04.09.2017 21:42","2":"04.09.2017 21:46","3":"212.28.68.81","4":"205","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1","15":"3","16":"3","17":"2","18":"4","19":"0","20":"1","21":"1","22":"1","23":"1","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"47.00560","31":"28.857498"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["isrc"],"name":[3],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[4],"type":["int"],"align":["right"]},{"label":["trackPopularity"],"name":[5],"type":["int"],"align":["right"]},{"label":["primary_artistName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["primary_artistID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[8],"type":["chr"],"align":["left"]},{"label":["artistIDs"],"name":[9],"type":["chr"],"align":["left"]},{"label":["albumName"],"name":[10],"type":["chr"],"align":["left"]},{"label":["albumID"],"name":[11],"type":["chr"],"align":["left"]},{"label":["available_markets"],"name":[12],"type":["chr"],"align":["left"]},{"label":["n_available_markets"],"name":[13],"type":["int"],"align":["right"]},{"label":["releaseDate"],"name":[14],"type":["chr"],"align":["left"]},{"label":["releaseDate_precision"],"name":[15],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[18],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[20],"type":["int"],"align":["right"]},{"label":["speechiness"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["time_signature"],"name":[28],"type":["int"],"align":["right"]},{"label":["uri"],"name":[29],"type":["chr"],"align":["left"]},{"label":["analysis_url"],"name":[30],"type":["chr"],"align":["left"]},{"label":["followers"],"name":[31],"type":["int"],"align":["right"]},{"label":["type"],"name":[32],"type":["chr"],"align":["left"]},{"label":["popularity"],"name":[33],"type":["int"],"align":["right"]},{"label":["primary_genre"],"name":[34],"type":["chr"],"align":["left"]},{"label":["genres"],"name":[35],"type":["chr"],"align":["left"]},{"label":["n_genres"],"name":[36],"type":["int"],"align":["right"]},{"label":["total_releases"],"name":[37],"type":["int"],"align":["right"]},{"label":["n_album"],"name":[38],"type":["int"],"align":["right"]},{"label":["n_single"],"name":[39],"type":["int"],"align":["right"]},{"label":["n_appears_on"],"name":[40],"type":["int"],"align":["right"]},{"label":["n_compilation"],"name":[41],"type":["int"],"align":["right"]},{"label":["mstreams"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[43],"type":["chr"],"align":["left"]},{"label":["adv_spending"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["top.genre"],"name":[45],"type":["chr"],"align":["left"]}],"data":[{"1":"5aAx2yezTd8zXrkmtKl66Z","2":"Starboy","3":"USUG11600976","4":"1","5":"22","6":"The Weeknd","7":"1Xyo4u8uXC1ZmMpatF05PJ","8":"The Weeknd feat. Daft Punk","9":"1Xyo4u8uXC1ZmMpatF05PJ,4tZwfgrHOc3mvqYlEYSvVi","10":"Starboy","11":"09fggMHib4YkOtwQNXEBII","12":"","13":"0","14":"2016-11-25","15":"day","16":"0.681","17":"0.594","18":"7","19":"-7.028","20":"1","21":"0.2820","22":"0.1650","23":"0.00000349","24":"0.134","25":"0.535","26":"186.054","27":"230453","28":"4","29":"spotify:track:5aAx2yezTd8zXrkmtKl66Z","30":"https://api.spotify.com/v1/audio-analysis/5aAx2yezTd8zXrkmtKl66Z","31":"15222808","32":"artist","33":"91","34":"canadian contemporary r&b","35":"canadian contemporary r&b, canadian pop, pop, rap","36":"4","37":"124","38":"13","39":"20","40":"91","41":"0","42":"357336.0","43":"us","44":"4538745582809720084335652681802192354751872961846816542356290991840842800362708869311675467455586767281244340224","45":"pop"},{"1":"7BKLCZ1jbUBVqRi2FVlTVw","2":"Closer","3":"USQX91601347","4":"0","5":"86","6":"The Chainsmokers","7":"69GGBxA162lTqCwzJG5jLp","8":"The Chainsmokers feat. Halsey","9":"69GGBxA162lTqCwzJG5jLp,26VFTg2z8YR0cCuwLzESi2","10":"Closer","11":"0rSLgV8p5FzfnqlEk4GzxE","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2016-07-29","15":"day","16":"0.748","17":"0.524","18":"8","19":"-5.599","20":"1","21":"0.0338","22":"0.4140","23":"0.00000000","24":"0.111","25":"0.661","26":"95.010","27":"244960","28":"4","29":"spotify:track:7BKLCZ1jbUBVqRi2FVlTVw","30":"https://api.spotify.com/v1/audio-analysis/7BKLCZ1jbUBVqRi2FVlTVw","31":"11565104","32":"artist","33":"90","34":"dance pop","35":"dance pop, electropop, pop, tropical house","36":"4","37":"96","38":"2","39":"59","40":"35","41":"0","42":"323081.4","43":"us","44":"87296125002616694828879835742568772595201488756664067891719260959953504690764846096364552367775131489311653888","45":"pop"},{"1":"4pdPtRcBmOSQDlJ3Fk945m","2":"Let Me Love You","3":"QMZSY1600015","4":"0","5":"27","6":"DJ Snake","7":"540vIaP2JwjQb9dm3aArA4","8":"DJ Snake feat. Justin Bieber","9":"540vIaP2JwjQb9dm3aArA4,1uNFoZAHBGtllmzznpCI3s","10":"Encore","11":"55bbXORm6ZrVq52zfZnxBf","12":"","13":"0","14":"2016-08-05","15":"day","16":"0.476","17":"0.718","18":"8","19":"-5.309","20":"1","21":"0.0576","22":"0.0784","23":"0.00000000","24":"0.122","25":"0.142","26":"199.864","27":"205947","28":"4","29":"spotify:track:4pdPtRcBmOSQDlJ3Fk945m","30":"https://api.spotify.com/v1/audio-analysis/4pdPtRcBmOSQDlJ3Fk945m","31":"4345960","32":"artist","33":"86","34":"dance pop","35":"dance pop, edm, electronic trap, pop, tropical house","36":"5","37":"85","38":"2","39":"38","40":"45","41":"0","42":"264546.4","43":"us","44":"4052673829394860012092441543505898027168278466357604061531255984953722983872577825913849720641449881585582080","45":"pop"},{"1":"5knuzwU65gJK7IF5yJsuaW","2":"Rockabye (feat. Sean Paul & Anne-Marie)","3":"GBAHS1600363","4":"0","5":"81","6":"Clean Bandit","7":"6MDME20pz9RveH9rEXvrOM","8":"Clean Bandit feat. Sean Paul feat. Anne-Marie","9":"6MDME20pz9RveH9rEXvrOM,3Isy6kedDrgPYoTS1dazA9,1zNqDE7qDGCsyzJwohVaoX","10":"Rockabye (feat. Sean Paul & Anne-Marie)","11":"3meZFplbMmji648oWUNEfQ","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"78","14":"2016-10-21","15":"day","16":"0.720","17":"0.763","18":"9","19":"-4.068","20":"0","21":"0.0523","22":"0.4060","23":"0.00000000","24":"0.180","25":"0.742","26":"101.965","27":"251088","28":"4","29":"spotify:track:5knuzwU65gJK7IF5yJsuaW","30":"https://api.spotify.com/v1/audio-analysis/5knuzwU65gJK7IF5yJsuaW","31":"2504254","32":"artist","33":"84","34":"dance pop","35":"dance pop, edm, pop, tropical house, uk funky","36":"5","37":"97","38":"2","39":"73","40":"22","41":"0","42":"299399.5","43":"us","44":"63076779883569398413334987328546550614768141860947245086927001088783215597781844192705652165114862194747506688","45":"pop"},{"1":"1xznGGDReH1oQq0xzbwXa3","2":"One Dance","3":"USCM51600028","4":"0","5":"25","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake feat. WizKid feat. Kyla","9":"3TVXtAsR1Inumwj472S9r4,3tVQdUvClmAT7URs9V3rsp,77DAFfvm3O9zT5dIoG0eIO","10":"Views","11":"3hARKC8cinq3mZLLAEaBh9","12":"","13":"0","14":"2016-05-06","15":"day","16":"0.791","17":"0.619","18":"1","19":"-5.886","20":"1","21":"0.0532","22":"0.0078","23":"0.00420000","24":"0.351","25":"0.371","26":"103.989","27":"173987","28":"4","29":"spotify:track:1xznGGDReH1oQq0xzbwXa3","30":"https://api.spotify.com/v1/audio-analysis/1xznGGDReH1oQq0xzbwXa3","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"265877.0","43":"us","44":"4668617894331640150713528913482931563888378169191399287770456451298974376421383853327796314422734196333084672","45":"pop"},{"1":"343YBumqHu19cGoGARUTsd","2":"Fake Love","3":"USCM51700084","4":"1","5":"76","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake","9":"3TVXtAsR1Inumwj472S9r4","10":"More Life","11":"1lXY618HWkwYKJWBRYR4MK","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2017-03-18","15":"day","16":"0.927","17":"0.488","18":"9","19":"-9.433","20":"0","21":"0.4200","22":"0.1080","23":"0.00000000","24":"0.196","25":"0.605","26":"133.987","27":"210937","28":"4","29":"spotify:track:343YBumqHu19cGoGARUTsd","30":"https://api.spotify.com/v1/audio-analysis/343YBumqHu19cGoGARUTsd","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"425740.1","43":"us","44":"34419285169424099063603169706763167298974920345850885001633591652364254906722960776146634654951625345242828374016","45":"pop"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r">test_data<span class="op">$</span>overall_knowledge_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(test_data<span class="op">$</span>overall_knowledge, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;intermediate&quot;</span>, 
-        <span class="st">&quot;advanced&quot;</span>, <span class="st">&quot;proficient&quot;</span>))
+<pre class="sourceCode r"><code class="sourceCode r">s.genre &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;pop&quot;</span>, <span class="st">&quot;hip hop&quot;</span>, <span class="st">&quot;rock&quot;</span>, <span class="st">&quot;rap&quot;</span>, <span class="st">&quot;indie&quot;</span>)
+music_data &lt;-<span class="st"> </span><span class="kw">subset</span>(music_data, top.genre <span class="op">%in%</span><span class="st"> </span>s.genre)
 
-test_data<span class="op">$</span>gender_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(test_data<span class="op">$</span>gender, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), 
-    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>))</code></pre>
+music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)
+music_data<span class="op">$</span>explicit_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(music_data<span class="op">$</span>explicit, 
+    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;not explicit&quot;</span>, <span class="st">&quot;explicit&quot;</span>))</code></pre>
 <p>How can we plot this kind of data? Since we have a categorical variable, we will use a bar plot. However, to be able to use the table for your plot, you first need to assign it to an object as a data frame using the <code>as.data.frame()</code>-function.</p>
-<pre class="sourceCode r"><code class="sourceCode r">table_plot_rel &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(test_data[, 
-    <span class="kw">c</span>(<span class="st">&quot;overall_knowledge_cat&quot;</span>)])))  <span class="co">#relative frequencies</span>
+<pre class="sourceCode r"><code class="sourceCode r">table_plot_rel &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, 
+    <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)])))  <span class="co">#relative frequencies #relative frequencies</span>
 <span class="kw">head</span>(table_plot_rel)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Var1"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"none","2":"0.18181818"},{"1":"basic","2":"0.58181818"},{"1":"intermediate","2":"0.16363636"},{"1":"advanced","2":"0.07272727"},{"1":"proficient","2":"0.00000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Var1"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"hip hop","2":"0.23643263"},{"1":"indie","2":"0.01260083"},{"1":"pop","2":"0.67891747"},{"1":"rap","2":"0.02816095"},{"1":"rock","2":"0.04388812"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Since <code>Var1</code> is not a very descriptive name, let’s rename the variable to something more meaningful</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(plyr)
-table_plot_rel &lt;-<span class="st"> </span>plyr<span class="op">::</span><span class="kw">rename</span>(table_plot_rel, <span class="kw">c</span>(<span class="dt">Var1 =</span> <span class="st">&quot;overall_knowledge&quot;</span>))
+table_plot_rel &lt;-<span class="st"> </span>plyr<span class="op">::</span><span class="kw">rename</span>(table_plot_rel, <span class="kw">c</span>(<span class="dt">Var1 =</span> <span class="st">&quot;Genre&quot;</span>))
 <span class="kw">head</span>(table_plot_rel)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["overall_knowledge"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"none","2":"0.18181818"},{"1":"basic","2":"0.58181818"},{"1":"intermediate","2":"0.16363636"},{"1":"advanced","2":"0.07272727"},{"1":"proficient","2":"0.00000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Genre"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"hip hop","2":"0.23643263"},{"1":"indie","2":"0.01260083"},{"1":"pop","2":"0.67891747"},{"1":"rap","2":"0.02816095"},{"1":"rock","2":"0.04388812"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Once we have our data set we can begin constructing the plot. As mentioned previously, we start with the <code>ggplot()</code> function, with the argument specifying the data set to be used. Within the function, we further specify the scales to be used using the aesthetics argument, specifying which variable should be plotted on which axis. In our example, we would like to plot the categories on the x-axis (horizontal axis) and the relative frequencies on the y-axis (vertical axis).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-bar_chart &lt;-<span class="st"> </span><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge, 
+bar_chart &lt;-<span class="st"> </span><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> Genre, 
     <span class="dt">y =</span> Freq))
 bar_chart</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-120"></span>
-<img src="_main_files/figure-html/unnamed-chunk-120-1.png" alt="Bar chart (step 1)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-121"></span>
+<img src="_main_files/figure-html/unnamed-chunk-121-1.png" alt="Bar chart (step 1)" width="672" />
 <p class="caption">
 Figure 3.1: Bar chart (step 1)
 </p>
 </div>
 <p>You can see that the coordinate system is empty. This is because so far, we have told R merely which variables we would like to plot but we haven’t specified which geometric figures (points, bars, lines, etc.) we would like to use. This is done using the <code>geom_xxx</code> function. ggplot includes many different geoms, for a wide range of plots (e.g., geom_line, geom_histogram, geom_boxplot, etc.). A good overview of the various geom functions can be found <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">here</a>. In our case, we would like to use a bar chart for which <code>geom_col</code> is appropriate.</p>
 <pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-121"></span>
-<img src="_main_files/figure-html/unnamed-chunk-121-1.png" alt="Bar chart (step 2)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-122"></span>
+<img src="_main_files/figure-html/unnamed-chunk-122-1.png" alt="Bar chart (step 2)" width="672" />
 <p class="caption">
 Figure 3.2: Bar chart (step 2)
 </p>
 </div>
 <p>Note that the same could be achieved using <code>geom_bar</code>. However, by default <code>geom_bar</code> counts the number of observations within each category of a variable. This is not required in our case because we have already used the <code>prop.table()</code> function to compute the relative frequencies. The argument <code>stat = &quot;identity&quot;</code> prevents <code>geom_bar</code> from performing counting operations and uses it “as it is”.</p>
 <pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-122"></span>
-<img src="_main_files/figure-html/unnamed-chunk-122-1.png" alt="Bar chart (alternative specification)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
+<img src="_main_files/figure-html/unnamed-chunk-123-1.png" alt="Bar chart (alternative specification)" width="672" />
 <p class="caption">
 Figure 3.3: Bar chart (alternative specification)
 </p>
 </div>
 <p>Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follow now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the <code>ylab()</code> and <code>xlab()</code> functions:</p>
 <pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
-<img src="_main_files/figure-html/unnamed-chunk-123-1.png" alt="Bar chart (step 3)" width="672" />
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-124"></span>
+<img src="_main_files/figure-html/unnamed-chunk-124-1.png" alt="Bar chart (step 3)" width="672" />
 <p class="caption">
 Figure 3.4: Bar chart (step 3)
 </p>
 </div>
 <p>How about adding some value labels to the bars? This can be done using <code>geom_text()</code>. Note that the <code>sprintf()</code> function is not mandatory and is only added to format the numeric labels here. The function takes two arguments: the first specifies the format wrapped in two <code>%</code> sings. Thus, <code>%.0f</code> means to format the value as a fixed point value with no digits after the decimal point, and <code>%%</code> is a literal that prints a “%” sign. The second argument is simply the numeric value to be used. In this case, the relative frequencies multiplied by 100 to obtain the percentage values. Using the <code>vjust =</code> argument, we can adjust the vertical alignment of the label. In this case, we would like to display the label slightly above the bars.</p>
 <pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
     Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust =</span> <span class="fl">-0.2</span>)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-124"></span>
-<img src="_main_files/figure-html/unnamed-chunk-124-1.png" alt="Bar chart (step 4)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-125"></span>
+<img src="_main_files/figure-html/unnamed-chunk-125-1.png" alt="Bar chart (step 4)" width="672" />
 <p class="caption">
 Figure 3.5: Bar chart (step 4)
 </p>
 </div>
 <p>We could go ahead and specify the appearance of every single element of the plot now. However, there are also pre-specified themes that include various formatting steps in one singe function. For example <code>theme_bw()</code> would make the plot appear like this:</p>
 <pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
     Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust =</span> <span class="fl">-0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-125"></span>
-<img src="_main_files/figure-html/unnamed-chunk-125-1.png" alt="Bar chart (step 5)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-126"></span>
+<img src="_main_files/figure-html/unnamed-chunk-126-1.png" alt="Bar chart (step 5)" width="672" />
 <p class="caption">
 Figure 3.6: Bar chart (step 5)
 </p>
 </div>
 <p>and <code>theme_minimal()</code> looks like this:</p>
 <pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, 
     Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)), <span class="dt">vjust =</span> <span class="fl">-0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-126"></span>
-<img src="_main_files/figure-html/unnamed-chunk-126-1.png" alt="Bar chart (options 1)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-127"></span>
+<img src="_main_files/figure-html/unnamed-chunk-127-1.png" alt="Bar chart (options 1)" width="672" />
 <p class="caption">
 Figure 3.7: Bar chart (options 1)
 </p>
@@ -675,38 +828,37 @@ Figure 3.7: Bar chart (options 1)
 <p>These were examples of built-in formations of <code>ggolot()</code>, where the default is <code>theme_classic()</code>. For even more options, check out the <code>ggthemes</code> package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example <code>theme_economist()</code> uses the formatting of the journal “The Economist”:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
 bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_economist</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-127"></span>
-<img src="_main_files/figure-html/unnamed-chunk-127-1.png" alt="Bar chart (options 2)" width="672" />
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_economist</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-128"></span>
+<img src="_main_files/figure-html/unnamed-chunk-128-1.png" alt="Bar chart (options 2)" width="672" />
 <p class="caption">
 Figure 3.8: Bar chart (options 2)
 </p>
 </div>
 <p><strong>Summary</strong></p>
 <p>To create a plot with ggplot we give it the appropriate data (in the <code>ggplot()</code> function), tell it which shape to use (via a function of the geom family), assign variables to the correct axis (by using the the <code>aes()</code> function) and define the appearance of the plot.</p>
-<p>Now we would like to investigate whether the distribution differs between male and female students. For this purpose we first construct the conditional relative frequency table from the previous chapter again. Recall that the latter gives us the relative frequency within a group (in our case male and female), as compared to the relative frequency within the entire sample.</p>
-<pre class="sourceCode r"><code class="sourceCode r">table_plot_cond_rel &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(test_data[, 
-    <span class="kw">c</span>(<span class="st">&quot;overall_knowledge_cat&quot;</span>, <span class="st">&quot;gender_cat&quot;</span>)]), <span class="dv">2</span>))  <span class="co">#conditional relative frequencies</span></code></pre>
-<p>We can now take these tables to construct plots grouped by gender. To achieve this we simply need to add the <code>facet_wrap()</code> function, which replicates a plot multiple times, split by a specified grouping factor. Note that the grouping factor has to be supplied in R’s formula notation, hence it is preceded by a “~” symbol.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge_cat, 
-    <span class="dt">y =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>gender_cat) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Conditional relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-129"></span>
-<img src="_main_files/figure-html/unnamed-chunk-129-1.png" alt="Grouped bar chart (conditional relative frequencies)" width="672" />
+<p>Now we would like to investigate whether the distribution differs between explicit and non-explicit songs. For this purpose we first construct the conditional relative frequency table from the previous chapter again. Recall that the latter gives us the relative frequency within a group (in our case explicit and non-explicit), as compared to the relative frequency within the entire sample.</p>
+<pre class="sourceCode r"><code class="sourceCode r">table_plot_cond_rel &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, 
+    <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)]), <span class="dv">2</span>))  <span class="co">#conditional relative frequencies</span></code></pre>
+<p>We can now take these tables to construct plots grouped by explicitness. To achieve this we simply need to add the <code>facet_wrap()</code> function, which replicates a plot multiple times, split by a specified grouping factor. Note that the grouping factor has to be supplied in R’s formula notation, hence it is preceded by a “~” symbol.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> Freq)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>explicit_cat) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Conditional relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-130"></span>
+<img src="_main_files/figure-html/unnamed-chunk-130-1.png" alt="Grouped bar chart (conditional relative frequencies)" width="672" />
 <p class="caption">
 Figure 3.9: Grouped bar chart (conditional relative frequencies)
 </p>
 </div>
-<p>To plot the relative frequencies for each response category by group in a slightly different way, we can also use the <code>fill</code> argument, which tells ggplot to fill the bars by a specified variable (in our case “gender”). The <code>position = &quot;dodge&quot;</code> argument causes the bars to be displayed next to each other (as opposed to stacked on top of one another).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> overall_knowledge_cat, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> gender_cat)) <span class="op">+</span><span class="st"> </span><span class="co">#use &quot;fill&quot; argument for different colors</span>
+<p>To plot the relative frequencies for each response category by group in a slightly different way, we can also use the <code>fill</code> argument, which tells ggplot to fill the bars by a specified variable (in our case “explicitness”). The <code>position = &quot;dodge&quot;</code> argument causes the bars to be displayed next to each other (as opposed to stacked on top of one another).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(table_plot_cond_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> explicit_cat)) <span class="op">+</span><span class="st"> </span><span class="co">#use &quot;fill&quot; argument for different colors</span>
 <span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co">#use &quot;dodge&quot; to display bars next to each other (instead of stacked on top)</span>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;%.0f%%&quot;</span>, Freq<span class="op">/</span><span class="kw">sum</span>(Freq) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)),<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.9</span>), <span class="dt">vjust=</span><span class="op">-</span><span class="fl">0.25</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Conditional relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Overall Knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>() </code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-130"></span>
-<img src="_main_files/figure-html/unnamed-chunk-130-1.png" alt="Grouped bar chart (conditional relative frequencies) (2)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-131"></span>
+<img src="_main_files/figure-html/unnamed-chunk-131-1.png" alt="Grouped bar chart (conditional relative frequencies) (2)" width="672" />
 <p class="caption">
 Figure 3.10: Grouped bar chart (conditional relative frequencies) (2)
 </p>
@@ -714,34 +866,31 @@ Figure 3.10: Grouped bar chart (conditional relative frequencies) (2)
 </div>
 <div id="covariation-plots" class="section level4">
 <h4><span class="header-section-number">3.2.1.2</span> Covariation plots</h4>
-<p>To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Let’s use a different example. Say, we wanted to investigate the association between prior theoretical and prior practical knowledge in regression analysis. First, we need to make sure that the respective variables are coded as factors.</p>
-<pre class="sourceCode r"><code class="sourceCode r">test_data<span class="op">$</span>Theory_Regression_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(test_data<span class="op">$</span>theory_reg, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;basic&quot;</span>, <span class="st">&quot;intermediate&quot;</span>, 
-        <span class="st">&quot;advanced&quot;</span>, <span class="st">&quot;proficient&quot;</span>))
+<p>To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Say, we wanted to investigate the association between genre and popularity. First, we need to make sure that the respective variables are coded as factors.</p>
+<pre class="sourceCode r"><code class="sourceCode r">music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)
 
-test_data<span class="op">$</span>Practice_Regression_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(test_data<span class="op">$</span>pract_reg, 
-    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Definitely not&quot;</span>, <span class="st">&quot;Probably not&quot;</span>, 
-        <span class="st">&quot;Might or might not&quot;</span>, <span class="st">&quot;Probably yes&quot;</span>, <span class="st">&quot;Definitely yes&quot;</span>))</code></pre>
+music_data<span class="op">$</span>popularity_factor &lt;-<span class="st"> </span><span class="kw">cut</span>(music_data<span class="op">$</span>trackPopularity, 
+    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="ot">Inf</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, 
+        <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;high&quot;</span>))</code></pre>
 <p>There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with <code>geom_count()</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> test_data) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, 
-    <span class="dt">y =</span> Practice_Regression_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-132"></span>
-<img src="_main_files/figure-html/unnamed-chunk-132-1.png" alt="Covariation between categorical data (1)" width="672" />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> music_data) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, 
+    <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-133"></span>
+<img src="_main_files/figure-html/unnamed-chunk-133-1.png" alt="Covariation between categorical data (1)" width="672" />
 <p class="caption">
 Figure 3.11: Covariation between categorical data (1)
 </p>
 </div>
 <p>Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first to have create a dataframe that contains the absolute frequencies of all combinations of factors. Then we can take this dataframe and supply it to <code>geom_tile()</code>, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the <code>aes()</code> function.</p>
-<pre class="sourceCode r"><code class="sourceCode r">table_plot_abs_reg &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(test_data[, 
-    <span class="kw">c</span>(<span class="st">&quot;Theory_Regression_cat&quot;</span>, <span class="st">&quot;Practice_Regression_cat&quot;</span>)]))  <span class="co">#absolute frequencies</span>
+<pre class="sourceCode r"><code class="sourceCode r">table_plot_abs &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(music_data[, 
+    <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;popularity_factor&quot;</span>)]))  <span class="co">#absolute frequencies</span>
 
-<span class="kw">ggplot</span>(table_plot_abs_reg, <span class="kw">aes</span>(<span class="dt">x =</span> Theory_Regression_cat, 
-    <span class="dt">y =</span> Practice_Regression_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Practical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Theoretical knowledge&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-133"></span>
-<img src="_main_files/figure-html/unnamed-chunk-133-1.png" alt="Covariation between categorical data (2)" width="672" />
+<span class="kw">ggplot</span>(table_plot_abs, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-134"></span>
+<img src="_main_files/figure-html/unnamed-chunk-134-1.png" alt="Covariation between categorical data (2)" width="672" />
 <p class="caption">
 Figure 3.12: Covariation between categorical data (2)
 </p>
@@ -753,24 +902,25 @@ Figure 3.12: Covariation between categorical data (2)
 <div id="histogram" class="section level4">
 <h4><span class="header-section-number">3.2.2.1</span> Histogram</h4>
 <p>Histograms can be plotted for continuous data using the <code>geom_histogram()</code> function. Note that the <code>aes()</code> function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let’s consider a data set containing the advertising expenditures and product sales of a company selling products in two different stores:</p>
-<pre class="sourceCode r"><code class="sourceCode r">adv_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat&quot;</span>, 
-    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># adv_data &lt;-</span>
+<span class="co"># read.table(&#39;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat&#39;,</span>
+<span class="co"># sep = &#39;\t&#39;, header = TRUE)</span>
 
-adv_data<span class="op">$</span>store &lt;-<span class="st"> </span><span class="kw">factor</span>(adv_data<span class="op">$</span>store, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), 
-    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;store1&quot;</span>, <span class="st">&quot;store2&quot;</span>))
+<span class="co"># adv_data$store &lt;- factor(adv_data$store, levels =</span>
+<span class="co"># c(1:2), labels = c(&#39;store1&#39;, &#39;store2&#39;))</span>
 
-<span class="kw">head</span>(adv_data)</code></pre>
+<span class="kw">head</span>(music_data)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["sales"],"name":[1],"type":["int"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["store"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"133553","2":"1841","3":"store1"},{"1":"119778","2":"1782","3":"store1"},{"1":"147097","2":"1782","3":"store1"},{"1":"55589","2":"573","3":"store1"},{"1":"109886","2":"1877","3":"store1"},{"1":"150285","2":"1907","3":"store1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["isrc"],"name":[3],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[4],"type":["int"],"align":["right"]},{"label":["trackPopularity"],"name":[5],"type":["int"],"align":["right"]},{"label":["primary_artistName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["primary_artistID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[8],"type":["chr"],"align":["left"]},{"label":["artistIDs"],"name":[9],"type":["chr"],"align":["left"]},{"label":["albumName"],"name":[10],"type":["chr"],"align":["left"]},{"label":["albumID"],"name":[11],"type":["chr"],"align":["left"]},{"label":["available_markets"],"name":[12],"type":["chr"],"align":["left"]},{"label":["n_available_markets"],"name":[13],"type":["int"],"align":["right"]},{"label":["releaseDate"],"name":[14],"type":["chr"],"align":["left"]},{"label":["releaseDate_precision"],"name":[15],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[18],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[20],"type":["int"],"align":["right"]},{"label":["speechiness"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["time_signature"],"name":[28],"type":["int"],"align":["right"]},{"label":["uri"],"name":[29],"type":["chr"],"align":["left"]},{"label":["analysis_url"],"name":[30],"type":["chr"],"align":["left"]},{"label":["followers"],"name":[31],"type":["int"],"align":["right"]},{"label":["type"],"name":[32],"type":["chr"],"align":["left"]},{"label":["popularity"],"name":[33],"type":["int"],"align":["right"]},{"label":["primary_genre"],"name":[34],"type":["chr"],"align":["left"]},{"label":["genres"],"name":[35],"type":["chr"],"align":["left"]},{"label":["n_genres"],"name":[36],"type":["int"],"align":["right"]},{"label":["total_releases"],"name":[37],"type":["int"],"align":["right"]},{"label":["n_album"],"name":[38],"type":["int"],"align":["right"]},{"label":["n_single"],"name":[39],"type":["int"],"align":["right"]},{"label":["n_appears_on"],"name":[40],"type":["int"],"align":["right"]},{"label":["n_compilation"],"name":[41],"type":["int"],"align":["right"]},{"label":["mstreams"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[43],"type":["chr"],"align":["left"]},{"label":["adv_spending"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["top.genre"],"name":[45],"type":["chr"],"align":["left"]},{"label":["genre_cat"],"name":[46],"type":["fctr"],"align":["left"]},{"label":["explicit_cat"],"name":[47],"type":["fctr"],"align":["left"]},{"label":["popularity_factor"],"name":[48],"type":["fctr"],"align":["left"]}],"data":[{"1":"5aAx2yezTd8zXrkmtKl66Z","2":"Starboy","3":"USUG11600976","4":"1","5":"22","6":"The Weeknd","7":"1Xyo4u8uXC1ZmMpatF05PJ","8":"The Weeknd feat. Daft Punk","9":"1Xyo4u8uXC1ZmMpatF05PJ,4tZwfgrHOc3mvqYlEYSvVi","10":"Starboy","11":"09fggMHib4YkOtwQNXEBII","12":"","13":"0","14":"2016-11-25","15":"day","16":"0.681","17":"0.594","18":"7","19":"-7.028","20":"1","21":"0.2820","22":"0.1650","23":"0.00000349","24":"0.134","25":"0.535","26":"186.054","27":"230453","28":"4","29":"spotify:track:5aAx2yezTd8zXrkmtKl66Z","30":"https://api.spotify.com/v1/audio-analysis/5aAx2yezTd8zXrkmtKl66Z","31":"15222808","32":"artist","33":"91","34":"canadian contemporary r&b","35":"canadian contemporary r&b, canadian pop, pop, rap","36":"4","37":"124","38":"13","39":"20","40":"91","41":"0","42":"357336.0","43":"us","44":"4538745582809720084335652681802192354751872961846816542356290991840842800362708869311675467455586767281244340224","45":"pop","46":"pop","47":"explicit","48":"low"},{"1":"7BKLCZ1jbUBVqRi2FVlTVw","2":"Closer","3":"USQX91601347","4":"0","5":"86","6":"The Chainsmokers","7":"69GGBxA162lTqCwzJG5jLp","8":"The Chainsmokers feat. Halsey","9":"69GGBxA162lTqCwzJG5jLp,26VFTg2z8YR0cCuwLzESi2","10":"Closer","11":"0rSLgV8p5FzfnqlEk4GzxE","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2016-07-29","15":"day","16":"0.748","17":"0.524","18":"8","19":"-5.599","20":"1","21":"0.0338","22":"0.4140","23":"0.00000000","24":"0.111","25":"0.661","26":"95.010","27":"244960","28":"4","29":"spotify:track:7BKLCZ1jbUBVqRi2FVlTVw","30":"https://api.spotify.com/v1/audio-analysis/7BKLCZ1jbUBVqRi2FVlTVw","31":"11565104","32":"artist","33":"90","34":"dance pop","35":"dance pop, electropop, pop, tropical house","36":"4","37":"96","38":"2","39":"59","40":"35","41":"0","42":"323081.4","43":"us","44":"87296125002616694828879835742568772595201488756664067891719260959953504690764846096364552367775131489311653888","45":"pop","46":"pop","47":"not explicit","48":"high"},{"1":"4pdPtRcBmOSQDlJ3Fk945m","2":"Let Me Love You","3":"QMZSY1600015","4":"0","5":"27","6":"DJ Snake","7":"540vIaP2JwjQb9dm3aArA4","8":"DJ Snake feat. Justin Bieber","9":"540vIaP2JwjQb9dm3aArA4,1uNFoZAHBGtllmzznpCI3s","10":"Encore","11":"55bbXORm6ZrVq52zfZnxBf","12":"","13":"0","14":"2016-08-05","15":"day","16":"0.476","17":"0.718","18":"8","19":"-5.309","20":"1","21":"0.0576","22":"0.0784","23":"0.00000000","24":"0.122","25":"0.142","26":"199.864","27":"205947","28":"4","29":"spotify:track:4pdPtRcBmOSQDlJ3Fk945m","30":"https://api.spotify.com/v1/audio-analysis/4pdPtRcBmOSQDlJ3Fk945m","31":"4345960","32":"artist","33":"86","34":"dance pop","35":"dance pop, edm, electronic trap, pop, tropical house","36":"5","37":"85","38":"2","39":"38","40":"45","41":"0","42":"264546.4","43":"us","44":"4052673829394860012092441543505898027168278466357604061531255984953722983872577825913849720641449881585582080","45":"pop","46":"pop","47":"not explicit","48":"low"},{"1":"5knuzwU65gJK7IF5yJsuaW","2":"Rockabye (feat. Sean Paul & Anne-Marie)","3":"GBAHS1600363","4":"0","5":"81","6":"Clean Bandit","7":"6MDME20pz9RveH9rEXvrOM","8":"Clean Bandit feat. Sean Paul feat. Anne-Marie","9":"6MDME20pz9RveH9rEXvrOM,3Isy6kedDrgPYoTS1dazA9,1zNqDE7qDGCsyzJwohVaoX","10":"Rockabye (feat. Sean Paul & Anne-Marie)","11":"3meZFplbMmji648oWUNEfQ","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"78","14":"2016-10-21","15":"day","16":"0.720","17":"0.763","18":"9","19":"-4.068","20":"0","21":"0.0523","22":"0.4060","23":"0.00000000","24":"0.180","25":"0.742","26":"101.965","27":"251088","28":"4","29":"spotify:track:5knuzwU65gJK7IF5yJsuaW","30":"https://api.spotify.com/v1/audio-analysis/5knuzwU65gJK7IF5yJsuaW","31":"2504254","32":"artist","33":"84","34":"dance pop","35":"dance pop, edm, pop, tropical house, uk funky","36":"5","37":"97","38":"2","39":"73","40":"22","41":"0","42":"299399.5","43":"us","44":"63076779883569398413334987328546550614768141860947245086927001088783215597781844192705652165114862194747506688","45":"pop","46":"pop","47":"not explicit","48":"high"},{"1":"1xznGGDReH1oQq0xzbwXa3","2":"One Dance","3":"USCM51600028","4":"0","5":"25","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake feat. WizKid feat. Kyla","9":"3TVXtAsR1Inumwj472S9r4,3tVQdUvClmAT7URs9V3rsp,77DAFfvm3O9zT5dIoG0eIO","10":"Views","11":"3hARKC8cinq3mZLLAEaBh9","12":"","13":"0","14":"2016-05-06","15":"day","16":"0.791","17":"0.619","18":"1","19":"-5.886","20":"1","21":"0.0532","22":"0.0078","23":"0.00420000","24":"0.351","25":"0.371","26":"103.989","27":"173987","28":"4","29":"spotify:track:1xznGGDReH1oQq0xzbwXa3","30":"https://api.spotify.com/v1/audio-analysis/1xznGGDReH1oQq0xzbwXa3","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"265877.0","43":"us","44":"4668617894331640150713528913482931563888378169191399287770456451298974376421383853327796314422734196333084672","45":"pop","46":"pop","47":"not explicit","48":"low"},{"1":"343YBumqHu19cGoGARUTsd","2":"Fake Love","3":"USCM51700084","4":"1","5":"76","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake","9":"3TVXtAsR1Inumwj472S9r4","10":"More Life","11":"1lXY618HWkwYKJWBRYR4MK","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2017-03-18","15":"day","16":"0.927","17":"0.488","18":"9","19":"-9.433","20":"0","21":"0.4200","22":"0.1080","23":"0.00000000","24":"0.196","25":"0.605","26":"133.987","27":"210937","28":"4","29":"spotify:track:343YBumqHu19cGoGARUTsd","30":"https://api.spotify.com/v1/audio-analysis/343YBumqHu19cGoGARUTsd","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"425740.1","43":"us","44":"34419285169424099063603169706763167298974920345850885001633591652364254906722960776146634654951625345242828374016","45":"pop","46":"pop","47":"explicit","48":"high"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now we can create the histogram using <code>geom_histogram()</code>. The argument <code>binwidth</code> specifies the range that each bar spans, <code>col = &quot;black&quot;</code> specifies the border to be black and <code>fill = &quot;darkblue&quot;</code> sets the inner color of the bars to dark blue. For brevity, we have now also started naming the x and y axis with the single function <code>labs()</code>, instead of using the two distinct functions <code>xlab()</code> and <code>ylab()</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, 
-    <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of sales&quot;</span>, 
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, 
+    <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of streams&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-135"></span>
-<img src="_main_files/figure-html/unnamed-chunk-135-1.png" alt="Histogram" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-136"></span>
+<img src="_main_files/figure-html/unnamed-chunk-136-1.png" alt="Histogram" width="672" />
 <p class="caption">
 Figure 3.13: Histogram
 </p>
@@ -779,10 +929,11 @@ Figure 3.13: Histogram
 <div id="boxplot" class="section level4">
 <h4><span class="header-section-number">3.2.2.2</span> Boxplot</h4>
 <p>Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom <code>geom_boxplot()</code>. In our case we want to show the difference in distribution between the two stores in our sample, which is why the <code>aes()</code> function contains both an x and a y variable.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-136"></span>
-<img src="_main_files/figure-html/unnamed-chunk-136-1.png" alt="Boxplot by group" width="672" />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explcit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-137"></span>
+<img src="_main_files/figure-html/unnamed-chunk-137-1.png" alt="Boxplot by group" width="672" />
 <p class="caption">
 Figure 3.14: Boxplot by group
 </p>
@@ -793,20 +944,21 @@ Figure 3.14: Boxplot by group
 <p class="caption">Information contained in a Boxplot</p>
 </div>
 <p>You may also augment the boxplot with the data points using <code>geom_jitter()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(<span class="dt">x =</span> store, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, 
-    <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-137"></span>
-<img src="_main_files/figure-html/unnamed-chunk-137-1.png" alt="Boxplot with augmented data points" width="672" />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-138"></span>
+<img src="_main_files/figure-html/unnamed-chunk-138-1.png" alt="Boxplot with augmented data points" width="672" />
 <p class="caption">
 Figure 3.15: Boxplot with augmented data points
 </p>
 </div>
 <p>In case you would like to create the boxplot on the total data (i.e., not by group), just leave the <code>x =</code> argument within the <code>aes()</code> function empty:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-138"></span>
-<img src="_main_files/figure-html/unnamed-chunk-138-1.png" alt="Single Boxplot" width="672" />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-139"></span>
+<img src="_main_files/figure-html/unnamed-chunk-139-1.png" alt="Single Boxplot" width="672" />
 <p class="caption">
 Figure 3.16: Single Boxplot
 </p>
@@ -815,13 +967,13 @@ Figure 3.16: Single Boxplot
 <div id="plot-of-means" class="section level4">
 <h4><span class="header-section-number">3.2.2.3</span> Plot of means</h4>
 <p>Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot’s layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a <code>geom_pointrange()</code> layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in <code>geom_bar()</code>, namely <code>stat =</code>, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. <code>geom_bar()</code> typically uses the <code>count</code> stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling <code>geom_bar()</code> explicitly that we want to use a different stat we can override its behavior, forcing it to create a bar plot of the means.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(store, sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(explicit_cat, mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
     <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Store ID&quot;</span>, 
-    <span class="dt">y =</span> <span class="st">&quot;Average number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">100000</span>, 
-    <span class="dv">130000</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-139"></span>
-<img src="_main_files/figure-html/unnamed-chunk-139-1.png" alt="Plot of means" width="672" />
+<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># coord_cartesian(ylim = c(100000, 150000)) +</span>
+<span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
+<img src="_main_files/figure-html/unnamed-chunk-140-1.png" alt="Plot of means" width="672" />
 <p class="caption">
 Figure 3.17: Plot of means
 </p>
@@ -830,12 +982,12 @@ Figure 3.17: Plot of means
 <div id="scatter-plot" class="section level4">
 <h4><span class="header-section-number">3.2.2.4</span> Scatter plot</h4>
 <p>The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The <code>geom_smooth()</code> function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument <code>method = &quot;lm&quot;</code>). The “fill” and “alpha” arguments solely affect appearance, in our case the color and the opacity of the confidence interval, respectively.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, 
-        <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
-<img src="_main_files/figure-html/unnamed-chunk-140-1.png" alt="Scatter plot" width="672" />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, 
+    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-141"></span>
+<img src="_main_files/figure-html/unnamed-chunk-141-1.png" alt="Scatter plot" width="672" />
 <p class="caption">
 Figure 3.18: Scatter plot
 </p>
@@ -844,12 +996,13 @@ Figure 3.18: Scatter plot
 <div id="grouped-scatter-plot" class="section level5">
 <h5><span class="header-section-number">3.2.2.4.1</span> Grouped scatter plot</h5>
 <p>It could be that customers from different store respond differently to advertising. We can visually capture such differences with a grouped scatter plot. By adding the argument <code>colour = store</code> to the aesthetic specification, ggplot automatically treats the two stores as distinct groups and plots accordingly.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales, <span class="dt">colour =</span> store)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, 
-        <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-141"></span>
-<img src="_main_files/figure-html/unnamed-chunk-141-1.png" alt="Grouped scatter plot" width="672" />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams, 
+    <span class="dt">colour =</span> explicit_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, 
+    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Explicit&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-142"></span>
+<img src="_main_files/figure-html/unnamed-chunk-142-1.png" alt="Grouped scatter plot" width="672" />
 <p class="caption">
 Figure 3.19: Grouped scatter plot
 </p>
@@ -860,12 +1013,12 @@ Figure 3.19: Grouped scatter plot
 <h5><span class="header-section-number">3.2.2.4.2</span> Combination of scatter plot and histogram</h5>
 <p>Using the <code>ggExtra()</code> package, you may also augment the scatterplot with a histogram:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggExtra)
-p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(adv_data, <span class="kw">aes</span>(advertising, sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, 
-        <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, 
+    <span class="dt">y =</span> <span class="st">&quot;Number of strams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()
 ggExtra<span class="op">::</span><span class="kw">ggMarginal</span>(p, <span class="dt">type =</span> <span class="st">&quot;histogram&quot;</span>)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-142"></span>
-<img src="_main_files/figure-html/unnamed-chunk-142-1.png" alt="Scatter plot with histogram" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-143"></span>
+<img src="_main_files/figure-html/unnamed-chunk-143-1.png" alt="Scatter plot with histogram" width="672" />
 <p class="caption">
 Figure 3.20: Scatter plot with histogram
 </p>
@@ -897,8 +1050,8 @@ ctrydata_at<span class="op">$</span>date &lt;-<span class="st"> </span><span cla
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-144"></span>
-<img src="_main_files/figure-html/unnamed-chunk-144-1.png" alt="Line plot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
+<img src="_main_files/figure-html/unnamed-chunk-145-1.png" alt="Line plot" width="672" />
 <p class="caption">
 Figure 3.21: Line plot
 </p>

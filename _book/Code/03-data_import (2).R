@@ -23,12 +23,17 @@ devtools::install_github('PMassicotte/gtrendsR', force = TRUE)
 #-------------------------------------------------------------------#
 
 # read.table can be used to read data from sites (as done here) or from local files
-test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
+music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
                         sep = "\t", 
                         header = TRUE)
 
-# If test_file is in your working directory, this would be the way to import it
-## test_data <- read.table(test_file, header=TRUE)
+music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
+                         sep = ",", 
+                         header = TRUE) #read in data
+
+
+# If music_file is in your working directory, this would be the way to import it
+## music_data <- read.table(music_file, header=TRUE)
 
 
 #-------------------------------------------------------------------#
@@ -44,14 +49,14 @@ setwd("path/to/file") #may be used to change the working directory to the folder
 
 #import excel files
 library(readxl) #load package to import Excel files
-excel_sheets("test_data.xlsx")
-test_data_excel <- read_excel("test_data.xlsx", sheet = "mrda_2016_survey") # "sheet = x"" specifies which sheet to import
-head(test_data_excel)
+excel_sheets("music_data.xlsx")
+music_data_excel <- read_excel("music_data.xlsx", sheet = "mrda_2016_survey") # "sheet = x"" specifies which sheet to import
+head(music_data_excel)
  
 #import SPSS files
 library(haven) #load package to import SPSS files
-test_data_spss <- read_sav("test_data.sav")
-head(test_data_spss)
+music_data_spss <- read_sav("music_data.sav")
+head(music_data_spss)
 
 
 #-------------------------------------------------------------------#
@@ -60,9 +65,9 @@ head(test_data_spss)
 
 # Writing data to the working directory is often as easy as exchanging "read" with "write".
 ## ------------------------------------------------------------------------
-## write.table(test_data, "testData.dat", row.names = FALSE, sep = "\t") #writes to a tab-delimited text file
-## write.table(test_data, "testData.csv", row.names = FALSE, sep = ",") #writes to a comma-separated value file
-## write_sav(test_data, "my_file.sav") #writes to a SPSS file
+## write.table(music_data, "musicData.dat", row.names = FALSE, sep = "\t") #writes to a tab-delimited text file
+## write.table(music_data, "musicData.csv", row.names = FALSE, sep = ",") #writes to a comma-separated value file
+## write_sav(music_data, "my_file.sav") #writes to a SPSS file
 
 
 #-------------------------------------------------------------------#

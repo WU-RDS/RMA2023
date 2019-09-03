@@ -122,7 +122,7 @@ Computing descriptive statistics in R is easy and there are many functions from 
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(psych)
-psych::describe(music_data[,c("trackPopularity", "total_releases")])
+psych::describe(music_data[,c("trackPopularity", "adv_spending")])
 ```
 
 In the above command, we used the ```psych::``` prefix to avoid confusion and to make sure that R uses the ```describe()``` function from the ```psych``` package since there are many other packages that also contain a ```desribe()``` function. Note that you could also compute these statistics separately by using the respective functions (e.g., ```mean()```, ```sd()```, ```median()```, ```min()```, ```max()```, etc.). 
@@ -130,39 +130,39 @@ In the above command, we used the ```psych::``` prefix to avoid confusion and to
 The ```psych``` package also contains the ```describeBy()``` function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by expliciteness as follows: 
 
 ```{r message=FALSE, warning=FALSE}
-describeBy(music_data[,c("trackPopularity", "total_releases")], music_data$explicit_cat)
+describeBy(music_data[,c("trackPopularity", "adv_spending")], music_data$explicit_cat)
 ```
 
 Note that you could just as well use other packages to compute the descriptive statistics. For example, you could have used the ```stat.desc()``` function from the ```pastecs``` package:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(pastecs)
-stat.desc(music_data[,c("trackPopularity", "total_releases")])
+stat.desc(music_data[,c("trackPopularity", "adv_spending")])
 ```
 
-Computing statistics by group is also possible by using the wrapper function ```by()```. Within the function, you first specify the data on which you would like to perform the grouping ```music_data[,c("trackPopularity", "total_releases")]```, followed by the grouping variable ```music_data$explicit_cat``` and the function that you would like to execute (e.g., ```stat.desc()```):
+Computing statistics by group is also possible by using the wrapper function ```by()```. Within the function, you first specify the data on which you would like to perform the grouping ```music_data[,c("trackPopularity", "adv_spending")]```, followed by the grouping variable ```music_data$explicit_cat``` and the function that you would like to execute (e.g., ```stat.desc()```):
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(pastecs)
-by(music_data[,c("trackPopularity", "total_releases")],music_data$explicit_cat,stat.desc)
+by(music_data[,c("trackPopularity", "adv_spending")],music_data$explicit_cat,stat.desc)
 ```
 
 These examples are meant to exemplify that there are often many different ways to reach a goal in R. Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences.
 
 #### Creating subsets
 
-From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum number of total releases is `r round(max(music_data$total_releases),1)` days. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let's check if potential outliers exist in the data:
+From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum amount of spending on advertisment is `r round(max(na.omit(music_data$adv_spending)),1)` units. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let's check if potential outliers exist in the data:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(dplyr)
-music_data %>% mutate(total_releases_std = as.vector(scale(total_releases))) %>% filter(abs(total_releases_std) < 3)
+music_data %>% mutate(adv_spending_std = as.vector(scale(adv_spending))) %>% filter(abs(adv_spending_std) > 3) %>% select(id, trackName, adv_spending, adv_spending_std)
 ```
 
-Indeed, there appears to be one potential outlier, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the ```filter()``` function from the ```dplyr()``` package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3: 
+Indeed, there appear to be two potential outliers, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the ```filter()``` function from the ```dplyr()``` package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3: 
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(dplyr)
-estimation_sample <- music_data %>% mutate(total_releases_std = as.vector(scale(total_releases))) %>% filter(abs(total_releases_std) < 3)
-psych::describe(estimation_sample[,c("trackPopularity", "total_releases")])
+estimation_sample <- music_data %>% mutate(adv_spending_std = as.vector(scale(adv_spending))) %>% filter(abs(adv_spending_std) < 3)
+psych::describe(estimation_sample[,c("trackPopularity", "adv_spending")])
 ```
 

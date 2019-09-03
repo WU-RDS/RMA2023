@@ -165,45 +165,44 @@ ggplot(table_plot_cond_rel, aes(x = genre_cat, y = Freq, fill = explicit_cat)) +
 
 #### Covariation plots
 
-To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Let's use a different example. Say, we wanted to investigate the association between prior theoretical and prior practical knowledge in regression analysis. First, we need to make sure that the respective variables are coded as factors. 
+To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Say, we wanted to investigate the association between genre and popularity. First, we need to make sure that the respective variables are coded as factors. 
+
 
 ```{r}
-#test_data$Theory_Regression_cat <- factor(test_data$theory_reg, 
-#                                          levels = c(1:5), 
-#                                          labels = c("none", "basic", "intermediate", "advanced", "proficient"))
+music_data$genre_cat <- as.factor(music_data$top.genre)
 
-#test_data$Practice_Regression_cat <- factor(test_data$pract_reg, 
-#                                            levels = c(1:5), 
-#                                            labels = c("Definitely not", "Probably not", "Might or might not", "Probably yes", "Definitely yes"))
+music_data$popularity_factor <- cut(music_data$trackPopularity, 
+                   breaks=c(-Inf, 40, 60, Inf), 
+                   labels=c("low","middle","high"))
 ```
 
 There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with ```geom_count()```.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Covariation between categorical data (1)"}
-#ggplot(data = test_data) + 
- # geom_count(aes(x = Theory_Regression_cat, y = Practice_Regression_cat))  + 
-#  ylab("Practical knowledge") + 
-#  xlab("Theoretical knowledge") + 
-#  theme_bw()
+ggplot(data = music_data) + 
+  geom_count(aes(x = genre_cat, y = popularity_factor))  + 
+  ylab("Popularity") + 
+  xlab("Genre") + 
+  theme_bw()
 ```
 
-Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first to have create a dataframe that contains the absolute frequencies of all combinations of factors. Then we can take this dataframe and supply it to ```geom_tile()```, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the ```aes()``` function.  
+Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first have to create a dataframe that contains the absolute frequencies of all combinations of factors. Then we can take this dataframe and supply it to ```geom_tile()```, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the ```aes()``` function.  
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Covariation between categorical data (2)"}
-#table_plot_abs_reg <- as.data.frame(table(test_data[,c("Theory_Regression_cat", "Practice_Regression_cat")])) #absolute frequencies
+table_plot_abs <- as.data.frame(table(music_data[,c("genre_cat", "popularity_factor")])) #absolute frequencies
 
-#ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regression_cat)) + 
-#  geom_tile(aes(fill = Freq)) + 
-#  ylab("Practical knowledge") + 
-#  xlab("Theoretical knowledge") + 
-#  theme_bw()
+ggplot(table_plot_abs, aes(x = genre_cat, y = popularity_factor)) + 
+  geom_tile(aes(fill = Freq)) + 
+  ylab("Popularity") + 
+  xlab("Genre") + 
+  theme_bw()
 ```
 
 ### Continuous variables
 
 #### Histogram
 
-Histograms can be plotted for continuous data using the ```geom_histogram()``` function. Note that the ```aes()``` function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let's consider a data set containing the advertising expenditures and product sales of a company selling products in two different stores: 
+Histograms can be plotted for continuous data using the ```geom_histogram()``` function. Note that the ```aes()``` function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let's consider our data set containing the advertising expenditures and product sales of a company selling products in two different stores: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Histogram"}
 #adv_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat", 
@@ -231,7 +230,7 @@ Another common way to display the distribution of continuous variables is throug
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Boxplot by group"}
 ggplot(music_data,aes(x = explicit_cat, y = mstreams)) +
   geom_boxplot() + 
-  labs(x = "Explcit", y = "Number of streams") + 
+  labs(x = "Explicit", y = "Number of streams") + 
   theme_bw()
 ```
 

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Assignments | Marketing Research Design &amp; Analysis 2019</title>
-  <meta name="description" content="An Introduction to Statistics Using R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="An Introduction to Statistics Using R" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Assignments | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
@@ -25,11 +24,11 @@
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="appendix.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -417,11 +416,11 @@ ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
     <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of SD stremas&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-439-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-440-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
     <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of HD streams&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-439-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-440-2.png" width="672" /></p>
 <p>We can now conduct a one sample t-test to test for significance.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_sd, <span class="dt">mu =</span> <span class="dv">2600</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre>
 <pre><code>## 
@@ -479,7 +478,7 @@ movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </s
         <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of SD streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-442-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-443-1.png" width="672" /></p>
 <p>As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = “yes”, i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a <strong>two sample t-test</strong>. We use an inpependent-means t-test because we have different movies in each group (i.e., the movies in one condition are <em>indpendent</em> of the movies in the other condition). The requirements are clearly met:</p>
 <ul>
 <li>Our dependent variable is on an interval scale</li>
@@ -529,7 +528,7 @@ stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_dat
         <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of HD streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-445-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-446-1.png" width="672" /></p>
 <p>Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is signficant (note that <em>two sample t-test</em> means the same as <em>independent-means t-test</em>).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</code></pre>
 <pre><code>## 
@@ -573,7 +572,7 @@ movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie
 <span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-449-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-450-1.png" width="672" /></p>
 <p>It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same movies are observed for HD and SD streams (i.e., the same movies are available in both formats). This means that we need a <strong>dependent means t-test</strong>. This test is also knownas the <strong>paired samples t-test</strong>. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding <code>paired = TRUE</code> to the code.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, 
     <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre>
@@ -705,7 +704,7 @@ customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><
         <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, 
     <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-457-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-458-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Both the summary statistics and the plot hint at the fact that the means may not be equal. Especially the difference between dynamic retargeting and no retargeting/ generic regtargeting seem to be quite high. Before we move to the formal test, we need to see if a series of assumptions are met, namely:</p>
 <ul>
 <li>Distributional assumptions</li>
@@ -742,10 +741,10 @@ aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span clas
 <p>Next we will briefly inspect the residuals of the ANOVA to see if the assumptions of the test really are justified.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Inspect residuals</span>
 <span class="kw">plot</span>(aov, <span class="dv">1</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-461-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-462-1.png" width="672" /></p>
 <p>The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-462-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-463-1.png" width="672" /></p>
 <p>The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behaviour here may indicate problems with the model specification.</p>
 <p>To further confirm that the residuals are roughly normally distributed we employ the Shapiro-Wilk test. The null hypothesis is that the distribution of the data is normal, with the alternative hypothesis positing that the data is not normally distributed.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</code></pre>
@@ -833,7 +832,7 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span cla
 <span class="co"># was not expected).</span>
 <span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(tukeys)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-466-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-467-1.png" width="672" /></p>
 <p>It is clearly visible that just the CIs of generic retargetring vs. no retargeting cross the 0 bound, which further indicates that the differences in means are statistically not significantly different from 0.</p>
 <p>From a reporting standpoint we can say that revenue is higher when using dynamic retargeting vs. no retargeting or generic retargeting, but there is no sifnificant difference between the sales for products in the dynamic retargeting vs. no retargeting conditions. Managerially, this menas that only dynamic retargetting helps us to increase sales.</p>
 <p><strong>Question 2</strong></p>
@@ -845,7 +844,7 @@ Or, alternatively</p>
 <p>A good way to visualize ordinal data is through a boxplot.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> customer_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> rank)) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-467-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-468-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The boxplot seems to indicate that the medians are unequal. At least for dynamic retargeting our customer ranks seem to be lower than the ones of no retargeting or generic retargeting.</p>
 <p>The only assumption that we require for this test is that the dependent variable is at least ordinal, which is fulfilled for customer ranks. Hence we can move on to performing the test in R.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ordinal data so we use a non-parametric test</span>

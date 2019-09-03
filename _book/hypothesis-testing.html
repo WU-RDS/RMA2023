@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Hypothesis testing | Marketing Research Design &amp; Analysis 2019</title>
-  <meta name="description" content="An Introduction to Statistics Using R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="An Introduction to Statistics Using R" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Hypothesis testing | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
@@ -25,11 +24,11 @@
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="introduction-to-statistical-inference.html">
 <link rel="next" href="regression.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -320,7 +319,7 @@ hours &lt;-<span class="st"> </span><span class="kw">rgamma</span>(<span class="
     <span class="dt">subtitle =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Population mean ($</span><span class="ch">\\</span><span class="st">mu$) = %.2f; population standard deviation ($</span><span class="ch">\\</span><span class="st">sigma$) = %.2f&quot;</span>, 
         <span class="kw">round</span>(<span class="kw">mean</span>(hours), <span class="dv">2</span>), <span class="kw">round</span>(<span class="kw">sd</span>(hours), <span class="dv">2</span>))), 
     <span class="dt">y =</span> <span class="st">&quot;Number of students&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
 <p>In this example, the population mean (<span class="math inline">\(\mu\)</span>) is equal to 19.98, and the population standard deviation <span class="math inline">\(\sigma\)</span> is equal to 14.15.</p>
 <div id="the-null-hypothesis" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> The null hypothesis</h3>
@@ -341,7 +340,7 @@ standard_error &lt;-<span class="st"> </span>sigma<span class="op">/</span><span
 standard_error</code></pre>
 <pre><code>## [1] 2.001639</code></pre>
 <p>Since we know from the central limit theorem that the sampling distribution is normal for large enough samples, we can now visualize the expected sampling distribution <strong>if our null hypothesis was in fact true</strong> (i.e., if the was no difference between the true population mean and the hypothesized mean of 10).</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-167-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-168-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>We also know that 95% of the probability is within 1.96 standard deviations from the mean. Values higher than that are rather unlikely, if our hypothesis about the population mean was indeed true. This is shown by the shaded area, also known as the “rejection region”. To test our hypothesis that the population mean is equal to <span class="math inline">\(10\)</span>, let us take a random sample from the population.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12567</span>)
 H_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">10</span>
@@ -354,7 +353,7 @@ mean_sample &lt;-<span class="st"> </span><span class="kw">mean</span>(student_s
         <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Distribution of values in the sample ($n =$ %.0f, $</span><span class="ch">\\</span><span class="st">bar{x] = $ %.2f, s = %.2f)&quot;</span>, 
     n, <span class="kw">mean</span>(student_sample), <span class="kw">sd</span>(student_sample))), 
     <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-169-1.png" width="672" /></p>
 <p>The mean listening time in the sample (black line) <span class="math inline">\(\bar x\)</span> is 18.59. We can already see from the graphic above that such a value is rather unlikely under the hypothesis that the population mean is <span class="math inline">\(10\)</span>. Intuitively, such a result would therefore provide evidence against our null hypothesis. But how could we quantify specifically how unlikely it is to obtain such a value and decide whether or not to reject the null hypothesis? Significance tests can be used to provide answers to these questions.</p>
 </div>
 <div id="statistical-inference-on-a-sample" class="section level3">
@@ -391,7 +390,7 @@ z_crit</code></pre>
 t = {\bar x-  \mu_0 \over SE_{\bar x}}={\bar x-  \mu_0 \over s / \sqrt{n}}
 \]</span></p>
 <p>Here, <span class="math inline">\(\bar X\)</span> denotes the sample mean and <span class="math inline">\(s\)</span> the sample standard deviation. The t-distribution has more probability in its “tails”, i.e. farther away from the mean. This reflects the higher uncertainty introduced by replacing the population standard deviation by its sample estimate. Intuitively, this is particularly relevant for small samples, since the uncertainty about the true population parameters decreases with increasing sample size. This is reflected by the fact that the exact shape of the t-distribution depends on the <strong>degrees of freedom</strong>, which is the sample size minus one (i.e., <span class="math inline">\(n-1\)</span>). To see this, the following graph shows the t-distribution with different degrees of freedom for a two-tailed test and <span class="math inline">\(\alpha = 0.05\)</span>. The grey curve shows the normal distribution.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-172-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-173-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>Notice that as <span class="math inline">\(n\)</span> gets larger, the t-distribution gets closer and closer to the normal distribution, reflecting the fact that the uncertainty introduced by <span class="math inline">\(s\)</span> is reduced. To summarize, we now have an estimate for the standard deviation of the distribution of the sample mean (i.e., <span class="math inline">\(SE_{\bar x}\)</span>) and an appropriate distribution that takes into account the necessary uncertainty (i.e., the t-distribution). Let us now compute the t-statistic according to the formula above:</p>
 <pre class="sourceCode r"><code class="sourceCode r">SE &lt;-<span class="st"> </span>(<span class="kw">sd</span>(student_sample)<span class="op">/</span><span class="kw">sqrt</span>(n))
 t_score &lt;-<span class="st"> </span>(mean_sample <span class="op">-</span><span class="st"> </span>H_<span class="dv">0</span>)<span class="op">/</span>SE
@@ -406,7 +405,7 @@ t_crit</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">abs</span>(t_score) <span class="op">&gt;</span><span class="st"> </span><span class="kw">abs</span>(t_crit)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>The following graphics shows that the calculated test statistic (red line) falls into the rejection region so that in our example, we would reject the null hypothesis that the true population mean is equal to <span class="math inline">\(10\)</span>.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-176-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-177-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p><strong>Decision:</strong> Reject <span class="math inline">\(H_0\)</span>, given that the calculated test statistic is larger than critical value.</p>
 <p>Something to keep in mind here is the fact the test statistic is a function of the sample size. This, as <span class="math inline">\(n\)</span> gets large, the test statistic gets larger as well and we are more likely to find a significant effect. This reflects the decrease in uncertainty about the true population mean as our sample size increases.</p>
 </div>
@@ -518,7 +517,7 @@ H_1: \mu \neq 10
     <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Distribution of values in the sample&quot;</span>, 
         <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
 <p><strong>5. Conduct significance test</strong></p>
 <p>In the beginning of the chapter, we saw, how you could conduct significance test by hand. However, R has built-in routines that you can use to conduct the analyses. The <code>t.test()</code> function can be used to conduct the test. To test if the listening time among WU students was 10, you can use the following code:</p>
 <pre class="sourceCode r"><code class="sourceCode r">H_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">10</span>
@@ -622,7 +621,7 @@ mean_delta &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span cl
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>()) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(mean_delta)), 
     <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;d&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%d samples; $d_{</span><span class="ch">\\</span><span class="st">bar{x}}$ = %.2f&quot;</span>, 
     samples, <span class="kw">round</span>(<span class="kw">mean</span>(mean_delta), <span class="dv">2</span>))))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <p>This gives us the sampling distribution of the mean differences between the samples. You will notice that this distribution follows a normal distribution and is centered around the true difference between the populations. This means that, on average, the difference between two sample means <span class="math inline">\(d\)</span> is a good estimate of <span class="math inline">\(\delta\)</span>. In our example, the difference between <span class="math inline">\(\bar x_1\)</span> and <span class="math inline">\(\bar x_2\)</span> is:</p>
 <pre class="sourceCode r"><code class="sourceCode r">mean_x1 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_a_b[hours_a_b<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, <span class="st">&quot;hours&quot;</span>])
 mean_x1</code></pre>
@@ -704,16 +703,16 @@ H_1: \mu_1 \ne \mu_2
 <span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Boxplot of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-190-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-191-2.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
     <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Listening time (hours)&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-190-3.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-191-3.png" width="672" /></p>
 <p><strong>5. Conduct significance test</strong></p>
 <p>To conduct the independent means t-test, we can use the <code>t.test()</code> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> hours_a_b, <span class="dt">mu =</span> <span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, 
@@ -864,16 +863,16 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of listining times&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b_paired_long, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> hours)) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Boxplot of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-199-2.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-200-2.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(hours_a_b_paired_long, <span class="kw">aes</span>(hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, 
     <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Listening time (hours)&quot;</span>, 
     <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Histogram of listening times&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-199-3.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-200-3.png" width="672" /></p>
 <p><strong>5. Conduct significance test</strong></p>
 <p>To conduct the independent means t-test, we can use the <code>t.test()</code> function with the argument <code>paired = TRUE</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(hours_a_b_paired<span class="op">$</span>hours_a, hours_a_b_paired<span class="op">$</span>hours_b, 
@@ -1012,8 +1011,8 @@ hours_a_b_paired_long &lt;-<span class="st"> </span><span class="kw">melt</span>
 <li>You stop when you have a significant effect</li>
 </ul>
 <p>This is called p-hacking and should be avoided at all costs. Assuming that both groups come from the same population (i.e., there is <strong>no difference</strong> in the means): What is the likelihood that the result will be significant at some point? In other words, what is the likelihood that you will draw the wrong conclusion from your data that there is an effect, while there is none? This is shown in the following graph using simulated data - the color red indicates significant test results that arise although there is no effect (i.e., false positives).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-205"></span>
-<img src="_main_files/figure-html/unnamed-chunk-205-1.png" alt="p-hacking (red indicates false positives)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-206"></span>
+<img src="_main_files/figure-html/unnamed-chunk-206-1.png" alt="p-hacking (red indicates false positives)" width="672" />
 <p class="caption">
 Figure 5.1: p-hacking (red indicates false positives)
 </p>
@@ -1108,8 +1107,8 @@ hours_abc &lt;-<span class="st"> </span><span class="kw">rbind</span>(sample_<sp
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group &quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Listening time&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-210"></span>
-<img src="_main_files/figure-html/unnamed-chunk-210-1.png" alt="Plot of means" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-211"></span>
+<img src="_main_files/figure-html/unnamed-chunk-211-1.png" alt="Plot of means" width="672" />
 <p class="caption">
 Figure 5.2: Plot of means
 </p>
@@ -1159,8 +1158,8 @@ Figure 5.2: Plot of means
 ## hours_abc$group: C
 ## [1] 34.99</code></pre>
 <p>To see how each variance component can be derived, let’s look at the data again. The following graph shows the individual observations by experimental group:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-213"></span>
-<img src="_main_files/figure-html/unnamed-chunk-213-1.png" alt="Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-214"></span>
+<img src="_main_files/figure-html/unnamed-chunk-214-1.png" alt="Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.3: Sum of Squares
 </p>
@@ -1168,8 +1167,8 @@ Figure 5.3: Sum of Squares
 <div id="total-sum-of-squares" class="section level4">
 <h4><span class="header-section-number">5.4.2.1</span> Total sum of squares</h4>
 <p>To compute the total variation in the data, we consider the difference between each observation and the grand mean. The grand mean is the mean over all observations in the data set. The vertical lines in the following plot measure how far each observation is away from the grand mean:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-214"></span>
-<img src="_main_files/figure-html/unnamed-chunk-214-1.png" alt="Total Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-215"></span>
+<img src="_main_files/figure-html/unnamed-chunk-215-1.png" alt="Total Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.4: Total Sum of Squares
 </p>
@@ -1202,8 +1201,8 @@ df_T = N-1=300-1=299
 <div id="model-sum-of-squares" class="section level4">
 <h4><span class="header-section-number">5.4.2.2</span> Model sum of squares</h4>
 <p>Now we know that there are 26646.33 units of total variation in our data. Next, we compute how much of the total variation can be explained by the differences between groups (i.e., our experimental manipulation). To compute the explained variation in the data, we consider the difference between the values predicted by our model for each observation (i.e., the group mean) and the grand mean. The group mean refers to the mean value within the experimental group. The vertical lines in the following plot measure how far the predicted value for each observation (i.e., the group mean) is away from the grand mean:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-216"></span>
-<img src="_main_files/figure-html/unnamed-chunk-216-1.png" alt="Model Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-217"></span>
+<img src="_main_files/figure-html/unnamed-chunk-217-1.png" alt="Model Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.5: Model Sum of Squares
 </p>
@@ -1232,8 +1231,8 @@ df_M= c-1=3-1=2
 <div id="residual-sum-of-squares" class="section level4">
 <h4><span class="header-section-number">5.4.2.3</span> Residual sum of squares</h4>
 <p>Lastly, we calculate the amount of variation that cannot be explained by our model. In ANOVA, this is the sum of squared distances between what the model predicts for each data point (i.e., the group means) and the observed values. In other words, this refers to the amount of variation that is caused by extraneous factors, such as differences between product characteristics of the products in the different experimental groups. The vertical lines in the following plot measure how far each observation is away from the group mean:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-218"></span>
-<img src="_main_files/figure-html/unnamed-chunk-218-1.png" alt="Residual Sum of Squares" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-219"></span>
+<img src="_main_files/figure-html/unnamed-chunk-219-1.png" alt="Residual Sum of Squares" width="672" />
 <p class="caption">
 Figure 5.6: Residual Sum of Squares
 </p>
@@ -1378,24 +1377,24 @@ hours_fewobs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<s
 <p>To create the Q-Q plot for the normal distribution, you may use the <code>qqnorm()</code> function, which takes the data to be tested as an argument. Using the <code>qqline()</code> function subsequently on the data creates the line on which the data points should fall based on the theoretical quantiles. If the individual data points deviate a lot from this line, it means that the data is not likely to follow a normal distribution.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, ]<span class="op">$</span>hours)
 <span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, ]<span class="op">$</span>hours)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2261"></span>
-<img src="_main_files/figure-html/unnamed-chunk-226-1.png" alt="Q-Q plot 1" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2271"></span>
+<img src="_main_files/figure-html/unnamed-chunk-227-1.png" alt="Q-Q plot 1" width="672" />
 <p class="caption">
 Figure 5.7: Q-Q plot 1
 </p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, ]<span class="op">$</span>hours)
 <span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, ]<span class="op">$</span>hours)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2262"></span>
-<img src="_main_files/figure-html/unnamed-chunk-226-2.png" alt="Q-Q plot 2" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2272"></span>
+<img src="_main_files/figure-html/unnamed-chunk-227-2.png" alt="Q-Q plot 2" width="672" />
 <p class="caption">
 Figure 5.8: Q-Q plot 2
 </p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, ]<span class="op">$</span>hours)
 <span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, ]<span class="op">$</span>hours)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2263"></span>
-<img src="_main_files/figure-html/unnamed-chunk-226-3.png" alt="Q-Q plot 3" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2273"></span>
+<img src="_main_files/figure-html/unnamed-chunk-227-3.png" alt="Q-Q plot 3" width="672" />
 <p class="caption">
 Figure 5.9: Q-Q plot 3
 </p>
@@ -1431,11 +1430,11 @@ Figure 5.9: Q-Q plot 3
 <p>The <code>aov()</code> function also automatically generates some plots that you can use to judge if the model assumptions are met. We will inspect two of the plots here.</p>
 <p>We will use the first plot to inspect if the residual variances are equal across the experimental groups:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">1</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-230-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
 <p>Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels of our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is higher in group “B” than in group “C”. However, the differences are not that large and since the Levene’s test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case.</p>
 <p>The second plot can be used to test the assumption that the residuals are approximately normally distributed. We use a Q-Q plot to test this assumption:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(aov, <span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-232-1.png" width="672" /></p>
 <p>The plot suggests that, the residuals are approximately normally distributed. We could also test this by extracting the residuals from the anova output using the <code>resid()</code> function and using the Shapiro-Wilk test:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</code></pre>
 <pre><code>## 
@@ -1575,8 +1574,8 @@ tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span cla
 ## C - B == 0 10.2900   8.4023 12.1777</code></pre>
 <p>We may also plot the result for the mean differences incl. their confidence intervals:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tukeys)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
-<img src="_main_files/figure-html/unnamed-chunk-239-1.png" alt="Tukey's HSD" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-240"></span>
+<img src="_main_files/figure-html/unnamed-chunk-240-1.png" alt="Tukey's HSD" width="672" />
 <p class="caption">
 Figure 5.10: Tukey’s HSD
 </p>
@@ -1697,8 +1696,8 @@ music_sales<span class="op">$</span>group &lt;-<span class="st"> </span><span cl
 <span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of sales&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-244"></span>
-<img src="_main_files/figure-html/unnamed-chunk-244-1.png" alt="Boxplot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-245"></span>
+<img src="_main_files/figure-html/unnamed-chunk-245-1.png" alt="Boxplot" width="672" />
 <p class="caption">
 Figure 5.11: Boxplot
 </p>
@@ -1764,8 +1763,8 @@ music_sales_dep &lt;-<span class="st"> </span><span class="kw">read.table</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_bw</span>() </code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-249"></span>
-<img src="_main_files/figure-html/unnamed-chunk-249-1.png" alt="Boxplot" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-250"></span>
+<img src="_main_files/figure-html/unnamed-chunk-250-1.png" alt="Boxplot" width="672" />
 <p class="caption">
 Figure 5.12: Boxplot
 </p>
@@ -1819,8 +1818,8 @@ rel_freq_table</code></pre>
 <span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span>
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Agent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span>
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-253"></span>
-<img src="_main_files/figure-html/unnamed-chunk-253-1.png" alt="proportion of conversions per agent (stacked bar chart)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-254"></span>
+<img src="_main_files/figure-html/unnamed-chunk-254-1.png" alt="proportion of conversions per agent (stacked bar chart)" width="672" />
 <p class="caption">
 Figure 5.13: proportion of conversions per agent (stacked bar chart)
 </p>
@@ -1828,8 +1827,8 @@ Figure 5.13: proportion of conversions per agent (stacked bar chart)
 <p>… or using the <code>mosaicplot()</code> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r">contigency_table &lt;-<span class="st"> </span><span class="kw">table</span>(call_center)
 <span class="kw">mosaicplot</span>(contigency_table, <span class="dt">main =</span> <span class="st">&quot;Proportion of conversions by agent&quot;</span>)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-254"></span>
-<img src="_main_files/figure-html/unnamed-chunk-254-1.png" alt="proportion of conversions per agent (mosaic plot)" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-255"></span>
+<img src="_main_files/figure-html/unnamed-chunk-255-1.png" alt="proportion of conversions per agent (mosaic plot)" width="672" />
 <p class="caption">
 Figure 5.14: proportion of conversions per agent (mosaic plot)
 </p>
@@ -1950,8 +1949,8 @@ exp_cell4 &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(call_cente
 chisq_cal</code></pre>
 <pre><code>## [1] 66.66667</code></pre>
 <p>The test statistic is <span class="math inline">\(\chi^2\)</span> distributed. The chi-square distribution is a non-symmetric distribution. Actually, there are many different chi-square distributions, one for each degree of freedom as show in the following figure.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-263"></span>
-<img src="_main_files/figure-html/unnamed-chunk-263-1.png" alt="The chi-square distribution" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-264"></span>
+<img src="_main_files/figure-html/unnamed-chunk-264-1.png" alt="The chi-square distribution" width="672" />
 <p class="caption">
 Figure 5.15: The chi-square distribution
 </p>
@@ -1971,8 +1970,8 @@ chisq_crit</code></pre>
 <pre><code>## [1] 3.841459</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">chisq_cal <span class="op">&gt;</span><span class="st"> </span>chisq_crit</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-266"></span>
-<img src="_main_files/figure-html/unnamed-chunk-266-1.png" alt="Visual depiction of the test result" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-267"></span>
+<img src="_main_files/figure-html/unnamed-chunk-267-1.png" alt="Visual depiction of the test result" width="672" />
 <p class="caption">
 Figure 5.16: Visual depiction of the test result
 </p>
