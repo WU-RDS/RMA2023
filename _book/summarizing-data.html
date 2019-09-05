@@ -369,7 +369,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>For this example, we are interested in the following two variables</p>
 <ul>
-<li>“genre”: the music genre the artist is associated with. subsetted for the five most frequent genres.<br />
+<li>“genre”: the music genre the song is associated with, subsetted for the most frequent genres.<br />
 </li>
 <li>“explicit”: whether the lyrics of the tracks are explicit or not (0 = not explicit, 1 = explicit)</li>
 </ul>
@@ -381,7 +381,7 @@ music_data &lt;-<span class="st"> </span><span class="kw">subset</span>(music_da
 music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)
 music_data<span class="op">$</span>explicit_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(music_data<span class="op">$</span>explicit, 
     <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;not explicit&quot;</span>, <span class="st">&quot;explicit&quot;</span>))</code></pre>
-<p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:</p>
+<p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurrences of the categories associated with the genre and explicitness variables separately:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></code></pre>
 <pre><code>## 
 ## hip hop   indie     pop     rap    rock 
@@ -391,9 +391,9 @@ music_data<span class="op">$</span>explicit_cat &lt;-<span class="st"> </span><s
 ## not explicit     explicit 
 ##        30204        11698</code></pre>
 <p>It is obvious that there are more tracks with non-explicit lyrics than songs with explicit lyrics. For variables with more categories, it might be less obvious and we might use the <code>summary()</code> function, which produces further statistics.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>((music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)]))</code></pre>
-<pre><code>## hip hop   indie     pop     rap    rock 
-##    9907     528   28448    1180    1839</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(music_data<span class="op">$</span>explicit)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.0000  0.0000  0.2792  1.0000  1.0000</code></pre>
 <p>Often, we are interested in the relative frequencies, which can be obtained by using the <code>prop.table()</code> function.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)]))  <span class="co">#relative frequencies</span></code></pre>
 <pre><code>## 
@@ -421,7 +421,7 @@ music_data<span class="op">$</span>explicit_cat &lt;-<span class="st"> </span><s
 ##   pop     0.5699250632 0.1089924109
 ##   rap     0.0127917522 0.0153691948
 ##   rock    0.0424084769 0.0014796430</code></pre>
-<p>Note that the above output shows the overall relative frequencies when explicit and non-explicit songs are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a <code>,2</code> to the <code>prop.table()</code> command, which tells R to compute the relative frequencies by the columns (which is in our case the explicit variable):</p>
+<p>Note that the above output shows the overall relative frequencies when explicit and non-explicit songs are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a <code>,2</code> to the <code>prop.table()</code> command, which tells R to compute the relative frequencies by the columns (which is in our case the explicitness variable):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;explicit_cat&quot;</span>)]), 
     <span class="dv">2</span>)  <span class="co">#conditional relative frequencies</span></code></pre>
 <pre><code>##          explicit_cat
@@ -786,7 +786,7 @@ Figure 3.2: Bar chart (step 2)
 Figure 3.3: Bar chart (alternative specification)
 </p>
 </div>
-<p>Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follow now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the <code>ylab()</code> and <code>xlab()</code> functions:</p>
+<p>Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follows now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the <code>ylab()</code> and <code>xlab()</code> functions:</p>
 <pre class="sourceCode r"><code class="sourceCode r">bar_chart <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequency&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-124"></span>
@@ -872,21 +872,420 @@ Figure 3.10: Grouped bar chart (conditional relative frequencies) (2)
 music_data<span class="op">$</span>popularity_factor &lt;-<span class="st"> </span><span class="kw">cut</span>(music_data<span class="op">$</span>trackPopularity, 
     <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="ot">Inf</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, 
         <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;high&quot;</span>))</code></pre>
-<p>There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with <code>geom_count()</code>.</p>
+<p>There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with <code>geom_count()</code>. From the bar charts above, we know that the categories in <code>genre</code> differ in size. To account for that we set the parameters <code>size</code> and <code>group</code> in <code>geom_count</code>, which gives us the conditional relative frequencies. This is equivalent to the conditional relative frequency table from above, only now the <code>stat(prop)</code> option assures that we get relative frequencies and with the <code>group</code> option we tell R to compute the relative frequencies by genre.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> music_data) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, 
-    <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
+    <span class="dt">y =</span> popularity_factor, <span class="dt">size =</span> <span class="kw">stat</span>(prop), <span class="dt">group =</span> genre_cat)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">size =</span> <span class="st">&quot;Proportion&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-133"></span>
 <img src="_main_files/figure-html/unnamed-chunk-133-1.png" alt="Covariation between categorical data (1)" width="672" />
 <p class="caption">
 Figure 3.11: Covariation between categorical data (1)
 </p>
 </div>
-<p>Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first to have create a dataframe that contains the absolute frequencies of all combinations of factors. Then we can take this dataframe and supply it to <code>geom_tile()</code>, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the <code>aes()</code> function.</p>
-<pre class="sourceCode r"><code class="sourceCode r">table_plot_abs &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(music_data[, 
-    <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, <span class="st">&quot;popularity_factor&quot;</span>)]))  <span class="co">#absolute frequencies</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_bw</span>()</code></pre>
+<pre><code>## List of 59
+##  $ line                 :List of 6
+##   ..$ colour       : chr &quot;black&quot;
+##   ..$ size         : num 0.5
+##   ..$ linetype     : num 1
+##   ..$ lineend      : chr &quot;butt&quot;
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_line&quot; &quot;element&quot;
+##  $ rect                 :List of 5
+##   ..$ fill         : chr &quot;white&quot;
+##   ..$ colour       : chr &quot;black&quot;
+##   ..$ size         : num 0.5
+##   ..$ linetype     : num 1
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+##  $ text                 :List of 11
+##   ..$ family       : chr &quot;&quot;
+##   ..$ face         : chr &quot;plain&quot;
+##   ..$ colour       : chr &quot;black&quot;
+##   ..$ size         : num 11
+##   ..$ hjust        : num 0.5
+##   ..$ vjust        : num 0.5
+##   ..$ angle        : num 0
+##   ..$ lineheight   : num 0.9
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 0pt 0pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.title.x         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 2.75pt 0pt 0pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.title.x.top     :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 0pt 2.75pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.title.y         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : num 90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 2.75pt 0pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.title.y.right   :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 0pt 0pt 2.75pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.text            :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : chr &quot;grey30&quot;
+##   ..$ size         : &#39;rel&#39; num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.text.x          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 2.2pt 0pt 0pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.text.x.top      :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 0pt 2.2pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.text.y          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 1
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 2.2pt 0pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.text.y.right    :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 0pt 0pt 2.2pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ axis.ticks           :List of 6
+##   ..$ colour       : chr &quot;grey20&quot;
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_line&quot; &quot;element&quot;
+##  $ axis.ticks.length    : &#39;unit&#39; num 2.75pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  $ axis.line            : list()
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_blank&quot; &quot;element&quot;
+##  $ axis.line.x          : NULL
+##  $ axis.line.y          : NULL
+##  $ legend.background    :List of 5
+##   ..$ fill         : NULL
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+##  $ legend.margin        : &#39;margin&#39; num [1:4] 5.5pt 5.5pt 5.5pt 5.5pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  $ legend.spacing       : &#39;unit&#39; num 11pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  $ legend.spacing.x     : NULL
+##  $ legend.spacing.y     : NULL
+##  $ legend.key           :List of 5
+##   ..$ fill         : chr &quot;white&quot;
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+##  $ legend.key.size      : &#39;unit&#39; num 1.2lines
+##   ..- attr(*, &quot;valid.unit&quot;)= int 3
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;lines&quot;
+##  $ legend.key.height    : NULL
+##  $ legend.key.width     : NULL
+##  $ legend.text          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : &#39;rel&#39; num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ legend.text.align    : NULL
+##  $ legend.title         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ legend.title.align   : NULL
+##  $ legend.position      : chr &quot;right&quot;
+##  $ legend.direction     : NULL
+##  $ legend.justification : chr &quot;center&quot;
+##  $ legend.box           : NULL
+##  $ legend.box.margin    : &#39;margin&#39; num [1:4] 0cm 0cm 0cm 0cm
+##   ..- attr(*, &quot;valid.unit&quot;)= int 1
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;cm&quot;
+##  $ legend.box.background: list()
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_blank&quot; &quot;element&quot;
+##  $ legend.box.spacing   : &#39;unit&#39; num 11pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  $ panel.background     :List of 5
+##   ..$ fill         : chr &quot;white&quot;
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+##  $ panel.border         :List of 5
+##   ..$ fill         : logi NA
+##   ..$ colour       : chr &quot;grey20&quot;
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+##  $ panel.spacing        : &#39;unit&#39; num 5.5pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  $ panel.spacing.x      : NULL
+##  $ panel.spacing.y      : NULL
+##  $ panel.grid           :List of 6
+##   ..$ colour       : chr &quot;grey92&quot;
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_line&quot; &quot;element&quot;
+##  $ panel.grid.minor     :List of 6
+##   ..$ colour       : NULL
+##   ..$ size         : &#39;rel&#39; num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_line&quot; &quot;element&quot;
+##  $ panel.ontop          : logi FALSE
+##  $ plot.background      :List of 5
+##   ..$ fill         : NULL
+##   ..$ colour       : chr &quot;white&quot;
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+##  $ plot.title           :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : &#39;rel&#39; num 1.2
+##   ..$ hjust        : num 0
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 0pt 5.5pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ plot.subtitle        :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 0pt 0pt 5.5pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ plot.caption         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : &#39;rel&#39; num 0.8
+##   ..$ hjust        : num 1
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 5.5pt 0pt 0pt 0pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ plot.tag             :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : &#39;rel&#39; num 1.2
+##   ..$ hjust        : num 0.5
+##   ..$ vjust        : num 0.5
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ plot.tag.position    : chr &quot;topleft&quot;
+##  $ plot.margin          : &#39;margin&#39; num [1:4] 5.5pt 5.5pt 5.5pt 5.5pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  $ strip.background     :List of 5
+##   ..$ fill         : chr &quot;grey85&quot;
+##   ..$ colour       : chr &quot;grey20&quot;
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_rect&quot; &quot;element&quot;
+##  $ strip.placement      : chr &quot;inside&quot;
+##  $ strip.text           :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : chr &quot;grey10&quot;
+##   ..$ size         : &#39;rel&#39; num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : &#39;margin&#39; num [1:4] 4.4pt 4.4pt 4.4pt 4.4pt
+##   .. ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   .. ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ strip.text.x         : NULL
+##  $ strip.text.y         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;element_text&quot; &quot;element&quot;
+##  $ strip.switch.pad.grid: &#39;unit&#39; num 2.75pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  $ strip.switch.pad.wrap: &#39;unit&#39; num 2.75pt
+##   ..- attr(*, &quot;valid.unit&quot;)= int 8
+##   ..- attr(*, &quot;unit&quot;)= chr &quot;pt&quot;
+##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;theme&quot; &quot;gg&quot;
+##  - attr(*, &quot;complete&quot;)= logi TRUE
+##  - attr(*, &quot;validate&quot;)= logi TRUE</code></pre>
+<p>Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first have to create a dataframe that contains the relative frequencies of all combinations of factors. Then we can take this dataframe and supply it to <code>geom_tile()</code>, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the <code>aes()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r">table_plot_rel &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, 
+    <span class="st">&quot;popularity_factor&quot;</span>)]), <span class="dv">1</span>)
+table_plot_rel &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(table_plot_rel)
 
-<span class="kw">ggplot</span>(table_plot_abs, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span>
+<span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-134"></span>
@@ -901,15 +1300,8 @@ Figure 3.12: Covariation between categorical data (2)
 <h3><span class="header-section-number">3.2.2</span> Continuous variables</h3>
 <div id="histogram" class="section level4">
 <h4><span class="header-section-number">3.2.2.1</span> Histogram</h4>
-<p>Histograms can be plotted for continuous data using the <code>geom_histogram()</code> function. Note that the <code>aes()</code> function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let’s consider a data set containing the advertising expenditures and product sales of a company selling products in two different stores:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># adv_data &lt;-</span>
-<span class="co"># read.table(&#39;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat&#39;,</span>
-<span class="co"># sep = &#39;\t&#39;, header = TRUE)</span>
-
-<span class="co"># adv_data$store &lt;- factor(adv_data$store, levels =</span>
-<span class="co"># c(1:2), labels = c(&#39;store1&#39;, &#39;store2&#39;))</span>
-
-<span class="kw">head</span>(music_data)</code></pre>
+<p>Histograms can be plotted for continuous data using the <code>geom_histogram()</code> function. Note that the <code>aes()</code> function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let’s consider our data set containing the advertising expenditures and product sales of a company selling products in two different stores:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(music_data)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["isrc"],"name":[3],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[4],"type":["int"],"align":["right"]},{"label":["trackPopularity"],"name":[5],"type":["int"],"align":["right"]},{"label":["primary_artistName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["primary_artistID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[8],"type":["chr"],"align":["left"]},{"label":["artistIDs"],"name":[9],"type":["chr"],"align":["left"]},{"label":["albumName"],"name":[10],"type":["chr"],"align":["left"]},{"label":["albumID"],"name":[11],"type":["chr"],"align":["left"]},{"label":["available_markets"],"name":[12],"type":["chr"],"align":["left"]},{"label":["n_available_markets"],"name":[13],"type":["int"],"align":["right"]},{"label":["releaseDate"],"name":[14],"type":["chr"],"align":["left"]},{"label":["releaseDate_precision"],"name":[15],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[18],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[20],"type":["int"],"align":["right"]},{"label":["speechiness"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["time_signature"],"name":[28],"type":["int"],"align":["right"]},{"label":["uri"],"name":[29],"type":["chr"],"align":["left"]},{"label":["analysis_url"],"name":[30],"type":["chr"],"align":["left"]},{"label":["followers"],"name":[31],"type":["int"],"align":["right"]},{"label":["type"],"name":[32],"type":["chr"],"align":["left"]},{"label":["popularity"],"name":[33],"type":["int"],"align":["right"]},{"label":["primary_genre"],"name":[34],"type":["chr"],"align":["left"]},{"label":["genres"],"name":[35],"type":["chr"],"align":["left"]},{"label":["n_genres"],"name":[36],"type":["int"],"align":["right"]},{"label":["total_releases"],"name":[37],"type":["int"],"align":["right"]},{"label":["n_album"],"name":[38],"type":["int"],"align":["right"]},{"label":["n_single"],"name":[39],"type":["int"],"align":["right"]},{"label":["n_appears_on"],"name":[40],"type":["int"],"align":["right"]},{"label":["n_compilation"],"name":[41],"type":["int"],"align":["right"]},{"label":["mstreams"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[43],"type":["chr"],"align":["left"]},{"label":["adv_spending"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["top.genre"],"name":[45],"type":["chr"],"align":["left"]},{"label":["genre_cat"],"name":[46],"type":["fctr"],"align":["left"]},{"label":["explicit_cat"],"name":[47],"type":["fctr"],"align":["left"]},{"label":["popularity_factor"],"name":[48],"type":["fctr"],"align":["left"]}],"data":[{"1":"5aAx2yezTd8zXrkmtKl66Z","2":"Starboy","3":"USUG11600976","4":"1","5":"22","6":"The Weeknd","7":"1Xyo4u8uXC1ZmMpatF05PJ","8":"The Weeknd feat. Daft Punk","9":"1Xyo4u8uXC1ZmMpatF05PJ,4tZwfgrHOc3mvqYlEYSvVi","10":"Starboy","11":"09fggMHib4YkOtwQNXEBII","12":"","13":"0","14":"2016-11-25","15":"day","16":"0.681","17":"0.594","18":"7","19":"-7.028","20":"1","21":"0.2820","22":"0.1650","23":"0.00000349","24":"0.134","25":"0.535","26":"186.054","27":"230453","28":"4","29":"spotify:track:5aAx2yezTd8zXrkmtKl66Z","30":"https://api.spotify.com/v1/audio-analysis/5aAx2yezTd8zXrkmtKl66Z","31":"15222808","32":"artist","33":"91","34":"canadian contemporary r&b","35":"canadian contemporary r&b, canadian pop, pop, rap","36":"4","37":"124","38":"13","39":"20","40":"91","41":"0","42":"357336.0","43":"us","44":"4538745582809720084335652681802192354751872961846816542356290991840842800362708869311675467455586767281244340224","45":"pop","46":"pop","47":"explicit","48":"low"},{"1":"7BKLCZ1jbUBVqRi2FVlTVw","2":"Closer","3":"USQX91601347","4":"0","5":"86","6":"The Chainsmokers","7":"69GGBxA162lTqCwzJG5jLp","8":"The Chainsmokers feat. Halsey","9":"69GGBxA162lTqCwzJG5jLp,26VFTg2z8YR0cCuwLzESi2","10":"Closer","11":"0rSLgV8p5FzfnqlEk4GzxE","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2016-07-29","15":"day","16":"0.748","17":"0.524","18":"8","19":"-5.599","20":"1","21":"0.0338","22":"0.4140","23":"0.00000000","24":"0.111","25":"0.661","26":"95.010","27":"244960","28":"4","29":"spotify:track:7BKLCZ1jbUBVqRi2FVlTVw","30":"https://api.spotify.com/v1/audio-analysis/7BKLCZ1jbUBVqRi2FVlTVw","31":"11565104","32":"artist","33":"90","34":"dance pop","35":"dance pop, electropop, pop, tropical house","36":"4","37":"96","38":"2","39":"59","40":"35","41":"0","42":"323081.4","43":"us","44":"87296125002616694828879835742568772595201488756664067891719260959953504690764846096364552367775131489311653888","45":"pop","46":"pop","47":"not explicit","48":"high"},{"1":"4pdPtRcBmOSQDlJ3Fk945m","2":"Let Me Love You","3":"QMZSY1600015","4":"0","5":"27","6":"DJ Snake","7":"540vIaP2JwjQb9dm3aArA4","8":"DJ Snake feat. Justin Bieber","9":"540vIaP2JwjQb9dm3aArA4,1uNFoZAHBGtllmzznpCI3s","10":"Encore","11":"55bbXORm6ZrVq52zfZnxBf","12":"","13":"0","14":"2016-08-05","15":"day","16":"0.476","17":"0.718","18":"8","19":"-5.309","20":"1","21":"0.0576","22":"0.0784","23":"0.00000000","24":"0.122","25":"0.142","26":"199.864","27":"205947","28":"4","29":"spotify:track:4pdPtRcBmOSQDlJ3Fk945m","30":"https://api.spotify.com/v1/audio-analysis/4pdPtRcBmOSQDlJ3Fk945m","31":"4345960","32":"artist","33":"86","34":"dance pop","35":"dance pop, edm, electronic trap, pop, tropical house","36":"5","37":"85","38":"2","39":"38","40":"45","41":"0","42":"264546.4","43":"us","44":"4052673829394860012092441543505898027168278466357604061531255984953722983872577825913849720641449881585582080","45":"pop","46":"pop","47":"not explicit","48":"low"},{"1":"5knuzwU65gJK7IF5yJsuaW","2":"Rockabye (feat. Sean Paul & Anne-Marie)","3":"GBAHS1600363","4":"0","5":"81","6":"Clean Bandit","7":"6MDME20pz9RveH9rEXvrOM","8":"Clean Bandit feat. Sean Paul feat. Anne-Marie","9":"6MDME20pz9RveH9rEXvrOM,3Isy6kedDrgPYoTS1dazA9,1zNqDE7qDGCsyzJwohVaoX","10":"Rockabye (feat. Sean Paul & Anne-Marie)","11":"3meZFplbMmji648oWUNEfQ","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"78","14":"2016-10-21","15":"day","16":"0.720","17":"0.763","18":"9","19":"-4.068","20":"0","21":"0.0523","22":"0.4060","23":"0.00000000","24":"0.180","25":"0.742","26":"101.965","27":"251088","28":"4","29":"spotify:track:5knuzwU65gJK7IF5yJsuaW","30":"https://api.spotify.com/v1/audio-analysis/5knuzwU65gJK7IF5yJsuaW","31":"2504254","32":"artist","33":"84","34":"dance pop","35":"dance pop, edm, pop, tropical house, uk funky","36":"5","37":"97","38":"2","39":"73","40":"22","41":"0","42":"299399.5","43":"us","44":"63076779883569398413334987328546550614768141860947245086927001088783215597781844192705652165114862194747506688","45":"pop","46":"pop","47":"not explicit","48":"high"},{"1":"1xznGGDReH1oQq0xzbwXa3","2":"One Dance","3":"USCM51600028","4":"0","5":"25","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake feat. WizKid feat. Kyla","9":"3TVXtAsR1Inumwj472S9r4,3tVQdUvClmAT7URs9V3rsp,77DAFfvm3O9zT5dIoG0eIO","10":"Views","11":"3hARKC8cinq3mZLLAEaBh9","12":"","13":"0","14":"2016-05-06","15":"day","16":"0.791","17":"0.619","18":"1","19":"-5.886","20":"1","21":"0.0532","22":"0.0078","23":"0.00420000","24":"0.351","25":"0.371","26":"103.989","27":"173987","28":"4","29":"spotify:track:1xznGGDReH1oQq0xzbwXa3","30":"https://api.spotify.com/v1/audio-analysis/1xznGGDReH1oQq0xzbwXa3","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"265877.0","43":"us","44":"4668617894331640150713528913482931563888378169191399287770456451298974376421383853327796314422734196333084672","45":"pop","46":"pop","47":"not explicit","48":"low"},{"1":"343YBumqHu19cGoGARUTsd","2":"Fake Love","3":"USCM51700084","4":"1","5":"76","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake","9":"3TVXtAsR1Inumwj472S9r4","10":"More Life","11":"1lXY618HWkwYKJWBRYR4MK","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2017-03-18","15":"day","16":"0.927","17":"0.488","18":"9","19":"-9.433","20":"0","21":"0.4200","22":"0.1080","23":"0.00000000","24":"0.196","25":"0.605","26":"133.987","27":"210937","28":"4","29":"spotify:track:343YBumqHu19cGoGARUTsd","30":"https://api.spotify.com/v1/audio-analysis/343YBumqHu19cGoGARUTsd","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"425740.1","43":"us","44":"34419285169424099063603169706763167298974920345850885001633591652364254906722960776146634654951625345242828374016","45":"pop","46":"pop","47":"explicit","48":"high"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -930,7 +1322,7 @@ Figure 3.13: Histogram
 <h4><span class="header-section-number">3.2.2.2</span> Boxplot</h4>
 <p>Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom <code>geom_boxplot()</code>. In our case we want to show the difference in distribution between the two stores in our sample, which is why the <code>aes()</code> function contains both an x and a y variable.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explcit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-137"></span>
 <img src="_main_files/figure-html/unnamed-chunk-137-1.png" alt="Boxplot by group" width="672" />
@@ -945,8 +1337,8 @@ Figure 3.14: Boxplot by group
 </div>
 <p>You may also augment the boxplot with the data points using <code>geom_jitter()</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, 
+    <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_bw</span>()</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-138"></span>
 <img src="_main_files/figure-html/unnamed-chunk-138-1.png" alt="Boxplot with augmented data points" width="672" />
@@ -955,7 +1347,7 @@ Figure 3.15: Boxplot with augmented data points
 </p>
 </div>
 <p>In case you would like to create the boxplot on the total data (i.e., not by group), just leave the <code>x =</code> argument within the <code>aes()</code> function empty:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-139"></span>
 <img src="_main_files/figure-html/unnamed-chunk-139-1.png" alt="Single Boxplot" width="672" />
@@ -967,10 +1359,13 @@ Figure 3.16: Single Boxplot
 <div id="plot-of-means" class="section level4">
 <h4><span class="header-section-number">3.2.2.3</span> Plot of means</h4>
 <p>Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot’s layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a <code>geom_pointrange()</code> layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in <code>geom_bar()</code>, namely <code>stat =</code>, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. <code>geom_bar()</code> typically uses the <code>count</code> stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling <code>geom_bar()</code> explicitly that we want to use a different stat we can override its behavior, forcing it to create a bar plot of the means.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(explicit_cat, mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, 
-    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, 
-    <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># coord_cartesian(ylim = c(100000, 150000)) +</span>
+<pre class="sourceCode r"><code class="sourceCode r">music_data2 &lt;-<span class="st"> </span>music_data[<span class="op">!</span><span class="kw">is.na</span>(music_data<span class="op">$</span>duration_ms), 
+    ]
+<span class="kw">ggplot</span>(music_data2, <span class="kw">aes</span>(explicit_cat, duration_ms)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, 
+        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="co"># coord_cartesian(ylim = c(100000, 150000)) +</span>
 <span class="kw">theme_bw</span>()</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
 <img src="_main_files/figure-html/unnamed-chunk-140-1.png" alt="Plot of means" width="672" />

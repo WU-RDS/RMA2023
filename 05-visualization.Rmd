@@ -84,7 +84,7 @@ Note that the same could be achieved using ```geom_bar```. However, by default `
 bar_chart + geom_bar(stat = "identity") 
 ```
 
-Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follow now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the ```ylab()``` and ```xlab()``` functions:
+Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follows now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the ```ylab()``` and ```xlab()``` functions:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (step 3)"}
 bar_chart + geom_col() +
@@ -176,7 +176,7 @@ music_data$popularity_factor <- cut(music_data$trackPopularity,
                    labels=c("low","middle","high"))
 ```
 
-There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with ```geom_count()```. From the bar charts above, we know that the categories in `genre` differ in size. To account for that we set the parameters `size` and `group` in `geom_count`, which gives us the conditional relative frequencies.
+There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with ```geom_count()```. From the bar charts above, we know that the categories in `genre` differ in size. To account for that we set the parameters `size` and `group` in `geom_count`, which gives us the conditional relative frequencies. This is equivalent to the conditional relative frequency table from above, only now the `stat(prop)` option assures that we get relative frequencies and with the `group` option we tell R to compute the relative frequencies by genre.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Covariation between categorical data (1)"}
 ggplot(data = music_data) + 
@@ -185,9 +185,6 @@ ggplot(data = music_data) +
   xlab("Genre") + 
   labs(size = "Proportion")
   theme_bw()
-```
-
-```{r}
 ```
 
 Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first have to create a dataframe that contains the relative frequencies of all combinations of factors. Then we can take this dataframe and supply it to ```geom_tile()```, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the ```aes()``` function.  

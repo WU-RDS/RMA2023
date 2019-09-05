@@ -55,7 +55,7 @@ Categorical variables contain a finite number of categories or distinct groups a
 
 For this example, we are interested in the following two variables
 
-* "genre": the music genre the artist is associated with. subsetted for the five most frequent genres.  
+* "genre": the music genre the song is associated with, subsetted for the most frequent genres.  
 * "explicit": whether the lyrics of the tracks are explicit or not (0 = not explicit, 1 = explicit)
 
 [You can find a full description of the variables here:](https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/) 
@@ -71,7 +71,7 @@ music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1),
     labels = c("not explicit", "explicit"))
 ```
 
-The ```table()``` function creates a frequency table. Let's start with the number of occurrences of the categories associated with the prior knowledge and gender variables separately:
+The ```table()``` function creates a frequency table. Let's start with the number of occurrences of the categories associated with the genre and explicitness variables separately:
 
 ```{r}
 table(music_data[,c("genre_cat")]) #absolute frequencies
@@ -81,7 +81,7 @@ table(music_data[,c("explicit_cat")]) #absolute frequencies
 It is obvious that there are more tracks with non-explicit lyrics than songs with explicit lyrics. For variables with more categories, it might be less obvious and we might use the ```summary()``` function, which produces further statistics. 
 
 ```{r}
-summary((music_data[,c("genre_cat")]))
+summary(music_data$explicit)
 ```
 
 Often, we are interested in the relative frequencies, which can be obtained by using the ```prop.table()``` function.
@@ -103,7 +103,7 @@ Again, it might be more meaningful to look at the relative frequencies using ```
 prop.table(table(music_data[,c("genre_cat", "explicit_cat")])) #relative frequencies
 ```
 
-Note that the above output shows the overall relative frequencies when explicit and non-explicit songs are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a ```,2``` to the ```prop.table()``` command, which tells R to compute the relative frequencies by the columns (which is in our case the explicit variable): 
+Note that the above output shows the overall relative frequencies when explicit and non-explicit songs are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a ```,2``` to the ```prop.table()``` command, which tells R to compute the relative frequencies by the columns (which is in our case the explicitness variable): 
 
 ```{r}
 prop.table(table(music_data[,c("genre_cat", "explicit_cat")]),2) #conditional relative frequencies
