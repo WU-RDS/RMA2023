@@ -28,76 +28,126 @@ Before we start with regression analysis, we will review the basic concept of co
 
 ### Correlation coefficient
 
-The correlation coefficient summarizes the strength of the linear relationship between two metric (interval or ratio scaled) variables. Let's consider a simple example. Say you conduct a survey to investigate the relationship between the attitude towards a city and the duration of residency. The "Attitude" variable can take values between 1 (very unfavorable) and 12 (very favorable), and the "duration of residency" is measured in years. Let's further assume for this example that the attitude measurement represents an interval scale (although it is usually not realistic to assume that the scale points on an itemized rating scale have the same distance). To keep it simple, let's further assume that you only asked 12 people. We can create a short data set like this:    
+The correlation coefficient summarizes the strength of the linear relationship between two metric (interval or ratio scaled) variables. Let's consider a simple example. Say you conduct a survey to investigate the relationship between the attitude towards a city and the duration of residency. The "Attitude" variable can take values between 1 (very unfavorable) and 12 (very favorable), and the "duration of residency" is measured in years. Let's further assume for this example that the attitude measurement represents an interval scale (although it is usually not realistic to assume that the scale points on an itemized rating scale have the same distance). To keep it simple, let's further assume that you only asked 12 people. We can create a short data set like this:  
 
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE,paged.print = FALSE}
-library(psych)
-attitude <- c(6,9,8,3,10,4,5,2,11,9,10,2)
-duration <- c(10,12,12,4,12,6,8,2,18,9,17,2)
-att_data <- data.frame(attitude, duration)
-att_data <- att_data[order(-attitude), ]
-att_data$respodentID <- c(1:12)
-str(att_data)
-psych::describe(att_data[, c("attitude","duration")])
-att_data
+```{r, warning=FALSE}
+music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
+                          sep = ",", 
+                          header = TRUE,
+                          stringsAsFactors = FALSE) #read in data
+head(music_data)
+
+s.genre <- c("pop","hip hop","rock","rap","indie")
+music_data <- subset(music_data, top.genre %in% s.genre)
+
+music_data$genre_cat <- as.factor(music_data$top.genre)
+music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1), 
+    labels = c("not explicit", "explicit"))
 ```
 
-Let's look at the data. The following graph shows the individual data points for the "duration of residency"" variable, where the blue horizontal line represents the mean of the variable (`r round(mean(att_data$duration),2)`) and the vertical lines show the distance of the individual data points from the mean.
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE,paged.print = FALSE}
+#library(psych)
+#attitude <- c(6,9,8,3,10,4,5,2,11,9,10,2)
+#duration <- c(10,12,12,4,12,6,8,2,18,9,17,2)
+#att_data <- data.frame(attitude, duration)
+#att_data <- att_data[order(-attitude), ]
+#att_data$respodentID <- c(1:12)
+#str(att_data)
+#psych::describe(att_data[, c("attitude","duration")])
+#att_data
+```
+
+Let's look at the data. The following graph shows the individual data points for the "duration of residency"" variable, where the blue horizontal line represents the mean of the variable (`r round(mean(music_data$energy, na.rm=T),2)`) and the vertical lines show the distance of the individual data points from the mean.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scores for duration of residency variable"}
 library(ggplot2)
-h <- round(mean(att_data$duration), 2)
-ggplot(att_data, aes(x = respodentID, y = duration)) + 
-  geom_point(size = 3, color = "deepskyblue4") + 
-  scale_x_continuous(breaks = 1:12) + 
-  geom_hline(data = att_data, aes(yintercept = mean(duration)), color ="deepskyblue4") +
-  labs(x = "Observations",y = "Duration of residency", size = 11) +
-  coord_cartesian(ylim = c(0, 18)) +
-  geom_segment(aes(x = respodentID,y = duration, xend = respodentID, 
-                   yend = mean(duration)), color = "deepskyblue4", size = 1) + 
-  theme(axis.title = element_text(size = 16),
-        axis.text  = element_text(size=16),
-        strip.text.x = element_text(size = 16),
-        legend.position="none") + 
+#h <- round(mean(att_data$duration), 2)
+
+ggplot(music_data) +
+  geom_histogram(aes(energy), bins = 50, fill = 'white', color = 'deepskyblue4') +
+  geom_vline(aes(xintercept = mean(energy, na.rm=T)), color='black', size=1) +
+  labs(title = "Histogram of energy",
+       #subtitle = TeX(sprintf("Population mean ($\\mu$) = %.2f; population standard deviation ($\\sigma$) = %.2f",round(mean(hours),2),round(sd(hours),2))),
+       y = 'Number of observations', 
+       x = 'Energy') +
   theme_bw()
+
+#ggplot(music_data, aes(y = energy)) + 
+#  geom_point(size = 3, color = "deepskyblue4") + 
+#  scale_x_continuous(breaks = 1:12) + 
+#  geom_hline(data = att_data, aes(yintercept = mean(duration)), color ="deepskyblue4") +
+#  labs(x = "Observations",y = "Duration of residency", size = 11) +
+#  coord_cartesian(ylim = c(0, 18)) +
+#  geom_segment(aes(x = respodentID,y = duration, xend = respodentID, 
+#                   yend = mean(duration)), color = "deepskyblue4", size = 1) + 
+#  theme(axis.title = element_text(size = 16),
+#        axis.text  = element_text(size=16),
+#        strip.text.x = element_text(size = 16),
+#        legend.position="none") + 
+#  theme_bw()
 ```
 
 You can see that there are some respondents that have been living in the city longer than average and some respondents that have been living in the city shorter than average. Let's do the same for the second variable ("Attitude"): 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scores for attitude variable"}
-ggplot(att_data, aes(x = respodentID, y = attitude)) + 
-  geom_point(size = 3, color = "#f9756d") + 
-  scale_x_continuous(breaks = 1:12) + 
-  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
-  labs(x = "Observations",y = "Attitude", size = 11) +
-  coord_cartesian(ylim = c(0,18)) +
-  geom_segment(aes(x = respodentID, y = attitude, xend = respodentID, 
-                   yend = mean(attitude)), color = "#f9756d", size = 1) + 
+
+ggplot(music_data) +
+  geom_histogram(aes(loudness), bins = 50, fill = 'white', color = '#f9756d') +
+  geom_vline(aes(xintercept = mean(energy, na.rm=T)), color='black', size=1) +
+  labs(title = "Histogram of loudness",
+       #subtitle = TeX(sprintf("Population mean ($\\mu$) = %.2f; population standard deviation ($\\sigma$) = %.2f",round(mean(hours),2),round(sd(hours),2))),
+       y = 'Number of observations', 
+       x = 'Loudness') +
   theme_bw()
+
+
+#ggplot(att_data, aes(x = respodentID, y = attitude)) + 
+#  geom_point(size = 3, color = "#f9756d") + 
+#  scale_x_continuous(breaks = 1:12) + 
+#  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
+#  labs(x = "Observations",y = "Attitude", size = 11) +
+#  coord_cartesian(ylim = c(0,18)) +
+#  geom_segment(aes(x = respodentID, y = attitude, xend = respodentID, 
+#                   yend = mean(attitude)), color = "#f9756d", size = 1) + 
+#  theme_bw()
 ```
 
 Again, we can see that some respondents have an above average attitude towards the city (more favorable) and some respondents have a below average attitude towards the city. Let's plot the data in one graph now to see if there is some co-movement: 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE,fig.align="center", fig.cap = "Scores for attitude and duration of residency variables"}
-ggplot(att_data) + 
-  geom_point(size = 3, aes(respodentID, attitude), color = "#f9756d") +
-  geom_point(size = 3, aes(respodentID, duration), color = "deepskyblue4")  + 
-  scale_x_continuous(breaks = 1:12) + 
-  geom_hline(data = att_data, aes(yintercept = mean(duration)), color = "deepskyblue4") +
-  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
+
+ggplot(music_data, aes(energy, loudness)) + 
+#  geom_point(size = 3, aes(id, energy), color = "#f9756d") +
+#  geom_point(size = 3, aes(id, loudness), color = "deepskyblue4")  + 
+   geom_point()
+#  scale_x_continuous(breaks = 1:12) + 
+#  geom_hline(data = att_data, aes(yintercept = mean(duration)), color = "deepskyblue4") +
+#  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
   labs(x = "Observations", y = "Duration/Attitude", size = 11) +
-  coord_cartesian(ylim = c(0, 18)) +
+#  coord_cartesian(ylim = c(0, 18)) +
   scale_color_manual(values = c("#f9756d", "deepskyblue4")) +
   theme_bw()
+
+#ggplot(att_data) + 
+#  geom_point(size = 3, aes(respodentID, attitude), color = "#f9756d") +
+#  geom_point(size = 3, aes(respodentID, duration), color = "deepskyblue4")  + 
+#  scale_x_continuous(breaks = 1:12) + 
+#  geom_hline(data = att_data, aes(yintercept = mean(duration)), color = "deepskyblue4") +
+#  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
+#  labs(x = "Observations", y = "Duration/Attitude", size = 11) +
+#  coord_cartesian(ylim = c(0, 18)) +
+#  scale_color_manual(values = c("#f9756d", "deepskyblue4")) +
+#  theme_bw()
 ```
 
 We can see that there is indeed some co-movement here. The variables <b>covary</b> because respondents who have an above (below) average attitude towards the city also appear to have been living in the city for an above (below) average amount of time and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterplot to visualize the relationship between two metric variables:
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scatterplot for duration and attitute variables"}
-ggplot(att_data) + 
-  geom_point(size = 3, aes(duration, attitude)) + 
-  labs(x = "Duration",y = "Attitude", size = 11) +
-  theme_bw()
+#ggplot(att_data) + 
+#  geom_point(size = 3, aes(duration, attitude)) + 
+#  labs(x = "Duration",y = "Attitude", size = 11) +
+#  theme_bw()
 ```
 
 How can we compute the correlation coefficient? Remember that the variance measures the average deviation from the mean of a variable:
@@ -132,11 +182,11 @@ Cov(x, y) =\frac{\sum_{i=1}^{N}(X_i-\overline{X})*(Y_i-\overline{Y})}{N-1}
 You can easily compute the covariance manually as follows
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-x <- att_data$duration
-x_bar <- mean(att_data$duration)
-y <- att_data$attitude
-y_bar <- mean(att_data$attitude)
-N <- nrow(att_data)
+x <- music_data$energy[!is.na(music_data$energy)]
+x_bar <- mean(music_data$energy, na.rm = T)
+y <- music_data$loudness[!is.na(music_data$loudness)]
+y_bar <- mean(music_data$loudness, na.rm = T)
+N <- nrow(music_data)
 cov <- (sum((x - x_bar)*(y - y_bar))) / (N - 1)
 cov
 ```
@@ -144,7 +194,7 @@ cov
 Or you simply use the built-in ```cov()``` function:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-cov(att_data$duration, att_data$attitude)          # apply the cov function 
+cov(x, y)          # apply the cov function 
 ```
 
 A positive covariance indicates that as one variable deviates from the mean, the other variable deviates in the same direction. A negative covariance indicates that as one variable deviates from the mean (e.g., increases), the other variable deviates in the opposite direction (e.g., decreases).
@@ -161,8 +211,8 @@ r=\frac{Cov_{xy}}{s_x*s_y}
 This is known as the product moment correlation (r) and it is straight-forward to compute:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-x_sd <- sd(att_data$duration)
-y_sd <- sd(att_data$attitude)
+x_sd <- sd(music_data$energy, na.rm = T)
+y_sd <- sd(music_data$loudness, na.rm = T)
 r <- cov/(x_sd*y_sd)
 r
 ```
@@ -170,7 +220,7 @@ r
 Or you could just use the ```cor()``` function:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-cor(att_data[, c("attitude", "duration")], method = "pearson", use = "complete")
+cor(music_data[, c("energy", "loudness")], method = "pearson", use = "complete")
 ```
 
 Properties of r:
@@ -211,7 +261,7 @@ pt(q = t_calc, df = df, lower.tail = F) * 2 #p-value
 Or you can simply use the ```cor.test()``` function, which also produces the 95% confidence interval:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-cor.test(att_data$attitude, att_data$duration, alternative = "two.sided", method = "pearson", conf.level = 0.95)
+cor.test(music_data$energy, music_data$loudness, alternative = "two.sided", method = "pearson", conf.level = 0.95)
 ```
 
 To determine the linear relationship between variables, the data only needs to be measured using interval scales. If you want to test the significance of the association, the sampling distribution needs to be normally distributed (we usually assume this when our data are normally distributed or when N is large). If parametric assumptions are violated, you should use non-parametric tests:
@@ -220,8 +270,8 @@ To determine the linear relationship between variables, the data only needs to b
 * Kendall's tau: use when N is small or the number of tied ranks is large.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-cor.test(att_data$attitude, att_data$duration, alternative = "two.sided", method = "spearman", conf.level = 0.95)
-cor.test(att_data$attitude, att_data$duration, alternative = "two.sided", method = "kendall", conf.level = 0.95)
+cor.test(music_data$energy, music_data$loudness, alternative = "two.sided", method = "spearman", conf.level = 0.95)
+cor.test(music_data$energy, music_data$loudness, alternative = "two.sided", method = "kendall", conf.level = 0.95)
 ```
 
 Report the results:
