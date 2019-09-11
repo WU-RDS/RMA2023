@@ -10,6 +10,14 @@ output:
 
 ## Data import and export 
 
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+options(scipen = 999)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+opts_chunk$set(cache=T)
+```
+
 ```{r echo=FALSE, eval=FALSE}
 install.packages("rvest")
 install.packages("jsonlite")
@@ -36,18 +44,11 @@ Most of the data sets we will be working with in this course will be stored in t
 #### Directly import datasets from GitHub (recommended)
 
 All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
+```{r, include=FALSE, eval=FALSE}
 
-```{r, include=FALSE}
-music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
+test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
                         sep = "\t", 
                         header = TRUE)
-```
-
-```{r}
-music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
-                          sep = ",", 
-                          header = TRUE,
-                          stringsAsFactors = FALSE) #read in data
 ```
 
 

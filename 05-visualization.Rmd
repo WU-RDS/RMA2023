@@ -7,6 +7,15 @@ output:
   pdf_document:
     toc: yes
 ---
+
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+options(scipen = 999)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+opts_chunk$set(cache=T)
+```
+
 ```{r, echo = FALSE, warning=FALSE, message=FALSE}
 library(Hmisc)
 library(knitr)
@@ -34,19 +43,30 @@ ggplot2 is built around the idea of constructing plots by stacking layers on top
 
 To give you an example of how the graphics are composed, let's go back to the frequency table from the previous chapter, where we created this table:
 
-```{r message=FALSE, warning=FALSE}
-music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
-                          sep = ",", 
-                          header = TRUE,
-                          stringsAsFactors = FALSE) #read in data
-head(music_data)
+```{r, include=FALSE}
+library(openssl)
+passphrase <- charToRaw("MRDAnils")
+key <- sha256(passphrase)
+url <- "https://raw.githubusercontent.com/IMSMWU/mrda_data_pub/master/secret-music_data.rds"
+download.file(url, "./data/secret_music_data.rds", method = "auto", quiet=FALSE)
+encrypted_music_data <- readRDS("./data/secret_music_data.rds")
+music_data <- unserialize(aes_cbc_decrypt(encrypted_music_data, key = key))
+```
 
+
+```{r, eval=FALSE}
+readRDS("music_data.rds")
+```
+
+```{r message=FALSE, warning=FALSE}
 s.genre <- c("pop","hip hop","rock","rap","indie")
 music_data <- subset(music_data, top.genre %in% s.genre)
 
 music_data$genre_cat <- as.factor(music_data$top.genre)
 music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1), 
     labels = c("not explicit", "explicit"))
+
+head(music_data)
 ```
 
 How can we plot this kind of data? Since we have a categorical variable, we will use a bar plot. However, to be able to use the table for your plot, you first need to assign it to an object as a data frame using the ```as.data.frame()```-function.
@@ -267,7 +287,7 @@ ggplot(music_data,aes(explicit_cat, duration_ms)) +
                   fun.ymax = function(x)mean(x) + sd(x),
                   fun.y= mean,
                   na.rm = T) + 
-  labs(x = "Explicit", y = "Average number of streams")
+  labs(x = "Explicit", y = "Average number of streams")+
   #coord_cartesian(ylim = c(100000, 150000)) +
   theme_bw()
 ```

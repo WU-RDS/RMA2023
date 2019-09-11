@@ -7,6 +7,13 @@ output:
   html_document:
     toc: yes
 ---
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+options(scipen = 999)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+opts_chunk$set(cache=T)
+```
 
 ```{r message=FALSE, warning=FALSE, echo=F, eval=TRUE,paged.print = FALSE}
 options(digits = 3)
@@ -30,19 +37,30 @@ Before we start with regression analysis, we will review the basic concept of co
 
 The correlation coefficient summarizes the strength of the linear relationship between two metric (interval or ratio scaled) variables. Let's consider a simple example. Say you conduct a survey to investigate the relationship between the attitude towards a city and the duration of residency. The "Attitude" variable can take values between 1 (very unfavorable) and 12 (very favorable), and the "duration of residency" is measured in years. Let's further assume for this example that the attitude measurement represents an interval scale (although it is usually not realistic to assume that the scale points on an itemized rating scale have the same distance). To keep it simple, let's further assume that you only asked 12 people. We can create a short data set like this:  
 
-```{r, warning=FALSE}
-music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
-                          sep = ",", 
-                          header = TRUE,
-                          stringsAsFactors = FALSE) #read in data
-head(music_data)
+```{r, include=FALSE}
+library(openssl)
+passphrase <- charToRaw("MRDAnils")
+key <- sha256(passphrase)
+url <- "https://raw.githubusercontent.com/IMSMWU/mrda_data_pub/master/secret-music_data.rds"
+download.file(url, "./data/secret_music_data.rds", method = "auto", quiet=FALSE)
+encrypted_music_data <- readRDS("./data/secret_music_data.rds")
+music_data <- unserialize(aes_cbc_decrypt(encrypted_music_data, key = key))
+```
 
+
+```{r, eval=FALSE}
+readRDS("music_data.rds")
+```
+
+```{r message=FALSE, warning=FALSE}
 s.genre <- c("pop","hip hop","rock","rap","indie")
 music_data <- subset(music_data, top.genre %in% s.genre)
 
 music_data$genre_cat <- as.factor(music_data$top.genre)
 music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1), 
     labels = c("not explicit", "explicit"))
+
+head(music_data)
 ```
 
 

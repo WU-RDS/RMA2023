@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Getting started | Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Getting started | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="course-materials.html">
-<link rel="next" href="data-handling.html">
+<link rel="prev" href="course-materials.html"/>
+<link rel="next" href="data-handling.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -63,7 +63,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -344,17 +343,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">1.3</span> Functions</h2>
 <p>When analyzing data in R, you will access most of the functionalities by calling functions. A <b>function</b> is a piece of code written to carry out a specified task (e.g., the <code>lm()</code>-function to run a linear regression). It may or may not accept arguments or parameters and it may or may not return one or more values. Functions are generally called like this:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">function_name</span>(<span class="dt">arg1 =</span> val1, <span class="dt">arg2 =</span> val2, ...)</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">function_name</span>(<span class="dt">arg1 =</span> val1, <span class="dt">arg2 =</span> val2, ...)</a></code></pre></div>
 <p>To give you an example, let’s use the built-in <code>seq()</code>-function to generate a sequence of numbers. RStudio has some nice features that help you when writing code. For example, when you type “se” and hit TAB, a pop-up shows you possible completions. The more letters you type in, the more precise the suggestions will become and you will notice that after typing in the third letter, a pop-up with possible completions will appear automatically and you can select the desired function using the ↑/↓ arrows and hitting ENTER. The pop-up even reminds you of the arguments that a function takes. If you require more details, you may either press the F1 key or type in <code>?seq</code> and you will find the details for the function in the help tab in the lower right pane. When you have selected the desired function from the pop-up, RStudio will automatically add matching opening and closing parentheses (i.e., go from <code>seq</code> to <code>seq()</code>). Within the parentheses you may now type in the arguments that the function takes. Let’s use <code>seq()</code> to generate a sequence of numbers from 1 to 10. To do this, you may include the argument names (i.e., <code>from =</code>, <code>to =</code>), or just the desired values in the correct order.<br />
 An important thing to note is that R is case-sensitive, meaning that <code>Seq()</code> and <code>seq()</code> are viewed as two different functions by R.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">10</span>) <span class="co">#creates sequence from 1 to 10</span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">10</span>) <span class="co">#creates sequence from 1 to 10</span></a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>) <span class="co">#same result</span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>) <span class="co">#same result</span></a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <p>Note that if you specify the argument names, you may enter them in any order. However, if do not include the argument names you must adhere to the order that is specified for the respective function.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dt">to =</span> <span class="dv">10</span>,<span class="dt">from =</span> <span class="dv">1</span>) <span class="co">#produces desired results</span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">seq</span>(<span class="dt">to =</span> <span class="dv">10</span>,<span class="dt">from =</span> <span class="dv">1</span>) <span class="co">#produces desired results</span></a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">10</span>,<span class="dv">1</span>) <span class="co">#produces reversed sequence</span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">seq</span>(<span class="dv">10</span>,<span class="dv">1</span>) <span class="co">#produces reversed sequence</span></a></code></pre></div>
 <pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
 </div>
 <div id="packages" class="section level2">
@@ -447,8 +446,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
