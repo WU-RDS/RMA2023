@@ -1163,77 +1163,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="directly-import-datasets-from-github-recommended" class="section level4">
 <h4><span class="header-section-number">2.3.1.1</span> Directly import datasets from GitHub (recommended)</h4>
 <p>All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the <code>read.table()</code> function. The <code>header=TRUE</code> argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The <code>sep=&quot;\t&quot;</code>-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat&quot;</span>, </a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="download-and-import-datasets-from-learnwu" class="section level4">
 <h4><span class="header-section-number">2.3.1.2</span> Download and import datasets from “Learn@WU”</h4>
 <p>It is also possible to download the data from the respective folder on the “Learn@WU” platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please <strong>remember to put the data file in the working directory first</strong>. If the import is not working, check your working directory setting using <code>getwd()</code>. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">music_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;music.data.extension&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">music_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;music.data.extension&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="import-data-created-by-other-software-packages" class="section level3">
 <h3><span class="header-section-number">2.3.2</span> Import data created by other software packages</h3>
 <p>Sometimes, you may need to import data files created by other software packages, such as Excel or SPSS. In this section we will use the <code>readxl</code> and <code>haven</code> packages to do this. To import a certain file you should first make sure that the file is stored in your current working directory. You can list all file names in your working directory using the <code>list.files()</code> function. If the file is not there, either copy it to your current working directory, or set your working directory to the folder where the file is located using <code>setwd(&quot;/path/to/file&quot;)</code>. This tells R the folder you are working in. Remember that you have to use <code>/</code> instead of <code>\</code> to specify the path (if you use Windows paths copied from the explorer they will not work). When your file is in your working directory you can simply enter the filename into the respective import command. The import commands offer various options. For more details enter <code>?read_excel</code>, <code>?read_spss</code> after loading the packages.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw">list.files</span>()  <span class="co">#lists all files in the current working directory</span></a>
-<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="co"># setwd(&#39;/path/to/file&#39;) #may be used to change the</span></a>
-<a class="sourceLine" id="cb151-3" data-line-number="3"><span class="co"># working directory to the folder that contains the</span></a>
-<a class="sourceLine" id="cb151-4" data-line-number="4"><span class="co"># desired file</span></a>
-<a class="sourceLine" id="cb151-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb151-6" data-line-number="6"><span class="co"># import excel files</span></a>
-<a class="sourceLine" id="cb151-7" data-line-number="7"><span class="kw">library</span>(readxl)  <span class="co">#load package to import Excel files</span></a>
-<a class="sourceLine" id="cb151-8" data-line-number="8"><span class="kw">excel_sheets</span>(<span class="st">&quot;music_data.xlsx&quot;</span>)</a>
-<a class="sourceLine" id="cb151-9" data-line-number="9">music_data_excel &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;music_data.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;mrda_2016_survey&quot;</span>)  <span class="co"># &#39;sheet=x&#39;&#39; specifies which sheet to import</span></a>
-<a class="sourceLine" id="cb151-10" data-line-number="10"><span class="kw">head</span>(music_data_excel)</a>
-<a class="sourceLine" id="cb151-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb151-12" data-line-number="12"><span class="kw">library</span>(haven)  <span class="co">#load package to import SPSS files</span></a>
-<a class="sourceLine" id="cb151-13" data-line-number="13"><span class="co"># import SPSS files</span></a>
-<a class="sourceLine" id="cb151-14" data-line-number="14">music_data_spss &lt;-<span class="st"> </span><span class="kw">read_sav</span>(<span class="st">&quot;music_data.sav&quot;</span>)</a>
-<a class="sourceLine" id="cb151-15" data-line-number="15"><span class="kw">head</span>(music_data_spss)</a></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">list.files</span>()  <span class="co">#lists all files in the current working directory</span></a>
+<a class="sourceLine" id="cb152-2" data-line-number="2"><span class="co"># setwd(&#39;/path/to/file&#39;) #may be used to change the</span></a>
+<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="co"># working directory to the folder that contains the</span></a>
+<a class="sourceLine" id="cb152-4" data-line-number="4"><span class="co"># desired file</span></a>
+<a class="sourceLine" id="cb152-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb152-6" data-line-number="6"><span class="co"># import excel files</span></a>
+<a class="sourceLine" id="cb152-7" data-line-number="7"><span class="kw">library</span>(readxl)  <span class="co">#load package to import Excel files</span></a>
+<a class="sourceLine" id="cb152-8" data-line-number="8"><span class="kw">excel_sheets</span>(<span class="st">&quot;music_data.xlsx&quot;</span>)</a>
+<a class="sourceLine" id="cb152-9" data-line-number="9">music_data_excel &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;music_data.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;mrda_2016_survey&quot;</span>)  <span class="co"># &#39;sheet=x&#39;&#39; specifies which sheet to import</span></a>
+<a class="sourceLine" id="cb152-10" data-line-number="10"><span class="kw">head</span>(music_data_excel)</a>
+<a class="sourceLine" id="cb152-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb152-12" data-line-number="12"><span class="kw">library</span>(haven)  <span class="co">#load package to import SPSS files</span></a>
+<a class="sourceLine" id="cb152-13" data-line-number="13"><span class="co"># import SPSS files</span></a>
+<a class="sourceLine" id="cb152-14" data-line-number="14">music_data_spss &lt;-<span class="st"> </span><span class="kw">read_sav</span>(<span class="st">&quot;music_data.sav&quot;</span>)</a>
+<a class="sourceLine" id="cb152-15" data-line-number="15"><span class="kw">head</span>(music_data_spss)</a></code></pre></div>
 <p>The import of other file formats works in a very similar way (e.g., Stata, SAS). Please refer to the respective help-files (e.g., <code>?read_dta</code>, <code>?read_sas</code> …) if you wish to import data created by other software packages.</p>
 </div>
 <div id="export-data" class="section level3">
 <h3><span class="header-section-number">2.3.3</span> Export data</h3>
 <p>Exporting to different formats is also easy, as you can just replace “read” with “write” in many of the previously discussed functions (e.g. <code>write.table(object, &quot;file_name&quot;)</code>). This will save the data file to the working directory. To check what the current working directory is you can use <code>getwd()</code>. By default, the <code>write.table(object, &quot;file_name&quot;)</code>function includes the row number as the first variable. By specifying <code>row.names = FALSE</code>, you may exclude this variable since it doesn’t contain any useful information.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">write.table</span>(music_data, <span class="st">&quot;musicData.dat&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb152-2" data-line-number="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)  <span class="co">#writes to a tab-delimited text file</span></a>
-<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="kw">write.table</span>(music_data, <span class="st">&quot;musicData.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb152-4" data-line-number="4">    <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>)  <span class="co">#writes to a comma-separated value file </span></a>
-<a class="sourceLine" id="cb152-5" data-line-number="5"><span class="kw">write_sav</span>(music_data, <span class="st">&quot;my_file.sav&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw">write.table</span>(music_data, <span class="st">&quot;musicData.dat&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb153-2" data-line-number="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)  <span class="co">#writes to a tab-delimited text file</span></a>
+<a class="sourceLine" id="cb153-3" data-line-number="3"><span class="kw">write.table</span>(music_data, <span class="st">&quot;musicData.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb153-4" data-line-number="4">    <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>)  <span class="co">#writes to a comma-separated value file </span></a>
+<a class="sourceLine" id="cb153-5" data-line-number="5"><span class="kw">write_sav</span>(music_data, <span class="st">&quot;my_file.sav&quot;</span>)</a></code></pre></div>
 </div>
 <div id="import-data-from-the-web" class="section level3">
 <h3><span class="header-section-number">2.3.4</span> Import data from the Web</h3>
 <div id="scraping-data-from-websites" class="section level4">
 <h4><span class="header-section-number">2.3.4.1</span> Scraping data from websites</h4>
 <p>Sometimes you may come across interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the <code>rvest</code> package. Let’s assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is <code>&lt;table&gt;</code>. So let’s read the entire website using <code>read_html(url)</code> and filter all tables using <code>read_html(html_nodes(...,&quot;table&quot;))</code>.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
-<a class="sourceLine" id="cb153-2" data-line-number="2">url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population&quot;</span></a>
-<a class="sourceLine" id="cb153-3" data-line-number="3">population &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)</a>
-<a class="sourceLine" id="cb153-4" data-line-number="4">population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(population, <span class="st">&quot;table.wikitable&quot;</span>)</a>
-<a class="sourceLine" id="cb153-5" data-line-number="5"><span class="kw">print</span>(population)</a></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
+<a class="sourceLine" id="cb154-2" data-line-number="2">url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population&quot;</span></a>
+<a class="sourceLine" id="cb154-3" data-line-number="3">population &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)</a>
+<a class="sourceLine" id="cb154-4" data-line-number="4">population &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(population, <span class="st">&quot;table.wikitable&quot;</span>)</a>
+<a class="sourceLine" id="cb154-5" data-line-number="5"><span class="kw">print</span>(population)</a></code></pre></div>
 <pre><code>## {xml_nodeset (1)}
 ## [1] &lt;table class=&quot;wikitable sortable&quot; style=&quot;text-align:right&quot;&gt;&lt;tbody&gt;\n ...</code></pre>
 <p>The output shows that there are two tables on the website and the first one appears to contain the relevant information. So let’s read the first table using the <code>html_table()</code> function. Note that <code>population</code> is of class “list”. A list is a vector that has other R objects (e.g., other vectors, data frames, matrices, etc.) as its elements. If we want to access the data of one of the elements, we have to use two square brackets on each side instead of just one (e.g., <code>population[[1]]</code> gets us the first table from the list of tables on the website; the argument <code>fill = TRUE</code> ensures that empty cells are replaced with missing values when reading the table).</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">population &lt;-<span class="st"> </span>population[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_table</span>(<span class="dt">fill =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb155-2" data-line-number="2"><span class="kw">head</span>(population)  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1">population &lt;-<span class="st"> </span>population[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_table</span>(<span class="dt">fill =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb156-2" data-line-number="2"><span class="kw">head</span>(population)  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1,399,070,000","4":"September 11, 2019","5":"18.1%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1,352,150,000","4":"September 11, 2019","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"329,878,000","4":"September 11, 2019","5":"4.27%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"268,074,600","4":"July 1, 2019","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Brazil","3":"210,424,000","4":"September 11, 2019","5":"2.72%","6":"Official population clock"},{"1":"6","2":"Pakistan","3":"205,975,000","4":"September 11, 2019","5":"2.66%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>You can see that population is read as a character variable because of the commas.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="kw">class</span>(population<span class="op">$</span>Population)</a></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">class</span>(population<span class="op">$</span>Population)</a></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <p>If we wanted to use this variable for some kind of analysis, we would first need to convert it to numeric format using the <code>as.numeric()</code> function. However, before we can do this, we can use the <code>str_replace_all()</code> function from the stringr package, which replaces all matches of a string. In our case, we would like to replace the commas (<code>&quot;,&quot;</code>) with nothing (<code>&quot;&quot;</code>).</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1"><span class="kw">library</span>(stringr)</a>
-<a class="sourceLine" id="cb158-2" data-line-number="2">population<span class="op">$</span>Population &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">str_replace_all</span>(population<span class="op">$</span>Population, </a>
-<a class="sourceLine" id="cb158-3" data-line-number="3">    <span class="dt">pattern =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>))  <span class="co">#convert to numeric</span></a>
-<a class="sourceLine" id="cb158-4" data-line-number="4"><span class="kw">head</span>(population)  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb159-2" data-line-number="2">population<span class="op">$</span>Population &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">str_replace_all</span>(population<span class="op">$</span>Population, </a>
+<a class="sourceLine" id="cb159-3" data-line-number="3">    <span class="dt">pattern =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>))  <span class="co">#convert to numeric</span></a>
+<a class="sourceLine" id="cb159-4" data-line-number="4"><span class="kw">head</span>(population)  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country(or dependent territory)"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Date"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of worldpopulation"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"China[Note 2]","3":"1399070000","4":"September 11, 2019","5":"18.1%","6":"Official population clock"},{"1":"2","2":"India[Note 3]","3":"1352150000","4":"September 11, 2019","5":"17.5%","6":"Official population clock"},{"1":"3","2":"United States[Note 4]","3":"329878000","4":"September 11, 2019","5":"4.27%","6":"Official population clock"},{"1":"4","2":"Indonesia","3":"268074600","4":"July 1, 2019","5":"3.47%","6":"Official annual projection"},{"1":"5","2":"Brazil","3":"210424000","4":"September 11, 2019","5":"2.72%","6":"Official population clock"},{"1":"6","2":"Pakistan","3":"205975000","4":"September 11, 2019","5":"2.66%","6":"Official population clock"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now the variable is of type “numeric” and could be used for analysis.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="kw">class</span>(population<span class="op">$</span>Population)</a></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1"><span class="kw">class</span>(population<span class="op">$</span>Population)</a></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
 </div>
 <div id="scraping-data-from-apis" class="section level4">
@@ -1254,10 +1256,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Store, process or analyze data according the marketing research question.</li>
 </ul>
 <p>Let’s assume that you would like to obtain population data again. The World Bank has an API that allows you to easily obtain this kind of data. The details are usually provided in the API reference, e.g., <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-api-documentation" target="_blank">here</a>. You simply “call” the API for the desired information and get a structured JSON file with the desired key-value pairs in return. For example, the population for Austria from 1960 to 2016 can be obtained using <a href="http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&format=json&per_page=100" target="_blank">this call</a>. The file can be easily read into R using the <code>fromJSON()</code>-function from the <code>jsonlite</code>-package. Again, the result is a list and the second element <code>ctrydata[[2]]</code> contains the desired data, from which we select the “value” and “data” columns using the square brackets as usual <code>[,c(&quot;value&quot;,&quot;date&quot;)]</code></p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">library</span>(jsonlite)</a>
-<a class="sourceLine" id="cb161-2" data-line-number="2">url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span>  <span class="co">#specifies url</span></a>
-<a class="sourceLine" id="cb161-3" data-line-number="3">ctrydata &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url)  <span class="co">#parses the data </span></a>
-<a class="sourceLine" id="cb161-4" data-line-number="4"><span class="kw">str</span>(ctrydata)</a></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="kw">library</span>(jsonlite)</a>
+<a class="sourceLine" id="cb162-2" data-line-number="2">url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span>  <span class="co">#specifies url</span></a>
+<a class="sourceLine" id="cb162-3" data-line-number="3">ctrydata &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url)  <span class="co">#parses the data </span></a>
+<a class="sourceLine" id="cb162-4" data-line-number="4"><span class="kw">str</span>(ctrydata)</a></code></pre></div>
 <pre><code>## List of 2
 ##  $ :List of 4
 ##   ..$ page    : int 1
@@ -1274,7 +1276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   ..$ value    : chr [1:57] &quot;8736668&quot; &quot;8642699&quot; &quot;8546356&quot; &quot;8479823&quot; ...
 ##   ..$ decimal  : chr [1:57] &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; ...
 ##   ..$ date     : chr [1:57] &quot;2016&quot; &quot;2015&quot; &quot;2014&quot; &quot;2013&quot; ...</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="kw">head</span>(ctrydata[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;value&quot;</span>, <span class="st">&quot;date&quot;</span>)])  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">head</span>(ctrydata[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;value&quot;</span>, <span class="st">&quot;date&quot;</span>)])  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["value"],"name":[1],"type":["chr"],"align":["left"]},{"label":["date"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"8736668","2":"2016"},{"1":"8642699","2":"2015"},{"1":"8546356","2":"2014"},{"1":"8479823","2":"2013"},{"1":"8429991","2":"2012"},{"1":"8391643","2":"2011"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1284,26 +1286,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="scraping-data-from-apis-via-r-packages" class="section level5">
 <h5><span class="header-section-number">2.3.4.2.2</span> Scraping data from APIs via R packages</h5>
 <p>An even more convenient way to obtain data from web APIs is to use existing R packages that someone else has already created. There are R packages available for various web-services. For example, the <code>gtrendsR</code> package can be used to conveniently obtain data from the <a href="https://trends.google.at/trends/" target="_blank">Google Trends</a> page. The <code>gtrends()</code> function is easy to use and returns a list of elements (e.g., “interest over time”, “interest by city”, “related topics”), which can be inspected using the <code>ls()</code> function. The following example can be used to obtain data for the search term “data science” in the US between September 1 and October 6:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">library</span>(gtrendsR)</a>
-<a class="sourceLine" id="cb164-2" data-line-number="2">index =<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb164-3" data-line-number="3">success =<span class="st"> </span><span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb164-4" data-line-number="4"><span class="cf">while</span> (<span class="op">!</span>(success <span class="op">|</span><span class="st"> </span>index <span class="op">==</span><span class="st"> </span><span class="dv">10</span>)) {</a>
-<a class="sourceLine" id="cb164-5" data-line-number="5">    google_trends &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">gtrends</span>(<span class="st">&quot;data science&quot;</span>, <span class="dt">geo =</span> <span class="kw">c</span>(<span class="st">&quot;US&quot;</span>), </a>
-<a class="sourceLine" id="cb164-6" data-line-number="6">        <span class="dt">gprop =</span> <span class="kw">c</span>(<span class="st">&quot;web&quot;</span>), <span class="dt">time =</span> <span class="st">&quot;2017-09-01 2017-10-06&quot;</span>), </a>
-<a class="sourceLine" id="cb164-7" data-line-number="7">        <span class="dt">silent =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb164-8" data-line-number="8">    </a>
-<a class="sourceLine" id="cb164-9" data-line-number="9">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is</span>(google_trends, <span class="st">&quot;try-error&quot;</span>)) {</a>
-<a class="sourceLine" id="cb164-10" data-line-number="10">        <span class="kw">ls</span>(google_trends)</a>
-<a class="sourceLine" id="cb164-11" data-line-number="11">        <span class="kw">head</span>(google_trends<span class="op">$</span>interest_over_time)</a>
-<a class="sourceLine" id="cb164-12" data-line-number="12">        success =<span class="st"> </span><span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb164-13" data-line-number="13">    } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb164-14" data-line-number="14">        index =<span class="st"> </span>index <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb164-15" data-line-number="15">        <span class="kw">Sys.sleep</span>(<span class="kw">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb164-16" data-line-number="16">    }</a>
-<a class="sourceLine" id="cb164-17" data-line-number="17">}</a>
-<a class="sourceLine" id="cb164-18" data-line-number="18"><span class="cf">if</span> (success <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>) {</a>
-<a class="sourceLine" id="cb164-19" data-line-number="19">    <span class="kw">warning</span>(<span class="st">&quot;Google Trends has exited unsuccessfully&quot;</span>)</a>
-<a class="sourceLine" id="cb164-20" data-line-number="20">}</a></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw">library</span>(gtrendsR)</a>
+<a class="sourceLine" id="cb165-2" data-line-number="2">index =<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb165-3" data-line-number="3">success =<span class="st"> </span><span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb165-4" data-line-number="4"><span class="cf">while</span> (<span class="op">!</span>(success <span class="op">|</span><span class="st"> </span>index <span class="op">==</span><span class="st"> </span><span class="dv">10</span>)) {</a>
+<a class="sourceLine" id="cb165-5" data-line-number="5">    google_trends &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">gtrends</span>(<span class="st">&quot;data science&quot;</span>, <span class="dt">geo =</span> <span class="kw">c</span>(<span class="st">&quot;US&quot;</span>), </a>
+<a class="sourceLine" id="cb165-6" data-line-number="6">        <span class="dt">gprop =</span> <span class="kw">c</span>(<span class="st">&quot;web&quot;</span>), <span class="dt">time =</span> <span class="st">&quot;2017-09-01 2017-10-06&quot;</span>), </a>
+<a class="sourceLine" id="cb165-7" data-line-number="7">        <span class="dt">silent =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb165-8" data-line-number="8">    </a>
+<a class="sourceLine" id="cb165-9" data-line-number="9">    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is</span>(google_trends, <span class="st">&quot;try-error&quot;</span>)) {</a>
+<a class="sourceLine" id="cb165-10" data-line-number="10">        <span class="kw">ls</span>(google_trends)</a>
+<a class="sourceLine" id="cb165-11" data-line-number="11">        <span class="kw">head</span>(google_trends<span class="op">$</span>interest_over_time)</a>
+<a class="sourceLine" id="cb165-12" data-line-number="12">        success =<span class="st"> </span><span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb165-13" data-line-number="13">    } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb165-14" data-line-number="14">        index =<span class="st"> </span>index <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb165-15" data-line-number="15">        <span class="kw">Sys.sleep</span>(<span class="kw">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb165-16" data-line-number="16">    }</a>
+<a class="sourceLine" id="cb165-17" data-line-number="17">}</a>
+<a class="sourceLine" id="cb165-18" data-line-number="18"><span class="cf">if</span> (success <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>) {</a>
+<a class="sourceLine" id="cb165-19" data-line-number="19">    <span class="kw">warning</span>(<span class="st">&quot;Google Trends has exited unsuccessfully&quot;</span>)</a>
+<a class="sourceLine" id="cb165-20" data-line-number="20">}</a></code></pre></div>
 
 </div>
 </div>
