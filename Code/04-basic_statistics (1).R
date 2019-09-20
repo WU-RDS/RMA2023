@@ -22,10 +22,12 @@ options(scipen = 999, digits = 2)
 
 # Load data
 ## ------------------------------------------------------------------------
-music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
-                       sep = ",", 
-                       header = TRUE,
-                       stringsAsFactors = FALSE) #read in data
+library(openssl)
+url <- "https://raw.githubusercontent.com/IMSMWU/mrda_data_pub/master/secret-music_data.rds"
+download.file(url, "./data/secret_music_data.rds", method = "auto", quiet=FALSE)
+encrypted_music_data <- readRDS("./data/secret_music_data.rds")
+music_data <- unserialize(aes_cbc_decrypt(encrypted_music_data, key = key))
+
 head(music_data)
 
 # The as.factor function can transform characters into factors

@@ -1,4 +1,4 @@
-# The following code is taken from the fourth chapter of the online script, which provides more detailed explanations:
+    # The following code is taken from the fourth chapter of the online script, which provides more detailed explanations:
 # https://imsmwu.github.io/MRDA2018/_book/regression.html
 
 
@@ -18,16 +18,23 @@ options(scipen = 999) #deactivate scientific notation
 #----------------------------Correlation----------------------------#
 #-------------------------------------------------------------------#
 
-# Create data set
+# Read in data and transform variables into factors
 ## ------------------------------------------------------------------------
-library(psych)
-attitude <- c(6,9,8,3,10,4,5,2,11,9,10,2)
-duration <- c(10,12,12,4,12,6,8,2,18,9,17,2)
-att_data <- data.frame(attitude, duration)
-att_data <- att_data[order(-attitude), ]
-att_data$respodentID <- c(1:12)
-str(att_data)
-psych::describe(att_data[, c("attitude","duration")])
+library(openssl)
+url <- "https://raw.githubusercontent.com/IMSMWU/mrda_data_pub/master/secret-music_data.rds"
+download.file(url, "./data/secret_music_data.rds", method = "auto", quiet=FALSE)
+encrypted_music_data <- readRDS("./data/secret_music_data.rds")
+music_data <- unserialize(aes_cbc_decrypt(encrypted_music_data, key = key))
+
+s.genre <- c("pop","hip hop","rock","rap","indie")
+music_data <- subset(music_data, top.genre %in% s.genre)
+
+music_data$genre_cat <- as.factor(music_data$top.genre)
+music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1), 
+                                  labels = c("not explicit", "explicit"))
+
+head(music_data)
+
 
 # Scatterplot
 ## ------------------------------------------------------------------------

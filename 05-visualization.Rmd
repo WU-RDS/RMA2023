@@ -279,7 +279,6 @@ ggplot(music_data,aes(x = "", y = mstreams)) +
 Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot's layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a ```geom_pointrange()``` layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in ```geom_bar()```, namely ```stat = ```, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. ```geom_bar()``` typically uses the ```count``` stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling ```geom_bar()``` explicitly that we want to use a different stat we can override its behavior, forcing it to create a bar plot of the means.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Plot of means"}
-music_data2 <- music_data[music_data$duration_ms,]
 ggplot(music_data,aes(explicit_cat, duration_ms)) + 
   geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7, na.rm=T) +
   geom_pointrange(stat = "summary",
@@ -288,7 +287,6 @@ ggplot(music_data,aes(explicit_cat, duration_ms)) +
                   fun.y= mean,
                   na.rm = T) + 
   labs(x = "Explicit", y = "Average number of streams")+
-  #coord_cartesian(ylim = c(100000, 150000)) +
   theme_bw()
 ```
 
@@ -366,13 +364,13 @@ ggplot(ctrydata_at, aes(x = date, y = value)) +
 To save the last displayed plot, simply use the function ```ggsave()```, and it will save the plot to your working directory. Use the arguments ```height```and ```width``` to specify the size of the file. You may also choose the file format by adjusting the ending of the file name. E.g., ```file_name.jpg``` will create a file in JPG-format, whereas ```file_name.png``` saves the file in PNG-format, etc.. 
 
 ```{r eval=FALSE}
-ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regression_cat)) + 
+ggplot(table_plot_rel, aes(x = genre_cat, y = popularity_factor)) + 
   geom_tile(aes(fill = Freq)) + 
-  ylab("Practical knowledge") + 
-  xlab("Theoretical knowledge") + 
+  ylab("Popularity") + 
+  xlab("Genre") + 
   theme_bw()
 
-ggsave("theory_practice_regression.jpg", height = 5, width = 7.5)
+ggsave("popularity_genre_regression.jpg", height = 5, width = 7.5)
 ```
 
 ### Additional options

@@ -20,34 +20,36 @@ lapply(req_pacakges, install.packages)
 
 # Read in data and transform variables into factors
 ## ------------------------------------------------------------------------
-test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat", 
-                        sep = "\t", 
-                        header = TRUE)
-head(test_data)
+library(openssl)
+url <- "https://raw.githubusercontent.com/IMSMWU/mrda_data_pub/master/secret-music_data.rds"
+download.file(url, "./data/secret_music_data.rds", method = "auto", quiet=FALSE)
+encrypted_music_data <- readRDS("./data/secret_music_data.rds")
+music_data <- unserialize(aes_cbc_decrypt(encrypted_music_data, key = key))
 
-test_data$overall_knowledge_cat <- factor(test_data$overall_knowledge, 
-                                          levels = c(1:5), 
-                                          labels = c("none", "basic", "intermediate","advanced","proficient"))
+s.genre <- c("pop","hip hop","rock","rap","indie")
+music_data <- subset(music_data, top.genre %in% s.genre)
 
-test_data$gender_cat <- factor(test_data$gender, 
-                               levels = c(1:2), 
-                               labels = c("male", "female"))
+music_data$genre_cat <- as.factor(music_data$top.genre)
+music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1), 
+                                  labels = c("not explicit", "explicit"))
+
+head(music_data)
 
 # Calculate relative frequencies and transform into a data frame
 ## ------------------------------------------------------------------------
-table_plot_rel <- as.data.frame(prop.table(table(test_data[,c("overall_knowledge_cat")]))) #relative frequencies
+table_plot_rel <- as.data.frame(prop.table(table(music_data[,c("genre_cat")]))) #relative frequencies
 head(table_plot_rel)
 
 # Rename a variable with the help of the plyr package
 ## ------------------------------------------------------------------------
 library(plyr)
-table_plot_rel <- plyr::rename(table_plot_rel, c(Var1="overall_knowledge"))
+table_plot_rel <- plyr::rename(table_plot_rel, c(Var1="Genre"))
 head(table_plot_rel)
 
 # Create an empty plot
 ## ------------------------------------------------------------------------
 library(ggplot2)
-bar_chart <- ggplot(table_plot_rel, aes(x = overall_knowledge,y = Freq))
+bar_chart <- ggplot(table_plot_rel, aes(x = Genre,y = Freq))
 bar_chart
 
 # Add a bar chart geom
@@ -58,20 +60,20 @@ bar_chart + geom_col()
 ## ------------------------------------------------------------------------
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
-  xlab("Overall Knowledge") 
+  xlab("Genre") 
 
 # Add value labels
 ## ------------------------------------------------------------------------
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
-  xlab("Overall Knowledge") + 
+  xlab("Genre") + 
   geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) 
 
 # Add theme
 ## ------------------------------------------------------------------------
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
-  xlab("Overall Knowledge") + 
+  xlab("Genre") + 
   geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_bw()
 
@@ -79,7 +81,7 @@ bar_chart + geom_col() +
 ## ------------------------------------------------------------------------
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
-  xlab("Overall Knowledge") + 
+  xlab("Genre") + 
   geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_minimal()
 
@@ -88,58 +90,58 @@ bar_chart + geom_col() +
 library(ggthemes)
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
-  xlab("Overall Knowledge") + 
+  xlab("Genre") + 
   theme_economist()
 
 # Plot conditional relative frequencies
 ## ------------------------------------------------------------------------
-table_plot_cond_rel <- as.data.frame(prop.table(table(test_data[,c("overall_knowledge_cat","gender_cat")]), 2)) #conditional relative frequencies
-
+table_plot_cond_rel <- as.data.frame(prop.table(table(music_data[,c("genre_cat", "explicit_cat")]), 2))  #conditional relative frequencies
 # Use the face_wrap() function to split plot by gender variable
 ## ------------------------------------------------------------------------
-ggplot(table_plot_cond_rel, aes(x = overall_knowledge_cat, y = Freq)) + 
+ggplot(table_plot_cond_rel, aes(x = genre_cat, y = Freq)) + 
   geom_col() + 
-  facet_wrap(~ gender_cat) + 
-  ylab("Absolute frequency") + 
-  xlab("Overall Knowledge") + 
-  theme_bw() 
+  facet_wrap(~explicit_cat) + 
+  ylab("Conditional relative frequency") + 
+  xlab("Genre") + 
+  theme_bw()
 
 # Use "fill = gender" and "position = dodge" arguments to plot bars in different colour by gender next to each other 
 ## ------------------------------------------------------------------------
-ggplot(table_plot_cond_rel, aes(x = overall_knowledge_cat, y = Freq, fill = gender_cat)) + #use "fill" argument for different colors
+ggplot(table_plot_cond_rel, aes(x = genre_cat, y = Freq, fill = explicit_cat)) + #use "fill" argument for different colors
   geom_col(position = "dodge") + #use "dodge" to display bars next to each other (instead of stacked on top)
   geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)),position=position_dodge(width=0.9), vjust=-0.25) +
   ylab("Conditional relative frequency") + 
-  xlab("Overall Knowledge") + 
+  xlab("Genre") + 
   theme_bw() 
 
 # Investigate relation between theoretical and practical knowledge in regression analysis
 ## ------------------------------------------------------------------------
-test_data$Theory_Regression_cat <- factor(test_data$theory_reg, 
-                                          levels = c(1:5), 
-                                          labels = c("none", "basic", "intermediate", "advanced", "proficient"))
+music_data$genre_cat <- as.factor(music_data$top.genre)
 
-test_data$Practice_Regression_cat <- factor(test_data$pract_reg, 
-                                            levels = c(1:5), 
-                                            labels = c("Definitely not", "Probably not", "Might or might not", "Probably yes", "Definitely yes"))
+music_data$popularity_factor <- cut(music_data$trackPopularity, 
+                                    breaks = c(-Inf, 40, 60, Inf), labels = c("low", 
+                                                                              "middle", "high"))
 
 # Plot frequency count of co-occurences
 ## ------------------------------------------------------------------------
-ggplot(data = test_data) + 
-  geom_count(aes(x = Theory_Regression_cat, y = Practice_Regression_cat))  + 
-  ylab("Practical knowledge") + 
-  xlab("Theoretical knowledge") + 
+ggplot(data = music_data) + geom_count(aes(x = genre_cat, y = popularity_factor, size = stat(prop), group = genre_cat)) + 
+  ylab("Popularity") + 
+  xlab("Genre") + 
+  labs(size = "Proportion") + 
   theme_bw()
 
 # Contingency table
 ## ------------------------------------------------------------------------
-table_plot_abs_reg <- as.data.frame(table(test_data[,c("Theory_Regression_cat", "Practice_Regression_cat")])) #absolute frequencies
+table_plot_rel <- prop.table(table(music_data[, c("genre_cat", 
+                                                  "popularity_factor")]), 1)
+table_plot_rel <- as.data.frame(table_plot_rel)
+
 
 # Tile plot
-ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regression_cat)) + 
+ggplot(table_plot_rel, aes(x = genre_cat, y = popularity_factor)) + 
   geom_tile(aes(fill = Freq)) + 
-  ylab("Practical knowledge") + 
-  xlab("Theoretical knowledge") + 
+  ylab("Popularity") + 
+  xlab("Genre") + 
   theme_bw()
 
 
@@ -147,84 +149,73 @@ ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regressio
 #----------------------Continuous variables-------------------------#
 #-------------------------------------------------------------------#
 
-# Load data
-## ------------------------------------------------------------------------
-adv_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/advertising_sales.dat", 
-                       sep = "\t", 
-                       header = TRUE)
-
-adv_data$store <- factor(adv_data$store, levels = c(1:2), labels = c("store1", "store2")) #convert to factor
-
-head(adv_data)
-
 # Histogram
 ## ------------------------------------------------------------------------
-ggplot(adv_data) + 
-  geom_histogram(aes(sales), binwidth = 3000, col = "black", fill = "darkblue") + 
-  labs(x = "Number of sales", y = "Frequency") + 
+ggplot(music_data, aes(mstreams)) + geom_histogram(binwidth = 3000, col = "black", fill = "darkblue") + 
+  labs(x = "Number of streams", y = "Frequency") + 
   theme_bw()
 
 # Grouped Boxplot
 ## ------------------------------------------------------------------------
-ggplot(adv_data,aes(x = store, y = sales)) +
-  geom_boxplot() + 
-  labs(x = "Store ID", y = "Number of sales") + 
+ggplot(music_data, aes(x = explicit_cat, y = mstreams)) + 
+  geom_boxplot(coef = 3) + labs(x = "Explicit", y = "Number of streams") + 
   theme_bw()
+
 
 # Grouped Boxplot with augmented data points
 ## ------------------------------------------------------------------------
-ggplot(adv_data,aes(x = store, y = sales)) +
-  geom_boxplot() + 
-  geom_jitter(colour="red", alpha = 0.2) +
-  labs(x = "Store ID", y = "Number of sales") + 
+ggplot(music_data, aes(x = explicit_cat, y = mstreams)) + 
+  geom_boxplot(coef = 3) + geom_jitter(colour = "red", alpha = 0.2) + 
+  labs(x = "Explicit", y = "Number of streams") + 
   theme_bw()
 
 # Single Boxplot
 ## ------------------------------------------------------------------------
-ggplot(adv_data,aes(x = "", y = sales)) +
-  geom_boxplot() + 
-  labs(x = "Total", y = "Number of sales") + 
+ggplot(music_data, aes(x = "", y = mstreams)) + 
+  geom_boxplot(coef = 3) + 
+  labs(x = "Total", y = "Number of streams") + 
   theme_bw()
 
 # Plot of means
 ## ------------------------------------------------------------------------
-ggplot(adv_data, aes(store, sales)) + 
-  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
-  geom_pointrange(stat = "summary") + 
-  labs(x = "Store ID", y = "Average number of sales") +
-  coord_cartesian(ylim = c(100000, 130000)) +
+ggplot(music_data, aes(explicit_cat, duration_ms)) + 
+  geom_bar(stat = "summary", color = "black", fill = "white", width = 0.7, na.rm = T) + 
+  geom_pointrange(stat = "summary",fun.ymin = function(x) mean(x) - sd(x), fun.ymax = function(x) mean(x) + 
+                  sd(x), fun.y = mean, na.rm = T) + 
+  labs(x = "Explicit",y = "Average number of streams") +
   theme_bw()
 
 # Scatter plot
 ## ------------------------------------------------------------------------
-ggplot(adv_data, aes(advertising, sales)) + 
+ggplot(music_data, aes(log(adv_spending), mstreams)) + 
   geom_point() +
   geom_smooth(method = "lm", fill = "blue", alpha = 0.1) +
-  labs(x = "Advertising expenditures (EUR)", y = "Number of sales", colour = "store") + 
-  theme_bw()
+  labs(x = "Advertising expenditures (EUR)", y = "Number of streams") + 
+  theme_bw() 
 
 # Grouped scatter plot (using the "colour" argument)
 ## ------------------------------------------------------------------------
-ggplot(adv_data, aes(advertising, sales, colour = store)) +
+ggplot(music_data, aes(log(adv_spending), mstreams, colour = explicit_cat)) +
   geom_point() + 
   geom_smooth(method="lm", alpha = 0.1) + 
-  labs(x = "Advertising expenditures (EUR)", y = "Number of sales", colour="store") + 
+  labs(x = "Advertising expenditures (EUR)", y = "Number of streams", colour="Explicit") + 
   theme_bw()
 
 # Combination of scatter plot and histogram
 ## ------------------------------------------------------------------------
 library(ggExtra)
-p <- ggplot(adv_data, aes(advertising, sales)) + 
+p <- ggplot(music_data, aes(log(adv_spending), mstreams)) + 
   geom_point() +
-  labs(x = "Advertising expenditures (EUR)", y = "Number of sales", colour = "store") + 
+  labs(x = "Advertising expenditures (EUR)", y = "Number of strams", colour = "store") + 
   theme_bw() 
 ggExtra::ggMarginal(p, type = "histogram")
 
 # Line plot
 ## ------------------------------------------------------------------------
 library(jsonlite)
+library(jsonlite)
 #specifies url
-url <- "http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2017&format=json&per_page=100" 
+url <- "http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&format=json&per_page=100" 
 ctrydata_at <- fromJSON(url) #parses the data 
 head(ctrydata_at[[2]][, c("value", "date")]) #checks if we scraped the desired data
 ctrydata_at <- ctrydata_at[[2]][, c("date","value")]
@@ -240,13 +231,13 @@ ggplot(ctrydata_at, aes(x = date, y = value)) +
 
 # Save plots using ggsave()
 ## ------------------------------------------------------------------------
-ggplot(table_plot_abs_reg, aes(x = Theory_Regression_cat, y = Practice_Regression_cat)) +
-   geom_tile(aes(fill = Freq)) +
-   ylab("Practical knowledge") +
-   xlab("Theoretical knowledge") +
-   theme_bw()
- 
- ggsave("theory_practice_regression.jpg", height = 5, width = 7.5)
+ggplot(table_plot_rel, aes(x = genre_cat, y = popularity_factor)) + 
+  geom_tile(aes(fill = Freq)) + 
+  ylab("Popularity") + 
+  xlab("Genre") + 
+  theme_bw()
+
+ggsave("popularity_genre_regression.jpg", height = 5, width = 7.5)
 
 
 #-------------------------------------------------------------------#

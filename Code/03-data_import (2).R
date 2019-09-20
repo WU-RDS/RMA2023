@@ -22,14 +22,11 @@ devtools::install_github('PMassicotte/gtrendsR', force = TRUE)
 #-------------------Getting data for this course--------------------#
 #-------------------------------------------------------------------#
 
-# read.table can be used to read data from sites (as done here) or from local files
-music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
-                        sep = "\t", 
-                        header = TRUE)
-
-music_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
-                         sep = ",", 
-                         header = TRUE) #read in data
+library(openssl)
+url <- "https://raw.githubusercontent.com/IMSMWU/mrda_data_pub/master/secret-music_data.rds"
+download.file(url, "./data/secret_music_data.rds", method = "auto", quiet=FALSE)
+encrypted_music_data <- readRDS("./data/secret_music_data.rds")
+music_data <- unserialize(aes_cbc_decrypt(encrypted_music_data, key = key))
 
 
 # If music_file is in your working directory, this would be the way to import it
