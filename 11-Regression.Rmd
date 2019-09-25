@@ -35,7 +35,7 @@ Before we start with regression analysis, we will review the basic concept of co
 
 ### Correlation coefficient
 
-The correlation coefficient summarizes the strength of the linear relationship between two metric (interval or ratio scaled) variables. Let's consider a simple example. Say you conduct a survey to investigate the relationship between the attitude towards a city and the duration of residency. The "Attitude" variable can take values between 1 (very unfavorable) and 12 (very favorable), and the "duration of residency" is measured in years. Let's further assume for this example that the attitude measurement represents an interval scale (although it is usually not realistic to assume that the scale points on an itemized rating scale have the same distance). To keep it simple, let's further assume that you only asked 12 people. We can create a short data set like this:  
+The correlation coefficient summarizes the strength of the linear relationship between two metric (interval or ratio scaled) variables. Let's consider a simple example. Say you collect music data from Spotify with variables describing the acoustic features of a song. In this case we will be using "loudness" and "energy". The "energy" variable can take values between 0 (unenergetic) and 1 (very energetic), and the "loudness" is measured in decibels (dB) with values typically ranging between -60 and 0 dB. For more detailed Information you can have a look at the [Spotify documentation](https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/).
 
 ```{r, include=FALSE}
 library(openssl)
@@ -63,22 +63,9 @@ music_data$explicit_cat <- factor(music_data$explicit, levels = c(0:1),
 head(music_data)
 ```
 
+Let's look at the data. The following graph shows the individual data points for the "energy"" variable, where the black vertical line represents the mean of the variable (`r round(mean(music_data$energy, na.rm=T),2)`).
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE,paged.print = FALSE}
-#library(psych)
-#attitude <- c(6,9,8,3,10,4,5,2,11,9,10,2)
-#duration <- c(10,12,12,4,12,6,8,2,18,9,17,2)
-#att_data <- data.frame(attitude, duration)
-#att_data <- att_data[order(-attitude), ]
-#att_data$respodentID <- c(1:12)
-#str(att_data)
-#psych::describe(att_data[, c("attitude","duration")])
-#att_data
-```
-
-Let's look at the data. The following graph shows the individual data points for the "duration of residency"" variable, where the blue horizontal line represents the mean of the variable (`r round(mean(music_data$energy, na.rm=T),2)`) and the vertical lines show the distance of the individual data points from the mean.
-
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scores for duration of residency variable"}
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Observations for the energy variable"}
 library(ggplot2)
 #h <- round(mean(att_data$duration), 2)
 
@@ -106,13 +93,13 @@ ggplot(music_data) +
 #  theme_bw()
 ```
 
-You can see that there are some respondents that have been living in the city longer than average and some respondents that have been living in the city shorter than average. Let's do the same for the second variable ("Attitude"): 
+You can see that the data for the "energy" variable looks like a normal distribution with a positive skew (lower values are more likely than higher ones).
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scores for attitude variable"}
 
 ggplot(music_data) +
   geom_histogram(aes(loudness), bins = 50, fill = 'white', color = '#f9756d') +
-  geom_vline(aes(xintercept = mean(energy, na.rm=T)), color='black', size=1) +
+  geom_vline(aes(xintercept = mean(loudness, na.rm=T)), color='black', size=1) +
   labs(title = "Histogram of loudness",
        #subtitle = TeX(sprintf("Population mean ($\\mu$) = %.2f; population standard deviation ($\\sigma$) = %.2f",round(mean(hours),2),round(sd(hours),2))),
        y = 'Number of observations', 
@@ -159,7 +146,7 @@ ggplot(music_data, aes(energy, loudness)) +
 #  theme_bw()
 ```
 
-We can see that there is indeed some co-movement here. The variables <b>covary</b> because respondents who have an above (below) average attitude towards the city also appear to have been living in the city for an above (below) average amount of time and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterplot to visualize the relationship between two metric variables:
+We can see that there is indeed some co-movement here. The variables <b>covary</b> because tracks that are very energetic and intense probably also have a higher level of decibles and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterplot to visualize the relationship between two metric variables:
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scatterplot for duration and attitute variables"}
 #ggplot(att_data) + 
