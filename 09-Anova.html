@@ -316,7 +316,7 @@ SS_T= \sum_{i=1}^{N} (Y_i-\bar{Y})^2
 SS_T =&amp;(13−24.67)^2 + (14−24.67)^2 + … + (2−24.67)^2\\
       &amp;+(21−24.67)^2 + (18-24.67)^2 + … + (17−24.67)^2\\
       &amp;+(30−24.67)^2 + (37−24.67)^2 + … + (28−24.67)^2\\ 
-      &amp;=26646.33
+      &amp;=30855.64
 \end{align}
 \]</span></p>
 <p>You could also compute this in R using:</p>
@@ -348,7 +348,7 @@ SS_M= \sum_{j=1}^{c} n_j(\bar{Y}_j-\bar{Y})^2
 <p><span class="math display">\[ 
 \begin{align}
 SS_M &amp;= 100*(15.47−24.67)^2 + 100*(24.88−24.67)^2 + 100*(33.66−24.67)^2 \\
-     &amp;= 16550.42
+     &amp;= 21321.21
 \end{align}
 \]</span></p>
 <p>You could also compute this manually in R using:</p>
@@ -377,10 +377,10 @@ SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\bar{Y}_{j})^2
 <p>This means that we need to subtract the group mean from each individual observation, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:</p>
 <p><span class="math display">\[ 
 \begin{align}
-SS_R =&amp; (13−15.47)^2 + (14−15.47)^2 + … + (2−15.47)^2 \\
-     +&amp;(21−24.88)^2 + (18−24.88)^2 + … + (17−24.88)^2 \\
-     +&amp; (30−33.66)^2 + (37−33.66)^2 + … + (28−33.66)^2 \\
-     =&amp;  10095.91
+SS_R =&amp; (13−14.34)^2 + (14−14.34)^2 + … + (2−14.34)^2 \\
+     +&amp;(21−24.7)^2 + (18−24.7)^2 + … + (17−24.7)^2 \\
+     +&amp; (30−34.99)^2 + (37−34.99)^2 + … + (28−34.99)^2 \\
+     =&amp;  9534.43
 \end{align}
 \]</span></p>
 <p>You could also compute this in R using:</p>
@@ -400,7 +400,7 @@ df_R=&amp; (n_1-1)+(n_2-1)+(n_3-1) \\
 <h4><span class="header-section-number">0.1.2.4</span> Effect strength</h4>
 <p>Once you have computed the different sum of squares, you can investigate the effect strength. <span class="math inline">\(\eta^2\)</span> is a measure of the variation in Y that is explained by X:</p>
 <p><span class="math display">\[
-\eta^2= \frac{SS_M}{SS_T}=\frac{16550.42}{26646.33}=0.621
+\eta^2= \frac{SS_M}{SS_T}=\frac{21321.21}{30855.64}=0.69
 \]</span></p>
 <p>To compute this in R:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">eta &lt;-<span class="st"> </span>SSM<span class="op">/</span>SST</a>
@@ -424,15 +424,15 @@ df_R=&amp; (n_1-1)+(n_2-1)+(n_3-1) \\
 <p>However, since these are summed values, their magnitude is influenced by the number of scores that were summed. For example, to calculate SS<sub>M</sub> we only used the sum of 3 values (the group means), while we used 30 and 27 values to calculate SS<sub>T</sub> and SS<sub>R</sub>, respectively. Thus, we calculate the average sum of squares (“mean square”) to compare the average amount of systematic vs. unsystematic variation by dividing the SS values by the degrees of freedom associated with the respective statistic.</p>
 <p>Mean square due to X:</p>
 <p><span class="math display">\[
-MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{16550.42}{(3-1)}
+MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{21321.21}{(3-1)}
 \]</span></p>
 <p>Mean square due to error:</p>
 <p><span class="math display">\[
-MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{10095.91}{(300-3)}
+MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{9534.43}{(300-3)}
 \]</span></p>
 <p>Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-radio can be derived as follows:</p>
 <p><span class="math display">\[
-F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.91}{(300-3)}}=243.44
+F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{21321.21}{(3-1)}}{\frac{9534.43}{(300-3)}}=332.08
 \]</span></p>
 <p>You can easily compute this in R:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">f_ratio &lt;-<span class="st"> </span>(SSM<span class="op">/</span><span class="dv">2</span>)<span class="op">/</span>(SSR<span class="op">/</span><span class="dv">297</span>)</a>
@@ -440,7 +440,7 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.
 <pre><code>## [1] 332.0806</code></pre>
 <p>This statistic follows the F distribution with (m = c – 1) and (n = N – c) degrees of freedom. This means that, like the <span class="math inline">\(\chi^2\)</span> distribution, the shape of the F-distribution depends on the degrees of freedom. In this case, the shape depends on the degrees of freedom associated with the numerator and denominator used to compute the F-ratio. The following figure shows the shape of the F-distribution for different degrees of freedom:</p>
 <div class="figure">
-<embed src="%22./fdistributions.png%22" />
+<img src="fdistributions.png" alt="The F distribution" />
 <p class="caption">The F distribution</p>
 </div>
 <p>The outcome of the test is one of the following:</p>
@@ -456,7 +456,7 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.
 <pre><code>## [1] TRUE</code></pre>
 <p>The output tells us that the calculated test statistic exceeds the critical value. We can also show the test result visually:</p>
 <div class="figure">
-<embed src="%22./ftest.png%22" />
+<img src="ftest.png" alt="Visual depiction of the test result" />
 <p class="caption">Visual depiction of the test result</p>
 </div>
 <p>Thus, we conclude that because F<sub>CAL</sub> = 332.08 &gt; F<sub>CR</sub> = 3.03, H<sub>0</sub> is rejected!</p>

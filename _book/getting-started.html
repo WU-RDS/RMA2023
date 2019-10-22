@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Getting started | Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Getting started | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
@@ -38,6 +38,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -48,7 +51,7 @@
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
@@ -74,7 +77,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -310,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><b>RStudio</b> provides a graphical user interface (GUI) that makes working with R easier. You can also download RStudio for free:</p>
 <ul>
-<li>&quot;<a href="https://www.rstudio.com/products/rstudio/download/#download">Download R Studio</a>(Windows, Linux, OSX, …).</li>
+<li>"<a href="https://www.rstudio.com/products/rstudio/download/#download">Download R Studio</a>(Windows, Linux, OSX, …).</li>
 <li>Contains statistical routines not yet available in other programs.</li>
 <li>Active global community (e.g., <a href="https://www.r-bloggers.com/" target="_blank">https://www.r-bloggers.com/</a>).</li>
 <li>Many specialized user-written packages.</li>
@@ -343,22 +346,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">1.3</span> Functions</h2>
 <p>When analyzing data in R, you will access most of the functionalities by calling functions. A <b>function</b> is a piece of code written to carry out a specified task (e.g., the <code>lm()</code>-function to run a linear regression). It may or may not accept arguments or parameters and it may or may not return one or more values. Functions are generally called like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">function_name</span>(<span class="dt">arg1 =</span> val1, <span class="dt">arg2 =</span> val2, ...)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">function_name</span>(<span class="dt">arg1 =</span> val1, <span class="dt">arg2 =</span> val2, ...)</a></code></pre></div>
 <p>To give you an example, let’s use the built-in <code>seq()</code>-function to generate a sequence of numbers. RStudio has some nice features that help you when writing code. For example, when you type “se” and hit TAB, a pop-up shows you possible completions. The more letters you type in, the more precise the suggestions will become and you will notice that after typing in the third letter, a pop-up with possible completions will appear automatically and you can select the desired function using the ↑/↓ arrows and hitting ENTER. The pop-up even reminds you of the arguments that a function takes. If you require more details, you may either press the F1 key or type in <code>?seq</code> and you will find the details for the function in the help tab in the lower right pane. When you have selected the desired function from the pop-up, RStudio will automatically add matching opening and closing parentheses (i.e., go from <code>seq</code> to <code>seq()</code>). Within the parentheses you may now type in the arguments that the function takes. Let’s use <code>seq()</code> to generate a sequence of numbers from 1 to 10. To do this, you may include the argument names (i.e., <code>from =</code>, <code>to =</code>), or just the desired values in the correct order.<br />
 An important thing to note is that R is case-sensitive, meaning that <code>Seq()</code> and <code>seq()</code> are viewed as two different functions by R.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">10</span>) <span class="co">#creates sequence from 1 to 10</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">10</span>) <span class="co">#creates sequence from 1 to 10</span></a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>) <span class="co">#same result</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>) <span class="co">#same result</span></a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <p>Note that if you specify the argument names, you may enter them in any order. However, if do not include the argument names you must adhere to the order that is specified for the respective function.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">seq</span>(<span class="dt">to =</span> <span class="dv">10</span>,<span class="dt">from =</span> <span class="dv">1</span>) <span class="co">#produces desired results</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">seq</span>(<span class="dt">to =</span> <span class="dv">10</span>,<span class="dt">from =</span> <span class="dv">1</span>) <span class="co">#produces desired results</span></a></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">seq</span>(<span class="dv">10</span>,<span class="dv">1</span>) <span class="co">#produces reversed sequence</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">seq</span>(<span class="dv">10</span>,<span class="dv">1</span>) <span class="co">#produces reversed sequence</span></a></code></pre></div>
 <pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
 </div>
 <div id="packages" class="section level2">
 <h2><span class="header-section-number">1.4</span> Packages</h2>
-<p>Most of the R functionalities are contained in distinct modules called <b>packages</b>. When R is installed, a small set of packages is also installed. For example, the Base R package contains the basic functions which let R function as a language: arithmetic, input/output, basic programming support, etc.. However, a large number of packages exist that contain specialized functions that will help you to achieve specific tasks. To access the functions outside the scope of the pre-installed packages, you have to install the package first using the <code>install.packages()</code>-function. For example, to install the ggplot2 package to create graphics, type in <code>install.packages(&quot;ggplot2&quot;)</code>. Note that you only have to install a package once. After you have installed a package, you may load it to access its functionalities using the <code>library()</code>-function. E.g., to load the ggplot2-package, type in <code>library(ggplot2)</code>.</p>
+<p>Most of the R functionalities are contained in distinct modules called <b>packages</b>. When R is installed, a small set of packages is also installed. For example, the Base R package contains the basic functions which let R function as a language: arithmetic, input/output, basic programming support, etc.. However, a large number of packages exist that contain specialized functions that will help you to achieve specific tasks. To access the functions outside the scope of the pre-installed packages, you have to install the package first using the <code>install.packages()</code>-function. For example, to install the ggplot2 package to create graphics, type in <code>install.packages("ggplot2")</code>. Note that you only have to install a package once. After you have installed a package, you may load it to access its functionalities using the <code>library()</code>-function. E.g., to load the ggplot2-package, type in <code>library(ggplot2)</code>.</p>
 The number of R packages is rapidly increasing and there are many specialized packages to perform different types of analytics.
 <p style="text-align:center;">
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/rpackages.png" alt="DSUR cover" height="300"  /> 
@@ -383,7 +386,7 @@ The number of R packages is rapidly increasing and there are many specialized pa
 <li><p>Make sure that your <b>working directory</b> is set correctly. The working directory is the location where R will look for files you would like to load and where any files you write to disk will be saved. If you open an existing R script from a specific folder, this folder will, by default, be the working directory. You can check your working directory by using the <code>getwd()</code>-function. In case you wish to change your working directory, you can use the <code>setwd()</code>-function and specify the desired location (i.e., <code>setwd(path_to_project_folder)</code>). Notice that you have to use <code>/</code> instead of <code>\</code> to specify the path (i.e., Windows paths copied from the explorer will not work before you change the backward slashes with forward slashes). Alternatively, you can set the working directory with R-Studio by clicking on the “Sessions” tab and selecting “Set Working Directory”.</p></li>
 <li><p>Load your data that you wish to analyze (using procedures that we will cover later)</p></li>
 <li><p>Perform statistical analysis on your data (using methods that we will cover later)</p></li>
-<li><p>Save your <b>workspace</b>. The R workspace is your current working environment incl. any user-defined objects (e.g., data frames, functions). You can save an image of the current workspace to a file called ”.RData”. In fact, RStudio will ask you automatically if you would like to save the workspace when you close the program at the end of the session. In addition, you may save an image of the workspace at any time during the session using the <code>save.image()</code>-function. This saves the workspace image to the current working directory. When you re-open R from that working directory, the workspace will be loaded, and all these things will be available to you again. You may also save the image to any other location by specifying the path to the folder explicitly (i.e., <code>save.image(path_to_project_folder)</code>). If you open R from a different location, you may load the workspace manually using the <code>load(&quot;&quot;)</code>-function which points to the image file in the respective directory (e.g., <code>load(&quot;path_to_project_folder/.RData&quot;)</code>. However, saving your workspace is not always required. Especially when you save your work in an R script file (which is highly recommended), you will be able to restore your latest results by simply executing the code contained therein again. This also prevents you from carrying over potential mistakes from one session to the next.</p></li>
+<li><p>Save your <b>workspace</b>. The R workspace is your current working environment incl. any user-defined objects (e.g., data frames, functions). You can save an image of the current workspace to a file called ”.RData”. In fact, RStudio will ask you automatically if you would like to save the workspace when you close the program at the end of the session. In addition, you may save an image of the workspace at any time during the session using the <code>save.image()</code>-function. This saves the workspace image to the current working directory. When you re-open R from that working directory, the workspace will be loaded, and all these things will be available to you again. You may also save the image to any other location by specifying the path to the folder explicitly (i.e., <code>save.image(path_to_project_folder)</code>). If you open R from a different location, you may load the workspace manually using the <code>load("")</code>-function which points to the image file in the respective directory (e.g., <code>load("path_to_project_folder/.RData")</code>. However, saving your workspace is not always required. Especially when you save your work in an R script file (which is highly recommended), you will be able to restore your latest results by simply executing the code contained therein again. This also prevents you from carrying over potential mistakes from one session to the next.</p></li>
 </ol>
 
 </div>
@@ -399,11 +402,13 @@ The number of R packages is rapidly increasing and there are many specialized pa
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

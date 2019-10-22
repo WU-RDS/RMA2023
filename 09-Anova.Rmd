@@ -3,7 +3,8 @@ title: "09-anova"
 output:
   html_document:
     toc: yes
-  html_notebook: default
+  html_notebook: 
+    default: TRUE
   pdf_document:
     toc: yes
 ---
@@ -12,6 +13,8 @@ output:
 library(knitr)
 #This code automatically tidies code so that it does not reach over the page
 opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+opts_chunk$set(cache=T)
+rm(list=ls())
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
@@ -201,16 +204,18 @@ $$
 SS_T =&(13−24.67)^2 + (14−24.67)^2 + … + (2−24.67)^2\\
       &+(21−24.67)^2 + (18-24.67)^2 + … + (17−24.67)^2\\
       &+(30−24.67)^2 + (37−24.67)^2 + … + (28−24.67)^2\\ 
-      &=26646.33
+      &=`r format(round(sum((hours_abc$hours - mean(hours_abc$hours))^2),2),scientific=FALSE)`
 \end{align}
 $$
 
 You could also compute this in R using:
 
-```{r}
+
+```{r, echo=TRUE}
 SST <- sum((hours_abc$hours - mean(hours_abc$hours))^2)
 SST
 ``` 
+
 
 For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b>. Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. In our example, we used all 300 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:
 
@@ -249,7 +254,7 @@ where c denotes the number of categories (experimental groups). This means that 
 $$ 
 \begin{align}
 SS_M &= 100*(15.47−24.67)^2 + 100*(24.88−24.67)^2 + 100*(33.66−24.67)^2 \\
-     &= 16550.42
+     &= `r format(round(sum(100*(by(hours_abc$hours, hours_abc$group, mean) - mean(hours_abc$hours))^2),2),scientific=FALSE)`
 \end{align}
 $$
 
@@ -292,10 +297,10 @@ This means that we need to subtract the group mean from each individual observat
 
 $$ 
 \begin{align}
-SS_R =& (13−15.47)^2 + (14−15.47)^2 + … + (2−15.47)^2 \\
-     +&(21−24.88)^2 + (18−24.88)^2 + … + (17−24.88)^2 \\
-     +& (30−33.66)^2 + (37−33.66)^2 + … + (28−33.66)^2 \\
-     =&  10095.91
+SS_R =& (13−`r format(round(means$x[1],2),scientific=FALSE)`)^2 + (14−`r format(round(means$x[1],2),scientific=FALSE)`)^2 + … + (2−`r format(round(means$x[1],2),scientific=FALSE)`)^2 \\
+     +&(21−`r format(round(means$x[2],2),scientific=FALSE)`)^2 + (18−`r format(round(means$x[2],2),scientific=FALSE)`)^2 + … + (17−`r format(round(means$x[2],2),scientific=FALSE)`)^2 \\
+     +& (30−`r format(round(means$x[3],2),scientific=FALSE)`)^2 + (37−`r format(round(means$x[3],2),scientific=FALSE)`)^2 + … + (28−`r format(round(means$x[3],2),scientific=FALSE)`)^2 \\
+     =&  `r format(round(sum((hours_abc$hours - rep(by(hours_abc$hours, hours_abc$group, mean), each = 100))^2),2),scientific=FALSE)`
 \end{align}
 $$
 
@@ -320,7 +325,7 @@ $$
 Once you have computed the different sum of squares, you can investigate the effect strength. $\eta^2$ is a measure of the variation in Y that is explained by X:
 
 $$
-\eta^2= \frac{SS_M}{SS_T}=\frac{16550.42}{26646.33}=0.621
+\eta^2= \frac{SS_M}{SS_T}=\frac{`r format(round(SSM,2),scientific=FALSE)`}{`r format(round(SST,2),scientific=FALSE)`}=`r format(round(SSM/SST,2),scientific=FALSE)`
 $$
 
 To compute this in R:
@@ -352,19 +357,19 @@ However, since these are summed values, their magnitude is influenced by the num
 Mean square due to X:
 
 $$
-MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{16550.42}{(3-1)}
+MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{`r format(round(SSM,2),scientific=FALSE)`}{(3-1)}
 $$
 
 Mean square due to error:
 
 $$
-MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{10095.91}{(300-3)}
+MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{`r format(round(SSR,2),scientific=FALSE)`}{(300-3)}
 $$
 
 Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-radio can be derived as follows:
 
 $$
-F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.91}{(300-3)}}=243.44
+F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{`r format(round(SSM,2),scientific=FALSE)`}{(3-1)}}{\frac{`r format(round(SSR,2),scientific=FALSE)`}{(300-3)}}=`r format(round((SSM/2)/(SSR/297),2),scientific=FALSE)`
 $$
 
 You can easily compute this in R:
@@ -396,7 +401,7 @@ library(ggplot2)
 # ggsave("fdistributions.png")
 ```
 
-![The F distribution]("./fdistributions.png")
+![The F distribution](./fdistributions.png)
 
 The outcome of the test is one of the following:
 
@@ -435,7 +440,7 @@ f_cal <- f_ratio
 # plot1
 ```
 
-![Visual depiction of the test result]("./ftest.png")
+![Visual depiction of the test result](./ftest.png)
 
 Thus, we conclude that because F<sub>CAL</sub> = `r round(f_cal,2)` > F<sub>CR</sub> = 3.03, H<sub>0</sub> is rejected!
 
