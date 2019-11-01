@@ -1026,7 +1026,7 @@ Figure 5.1: p-hacking (red indicates false positives)
 <div id="comparing-several-means" class="section level2">
 <h2><span class="header-section-number">5.4</span> Comparing several means</h2>
 <p>This chapter is primarily based on Field, A., Miles J., &amp; Field, Z. (2012): Discovering Statistics Using R. Sage Publications, <strong>chapters 10 &amp; 12</strong>.</p>
-<p><a href="./Code/08-anova%20(1).R">You can download the corresponding R-Code here</a></p>
+<p><a href="./Code/08-anova.R">You can download the corresponding R-Code here</a></p>
 <div id="introduction-1" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Introduction</h3>
 <p>In the previous section we learned how to compare means using a t-test. The t-test has some limitations since it only lets you compare 2 means and you can only use it with one independent variable. However, often we would like to compare means from 3 or more groups. In addition, there may be instances in which you manipulate more than one independent variable. For these applications, ANOVA (ANalysis Of VAriance) can be used. Hence, to conduct ANOVA you need:</p>
@@ -1648,7 +1648,7 @@ Figure 5.10: Tukey’s HSD
 <li>When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)</li>
 <li>You have a very small sample size (i.e., the central limit theorem does not apply)</li>
 </ul>
-<p><a href="./Code/09-non_parametric%20(1).R">You can download the corresponding R-Code here</a></p>
+<p><a href="./Code/09-non_parametric.R">You can download the corresponding R-Code here</a></p>
 <div id="mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test" class="section level3">
 <h3><span class="header-section-number">5.5.1</span> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</h3>
 <p>The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale. The following assumptions must be fulfilled for the test to be applicable:</p>
@@ -1798,6 +1798,7 @@ Figure 5.12: Boxplot
 <li>Service agent 2 talks to 300 customers and gets 100 of them to buy (conversion rate=1/3)</li>
 </ul>
 <p>As always, we load the data first:</p>
+<<<<<<< HEAD
 <p><a href="./Code/10-categorical_data%20(1).R">You can download the corresponding R-Code here</a></p>
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" title="1">call_center &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat&quot;</span>, </a>
 <a class="sourceLine" id="cb431-2" title="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
@@ -1805,6 +1806,15 @@ Figure 5.12: Boxplot
 <a class="sourceLine" id="cb431-4" title="4">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))  <span class="co">#convert to factor</span></a>
 <a class="sourceLine" id="cb431-5" title="5">call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), </a>
 <a class="sourceLine" id="cb431-6" title="6">    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>))  <span class="co">#convert to factor</span></a></code></pre></div>
+=======
+<p><a href="./Code/10-categorical_data.R">You can download the corresponding R-Code here</a></p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" title="1">call_center &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat&quot;</span>, </a>
+<a class="sourceLine" id="cb433-2" title="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
+<a class="sourceLine" id="cb433-3" title="3">call_center<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>conversion, </a>
+<a class="sourceLine" id="cb433-4" title="4">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))  <span class="co">#convert to factor</span></a>
+<a class="sourceLine" id="cb433-5" title="5">call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb433-6" title="6">    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>))  <span class="co">#convert to factor</span></a></code></pre></div>
+>>>>>>> cc05d63... codefiles
 <p>Next, we create a table to check the relative frequencies:</p>
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" title="1">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(call_center), </a>
 <a class="sourceLine" id="cb432-2" title="2">    <span class="dv">2</span>))  <span class="co">#conditional relative frequencies</span></a>
