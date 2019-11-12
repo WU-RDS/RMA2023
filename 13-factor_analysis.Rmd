@@ -8,6 +8,11 @@ output:
     toc: yes
 ---
 
+```{r include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+
 # Exploratory factor analysis
 
 This chapter is primarily based on 
@@ -156,17 +161,53 @@ where the variable names are replaced by the values that were observed for respo
 
 ## Steps in factor analysis
 
+<<<<<<< HEAD
 Now that we have a broad understanding of how factor analysis works, let's use another example to go through the process of deriving factors step by step. In this section, we will use the R anxiety questionnaire from the book by Andy Field et al.. The questionnaire is intended to measure the various aspects of student's anxiety towards learning R. It includes 23 items for which respondents are asked to indicate on a five-point Likert scale to what extent they agree with the respective statements. The questionnaire is shown in the following figure:     
+=======
+```{r, include=FALSE}
+library(openssl)
+passphrase <- charToRaw("MRDAnils")
+key <- sha256(passphrase)
+url <- "https://raw.githubusercontent.com/IMSMWU/mrda_data_pub/master/secret-music_data.rds"
+download.file(url, "./data/secret_music_data.rds", method = "auto", quiet=FALSE)
+encrypted_music_data <- readRDS("./data/secret_music_data.rds")
+music_data <- unserialize(aes_cbc_decrypt(encrypted_music_data, key = key))
+```
+
+
+```{r, eval=FALSE}
+readRDS("music_data.rds")
+```
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
+#music_data <- na.omit(music_data[,c(1,16:26)])
+music_data <- na.omit(music_data[,c(16:26)])
+nsongs <- length(unique(music_data$id))
+nsongs <- formatC(nsongs, big.mark=".")
+```
+
+Now that we have a broad understanding of how factor analysis works, let's use another example to go through the process of deriving factors step by step. In this section, we will use Spotify data.
+>>>>>>> bd05c43... pca
 
 ![The R anxiety questionnaire (source: Field, A. et al. (2012): Discovering Statistics Using R, p. 768)](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/ra_anx_quest.JPG)
 
 
+<<<<<<< HEAD
 Let's assume, we have collected data from 2,571 respondents and stored the results in the data set "raq.dat".
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 raq_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/raq.dat", 
                           sep = "\t", 
                           header = TRUE) #read in data
+=======
+We have collected data for `r nsongs` songs and stored the results in the data set "music_data".
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+#spotify_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
+#                          sep = ",", 
+#                          header = TRUE) #read in data
+#spotify_data <- na.omit(spotify_data[,c(16:26)])
+>>>>>>> bd05c43... pca
 ```
 
 ### Are the assumptions satisfied?
@@ -174,8 +215,13 @@ raq_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master
 Since PCA is based on the correlation between variables, the first step is to inspect the correlation matrix, which can be created using the ```cor()``` function. 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 raq_matrix <- cor(raq_data)
 round(raq_matrix,3)
+=======
+spotify_matrix <- cor(music_data)
+round(spotify_matrix,3)
+>>>>>>> bd05c43... pca
 ```
 
 If the variables measure the same construct, we would expect to see a certain degree of correlation between the variables. Even if the variables turn out to measure different dimensions of the same underlying construct, we would still expect to see some degree of correlation. So the first problem that could occur is that the **correlations are not high enough**. A first approach would be to scan the correlation matrix for correlations lower than about 0.3 and identify variables that have many correlations below this threshold. If your data set contains many variables, this task can be quite tedious. To make the task a little easier, you could proceed as follows. 
@@ -209,7 +255,11 @@ You will, however, notice that this is a rather subjective approach. The **Bartl
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 library(psych)
+<<<<<<< HEAD
 cortest.bartlett(raq_matrix, n = nrow(raq_data))
+=======
+cortest.bartlett(spotify_matrix, n = nrow(music_data))
+>>>>>>> bd05c43... pca
 ```
 
 In our example, the p-value is less than 0.05, which is good news since it confirms that overall the correlation between variables is different from zero. 
@@ -248,7 +298,11 @@ where $r_{jk}$ is the correlation between two variables of interest and $p_{jk}$
 The KMO measure of sampling adequacy can be computed using the ```KMO()``` function from the ```psych``` package:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 KMO(raq_data)
+=======
+KMO(music_data)
+>>>>>>> bd05c43... pca
 ```
 
 You can see that the statistic is calculated for the entire matrix and for each variable individually. In our example, the values for all variables as well as the overall matrix is above 0.5, suggesting that factor analysis is appropriate.  
@@ -264,10 +318,17 @@ After testing that the data can be used for PCA, we can move on to conducting PC
 
 Often, the decision is made based on a combination of different criteria. 
 
+<<<<<<< HEAD
 By extracting as many factors as there are variables we can inspect their eigenvalues and make decisions about which factors to extract. Since we have 23 variables, we set the argument ```nfactors``` to 23.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 pc1 <- principal(raq_data, nfactors = 23, rotate = "none")
+=======
+By extracting as many factors as there are variables we can inspect their eigenvalues and make decisions about which factors to extract. Since we have `r ncol(music_data)` variables, we set the argument ```nfactors``` to `r ncol(music_data)`, which is equivalent to the number of columns ```ncol``` in our dataset.
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+pc1 <- principal(music_data, nfactors = ncol(music_data), rotate = "none")
+>>>>>>> bd05c43... pca
 pc1
 ```
 
@@ -277,6 +338,10 @@ You can also plot the eigenvalues against the number of factors in order of extr
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE, fig.align="center", fig.cap="Scree plot"}
 plot(pc1$values, type="b")
+<<<<<<< HEAD
+=======
+axis(side=1,c(1:ncol(music_data)))
+>>>>>>> bd05c43... pca
 abline(h=1, lty=2)
 ```
 
@@ -285,7 +350,11 @@ The dashed line is simply a visualization of the rule that we will retain factor
 Now that we know how many components we want to extract, we can rerun the analysis, specifying that number:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 pc2 <- principal(raq_data, nfactors = 4, rotate = "none")
+=======
+pc2 <- principal(music_data, nfactors = nfac, rotate = "none")
+>>>>>>> bd05c43... pca
 pc2
 ```
 
@@ -300,7 +369,11 @@ residuals <- factor.residuals(raq_matrix, pc2$loadings)
 round(residuals,3)
 ```
 
+<<<<<<< HEAD
 Note that the diagonal elements in the residual matrix correspond to the unique variance in each variable that cannot be explained by the factors (i.e., "u2" in the output above). For example, the proportion of unique variance for question 1 is 0.57, which is reflected in the first cell in the residual matrix. The off-diagonal elements represent the difference between the actual correlations and the correlation based on the reproduced correlation matrix for all variable pairs. To see this, the reproduced correlation matrix could be generated by using the ```factor.model()``` function:   
+=======
+Note that the diagonal elements in the residual matrix correspond to the unique variance in each variable that cannot be explained by the factors (i.e., "u2" in the output above). For example, the proportion of unique variance for ````r rownames(residuals)[1]```` is `r round(residuals[1],2)`, which is reflected in the first cell in the residual matrix. The off-diagonal elements represent the difference between the actual correlations and the correlation based on the reproduced correlation matrix for all variable pairs. To see this, the reproduced correlation matrix could be generated by using the ```factor.model()``` function:   
+>>>>>>> bd05c43... pca
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 reproduced_matrix <- factor.model(pc2$loadings)
@@ -309,7 +382,40 @@ round(reproduced_matrix,3)
 
 You can see that the reproduced correlation between the first and second variable is -0.112. From the correlation table from the beginning we know, however, that the observed correlation was -0.099. Hence, the difference between the observed and reproduced correlation is: (-0.099)-(-0.112) = 0.013, which corresponds to the residual of this variable pair in the residual matrix. Note that the diagonal elements in the reproduced matrix correspond to the communalities in the model summary above (i.e., "h2"). 
 
+<<<<<<< HEAD
 A measure of fit can now be computed based on the size of the residuals. In the worst case, the residuals would be as large as the correlations in the original matrix, which would be the case if we extracted no factors at all. A measure of fit could therefore be the sum of the squared residuals divided by the sum of the squared correlations. We square the residuals to account for positive and negative deviations. **Values >0.90 are considered indicators of good fit.** From the output above, you can see that: "Fit based upon off diagonal values = 0.96". Thus, we conclude that the model fit is sufficient. 
+=======
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
+goodness <- ifelse(pc2$fit.off>0.9,"the model has a good fit. ","the model does not have a good fit. ")
+
+
+#if(pc2$fit.off>0.9, )    
+#    <.50 = unacceptable
+#    >.50 = miserable
+#    >.60 = mediocre
+#    >.70 = middling
+#    >.80 = meritorious
+#    >.90 = marvelous
+
+if (pc2$fit.off > 0.9) {
+goodness <- "the model has a marvelous fit."
+} else if (pc2$fit.off > 0.8) {
+goodness <- "the model has a meritorious fit."
+} else if (pc2$fit.off > 0.7) {
+goodness <- "the model has a middling fit."
+} else if (pc2$fit.off > 0.6) {
+goodness <- "the model has a mediocre fit."
+} else if (pc2$fit.off > 0.5) {
+goodness <- "the model has a miserable fit."
+} else if (pc2$fit.off < 0.5) {
+goodness <- "the model has an unaccatable fit."
+} else {
+print("Zero")
+}
+```
+
+A measure of fit can now be computed based on the size of the residuals. In the worst case, the residuals would be as large as the correlations in the original matrix, which would be the case if we extracted no factors at all. A measure of fit could therefore be the sum of the squared residuals divided by the sum of the squared correlations. We square the residuals to account for positive and negative deviations. **Values >0.90 are considered indicators of good fit.** From the output above, you can see that: "Fit based upon off diagonal values = `r round(pc2$fit.off,2)`". Thus, we conclude that `r goodness`
+>>>>>>> bd05c43... pca
 
 You could also manually compute this statistic by summing over the squared residuals and correlations, take their ratio and subtract it from one (note that we use the ```upper.tri()``` function to use the upper triangle of the matrix only; this has the effect of discarding the diagonal elements and the elements below the diagonal).  
 
@@ -362,7 +468,11 @@ To aid interpretation, it is possible to maximize the loading of a variable on o
 To carry out a orthogonal rotation, we change the rotate option in the ```principal()``` function from “none” to “varimax” (we could also exclude it altogether because varimax is the default if the option is not specified):
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 pc3 <- principal(raq_data, nfactors = 4, rotate = "varimax")
+=======
+pc3 <- principal(music_data, nfactors = nfac, rotate = "varimax")
+>>>>>>> bd05c43... pca
 pc3
 ```
 
@@ -384,7 +494,11 @@ As an example, we could name our factors as follows:
 The previous type of rotation (i.e., "varimax") assumed that the factors are independent. Oblique rotation is another type of rotation that can handle correlation between the factors. The command for an oblique rotation is very similar to that for an orthogonal rotation – we just change the rotate option from “varimax” to “oblimin”.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 pc4 <- principal(raq_data, nfactors = 4, rotate = "oblimin", scores = TRUE)
+=======
+pc4 <- principal(music_data, nfactors = nfac, rotate = "oblimin", scores = TRUE)
+>>>>>>> bd05c43... pca
 print.psych(pc4, cut = 0.3, sort = TRUE)
 ```
 
@@ -401,7 +515,11 @@ head(pc4$scores)
 We can also use the ```cbind()``` function to add the computed factor scores to the existing data set:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 raq_data <- cbind(raq_data, pc4$scores)
+=======
+music_data <- cbind(music_data, pc4$scores)
+>>>>>>> bd05c43... pca
 ```
 
 This way, it is easier to use the new variables in subsequent analysis (e.g., t-tests, regression, ANOVA, cluster analysis).
@@ -424,20 +542,35 @@ The share of the items common variance (inter-correlation) in the total variance
 To see if the subscales that were derived from the previous PCA exhibit a sufficient degree of reliability, we first create subsets of our data set that contain the respective items for each of the factors (we use the results from the oblimin rotation here):  
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 computer_fear <- raq_data[,c(6,7,10,13,14,15,18)]
 statistics_fear <- raq_data[,c(1,3,4,5,12,16,20,21)]
 math_fear <- raq_data[,c(8,11,17)]
 peer_evaluation <- raq_data[,c(2,9,19,22,23)]
+=======
+energetic <- music_data[,c(rc1)]
+fast <- music_data[,c(rc2)]
+pitch <- music_data[,c(rc3)]
+dancefloor <- music_data[,c(rc4)]
+>>>>>>> bd05c43... pca
 ```
 
-Now we can use the ```alpha()``` function from the ```psych``` package to test the reliability. Note that the ```keys``` argument may be used to indicate reverse coded items. In the example below, the second item of the "statistics_fear" factor is reverse coded as indicated by the ```-1```, meaning that it is phrased in a "positive" way, while the remaining items belonging to this factor are phrased in a "negative" way. This is often done to check if respondents are giving consistent answers. 
+Now we can use the ```alpha()``` function from the ```psych``` package to test the reliability. Note that the ```keys``` argument may be used to indicate reverse coded items.
 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+<<<<<<< HEAD
 psych::alpha(computer_fear)
 psych::alpha(statistics_fear, keys=c(1,-1,1,1,1,1,1,1))
 psych::alpha(math_fear)
 psych::alpha(peer_evaluation)
+=======
+psych::alpha(energetic)
+psych::alpha(fast)
+#psych::alpha(statistics_fear, keys=c(1,1,1,1,1,1,1,1))
+psych::alpha(pitch)
+psych::alpha(dancefloor)
+>>>>>>> bd05c43... pca
 ```
 
 The above output would lead us to conclude that the fear of computers, fear of statistics and fear of maths subscales of the RAQ all had sufficiently high reliabilities (i.e., Cronbach’s alpha > 0.70). However, the fear of negative peer evaluation subscale had relatively low reliability (Cronbach’s alpha = 0.57). As the output under "Reliability if an item is dropped" suggests, the alpha score would also not increase if an item was dropped from the scale. 
