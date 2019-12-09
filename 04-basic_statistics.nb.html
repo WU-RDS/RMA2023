@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -1699,6 +1698,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -1758,7 +1758,7 @@ summary {
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>This section discusses how to produce and analyse basic summary statistics. We make a distinction between categorical and continuous variables, for which different statistics are permissible.</p>
-<p><a href="./Code/04-basic_statistics%20(1).R">You can download the corresponding R-Code here</a></p>
+<p><a href="./Code/04-basic_statistics.R">You can download the corresponding R-Code here</a></p>
 <p><br> <br></p>
 <table>
 <thead>
@@ -1828,23 +1828,37 @@ summary {
 <p>In a first step, we convert the variables to factor variables using the <code>factor()</code> function to assign appropriate labels according to the scale points:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucy5nZW5yZSA8LSBjKFwicG9wXCIsXCJoaXAgaG9wXCIsXCJyb2NrXCIsXCJyYXBcIixcImluZGllXCIpXG5tdXNpY19kYXRhIDwtIHN1YnNldChtdXNpY19kYXRhLCB0b3AuZ2VucmUgJWluJSBzLmdlbnJlKVxuXG5tdXNpY19kYXRhJGdlbnJlX2NhdCA8LSBhcy5mYWN0b3IobXVzaWNfZGF0YSR0b3AuZ2VucmUpXG5tdXNpY19kYXRhJGV4cGxpY2l0X2NhdCA8LSBmYWN0b3IobXVzaWNfZGF0YSRleHBsaWNpdCwgbGV2ZWxzID0gYygwOjEpLCBcbiAgICBsYWJlbHMgPSBjKFwibm90IGV4cGxpY2l0XCIsIFwiZXhwbGljaXRcIikpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucy5nZW5yZSA8LSBjKFwicG9wXCIsXCJoaXAgaG9wXCIsXCJyb2NrXCIsXCJyYXBcIixcImluZGllXCIpXG5tdXNpY19kYXRhIDwtIHN1YnNldChtdXNpY19kYXRhLCB0b3AuZ2VucmUgJWluJSBzLmdlbnJlKVxuXG5tdXNpY19kYXRhJGdlbnJlX2NhdCA8LSBhcy5mYWN0b3IobXVzaWNfZGF0YSR0b3AuZ2VucmUpXG5tdXNpY19kYXRhJGV4cGxpY2l0X2NhdCA8LSBmYWN0b3IobXVzaWNfZGF0YSRleHBsaWNpdCwgbGV2ZWxzID0gYygwOjEpLCBcbiAgICBsYWJlbHMgPSBjKFwibm90IGV4cGxpY2l0XCIsIFwiZXhwbGljaXRcIikpXG5cbm11c2ljX2RhdGEkYWR2X3NwZW5kaW5nMiA8LSBtdXNpY19kYXRhJGFkdl9zcGVuZGluZyAvIDEwXjEwOSAjIGVeMTExID0gc2NhbGluZyBmYWN0b3IgZm9yIHNwZWNpZmljIG91dGxpZXJzXG5gYGAifQ== -->
 <pre class="r"><code>s.genre &lt;- c(&quot;pop&quot;,&quot;hip hop&quot;,&quot;rock&quot;,&quot;rap&quot;,&quot;indie&quot;)
 music_data &lt;- subset(music_data, top.genre %in% s.genre)
 
 music_data$genre_cat &lt;- as.factor(music_data$top.genre)
 music_data$explicit_cat &lt;- factor(music_data$explicit, levels = c(0:1), 
-    labels = c(&quot;not explicit&quot;, &quot;explicit&quot;))</code></pre>
+    labels = c(&quot;not explicit&quot;, &quot;explicit&quot;))
+
+music_data$adv_spending2 &lt;- music_data$adv_spending / 10^109 # e^111 = scaling factor for specific outliers</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurrences of the categories associated with the genre and explicitness variables separately:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUobXVzaWNfZGF0YVssYyhcImdlbnJlX2NhdFwiKV0pICNhYnNvbHV0ZSBmcmVxdWVuY2llc1xudGFibGUobXVzaWNfZGF0YVssYyhcImV4cGxpY2l0X2NhdFwiKV0pICNhYnNvbHV0ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
-<pre class="r"><code>table(music_data[,c(&quot;genre_cat&quot;)]) #absolute frequencies
-table(music_data[,c(&quot;explicit_cat&quot;)]) #absolute frequencies</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUobXVzaWNfZGF0YVssYyhcImdlbnJlX2NhdFwiKV0pICNhYnNvbHV0ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
+<pre class="r"><code>table(music_data[,c(&quot;genre_cat&quot;)]) #absolute frequencies</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5oaXAgaG9wICAgaW5kaWUgICAgIHBvcCAgICAgcmFwICAgIHJvY2sgXG4gICA5OTA3ICAgICA1MjggICAyODQ0OCAgICAxMTgwICAgIDE4MzkgXG4ifQ== -->
+<pre><code>
+hip hop   indie     pop     rap    rock 
+   9907     528   28448    1180    1839 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUobXVzaWNfZGF0YVssYyhcImV4cGxpY2l0X2NhdFwiKV0pICNhYnNvbHV0ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
+<pre class="r"><code>table(music_data[,c(&quot;explicit_cat&quot;)]) #absolute frequencies</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5ub3QgZXhwbGljaXQgICAgIGV4cGxpY2l0IFxuICAgICAgIDMwMjA0ICAgICAgICAxMTY5OCBcbiJ9 -->
+<pre><code>
+not explicit     explicit 
+       30204        11698 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>It is obvious that there are more tracks with non-explicit lyrics than songs with explicit lyrics. For variables with more categories, it might be less obvious and we might use the <code>summary()</code> function, which produces further statistics.</p>
@@ -1853,15 +1867,31 @@ table(music_data[,c(&quot;explicit_cat&quot;)]) #absolute frequencies</code></pr
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShtdXNpY19kYXRhJGV4cGxpY2l0KVxuYGBgIn0= -->
 <pre class="r"><code>summary(music_data$explicit)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgTWluLiAxc3QgUXUuICBNZWRpYW4gICAgTWVhbiAzcmQgUXUuICAgIE1heC4gXG4gMC4wMDAwICAwLjAwMDAgIDAuMDAwMCAgMC4yNzkyICAxLjAwMDAgIDEuMDAwMCBcbiJ9 -->
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.2792  1.0000  1.0000 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Often, we are interested in the relative frequencies, which can be obtained by using the <code>prop.table()</code> function.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKFwiZ2VucmVfY2F0XCIpXSkpICNyZWxhdGl2ZSBmcmVxdWVuY2llc1xucHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKFwiZXhwbGljaXRfY2F0XCIpXSkpICNyZWxhdGl2ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
-<pre class="r"><code>prop.table(table(music_data[,c(&quot;genre_cat&quot;)])) #relative frequencies
-prop.table(table(music_data[,c(&quot;explicit_cat&quot;)])) #relative frequencies</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKFwiZ2VucmVfY2F0XCIpXSkpICNyZWxhdGl2ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
+<pre class="r"><code>prop.table(table(music_data[,c(&quot;genre_cat&quot;)])) #relative frequencies</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICBoaXAgaG9wICAgICAgaW5kaWUgICAgICAgIHBvcCAgICAgICAgcmFwICAgICAgIHJvY2sgXG4wLjIzNjQzMjYzIDAuMDEyNjAwODMgMC42Nzg5MTc0NyAwLjAyODE2MDk1IDAuMDQzODg4MTIgXG4ifQ== -->
+<pre><code>
+   hip hop      indie        pop        rap       rock 
+0.23643263 0.01260083 0.67891747 0.02816095 0.04388812 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKFwiZXhwbGljaXRfY2F0XCIpXSkpICNyZWxhdGl2ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
+<pre class="r"><code>prop.table(table(music_data[,c(&quot;explicit_cat&quot;)])) #relative frequencies</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5ub3QgZXhwbGljaXQgICAgIGV4cGxpY2l0IFxuICAgMC43MjA4MjQ4ICAgIDAuMjc5MTc1MiBcbiJ9 -->
+<pre><code>
+not explicit     explicit 
+   0.7208248    0.2791752 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Now let’s investigate if the genre differs by expliciteness. To do this, we simply apply the <code>table()</code> function to both variables:</p>
@@ -1870,6 +1900,15 @@ prop.table(table(music_data[,c(&quot;explicit_cat&quot;)])) #relative frequencie
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUobXVzaWNfZGF0YVssYyhcImdlbnJlX2NhdFwiLCBcImV4cGxpY2l0X2NhdFwiKV0pICNhYnNvbHV0ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
 <pre class="r"><code>table(music_data[,c(&quot;genre_cat&quot;, &quot;explicit_cat&quot;)]) #absolute frequencies</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgZXhwbGljaXRfY2F0XG5nZW5yZV9jYXQgbm90IGV4cGxpY2l0IGV4cGxpY2l0XG4gIGhpcCBob3AgICAgICAgICAzNTE1ICAgICA2MzkyXG4gIGluZGllICAgICAgICAgICAgNDk1ICAgICAgIDMzXG4gIHBvcCAgICAgICAgICAgIDIzODgxICAgICA0NTY3XG4gIHJhcCAgICAgICAgICAgICAgNTM2ICAgICAgNjQ0XG4gIHJvY2sgICAgICAgICAgICAxNzc3ICAgICAgIDYyXG4ifQ== -->
+<pre><code>         explicit_cat
+genre_cat not explicit explicit
+  hip hop         3515     6392
+  indie            495       33
+  pop            23881     4567
+  rap              536      644
+  rock            1777       62</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Again, it might be more meaningful to look at the relative frequencies using <code>prop.table()</code>:</p>
@@ -1878,6 +1917,15 @@ prop.table(table(music_data[,c(&quot;explicit_cat&quot;)])) #relative frequencie
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKFwiZ2VucmVfY2F0XCIsIFwiZXhwbGljaXRfY2F0XCIpXSkpICNyZWxhdGl2ZSBmcmVxdWVuY2llc1xuYGBgIn0= -->
 <pre class="r"><code>prop.table(table(music_data[,c(&quot;genre_cat&quot;, &quot;explicit_cat&quot;)])) #relative frequencies</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgZXhwbGljaXRfY2F0XG5nZW5yZV9jYXQgbm90IGV4cGxpY2l0ICAgICBleHBsaWNpdFxuICBoaXAgaG9wIDAuMDgzODg2MjEwNyAwLjE1MjU0NjQxNzhcbiAgaW5kaWUgICAwLjAxMTgxMzI3ODYgMC4wMDA3ODc1NTE5XG4gIHBvcCAgICAgMC41Njk5MjUwNjMyIDAuMTA4OTkyNDEwOVxuICByYXAgICAgIDAuMDEyNzkxNzUyMiAwLjAxNTM2OTE5NDhcbiAgcm9jayAgICAwLjA0MjQwODQ3NjkgMC4wMDE0Nzk2NDMwXG4ifQ== -->
+<pre><code>         explicit_cat
+genre_cat not explicit     explicit
+  hip hop 0.0838862107 0.1525464178
+  indie   0.0118132786 0.0007875519
+  pop     0.5699250632 0.1089924109
+  rap     0.0127917522 0.0153691948
+  rock    0.0424084769 0.0014796430</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Note that the above output shows the overall relative frequencies when explicit and non-explicit songs are considered together. In this context, it might be even more meaningful to look at the conditional relative frequencies. This can be achieved by adding a <code>,2</code> to the <code>prop.table()</code> command, which tells R to compute the relative frequencies by the columns (which is in our case the explicitness variable):</p>
@@ -1886,6 +1934,15 @@ prop.table(table(music_data[,c(&quot;explicit_cat&quot;)])) #relative frequencie
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKFwiZ2VucmVfY2F0XCIsIFwiZXhwbGljaXRfY2F0XCIpXSksMikgI2NvbmRpdGlvbmFsIHJlbGF0aXZlIGZyZXF1ZW5jaWVzXG5gYGAifQ== -->
 <pre class="r"><code>prop.table(table(music_data[,c(&quot;genre_cat&quot;, &quot;explicit_cat&quot;)]),2) #conditional relative frequencies</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgZXhwbGljaXRfY2F0XG5nZW5yZV9jYXQgbm90IGV4cGxpY2l0ICAgIGV4cGxpY2l0XG4gIGhpcCBob3AgIDAuMTE2Mzc1MzE1IDAuNTQ2NDE4MTkxXG4gIGluZGllICAgIDAuMDE2Mzg4NTU4IDAuMDAyODIwOTk1XG4gIHBvcCAgICAgIDAuNzkwNjU2ODY3IDAuMzkwNDA4NjE3XG4gIHJhcCAgICAgIDAuMDE3NzQ1OTk0IDAuMDU1MDUyMTQ2XG4gIHJvY2sgICAgIDAuMDU4ODMzMjY3IDAuMDA1MzAwMDUxXG4ifQ== -->
+<pre><code>         explicit_cat
+genre_cat not explicit    explicit
+  hip hop  0.116375315 0.546418191
+  indie    0.016388558 0.002820995
+  pop      0.790656867 0.390408617
+  rap      0.017745994 0.055052146
+  rock     0.058833267 0.005300051</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1901,60 +1958,158 @@ prop.table(table(music_data[,c(&quot;explicit_cat&quot;)])) #relative frequencie
 <p>Computing descriptive statistics in R is easy and there are many functions from different packages that let you calculate summary statistics (including the <code>summary()</code> function from the <code>base</code> package). In this tutorial, we will use the <code>describe()</code> function from the <code>psych</code> package:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwc3ljaClcbnBzeWNoOjpkZXNjcmliZShtdXNpY19kYXRhWyxjKFwidHJhY2tQb3B1bGFyaXR5XCIsIFwiYWR2X3NwZW5kaW5nXCIpXSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwc3ljaClcbnBzeWNoOjpkZXNjcmliZShtdXNpY19kYXRhWyxjKFwidHJhY2tQb3B1bGFyaXR5XCIsIFwiZHVyYXRpb25fbXNcIildKVxuYGBgIn0= -->
 <pre class="r"><code>library(psych)
-psych::describe(music_data[,c(&quot;trackPopularity&quot;, &quot;adv_spending&quot;)])</code></pre>
+psych::describe(music_data[,c(&quot;trackPopularity&quot;, &quot;duration_ms&quot;)])</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgIHZhcnMgICAgIG4gICAgICBtZWFuICAgICAgIHNkICAgbWVkaWFuICAgdHJpbW1lZCAgICAgIG1hZCAgbWluICAgICBtYXggICByYW5nZSAgc2tldyBrdXJ0b3Npc1xudHJhY2tQb3B1bGFyaXR5ICAgIDEgNDE5MDIgICAgIDQyLjE5ICAgIDIxLjkzICAgICA0Ni4wICAgICA0My4zMiAgICAyMC43NiAgICAwICAgICAxMDAgICAgIDEwMCAtMC40NiAgICAtMC41N1xuZHVyYXRpb25fbXMgICAgICAgIDIgNDE4OTIgMjE1NDc2Ljk1IDU5MDY3LjU1IDIwOTk5MC41IDIxMjA3Mi4zNSAzOTE5NC43NSAxMDAwIDM5MjQ1NDggMzkyMzU0OCAxNC45NSAgIDc1NS42NVxuICAgICAgICAgICAgICAgICAgICBzZVxudHJhY2tQb3B1bGFyaXR5ICAgMC4xMVxuZHVyYXRpb25fbXMgICAgIDI4OC41OVxuIn0= -->
+<pre><code>                vars     n      mean       sd   median   trimmed      mad  min     max   range  skew kurtosis
+trackPopularity    1 41902     42.19    21.93     46.0     43.32    20.76    0     100     100 -0.46    -0.57
+duration_ms        2 41892 215476.95 59067.55 209990.5 212072.35 39194.75 1000 3924548 3923548 14.95   755.65
+                    se
+trackPopularity   0.11
+duration_ms     288.59</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>In the above command, we used the <code>psych::</code> prefix to avoid confusion and to make sure that R uses the <code>describe()</code> function from the <code>psych</code> package since there are many other packages that also contain a <code>desribe()</code> function. Note that you could also compute these statistics separately by using the respective functions (e.g., <code>mean()</code>, <code>sd()</code>, <code>median()</code>, <code>min()</code>, <code>max()</code>, etc.).</p>
 <p>The <code>psych</code> package also contains the <code>describeBy()</code> function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by expliciteness as follows:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVzY3JpYmVCeShtdXNpY19kYXRhWyxjKFwidHJhY2tQb3B1bGFyaXR5XCIsIFwiYWR2X3NwZW5kaW5nXCIpXSwgbXVzaWNfZGF0YSRleHBsaWNpdF9jYXQpXG5gYGAifQ== -->
-<pre class="r"><code>describeBy(music_data[,c(&quot;trackPopularity&quot;, &quot;adv_spending&quot;)], music_data$explicit_cat)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVzY3JpYmVCeShtdXNpY19kYXRhWyxjKFwidHJhY2tQb3B1bGFyaXR5XCIsIFwiZHVyYXRpb25fbXNcIildLCBtdXNpY19kYXRhJGV4cGxpY2l0X2NhdClcbmBgYCJ9 -->
+<pre class="r"><code>describeBy(music_data[,c(&quot;trackPopularity&quot;, &quot;duration_ms&quot;)], music_data$explicit_cat)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gRGVzY3JpcHRpdmUgc3RhdGlzdGljcyBieSBncm91cCBcbmdyb3VwOiBub3QgZXhwbGljaXRcbiJ9 -->
+<pre><code>
+ Descriptive statistics by group 
+group: not explicit</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MTMsIm5yb3ciOjJ9LCJyZGYiOiJINHNJQUFBQUFBQUFBMjJTdjBzY1FSVEhaL2Z1M0RoQm84VGFJcFVXdDJCTUlJMjRCMm9xUVVNRUJTR010NXR6dU4zWlpXYlc4eGVrc3JIdy9naFRCeTBDVm9tWUpsMmFnR2tzRWtzTlNRb2xsY25NN3N5Y3R6Z3c3SHVmbWZmZWwrL09pNm5GY2JnSUFRQWxVT3F4UUtraVFsQlplRGxUZlFaQTJSYUpCY3FnVjM3WHhhV0hJdWdUdTE5c2UvSTN5SllIek1xNGQvWW01MmZieDExOGFuY2kyVCtGTmZobHRiMDhjbTM0MDgzdno5OE5iWG1YbncrdVR0ckxocy9reFRVNCtMZXJ6N1F0eXE4KzFXRGp2YmcrYXZpVGs0eDdQMzRleW42YWEzRmUyeWpON3krcC9yTi9IdDNOZjdtMytjZHZVdDNJdGZkNEtCTnMrUG5POE5IOHhZNjM5N1dMVDM2UWRQaklTOGRQNFVUeXRtQm9oYUFvWUNJWXlFek5ZWGtOVWFZZEp4cEdBZEt4elh3VjlVU0JqdzEzT01XUklDb3RSYWdUWXRLaDYzbzZSYVFSNkFHc0diUlVmSytaVWg0enpNekFvQ0M4bDhZdDk3WjRXeDA4NEJUVm0zTnhrb2FJWXI2aDhIMC9wWWpqbUx5S1dOR0Rlb2lZYnFNaDlCRkg3bXNxSm9qc3BsRGl4SW5zSllwcytScWRRckZGQzJBZ0pWS3JYNjJ2cHFSWkhSdVRFN0x6Zk4wVld5Qi81cFo2UG4wZEpyWFkvOVFNUi8rS2dEUXcwVzVXUXJRU2hGcXVzSWtoNDdUVFFwUmcwbEJwdjdBeWM5Sk5LQ1pjR3lBb2Mzbk1rZTRDNjNHb1NXWUp1UGtQRm1OYjg3c0RBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["vars"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["trimmed"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mad"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["min"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["range"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["skew"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["kurtosis"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"30204","3":"41.08","4":"21.48","5":"44","6":"42.02","7":"20.76","8":"0","9":"100","10":"100","11":"-0.39","12":"-0.61","13":"0.12","_rn_":"trackPopularity"},{"1":"2","2":"30195","3":"219629.07","4":"58949.53","5":"213567","6":"216310.72","7":"38765.54","8":"1000","9":"3924548","10":"3923548","11":"18.08","12":"986.56","13":"339.24","_rn_":"duration_ms"}],"options":{"columns":{"min":{},"max":[10],"total":[13]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gXG5ncm91cDogZXhwbGljaXRcbiJ9 -->
+<pre><code>-------------------------------------------------------------------------------------- 
+group: explicit</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MTMsIm5yb3ciOjJ9LCJyZGYiOiJINHNJQUFBQUFBQUFBd3R5aVREbWl1QmlZR0JnWm1CbVkyUmdaZ1V5R1ZoRFE5eDBMUmdZV0ppQUhFWUdGZ1pPRUYwQlZDUU1aUEFDTVI4UU05bC9ZQUFEQndZNEFJczdITHNKRVQ5Mm93RkYzSzNqNjZIK0dFMUhqbjliYkFzV1g0ZUxtNTJQMFFES09Md0ovcjVPcE9vaFhOd1RvdG1Sd3lzQ3hSejNxSWZ1NjBTcUhUbWFOb0FZY0hGalY3a2RnYTliSFI1ZDRPcVAwZmdHRTRjNXp1RkI0QUVVY3lJZ3puTjBTSXpETHE0Z2ppeSsveW5RMFZ5MmhRNXlHbUIvd01WdkFDMlYyeEhra0M0RjhoWVhQSHhPZ1Z4WDlkQ2g0VERZZjJnQnlwcVhtSnRhREdRSWdBTVZJc2hTbGxoVURBdnhQSmhnYm1vaWpNMVVuQUpsc2VXbXBtVEN4ZGxMaWpKemdTSlFMbk51SW9LWm1ZY1FyWURaWHBTWWw1NEtzNkE0TzdVY3l1YklMaTBxeVMvT0xJWmJtSXJtY002aS9ISTlaTWN6UVNYNFM0b1NrN01EOGd0S2N4S0xNa3Nxb2NMY0thVkZpU1daK1hueHVjWG9ZWkNjazFnTU13WW15SldTV0pLb2wxWUV0QUhJKzRlbWhUMi9BR1FXVUJNVEtEV3lvMmxtTEVJVEVDak5BN2sxUlRjNW96UXZXOWZRRUdRRFdCNENzTEVaR1NESm5CR2FmSGdSWWlDM01QMkgyc0VPaTRyVXZQVE1QRmhvc3VZa0pxWG13SndMREtiaVJIaElzNWNuRnVWbDVxVkR1WHpBb0FTSHBGNUJVV1plQ1N3QWdLTEZlaVg1Sllrd1U3aVM4M05nSXVBZ1lmZ0hBRlZYbXo2N0F3QUEifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["vars"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["trimmed"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mad"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["min"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["range"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["skew"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["kurtosis"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"11698","3":"45.07","4":"22.81","5":"50","6":"46.71","7":"19.27","8":"0","9":"98","10":"98","11":"-0.67","12":"-0.38","13":"0.21","_rn_":"trackPopularity"},{"1":"2","2":"11697","3":"204758.53","4":"58015.74","5":"198987","6":"200790.11","7":"38528.33","8":"33422","9":"2147004","10":"2113582","11":"7.54","12":"184.82","13":"536.42","_rn_":"duration_ms"}],"options":{"columns":{"min":{},"max":[10],"total":[13]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Note that you could just as well use other packages to compute the descriptive statistics. For example, you could have used the <code>stat.desc()</code> function from the <code>pastecs</code> package:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwYXN0ZWNzKVxuc3RhdC5kZXNjKG11c2ljX2RhdGFbLGMoXCJ0cmFja1BvcHVsYXJpdHlcIiwgXCJhZHZfc3BlbmRpbmdcIildKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwYXN0ZWNzKVxuc3RhdC5kZXNjKG11c2ljX2RhdGFbLGMoXCJ0cmFja1BvcHVsYXJpdHlcIiwgXCJkdXJhdGlvbl9tc1wiKV0pXG5gYGAifQ== -->
 <pre class="r"><code>library(pastecs)
-stat.desc(music_data[,c(&quot;trackPopularity&quot;, &quot;adv_spending&quot;)])</code></pre>
+stat.desc(music_data[,c(&quot;trackPopularity&quot;, &quot;duration_ms&quot;)])</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgIHRyYWNrUG9wdWxhcml0eSAgICAgICAgZHVyYXRpb25fbXNcbm5ici52YWwgICAgICAgIDQxOTAyLjAwMDAwMDAgICAgICA0MTg5Mi4wMDAwMDAwXG5uYnIubnVsbCAgICAgICAgMjcxOC4wMDAwMDAwICAgICAgICAgIDAuMDAwMDAwMFxubmJyLm5hICAgICAgICAgICAgIDAuMDAwMDAwMCAgICAgICAgIDEwLjAwMDAwMDBcbm1pbiAgICAgICAgICAgICAgICAwLjAwMDAwMDAgICAgICAgMTAwMC4wMDAwMDAwXG5tYXggICAgICAgICAgICAgIDEwMC4wMDAwMDAwICAgIDM5MjQ1NDguMDAwMDAwMFxucmFuZ2UgICAgICAgICAgICAxMDAuMDAwMDAwMCAgICAzOTIzNTQ4LjAwMDAwMDBcbnN1bSAgICAgICAgICAxNzY3ODc0LjAwMDAwMDAgOTAyNjc2MDM4MC4wMDAwMDAwXG5tZWRpYW4gICAgICAgICAgICA0Ni4wMDAwMDAwICAgICAyMDk5OTAuNTAwMDAwMFxubWVhbiAgICAgICAgICAgICAgNDIuMTkwNjgzMCAgICAgMjE1NDc2Ljk0OTc3NTZcblNFLm1lYW4gICAgICAgICAgICAwLjEwNzE0MzUgICAgICAgIDI4OC41OTE0MDcyXG5DSS5tZWFuLjAuOTUgICAgICAgMC4yMTAwMDM0ICAgICAgICA1NjUuNjQ1MTA3NlxudmFyICAgICAgICAgICAgICA0ODEuMDIzMTg0MiAzNDg4OTc1MjMyLjA4MzI3MTVcbnN0ZC5kZXYgICAgICAgICAgIDIxLjkzMjI0MDcgICAgICA1OTA2Ny41NDgwNDUzXG5jb2VmLnZhciAgICAgICAgICAgMC41MTk4MzYxICAgICAgICAgIDAuMjc0MTI0N1xuIn0= -->
+<pre><code>             trackPopularity        duration_ms
+nbr.val        41902.0000000      41892.0000000
+nbr.null        2718.0000000          0.0000000
+nbr.na             0.0000000         10.0000000
+min                0.0000000       1000.0000000
+max              100.0000000    3924548.0000000
+range            100.0000000    3923548.0000000
+sum          1767874.0000000 9026760380.0000000
+median            46.0000000     209990.5000000
+mean              42.1906830     215476.9497756
+SE.mean            0.1071435        288.5914072
+CI.mean.0.95       0.2100034        565.6451076
+var              481.0231842 3488975232.0832715
+std.dev           21.9322407      59067.5480453
+coef.var           0.5198361          0.2741247</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Computing statistics by group is also possible by using the wrapper function <code>by()</code>. Within the function, you first specify the data on which you would like to perform the grouping <code>music_data[,c(&quot;trackPopularity&quot;, &quot;adv_spending&quot;)]</code>, followed by the grouping variable <code>music_data$explicit_cat</code> and the function that you would like to execute (e.g., <code>stat.desc()</code>):</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwYXN0ZWNzKVxuYnkobXVzaWNfZGF0YVssYyhcInRyYWNrUG9wdWxhcml0eVwiLCBcImFkdl9zcGVuZGluZ1wiKV0sbXVzaWNfZGF0YSRleHBsaWNpdF9jYXQsc3RhdC5kZXNjKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwYXN0ZWNzKVxuYnkobXVzaWNfZGF0YVssYyhcInRyYWNrUG9wdWxhcml0eVwiLCBcImR1cmF0aW9uX21zXCIpXSxtdXNpY19kYXRhJGV4cGxpY2l0X2NhdCxzdGF0LmRlc2MpXG5gYGAifQ== -->
 <pre class="r"><code>library(pastecs)
-by(music_data[,c(&quot;trackPopularity&quot;, &quot;adv_spending&quot;)],music_data$explicit_cat,stat.desc)</code></pre>
+by(music_data[,c(&quot;trackPopularity&quot;, &quot;duration_ms&quot;)],music_data$explicit_cat,stat.desc)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibXVzaWNfZGF0YSRleHBsaWNpdF9jYXQ6IG5vdCBleHBsaWNpdFxuICAgICAgICAgICAgIHRyYWNrUG9wdWxhcml0eSAgICAgICBkdXJhdGlvbl9tc1xubmJyLnZhbCAgICAgICAgMzAyMDQuMDAwMDAwMCAgICAgIDMwMTk1LjAwMDAwMFxubmJyLm51bGwgICAgICAgIDE3NzcuMDAwMDAwMCAgICAgICAgICAwLjAwMDAwMFxubmJyLm5hICAgICAgICAgICAgIDAuMDAwMDAwMCAgICAgICAgICA5LjAwMDAwMFxubWluICAgICAgICAgICAgICAgIDAuMDAwMDAwMCAgICAgICAxMDAwLjAwMDAwMFxubWF4ICAgICAgICAgICAgICAxMDAuMDAwMDAwMCAgICAzOTI0NTQ4LjAwMDAwMFxucmFuZ2UgICAgICAgICAgICAxMDAuMDAwMDAwMCAgICAzOTIzNTQ4LjAwMDAwMFxuc3VtICAgICAgICAgIDEyNDA2OTYuMDAwMDAwMCA2NjMxNjk5ODUxLjAwMDAwMFxubWVkaWFuICAgICAgICAgICAgNDQuMDAwMDAwMCAgICAgMjEzNTY3LjAwMDAwMFxubWVhbiAgICAgICAgICAgICAgNDEuMDc3MjA4MyAgICAgMjE5NjI5LjA3MjcyN1xuU0UubWVhbiAgICAgICAgICAgIDAuMTIzNTkyNiAgICAgICAgMzM5LjI0NDUzNFxuQ0kubWVhbi4wLjk1ICAgICAgIDAuMjQyMjQ2NyAgICAgICAgNjY0LjkzMzcyM1xudmFyICAgICAgICAgICAgICA0NjEuMzY5NzI5OCAzNDc1MDQ3NTQ0LjQzMzg3MVxuc3RkLmRldiAgICAgICAgICAgMjEuNDc5NTE4OCAgICAgIDU4OTQ5LjUzMzg3OFxuY29lZi52YXIgICAgICAgICAgIDAuNTIyOTA2MCAgICAgICAgICAwLjI2ODQwNVxuLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gXG5tdXNpY19kYXRhJGV4cGxpY2l0X2NhdDogZXhwbGljaXRcbiAgICAgICAgICAgICB0cmFja1BvcHVsYXJpdHkgICAgICAgIGR1cmF0aW9uX21zXG5uYnIudmFsICAgICAgICAxMTY5OC4wMDAwMDAwICAgICAgMTE2OTcuMDAwMDAwMFxubmJyLm51bGwgICAgICAgICA5NDEuMDAwMDAwMCAgICAgICAgICAwLjAwMDAwMDBcbm5ici5uYSAgICAgICAgICAgICAwLjAwMDAwMDAgICAgICAgICAgMS4wMDAwMDAwXG5taW4gICAgICAgICAgICAgICAgMC4wMDAwMDAwICAgICAgMzM0MjIuMDAwMDAwMFxubWF4ICAgICAgICAgICAgICAgOTguMDAwMDAwMCAgICAyMTQ3MDA0LjAwMDAwMDBcbnJhbmdlICAgICAgICAgICAgIDk4LjAwMDAwMDAgICAgMjExMzU4Mi4wMDAwMDAwXG5zdW0gICAgICAgICAgIDUyNzE3OC4wMDAwMDAwIDIzOTUwNjA1MjkuMDAwMDAwMFxubWVkaWFuICAgICAgICAgICAgNTAuMDAwMDAwMCAgICAgMTk4OTg3LjAwMDAwMDBcbm1lYW4gICAgICAgICAgICAgIDQ1LjA2NTY1MjIgICAgIDIwNDc1OC41MzAzMDY5XG5TRS5tZWFuICAgICAgICAgICAgMC4yMTA5MDYzICAgICAgICA1MzYuNDI0NTExNVxuQ0kubWVhbi4wLjk1ICAgICAgIDAuNDEzNDExNSAgICAgICAxMDUxLjQ4MTUzNTdcbnZhciAgICAgICAgICAgICAgNTIwLjM0NDE1NDggMzM2NTgyNjQ0Ny43OTg2OTIyXG5zdGQuZGV2ICAgICAgICAgICAyMi44MTEwNTMzICAgICAgNTgwMTUuNzQzMTAzMFxuY29lZi52YXIgICAgICAgICAgIDAuNTA2MTczOCAgICAgICAgICAwLjI4MzMzNzRcbiJ9 -->
+<pre><code>music_data$explicit_cat: not explicit
+             trackPopularity       duration_ms
+nbr.val        30204.0000000      30195.000000
+nbr.null        1777.0000000          0.000000
+nbr.na             0.0000000          9.000000
+min                0.0000000       1000.000000
+max              100.0000000    3924548.000000
+range            100.0000000    3923548.000000
+sum          1240696.0000000 6631699851.000000
+median            44.0000000     213567.000000
+mean              41.0772083     219629.072727
+SE.mean            0.1235926        339.244534
+CI.mean.0.95       0.2422467        664.933723
+var              461.3697298 3475047544.433871
+std.dev           21.4795188      58949.533878
+coef.var           0.5229060          0.268405
+-------------------------------------------------------------------------------------- 
+music_data$explicit_cat: explicit
+             trackPopularity        duration_ms
+nbr.val        11698.0000000      11697.0000000
+nbr.null         941.0000000          0.0000000
+nbr.na             0.0000000          1.0000000
+min                0.0000000      33422.0000000
+max               98.0000000    2147004.0000000
+range             98.0000000    2113582.0000000
+sum           527178.0000000 2395060529.0000000
+median            50.0000000     198987.0000000
+mean              45.0656522     204758.5303069
+SE.mean            0.2109063        536.4245115
+CI.mean.0.95       0.4134115       1051.4815357
+var              520.3441548 3365826447.7986922
+std.dev           22.8110533      58015.7431030
+coef.var           0.5061738          0.2833374</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>These examples are meant to exemplify that there are often many different ways to reach a goal in R. Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences.</p>
 </div>
 <div id="creating-subsets" class="section level4">
 <h4>Creating subsets</h4>
-<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum amount of spending on advertisment is 5.656214510^{129} units. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
+<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum amount of spending on advertisment is 5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848 units. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbm11c2ljX2RhdGEgJT4lIG11dGF0ZShhZHZfc3BlbmRpbmdfc3RkID0gYXMudmVjdG9yKHNjYWxlKGFkdl9zcGVuZGluZykpKSAlPiUgZmlsdGVyKGFicyhhZHZfc3BlbmRpbmdfc3RkKSA+IDMpICU+JSBzZWxlY3QoaWQsIHRyYWNrTmFtZSwgYWR2X3NwZW5kaW5nLCBhZHZfc3BlbmRpbmdfc3RkKVxuYGBgIn0= -->
 <pre class="r"><code>library(dplyr)
 music_data %&gt;% mutate(adv_spending_std = as.vector(scale(adv_spending))) %&gt;% filter(abs(adv_spending_std) &gt; 3) %&gt;% select(id, trackName, adv_spending, adv_spending_std)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXHUwMDFiWzM4OzU7MjQ2bSMgQSB0aWJibGU6IDIgeCA0XHUwMDFiWzM5bVxuICBpZCAgICAgICAgICAgICAgICAgICAgIHRyYWNrTmFtZSAgICAgIGFkdl9zcGVuZGluZyBhZHZfc3BlbmRpbmdfc3RkXG4gIFx1MDAxYlszbVx1MDAxYlszODs1OzI0Nm08Y2hyPlx1MDAxYlszOW1cdTAwMWJbMjNtICAgICAgICAgICAgICAgICAgXHUwMDFiWzNtXHUwMDFiWzM4OzU7MjQ2bTxjaHI+XHUwMDFiWzM5bVx1MDAxYlsyM20gICAgICAgICAgICAgICAgIFx1MDAxYlszbVx1MDAxYlszODs1OzI0Nm08ZGJsPlx1MDAxYlszOW1cdTAwMWJbMjNtICAgICAgICAgICAgXHUwMDFiWzNtXHUwMDFiWzM4OzU7MjQ2bTxkYmw+XHUwMDFiWzM5bVx1MDAxYlsyM21cblx1MDAxYlszODs1OzI1MG0xXHUwMDFiWzM5bSAwYkFrS05DUWZXa2V4SEZuN2ZJS25zIEluIE15IEZlZWxpbmdzICAgICA1LjY2XHUwMDFiWzM4OzU7MjQ2bWVcdTAwMWJbMzltMTI5ICAgICAgICAgICAgIDYyLjZcblx1MDAxYlszODs1OzI1MG0yXHUwMDFiWzM5bSAxNG1zSzc1cGszcEEzM3B6UFZOdEJGIDcgcmluZ3MgICAgICAgICAgICAxLjAxXHUwMDFiWzM4OzU7MjQ2bWVcdTAwMWJbMzltMTI5ICAgICAgICAgICAgIDExLjFcbiJ9 -->
+<pre><code>[38;5;246m# A tibble: 2 x 4[39m
+  id                     trackName      adv_spending adv_spending_std
+  [3m[38;5;246m&lt;chr&gt;[39m[23m                  [3m[38;5;246m&lt;chr&gt;[39m[23m                 [3m[38;5;246m&lt;dbl&gt;[39m[23m            [3m[38;5;246m&lt;dbl&gt;[39m[23m
+[38;5;250m1[39m 0bAkKNCQfWkexHFn7fIKns In My Feelings     5.66[38;5;246me[39m129             62.6
+[38;5;250m2[39m 14msK75pk3pA33pzPVNtBF 7 rings            1.01[38;5;246me[39m129             11.1</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Indeed, there appear to be two potential outliers, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the <code>filter()</code> function from the <code>dplyr()</code> package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmVzdGltYXRpb25fc2FtcGxlIDwtIG11c2ljX2RhdGEgJT4lIG11dGF0ZShhZHZfc3BlbmRpbmdfc3RkID0gYXMudmVjdG9yKHNjYWxlKGFkdl9zcGVuZGluZykpKSAlPiUgZmlsdGVyKGFicyhhZHZfc3BlbmRpbmdfc3RkKSA8IDMpXG5wc3ljaDo6ZGVzY3JpYmUoZXN0aW1hdGlvbl9zYW1wbGVbLGMoXCJ0cmFja1BvcHVsYXJpdHlcIiwgXCJhZHZfc3BlbmRpbmdcIildKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmVzdGltYXRpb25fc2FtcGxlIDwtIG11c2ljX2RhdGEgJT4lIG11dGF0ZShhZHZfc3BlbmRpbmdfc3RkMiA9IGFzLnZlY3RvcihzY2FsZShhZHZfc3BlbmRpbmcyKSkpICU+JSBmaWx0ZXIoYWJzKGFkdl9zcGVuZGluZ19zdGQyKSA8IDMpXG5wc3ljaDo6ZGVzY3JpYmUoZXN0aW1hdGlvbl9zYW1wbGVbLGMoXCJ0cmFja1BvcHVsYXJpdHlcIiwgXCJhZHZfc3BlbmRpbmcyXCIpXSlcbmBgYCJ9 -->
 <pre class="r"><code>library(dplyr)
-estimation_sample &lt;- music_data %&gt;% mutate(adv_spending_std = as.vector(scale(adv_spending))) %&gt;% filter(abs(adv_spending_std) &lt; 3)
-psych::describe(estimation_sample[,c(&quot;trackPopularity&quot;, &quot;adv_spending&quot;)])</code></pre>
+estimation_sample &lt;- music_data %&gt;% mutate(adv_spending_std2 = as.vector(scale(adv_spending2))) %&gt;% filter(abs(adv_spending_std2) &lt; 3)
+psych::describe(estimation_sample[,c(&quot;trackPopularity&quot;, &quot;adv_spending2&quot;)])</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgIHZhcnMgICAgbiAgICAgICAgICAgICBtZWFuICAgICAgICAgICAgICAgICBzZCBtZWRpYW4gdHJpbW1lZCAgIG1hZCBtaW4gICAgICAgICAgICAgICBtYXhcbnRyYWNrUG9wdWxhcml0eSAgICAxIDQwMzggICAgICAgICAgICAgNTYuMSAgICAgICAgICAgICAgMjUuNzUgIDY1LjAwICAgNTkuMDQgMTYuMzEgICAwICAgICAgICAgICAgICAgMTAwXG5hZHZfc3BlbmRpbmcyICAgICAgMiA0MDM4IDE0Mjk5ODUyNzgwMTIwLjUgNTE0MDMzOTM4OTIxODA0LjA2ICAgMC4wMSAgIDE0LjA5ICAwLjAxICAgMCAyMzAwNzg5NzgzMjUzMzQwMFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJhbmdlICBza2V3IGt1cnRvc2lzICAgICAgICAgICAgICAgc2VcbnRyYWNrUG9wdWxhcml0eSAgICAgICAgICAgICAgIDEwMCAtMC45OCAgICAtMC4yNyAgICAgICAgICAgICAwLjQxXG5hZHZfc3BlbmRpbmcyICAgMjMwMDc4OTc4MzI1MzM0MDAgNDEuNDUgIDE3NzMuODUgODA4OTI1NzA2MzA3MS44NlxuIn0= -->
+<pre><code>                vars    n             mean                 sd median trimmed   mad min               max
+trackPopularity    1 4038             56.1              25.75  65.00   59.04 16.31   0               100
+adv_spending2      2 4038 14299852780120.5 514033938921804.06   0.01   14.09  0.01   0 23007897832533400
+                            range  skew kurtosis               se
+trackPopularity               100 -0.98    -0.27             0.41
+adv_spending2   23007897832533400 41.45  1773.85 8089257063071.86</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1963,7 +2118,7 @@ psych::describe(estimation_sample[,c(&quot;trackPopularity&quot;, &quot;adv_spen
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiMDQtc3VtbWFyeSBzdGF0aXN0aWNzIgpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIHRvYzogeWVzCiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAogIHBkZl9kb2N1bWVudDoKICAgIHRvYzogeWVzCgotLS0KIyBTdW1tYXJpemluZyBkYXRhCgojIyBTdW1tYXJ5IHN0YXRpc3RpY3MKCmBgYHtyIGVjaG89RkFMU0UsIGV2YWw9VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0KbGlicmFyeShrbml0cikKb3B0aW9ucyhzY2lwZW4gPSA5OTkpCiNUaGlzIGNvZGUgYXV0b21hdGljYWxseSB0aWRpZXMgY29kZSBzbyB0aGF0IGl0IGRvZXMgbm90IHJlYWNoIG92ZXIgdGhlIHBhZ2UKb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTUwKSx0aWR5PVRSVUUsIHJvd25hbWVzLnByaW50ID0gRkFMU0UsIHJvd3MucHJpbnQgPSAxMCkKb3B0c19jaHVuayRzZXQoY2FjaGU9VCkKYGBgCgpUaGlzIHNlY3Rpb24gZGlzY3Vzc2VzIGhvdyB0byBwcm9kdWNlIGFuZCBhbmFseXNlIGJhc2ljIHN1bW1hcnkgc3RhdGlzdGljcy4gV2UgbWFrZSBhIGRpc3RpbmN0aW9uIGJldHdlZW4gY2F0ZWdvcmljYWwgYW5kIGNvbnRpbnVvdXMgdmFyaWFibGVzLCBmb3Igd2hpY2ggZGlmZmVyZW50IHN0YXRpc3RpY3MgYXJlIHBlcm1pc3NpYmxlLgoKW1lvdSBjYW4gZG93bmxvYWQgdGhlIGNvcnJlc3BvbmRpbmcgUi1Db2RlIGhlcmVdKC4vQ29kZS8wNC1iYXNpY19zdGF0aXN0aWNzICgxKS5SKQoKCjxicj4KPGJyPgoKT0sgdG8gY29tcHV0ZS4uLi4JIHwgTm9taW5hbAkgfCBPcmRpbmFsCSB8IEludGVydmFsCSB8IFJhdGlvCi0tLS0tLS0tLS0tLS0gfCAtLS0tLS0tLS0tLS0tIHwgLS0tLS0tLS0tLS0tLSB8IC0tLSB8IC0tLQpmcmVxdWVuY3kgZGlzdHJpYnV0aW9uICB8IFllcyAgfCBZZXMgIHwgWWVzICB8IFllcwptZWRpYW4gYW5kIHBlcmNlbnRpbGVzICB8IE5vICB8IFllcyAgfCBZZXMgIHwgWWVzCm1lYW4sIHN0YW5kYXJkIGRldmlhdGlvbiwgc3RhbmRhcmQgZXJyb3Igb2YgdGhlIG1lYW4gfCBObyAgfCBObyAgfCBZZXMgIHwgWWVzCnJhdGlvLCBvciBjb2VmZmljaWVudCBvZiB2YXJpYXRpb24gIHwgTm8gIHwgTm8gIHwgTm8gIHwgWWVzCgpBcyBhbiBleGFtcGxlIGRhdGEgc2V0LCB3ZSB3aWxsIGJlIHVzaW5nIHRoZSBTcG90aWZ5IG11c2ljIGRhdGEuIExldCdzIGxvYWQgYW5kIGluc3BlY3QgdGhlIGRhdGEgZmlyc3QuIFN0dWRlbnRzIG9mIHRoZSBjb3Vyc2UgY2FuIGdldCB0aGUgZGF0YSB2aWEgTGVhcm5cQFdVLiBJZiB5b3UgYXJlIG5vdCBlbnJvbGxlZCBpbiB0aGUgY291cnNlIHBsZWFzZSBjb250YWN0IFtEYW5pZWwgV2lua2xlcl0oaHR0cHM6Ly93d3cud3UuYWMuYXQvZW4vaW1zbS9hYm91dC11cy90ZWFtL2RhbmllbC13aW5rbGVyKSAoaHR0cHM6Ly93d3cud3UuYWMuYXQvZW4vaW1zbS9hYm91dC11cy90ZWFtL2RhbmllbC13aW5rbGVyKS4KCmBgYHtyLCBpbmNsdWRlPUZBTFNFfQpsaWJyYXJ5KG9wZW5zc2wpCnBhc3NwaHJhc2UgPC0gY2hhclRvUmF3KCJNUkRBbmlscyIpCmtleSA8LSBzaGEyNTYocGFzc3BocmFzZSkKdXJsIDwtICJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vSU1TTVdVL21yZGFfZGF0YV9wdWIvbWFzdGVyL3NlY3JldC1tdXNpY19kYXRhLnJkcyIKZG93bmxvYWQuZmlsZSh1cmwsICIuL2RhdGEvc2VjcmV0X211c2ljX2RhdGEucmRzIiwgbWV0aG9kID0gImF1dG8iLCBxdWlldD1GQUxTRSkKZW5jcnlwdGVkX211c2ljX2RhdGEgPC0gcmVhZFJEUygiLi9kYXRhL3NlY3JldF9tdXNpY19kYXRhLnJkcyIpCm11c2ljX2RhdGEgPC0gdW5zZXJpYWxpemUoYWVzX2NiY19kZWNyeXB0KGVuY3J5cHRlZF9tdXNpY19kYXRhLCBrZXkgPSBrZXkpKQpgYGAKCgpgYGB7ciwgZXZhbD1GQUxTRX0KcmVhZFJEUygibXVzaWNfZGF0YS5yZHMiKQpgYGAKIyMjIENhdGVnb3JpY2FsIHZhcmlhYmxlcwoKQ2F0ZWdvcmljYWwgdmFyaWFibGVzIGNvbnRhaW4gYSBmaW5pdGUgbnVtYmVyIG9mIGNhdGVnb3JpZXMgb3IgZGlzdGluY3QgZ3JvdXBzIGFuZCBhcmUgYWxzbyBrbm93biBhcyBxdWFsaXRhdGl2ZSB2YXJpYWJsZXMuIFRoZXJlIGFyZSBkaWZmZXJlbnQgdHlwZXMgb2YgY2F0ZWdvcmljYWwgdmFyaWFibGVzOgoKKiAqKk5vbWluYWwgdmFyaWFibGVzKio6IHZhcmlhYmxlcyB0aGF0IGhhdmUgdHdvIG9yIG1vcmUgY2F0ZWdvcmllcyBidXQgbm8gbG9naWNhbCBvcmRlciAoZS5nLiwgbXVzaWMgZ2VucmVzKS4gQSBkaWNob3RvbW91cyB2YXJpYWJsZXMgaXMgc2ltcGx5IGEgbm9taW5hbCB2YXJpYWJsZSB0aGF0IG9ubHkgaGFzIHR3byBjYXRlZ29yaWVzIChlLmcuLCBnZW5kZXIpLgoqICoqT3JkaW5hbCB2YXJpYWJsZXMqKjogdmFyaWFibGVzIHRoYXQgaGF2ZSB0d28gb3IgbW9yZSBjYXRlZ29yaWVzIHRoYXQgY2FuIGFsc28gYmUgb3JkZXJlZCBvciByYW5rZWQgKGUuZy4sIGluY29tZSBncm91cHMpLgoKRm9yIHRoaXMgZXhhbXBsZSwgd2UgYXJlIGludGVyZXN0ZWQgaW4gdGhlIGZvbGxvd2luZyB0d28gdmFyaWFibGVzCgoqICJnZW5yZSI6IHRoZSBtdXNpYyBnZW5yZSB0aGUgc29uZyBpcyBhc3NvY2lhdGVkIHdpdGgsIHN1YnNldHRlZCBmb3IgdGhlIG1vc3QgZnJlcXVlbnQgZ2VucmVzLiAgCiogImV4cGxpY2l0Ijogd2hldGhlciB0aGUgbHlyaWNzIG9mIHRoZSB0cmFja3MgYXJlIGV4cGxpY2l0IG9yIG5vdCAoMCA9IG5vdCBleHBsaWNpdCwgMSA9IGV4cGxpY2l0KQoKW1lvdSBjYW4gZmluZCBhIGZ1bGwgZGVzY3JpcHRpb24gb2YgdGhlIHZhcmlhYmxlcyBoZXJlOl0oaHR0cHM6Ly9kZXZlbG9wZXIuc3BvdGlmeS5jb20vZG9jdW1lbnRhdGlvbi93ZWItYXBpL3JlZmVyZW5jZS9wZXJzb25hbGl6YXRpb24vZ2V0LXVzZXJzLXRvcC1hcnRpc3RzLWFuZC10cmFja3MvKSAKCkluIGEgZmlyc3Qgc3RlcCwgd2UgY29udmVydCB0aGUgdmFyaWFibGVzIHRvIGZhY3RvciB2YXJpYWJsZXMgdXNpbmcgdGhlIGBgYGZhY3RvcigpYGBgIGZ1bmN0aW9uIHRvIGFzc2lnbiBhcHByb3ByaWF0ZSBsYWJlbHMgYWNjb3JkaW5nIHRvIHRoZSBzY2FsZSBwb2ludHM6CgpgYGB7cn0Kcy5nZW5yZSA8LSBjKCJwb3AiLCJoaXAgaG9wIiwicm9jayIsInJhcCIsImluZGllIikKbXVzaWNfZGF0YSA8LSBzdWJzZXQobXVzaWNfZGF0YSwgdG9wLmdlbnJlICVpbiUgcy5nZW5yZSkKCm11c2ljX2RhdGEkZ2VucmVfY2F0IDwtIGFzLmZhY3RvcihtdXNpY19kYXRhJHRvcC5nZW5yZSkKbXVzaWNfZGF0YSRleHBsaWNpdF9jYXQgPC0gZmFjdG9yKG11c2ljX2RhdGEkZXhwbGljaXQsIGxldmVscyA9IGMoMDoxKSwgCiAgICBsYWJlbHMgPSBjKCJub3QgZXhwbGljaXQiLCAiZXhwbGljaXQiKSkKYGBgCgpUaGUgYGBgdGFibGUoKWBgYCBmdW5jdGlvbiBjcmVhdGVzIGEgZnJlcXVlbmN5IHRhYmxlLiBMZXQncyBzdGFydCB3aXRoIHRoZSBudW1iZXIgb2Ygb2NjdXJyZW5jZXMgb2YgdGhlIGNhdGVnb3JpZXMgYXNzb2NpYXRlZCB3aXRoIHRoZSBnZW5yZSBhbmQgZXhwbGljaXRuZXNzIHZhcmlhYmxlcyBzZXBhcmF0ZWx5OgoKYGBge3J9CnRhYmxlKG11c2ljX2RhdGFbLGMoImdlbnJlX2NhdCIpXSkgI2Fic29sdXRlIGZyZXF1ZW5jaWVzCnRhYmxlKG11c2ljX2RhdGFbLGMoImV4cGxpY2l0X2NhdCIpXSkgI2Fic29sdXRlIGZyZXF1ZW5jaWVzCmBgYAoKSXQgaXMgb2J2aW91cyB0aGF0IHRoZXJlIGFyZSBtb3JlIHRyYWNrcyB3aXRoIG5vbi1leHBsaWNpdCBseXJpY3MgdGhhbiBzb25ncyB3aXRoIGV4cGxpY2l0IGx5cmljcy4gRm9yIHZhcmlhYmxlcyB3aXRoIG1vcmUgY2F0ZWdvcmllcywgaXQgbWlnaHQgYmUgbGVzcyBvYnZpb3VzIGFuZCB3ZSBtaWdodCB1c2UgdGhlIGBgYHN1bW1hcnkoKWBgYCBmdW5jdGlvbiwgd2hpY2ggcHJvZHVjZXMgZnVydGhlciBzdGF0aXN0aWNzLiAKCmBgYHtyfQpzdW1tYXJ5KG11c2ljX2RhdGEkZXhwbGljaXQpCmBgYAoKT2Z0ZW4sIHdlIGFyZSBpbnRlcmVzdGVkIGluIHRoZSByZWxhdGl2ZSBmcmVxdWVuY2llcywgd2hpY2ggY2FuIGJlIG9idGFpbmVkIGJ5IHVzaW5nIHRoZSBgYGBwcm9wLnRhYmxlKClgYGAgZnVuY3Rpb24uCgpgYGB7cn0KcHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKCJnZW5yZV9jYXQiKV0pKSAjcmVsYXRpdmUgZnJlcXVlbmNpZXMKcHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKCJleHBsaWNpdF9jYXQiKV0pKSAjcmVsYXRpdmUgZnJlcXVlbmNpZXMKYGBgCgpOb3cgbGV0J3MgaW52ZXN0aWdhdGUgaWYgdGhlIGdlbnJlIGRpZmZlcnMgYnkgZXhwbGljaXRlbmVzcy4gVG8gZG8gdGhpcywgd2Ugc2ltcGx5IGFwcGx5IHRoZSBgYGB0YWJsZSgpYGBgIGZ1bmN0aW9uIHRvIGJvdGggdmFyaWFibGVzOgoKYGBge3J9CnRhYmxlKG11c2ljX2RhdGFbLGMoImdlbnJlX2NhdCIsICJleHBsaWNpdF9jYXQiKV0pICNhYnNvbHV0ZSBmcmVxdWVuY2llcwpgYGAKCkFnYWluLCBpdCBtaWdodCBiZSBtb3JlIG1lYW5pbmdmdWwgdG8gbG9vayBhdCB0aGUgcmVsYXRpdmUgZnJlcXVlbmNpZXMgdXNpbmcgYGBgcHJvcC50YWJsZSgpYGBgOgoKYGBge3J9CnByb3AudGFibGUodGFibGUobXVzaWNfZGF0YVssYygiZ2VucmVfY2F0IiwgImV4cGxpY2l0X2NhdCIpXSkpICNyZWxhdGl2ZSBmcmVxdWVuY2llcwpgYGAKCk5vdGUgdGhhdCB0aGUgYWJvdmUgb3V0cHV0IHNob3dzIHRoZSBvdmVyYWxsIHJlbGF0aXZlIGZyZXF1ZW5jaWVzIHdoZW4gZXhwbGljaXQgYW5kIG5vbi1leHBsaWNpdCBzb25ncyBhcmUgY29uc2lkZXJlZCB0b2dldGhlci4gSW4gdGhpcyBjb250ZXh0LCBpdCBtaWdodCBiZSBldmVuIG1vcmUgbWVhbmluZ2Z1bCB0byBsb29rIGF0IHRoZSBjb25kaXRpb25hbCByZWxhdGl2ZSBmcmVxdWVuY2llcy4gVGhpcyBjYW4gYmUgYWNoaWV2ZWQgYnkgYWRkaW5nIGEgYGBgLDJgYGAgdG8gdGhlIGBgYHByb3AudGFibGUoKWBgYCBjb21tYW5kLCB3aGljaCB0ZWxscyBSIHRvIGNvbXB1dGUgdGhlIHJlbGF0aXZlIGZyZXF1ZW5jaWVzIGJ5IHRoZSBjb2x1bW5zICh3aGljaCBpcyBpbiBvdXIgY2FzZSB0aGUgZXhwbGljaXRuZXNzIHZhcmlhYmxlKTogCgpgYGB7cn0KcHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKCJnZW5yZV9jYXQiLCAiZXhwbGljaXRfY2F0IildKSwyKSAjY29uZGl0aW9uYWwgcmVsYXRpdmUgZnJlcXVlbmNpZXMKYGBgCgojIyMgQ29udGludW91cyB2YXJpYWJsZXMKCiMjIyMgRGVzY3JpcHRpdmUgc3RhdGlzdGljcwoKQ29udGludW91cyB2YXJpYWJsZXMgYXJlIG51bWVyaWMgdmFyaWFibGVzIHRoYXQgY2FuIHRha2Ugb24gYW55IHZhbHVlIG9uIGEgbWVhc3VyZW1lbnQgc2NhbGUgKGkuZS4sIHRoZXJlIGlzIGFuIGluZmluaXRlIG51bWJlciBvZiB2YWx1ZXMgYmV0d2VlbiBhbnkgdHdvIHZhbHVlcykuIFRoZXJlIGFyZSBkaWZmZXJlbnQgdHlwZXMgb2YgY29udGludW91cyB2YXJpYWJsZXM6CgoqICoqSW50ZXJ2YWwgdmFyaWFibGVzKio6IHdoaWxlIHRoZSB6ZXJvIHBvaW50IGlzIGFyYml0cmFyeSwgZXF1YWwgaW50ZXJ2YWxzIG9uIHRoZSBzY2FsZSByZXByZXNlbnQgZXF1YWwgZGlmZmVyZW5jZXMgaW4gdGhlIHByb3BlcnR5IGJlaW5nIG1lYXN1cmVkLiBFLmcuLCBvbiBhIHRlbXBlcmF0dXJlIHNjYWxlIG1lYXN1cmVkIGluIENlbHNpdXMgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiBhIHRlbXBlcmF0dXJlIG9mIDE1IGRlZ3JlZXMgYW5kIDI1IGRlZ3JlZXMgaXMgdGhlIHNhbWUgZGlmZmVyZW5jZSBhcyBiZXR3ZWVuIDI1IGRlZ3JlZXMgYW5kIDM1IGRlZ3JlZXMgYnV0IHRoZSB6ZXJvIHBvaW50IGlzIGFyYml0cmFyeS4gCiogKipSYXRpbyB2YXJpYWJsZXMqKjogaGFzIGFsbCB0aGUgcHJvcGVydGllcyBvZiBhbiBpbnRlcnZhbCB2YXJpYWJsZSwgYnV0IGFsc28gaGFzIGFuIGFic29sdXRlIHplcm8gcG9pbnQuIFdoZW4gdGhlIHZhcmlhYmxlIGVxdWFscyAwLjAsIGl0IG1lYW5zIHRoYXQgdGhlcmUgaXMgbm9uZSBvZiB0aGF0IHZhcmlhYmxlIChlLmcuLCBudW1iZXIgb2YgcHJvZHVjdHMgc29sZCwgd2lsbGluZ25lc3MtdG8tcGF5LCBtaWxlYWdlIGEgY2FyIGdldHMpLiAKCkNvbXB1dGluZyBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzIGluIFIgaXMgZWFzeSBhbmQgdGhlcmUgYXJlIG1hbnkgZnVuY3Rpb25zIGZyb20gZGlmZmVyZW50IHBhY2thZ2VzIHRoYXQgbGV0IHlvdSBjYWxjdWxhdGUgc3VtbWFyeSBzdGF0aXN0aWNzIChpbmNsdWRpbmcgdGhlIGBgYHN1bW1hcnkoKWBgYCBmdW5jdGlvbiBmcm9tIHRoZSBgYGBiYXNlYGBgIHBhY2thZ2UpLiBJbiB0aGlzIHR1dG9yaWFsLCB3ZSB3aWxsIHVzZSB0aGUgYGBgZGVzY3JpYmUoKWBgYCBmdW5jdGlvbiBmcm9tIHRoZSBgYGBwc3ljaGBgYCBwYWNrYWdlOgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQgPSBGQUxTRX0KbGlicmFyeShwc3ljaCkKcHN5Y2g6OmRlc2NyaWJlKG11c2ljX2RhdGFbLGMoInRyYWNrUG9wdWxhcml0eSIsICJhZHZfc3BlbmRpbmciKV0pCmBgYAoKSW4gdGhlIGFib3ZlIGNvbW1hbmQsIHdlIHVzZWQgdGhlIGBgYHBzeWNoOjpgYGAgcHJlZml4IHRvIGF2b2lkIGNvbmZ1c2lvbiBhbmQgdG8gbWFrZSBzdXJlIHRoYXQgUiB1c2VzIHRoZSBgYGBkZXNjcmliZSgpYGBgIGZ1bmN0aW9uIGZyb20gdGhlIGBgYHBzeWNoYGBgIHBhY2thZ2Ugc2luY2UgdGhlcmUgYXJlIG1hbnkgb3RoZXIgcGFja2FnZXMgdGhhdCBhbHNvIGNvbnRhaW4gYSBgYGBkZXNyaWJlKClgYGAgZnVuY3Rpb24uIE5vdGUgdGhhdCB5b3UgY291bGQgYWxzbyBjb21wdXRlIHRoZXNlIHN0YXRpc3RpY3Mgc2VwYXJhdGVseSBieSB1c2luZyB0aGUgcmVzcGVjdGl2ZSBmdW5jdGlvbnMgKGUuZy4sIGBgYG1lYW4oKWBgYCwgYGBgc2QoKWBgYCwgYGBgbWVkaWFuKClgYGAsIGBgYG1pbigpYGBgLCBgYGBtYXgoKWBgYCwgZXRjLikuIAoKVGhlIGBgYHBzeWNoYGBgIHBhY2thZ2UgYWxzbyBjb250YWlucyB0aGUgYGBgZGVzY3JpYmVCeSgpYGBgIGZ1bmN0aW9uLCB3aGljaCBsZXRzIHlvdSBjb21wdXRlIHRoZSBzdW1tYXJ5IHN0YXRpc3RpY3MgYnkgc3ViLWdyb3VwIHNlcGFyYXRlbHkuIEZvciBleGFtcGxlLCB3ZSBjb3VsZCBlYXNpbHkgY29tcHV0ZSB0aGUgc3VtbWFyeSBzdGF0aXN0aWNzIGJ5IGV4cGxpY2l0ZW5lc3MgYXMgZm9sbG93czogCgpgYGB7ciBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQpkZXNjcmliZUJ5KG11c2ljX2RhdGFbLGMoInRyYWNrUG9wdWxhcml0eSIsICJhZHZfc3BlbmRpbmciKV0sIG11c2ljX2RhdGEkZXhwbGljaXRfY2F0KQpgYGAKCk5vdGUgdGhhdCB5b3UgY291bGQganVzdCBhcyB3ZWxsIHVzZSBvdGhlciBwYWNrYWdlcyB0byBjb21wdXRlIHRoZSBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzLiBGb3IgZXhhbXBsZSwgeW91IGNvdWxkIGhhdmUgdXNlZCB0aGUgYGBgc3RhdC5kZXNjKClgYGAgZnVuY3Rpb24gZnJvbSB0aGUgYGBgcGFzdGVjc2BgYCBwYWNrYWdlOgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQgPSBGQUxTRX0KbGlicmFyeShwYXN0ZWNzKQpzdGF0LmRlc2MobXVzaWNfZGF0YVssYygidHJhY2tQb3B1bGFyaXR5IiwgImFkdl9zcGVuZGluZyIpXSkKYGBgCgpDb21wdXRpbmcgc3RhdGlzdGljcyBieSBncm91cCBpcyBhbHNvIHBvc3NpYmxlIGJ5IHVzaW5nIHRoZSB3cmFwcGVyIGZ1bmN0aW9uIGBgYGJ5KClgYGAuIFdpdGhpbiB0aGUgZnVuY3Rpb24sIHlvdSBmaXJzdCBzcGVjaWZ5IHRoZSBkYXRhIG9uIHdoaWNoIHlvdSB3b3VsZCBsaWtlIHRvIHBlcmZvcm0gdGhlIGdyb3VwaW5nIGBgYG11c2ljX2RhdGFbLGMoInRyYWNrUG9wdWxhcml0eSIsICJhZHZfc3BlbmRpbmciKV1gYGAsIGZvbGxvd2VkIGJ5IHRoZSBncm91cGluZyB2YXJpYWJsZSBgYGBtdXNpY19kYXRhJGV4cGxpY2l0X2NhdGBgYCBhbmQgdGhlIGZ1bmN0aW9uIHRoYXQgeW91IHdvdWxkIGxpa2UgdG8gZXhlY3V0ZSAoZS5nLiwgYGBgc3RhdC5kZXNjKClgYGApOgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQgPSBGQUxTRX0KbGlicmFyeShwYXN0ZWNzKQpieShtdXNpY19kYXRhWyxjKCJ0cmFja1BvcHVsYXJpdHkiLCAiYWR2X3NwZW5kaW5nIildLG11c2ljX2RhdGEkZXhwbGljaXRfY2F0LHN0YXQuZGVzYykKYGBgCgpUaGVzZSBleGFtcGxlcyBhcmUgbWVhbnQgdG8gZXhlbXBsaWZ5IHRoYXQgdGhlcmUgYXJlIG9mdGVuIG1hbnkgZGlmZmVyZW50IHdheXMgdG8gcmVhY2ggYSBnb2FsIGluIFIuIFdoaWNoIG9uZSB5b3UgY2hvb3NlIGRlcGVuZHMgb24gd2hhdCB0eXBlIG9mIGluZm9ybWF0aW9uIHlvdSBzZWVrICh0aGUgcmVzdWx0cyBwcm92aWRlIHNsaWdodGx5IGRpZmZlcmVudCBpbmZvcm1hdGlvbikgYW5kIG9uIHBlcnNvbmFsIHByZWZlcmVuY2VzLgoKIyMjIyBDcmVhdGluZyBzdWJzZXRzCgpGcm9tIHRoZSBhYm92ZSBzdGF0aXN0aWNzIGl0IGlzIGNsZWFyIHRoYXQgdGhlIGRhdGEgc2V0IGNvbnRhaW5zIHNvbWUgc2V2ZXJlIG91dGxpZXJzIG9uIHNvbWUgdmFyaWFibGVzLiBGb3IgZXhhbXBsZSwgdGhlIG1heGltdW0gYW1vdW50IG9mIHNwZW5kaW5nIG9uIGFkdmVydGlzbWVudCBpcyBgciByb3VuZChtYXgobmEub21pdChtdXNpY19kYXRhJGFkdl9zcGVuZGluZykpLDEpYCB1bml0cy4gWW91IG1pZ2h0IHdhbnQgdG8gaW52ZXN0aWdhdGUgdGhlc2UgY2FzZXMgYW5kIGRlbGV0ZSB0aGVtIGlmIHRoZXkgd291bGQgdHVybiBvdXQgdG8gaW5kZWVkIGluZHVjZSBhIGJpYXMgaW4geW91ciBhbmFseXNlcy4gRm9yIG5vcm1hbGx5IGRpc3RyaWJ1dGVkIGRhdGEsIGFueSBhYnNvbHV0ZSBzdGFuZGFyZGl6ZWQgZGV2aWF0aW9ucyBsYXJnZXIgdGhhbiAzIHN0YW5kYXJkIGRldmlhdGlvbnMgZnJvbSB0aGUgbWVhbiBhcmUgc3VzcGljaW91cy4gTGV0J3MgY2hlY2sgaWYgcG90ZW50aWFsIG91dGxpZXJzIGV4aXN0IGluIHRoZSBkYXRhOgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQgPSBGQUxTRX0KbGlicmFyeShkcGx5cikKbXVzaWNfZGF0YSAlPiUgbXV0YXRlKGFkdl9zcGVuZGluZ19zdGQgPSBhcy52ZWN0b3Ioc2NhbGUoYWR2X3NwZW5kaW5nKSkpICU+JSBmaWx0ZXIoYWJzKGFkdl9zcGVuZGluZ19zdGQpID4gMykgJT4lIHNlbGVjdChpZCwgdHJhY2tOYW1lLCBhZHZfc3BlbmRpbmcsIGFkdl9zcGVuZGluZ19zdGQpCmBgYAoKSW5kZWVkLCB0aGVyZSBhcHBlYXIgdG8gYmUgdHdvIHBvdGVudGlhbCBvdXRsaWVycywgd2hpY2ggd2UgbWF5IHdpc2ggdG8gZXhjbHVkZSBiZWZvcmUgd2Ugc3RhcnQgZml0dGluZyBtb2RlbHMgdG8gdGhlIGRhdGEuIFlvdSBjb3VsZCBlYXNpbHkgY3JlYXRlIGEgc3Vic2V0IG9mIHRoZSBvcmlnaW5hbCBkYXRhLCB3aGljaCB5b3Ugd291bGQgdGhlbiB1c2UgZm9yIGVzdGltYXRpb24gdXNpbmcgdGhlIGBgYGZpbHRlcigpYGBgIGZ1bmN0aW9uIGZyb20gdGhlIGBgYGRwbHlyKClgYGAgcGFja2FnZS4gRm9yIGV4YW1wbGUsIHRoZSBmb2xsb3dpbmcgY29kZSBjcmVhdGVzIGEgc3Vic2V0IHRoYXQgZXhjbHVkZXMgYWxsIGNhc2VzIHdpdGggYSBzdGFuZGFyZGl6ZWQgZHVyYXRpb24gb2YgbW9yZSB0aGFuIDM6IAoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQgPSBGQUxTRX0KbGlicmFyeShkcGx5cikKZXN0aW1hdGlvbl9zYW1wbGUgPC0gbXVzaWNfZGF0YSAlPiUgbXV0YXRlKGFkdl9zcGVuZGluZ19zdGQgPSBhcy52ZWN0b3Ioc2NhbGUoYWR2X3NwZW5kaW5nKSkpICU+JSBmaWx0ZXIoYWJzKGFkdl9zcGVuZGluZ19zdGQpIDwgMykKcHN5Y2g6OmRlc2NyaWJlKGVzdGltYXRpb25fc2FtcGxlWyxjKCJ0cmFja1BvcHVsYXJpdHkiLCAiYWR2X3NwZW5kaW5nIildKQpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiMDQtc3VtbWFyeSBzdGF0aXN0aWNzIgpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIHRvYzogeWVzCiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdAogIHBkZl9kb2N1bWVudDoKICAgIHRvYzogeWVzCgotLS0KIyBTdW1tYXJpemluZyBkYXRhCgojIyBTdW1tYXJ5IHN0YXRpc3RpY3MKCmBgYHtyIGVjaG89RkFMU0UsIGV2YWw9VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0KbGlicmFyeShrbml0cikKb3B0aW9ucyhzY2lwZW4gPSA5OTkpCiNUaGlzIGNvZGUgYXV0b21hdGljYWxseSB0aWRpZXMgY29kZSBzbyB0aGF0IGl0IGRvZXMgbm90IHJlYWNoIG92ZXIgdGhlIHBhZ2UKb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTUwKSx0aWR5PVRSVUUsIHJvd25hbWVzLnByaW50ID0gRkFMU0UsIHJvd3MucHJpbnQgPSAxMCkKb3B0c19jaHVuayRzZXQoY2FjaGU9VCkKYGBgCgpUaGlzIHNlY3Rpb24gZGlzY3Vzc2VzIGhvdyB0byBwcm9kdWNlIGFuZCBhbmFseXNlIGJhc2ljIHN1bW1hcnkgc3RhdGlzdGljcy4gV2UgbWFrZSBhIGRpc3RpbmN0aW9uIGJldHdlZW4gY2F0ZWdvcmljYWwgYW5kIGNvbnRpbnVvdXMgdmFyaWFibGVzLCBmb3Igd2hpY2ggZGlmZmVyZW50IHN0YXRpc3RpY3MgYXJlIHBlcm1pc3NpYmxlLgoKW1lvdSBjYW4gZG93bmxvYWQgdGhlIGNvcnJlc3BvbmRpbmcgUi1Db2RlIGhlcmVdKC4vQ29kZS8wNC1iYXNpY19zdGF0aXN0aWNzLlIpCgoKPGJyPgo8YnI+CgpPSyB0byBjb21wdXRlLi4uLgkgfCBOb21pbmFsCSB8IE9yZGluYWwJIHwgSW50ZXJ2YWwJIHwgUmF0aW8KLS0tLS0tLS0tLS0tLSB8IC0tLS0tLS0tLS0tLS0gfCAtLS0tLS0tLS0tLS0tIHwgLS0tIHwgLS0tCmZyZXF1ZW5jeSBkaXN0cmlidXRpb24gIHwgWWVzICB8IFllcyAgfCBZZXMgIHwgWWVzCm1lZGlhbiBhbmQgcGVyY2VudGlsZXMgIHwgTm8gIHwgWWVzICB8IFllcyAgfCBZZXMKbWVhbiwgc3RhbmRhcmQgZGV2aWF0aW9uLCBzdGFuZGFyZCBlcnJvciBvZiB0aGUgbWVhbiB8IE5vICB8IE5vICB8IFllcyAgfCBZZXMKcmF0aW8sIG9yIGNvZWZmaWNpZW50IG9mIHZhcmlhdGlvbiAgfCBObyAgfCBObyAgfCBObyAgfCBZZXMKCkFzIGFuIGV4YW1wbGUgZGF0YSBzZXQsIHdlIHdpbGwgYmUgdXNpbmcgdGhlIFNwb3RpZnkgbXVzaWMgZGF0YS4gTGV0J3MgbG9hZCBhbmQgaW5zcGVjdCB0aGUgZGF0YSBmaXJzdC4gU3R1ZGVudHMgb2YgdGhlIGNvdXJzZSBjYW4gZ2V0IHRoZSBkYXRhIHZpYSBMZWFyblxAV1UuIElmIHlvdSBhcmUgbm90IGVucm9sbGVkIGluIHRoZSBjb3Vyc2UgcGxlYXNlIGNvbnRhY3QgW0RhbmllbCBXaW5rbGVyXShodHRwczovL3d3dy53dS5hYy5hdC9lbi9pbXNtL2Fib3V0LXVzL3RlYW0vZGFuaWVsLXdpbmtsZXIpIChodHRwczovL3d3dy53dS5hYy5hdC9lbi9pbXNtL2Fib3V0LXVzL3RlYW0vZGFuaWVsLXdpbmtsZXIpLgoKYGBge3IsIGluY2x1ZGU9RkFMU0V9CmxpYnJhcnkob3BlbnNzbCkKcGFzc3BocmFzZSA8LSBjaGFyVG9SYXcoIk1SREFuaWxzIikKa2V5IDwtIHNoYTI1NihwYXNzcGhyYXNlKQp1cmwgPC0gImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9JTVNNV1UvbXJkYV9kYXRhX3B1Yi9tYXN0ZXIvc2VjcmV0LW11c2ljX2RhdGEucmRzIgpkb3dubG9hZC5maWxlKHVybCwgIi4vZGF0YS9zZWNyZXRfbXVzaWNfZGF0YS5yZHMiLCBtZXRob2QgPSAiYXV0byIsIHF1aWV0PUZBTFNFKQplbmNyeXB0ZWRfbXVzaWNfZGF0YSA8LSByZWFkUkRTKCIuL2RhdGEvc2VjcmV0X211c2ljX2RhdGEucmRzIikKbXVzaWNfZGF0YSA8LSB1bnNlcmlhbGl6ZShhZXNfY2JjX2RlY3J5cHQoZW5jcnlwdGVkX211c2ljX2RhdGEsIGtleSA9IGtleSkpCmBgYAoKCmBgYHtyLCBldmFsPUZBTFNFfQpyZWFkUkRTKCJtdXNpY19kYXRhLnJkcyIpCmBgYAojIyMgQ2F0ZWdvcmljYWwgdmFyaWFibGVzCgpDYXRlZ29yaWNhbCB2YXJpYWJsZXMgY29udGFpbiBhIGZpbml0ZSBudW1iZXIgb2YgY2F0ZWdvcmllcyBvciBkaXN0aW5jdCBncm91cHMgYW5kIGFyZSBhbHNvIGtub3duIGFzIHF1YWxpdGF0aXZlIHZhcmlhYmxlcy4gVGhlcmUgYXJlIGRpZmZlcmVudCB0eXBlcyBvZiBjYXRlZ29yaWNhbCB2YXJpYWJsZXM6CgoqICoqTm9taW5hbCB2YXJpYWJsZXMqKjogdmFyaWFibGVzIHRoYXQgaGF2ZSB0d28gb3IgbW9yZSBjYXRlZ29yaWVzIGJ1dCBubyBsb2dpY2FsIG9yZGVyIChlLmcuLCBtdXNpYyBnZW5yZXMpLiBBIGRpY2hvdG9tb3VzIHZhcmlhYmxlcyBpcyBzaW1wbHkgYSBub21pbmFsIHZhcmlhYmxlIHRoYXQgb25seSBoYXMgdHdvIGNhdGVnb3JpZXMgKGUuZy4sIGdlbmRlcikuCiogKipPcmRpbmFsIHZhcmlhYmxlcyoqOiB2YXJpYWJsZXMgdGhhdCBoYXZlIHR3byBvciBtb3JlIGNhdGVnb3JpZXMgdGhhdCBjYW4gYWxzbyBiZSBvcmRlcmVkIG9yIHJhbmtlZCAoZS5nLiwgaW5jb21lIGdyb3VwcykuCgpGb3IgdGhpcyBleGFtcGxlLCB3ZSBhcmUgaW50ZXJlc3RlZCBpbiB0aGUgZm9sbG93aW5nIHR3byB2YXJpYWJsZXMKCiogImdlbnJlIjogdGhlIG11c2ljIGdlbnJlIHRoZSBzb25nIGlzIGFzc29jaWF0ZWQgd2l0aCwgc3Vic2V0dGVkIGZvciB0aGUgbW9zdCBmcmVxdWVudCBnZW5yZXMuICAKKiAiZXhwbGljaXQiOiB3aGV0aGVyIHRoZSBseXJpY3Mgb2YgdGhlIHRyYWNrcyBhcmUgZXhwbGljaXQgb3Igbm90ICgwID0gbm90IGV4cGxpY2l0LCAxID0gZXhwbGljaXQpCgpbWW91IGNhbiBmaW5kIGEgZnVsbCBkZXNjcmlwdGlvbiBvZiB0aGUgdmFyaWFibGVzIGhlcmU6XShodHRwczovL2RldmVsb3Blci5zcG90aWZ5LmNvbS9kb2N1bWVudGF0aW9uL3dlYi1hcGkvcmVmZXJlbmNlL3BlcnNvbmFsaXphdGlvbi9nZXQtdXNlcnMtdG9wLWFydGlzdHMtYW5kLXRyYWNrcy8pIAoKSW4gYSBmaXJzdCBzdGVwLCB3ZSBjb252ZXJ0IHRoZSB2YXJpYWJsZXMgdG8gZmFjdG9yIHZhcmlhYmxlcyB1c2luZyB0aGUgYGBgZmFjdG9yKClgYGAgZnVuY3Rpb24gdG8gYXNzaWduIGFwcHJvcHJpYXRlIGxhYmVscyBhY2NvcmRpbmcgdG8gdGhlIHNjYWxlIHBvaW50czoKCmBgYHtyfQpzLmdlbnJlIDwtIGMoInBvcCIsImhpcCBob3AiLCJyb2NrIiwicmFwIiwiaW5kaWUiKQptdXNpY19kYXRhIDwtIHN1YnNldChtdXNpY19kYXRhLCB0b3AuZ2VucmUgJWluJSBzLmdlbnJlKQoKbXVzaWNfZGF0YSRnZW5yZV9jYXQgPC0gYXMuZmFjdG9yKG11c2ljX2RhdGEkdG9wLmdlbnJlKQptdXNpY19kYXRhJGV4cGxpY2l0X2NhdCA8LSBmYWN0b3IobXVzaWNfZGF0YSRleHBsaWNpdCwgbGV2ZWxzID0gYygwOjEpLCAKICAgIGxhYmVscyA9IGMoIm5vdCBleHBsaWNpdCIsICJleHBsaWNpdCIpKQoKbXVzaWNfZGF0YSRhZHZfc3BlbmRpbmcgPC0gbXVzaWNfZGF0YSRhZHZfc3BlbmRpbmcgLyAxMF4xMTEgIyBlXjExMSA9IHNjYWxpbmcgZmFjdG9yIGZvciBzcGVjaWZpYyBvdXRsaWVycwptdXNpY19kYXRhJGFkdl9zcGVuZGluZzIgPC0gbXVzaWNfZGF0YSRhZHZfc3BlbmRpbmcKYGBgCgpUaGUgYGBgdGFibGUoKWBgYCBmdW5jdGlvbiBjcmVhdGVzIGEgZnJlcXVlbmN5IHRhYmxlLiBMZXQncyBzdGFydCB3aXRoIHRoZSBudW1iZXIgb2Ygb2NjdXJyZW5jZXMgb2YgdGhlIGNhdGVnb3JpZXMgYXNzb2NpYXRlZCB3aXRoIHRoZSBnZW5yZSBhbmQgZXhwbGljaXRuZXNzIHZhcmlhYmxlcyBzZXBhcmF0ZWx5OgoKYGBge3J9CnRhYmxlKG11c2ljX2RhdGFbLGMoImdlbnJlX2NhdCIpXSkgI2Fic29sdXRlIGZyZXF1ZW5jaWVzCnRhYmxlKG11c2ljX2RhdGFbLGMoImV4cGxpY2l0X2NhdCIpXSkgI2Fic29sdXRlIGZyZXF1ZW5jaWVzCmBgYAoKSXQgaXMgb2J2aW91cyB0aGF0IHRoZXJlIGFyZSBtb3JlIHRyYWNrcyB3aXRoIG5vbi1leHBsaWNpdCBseXJpY3MgdGhhbiBzb25ncyB3aXRoIGV4cGxpY2l0IGx5cmljcy4gRm9yIHZhcmlhYmxlcyB3aXRoIG1vcmUgY2F0ZWdvcmllcywgaXQgbWlnaHQgYmUgbGVzcyBvYnZpb3VzIGFuZCB3ZSBtaWdodCB1c2UgdGhlIGBgYHN1bW1hcnkoKWBgYCBmdW5jdGlvbiwgd2hpY2ggcHJvZHVjZXMgZnVydGhlciBzdGF0aXN0aWNzLiAKCmBgYHtyfQpzdW1tYXJ5KG11c2ljX2RhdGEkZXhwbGljaXQpCmBgYAoKT2Z0ZW4sIHdlIGFyZSBpbnRlcmVzdGVkIGluIHRoZSByZWxhdGl2ZSBmcmVxdWVuY2llcywgd2hpY2ggY2FuIGJlIG9idGFpbmVkIGJ5IHVzaW5nIHRoZSBgYGBwcm9wLnRhYmxlKClgYGAgZnVuY3Rpb24uCgpgYGB7cn0KcHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKCJnZW5yZV9jYXQiKV0pKSAjcmVsYXRpdmUgZnJlcXVlbmNpZXMKcHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKCJleHBsaWNpdF9jYXQiKV0pKSAjcmVsYXRpdmUgZnJlcXVlbmNpZXMKYGBgCgpOb3cgbGV0J3MgaW52ZXN0aWdhdGUgaWYgdGhlIGdlbnJlIGRpZmZlcnMgYnkgZXhwbGljaXRlbmVzcy4gVG8gZG8gdGhpcywgd2Ugc2ltcGx5IGFwcGx5IHRoZSBgYGB0YWJsZSgpYGBgIGZ1bmN0aW9uIHRvIGJvdGggdmFyaWFibGVzOgoKYGBge3J9CnRhYmxlKG11c2ljX2RhdGFbLGMoImdlbnJlX2NhdCIsICJleHBsaWNpdF9jYXQiKV0pICNhYnNvbHV0ZSBmcmVxdWVuY2llcwpgYGAKCkFnYWluLCBpdCBtaWdodCBiZSBtb3JlIG1lYW5pbmdmdWwgdG8gbG9vayBhdCB0aGUgcmVsYXRpdmUgZnJlcXVlbmNpZXMgdXNpbmcgYGBgcHJvcC50YWJsZSgpYGBgOgoKYGBge3J9CnByb3AudGFibGUodGFibGUobXVzaWNfZGF0YVssYygiZ2VucmVfY2F0IiwgImV4cGxpY2l0X2NhdCIpXSkpICNyZWxhdGl2ZSBmcmVxdWVuY2llcwpgYGAKCk5vdGUgdGhhdCB0aGUgYWJvdmUgb3V0cHV0IHNob3dzIHRoZSBvdmVyYWxsIHJlbGF0aXZlIGZyZXF1ZW5jaWVzIHdoZW4gZXhwbGljaXQgYW5kIG5vbi1leHBsaWNpdCBzb25ncyBhcmUgY29uc2lkZXJlZCB0b2dldGhlci4gSW4gdGhpcyBjb250ZXh0LCBpdCBtaWdodCBiZSBldmVuIG1vcmUgbWVhbmluZ2Z1bCB0byBsb29rIGF0IHRoZSBjb25kaXRpb25hbCByZWxhdGl2ZSBmcmVxdWVuY2llcy4gVGhpcyBjYW4gYmUgYWNoaWV2ZWQgYnkgYWRkaW5nIGEgYGBgLDJgYGAgdG8gdGhlIGBgYHByb3AudGFibGUoKWBgYCBjb21tYW5kLCB3aGljaCB0ZWxscyBSIHRvIGNvbXB1dGUgdGhlIHJlbGF0aXZlIGZyZXF1ZW5jaWVzIGJ5IHRoZSBjb2x1bW5zICh3aGljaCBpcyBpbiBvdXIgY2FzZSB0aGUgZXhwbGljaXRuZXNzIHZhcmlhYmxlKTogCgpgYGB7cn0KcHJvcC50YWJsZSh0YWJsZShtdXNpY19kYXRhWyxjKCJnZW5yZV9jYXQiLCAiZXhwbGljaXRfY2F0IildKSwyKSAjY29uZGl0aW9uYWwgcmVsYXRpdmUgZnJlcXVlbmNpZXMKYGBgCgojIyMgQ29udGludW91cyB2YXJpYWJsZXMKCiMjIyMgRGVzY3JpcHRpdmUgc3RhdGlzdGljcwoKQ29udGludW91cyB2YXJpYWJsZXMgYXJlIG51bWVyaWMgdmFyaWFibGVzIHRoYXQgY2FuIHRha2Ugb24gYW55IHZhbHVlIG9uIGEgbWVhc3VyZW1lbnQgc2NhbGUgKGkuZS4sIHRoZXJlIGlzIGFuIGluZmluaXRlIG51bWJlciBvZiB2YWx1ZXMgYmV0d2VlbiBhbnkgdHdvIHZhbHVlcykuIFRoZXJlIGFyZSBkaWZmZXJlbnQgdHlwZXMgb2YgY29udGludW91cyB2YXJpYWJsZXM6CgoqICoqSW50ZXJ2YWwgdmFyaWFibGVzKio6IHdoaWxlIHRoZSB6ZXJvIHBvaW50IGlzIGFyYml0cmFyeSwgZXF1YWwgaW50ZXJ2YWxzIG9uIHRoZSBzY2FsZSByZXByZXNlbnQgZXF1YWwgZGlmZmVyZW5jZXMgaW4gdGhlIHByb3BlcnR5IGJlaW5nIG1lYXN1cmVkLiBFLmcuLCBvbiBhIHRlbXBlcmF0dXJlIHNjYWxlIG1lYXN1cmVkIGluIENlbHNpdXMgdGhlIGRpZmZlcmVuY2UgYmV0d2VlbiBhIHRlbXBlcmF0dXJlIG9mIDE1IGRlZ3JlZXMgYW5kIDI1IGRlZ3JlZXMgaXMgdGhlIHNhbWUgZGlmZmVyZW5jZSBhcyBiZXR3ZWVuIDI1IGRlZ3JlZXMgYW5kIDM1IGRlZ3JlZXMgYnV0IHRoZSB6ZXJvIHBvaW50IGlzIGFyYml0cmFyeS4gCiogKipSYXRpbyB2YXJpYWJsZXMqKjogaGFzIGFsbCB0aGUgcHJvcGVydGllcyBvZiBhbiBpbnRlcnZhbCB2YXJpYWJsZSwgYnV0IGFsc28gaGFzIGFuIGFic29sdXRlIHplcm8gcG9pbnQuIFdoZW4gdGhlIHZhcmlhYmxlIGVxdWFscyAwLjAsIGl0IG1lYW5zIHRoYXQgdGhlcmUgaXMgbm9uZSBvZiB0aGF0IHZhcmlhYmxlIChlLmcuLCBudW1iZXIgb2YgcHJvZHVjdHMgc29sZCwgd2lsbGluZ25lc3MtdG8tcGF5LCBtaWxlYWdlIGEgY2FyIGdldHMpLiAKCkNvbXB1dGluZyBkZXNjcmlwdGl2ZSBzdGF0aXN0aWNzIGluIFIgaXMgZWFzeSBhbmQgdGhlcmUgYXJlIG1hbnkgZnVuY3Rpb25zIGZyb20gZGlmZmVyZW50IHBhY2thZ2VzIHRoYXQgbGV0IHlvdSBjYWxjdWxhdGUgc3VtbWFyeSBzdGF0aXN0aWNzIChpbmNsdWRpbmcgdGhlIGBgYHN1bW1hcnkoKWBgYCBmdW5jdGlvbiBmcm9tIHRoZSBgYGBiYXNlYGBgIHBhY2thZ2UpLiBJbiB0aGlzIHR1dG9yaWFsLCB3ZSB3aWxsIHVzZSB0aGUgYGBgZGVzY3JpYmUoKWBgYCBmdW5jdGlvbiBmcm9tIHRoZSBgYGBwc3ljaGBgYCBwYWNrYWdlOgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQgPSBGQUxTRX0KbGlicmFyeShwc3ljaCkKcHN5Y2g6OmRlc2NyaWJlKG11c2ljX2RhdGFbLGMoInRyYWNrUG9wdWxhcml0eSIsICJkdXJhdGlvbl9tcyIpXSkKYGBgCgpJbiB0aGUgYWJvdmUgY29tbWFuZCwgd2UgdXNlZCB0aGUgYGBgcHN5Y2g6OmBgYCBwcmVmaXggdG8gYXZvaWQgY29uZnVzaW9uIGFuZCB0byBtYWtlIHN1cmUgdGhhdCBSIHVzZXMgdGhlIGBgYGRlc2NyaWJlKClgYGAgZnVuY3Rpb24gZnJvbSB0aGUgYGBgcHN5Y2hgYGAgcGFja2FnZSBzaW5jZSB0aGVyZSBhcmUgbWFueSBvdGhlciBwYWNrYWdlcyB0aGF0IGFsc28gY29udGFpbiBhIGBgYGRlc3JpYmUoKWBgYCBmdW5jdGlvbi4gTm90ZSB0aGF0IHlvdSBjb3VsZCBhbHNvIGNvbXB1dGUgdGhlc2Ugc3RhdGlzdGljcyBzZXBhcmF0ZWx5IGJ5IHVzaW5nIHRoZSByZXNwZWN0aXZlIGZ1bmN0aW9ucyAoZS5nLiwgYGBgbWVhbigpYGBgLCBgYGBzZCgpYGBgLCBgYGBtZWRpYW4oKWBgYCwgYGBgbWluKClgYGAsIGBgYG1heCgpYGBgLCBldGMuKS4gCgpUaGUgYGBgcHN5Y2hgYGAgcGFja2FnZSBhbHNvIGNvbnRhaW5zIHRoZSBgYGBkZXNjcmliZUJ5KClgYGAgZnVuY3Rpb24sIHdoaWNoIGxldHMgeW91IGNvbXB1dGUgdGhlIHN1bW1hcnkgc3RhdGlzdGljcyBieSBzdWItZ3JvdXAgc2VwYXJhdGVseS4gRm9yIGV4YW1wbGUsIHdlIGNvdWxkIGVhc2lseSBjb21wdXRlIHRoZSBzdW1tYXJ5IHN0YXRpc3RpY3MgYnkgZXhwbGljaXRlbmVzcyBhcyBmb2xsb3dzOiAKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CmRlc2NyaWJlQnkobXVzaWNfZGF0YVssYygidHJhY2tQb3B1bGFyaXR5IiwgImR1cmF0aW9uX21zIildLCBtdXNpY19kYXRhJGV4cGxpY2l0X2NhdCkKYGBgCgpOb3RlIHRoYXQgeW91IGNvdWxkIGp1c3QgYXMgd2VsbCB1c2Ugb3RoZXIgcGFja2FnZXMgdG8gY29tcHV0ZSB0aGUgZGVzY3JpcHRpdmUgc3RhdGlzdGljcy4gRm9yIGV4YW1wbGUsIHlvdSBjb3VsZCBoYXZlIHVzZWQgdGhlIGBgYHN0YXQuZGVzYygpYGBgIGZ1bmN0aW9uIGZyb20gdGhlIGBgYHBhc3RlY3NgYGAgcGFja2FnZToKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50ID0gRkFMU0V9CmxpYnJhcnkocGFzdGVjcykKc3RhdC5kZXNjKG11c2ljX2RhdGFbLGMoInRyYWNrUG9wdWxhcml0eSIsICJkdXJhdGlvbl9tcyIpXSkKYGBgCgpDb21wdXRpbmcgc3RhdGlzdGljcyBieSBncm91cCBpcyBhbHNvIHBvc3NpYmxlIGJ5IHVzaW5nIHRoZSB3cmFwcGVyIGZ1bmN0aW9uIGBgYGJ5KClgYGAuIFdpdGhpbiB0aGUgZnVuY3Rpb24sIHlvdSBmaXJzdCBzcGVjaWZ5IHRoZSBkYXRhIG9uIHdoaWNoIHlvdSB3b3VsZCBsaWtlIHRvIHBlcmZvcm0gdGhlIGdyb3VwaW5nIGBgYG11c2ljX2RhdGFbLGMoInRyYWNrUG9wdWxhcml0eSIsICJhZHZfc3BlbmRpbmciKV1gYGAsIGZvbGxvd2VkIGJ5IHRoZSBncm91cGluZyB2YXJpYWJsZSBgYGBtdXNpY19kYXRhJGV4cGxpY2l0X2NhdGBgYCBhbmQgdGhlIGZ1bmN0aW9uIHRoYXQgeW91IHdvdWxkIGxpa2UgdG8gZXhlY3V0ZSAoZS5nLiwgYGBgc3RhdC5kZXNjKClgYGApOgoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgcGFnZWQucHJpbnQgPSBGQUxTRX0KbGlicmFyeShwYXN0ZWNzKQpieShtdXNpY19kYXRhWyxjKCJ0cmFja1BvcHVsYXJpdHkiLCAiZHVyYXRpb25fbXMiKV0sbXVzaWNfZGF0YSRleHBsaWNpdF9jYXQsc3RhdC5kZXNjKQpgYGAKClRoZXNlIGV4YW1wbGVzIGFyZSBtZWFudCB0byBleGVtcGxpZnkgdGhhdCB0aGVyZSBhcmUgb2Z0ZW4gbWFueSBkaWZmZXJlbnQgd2F5cyB0byByZWFjaCBhIGdvYWwgaW4gUi4gV2hpY2ggb25lIHlvdSBjaG9vc2UgZGVwZW5kcyBvbiB3aGF0IHR5cGUgb2YgaW5mb3JtYXRpb24geW91IHNlZWsgKHRoZSByZXN1bHRzIHByb3ZpZGUgc2xpZ2h0bHkgZGlmZmVyZW50IGluZm9ybWF0aW9uKSBhbmQgb24gcGVyc29uYWwgcHJlZmVyZW5jZXMuCgojIyMjIENyZWF0aW5nIHN1YnNldHMKCkZyb20gdGhlIGFib3ZlIHN0YXRpc3RpY3MgaXQgaXMgY2xlYXIgdGhhdCB0aGUgZGF0YSBzZXQgY29udGFpbnMgc29tZSBzZXZlcmUgb3V0bGllcnMgb24gc29tZSB2YXJpYWJsZXMuIEZvciBleGFtcGxlLCB0aGUgbWF4aW11bSBhbW91bnQgb2Ygc3BlbmRpbmcgb24gYWR2ZXJ0aXNtZW50IGlzIGByIHJvdW5kKG1heChuYS5vbWl0KG11c2ljX2RhdGEkYWR2X3NwZW5kaW5nKSksMSlgIHVuaXRzLiBZb3UgbWlnaHQgd2FudCB0byBpbnZlc3RpZ2F0ZSB0aGVzZSBjYXNlcyBhbmQgZGVsZXRlIHRoZW0gaWYgdGhleSB3b3VsZCB0dXJuIG91dCB0byBpbmRlZWQgaW5kdWNlIGEgYmlhcyBpbiB5b3VyIGFuYWx5c2VzLiBGb3Igbm9ybWFsbHkgZGlzdHJpYnV0ZWQgZGF0YSwgYW55IGFic29sdXRlIHN0YW5kYXJkaXplZCBkZXZpYXRpb25zIGxhcmdlciB0aGFuIDMgc3RhbmRhcmQgZGV2aWF0aW9ucyBmcm9tIHRoZSBtZWFuIGFyZSBzdXNwaWNpb3VzLiBMZXQncyBjaGVjayBpZiBwb3RlbnRpYWwgb3V0bGllcnMgZXhpc3QgaW4gdGhlIGRhdGE6CgpgYGB7ciBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBwYWdlZC5wcmludCA9IEZBTFNFfQpsaWJyYXJ5KGRwbHlyKQptdXNpY19kYXRhICU+JSBtdXRhdGUoYWR2X3NwZW5kaW5nX3N0ZDIgPSBhcy52ZWN0b3Ioc2NhbGUoYWR2X3NwZW5kaW5nMikpKSAlPiUgZmlsdGVyKGFicyhhZHZfc3BlbmRpbmdfc3RkMikgPiAzKSAlPiUgc2VsZWN0KGlkLCB0cmFja05hbWUsIGFkdl9zcGVuZGluZzIsIGFkdl9zcGVuZGluZ19zdGQyKQpgYGAKCkluZGVlZCwgdGhlcmUgYXBwZWFyIHRvIGJlIHR3byBwb3RlbnRpYWwgb3V0bGllcnMsIHdoaWNoIHdlIG1heSB3aXNoIHRvIGV4Y2x1ZGUgYmVmb3JlIHdlIHN0YXJ0IGZpdHRpbmcgbW9kZWxzIHRvIHRoZSBkYXRhLiBZb3UgY291bGQgZWFzaWx5IGNyZWF0ZSBhIHN1YnNldCBvZiB0aGUgb3JpZ2luYWwgZGF0YSwgd2hpY2ggeW91IHdvdWxkIHRoZW4gdXNlIGZvciBlc3RpbWF0aW9uIHVzaW5nIHRoZSBgYGBmaWx0ZXIoKWBgYCBmdW5jdGlvbiBmcm9tIHRoZSBgYGBkcGx5cigpYGBgIHBhY2thZ2UuIEZvciBleGFtcGxlLCB0aGUgZm9sbG93aW5nIGNvZGUgY3JlYXRlcyBhIHN1YnNldCB0aGF0IGV4Y2x1ZGVzIGFsbCBjYXNlcyB3aXRoIGEgc3RhbmRhcmRpemVkIGR1cmF0aW9uIG9mIG1vcmUgdGhhbiAzOiAKCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIHBhZ2VkLnByaW50ID0gRkFMU0V9CmxpYnJhcnkoZHBseXIpCmVzdGltYXRpb25fc2FtcGxlIDwtIG11c2ljX2RhdGEgJT4lIG11dGF0ZShhZHZfc3BlbmRpbmdfc3RkMiA9IGFzLnZlY3RvcihzY2FsZShhZHZfc3BlbmRpbmcyKSkpICU+JSBmaWx0ZXIoYWJzKGFkdl9zcGVuZGluZ19zdGQyKSA8IDMpCnBzeWNoOjpkZXNjcmliZShlc3RpbWF0aW9uX3NhbXBsZVssYygidHJhY2tQb3B1bGFyaXR5IiwgImFkdl9zcGVuZGluZzIiKV0pCmBgYAoK</div>
 
 
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Hypothesis testing | Marketing Research Design &amp; Analysis 2019</title>
   <meta name="description" content="An Introduction to Statistics Using R" />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Hypothesis testing | Marketing Research Design &amp; Analysis 2019" />
   <meta property="og:type" content="book" />
@@ -52,12 +52,12 @@
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.49.4/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.49.4/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -508,12 +508,12 @@ H_1: \mu \neq 10
 <p>Provide descriptive statistics using the <code>stat.desc()</code> function:</p>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" title="1"><span class="kw">library</span>(pastecs)</a>
 <a class="sourceLine" id="cb275-2" title="2"><span class="kw">stat.desc</span>(student_sample)</a></code></pre></div>
-<pre><code>##      nbr.val     nbr.null       nbr.na          min          max 
-##   50.0000000    0.0000000    0.0000000    1.9365049   64.9843737 
-##        range          sum       median         mean      SE.mean 
-##   63.0478688  929.5971917   16.2246844   18.5919438    1.7744470 
-## CI.mean.0.95          var      std.dev     coef.var 
-##    3.5658848  157.4331152   12.5472354    0.6748749</code></pre>
+<pre><code>##      nbr.val     nbr.null       nbr.na          min          max        range 
+##   50.0000000    0.0000000    0.0000000    1.9365049   64.9843737   63.0478688 
+##          sum       median         mean      SE.mean CI.mean.0.95          var 
+##  929.5971917   16.2246844   18.5919438    1.7744470    3.5658848  157.4331152 
+##      std.dev     coef.var 
+##   12.5472354    0.6748749</code></pre>
 <p>From this, we can already see that the mean is different from the hypothesized value. The question however remains, whether this difference is significantly different, given the sample size and the variability in the data. Since we only have one continuous variable, we can visualize the distribution in a histogram.</p>
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" title="1"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(student_sample)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> student_sample), </a>
 <a class="sourceLine" id="cb277-2" title="2">    <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span></a>
@@ -575,16 +575,12 @@ H_1: \mu \neq 10
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: A
-##    vars  n  mean   sd median trimmed   mad min max range skew kurtosis
-## X1    1 98 18.11 12.1     15   16.88 10.38   2  65    63 1.08     1.21
-##      se
-## X1 1.22
-## -------------------------------------------------------- 
+##    vars  n  mean   sd median trimmed   mad min max range skew kurtosis   se
+## X1    1 98 18.11 12.1     15   16.88 10.38   2  65    63 1.08     1.21 1.22
+## ------------------------------------------------------------ 
 ## group: B
-##    vars   n mean    sd median trimmed   mad min max range skew kurtosis
-## X1    1 112 28.5 17.97   24.5   26.56 15.57   1  83    82 0.96     0.82
-##     se
-## X1 1.7</code></pre>
+##    vars   n mean    sd median trimmed   mad min max range skew kurtosis  se
+## X1    1 112 28.5 17.97   24.5   26.56 15.57   1  83    82 0.96     0.82 1.7</code></pre>
 <p>From this, we can already see that there is a difference in means between groups A and B. We can also see that the number of observations is different, as is the standard deviation. The question that we would like to answer is whether there is a significant difference in mean listening times between the groups. Remember that different users are contained in each group (‘between-subjects design’) and that the observations in one group are independent of the observations in the other group. Before we will see how you can easily conduct an independent-means t-test, let’s go over some theory first.</p>
 <div id="theory" class="section level4">
 <h4><span class="header-section-number">5.3.1.1</span> Theory</h4>
@@ -689,16 +685,12 @@ H_1: \mu_1 \ne \mu_2
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: A
-##    vars  n  mean   sd median trimmed   mad min max range skew kurtosis
-## X1    1 98 18.11 12.1     15   16.88 10.38   2  65    63 1.08     1.21
-##      se
-## X1 1.22
-## -------------------------------------------------------- 
+##    vars  n  mean   sd median trimmed   mad min max range skew kurtosis   se
+## X1    1 98 18.11 12.1     15   16.88 10.38   2  65    63 1.08     1.21 1.22
+## ------------------------------------------------------------ 
 ## group: B
-##    vars   n mean    sd median trimmed   mad min max range skew kurtosis
-## X1    1 112 28.5 17.97   24.5   26.56 15.57   1  83    82 0.96     0.82
-##     se
-## X1 1.7</code></pre>
+##    vars   n mean    sd median trimmed   mad min max range skew kurtosis  se
+## X1    1 112 28.5 17.97   24.5   26.56 15.57   1  83    82 0.96     0.82 1.7</code></pre>
 <p>This already shows us that the mean between groups A and B are different. We can visualize the data using a plot of means, boxplot, and a histogram.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" title="1"><span class="kw">ggplot</span>(hours_a_b, <span class="kw">aes</span>(group, hours)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, </a>
 <a class="sourceLine" id="cb302-2" title="2">    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span></a>
@@ -821,7 +813,7 @@ H_0: \mu_D \ne 0
 <pre><code>## hours_a_b_paired 
 ## 
 ##  3  Variables      100  Observations
-## ---------------------------------------------------------------------------
+## --------------------------------------------------------------------------------
 ## hours_a 
 ##        n  missing distinct     Info     Mean      Gmd      .05      .10 
 ##      100        0       38    0.998    17.93    13.16     3.00     5.90 
@@ -829,7 +821,7 @@ H_0: \mu_D \ne 0
 ##     8.00    15.00    25.25    34.30    39.05 
 ## 
 ## lowest :  2  3  4  5  6, highest: 40 41 46 50 65
-## ---------------------------------------------------------------------------
+## --------------------------------------------------------------------------------
 ## hours_b 
 ##        n  missing distinct     Info     Mean      Gmd      .05      .10 
 ##      100        0       48    0.999    29.58     20.3     5.95     8.00 
@@ -837,7 +829,7 @@ H_0: \mu_D \ne 0
 ##    15.75    25.00    40.00    54.20    63.30 
 ## 
 ## lowest :  3  4  5  6  8, highest: 63 69 78 81 83
-## ---------------------------------------------------------------------------
+## --------------------------------------------------------------------------------
 ## d 
 ##        n  missing distinct     Info     Mean      Gmd      .05      .10 
 ##      100        0       52    0.999   -11.65    23.75   -54.15   -35.20 
@@ -845,7 +837,7 @@ H_0: \mu_D \ne 0
 ##   -23.25    -9.00     2.00    12.00    21.05 
 ## 
 ## lowest : -76 -64 -63 -60 -57, highest:  22  23  24  34  51
-## ---------------------------------------------------------------------------</code></pre>
+## --------------------------------------------------------------------------------</code></pre>
 <p>This already shows us that the mean between the two months are different. We can visiualize the data using a plot of means, boxplot, and a histogram.</p>
 <p>To plot the data, we need to do some restructuring first, since the variables are now stored in two different columns (“hours_a” and “hours_b”). This is also known as the “wide” format. To plot the data we need all observations to be stored in one variable. This is also known as the “long” format. We can use the <code>melt(...)</code> function from the <code>reshape2</code>package to “melt” the two variable into one column to plot the data.</p>
 <div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb319-1" title="1"><span class="kw">library</span>(reshape2)</a>
@@ -1086,20 +1078,16 @@ As always, we load and inspect the data first:</p>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: A
-##    vars   n  mean   sd median trimmed  mad min max range  skew kurtosis
-## X1    1 100 14.34 4.62     14   14.36 4.45   3  25    22 -0.03    -0.32
-##      se
-## X1 0.46
-## -------------------------------------------------------- 
+##    vars   n  mean   sd median trimmed  mad min max range  skew kurtosis   se
+## X1    1 100 14.34 4.62     14   14.36 4.45   3  25    22 -0.03    -0.32 0.46
+## ------------------------------------------------------------ 
 ## group: B
 ##    vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
 ## X1    1 100 24.7 5.81     25   24.79 5.93  12  42    30 0.05      0.2 0.58
-## -------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## group: C
-##    vars   n  mean   sd median trimmed  mad min max range  skew kurtosis
-## X1    1 100 34.99 6.42   34.5   35.02 6.67  17  50    33 -0.05    -0.23
-##      se
-## X1 0.64</code></pre>
+##    vars   n  mean   sd median trimmed  mad min max range  skew kurtosis   se
+## X1    1 100 34.99 6.42   34.5   35.02 6.67  17  50    33 -0.05    -0.23 0.64</code></pre>
 <p>In addition, you should visualize the data using appropriate plots:</p>
 <div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" title="1"><span class="co">#Plot of means</span></a>
 <a class="sourceLine" id="cb337-2" title="2"><span class="kw">library</span>(plyr)</a>
@@ -1153,10 +1141,10 @@ Figure 5.2: Plot of means
 <div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb341-1" title="1"><span class="kw">by</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, mean)  <span class="co">#category mean</span></a></code></pre></div>
 <pre><code>## hours_abc$group: A
 ## [1] 14.34
-## -------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## hours_abc$group: B
 ## [1] 24.7
-## -------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## hours_abc$group: C
 ## [1] 34.99</code></pre>
 <p>To see how each variance component can be derived, let’s look at the data again. The following graph shows the individual observations by experimental group:</p>
@@ -1185,7 +1173,7 @@ SS_T= \sum_{i=1}^{N} (Y_i-\bar{Y})^2
 SS_T =&amp;(13−24.67)^2 + (14−24.67)^2 + … + (2−24.67)^2\\
       &amp;+(21−24.67)^2 + (18-24.67)^2 + … + (17−24.67)^2\\
       &amp;+(30−24.67)^2 + (37−24.67)^2 + … + (28−24.67)^2\\ 
-      &amp;=26646.33
+      &amp;=30855.64
 \end{align}
 \]</span></p>
 <p>You could also compute this in R using:</p>
@@ -1217,7 +1205,7 @@ SS_M= \sum_{j=1}^{c} n_j(\bar{Y}_j-\bar{Y})^2
 <p><span class="math display">\[ 
 \begin{align}
 SS_M &amp;= 100*(15.47−24.67)^2 + 100*(24.88−24.67)^2 + 100*(33.66−24.67)^2 \\
-     &amp;= 16550.42
+     &amp;= 21321.21
 \end{align}
 \]</span></p>
 <p>You could also compute this manually in R using:</p>
@@ -1246,10 +1234,10 @@ SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\bar{Y}_{j})^2
 <p>This means that we need to subtract the group mean from each individual observation, square the difference, and sum up over all the squared differences. Thus, in our example, the model sum of squares can be calculated as:</p>
 <p><span class="math display">\[ 
 \begin{align}
-SS_R =&amp; (13−15.47)^2 + (14−15.47)^2 + … + (2−15.47)^2 \\
-     +&amp;(21−24.88)^2 + (18−24.88)^2 + … + (17−24.88)^2 \\
-     +&amp; (30−33.66)^2 + (37−33.66)^2 + … + (28−33.66)^2 \\
-     =&amp;  10095.91
+SS_R =&amp; (13−14.34)^2 + (14−14.34)^2 + … + (2−14.34)^2 \\
+     +&amp;(21−24.7)^2 + (18−24.7)^2 + … + (17−24.7)^2 \\
+     +&amp; (30−34.99)^2 + (37−34.99)^2 + … + (28−34.99)^2 \\
+     =&amp;  9534.43
 \end{align}
 \]</span></p>
 <p>You could also compute this in R using:</p>
@@ -1269,7 +1257,7 @@ df_R=&amp; (n_1-1)+(n_2-1)+(n_3-1) \\
 <h4><span class="header-section-number">5.4.2.4</span> Effect strength</h4>
 <p>Once you have computed the different sum of squares, you can investigate the effect strength. <span class="math inline">\(\eta^2\)</span> is a measure of the variation in Y that is explained by X:</p>
 <p><span class="math display">\[
-\eta^2= \frac{SS_M}{SS_T}=\frac{16550.42}{26646.33}=0.621
+\eta^2= \frac{SS_M}{SS_T}=\frac{21321.21}{30855.64}=0.69
 \]</span></p>
 <p>To compute this in R:</p>
 <div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb349-1" title="1">eta &lt;-<span class="st"> </span>SSM<span class="op">/</span>SST</a>
@@ -1293,15 +1281,15 @@ df_R=&amp; (n_1-1)+(n_2-1)+(n_3-1) \\
 <p>However, since these are summed values, their magnitude is influenced by the number of scores that were summed. For example, to calculate SS<sub>M</sub> we only used the sum of 3 values (the group means), while we used 30 and 27 values to calculate SS<sub>T</sub> and SS<sub>R</sub>, respectively. Thus, we calculate the average sum of squares (“mean square”) to compare the average amount of systematic vs. unsystematic variation by dividing the SS values by the degrees of freedom associated with the respective statistic.</p>
 <p>Mean square due to X:</p>
 <p><span class="math display">\[
-MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{16550.42}{(3-1)}
+MS_M= \frac{SS_M}{df_M}=\frac{SS_M}{c-1}=\frac{21321.21}{(3-1)}
 \]</span></p>
 <p>Mean square due to error:</p>
 <p><span class="math display">\[
-MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{10095.91}{(300-3)}
+MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{9534.43}{(300-3)}
 \]</span></p>
 <p>Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-radio can be derived as follows:</p>
 <p><span class="math display">\[
-F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.91}{(300-3)}}=243.44
+F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{21321.21}{(3-1)}}{\frac{9534.43}{(300-3)}}=332.08
 \]</span></p>
 <p>You can easily compute this in R:</p>
 <div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb351-1" title="1">f_ratio &lt;-<span class="st"> </span>(SSM<span class="op">/</span><span class="dv">2</span>)<span class="op">/</span>(SSR<span class="op">/</span><span class="dv">297</span>)</a>
@@ -1309,7 +1297,7 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.
 <pre><code>## [1] 332.0806</code></pre>
 <p>This statistic follows the F distribution with (m = c – 1) and (n = N – c) degrees of freedom. This means that, like the <span class="math inline">\(\chi^2\)</span> distribution, the shape of the F-distribution depends on the degrees of freedom. In this case, the shape depends on the degrees of freedom associated with the numerator and denominator used to compute the F-ratio. The following figure shows the shape of the F-distribution for different degrees of freedom:</p>
 <div class="figure">
-<embed src="%22./fdistributions.png%22" />
+<img src="fdistributions.png" alt="The F distribution" />
 <p class="caption">The F distribution</p>
 </div>
 <p>The outcome of the test is one of the following:</p>
@@ -1325,7 +1313,7 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.
 <pre><code>## [1] TRUE</code></pre>
 <p>The output tells us that the calculated test statistic exceeds the critical value. We can also show the test result visually:</p>
 <div class="figure">
-<embed src="%22./ftest.png%22" />
+<img src="ftest.png" alt="Visual depiction of the test result" />
 <p class="caption">Visual depiction of the test result</p>
 </div>
 <p>Thus, we conclude that because F<sub>CAL</sub> = 332.08 &gt; F<sub>CR</sub> = 3.03, H<sub>0</sub> is rejected!</p>
@@ -1359,7 +1347,7 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.
 ## data:  dd[x, ]
 ## W = 0.91625, p-value = 0.3267
 ## 
-## -------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## hours_fewobs$group: B
 ## 
 ##  Shapiro-Wilk normality test
@@ -1367,7 +1355,7 @@ F= \frac{MS_M}{MS_R}=\frac{SS_R}{N-c}=\frac{\frac{16550.42}{(3-1)}}{\frac{10095.
 ## data:  dd[x, ]
 ## W = 0.91486, p-value = 0.3161
 ## 
-## -------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## hours_fewobs$group: C
 ## 
 ##  Shapiro-Wilk normality test
@@ -1451,8 +1439,7 @@ Figure 5.9: Q-Q plot 3
 ##  One-way analysis of means (not assuming equal variances)
 ## 
 ## data:  hours and group
-## F = 350.93, num df = 2, denom df = 194, p-value &lt;
-## 0.00000000000000022</code></pre>
+## F = 350.93, num df = 2, denom df = 194, p-value &lt; 0.00000000000000022</code></pre>
 <p>You can see that the results are fairly similar, since the variances turned out to be fairly equal across groups.</p>
 </div>
 </div>
@@ -1688,7 +1675,7 @@ Figure 5.10: Tukey’s HSD
 ## group: low_price
 ##    vars  n mean   sd median trimmed  mad min max range skew kurtosis  se
 ## X1    1 51 8.37 6.44      6    7.17 4.45   2  30    28 1.66     2.22 0.9
-## -------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## group: high_price
 ##    vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
 ## X1    1 51 5.86 5.87      3     4.9 4.45   0  30    30 1.84      4.1 0.82</code></pre>
@@ -1798,23 +1785,13 @@ Figure 5.12: Boxplot
 <li>Service agent 2 talks to 300 customers and gets 100 of them to buy (conversion rate=1/3)</li>
 </ul>
 <p>As always, we load the data first:</p>
-<<<<<<< HEAD
-<p><a href="./Code/10-categorical_data%20(1).R">You can download the corresponding R-Code here</a></p>
+<p><a href="./Code/10-categorical_data.R">You can download the corresponding R-Code here</a></p>
 <div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" title="1">call_center &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat&quot;</span>, </a>
 <a class="sourceLine" id="cb431-2" title="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
 <a class="sourceLine" id="cb431-3" title="3">call_center<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>conversion, </a>
 <a class="sourceLine" id="cb431-4" title="4">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))  <span class="co">#convert to factor</span></a>
 <a class="sourceLine" id="cb431-5" title="5">call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), </a>
 <a class="sourceLine" id="cb431-6" title="6">    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>))  <span class="co">#convert to factor</span></a></code></pre></div>
-=======
-<p><a href="./Code/10-categorical_data.R">You can download the corresponding R-Code here</a></p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" title="1">call_center &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat&quot;</span>, </a>
-<a class="sourceLine" id="cb433-2" title="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
-<a class="sourceLine" id="cb433-3" title="3">call_center<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>conversion, </a>
-<a class="sourceLine" id="cb433-4" title="4">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))  <span class="co">#convert to factor</span></a>
-<a class="sourceLine" id="cb433-5" title="5">call_center<span class="op">$</span>agent &lt;-<span class="st"> </span><span class="kw">factor</span>(call_center<span class="op">$</span>agent, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb433-6" title="6">    <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;agent_1&quot;</span>, <span class="st">&quot;agent_2&quot;</span>))  <span class="co">#convert to factor</span></a></code></pre></div>
->>>>>>> cc05d63... codefiles
 <p>Next, we create a table to check the relative frequencies:</p>
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" title="1">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(call_center), </a>
 <a class="sourceLine" id="cb432-2" title="2">    <span class="dv">2</span>))  <span class="co">#conditional relative frequencies</span></a>
@@ -1895,8 +1872,7 @@ CI = p_1-p_2\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p_1*(1-p_1)}{n_1}+\frac{p_2*(
 <p>Instead of computing the intervals by hand, we could also use the <code>prop.test()</code> function:</p>
 <div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb447-1" title="1"><span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(n1_conv, n2_conv), <span class="dt">n =</span> <span class="kw">c</span>(n1, n2), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
 <pre><code>## 
-##  2-sample test for equality of proportions with continuity
-##  correction
+##  2-sample test for equality of proportions with continuity correction
 ## 
 ## data:  c(n1_conv, n2_conv) out of c(n1, n2)
 ## X-squared = 65.34, df = 1, p-value = 0.0000000000000006303
@@ -2103,12 +2079,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -2120,6 +2095,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
