@@ -163,14 +163,14 @@ From the above statistics it is clear that the data set contains some severe out
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(dplyr)
-music_data %>% mutate(adv_spending_std2 = as.vector(scale(adv_spending2))) %>% filter(abs(adv_spending_std2) > 3) %>% select(id, trackName, adv_spending2, adv_spending_std2)
+music_data %>% mutate(adv_spending_std = as.vector(scale(adv_spending2))) %>% filter(abs(adv_spending_std) > 3) %>% select(id, trackName, adv_spending, adv_spending_std)
 ```
 
 Indeed, there appear to be two potential outliers, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the ```filter()``` function from the ```dplyr()``` package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3: 
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(dplyr)
-estimation_sample <- music_data %>% mutate(adv_spending_std2 = as.vector(scale(adv_spending2))) %>% filter(abs(adv_spending_std2) < 3)
-psych::describe(estimation_sample[,c("trackPopularity", "adv_spending2")])
+estimation_sample <- music_data %>% mutate(adv_spending_std = as.vector(scale(adv_spending))) %>% filter(abs(adv_spending_std) < 3)
+psych::describe(estimation_sample[,c("trackPopularity", "adv_spending")])
 ```
 

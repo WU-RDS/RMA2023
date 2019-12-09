@@ -183,6 +183,43 @@ ggplot(table_plot_cond_rel, aes(x = genre_cat, y = Freq, fill = explicit_cat)) +
   theme_bw() 
 ```
 
+#### Pie plot
+
+We could also create a pie plot with ggplot.
+
+```{r}
+ggplot(subset(table_plot_rel,Freq > 0), aes(x="", y=Freq, fill=Genre)) + # Create a basic bar
+  geom_bar(stat="identity", width=1) + 
+  coord_polar("y", start=0) + #Convert to pie (polar coordinates) 
+  geom_text(aes(label = paste0(round(Freq*100), "%")), position = position_stack(vjust = 0.5)) + #add labels
+  #scale_fill_manual(values=c("#55DDE0", "#33658A", "#2F4858", "#F6AE2D")) # Add color scale (hex colors)
+  scale_fill_brewer(palette = "Blues") +
+  labs(x = NULL, y = NULL, fill = NULL, title = "Spotify tracks by Genre") +  #remove labels and add title
+  theme_classic() + 
+  theme(axis.line = element_blank(),  # Tidy up the theme
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "#666666"))   
+```
+
+Alternatively we could use ggstatplot, which has a smiliar syntax:
+
+```{r}
+ggstatsplot::ggpiestats(
+  data = music_data, # use raw data because we need disaggregated factors for x
+  x = genre_cat,
+  title = "Spotify tracks by Genre",
+  messages = FALSE,
+  bf.message = FALSE,
+  legend.title = element_blank(),
+  #palette = "Blues",
+  results.subtitle = FALSE
+)
+```
+
+
+
+
 #### Covariation plots
 
 To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Say, we wanted to investigate the association between genre and popularity. First, we need to make sure that the respective variables are coded as factors. 
