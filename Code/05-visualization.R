@@ -288,16 +288,16 @@ ggplot(adv_data,aes(x = store, y = sales)) +
   labs(x = "Store ID", y = "Number of sales") + 
   theme_bw()
 #alternative
-ggbetweenstats(
-  data = adv_data,
-  title = "Sales by store", # title for the plot
-  plot.type = "box",
-  x = store, # 2 groups
-  y = sales ,
-  type = "p", # default
-  messages = FALSE,
-  bf.message = FALSE
-)
+  ggbetweenstats(
+    data = adv_data,
+    title = "Sales by store", # title for the plot
+    plot.type = "box",
+    x = store, # 2 groups
+    y = sales ,
+    type = "p", # default
+    messages = FALSE,
+    bf.message = FALSE
+  )
 
 # Single Boxplot
 ## ------------------------------------------------------------------------

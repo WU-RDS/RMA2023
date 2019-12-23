@@ -177,24 +177,22 @@ readRDS("music_data.rds")
 ```
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
-#music_data <- na.omit(music_data[,c(1,16:26)])
-music_data <- na.omit(music_data[,c(16:26)])
+music_data <- na.omit(music_data[,c(1,16:26)])
+music_data[,-1] <- as.numeric(unlist(music_data[,-1]))
 nsongs <- length(unique(music_data$id))
 nsongs <- formatC(nsongs, big.mark=".")
 ```
 
 Now that we have a broad understanding of how factor analysis works, let's use another example to go through the process of deriving factors step by step. In this section, we will use Spotify data.
 
-![Spotify Data &copy; spotify.com](/home/felix/Documents/e-Assistant IMSM/course_daniel/Spotify_logo_with_text.svg.png)
-
 
 We have collected data for `r nsongs` songs and stored the results in the data set "music_data".
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
-#spotify_data <- read.csv("/home/felix/Documents/e-Assistant IMSM/course_daniel/music_data.csv", 
-#                          sep = ",", 
-#                          header = TRUE) #read in data
-#spotify_data <- na.omit(spotify_data[,c(16:26)])
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
+music_data <- music_data[,-1] #remove id - only used for inline code above
+#music_data[ ,!(colnames(music_data) %in% c("instrumentalness", "speechiness"))]
+music_data <- music_data[,-c(6,8)] # remove instrumentalness and speechiness because of KMO score
+
 ```
 
 ### Are the assumptions satisfied?
@@ -330,6 +328,8 @@ Now that the output is less complex, we can inspect the remaining statistics. Th
 sum(pc2$communality < 0.3)
 ```
 
+In our example this is not true because the communalities of "tempo" and "liveness" are smaller 0.3. For illustrative purposes we will still continue our analysis.
+
 Note that there is a difference between PCA and common factor analysis. PCA focuses on the variance and aims to reproduce the total variable variance. This means that the components reflect both common and unique variance of the variables. Factor analysis, in contrast, focuses on the correlation and aims to reproduce the correlations among variables. Here, the factors only represent the common variance that variable share and do not include the unique variance. In other words, while factor analysis focuses on explaining the off-diagonal terms in the correlation matrix (i.e., shared co-variance), PCA focuses on explaining the diagonal terms (i.e., the variances). However, although PCA aims to reproduce the on-diagonal terms in the correlation matrix, it also tends to fit the off-diagonal correlations quite well. Hence, the results are often comparable. See also <a href="https://en.wikipedia.org/wiki/Principal_component_analysis#Relation_between_PCA_and_factor_analysis" target="_blank">here</a>.
 
 You should also take a closer look at the residuals in order to check whether you have extracted the correct number of factors. The difference between the reproduced and the actual correlation matrices are the residuals. We can extract the residuals from our model using the ```factor.residuals()``` function from the ```psych``` package. It takes the original correlation matrix and the factor loadings as arguments:
@@ -443,22 +443,23 @@ Interpreting the factor loading matrix is a little complex, so we can make it ea
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 print.psych(pc3, cut = 0.3, sort = TRUE)
 ```
+
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
 rc1 <- abs(pc3$loadings[,1])>0.3
 rc1 <- rc1[rc1>0]
 rc1 <- names(rc1)
 
-rc4 <- abs(pc3$loadings[,2])>0.3
-rc4 <- rc4[rc4>0]
-rc4 <- names(rc4)
+rc2 <- abs(pc3$loadings[,2])>0.3
+rc2 <- rc2[rc2>0]
+rc2 <- names(rc2)
 
 rc3 <- abs(pc3$loadings[,3])>0.3
 rc3 <- rc3[rc3>0]
 rc3 <- names(rc3)
 
-rc2 <- abs(pc3$loadings[,4])>0.3
-rc2 <- rc2[rc2>0]
-rc2 <- names(rc2)
+#rc4 <- abs(pc3$loadings[,4])>0.3
+#rc4 <- rc4[rc2>0]
+#rc4 <- names(rc4)
 ```
 
 After obtaining the rotated matrix, variables with high loading are used for interpreting (=naming) the factor. Note that factor loading can be positive or negative (depends on scaling of the variable), thus take care when interpreting! Look for simple structure: each variable (hopefully) loads high on 1 factor and low on other factors.
@@ -468,7 +469,6 @@ As an example, we could name our factors as follows:
 * **Factor 1:** energetic
 * **Factor 2:** fast
 * **Factor 3:** pitch
-* **Factor 4:** dancefloor
 
 
 
@@ -516,20 +516,17 @@ To see if the subscales that were derived from the previous PCA exhibit a suffic
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
 energetic <- music_data[,c(rc1)]
-fast <- music_data[,c(rc2)]
 pitch <- music_data[,c(rc3)]
-dancefloor <- music_data[,c(rc4)]
+dancefloor <- music_data[,c(rc2)]
 ```
 
 Now we can use the ```alpha()``` function from the ```psych``` package to test the reliability. Note that the ```keys``` argument may be used to indicate reverse coded items.
 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
-psych::alpha(energetic)
-psych::alpha(fast)
-#psych::alpha(statistics_fear, keys=c(1,1,1,1,1,1,1,1))
-psych::alpha(pitch)
-psych::alpha(dancefloor)
+psych::alpha(energetic, check.keys=TRUE)
+psych::alpha(pitch, check.keys=TRUE)
+psych::alpha(dancefloor, check.keys=TRUE)
 ```
 
 The above output would lead us to conclude that the fear of computers, fear of statistics and fear of maths subscales of the RAQ all had sufficiently high reliabilities (i.e., Cronbach’s alpha > 0.70). However, the fear of negative peer evaluation subscale had relatively low reliability (Cronbach’s alpha = 0.57). As the output under "Reliability if an item is dropped" suggests, the alpha score would also not increase if an item was dropped from the scale. 

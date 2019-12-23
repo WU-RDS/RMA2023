@@ -337,15 +337,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>When you are done with your analysis, click on “Knit to HTML” button above the code editor. This will create a HTML document of your results in the folder where the “assignment.Rmd” file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn@WU. The file name should be “assignment2_studendID_name.html”.</p>
 <p><strong>Load and inspect data</strong></p>
 <p>Let´s load the data first and inspect the contained variables:</p>
-<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb758-1" title="1">movie_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat&quot;</span>, </a>
-<a class="sourceLine" id="cb758-2" title="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
-<a class="sourceLine" id="cb758-3" title="3"><span class="kw">head</span>(movie_data)</a></code></pre></div>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb760-1" title="1">movie_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat&quot;</span>, </a>
+<a class="sourceLine" id="cb760-2" title="2">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
+<a class="sourceLine" id="cb760-3" title="3"><span class="kw">head</span>(movie_data)</a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["movieID"],"name":[1],"type":["int"],"align":["right"]},{"label":["online_advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams_sd"],"name":[3],"type":["int"],"align":["right"]},{"label":["streams_hd"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"2365","4":"1432"},{"1":"2","2":"0","3":"1752","4":"2305"},{"1":"3","2":"0","3":"1351","4":"1197"},{"1":"4","2":"0","3":"2495","4":"1112"},{"1":"5","2":"0","3":"3883","4":"1364"},{"1":"6","2":"1","3":"3933","4":"1202"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb759-1" title="1"><span class="kw">str</span>(movie_data)</a></code></pre></div>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb761-1" title="1"><span class="kw">str</span>(movie_data)</a></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    200 obs. of  4 variables:
 ##  $ movieID           : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ online_advertising: int  0 0 0 0 0 1 1 1 0 1 ...
@@ -353,46 +353,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ streams_hd        : int  1432 2305 1197 1112 1364 1202 1363 3502 2047 1104 ...</code></pre>
 <p><strong>Load packages</strong></p>
 <p>Next, we load the packages that we will be using to answer the questions:</p>
-<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb761-1" title="1"><span class="kw">library</span>(pastecs)</a>
-<a class="sourceLine" id="cb761-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb761-3" title="3"><span class="kw">library</span>(psych)</a>
-<a class="sourceLine" id="cb761-4" title="4"><span class="kw">library</span>(pwr)</a>
-<a class="sourceLine" id="cb761-5" title="5"><span class="kw">library</span>(lsr)</a>
-<a class="sourceLine" id="cb761-6" title="6"><span class="kw">library</span>(reshape2)</a></code></pre></div>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb763-1" title="1"><span class="kw">library</span>(pastecs)</a>
+<a class="sourceLine" id="cb763-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb763-3" title="3"><span class="kw">library</span>(psych)</a>
+<a class="sourceLine" id="cb763-4" title="4"><span class="kw">library</span>(pwr)</a>
+<a class="sourceLine" id="cb763-5" title="5"><span class="kw">library</span>(lsr)</a>
+<a class="sourceLine" id="cb763-6" title="6"><span class="kw">library</span>(reshape2)</a></code></pre></div>
 <p><strong>Question 1</strong></p>
 <p>To compute the confidence intervals for SD and HD streams we will need three things: 1) the mean <span class="math inline">\(\bar x\)</span>, 2) the standard error (<span class="math inline">\(s \over \sqrt{n}\)</span>), and 3) the critical value for a t-distribution (<span class="math inline">\(t_{crit}\)</span>; we will use a t-distribution, because we are not sure of the variance in the population).</p>
-<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb762-1" title="1"><span class="co"># Calculate components of confidence interval</span></a>
-<a class="sourceLine" id="cb762-2" title="2"><span class="co"># formula</span></a>
-<a class="sourceLine" id="cb762-3" title="3">mean_sd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_sd)</a>
-<a class="sourceLine" id="cb762-4" title="4">mean_hd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_hd)</a>
-<a class="sourceLine" id="cb762-5" title="5"></a>
-<a class="sourceLine" id="cb762-6" title="6">sd_sd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_sd)</a>
-<a class="sourceLine" id="cb762-7" title="7">sd_hd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_hd)</a>
-<a class="sourceLine" id="cb762-8" title="8"></a>
-<a class="sourceLine" id="cb762-9" title="9">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(movie_data)</a>
-<a class="sourceLine" id="cb762-10" title="10">se_sd &lt;-<span class="st"> </span>sd_sd<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
-<a class="sourceLine" id="cb762-11" title="11">se_hd &lt;-<span class="st"> </span>sd_hd<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
-<a class="sourceLine" id="cb762-12" title="12"></a>
-<a class="sourceLine" id="cb762-13" title="13">df &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb762-14" title="14">t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, df)</a></code></pre></div>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb764-1" title="1"><span class="co"># Calculate components of confidence interval</span></a>
+<a class="sourceLine" id="cb764-2" title="2"><span class="co"># formula</span></a>
+<a class="sourceLine" id="cb764-3" title="3">mean_sd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_sd)</a>
+<a class="sourceLine" id="cb764-4" title="4">mean_hd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_hd)</a>
+<a class="sourceLine" id="cb764-5" title="5"></a>
+<a class="sourceLine" id="cb764-6" title="6">sd_sd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_sd)</a>
+<a class="sourceLine" id="cb764-7" title="7">sd_hd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_hd)</a>
+<a class="sourceLine" id="cb764-8" title="8"></a>
+<a class="sourceLine" id="cb764-9" title="9">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(movie_data)</a>
+<a class="sourceLine" id="cb764-10" title="10">se_sd &lt;-<span class="st"> </span>sd_sd<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
+<a class="sourceLine" id="cb764-11" title="11">se_hd &lt;-<span class="st"> </span>sd_hd<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
+<a class="sourceLine" id="cb764-12" title="12"></a>
+<a class="sourceLine" id="cb764-13" title="13">df &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb764-14" title="14">t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, df)</a></code></pre></div>
 <p>Now the confidence intervals for streams in SD and HD quality can be computed as:</p>
-<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb763-1" title="1"><span class="co"># Interval for SD moviess</span></a>
-<a class="sourceLine" id="cb763-2" title="2">ci_lower_sd &lt;-<span class="st"> </span>mean_sd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</a>
-<a class="sourceLine" id="cb763-3" title="3">ci_upper_sd &lt;-<span class="st"> </span>mean_sd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</a>
-<a class="sourceLine" id="cb763-4" title="4"></a>
-<a class="sourceLine" id="cb763-5" title="5"><span class="co"># Interval for HD movies</span></a>
-<a class="sourceLine" id="cb763-6" title="6">ci_lower_hd &lt;-<span class="st"> </span>mean_hd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</a>
-<a class="sourceLine" id="cb763-7" title="7">ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</a></code></pre></div>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb765-1" title="1"><span class="co"># Interval for SD moviess</span></a>
+<a class="sourceLine" id="cb765-2" title="2">ci_lower_sd &lt;-<span class="st"> </span>mean_sd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</a>
+<a class="sourceLine" id="cb765-3" title="3">ci_upper_sd &lt;-<span class="st"> </span>mean_sd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</a>
+<a class="sourceLine" id="cb765-4" title="4"></a>
+<a class="sourceLine" id="cb765-5" title="5"><span class="co"># Interval for HD movies</span></a>
+<a class="sourceLine" id="cb765-6" title="6">ci_lower_hd &lt;-<span class="st"> </span>mean_hd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</a>
+<a class="sourceLine" id="cb765-7" title="7">ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</a></code></pre></div>
 <p>Hence, the CI for SD movies is given by:</p>
-<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb764-1" title="1">ci_lower_sd</a></code></pre></div>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb766-1" title="1">ci_lower_sd</a></code></pre></div>
 <pre><code>## [1] 2527.979</code></pre>
-<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb766-1" title="1">ci_upper_sd</a></code></pre></div>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb768-1" title="1">ci_upper_sd</a></code></pre></div>
 <pre><code>## [1] 2827.851</code></pre>
 <p><span class="math inline">\(CI_{SD} = [2527.97,2827.85]\)</span></p>
 <p>Similarly, the CI for HD movies is given by</p>
-<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb768-1" title="1">ci_lower_hd</a></code></pre></div>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb770-1" title="1">ci_lower_hd</a></code></pre></div>
 <pre><code>## [1] 1728.51</code></pre>
-<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb770-1" title="1">ci_upper_hd</a></code></pre></div>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb772-1" title="1">ci_upper_hd</a></code></pre></div>
 <pre><code>## [1] 1940.52</code></pre>
 <p><span class="math inline">\(CI_{HD} = [1728.51,1940.52]\)</span></p>
 <p>The intervals can be interpreted as follows: If we would take 100 samples, calculate the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals.</p>
@@ -404,27 +404,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The same approach can be used for our HD streams:</p>
 <p><span class="math display">\[H_0: \mu_0 = 1700 \\ H_1: \mu_0 \neq 1700 \]</span></p>
 <p>We can first have a quick look at the descriptive statistics:</p>
-<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb772-1" title="1"><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</a></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb774-1" title="1"><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</a></code></pre></div>
 <pre><code>##    vars   n    mean      sd median trimmed     mad min  max range skew kurtosis
 ## X1    1 200 2677.91 1075.28   2732 2653.68 1064.51 654 5709  5055  0.2    -0.41
 ##       se
 ## X1 76.03</code></pre>
-<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb774-1" title="1"><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</a></code></pre></div>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb776-1" title="1"><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</a></code></pre></div>
 <pre><code>##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
 ## X1    1 200 1834.52 760.23 1668.5  1761.9 578.21 246 4305  4059 0.85     0.42
 ##       se
 ## X1 53.76</code></pre>
 <p>As we can see, the differences between SD/HD and the week before don´t seem to be extraordinary high. To visualize the distribution of the data, we can create histograms:</p>
-<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb776-1" title="1"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </a>
-<a class="sourceLine" id="cb776-2" title="2">    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of SD stremas&quot;</span>, </a>
-<a class="sourceLine" id="cb776-3" title="3">    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-456-1.png" width="672" /></p>
-<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb777-1" title="1"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </a>
-<a class="sourceLine" id="cb777-2" title="2">    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of HD streams&quot;</span>, </a>
-<a class="sourceLine" id="cb777-3" title="3">    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-456-2.png" width="672" /></p>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb778-1" title="1"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </a>
+<a class="sourceLine" id="cb778-2" title="2">    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of SD stremas&quot;</span>, </a>
+<a class="sourceLine" id="cb778-3" title="3">    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-458-1.png" width="672" /></p>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb779-1" title="1"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </a>
+<a class="sourceLine" id="cb779-2" title="2">    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of HD streams&quot;</span>, </a>
+<a class="sourceLine" id="cb779-3" title="3">    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-458-2.png" width="672" /></p>
 <p>We can now conduct a one sample t-test to test for significance.</p>
-<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb778-1" title="1"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_sd, <span class="dt">mu =</span> <span class="dv">2600</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb780-1" title="1"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_sd, <span class="dt">mu =</span> <span class="dv">2600</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -436,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## sample estimates:
 ## mean of x 
 ##  2677.915</code></pre>
-<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb780-1" title="1"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_hd, <span class="dt">mu =</span> <span class="dv">1700</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb782-1" title="1"><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_hd, <span class="dt">mu =</span> <span class="dv">1700</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -454,13 +454,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>First we will analyse whether the advertising campaign had an effect on SD streams. We need to formulate a hypothesis which we can test. In this case, the null hypothesis is that the campaign had no effect on the mean number of streams, i.e. that there is no difference in the mean number of streams between the two populations. The alternative hypothesis states that the campaign <em>did</em> have an effect, meaning that there is a difference in the mean number of streams between the populations. In more formal notation this is:</p>
 <p><span class="math display">\[H_0: \mu_0 = \mu_1 \\ H_1: \mu_0 \neq \mu_1\]</span></p>
 <p>We need to transform the variable online_advertising into a factor variable for some of our analyses:</p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb782-1" title="1"><span class="co"># Transform into factor variable</span></a>
-<a class="sourceLine" id="cb782-2" title="2">movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </span><span class="kw">factor</span>(movie_data<span class="op">$</span>online_advertising, </a>
-<a class="sourceLine" id="cb782-3" title="3">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb784-1" title="1"><span class="co"># Transform into factor variable</span></a>
+<a class="sourceLine" id="cb784-2" title="2">movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </span><span class="kw">factor</span>(movie_data<span class="op">$</span>online_advertising, </a>
+<a class="sourceLine" id="cb784-3" title="3">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</a></code></pre></div>
 <p>A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means would be appropriate.</p>
-<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb783-1" title="1"><span class="co"># Descriptive statistics for SD streams, split by</span></a>
-<a class="sourceLine" id="cb783-2" title="2"><span class="co"># online advertising</span></a>
-<a class="sourceLine" id="cb783-3" title="3"><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>online_advertising)</a></code></pre></div>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb785-1" title="1"><span class="co"># Descriptive statistics for SD streams, split by</span></a>
+<a class="sourceLine" id="cb785-2" title="2"><span class="co"># online advertising</span></a>
+<a class="sourceLine" id="cb785-3" title="3"><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>online_advertising)</a></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no
@@ -474,13 +474,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## X1    1 100 3205.59 978.01   3147 3193.69 966.66 654 5709  5055 0.08     0.04
 ##      se
 ## X1 97.8</code></pre>
-<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb785-1" title="1"><span class="co"># Plot of means</span></a>
-<a class="sourceLine" id="cb785-2" title="2"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_sd)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb785-3" title="3"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
-<a class="sourceLine" id="cb785-4" title="4">        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb785-5" title="5"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of SD streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb785-6" title="6"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-459-1.png" width="672" /></p>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb787-1" title="1"><span class="co"># Plot of means</span></a>
+<a class="sourceLine" id="cb787-2" title="2"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_sd)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb787-3" title="3"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
+<a class="sourceLine" id="cb787-4" title="4">        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb787-5" title="5"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of SD streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb787-6" title="6"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-461-1.png" width="672" /></p>
 <p>As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = “yes”, i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a <strong>two sample t-test</strong>. We use an inpependent-means t-test because we have different movies in each group (i.e., the movies in one condition are <em>indpendent</em> of the movies in the other condition). The requirements are clearly met:</p>
 <ul>
 <li>Our dependent variable is on an interval scale</li>
@@ -489,7 +489,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>R automatically performs Welch’s t-test, which corrects for unequal variance</li>
 </ul>
 <p>Thus we can perform the test in R</p>
-<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb786-1" title="1"><span class="kw">t.test</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb788-1" title="1"><span class="kw">t.test</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -503,14 +503,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##           2150.24           3205.59</code></pre>
 <p>The test is significant, since the p-value is smaller than 0.05, leading us to reject the null hypothesis that there is no difference in the mean number of streams. The p-value states the probability of finding a difference of the observed magnitude or higher, if the null hypothesis was in fact true (i.e., if there was in fact no difference between the populations). In effect, this means that the advertising campaign had an effect on the average number of times a video was streamed. Another thing we can extract from this test result is the confidence interval around the difference in means. Since 0 is not included in the interval, it is not a plausible value, cofirming the conclusion to reject the null hypothesis.</p>
 <p>The standardized effect size can be computed using the <code>cohensD</code> function:</p>
-<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb788-1" title="1"><span class="kw">cohensD</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb790-1" title="1"><span class="kw">cohensD</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
 <pre><code>## [1] 1.124481</code></pre>
 <p>This maginitude of the effect size (1.12) suggests that the effect of online advertising on the number of SD streams is large.</p>
 <p>The same can be done analogously for HD streams:</p>
-<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb790-1" title="1"><span class="co"># Descriptive statistics for HD streams, split by</span></a>
-<a class="sourceLine" id="cb790-2" title="2"><span class="co"># online advertising</span></a>
-<a class="sourceLine" id="cb790-3" title="3">stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_hd, movie_data<span class="op">$</span>online_advertising)</a>
-<a class="sourceLine" id="cb790-4" title="4"><span class="kw">print</span>(stats)</a></code></pre></div>
+<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb792-1" title="1"><span class="co"># Descriptive statistics for HD streams, split by</span></a>
+<a class="sourceLine" id="cb792-2" title="2"><span class="co"># online advertising</span></a>
+<a class="sourceLine" id="cb792-3" title="3">stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_hd, movie_data<span class="op">$</span>online_advertising)</a>
+<a class="sourceLine" id="cb792-4" title="4"><span class="kw">print</span>(stats)</a></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no
@@ -524,15 +524,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## X1    1 100 2193.48 863.34   2133  2179.2 962.95 585 4305  3720 0.21    -0.73
 ##       se
 ## X1 86.33</code></pre>
-<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb792-1" title="1"><span class="co"># Plot of means</span></a>
-<a class="sourceLine" id="cb792-2" title="2"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_hd)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb792-3" title="3"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
-<a class="sourceLine" id="cb792-4" title="4">        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb792-5" title="5"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of HD streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb792-6" title="6"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-462-1.png" width="672" /></p>
+<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb794-1" title="1"><span class="co"># Plot of means</span></a>
+<a class="sourceLine" id="cb794-2" title="2"><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(online_advertising, streams_hd)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb794-3" title="3"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
+<a class="sourceLine" id="cb794-4" title="4">        <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb794-5" title="5"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Online Advertising&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of HD streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb794-6" title="6"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-464-1.png" width="672" /></p>
 <p>Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is signficant (note that <em>two sample t-test</em> means the same as <em>independent-means t-test</em>).</p>
-<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb793-1" title="1"><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
+<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb795-1" title="1"><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -546,38 +546,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##           1475.55           2193.48</code></pre>
 <p>Again, the p-value is so low that any sensible signifcance level would lead us to reject the null hypothesis, suggesting that there is a difference in mean the number of streams between videos included in the campaign and those that aren’t.</p>
 <p>Calculate the standardized effect size:</p>
-<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb795-1" title="1"><span class="kw">cohensD</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb797-1" title="1"><span class="kw">cohensD</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</a></code></pre></div>
 <pre><code>## [1] 1.069388</code></pre>
 <p>The meagnitude of the effect size indicates again that this effect is large, although it is somewhat smaller than for SD streams.</p>
 <p><strong>Question 4</strong></p>
 <p>Next we want to examine whether HD and SD streams have similar numbers on average. The null hypothesis here is that there is no difference in the mean number of HD streams and the mean number of SD streams for the same movies. Because the observations come from the same population of movies, we refer to the difference in the means for the same populaltion as <span class="math inline">\(\mu_D\)</span> when stating our hypotheses. The alternative hypothesis states that that there is a difference between the streams in HD and SD quality for the same movies. In mathematical notation this can be written as</p>
 <p><span class="math display">\[H_0: \mu_D = 0 \\ H_1: \mu_D \neq 0\]</span></p>
 <p>Again, we start with descriptive statistics to get a feel for the data.</p>
-<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb797-1" title="1"><span class="co"># Descriptive statistics for HD and SD streams</span></a>
-<a class="sourceLine" id="cb797-2" title="2">psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</a></code></pre></div>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb799-1" title="1"><span class="co"># Descriptive statistics for HD and SD streams</span></a>
+<a class="sourceLine" id="cb799-2" title="2">psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</a></code></pre></div>
 <pre><code>##    vars   n    mean      sd median trimmed     mad min  max range skew kurtosis
 ## X1    1 200 2677.91 1075.28   2732 2653.68 1064.51 654 5709  5055  0.2    -0.41
 ##       se
 ## X1 76.03</code></pre>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb799-1" title="1">psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</a></code></pre></div>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb801-1" title="1">psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</a></code></pre></div>
 <pre><code>##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
 ## X1    1 200 1834.52 760.23 1668.5  1761.9 578.21 246 4305  4059 0.85     0.42
 ##       se
 ## X1 53.76</code></pre>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb801-1" title="1"><span class="co"># Plot of means</span></a>
-<a class="sourceLine" id="cb801-2" title="2">movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie_data[, <span class="kw">c</span>(<span class="st">&quot;streams_sd&quot;</span>, </a>
-<a class="sourceLine" id="cb801-3" title="3">    <span class="st">&quot;streams_hd&quot;</span>)])</a>
-<a class="sourceLine" id="cb801-4" title="4"><span class="kw">names</span>(movie_data_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;stream&quot;</span>, <span class="st">&quot;number&quot;</span>)</a>
-<a class="sourceLine" id="cb801-5" title="5"></a>
-<a class="sourceLine" id="cb801-6" title="6"><span class="kw">ggplot</span>(movie_data_long, <span class="kw">aes</span>(stream, number)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, </a>
-<a class="sourceLine" id="cb801-7" title="7">    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb801-8" title="8"><span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, </a>
-<a class="sourceLine" id="cb801-9" title="9">    <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb801-10" title="10"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-466-1.png" width="672" /></p>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb803-1" title="1"><span class="co"># Plot of means</span></a>
+<a class="sourceLine" id="cb803-2" title="2">movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie_data[, <span class="kw">c</span>(<span class="st">&quot;streams_sd&quot;</span>, </a>
+<a class="sourceLine" id="cb803-3" title="3">    <span class="st">&quot;streams_hd&quot;</span>)])</a>
+<a class="sourceLine" id="cb803-4" title="4"><span class="kw">names</span>(movie_data_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;stream&quot;</span>, <span class="st">&quot;number&quot;</span>)</a>
+<a class="sourceLine" id="cb803-5" title="5"></a>
+<a class="sourceLine" id="cb803-6" title="6"><span class="kw">ggplot</span>(movie_data_long, <span class="kw">aes</span>(stream, number)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, </a>
+<a class="sourceLine" id="cb803-7" title="7">    <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb803-8" title="8"><span class="st">    </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, </a>
+<a class="sourceLine" id="cb803-9" title="9">    <span class="dt">y =</span> <span class="st">&quot;Listening time (hours)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Means and standard errors of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb803-10" title="10"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
 <p>It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same movies are observed for HD and SD streams (i.e., the same movies are available in both formats). This means that we need a <strong>dependent means t-test</strong>. This test is also knownas the <strong>paired samples t-test</strong>. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding <code>paired = TRUE</code> to the code.</p>
-<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb802-1" title="1"><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, </a>
-<a class="sourceLine" id="cb802-2" title="2">    <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb804-1" title="1"><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, </a>
+<a class="sourceLine" id="cb804-2" title="2">    <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -591,13 +591,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                  -843.4</code></pre>
 <p>The p-value is again lower than the chosen signifance level of 5% (i.e., p &lt; .05), which means that we reject the null hypothesis that there is no difference in the mean number of streams in HD and SD quality. Make sure you interpret the p-value correctly. It refers to the probability of observing a difference of the observed magnitude (or larger) between streams in HD and SD quality, assuming that there was in fact no difference between the formats. The confidence interval confirms the conclusion to reject the null hypothesis since <span class="math inline">\(0\)</span> is not contained in the range of plausible values.</p>
 <p>Now let’s find out how strong this effect is.</p>
-<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb804-1" title="1"><span class="kw">cohensD</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>streams_hd)</a></code></pre></div>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb806-1" title="1"><span class="kw">cohensD</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>streams_hd)</a></code></pre></div>
 <pre><code>## [1] 0.9057351</code></pre>
 <p>A standardized effect size of approx. 0.9 tells us that this effect is large.</p>
 <p><strong>Question 5</strong></p>
 <p>The question of how many movies we would need to include in each sample of our experiment can be answered quite comfortably with a power calculation function in R.</p>
-<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb806-1" title="1"><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.3</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, </a>
-<a class="sourceLine" id="cb806-2" title="2">    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb808-1" title="1"><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.3</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, </a>
+<a class="sourceLine" id="cb808-2" title="2">    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</a></code></pre></div>
 <pre><code>## 
 ##      Two-sample t test power calculation 
 ## 
@@ -641,16 +641,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>When you are done with your analysis, click on “Knit to HTML” button above the code editor. This will create a HTML document of your results in the folder where the “assignment3.Rmd” file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn@WU. The file name should be “assignment3_studendID_name.html”.</p>
 <p><strong>Load data</strong></p>
-<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb808-1" title="1"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</a>
-<a class="sourceLine" id="cb808-2" title="2">customer_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv&quot;</span>, </a>
-<a class="sourceLine" id="cb808-3" title="3">    <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
-<a class="sourceLine" id="cb808-4" title="4"><span class="kw">head</span>(customer_data)</a></code></pre></div>
+<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb810-1" title="1"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</a>
+<a class="sourceLine" id="cb810-2" title="2">customer_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv&quot;</span>, </a>
+<a class="sourceLine" id="cb810-3" title="3">    <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></a>
+<a class="sourceLine" id="cb810-4" title="4"><span class="kw">head</span>(customer_data)</a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["revenue"],"name":[1],"type":["int"],"align":["right"]},{"label":["gender"],"name":[2],"type":["int"],"align":["right"]},{"label":["retargeting"],"name":[3],"type":["int"],"align":["right"]},{"label":["customerID"],"name":[4],"type":["int"],"align":["right"]},{"label":["rank"],"name":[5],"type":["int"],"align":["right"]},{"label":["conversion"],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"3866","2":"1","3":"3","4":"2","5":"1","6":"1"},{"1":"1576","2":"1","3":"1","4":"7","5":"159","6":"1"},{"1":"2667","2":"1","3":"1","4":"8","5":"37","6":"0"},{"1":"772","2":"1","3":"1","4":"12","5":"259","6":"1"},{"1":"2702","2":"1","3":"3","4":"13","5":"35","6":"1"},{"1":"1277","2":"1","3":"2","4":"14","5":"203","6":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb809-1" title="1"><span class="kw">str</span>(customer_data)</a></code></pre></div>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb811-1" title="1"><span class="kw">str</span>(customer_data)</a></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    296 obs. of  6 variables:
 ##  $ revenue    : int  3866 1576 2667 772 2702 1277 2023 2170 3103 3067 ...
 ##  $ gender     : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -660,18 +660,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ conversion : int  1 1 0 1 1 1 0 1 1 0 ...</code></pre>
 <p><strong>Data Preparation</strong></p>
 <p>As always, the first step is to load required packages (packages that have not been used as often in the course will be loaded as required to show which packages contain certain functions) and to load and inspect the data.</p>
-<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb811-1" title="1"><span class="kw">library</span>(plyr)</a>
-<a class="sourceLine" id="cb811-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb811-3" title="3"><span class="kw">library</span>(psych)</a>
-<a class="sourceLine" id="cb811-4" title="4"><span class="kw">library</span>(Hmisc)</a></code></pre></div>
+<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb813-1" title="1"><span class="kw">library</span>(plyr)</a>
+<a class="sourceLine" id="cb813-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb813-3" title="3"><span class="kw">library</span>(psych)</a>
+<a class="sourceLine" id="cb813-4" title="4"><span class="kw">library</span>(Hmisc)</a></code></pre></div>
 <p>Next we are going to recode some of the variables into factors and give them more descriptive level names.</p>
-<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb812-1" title="1">customer_data<span class="op">$</span>retargeting &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>retargeting, </a>
-<a class="sourceLine" id="cb812-2" title="2">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no retargeting&quot;</span>, </a>
-<a class="sourceLine" id="cb812-3" title="3">        <span class="st">&quot;generic retargeting&quot;</span>, <span class="st">&quot;dynamic retargeting&quot;</span>))</a>
-<a class="sourceLine" id="cb812-4" title="4">customer_data<span class="op">$</span>gender &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>gender, </a>
-<a class="sourceLine" id="cb812-5" title="5">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>))</a>
-<a class="sourceLine" id="cb812-6" title="6">customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>conversion, </a>
-<a class="sourceLine" id="cb812-7" title="7">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;conversion&quot;</span>, <span class="st">&quot;no conversion&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb814-1" title="1">customer_data<span class="op">$</span>retargeting &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>retargeting, </a>
+<a class="sourceLine" id="cb814-2" title="2">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no retargeting&quot;</span>, </a>
+<a class="sourceLine" id="cb814-3" title="3">        <span class="st">&quot;generic retargeting&quot;</span>, <span class="st">&quot;dynamic retargeting&quot;</span>))</a>
+<a class="sourceLine" id="cb814-4" title="4">customer_data<span class="op">$</span>gender &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>gender, </a>
+<a class="sourceLine" id="cb814-5" title="5">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>))</a>
+<a class="sourceLine" id="cb814-6" title="6">customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>conversion, </a>
+<a class="sourceLine" id="cb814-7" title="7">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;conversion&quot;</span>, <span class="st">&quot;no conversion&quot;</span>))</a></code></pre></div>
 <p><strong>Question 1</strong></p>
 <p>To answer whether the type of advertising has an effect on revenue we need to formulate a testable null hypothesis. In our case the null hypothesis is stating that the average level of sales is equal for all advertising types. In mathematical notation this implies:</p>
 <p><span class="math display">\[H_0: \mu_1 = \mu_2 = \mu_3 \]</span></p>
@@ -681,7 +681,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[H_1: \exists {i,j}: {\mu_i \ne \mu_j} \]</span></p>
 <p>The appropriate test for such a hypothesis is one-way ANOVA since we have a metric scales dependent variable and a categorical independent variable with more than two levels.</p>
 <p>Next we will calculate summary statistics for the data and produce an approppriate plot.</p>
-<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb813-1" title="1"><span class="kw">describeBy</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting)</a></code></pre></div>
+<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb815-1" title="1"><span class="kw">describeBy</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting)</a></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no retargeting
@@ -701,12 +701,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## X1    1 100 2208.28 796.85 2277.5 2218.12 735.37 145 3866  3721 -0.16    -0.51
 ##       se
 ## X1 79.68</code></pre>
-<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb815-1" title="1"><span class="kw">ggplot</span>(customer_data, <span class="kw">aes</span>(retargeting, revenue)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb815-2" title="2"><span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;White&quot;</span>, </a>
-<a class="sourceLine" id="cb815-3" title="3">        <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, </a>
-<a class="sourceLine" id="cb815-4" title="4">    <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, </a>
-<a class="sourceLine" id="cb815-5" title="5">    <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-474-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb817-1" title="1"><span class="kw">ggplot</span>(customer_data, <span class="kw">aes</span>(retargeting, revenue)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb817-2" title="2"><span class="st">    </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;White&quot;</span>, </a>
+<a class="sourceLine" id="cb817-3" title="3">        <span class="dt">colour =</span> <span class="st">&quot;Black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, </a>
+<a class="sourceLine" id="cb817-4" title="4">    <span class="dt">geom =</span> <span class="st">&quot;pointrange&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Experimental group (promotion level)&quot;</span>, </a>
+<a class="sourceLine" id="cb817-5" title="5">    <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-476-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Both the summary statistics and the plot hint at the fact that the means may not be equal. Especially the difference between dynamic retargeting and no retargeting/ generic regtargeting seem to be quite high. Before we move to the formal test, we need to see if a series of assumptions are met, namely:</p>
 <ul>
 <li>Distributional assumptions</li>
@@ -714,26 +714,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Independence of observations</li>
 </ul>
 <p>The last assumption is satisfied due to the fact that the observations were randomly assigned to the advertisement groups. To see if we need to worry about distributional assumptions we first take a look at the number of observations in each advertising group.</p>
-<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb816-1" title="1"><span class="co"># check number of observations by group</span></a>
-<a class="sourceLine" id="cb816-2" title="2"><span class="kw">table</span>(customer_data<span class="op">$</span>retargeting)</a></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb818-1" title="1"><span class="co"># check number of observations by group</span></a>
+<a class="sourceLine" id="cb818-2" title="2"><span class="kw">table</span>(customer_data<span class="op">$</span>retargeting)</a></code></pre></div>
 <pre><code>## 
 ##      no retargeting generic retargeting dynamic retargeting 
 ##                 106                  90                 100</code></pre>
 <p>Due to the fact that there are always more than 30 observations in each group we can rely on the central limit theorem to satisfy the distributional assumptions.</p>
 <p>Homogeneity of variances can be checked with Levene’s test (implemented as <code>leveneTest()</code> from the <code>car</code> package). The null hypothesis of this test is that the variances are equal, with the alternative hypothesis being that the variances are not all equal.</p>
-<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb818-1" title="1"><span class="co"># Homogeneity of variances test:</span></a>
-<a class="sourceLine" id="cb818-2" title="2"><span class="kw">library</span>(car)</a>
-<a class="sourceLine" id="cb818-3" title="3"><span class="kw">leveneTest</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data, </a>
-<a class="sourceLine" id="cb818-4" title="4">    <span class="dt">center =</span> mean)</a></code></pre></div>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb820-1" title="1"><span class="co"># Homogeneity of variances test:</span></a>
+<a class="sourceLine" id="cb820-2" title="2"><span class="kw">library</span>(car)</a>
+<a class="sourceLine" id="cb820-3" title="3"><span class="kw">leveneTest</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data, </a>
+<a class="sourceLine" id="cb820-4" title="4">    <span class="dt">center =</span> mean)</a></code></pre></div>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = mean)
 ##        Df F value Pr(&gt;F)
 ## group   2  1.2455 0.2893
 ##       293</code></pre>
 <p>The test result is insignificant (for a signifcance level of 5 %), meaning that we do not reject the null hypothesis of equal variances and can operate under the assumption that the variances are equal.</p>
 <p>Since all assumptions are fulfilled we can move on to conducting the actual ANOVA using the <code>aov()</code> function.</p>
-<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb820-1" title="1"><span class="co"># Anova:</span></a>
-<a class="sourceLine" id="cb820-2" title="2">aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</a>
-<a class="sourceLine" id="cb820-3" title="3"><span class="kw">summary</span>(aov)</a></code></pre></div>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb822-1" title="1"><span class="co"># Anova:</span></a>
+<a class="sourceLine" id="cb822-2" title="2">aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</a>
+<a class="sourceLine" id="cb822-3" title="3"><span class="kw">summary</span>(aov)</a></code></pre></div>
 <pre><code>##              Df    Sum Sq  Mean Sq F value            Pr(&gt;F)    
 ## retargeting   2  37966043 18983022   35.26 0.000000000000019 ***
 ## Residuals   293 157734112   538342                              
@@ -741,15 +741,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The p-value is smaller than 0.05, which we chose as our significance level, meaning that we reject the null hypothesis of the means being equal in the three advertising groups.</p>
 <p>Next we will briefly inspect the residuals of the ANOVA to see if the assumptions of the test really are justified.</p>
-<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb822-1" title="1"><span class="co"># Inspect residuals</span></a>
-<a class="sourceLine" id="cb822-2" title="2"><span class="kw">plot</span>(aov, <span class="dv">1</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-478-1.png" width="672" /></p>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb824-1" title="1"><span class="co"># Inspect residuals</span></a>
+<a class="sourceLine" id="cb824-2" title="2"><span class="kw">plot</span>(aov, <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-480-1.png" width="672" /></p>
 <p>The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled.</p>
-<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb823-1" title="1"><span class="kw">plot</span>(aov, <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-479-1.png" width="672" /></p>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb825-1" title="1"><span class="kw">plot</span>(aov, <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-481-1.png" width="672" /></p>
 <p>The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behaviour here may indicate problems with the model specification.</p>
 <p>To further confirm that the residuals are roughly normally distributed we employ the Shapiro-Wilk test. The null hypothesis is that the distribution of the data is normal, with the alternative hypothesis positing that the data is not normally distributed.</p>
-<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb824-1" title="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</a></code></pre></div>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb826-1" title="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -761,9 +761,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 2) H_0: \mu_2 = \mu_3; H_1 = \mu_2 \neq \mu_3 \\
 3) H_0: \mu_1 = \mu_3; H_1 = \mu_1 \neq \mu_3 \]</span></p>
 <p>Here we will conduct both the Bonferroni correction as well as Tukey’s HSD test, however either would be sufficient for your homework. Bonferroni’s correction conducts multiple pairwise t-tests, with the null hypothesis being that of equal means in each case and the alternative hypothesis stating that the means are unequal.</p>
-<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb826-1" title="1"><span class="co"># bonferroni</span></a>
-<a class="sourceLine" id="cb826-2" title="2"><span class="kw">pairwise.t.test</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting, </a>
-<a class="sourceLine" id="cb826-3" title="3">    <span class="dt">data =</span> customer_data, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb828-1" title="1"><span class="co"># bonferroni</span></a>
+<a class="sourceLine" id="cb828-2" title="2"><span class="kw">pairwise.t.test</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting, </a>
+<a class="sourceLine" id="cb828-3" title="3">    <span class="dt">data =</span> customer_data, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -780,10 +780,10 @@ dynamic regargeting vs. no retargeting<br />
 dynamic regargeting vs. generig retargeting</p>
 <p>But there seems to be no difference in the means of generic retargeting vs. no retargeting.</p>
 <p>Tukey’s HSD similarly compares pairwise means, corrected for family-wise errors (both of the post hoc tests would have been considered correct).</p>
-<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb828-1" title="1"><span class="co"># tukey correction using the mult-comp package</span></a>
-<a class="sourceLine" id="cb828-2" title="2"><span class="kw">library</span>(multcomp)</a>
-<a class="sourceLine" id="cb828-3" title="3">tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">retargeting =</span> <span class="st">&quot;Tukey&quot;</span>))</a>
-<a class="sourceLine" id="cb828-4" title="4"><span class="kw">summary</span>(tukeys)</a></code></pre></div>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb830-1" title="1"><span class="co"># tukey correction using the mult-comp package</span></a>
+<a class="sourceLine" id="cb830-2" title="2"><span class="kw">library</span>(multcomp)</a>
+<a class="sourceLine" id="cb830-3" title="3">tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">retargeting =</span> <span class="st">&quot;Tukey&quot;</span>))</a>
+<a class="sourceLine" id="cb830-4" title="4"><span class="kw">summary</span>(tukeys)</a></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Tests for General Linear Hypotheses
 ## 
@@ -806,7 +806,7 @@ dynamic regargeting vs. generig retargeting</p>
 ## (Adjusted p values reported -- single-step method)</code></pre>
 <p>Tukey’s correction confirms the conclusion from the Bonferroni test from above. While there seems to be no difference in the means of generic retargeting vs. no retargeting, dynamic retargeting seems to differ significantly from both generic retargeting and no retargeting.</p>
 <p>Tukey’s HSD further let’s us estimate the difference in means with corresponding confidence intervals.</p>
-<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb830-1" title="1"><span class="kw">confint</span>(tukeys)</a></code></pre></div>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb832-1" title="1"><span class="kw">confint</span>(tukeys)</a></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Confidence Intervals
 ## 
@@ -824,13 +824,13 @@ dynamic regargeting vs. generig retargeting</p>
 ## generic retargeting - no retargeting == 0        88.3220 -159.3805  336.0245
 ## dynamic retargeting - no retargeting == 0       793.9687  553.0574 1034.8800
 ## dynamic retargeting - generic retargeting == 0  705.6467  454.5551  956.7382</code></pre>
-<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb832-1" title="1"><span class="co"># The mar parameter changes the margins around</span></a>
-<a class="sourceLine" id="cb832-2" title="2"><span class="co"># created plots. This is done so the labels on the</span></a>
-<a class="sourceLine" id="cb832-3" title="3"><span class="co"># side of the Tukey plot are visible (however, this</span></a>
-<a class="sourceLine" id="cb832-4" title="4"><span class="co"># was not expected).</span></a>
-<a class="sourceLine" id="cb832-5" title="5"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb832-6" title="6"><span class="kw">plot</span>(tukeys)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-483-1.png" width="672" /></p>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb834-1" title="1"><span class="co"># The mar parameter changes the margins around</span></a>
+<a class="sourceLine" id="cb834-2" title="2"><span class="co"># created plots. This is done so the labels on the</span></a>
+<a class="sourceLine" id="cb834-3" title="3"><span class="co"># side of the Tukey plot are visible (however, this</span></a>
+<a class="sourceLine" id="cb834-4" title="4"><span class="co"># was not expected).</span></a>
+<a class="sourceLine" id="cb834-5" title="5"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb834-6" title="6"><span class="kw">plot</span>(tukeys)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-485-1.png" width="672" /></p>
 <p>It is clearly visible that just the CIs of generic retargetring vs. no retargeting cross the 0 bound, which further indicates that the differences in means are statistically not significantly different from 0.</p>
 <p>From a reporting standpoint we can say that revenue is higher when using dynamic retargeting vs. no retargeting or generic retargeting, but there is no sifnificant difference between the sales for products in the dynamic retargeting vs. no retargeting conditions. Managerially, this menas that only dynamic retargetting helps us to increase sales.</p>
 <p><strong>Question 2</strong></p>
@@ -840,13 +840,13 @@ dynamic regargeting vs. generig retargeting</p>
 Or, alternatively</p>
 <p><span class="math display">\[H_1: \exists {i,j}: {\bar \mu_i \ne \bar \mu_j} \]</span></p>
 <p>A good way to visualize ordinal data is through a boxplot.</p>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb833-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> customer_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> rank)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb833-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-484-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb835-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> customer_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> rank)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb835-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-486-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The boxplot seems to indicate that the medians are unequal. At least for dynamic retargeting our customer ranks seem to be lower than the ones of no retargeting or generic retargeting.</p>
 <p>The only assumption that we require for this test is that the dependent variable is at least ordinal, which is fulfilled for customer ranks. Hence we can move on to performing the test in R.</p>
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb834-1" title="1"><span class="co"># ordinal data so we use a non-parametric test</span></a>
-<a class="sourceLine" id="cb834-2" title="2"><span class="kw">kruskal.test</span>(rank <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</a></code></pre></div>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb836-1" title="1"><span class="co"># ordinal data so we use a non-parametric test</span></a>
+<a class="sourceLine" id="cb836-2" title="2"><span class="kw">kruskal.test</span>(rank <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</a></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
@@ -855,9 +855,9 @@ Or, alternatively</p>
 ## 0.000000000001732</code></pre>
 <p>The p-value is below any sensible signifcance level and thus we reject the null hypothesis of equal medians. This means that the median rank of customers is different for different types of retargeting, implying that the type of retargeting has an effect on the customer rank.</p>
 <p>To further see which of the medians are unequeal we perform the Nemenyi post hoc test, which can be found in the <code>PCMCR</code> package in R. The null hyptohesis is that the pairwise medians are equal, while the alternative hypothesis is that the pairwise medians are unequal.</p>
-<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb836-1" title="1"><span class="kw">library</span>(PMCMR)</a>
-<a class="sourceLine" id="cb836-2" title="2"><span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> customer_data<span class="op">$</span>rank, </a>
-<a class="sourceLine" id="cb836-3" title="3">    <span class="dt">g =</span> customer_data<span class="op">$</span>retargeting, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb838-1" title="1"><span class="kw">library</span>(PMCMR)</a>
+<a class="sourceLine" id="cb838-2" title="2"><span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> customer_data<span class="op">$</span>rank, </a>
+<a class="sourceLine" id="cb838-3" title="3">    <span class="dt">g =</span> customer_data<span class="op">$</span>retargeting, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using Tukey and Kramer (Nemenyi) test  
 ##                    with Tukey-Dist approximation for independent samples 
@@ -875,30 +875,30 @@ Or, alternatively</p>
 <p>Our null hypothesis in this case states that the proportions of conversion are equal for females and males. Our alternative hypothesis states that these proportions are unequal.</p>
 <p><span class="math display">\[H_0: \pi_1 = \pi_2 \\ H_1: \pi_1 \neq \pi_2\]</span></p>
 <p>First letÂ´s create a summary plot to get a feeling for the data.</p>
-<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb838-1" title="1"><span class="co">#conditional relative frequencies</span></a>
-<a class="sourceLine" id="cb838-2" title="2">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(customer_data<span class="op">$</span>gender, customer_data<span class="op">$</span>conversion), <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb838-3" title="3"><span class="kw">names</span>(rel_freq_table) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;gender&quot;</span>, <span class="st">&quot;conversion&quot;</span>,<span class="st">&quot;freq&quot;</span>) <span class="co"># changing names of the columns</span></a>
-<a class="sourceLine" id="cb838-4" title="4">rel_freq_table</a></code></pre></div>
+<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb840-1" title="1"><span class="co">#conditional relative frequencies</span></a>
+<a class="sourceLine" id="cb840-2" title="2">rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(customer_data<span class="op">$</span>gender, customer_data<span class="op">$</span>conversion), <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb840-3" title="3"><span class="kw">names</span>(rel_freq_table) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;gender&quot;</span>, <span class="st">&quot;conversion&quot;</span>,<span class="st">&quot;freq&quot;</span>) <span class="co"># changing names of the columns</span></a>
+<a class="sourceLine" id="cb840-4" title="4">rel_freq_table</a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["gender"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["conversion"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"female","2":"conversion","3":"0.3851351"},{"1":"male","2":"conversion","3":"0.1283784"},{"1":"female","2":"no conversion","3":"0.6148649"},{"1":"male","2":"no conversion","3":"0.8716216"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb839-1" title="1"><span class="kw">ggplot</span>(rel_freq_table, <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> freq, <span class="dt">fill =</span> conversion)) <span class="op">+</span><span class="st"> </span><span class="co">#plot data</span></a>
-<a class="sourceLine" id="cb839-2" title="2"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">.7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span></a>
-<a class="sourceLine" id="cb839-3" title="3"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span></a>
-<a class="sourceLine" id="cb839-4" title="4"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;gender&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span></a>
-<a class="sourceLine" id="cb839-5" title="5"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb841-1" title="1"><span class="kw">ggplot</span>(rel_freq_table, <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> freq, <span class="dt">fill =</span> conversion)) <span class="op">+</span><span class="st"> </span><span class="co">#plot data</span></a>
+<a class="sourceLine" id="cb841-2" title="2"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">.7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span></a>
+<a class="sourceLine" id="cb841-3" title="3"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span></a>
+<a class="sourceLine" id="cb841-4" title="4"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;gender&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span></a>
+<a class="sourceLine" id="cb841-5" title="5"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
 <p><img src="_main_files/figure-html/question_3_1-1.png" width="672" /></p>
 <p>We see that our conversion seems to be better for our female customers, but letÂ´s check whether these proportions are significantly different.</p>
-<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb840-1" title="1">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>))  <span class="co">#number of observations for females</span></a>
-<a class="sourceLine" id="cb840-2" title="2">n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>))  <span class="co">#number of observations for males</span></a>
-<a class="sourceLine" id="cb840-3" title="3">n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb840-4" title="4"><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for females</span></a>
-<a class="sourceLine" id="cb840-5" title="5">n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb840-6" title="6"><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for males</span></a>
-<a class="sourceLine" id="cb840-7" title="7"></a>
-<a class="sourceLine" id="cb840-8" title="8"><span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(n1_conv, n2_conv), <span class="dt">n =</span> <span class="kw">c</span>(n1, n2), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb842-1" title="1">n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>))  <span class="co">#number of observations for females</span></a>
+<a class="sourceLine" id="cb842-2" title="2">n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>))  <span class="co">#number of observations for males</span></a>
+<a class="sourceLine" id="cb842-3" title="3">n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb842-4" title="4"><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for females</span></a>
+<a class="sourceLine" id="cb842-5" title="5">n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb842-6" title="6"><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for males</span></a>
+<a class="sourceLine" id="cb842-7" title="7"></a>
+<a class="sourceLine" id="cb842-8" title="8"><span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(n1_conv, n2_conv), <span class="dt">n =</span> <span class="kw">c</span>(n1, n2), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
 <pre><code>## 
 ##  2-sample test for equality of proportions with continuity correction
 ## 

@@ -20,6 +20,7 @@ opts_chunk$set(cache=T)
 library(Hmisc)
 library(knitr)
 library(ggmap)
+library(ggstatsplot)
 register_google(key = "AIzaSyDMxadfjNH489ueRgo9S62PuZU6PbwAyiM")
 ```
 
@@ -277,6 +278,26 @@ ggplot(music_data,aes(mstreams)) +
   theme_bw()
 ```
 
+Alternatively we could use ggstatplot, which has a smiliar syntax:
+
+```{r}
+gghistostats(
+  data = music_data, # dataframe from which variable is to be taken
+  x = mstreams, # numeric variable whose distribution is of interest
+  title = "Distribution of the number of streams", # title for the plot
+  caption = substitute(paste(italic("Source:"), "Spotify")),
+  centrality.para = "mean", # which measure of central tendency is to be plotted
+  centrality.color = "darkred", # decides color for central tendency line
+  binwidth = 3000, # binwidth value 
+  messages = FALSE, # turn off the messages
+  ggtheme = theme_bw(), # choosing a different theme
+  ggstatsplot.layer = FALSE, # turn off ggstatsplot theme layer
+  bf.message = FALSE,
+  results.subtitle = FALSE
+)
+```
+
+
 #### Boxplot
 
 Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom ```geom_boxplot()```. In our case we want to show the difference in distribution between the two stores in our sample, which is why the ```aes()``` function contains both an x and a y variable. 
@@ -310,6 +331,23 @@ ggplot(music_data,aes(x = "", y = mstreams)) +
   labs(x = "Total", y = "Number of streams") + 
   theme_bw()
 ```
+
+Alternatively we could use ggstatplot, which has a smiliar syntax:
+
+```{r}
+ggbetweenstats(
+    data = music_data,
+    title = "Number of streams by explicitness", # title for the plot
+    plot.type = "box",
+    x = explicit_cat, # 2 groups
+    y = mstreams,
+    type = "p", # default
+    messages = FALSE,
+    bf.message = FALSE
+  )
+```
+
+
 
 #### Plot of means
 

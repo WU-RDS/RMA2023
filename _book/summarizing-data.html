@@ -373,7 +373,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb167-3" title="3"></a>
 <a class="sourceLine" id="cb167-4" title="4">music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)</a>
 <a class="sourceLine" id="cb167-5" title="5">music_data<span class="op">$</span>explicit_cat &lt;-<span class="st"> </span><span class="kw">factor</span>(music_data<span class="op">$</span>explicit, </a>
-<a class="sourceLine" id="cb167-6" title="6">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;not explicit&quot;</span>, <span class="st">&quot;explicit&quot;</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb167-6" title="6">    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;not explicit&quot;</span>, <span class="st">&quot;explicit&quot;</span>))</a>
+<a class="sourceLine" id="cb167-7" title="7"></a>
+<a class="sourceLine" id="cb167-8" title="8">music_data<span class="op">$</span>adv_spending &lt;-<span class="st"> </span>music_data<span class="op">$</span>adv_spending<span class="op">/</span><span class="dv">10</span><span class="op">^</span><span class="dv">111</span>  <span class="co"># e^111 = scaling factor for specific outliers</span></a>
+<a class="sourceLine" id="cb167-9" title="9">music_data<span class="op">$</span>adv_spending2 &lt;-<span class="st"> </span>music_data<span class="op">$</span>adv_spending</a></code></pre></div>
 <p>The <code>table()</code> function creates a frequency table. Let’s start with the number of occurrences of the categories associated with the genre and explicitness variables separately:</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" title="1"><span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>)])  <span class="co">#absolute frequencies</span></a></code></pre></div>
 <pre><code>## 
@@ -436,229 +439,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Computing descriptive statistics in R is easy and there are many functions from different packages that let you calculate summary statistics (including the <code>summary()</code> function from the <code>base</code> package). In this tutorial, we will use the <code>describe()</code> function from the <code>psych</code> package:</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" title="1"><span class="kw">library</span>(psych)</a>
-<a class="sourceLine" id="cb184-2" title="2">psych<span class="op">::</span><span class="kw">describe</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)])</a></code></pre></div>
-<pre><code>##                 vars     n
-## trackPopularity    1 41902
-## adv_spending       2  4040
-##                                                                                                                                               mean
-## trackPopularity                                                                                                                              42.19
-## adv_spending    1663861998635444585799602166412216556576766983815898539262112991801036926040046455146949703012774025143762194963165646424113152.00
-##                                                                                                                                                  sd
-## trackPopularity                                                                                                                               21.93
-## adv_spending    90388285514975490271795863003907786255407670856965955656109222016563254125189143073145303108376541058461249614948556335979954176.00
-##                                                                                                                        median
-## trackPopularity                                                                                                            46
-## adv_spending    8053950811694375076647952760936325412330582286337524164369343773718646589908344175161847915011555945745481728
-##                                                                                                                              trimmed
-## trackPopularity                                                                                                                43.32
-## adv_spending    14312549466936196760783481604417957757777576101710492679466473955070433986974341367139670520283693558159388966912.00
-##                                                                                                                               mad
-## trackPopularity                                                                                                             20.76
-## adv_spending    11939965425569067043575351803658340312697485103812437558690892244534581568569211936813173116078062282177773568.00
-##                                                                                                                     min
-## trackPopularity                                                                                                       0
-## adv_spending    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880
-##                                                                                                                                                max
-## trackPopularity                                                                                                                                100
-## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
-##                                                                                                                                              range
-## trackPopularity                                                                                                                                100
-## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
-##                  skew kurtosis
-## trackPopularity -0.46    -0.57
-## adv_spending      NaN      NaN
-##                                                                                                                                                 se
-## trackPopularity                                                                                                                               0.11
-## adv_spending    1422071609643704026249753197586951515463142435487387848863024692896229474709084513620890368357693259819763446809306914447425536.00</code></pre>
+<a class="sourceLine" id="cb184-2" title="2">psych<span class="op">::</span><span class="kw">describe</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;duration_ms&quot;</span>)])</a></code></pre></div>
+<pre><code>##                 vars     n      mean       sd   median   trimmed      mad  min
+## trackPopularity    1 41902     42.19    21.93     46.0     43.32    20.76    0
+## duration_ms        2 41892 215476.95 59067.55 209990.5 212072.35 39194.75 1000
+##                     max   range  skew kurtosis     se
+## trackPopularity     100     100 -0.46    -0.57   0.11
+## duration_ms     3924548 3923548 14.95   755.65 288.59</code></pre>
 <p>In the above command, we used the <code>psych::</code> prefix to avoid confusion and to make sure that R uses the <code>describe()</code> function from the <code>psych</code> package since there are many other packages that also contain a <code>desribe()</code> function. Note that you could also compute these statistics separately by using the respective functions (e.g., <code>mean()</code>, <code>sd()</code>, <code>median()</code>, <code>min()</code>, <code>max()</code>, etc.).</p>
 <p>The <code>psych</code> package also contains the <code>describeBy()</code> function, which lets you compute the summary statistics by sub-group separately. For example, we could easily compute the summary statistics by expliciteness as follows:</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" title="1"><span class="kw">describeBy</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)], </a>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" title="1"><span class="kw">describeBy</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;duration_ms&quot;</span>)], </a>
 <a class="sourceLine" id="cb186-2" title="2">    music_data<span class="op">$</span>explicit_cat)</a></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: not explicit
-##                 vars     n
-## trackPopularity    1 30204
-## adv_spending       2  1615
-##                                                                                                                                            mean
-## trackPopularity                                                                                                                           41.08
-## adv_spending    5172168603099718432851297255956777123746053276240670083946866176769415706160674361986120612129653589692122257714508906627072.00
-##                                                                                                                                                sd
-## trackPopularity                                                                                                                             21.48
-## adv_spending    193381855610632447547751245383868977151535263730018200292784367391663701087958346550985189639430024775385068674556835013853184.00
-##                                                                                                                        median
-## trackPopularity                                                                                                            44
-## adv_spending    2559156059025929783904012511794850814137726896451867630430204094110902960084686675151033589613010052068671488
-##                                                                                                                             trimmed
-## trackPopularity                                                                                                               42.02
-## adv_spending    1552391850272417551260541218699560271374285287324560765205145708945175757017623622955337963329647931986729238528.00
-##                                                                                                                              mad
-## trackPopularity                                                                                                            20.76
-## adv_spending    3793573264280055573989692432837769198694619592855876753447158169066569246652547100784541204811141925908250624.00
-##                                                                                                                     min
-## trackPopularity                                                                                                       0
-## adv_spending    1788886480907749967800767903198959017803271330687803346259775343201180214710951059799925207252972077056
-##                                                                                                                                             max
-## trackPopularity                                                                                                                             100
-## adv_spending    7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608
-##                                                                                                                                           range
-## trackPopularity                                                                                                                             100
-## adv_spending    7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608
-##                  skew kurtosis
-## trackPopularity -0.39    -0.61
-## adv_spending      NaN      NaN
-##                                                                                                                                              se
-## trackPopularity                                                                                                                            0.12
-## adv_spending    4812042561069334413658881832064407463280356005964057426447789336055491389549994156940560612380176530567396576327037806968832.00
+##                 vars     n      mean       sd median   trimmed      mad  min
+## trackPopularity    1 30204     41.08    21.48     44     42.02    20.76    0
+## duration_ms        2 30195 219629.07 58949.53 213567 216310.72 38765.54 1000
+##                     max   range  skew kurtosis     se
+## trackPopularity     100     100 -0.39    -0.61   0.12
+## duration_ms     3924548 3923548 18.08   986.56 339.24
 ## ------------------------------------------------------------ 
 ## group: explicit
-##                 vars     n
-## trackPopularity    1 11698
-## adv_spending       2  2425
-##                                                                                                                                               mean
-## trackPopularity                                                                                                                              45.07
-## adv_spending    2768515225646676246676162821451682216828911935149173871155142886219560271694665145879934665093000158200648550487804638174117888.00
-##                                                                                                                                                   sd
-## trackPopularity                                                                                                                                22.81
-## adv_spending    116663137947801986765276655850226354566622102326259874731241693256319504071284192300331944346479806044416809616292599765294645248.00
-##                                                                                                                         median
-## trackPopularity                                                                                                             50
-## adv_spending    16277273105159300279201836045070017442893414952768978834780850370041112632978214969084537078780304893170155520
-##                                                                                                                              trimmed
-## trackPopularity                                                                                                                46.71
-## adv_spending    56023009135510243088914501309015842274125585498928715915763841732567728568664908564405876699413058364659027935232.00
-##                                                                                                                               mad
-## trackPopularity                                                                                                             19.27
-## adv_spending    24131787940269998252417729231936258902038709675525474818134710775231449898917202835217367263874142969297633280.00
-##                                                                                                                     min
-## trackPopularity                                                                                                       0
-## adv_spending    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880
-##                                                                                                                                                max
-## trackPopularity                                                                                                                                 98
-## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
-##                                                                                                                                              range
-## trackPopularity                                                                                                                                 98
-## adv_spending    5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848
-##                  skew kurtosis
-## trackPopularity -0.67    -0.38
-## adv_spending      NaN      NaN
-##                                                                                                                                                 se
-## trackPopularity                                                                                                                               0.21
-## adv_spending    2369069394555102609637929516509963472253684191870489391436065904037937544068666190710539940555492676837585516201848155007877120.00</code></pre>
+##                 vars     n      mean       sd median   trimmed      mad   min
+## trackPopularity    1 11698     45.07    22.81     50     46.71    19.27     0
+## duration_ms        2 11697 204758.53 58015.74 198987 200790.11 38528.33 33422
+##                     max   range  skew kurtosis     se
+## trackPopularity      98      98 -0.67    -0.38   0.21
+## duration_ms     2147004 2113582  7.54   184.82 536.42</code></pre>
 <p>Note that you could just as well use other packages to compute the descriptive statistics. For example, you could have used the <code>stat.desc()</code> function from the <code>pastecs</code> package:</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" title="1"><span class="kw">library</span>(pastecs)</a>
-<a class="sourceLine" id="cb188-2" title="2"><span class="kw">stat.desc</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)])</a></code></pre></div>
-<pre><code>##              trackPopularity
-## nbr.val        41902.0000000
-## nbr.null        2718.0000000
-## nbr.na             0.0000000
-## min                0.0000000
-## max              100.0000000
-## range            100.0000000
-## sum          1767874.0000000
-## median            46.0000000
-## mean              42.1906830
-## SE.mean            0.1071435
-## CI.mean.0.95       0.2100034
-## var              481.0231842
-## std.dev           21.9322407
-## coef.var           0.5198361
-##                                                                                                                                                                                                                                                                        adv_spending
-## nbr.val                                                                                                                                                                                                                                                                  4040.00000
-## nbr.null                                                                                                                                                                                                                                                                    0.00000
-## nbr.na                                                                                                                                                                                                                                                                  37862.00000
-## min                                                                                                                                                                   1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880.00000
-## max                                                                                                                                        5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
-## range                                                                                                                                      5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
-## sum                                                                                                                                        6722002474487196114605854728503328761775997959054824518455441836465591443180457904548766591584811831046660395921173452029910056960.00000
-## median                                                                                                                                                          8053950811694375076647952760936325412330582286337524164369343773718646589908344175161847915011555945745481728.00000
-## mean                                                                                                                                          1663861998635444585799602166412216556576766983815898539262112991801036926040046455146949703012774025143762194963165646424113152.00000
-## SE.mean                                                                                                                                       1422071609643704026249753197586951515463142435487387848863024692896229474709084513620890368357693259819763446809306914447425536.00000
-## CI.mean.0.95                                                                                                                                  2788044625723915458338140131640119709214076421615346353356072322387958038678787605544590167698011636706189948644072160285949952.00000
-## var          8170042158336727985584155358928501945007069761199404624925743472097598574696898704016127391582732374381167474204966413129492906943119588228618671677530711768615870910780816611902644306269116306238204414786201181630868688547307884340558060241671993551749120.00000
-## std.dev                                                                                                                                      90388285514975490271795863003907786255407670856965955656109222016563254125189143073145303108376541058461249614948556335979954176.00000
-## coef.var                                                                                                                                                                                                                                                                   54.32439</code></pre>
+<a class="sourceLine" id="cb188-2" title="2"><span class="kw">stat.desc</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;duration_ms&quot;</span>)])</a></code></pre></div>
+<pre><code>##              trackPopularity        duration_ms
+## nbr.val        41902.0000000      41892.0000000
+## nbr.null        2718.0000000          0.0000000
+## nbr.na             0.0000000         10.0000000
+## min                0.0000000       1000.0000000
+## max              100.0000000    3924548.0000000
+## range            100.0000000    3923548.0000000
+## sum          1767874.0000000 9026760380.0000000
+## median            46.0000000     209990.5000000
+## mean              42.1906830     215476.9497756
+## SE.mean            0.1071435        288.5914072
+## CI.mean.0.95       0.2100034        565.6451076
+## var              481.0231842 3488975232.0832715
+## std.dev           21.9322407      59067.5480453
+## coef.var           0.5198361          0.2741247</code></pre>
 <p>Computing statistics by group is also possible by using the wrapper function <code>by()</code>. Within the function, you first specify the data on which you would like to perform the grouping <code>music_data[,c("trackPopularity", "adv_spending")]</code>, followed by the grouping variable <code>music_data$explicit_cat</code> and the function that you would like to execute (e.g., <code>stat.desc()</code>):</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" title="1"><span class="kw">library</span>(pastecs)</a>
-<a class="sourceLine" id="cb190-2" title="2"><span class="kw">by</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;adv_spending&quot;</span>)], </a>
+<a class="sourceLine" id="cb190-2" title="2"><span class="kw">by</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, <span class="st">&quot;duration_ms&quot;</span>)], </a>
 <a class="sourceLine" id="cb190-3" title="3">    music_data<span class="op">$</span>explicit_cat, stat.desc)</a></code></pre></div>
 <pre><code>## music_data$explicit_cat: not explicit
-##              trackPopularity
-## nbr.val        30204.0000000
-## nbr.null        1777.0000000
-## nbr.na             0.0000000
-## min                0.0000000
-## max              100.0000000
-## range            100.0000000
-## sum          1240696.0000000
-## median            44.0000000
-## mean              41.0772083
-## SE.mean            0.1235926
-## CI.mean.0.95       0.2422467
-## var              461.3697298
-## std.dev           21.4795188
-## coef.var           0.5229060
-##                                                                                                                                                                                                                                                                   adv_spending
-## nbr.val                                                                                                                                                                                                                                                             1615.00000
-## nbr.null                                                                                                                                                                                                                                                               0.00000
-## nbr.na                                                                                                                                                                                                                                                             28589.00000
-## min                                                                                                                                                              1788886480907749967800767903198959017803271330687803346259775343201180214710951059799925207252972077056.00000
-## max                                                                                                                                      7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608.00000
-## range                                                                                                                                    7764099326969320377862473334684483465938646883419636442000588122891992647689689528784785605212451924610928226564268033581252608.00000
-## sum                                                                                                                                      8353052294006045667719948494228385489089207346118642582596301552669904418012131512200066801794173825315682422023419223873683456.00000
-## median                                                                                                                                                     2559156059025929783904012511794850814137726896451867630430204094110902960084686675151033589613010052068671488.00000
-## mean                                                                                                                                        5172168603099718432851297255956777123746053276240670083946866176769415706160674361986120612129653589692122257714508906627072.00000
-## SE.mean                                                                                                                                     4812042561069334413658881832064407463280356005964057426447789336055491389549994156940560612380176530567396576327037806968832.00000
-## CI.mean.0.95                                                                                                                                9438508110504072852885928339809330319134619407745960075370646187395180949376531142479041917389950218916856573259053550010368.00000
-## var          37396542079411498131144847226849996155181511245711451108004567056052469842579858325289647196214991357585017871776703544624605350369380232968427943372525647378365511581576534322270648662714037140428215378691051777969660175102626842598364003455668846592.00000
-## std.dev                                                                                                                                   193381855610632447547751245383868977151535263730018200292784367391663701087958346550985189639430024775385068674556835013853184.00000
-## coef.var                                                                                                                                                                                                                                                              37.38893
+##              trackPopularity       duration_ms
+## nbr.val        30204.0000000      30195.000000
+## nbr.null        1777.0000000          0.000000
+## nbr.na             0.0000000          9.000000
+## min                0.0000000       1000.000000
+## max              100.0000000    3924548.000000
+## range            100.0000000    3923548.000000
+## sum          1240696.0000000 6631699851.000000
+## median            44.0000000     213567.000000
+## mean              41.0772083     219629.072727
+## SE.mean            0.1235926        339.244534
+## CI.mean.0.95       0.2422467        664.933723
+## var              461.3697298 3475047544.433871
+## std.dev           21.4795188      58949.533878
+## coef.var           0.5229060          0.268405
 ## ------------------------------------------------------------ 
 ## music_data$explicit_cat: explicit
-##              trackPopularity
-## nbr.val        11698.0000000
-## nbr.null         941.0000000
-## nbr.na             0.0000000
-## min                0.0000000
-## max               98.0000000
-## range             98.0000000
-## sum           527178.0000000
-## median            50.0000000
-## mean              45.0656522
-## SE.mean            0.2109063
-## CI.mean.0.95       0.4134115
-## var              520.3441548
-## std.dev           22.8110533
-## coef.var           0.5061738
-##                                                                                                                                                                                                                                                                         adv_spending
-## nbr.val                                                                                                                                                                                                                                                                   2425.00000
-## nbr.null                                                                                                                                                                                                                                                                     0.00000
-## nbr.na                                                                                                                                                                                                                                                                    9273.00000
-## min                                                                                                                                                                    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880.00000
-## max                                                                                                                                         5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
-## range                                                                                                                                       5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848.00000
-## sum                                                                                                                                         6713649422193189931858401308666002530833705278308682262009006520232107325319286346644590146893552029132161575776970374238055694336.00000
-## median                                                                                                                                                          16277273105159300279201836045070017442893414952768978834780850370041112632978214969084537078780304893170155520.00000
-## mean                                                                                                                                           2768515225646676246676162821451682216828911935149173871155142886219560271694665145879934665093000158200648550487804638174117888.00000
-## SE.mean                                                                                                                                        2369069394555102609637929516509963472253684191870489391436065904037937544068666190710539940555492676837585516201848155007877120.00000
-## CI.mean.0.95                                                                                                                                   4645610341497686096375959094522914490123115368707138744568977581813844053362617607728462666908133765731575094148070415890644992.00000
-## var          13610287755827875778719137998489737662204122359063366245590425994016353278686815344510450706245734240054198519332236460396884299911014786837337577757197426556095328982688792166566100303033028214504872905181222266141011080120924423714229442433473368788303872.00000
-## std.dev                                                                                                                                      116663137947801986765276655850226354566622102326259874731241693256319504071284192300331944346479806044416809616292599765294645248.00000
-## coef.var                                                                                                                                                                                                                                                                    42.13924</code></pre>
+##              trackPopularity        duration_ms
+## nbr.val        11698.0000000      11697.0000000
+## nbr.null         941.0000000          0.0000000
+## nbr.na             0.0000000          1.0000000
+## min                0.0000000      33422.0000000
+## max               98.0000000    2147004.0000000
+## range             98.0000000    2113582.0000000
+## sum           527178.0000000 2395060529.0000000
+## median            50.0000000     198987.0000000
+## mean              45.0656522     204758.5303069
+## SE.mean            0.2109063        536.4245115
+## CI.mean.0.95       0.4134115       1051.4815357
+## var              520.3441548 3365826447.7986922
+## std.dev           22.8110533      58015.7431030
+## coef.var           0.5061738          0.2833374</code></pre>
 <p>These examples are meant to exemplify that there are often many different ways to reach a goal in R. Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences.</p>
 </div>
 <div id="creating-subsets" class="section level4">
 <h4><span class="header-section-number">3.1.2.2</span> Creating subsets</h4>
-<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum amount of spending on advertisment is 5656214468105729405047483195787493940130026735209440740880133182450172331679124524407099502558483700316582376966847235041261518848 units. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
+<p>From the above statistics it is clear that the data set contains some severe outliers on some variables. For example, the maximum amount of spending on advertisment is 5656214468105730048 units. You might want to investigate these cases and delete them if they would turn out to indeed induce a bias in your analyses. For normally distributed data, any absolute standardized deviations larger than 3 standard deviations from the mean are suspicious. Let’s check if potential outliers exist in the data:</p>
 <div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb192-2" title="2">music_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">adv_spending_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(adv_spending))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb192-2" title="2">music_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">adv_spending_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(adv_spending2))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb192-3" title="3"><span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(adv_spending_std) <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(id, </a>
 <a class="sourceLine" id="cb192-4" title="4">    trackName, adv_spending, adv_spending_std)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   id                     trackName      adv_spending adv_spending_std
 ##   &lt;chr&gt;                  &lt;chr&gt;                 &lt;dbl&gt;            &lt;dbl&gt;
-## 1 0bAkKNCQfWkexHFn7fIKns In My Feelings     5.66e129             62.6
-## 2 14msK75pk3pA33pzPVNtBF 7 rings            1.01e129             11.1</code></pre>
+## 1 0bAkKNCQfWkexHFn7fIKns In My Feelings      5.66e18             62.6
+## 2 14msK75pk3pA33pzPVNtBF 7 rings             1.01e18             11.1</code></pre>
 <p>Indeed, there appear to be two potential outliers, which we may wish to exclude before we start fitting models to the data. You could easily create a subset of the original data, which you would then use for estimation using the <code>filter()</code> function from the <code>dplyr()</code> package. For example, the following code creates a subset that excludes all cases with a standardized duration of more than 3:</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" title="1"><span class="kw">library</span>(dplyr)</a>
 <a class="sourceLine" id="cb194-2" title="2">estimation_sample &lt;-<span class="st"> </span>music_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">adv_spending_std =</span> <span class="kw">as.vector</span>(<span class="kw">scale</span>(adv_spending))) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -853,35 +730,64 @@ Figure 3.10: Grouped bar chart (conditional relative frequencies) (2)
 </p>
 </div>
 </div>
+<div id="pie-plot" class="section level4">
+<h4><span class="header-section-number">3.2.1.2</span> Pie plot</h4>
+<p>We could also create a pie plot with ggplot.</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" title="1"><span class="kw">ggplot</span>(<span class="kw">subset</span>(table_plot_rel,Freq <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>), <span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>, <span class="dt">y=</span>Freq, <span class="dt">fill=</span>Genre)) <span class="op">+</span><span class="st"> </span><span class="co"># Create a basic bar</span></a>
+<a class="sourceLine" id="cb211-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">width=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb211-3" title="3"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="st">&quot;y&quot;</span>, <span class="dt">start=</span><span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="co">#Convert to pie (polar coordinates) </span></a>
+<a class="sourceLine" id="cb211-4" title="4"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Freq<span class="op">*</span><span class="dv">100</span>), <span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span><span class="co">#add labels</span></a>
+<a class="sourceLine" id="cb211-5" title="5"><span class="st">  </span><span class="co">#scale_fill_manual(values=c(&quot;#55DDE0&quot;, &quot;#33658A&quot;, &quot;#2F4858&quot;, &quot;#F6AE2D&quot;)) # Add color scale (hex colors)</span></a>
+<a class="sourceLine" id="cb211-6" title="6"><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb211-7" title="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;Spotify tracks by Genre&quot;</span>) <span class="op">+</span><span class="st">  </span><span class="co">#remove labels and add title</span></a>
+<a class="sourceLine" id="cb211-8" title="8"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb211-9" title="9"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(),  <span class="co"># Tidy up the theme</span></a>
+<a class="sourceLine" id="cb211-10" title="10">        <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb211-11" title="11">        <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb211-12" title="12">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))   </a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p>Alternatively we could use ggstatplot, which has a smiliar syntax:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1">ggstatsplot<span class="op">::</span><span class="kw">ggpiestats</span>(</a>
+<a class="sourceLine" id="cb212-2" title="2">  <span class="dt">data =</span> music_data, <span class="co"># use raw data because we need disaggregated factors for x</span></a>
+<a class="sourceLine" id="cb212-3" title="3">  <span class="dt">x =</span> genre_cat,</a>
+<a class="sourceLine" id="cb212-4" title="4">  <span class="dt">title =</span> <span class="st">&quot;Spotify tracks by Genre&quot;</span>,</a>
+<a class="sourceLine" id="cb212-5" title="5">  <span class="dt">messages =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb212-6" title="6">  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb212-7" title="7">  <span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb212-8" title="8">  <span class="co">#palette = &quot;Blues&quot;,</span></a>
+<a class="sourceLine" id="cb212-9" title="9">  <span class="dt">results.subtitle =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb212-10" title="10">)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
+</div>
 <div id="covariation-plots" class="section level4">
-<h4><span class="header-section-number">3.2.1.2</span> Covariation plots</h4>
+<h4><span class="header-section-number">3.2.1.3</span> Covariation plots</h4>
 <p>To visualize the covariation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Say, we wanted to investigate the association between genre and popularity. First, we need to make sure that the respective variables are coded as factors.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" title="1">music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)</a>
-<a class="sourceLine" id="cb211-2" title="2"></a>
-<a class="sourceLine" id="cb211-3" title="3">music_data<span class="op">$</span>popularity_factor &lt;-<span class="st"> </span><span class="kw">cut</span>(music_data<span class="op">$</span>trackPopularity, </a>
-<a class="sourceLine" id="cb211-4" title="4">    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="ot">Inf</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, </a>
-<a class="sourceLine" id="cb211-5" title="5">        <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;high&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" title="1">music_data<span class="op">$</span>genre_cat &lt;-<span class="st"> </span><span class="kw">as.factor</span>(music_data<span class="op">$</span>top.genre)</a>
+<a class="sourceLine" id="cb213-2" title="2"></a>
+<a class="sourceLine" id="cb213-3" title="3">music_data<span class="op">$</span>popularity_factor &lt;-<span class="st"> </span><span class="kw">cut</span>(music_data<span class="op">$</span>trackPopularity, </a>
+<a class="sourceLine" id="cb213-4" title="4">    <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="ot">Inf</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="ot">Inf</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, </a>
+<a class="sourceLine" id="cb213-5" title="5">        <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;high&quot;</span>))</a></code></pre></div>
 <p>There are multiple ways to visualize such a relationship with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with <code>geom_count()</code>. From the bar charts above, we know that the categories in <code>genre</code> differ in size. To account for that we set the parameters <code>size</code> and <code>group</code> in <code>geom_count</code>, which gives us the conditional relative frequencies. This is equivalent to the conditional relative frequency table from above, only now the <code>stat(prop)</code> argument assures that we get relative frequencies and with the <code>group</code> argument we tell R to compute the relative frequencies by genre.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> music_data) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, </a>
-<a class="sourceLine" id="cb212-2" title="2">    <span class="dt">y =</span> popularity_factor, <span class="dt">size =</span> <span class="kw">stat</span>(prop), <span class="dt">group =</span> genre_cat)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb212-3" title="3"><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">size =</span> <span class="st">&quot;Proportion&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb212-4" title="4"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-137"></span>
-<img src="_main_files/figure-html/unnamed-chunk-137-1.png" alt="Covariation between categorical data (1)" width="672" />
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> music_data) <span class="op">+</span><span class="st"> </span><span class="kw">geom_count</span>(<span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, </a>
+<a class="sourceLine" id="cb214-2" title="2">    <span class="dt">y =</span> popularity_factor, <span class="dt">size =</span> <span class="kw">stat</span>(prop), <span class="dt">group =</span> genre_cat)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb214-3" title="3"><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">size =</span> <span class="st">&quot;Proportion&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb214-4" title="4"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-139"></span>
+<img src="_main_files/figure-html/unnamed-chunk-139-1.png" alt="Covariation between categorical data (1)" width="672" />
 <p class="caption">
 Figure 3.11: Covariation between categorical data (1)
 </p>
 </div>
 <p>Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this we first have to create a dataframe that contains the relative frequencies of all combinations of factors. Then we can take this dataframe and supply it to <code>geom_tile()</code>, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the <code>aes()</code> function.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" title="1">table_plot_rel &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, </a>
-<a class="sourceLine" id="cb213-2" title="2">    <span class="st">&quot;popularity_factor&quot;</span>)]), <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb213-3" title="3">table_plot_rel &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(table_plot_rel)</a>
-<a class="sourceLine" id="cb213-4" title="4"></a>
-<a class="sourceLine" id="cb213-5" title="5"><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb213-6" title="6"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb213-7" title="7"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-138"></span>
-<img src="_main_files/figure-html/unnamed-chunk-138-1.png" alt="Covariation between categorical data (2)" width="672" />
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1">table_plot_rel &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(music_data[, <span class="kw">c</span>(<span class="st">&quot;genre_cat&quot;</span>, </a>
+<a class="sourceLine" id="cb215-2" title="2">    <span class="st">&quot;popularity_factor&quot;</span>)]), <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb215-3" title="3">table_plot_rel &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(table_plot_rel)</a>
+<a class="sourceLine" id="cb215-4" title="4"></a>
+<a class="sourceLine" id="cb215-5" title="5"><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb215-6" title="6"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb215-7" title="7"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
+<img src="_main_files/figure-html/unnamed-chunk-140-1.png" alt="Covariation between categorical data (2)" width="672" />
 <p class="caption">
 Figure 3.12: Covariation between categorical data (2)
 </p>
@@ -893,18 +799,18 @@ Figure 3.12: Covariation between categorical data (2)
 <div id="histogram" class="section level4">
 <h4><span class="header-section-number">3.2.2.1</span> Histogram</h4>
 <p>Histograms can be plotted for continuous data using the <code>geom_histogram()</code> function. Note that the <code>aes()</code> function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let’s consider our data set containing the advertising expenditures and product sales of a company selling products in two different stores:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw">head</span>(music_data)</a></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" title="1"><span class="kw">head</span>(music_data)</a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["isrc"],"name":[3],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["trackPopularity"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["primary_artistName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["primary_artistID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[8],"type":["chr"],"align":["left"]},{"label":["artistIDs"],"name":[9],"type":["chr"],"align":["left"]},{"label":["albumName"],"name":[10],"type":["chr"],"align":["left"]},{"label":["albumID"],"name":[11],"type":["chr"],"align":["left"]},{"label":["available_markets"],"name":[12],"type":["chr"],"align":["left"]},{"label":["n_available_markets"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["releaseDate"],"name":[14],"type":["date"],"align":["right"]},{"label":["releaseDate_precision"],"name":[15],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["loudness"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["time_signature"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["uri"],"name":[29],"type":["chr"],"align":["left"]},{"label":["analysis_url"],"name":[30],"type":["chr"],"align":["left"]},{"label":["followers"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["type"],"name":[32],"type":["chr"],"align":["left"]},{"label":["popularity"],"name":[33],"type":["dbl"],"align":["right"]},{"label":["primary_genre"],"name":[34],"type":["chr"],"align":["left"]},{"label":["genres"],"name":[35],"type":["chr"],"align":["left"]},{"label":["n_genres"],"name":[36],"type":["dbl"],"align":["right"]},{"label":["total_releases"],"name":[37],"type":["dbl"],"align":["right"]},{"label":["n_album"],"name":[38],"type":["dbl"],"align":["right"]},{"label":["n_single"],"name":[39],"type":["dbl"],"align":["right"]},{"label":["n_appears_on"],"name":[40],"type":["dbl"],"align":["right"]},{"label":["n_compilation"],"name":[41],"type":["dbl"],"align":["right"]},{"label":["mstreams"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["region"],"name":[43],"type":["chr"],"align":["left"]},{"label":["adv_spending"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["top.genre"],"name":[45],"type":["chr"],"align":["left"]},{"label":["genre_cat"],"name":[46],"type":["fctr"],"align":["left"]},{"label":["explicit_cat"],"name":[47],"type":["fctr"],"align":["left"]},{"label":["popularity_factor"],"name":[48],"type":["fctr"],"align":["left"]}],"data":[{"1":"5aAx2yezTd8zXrkmtKl66Z","2":"Starboy","3":"USUG11600976","4":"1","5":"22","6":"The Weeknd","7":"1Xyo4u8uXC1ZmMpatF05PJ","8":"The Weeknd feat. Daft Punk","9":"1Xyo4u8uXC1ZmMpatF05PJ,4tZwfgrHOc3mvqYlEYSvVi","10":"Starboy","11":"09fggMHib4YkOtwQNXEBII","12":"NA","13":"0","14":"2016-11-25","15":"day","16":"0.681","17":"0.594","18":"7","19":"-7.028","20":"1","21":"0.2820","22":"0.1650","23":"0.00000349","24":"0.134","25":"0.535","26":"186.054","27":"230453","28":"4","29":"spotify:track:5aAx2yezTd8zXrkmtKl66Z","30":"https://api.spotify.com/v1/audio-analysis/5aAx2yezTd8zXrkmtKl66Z","31":"15222808","32":"artist","33":"91","34":"canadian contemporary r&b","35":"canadian contemporary r&b, canadian pop, pop, rap","36":"4","37":"124","38":"13","39":"20","40":"91","41":"0","42":"357336.0","43":"us","44":"4538745582809720084335652681802192354751872961846816542356290991840842800362708869311675467455586767281244340224","45":"pop","46":"pop","47":"explicit","48":"low"},{"1":"7BKLCZ1jbUBVqRi2FVlTVw","2":"Closer","3":"USQX91601347","4":"0","5":"86","6":"The Chainsmokers","7":"69GGBxA162lTqCwzJG5jLp","8":"The Chainsmokers feat. Halsey","9":"69GGBxA162lTqCwzJG5jLp,26VFTg2z8YR0cCuwLzESi2","10":"Closer","11":"0rSLgV8p5FzfnqlEk4GzxE","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2016-07-29","15":"day","16":"0.748","17":"0.524","18":"8","19":"-5.599","20":"1","21":"0.0338","22":"0.4140","23":"0.00000000","24":"0.111","25":"0.661","26":"95.010","27":"244960","28":"4","29":"spotify:track:7BKLCZ1jbUBVqRi2FVlTVw","30":"https://api.spotify.com/v1/audio-analysis/7BKLCZ1jbUBVqRi2FVlTVw","31":"11565104","32":"artist","33":"90","34":"dance pop","35":"dance pop, electropop, pop, tropical house","36":"4","37":"96","38":"2","39":"59","40":"35","41":"0","42":"323081.4","43":"us","44":"87296125002616694828879835742568772595201488756664067891719260959953504690764846096364552367775131489311653888","45":"pop","46":"pop","47":"not explicit","48":"high"},{"1":"4pdPtRcBmOSQDlJ3Fk945m","2":"Let Me Love You","3":"QMZSY1600015","4":"0","5":"27","6":"DJ Snake","7":"540vIaP2JwjQb9dm3aArA4","8":"DJ Snake feat. Justin Bieber","9":"540vIaP2JwjQb9dm3aArA4,1uNFoZAHBGtllmzznpCI3s","10":"Encore","11":"55bbXORm6ZrVq52zfZnxBf","12":"NA","13":"0","14":"2016-08-05","15":"day","16":"0.476","17":"0.718","18":"8","19":"-5.309","20":"1","21":"0.0576","22":"0.0784","23":"0.00000000","24":"0.122","25":"0.142","26":"199.864","27":"205947","28":"4","29":"spotify:track:4pdPtRcBmOSQDlJ3Fk945m","30":"https://api.spotify.com/v1/audio-analysis/4pdPtRcBmOSQDlJ3Fk945m","31":"4345960","32":"artist","33":"86","34":"dance pop","35":"dance pop, edm, electronic trap, pop, tropical house","36":"5","37":"85","38":"2","39":"38","40":"45","41":"0","42":"264546.4","43":"us","44":"4052673829394860012092441543505898027168278466357604061531255984953722983872577825913849720641449881585582080","45":"pop","46":"pop","47":"not explicit","48":"low"},{"1":"5knuzwU65gJK7IF5yJsuaW","2":"Rockabye (feat. Sean Paul & Anne-Marie)","3":"GBAHS1600363","4":"0","5":"81","6":"Clean Bandit","7":"6MDME20pz9RveH9rEXvrOM","8":"Clean Bandit feat. Sean Paul feat. Anne-Marie","9":"6MDME20pz9RveH9rEXvrOM,3Isy6kedDrgPYoTS1dazA9,1zNqDE7qDGCsyzJwohVaoX","10":"Rockabye (feat. Sean Paul & Anne-Marie)","11":"3meZFplbMmji648oWUNEfQ","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"78","14":"2016-10-21","15":"day","16":"0.720","17":"0.763","18":"9","19":"-4.068","20":"0","21":"0.0523","22":"0.4060","23":"0.00000000","24":"0.180","25":"0.742","26":"101.965","27":"251088","28":"4","29":"spotify:track:5knuzwU65gJK7IF5yJsuaW","30":"https://api.spotify.com/v1/audio-analysis/5knuzwU65gJK7IF5yJsuaW","31":"2504254","32":"artist","33":"84","34":"dance pop","35":"dance pop, edm, pop, tropical house, uk funky","36":"5","37":"97","38":"2","39":"73","40":"22","41":"0","42":"299399.5","43":"us","44":"63076779883569398413334987328546550614768141860947245086927001088783215597781844192705652165114862194747506688","45":"pop","46":"pop","47":"not explicit","48":"high"},{"1":"1xznGGDReH1oQq0xzbwXa3","2":"One Dance","3":"USCM51600028","4":"0","5":"25","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake feat. WizKid feat. Kyla","9":"3TVXtAsR1Inumwj472S9r4,3tVQdUvClmAT7URs9V3rsp,77DAFfvm3O9zT5dIoG0eIO","10":"Views","11":"3hARKC8cinq3mZLLAEaBh9","12":"NA","13":"0","14":"2016-05-06","15":"day","16":"0.791","17":"0.619","18":"1","19":"-5.886","20":"1","21":"0.0532","22":"0.0078","23":"0.00420000","24":"0.351","25":"0.371","26":"103.989","27":"173987","28":"4","29":"spotify:track:1xznGGDReH1oQq0xzbwXa3","30":"https://api.spotify.com/v1/audio-analysis/1xznGGDReH1oQq0xzbwXa3","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"265877.0","43":"us","44":"4668617894331640150713528913482931563888378169191399287770456451298974376421383853327796314422734196333084672","45":"pop","46":"pop","47":"not explicit","48":"low"},{"1":"343YBumqHu19cGoGARUTsd","2":"Fake Love","3":"USCM51700084","4":"1","5":"76","6":"Drake","7":"3TVXtAsR1Inumwj472S9r4","8":"Drake","9":"3TVXtAsR1Inumwj472S9r4","10":"More Life","11":"1lXY618HWkwYKJWBRYR4MK","12":"AD, AE, AR, AT, AU, BE, BG, BH, BO, BR, CA, CH, CL, CO, CR, CY, CZ, DE, DK, DO, DZ, EC, EE, EG, ES, FI, FR, GB, GR, GT, HK, HN, HU, ID, IE, IL, IN, IS, IT, JO, JP, KW, LB, LI, LT, LU, LV, MA, MC, MT, MX, MY, NI, NL, NO, NZ, OM, PA, PE, PH, PL, PS, PT, PY, QA, RO, SA, SE, SG, SK, SV, TH, TN, TR, TW, US, UY, VN, ZA","13":"79","14":"2017-03-18","15":"day","16":"0.927","17":"0.488","18":"9","19":"-9.433","20":"0","21":"0.4200","22":"0.1080","23":"0.00000000","24":"0.196","25":"0.605","26":"133.987","27":"210937","28":"4","29":"spotify:track:343YBumqHu19cGoGARUTsd","30":"https://api.spotify.com/v1/audio-analysis/343YBumqHu19cGoGARUTsd","31":"35200192","32":"artist","33":"98","34":"canadian hip hop","35":"canadian hip hop, canadian pop, hip hop, pop rap, rap","36":"5","37":"403","38":"27","39":"37","40":"339","41":"0","42":"425740.1","43":"us","44":"34419285169424099063603169706763167298974920345850885001633591652364254906722960776146634654951625345242828374016","45":"pop","46":"pop","47":"explicit","48":"high"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now we can create the histogram using <code>geom_histogram()</code>. The argument <code>binwidth</code> specifies the range that each bar spans, <code>col = "black"</code> specifies the border to be black and <code>fill = "darkblue"</code> sets the inner color of the bars to dark blue. For brevity, we have now also started naming the x and y axis with the single function <code>labs()</code>, instead of using the two distinct functions <code>xlab()</code> and <code>ylab()</code>.</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, </a>
-<a class="sourceLine" id="cb215-2" title="2">    <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of streams&quot;</span>, </a>
-<a class="sourceLine" id="cb215-3" title="3">    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
-<img src="_main_files/figure-html/unnamed-chunk-140-1.png" alt="Histogram" width="672" />
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">3000</span>, </a>
+<a class="sourceLine" id="cb217-2" title="2">    <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of streams&quot;</span>, </a>
+<a class="sourceLine" id="cb217-3" title="3">    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-142"></span>
+<img src="_main_files/figure-html/unnamed-chunk-142-1.png" alt="Histogram" width="672" />
 <p class="caption">
 Figure 3.13: Histogram
 </p>
@@ -913,11 +819,11 @@ Figure 3.13: Histogram
 <div id="boxplot" class="section level4">
 <h4><span class="header-section-number">3.2.2.2</span> Boxplot</h4>
 <p>Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom <code>geom_boxplot()</code>. In our case we want to show the difference in distribution between the two stores in our sample, which is why the <code>aes()</code> function contains both an x and a y variable.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb216-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb216-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-141"></span>
-<img src="_main_files/figure-html/unnamed-chunk-141-1.png" alt="Boxplot by group" width="672" />
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb218-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb218-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-143"></span>
+<img src="_main_files/figure-html/unnamed-chunk-143-1.png" alt="Boxplot by group" width="672" />
 <p class="caption">
 Figure 3.14: Boxplot by group
 </p>
@@ -928,21 +834,21 @@ Figure 3.14: Boxplot by group
 <p class="caption">Information contained in a Boxplot</p>
 </div>
 <p>You may also augment the boxplot with the data points using <code>geom_jitter()</code>:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb217-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, </a>
-<a class="sourceLine" id="cb217-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb217-4" title="4"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-142"></span>
-<img src="_main_files/figure-html/unnamed-chunk-142-1.png" alt="Boxplot with augmented data points" width="672" />
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb219-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, </a>
+<a class="sourceLine" id="cb219-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb219-4" title="4"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-144"></span>
+<img src="_main_files/figure-html/unnamed-chunk-144-1.png" alt="Boxplot with augmented data points" width="672" />
 <p class="caption">
 Figure 3.15: Boxplot with augmented data points
 </p>
 </div>
 <p>In case you would like to create the boxplot on the total data (i.e., not by group), just leave the <code>x =</code> argument within the <code>aes()</code> function empty:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb218-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-143"></span>
-<img src="_main_files/figure-html/unnamed-chunk-143-1.png" alt="Single Boxplot" width="672" />
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb220-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
+<img src="_main_files/figure-html/unnamed-chunk-145-1.png" alt="Single Boxplot" width="672" />
 <p class="caption">
 Figure 3.16: Single Boxplot
 </p>
@@ -951,14 +857,14 @@ Figure 3.16: Single Boxplot
 <div id="plot-of-means" class="section level4">
 <h4><span class="header-section-number">3.2.2.3</span> Plot of means</h4>
 <p>Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot’s layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a <code>geom_pointrange()</code> layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in <code>geom_bar()</code>, namely <code>stat =</code>, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. <code>geom_bar()</code> typically uses the <code>count</code> stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling <code>geom_bar()</code> explicitly that we want to use a different stat we can override its behavior, forcing it to create a bar plot of the means.</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(explicit_cat, duration_ms)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb219-2" title="2"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
-<a class="sourceLine" id="cb219-3" title="3">        <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, </a>
-<a class="sourceLine" id="cb219-4" title="4">    <span class="dt">fun.ymin =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">sd</span>(x), <span class="dt">fun.ymax =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb219-5" title="5"><span class="st">        </span><span class="kw">sd</span>(x), <span class="dt">fun.y =</span> mean, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, </a>
-<a class="sourceLine" id="cb219-6" title="6">    <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-144"></span>
-<img src="_main_files/figure-html/unnamed-chunk-144-1.png" alt="Plot of means" width="672" />
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(explicit_cat, duration_ms)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb221-2" title="2"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
+<a class="sourceLine" id="cb221-3" title="3">        <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, </a>
+<a class="sourceLine" id="cb221-4" title="4">    <span class="dt">fun.ymin =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">sd</span>(x), <span class="dt">fun.ymax =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb221-5" title="5"><span class="st">        </span><span class="kw">sd</span>(x), <span class="dt">fun.y =</span> mean, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, </a>
+<a class="sourceLine" id="cb221-6" title="6">    <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-146"></span>
+<img src="_main_files/figure-html/unnamed-chunk-146-1.png" alt="Plot of means" width="672" />
 <p class="caption">
 Figure 3.17: Plot of means
 </p>
@@ -967,12 +873,12 @@ Figure 3.17: Plot of means
 <div id="scatter-plot" class="section level4">
 <h4><span class="header-section-number">3.2.2.4</span> Scatter plot</h4>
 <p>The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The <code>geom_smooth()</code> function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument <code>method = "lm"</code>). The “fill” and “alpha” arguments solely affect appearance, in our case the color and the opacity of the confidence interval, respectively.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb220-2" title="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, </a>
-<a class="sourceLine" id="cb220-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
-<a class="sourceLine" id="cb220-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
-<img src="_main_files/figure-html/unnamed-chunk-145-1.png" alt="Scatter plot" width="672" />
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb222-2" title="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, </a>
+<a class="sourceLine" id="cb222-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
+<a class="sourceLine" id="cb222-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-147"></span>
+<img src="_main_files/figure-html/unnamed-chunk-147-1.png" alt="Scatter plot" width="672" />
 <p class="caption">
 Figure 3.18: Scatter plot
 </p>
@@ -981,13 +887,13 @@ Figure 3.18: Scatter plot
 <div id="grouped-scatter-plot" class="section level5">
 <h5><span class="header-section-number">3.2.2.4.1</span> Grouped scatter plot</h5>
 <p>It could be that customers from different store respond differently to advertising. We can visually capture such differences with a grouped scatter plot. By adding the argument <code>colour = store</code> to the aesthetic specification, ggplot automatically treats the two stores as distinct groups and plots accordingly.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams, </a>
-<a class="sourceLine" id="cb221-2" title="2">    <span class="dt">colour =</span> explicit_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </a>
-<a class="sourceLine" id="cb221-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
-<a class="sourceLine" id="cb221-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Explicit&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb221-5" title="5"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-146"></span>
-<img src="_main_files/figure-html/unnamed-chunk-146-1.png" alt="Grouped scatter plot" width="672" />
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams, </a>
+<a class="sourceLine" id="cb223-2" title="2">    <span class="dt">colour =</span> explicit_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </a>
+<a class="sourceLine" id="cb223-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
+<a class="sourceLine" id="cb223-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Explicit&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb223-5" title="5"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-148"></span>
+<img src="_main_files/figure-html/unnamed-chunk-148-1.png" alt="Grouped scatter plot" width="672" />
 <p class="caption">
 Figure 3.19: Grouped scatter plot
 </p>
@@ -997,13 +903,13 @@ Figure 3.19: Grouped scatter plot
 <div id="combination-of-scatter-plot-and-histogram" class="section level5">
 <h5><span class="header-section-number">3.2.2.4.2</span> Combination of scatter plot and histogram</h5>
 <p>Using the <code>ggExtra()</code> package, you may also augment the scatterplot with a histogram:</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">library</span>(ggExtra)</a>
-<a class="sourceLine" id="cb222-2" title="2">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb222-3" title="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
-<a class="sourceLine" id="cb222-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of strams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
-<a class="sourceLine" id="cb222-5" title="5">ggExtra<span class="op">::</span><span class="kw">ggMarginal</span>(p, <span class="dt">type =</span> <span class="st">&quot;histogram&quot;</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-147"></span>
-<img src="_main_files/figure-html/unnamed-chunk-147-1.png" alt="Scatter plot with histogram" width="672" />
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" title="1"><span class="kw">library</span>(ggExtra)</a>
+<a class="sourceLine" id="cb224-2" title="2">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb224-3" title="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
+<a class="sourceLine" id="cb224-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of strams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
+<a class="sourceLine" id="cb224-5" title="5">ggExtra<span class="op">::</span><span class="kw">ggMarginal</span>(p, <span class="dt">type =</span> <span class="st">&quot;histogram&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-149"></span>
+<img src="_main_files/figure-html/unnamed-chunk-149-1.png" alt="Scatter plot with histogram" width="672" />
 <p class="caption">
 Figure 3.20: Scatter plot with histogram
 </p>
@@ -1014,29 +920,29 @@ Figure 3.20: Scatter plot with histogram
 <div id="line-plot" class="section level4">
 <h4><span class="header-section-number">3.2.2.5</span> Line plot</h4>
 <p>Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did previously).</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1"><span class="kw">library</span>(jsonlite)</a>
-<a class="sourceLine" id="cb223-2" title="2"><span class="co"># specifies url</span></a>
-<a class="sourceLine" id="cb223-3" title="3">url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span></a>
-<a class="sourceLine" id="cb223-4" title="4">ctrydata_at &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url)  <span class="co">#parses the data </span></a>
-<a class="sourceLine" id="cb223-5" title="5"><span class="kw">head</span>(ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;value&quot;</span>, <span class="st">&quot;date&quot;</span>)])  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" title="1"><span class="kw">library</span>(jsonlite)</a>
+<a class="sourceLine" id="cb225-2" title="2"><span class="co"># specifies url</span></a>
+<a class="sourceLine" id="cb225-3" title="3">url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span></a>
+<a class="sourceLine" id="cb225-4" title="4">ctrydata_at &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url)  <span class="co">#parses the data </span></a>
+<a class="sourceLine" id="cb225-5" title="5"><span class="kw">head</span>(ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;value&quot;</span>, <span class="st">&quot;date&quot;</span>)])  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["value"],"name":[1],"type":["chr"],"align":["left"]},{"label":["date"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"8736668","2":"2016"},{"1":"8642699","2":"2015"},{"1":"8546356","2":"2014"},{"1":"8479823","2":"2013"},{"1":"8429991","2":"2012"},{"1":"8391643","2":"2011"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" title="1">ctrydata_at &lt;-<span class="st"> </span>ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;value&quot;</span>)]</a>
-<a class="sourceLine" id="cb224-2" title="2">ctrydata_at<span class="op">$</span>value &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(ctrydata_at<span class="op">$</span>value)</a>
-<a class="sourceLine" id="cb224-3" title="3">ctrydata_at<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw">as.integer</span>(ctrydata_at<span class="op">$</span>date)</a>
-<a class="sourceLine" id="cb224-4" title="4"><span class="kw">str</span>(ctrydata_at)</a></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" title="1">ctrydata_at &lt;-<span class="st"> </span>ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;value&quot;</span>)]</a>
+<a class="sourceLine" id="cb226-2" title="2">ctrydata_at<span class="op">$</span>value &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(ctrydata_at<span class="op">$</span>value)</a>
+<a class="sourceLine" id="cb226-3" title="3">ctrydata_at<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw">as.integer</span>(ctrydata_at<span class="op">$</span>date)</a>
+<a class="sourceLine" id="cb226-4" title="4"><span class="kw">str</span>(ctrydata_at)</a></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    57 obs. of  2 variables:
 ##  $ date : int  2016 2015 2014 2013 2012 2011 2010 2009 2008 2007 ...
 ##  $ value: num  8736668 8642699 8546356 8479823 8429991 ...</code></pre>
 <p>As you can see doing this is very straightforward. Given the correct <code>aes()</code> and geom specification ggplot constructs the correct plot for us.</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" title="1"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb226-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb226-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-149"></span>
-<img src="_main_files/figure-html/unnamed-chunk-149-1.png" alt="Line plot" width="672" />
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" title="1"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb228-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb228-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-151"></span>
+<img src="_main_files/figure-html/unnamed-chunk-151-1.png" alt="Line plot" width="672" />
 <p class="caption">
 Figure 3.21: Line plot
 </p>
@@ -1046,40 +952,40 @@ Figure 3.21: Line plot
 <div id="saving-plots" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Saving plots</h3>
 <p>To save the last displayed plot, simply use the function <code>ggsave()</code>, and it will save the plot to your working directory. Use the arguments <code>height</code>and <code>width</code> to specify the size of the file. You may also choose the file format by adjusting the ending of the file name. E.g., <code>file_name.jpg</code> will create a file in JPG-format, whereas <code>file_name.png</code> saves the file in PNG-format, etc..</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" title="1"><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb227-2" title="2"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb227-3" title="3"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
-<a class="sourceLine" id="cb227-4" title="4"></a>
-<a class="sourceLine" id="cb227-5" title="5"><span class="kw">ggsave</span>(<span class="st">&quot;popularity_genre_regression.jpg&quot;</span>, <span class="dt">height =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb227-6" title="6">    <span class="dt">width =</span> <span class="fl">7.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" title="1"><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb229-2" title="2"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb229-3" title="3"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
+<a class="sourceLine" id="cb229-4" title="4"></a>
+<a class="sourceLine" id="cb229-5" title="5"><span class="kw">ggsave</span>(<span class="st">&quot;popularity_genre_regression.jpg&quot;</span>, <span class="dt">height =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb229-6" title="6">    <span class="dt">width =</span> <span class="fl">7.5</span>)</a></code></pre></div>
 </div>
 <div id="additional-options" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> Additional options</h3>
 <p>Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of Shazam users from Germany. The data contains the latitude and longitude information where a music track was “shazamed”.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" title="1"><span class="kw">library</span>(ggmap)</a>
-<a class="sourceLine" id="cb228-2" title="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb228-3" title="3">geo_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat&quot;</span>, </a>
-<a class="sourceLine" id="cb228-4" title="4">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb228-5" title="5"><span class="kw">head</span>(geo_data)</a></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1"><span class="kw">library</span>(ggmap)</a>
+<a class="sourceLine" id="cb230-2" title="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb230-3" title="3">geo_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat&quot;</span>, </a>
+<a class="sourceLine" id="cb230-4" title="4">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb230-5" title="5"><span class="kw">head</span>(geo_data)</a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["lat"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["lon"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["latlon"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"50.7","2":"7.7","3":"50.7_7.7"},{"1":"51.0","2":"6.3","3":"51_6.3"},{"1":"52.2","2":"10.5","3":"52.2_10.5"},{"1":"50.9","2":"11.0","3":"50.9_11"},{"1":"49.9","2":"8.2","3":"49.9_8.2"},{"1":"53.3","2":"13.4","3":"53.3_13.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>There is a package called “ggmap”, which is an augmentation for the ggplot packages. It lets you load maps from different web services (e.g., Google maps) and maps the user location within the coordination system of ggplot. With this information, you can create interesting plots like heat maps. We won’t go into detail here but you may go through the following code on your own if you are interested. However, please note that you need to register an API with Google in order to make use of this package.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" title="1"><span class="co"># register_google(key = &#39;your_api_key&#39;)</span></a>
-<a class="sourceLine" id="cb229-2" title="2"></a>
-<a class="sourceLine" id="cb229-3" title="3"><span class="co"># Download the base map</span></a>
-<a class="sourceLine" id="cb229-4" title="4">de_map_g_str &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="kw">c</span>(<span class="fl">10.018343</span>, <span class="fl">51.133481</span>), </a>
-<a class="sourceLine" id="cb229-5" title="5">    <span class="dt">zoom =</span> <span class="dv">6</span>, <span class="dt">scale =</span> <span class="dv">2</span>)  <span class="co"># results in below map (wohoo!)</span></a>
-<a class="sourceLine" id="cb229-6" title="6"></a>
-<a class="sourceLine" id="cb229-7" title="7"><span class="co"># Draw the heat map</span></a>
-<a class="sourceLine" id="cb229-8" title="8"><span class="kw">ggmap</span>(de_map_g_str, <span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density2d</span>(<span class="dt">data =</span> geo_data, </a>
-<a class="sourceLine" id="cb229-9" title="9">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">size =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_density2d</span>(<span class="dt">data =</span> geo_data, </a>
-<a class="sourceLine" id="cb229-10" title="10">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat, <span class="dt">fill =</span> ..level.., <span class="dt">alpha =</span> ..level..), </a>
-<a class="sourceLine" id="cb229-11" title="11">    <span class="dt">size =</span> <span class="fl">0.01</span>, <span class="dt">bins =</span> <span class="dv">16</span>, <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, </a>
-<a class="sourceLine" id="cb229-12" title="12">    <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb229-13" title="13">    <span class="dt">guide =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" title="1"><span class="co"># register_google(key = &#39;your_api_key&#39;)</span></a>
+<a class="sourceLine" id="cb231-2" title="2"></a>
+<a class="sourceLine" id="cb231-3" title="3"><span class="co"># Download the base map</span></a>
+<a class="sourceLine" id="cb231-4" title="4">de_map_g_str &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="kw">c</span>(<span class="fl">10.018343</span>, <span class="fl">51.133481</span>), </a>
+<a class="sourceLine" id="cb231-5" title="5">    <span class="dt">zoom =</span> <span class="dv">6</span>, <span class="dt">scale =</span> <span class="dv">2</span>)  <span class="co"># results in below map (wohoo!)</span></a>
+<a class="sourceLine" id="cb231-6" title="6"></a>
+<a class="sourceLine" id="cb231-7" title="7"><span class="co"># Draw the heat map</span></a>
+<a class="sourceLine" id="cb231-8" title="8"><span class="kw">ggmap</span>(de_map_g_str, <span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density2d</span>(<span class="dt">data =</span> geo_data, </a>
+<a class="sourceLine" id="cb231-9" title="9">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">size =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_density2d</span>(<span class="dt">data =</span> geo_data, </a>
+<a class="sourceLine" id="cb231-10" title="10">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat, <span class="dt">fill =</span> ..level.., <span class="dt">alpha =</span> ..level..), </a>
+<a class="sourceLine" id="cb231-11" title="11">    <span class="dt">size =</span> <span class="fl">0.01</span>, <span class="dt">bins =</span> <span class="dv">16</span>, <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, </a>
+<a class="sourceLine" id="cb231-12" title="12">    <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb231-13" title="13">    <span class="dt">guide =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/ggmaps-1.png" width="672" /></p>
 
 </div>
@@ -1199,7 +1105,7 @@ summary(cars)
 
 plot(dist~speed, cars)
 ```</code></pre>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" title="1"><span class="kw">summary</span>(cars)</a></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" title="1"><span class="kw">summary</span>(cars)</a></code></pre></div>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
@@ -1207,7 +1113,7 @@ plot(dist~speed, cars)
 ##  Mean   :15.4   Mean   : 42.98  
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" title="1"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</a></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" title="1"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</a></code></pre></div>
 <p><img src="_main_files/figure-html/cars2-1.png" width="672" /></p>
 <p>A good overview of all available global/chunk options can be found <a href="https://yihui.name/knitr/options/#chunk_options">here</a>.</p>
 </div>
