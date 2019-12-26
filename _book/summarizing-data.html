@@ -542,39 +542,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb194-3" title="3"><span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(adv_spending_std) <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb194-4" title="4">psych<span class="op">::</span><span class="kw">describe</span>(estimation_sample[, <span class="kw">c</span>(<span class="st">&quot;trackPopularity&quot;</span>, </a>
 <a class="sourceLine" id="cb194-5" title="5">    <span class="st">&quot;adv_spending&quot;</span>)])</a></code></pre></div>
-<pre><code>##                 vars    n
-## trackPopularity    1 4038
-## adv_spending       2 4038
-##                                                                                                                                            mean
-## trackPopularity                                                                                                                            56.1
-## adv_spending    14299852780120468657410877578753089676587084887750699460926288114711048967760614101945583734512264829226601349227020116033536.0
-##                                                                                                                                                sd
-## trackPopularity                                                                                                                             25.75
-## adv_spending    514033938921804019020429914640731768428064760933988323242505729121815072331089459342804092286099409142425572854198998732374016.00
-##                                                                                                                        median
-## trackPopularity                                                                                                            65
-## adv_spending    7953461129902340059156517311538987796994400935131065747107576361659234914000790092783078003022891724281217024
-##                                                                                                                              trimmed
-## trackPopularity                                                                                                                59.04
-## adv_spending    14094605684355323875805003735879490584491469607097240346557008438931548607721069633165388848472810487877239570432.00
-##                                                                                                                               mad
-## trackPopularity                                                                                                             16.31
-## adv_spending    11790995100996427476047494673272810230694477221730052628311320123674956042955025475269224785384581086989778944.00
-##                                                                                                                     min
-## trackPopularity                                                                                                       0
-## adv_spending    1646831944677300010790810122733076572518422928902955275820834972437692264728987411734290123667149946880
-##                                                                                                                                              max
-## trackPopularity                                                                                                                              100
-## adv_spending    23007897832533398424219963588429175658686192709157713192410586014575505712381615201439302030465371774372780167264980048950591488
-##                                                                                                                                            range
-## trackPopularity                                                                                                                              100
-## adv_spending    23007897832533398424219963588429175658686192709157713192410586014575505712381615201439302030465371774372780167264980048950591488
-##                  skew kurtosis
-## trackPopularity -0.98    -0.27
-## adv_spending      NaN      NaN
-##                                                                                                                                              se
-## trackPopularity                                                                                                                            0.41
-## adv_spending    8089257063071855260006040258716645323204110342931098549534787199311347707475638991808748465408187718329609987958599659290624.00</code></pre>
+<pre><code>##                 vars    n             mean                 sd median trimmed
+## trackPopularity    1 4038             56.1              25.75  65.00   59.04
+## adv_spending       2 4038 14299852780120.5 514033938921804.06   0.01   14.09
+##                   mad min               max             range  skew kurtosis
+## trackPopularity 16.31   0               100               100 -0.98    -0.27
+## adv_spending     0.01   0 23007897832533400 23007897832533400 41.45  1773.85
+##                               se
+## trackPopularity             0.41
+## adv_spending    8089257063071.86</code></pre>
 
 </div>
 </div>
@@ -815,15 +791,31 @@ Figure 3.12: Covariation between categorical data (2)
 Figure 3.13: Histogram
 </p>
 </div>
+<p>Alternatively we could use ggstatplot, which has a smiliar syntax:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" title="1"><span class="kw">gghistostats</span>(</a>
+<a class="sourceLine" id="cb218-2" title="2">  <span class="dt">data =</span> music_data, <span class="co"># dataframe from which variable is to be taken</span></a>
+<a class="sourceLine" id="cb218-3" title="3">  <span class="dt">x =</span> mstreams, <span class="co"># numeric variable whose distribution is of interest</span></a>
+<a class="sourceLine" id="cb218-4" title="4">  <span class="dt">title =</span> <span class="st">&quot;Distribution of the number of streams&quot;</span>, <span class="co"># title for the plot</span></a>
+<a class="sourceLine" id="cb218-5" title="5">  <span class="dt">caption =</span> <span class="kw">substitute</span>(<span class="kw">paste</span>(<span class="kw">italic</span>(<span class="st">&quot;Source:&quot;</span>), <span class="st">&quot;Spotify&quot;</span>)),</a>
+<a class="sourceLine" id="cb218-6" title="6">  <span class="dt">centrality.para =</span> <span class="st">&quot;mean&quot;</span>, <span class="co"># which measure of central tendency is to be plotted</span></a>
+<a class="sourceLine" id="cb218-7" title="7">  <span class="dt">centrality.color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="co"># decides color for central tendency line</span></a>
+<a class="sourceLine" id="cb218-8" title="8">  <span class="dt">binwidth =</span> <span class="dv">3000</span>, <span class="co"># binwidth value </span></a>
+<a class="sourceLine" id="cb218-9" title="9">  <span class="dt">messages =</span> <span class="ot">FALSE</span>, <span class="co"># turn off the messages</span></a>
+<a class="sourceLine" id="cb218-10" title="10">  <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>(), <span class="co"># choosing a different theme</span></a>
+<a class="sourceLine" id="cb218-11" title="11">  <span class="dt">ggstatsplot.layer =</span> <span class="ot">FALSE</span>, <span class="co"># turn off ggstatsplot theme layer</span></a>
+<a class="sourceLine" id="cb218-12" title="12">  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb218-13" title="13">  <span class="dt">results.subtitle =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb218-14" title="14">)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-143-1.png" width="672" /></p>
 </div>
 <div id="boxplot" class="section level4">
 <h4><span class="header-section-number">3.2.2.2</span> Boxplot</h4>
 <p>Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom <code>geom_boxplot()</code>. In our case we want to show the difference in distribution between the two stores in our sample, which is why the <code>aes()</code> function contains both an x and a y variable.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb218-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb218-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-143"></span>
-<img src="_main_files/figure-html/unnamed-chunk-143-1.png" alt="Boxplot by group" width="672" />
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb219-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb219-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-144"></span>
+<img src="_main_files/figure-html/unnamed-chunk-144-1.png" alt="Boxplot by group" width="672" />
 <p class="caption">
 Figure 3.14: Boxplot by group
 </p>
@@ -834,37 +826,49 @@ Figure 3.14: Boxplot by group
 <p class="caption">Information contained in a Boxplot</p>
 </div>
 <p>You may also augment the boxplot with the data points using <code>geom_jitter()</code>:</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb219-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, </a>
-<a class="sourceLine" id="cb219-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb219-4" title="4"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-144"></span>
-<img src="_main_files/figure-html/unnamed-chunk-144-1.png" alt="Boxplot with augmented data points" width="672" />
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> explicit_cat, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb220-2" title="2"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, </a>
+<a class="sourceLine" id="cb220-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb220-4" title="4"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
+<img src="_main_files/figure-html/unnamed-chunk-145-1.png" alt="Boxplot with augmented data points" width="672" />
 <p class="caption">
 Figure 3.15: Boxplot with augmented data points
 </p>
 </div>
 <p>In case you would like to create the boxplot on the total data (i.e., not by group), just leave the <code>x =</code> argument within the <code>aes()</code> function empty:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb220-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
-<img src="_main_files/figure-html/unnamed-chunk-145-1.png" alt="Single Boxplot" width="672" />
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> mstreams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb221-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Total&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-146"></span>
+<img src="_main_files/figure-html/unnamed-chunk-146-1.png" alt="Single Boxplot" width="672" />
 <p class="caption">
 Figure 3.16: Single Boxplot
 </p>
 </div>
+<p>Alternatively we could use ggstatplot, which has a smiliar syntax:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">ggbetweenstats</span>(</a>
+<a class="sourceLine" id="cb222-2" title="2">    <span class="dt">data =</span> music_data,</a>
+<a class="sourceLine" id="cb222-3" title="3">    <span class="dt">title =</span> <span class="st">&quot;Number of streams by explicitness&quot;</span>, <span class="co"># title for the plot</span></a>
+<a class="sourceLine" id="cb222-4" title="4">    <span class="dt">plot.type =</span> <span class="st">&quot;box&quot;</span>,</a>
+<a class="sourceLine" id="cb222-5" title="5">    <span class="dt">x =</span> explicit_cat, <span class="co"># 2 groups</span></a>
+<a class="sourceLine" id="cb222-6" title="6">    <span class="dt">y =</span> mstreams,</a>
+<a class="sourceLine" id="cb222-7" title="7">    <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="co"># default</span></a>
+<a class="sourceLine" id="cb222-8" title="8">    <span class="dt">messages =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb222-9" title="9">    <span class="dt">bf.message =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb222-10" title="10">  )</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
 </div>
 <div id="plot-of-means" class="section level4">
 <h4><span class="header-section-number">3.2.2.3</span> Plot of means</h4>
 <p>Another quick way to get an overview of the difference between two groups is to plot their respective means with confidence intervals. Two things about this plot are new. First, there are now two geoms included in the same plot. This is one of the big advantages of ggplot’s layered approach to graphs, the fact that new elements can be drawn by simply adding a new line with a new geom function. In this case we want to add confidence bounds to our plot, which we achieve by adding a <code>geom_pointrange()</code> layer. Recall that if the interval is small, the sample must be very close to the population and when the interval is wide, the sample mean is likely very different from the population mean and therefore a bad representation of the population. Second, we are using an additional argument in <code>geom_bar()</code>, namely <code>stat =</code>, which is short for statistical transformation. Every geom uses such a transformation in the background to adapt the data to be able to create the desired plot. <code>geom_bar()</code> typically uses the <code>count</code> stat, which would create a similar plot to the one we saw at the very beginning, counting how often a certain value of a variable appears. By telling <code>geom_bar()</code> explicitly that we want to use a different stat we can override its behavior, forcing it to create a bar plot of the means.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(explicit_cat, duration_ms)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb221-2" title="2"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
-<a class="sourceLine" id="cb221-3" title="3">        <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, </a>
-<a class="sourceLine" id="cb221-4" title="4">    <span class="dt">fun.ymin =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">sd</span>(x), <span class="dt">fun.ymax =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb221-5" title="5"><span class="st">        </span><span class="kw">sd</span>(x), <span class="dt">fun.y =</span> mean, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, </a>
-<a class="sourceLine" id="cb221-6" title="6">    <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-146"></span>
-<img src="_main_files/figure-html/unnamed-chunk-146-1.png" alt="Plot of means" width="672" />
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(explicit_cat, duration_ms)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb223-2" title="2"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, </a>
+<a class="sourceLine" id="cb223-3" title="3">        <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">geom_pointrange</span>(<span class="dt">stat =</span> <span class="st">&quot;summary&quot;</span>, </a>
+<a class="sourceLine" id="cb223-4" title="4">    <span class="dt">fun.ymin =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="kw">sd</span>(x), <span class="dt">fun.ymax =</span> <span class="cf">function</span>(x) <span class="kw">mean</span>(x) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb223-5" title="5"><span class="st">        </span><span class="kw">sd</span>(x), <span class="dt">fun.y =</span> mean, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Explicit&quot;</span>, </a>
+<a class="sourceLine" id="cb223-6" title="6">    <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-148"></span>
+<img src="_main_files/figure-html/unnamed-chunk-148-1.png" alt="Plot of means" width="672" />
 <p class="caption">
 Figure 3.17: Plot of means
 </p>
@@ -873,12 +877,12 @@ Figure 3.17: Plot of means
 <div id="scatter-plot" class="section level4">
 <h4><span class="header-section-number">3.2.2.4</span> Scatter plot</h4>
 <p>The most common way to show the relationship between two continuous variables is a scatterplot. The following code creates a scatterplot with some additional components. The <code>geom_smooth()</code> function creates a smoothed line from the data provided. In this particular example we tell the function to draw the best possible straight line (i.e., minimizing the distance between the line and the points) through the data (via the argument <code>method = "lm"</code>). The “fill” and “alpha” arguments solely affect appearance, in our case the color and the opacity of the confidence interval, respectively.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb222-2" title="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, </a>
-<a class="sourceLine" id="cb222-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
-<a class="sourceLine" id="cb222-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-147"></span>
-<img src="_main_files/figure-html/unnamed-chunk-147-1.png" alt="Scatter plot" width="672" />
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb224-2" title="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, </a>
+<a class="sourceLine" id="cb224-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
+<a class="sourceLine" id="cb224-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-149"></span>
+<img src="_main_files/figure-html/unnamed-chunk-149-1.png" alt="Scatter plot" width="672" />
 <p class="caption">
 Figure 3.18: Scatter plot
 </p>
@@ -887,13 +891,13 @@ Figure 3.18: Scatter plot
 <div id="grouped-scatter-plot" class="section level5">
 <h5><span class="header-section-number">3.2.2.4.1</span> Grouped scatter plot</h5>
 <p>It could be that customers from different store respond differently to advertising. We can visually capture such differences with a grouped scatter plot. By adding the argument <code>colour = store</code> to the aesthetic specification, ggplot automatically treats the two stores as distinct groups and plots accordingly.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams, </a>
-<a class="sourceLine" id="cb223-2" title="2">    <span class="dt">colour =</span> explicit_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </a>
-<a class="sourceLine" id="cb223-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
-<a class="sourceLine" id="cb223-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Explicit&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb223-5" title="5"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-148"></span>
-<img src="_main_files/figure-html/unnamed-chunk-148-1.png" alt="Grouped scatter plot" width="672" />
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" title="1"><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams, </a>
+<a class="sourceLine" id="cb225-2" title="2">    <span class="dt">colour =</span> explicit_cat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </a>
+<a class="sourceLine" id="cb225-3" title="3">    <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
+<a class="sourceLine" id="cb225-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of streams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;Explicit&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb225-5" title="5"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-150"></span>
+<img src="_main_files/figure-html/unnamed-chunk-150-1.png" alt="Grouped scatter plot" width="672" />
 <p class="caption">
 Figure 3.19: Grouped scatter plot
 </p>
@@ -903,13 +907,13 @@ Figure 3.19: Grouped scatter plot
 <div id="combination-of-scatter-plot-and-histogram" class="section level5">
 <h5><span class="header-section-number">3.2.2.4.2</span> Combination of scatter plot and histogram</h5>
 <p>Using the <code>ggExtra()</code> package, you may also augment the scatterplot with a histogram:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" title="1"><span class="kw">library</span>(ggExtra)</a>
-<a class="sourceLine" id="cb224-2" title="2">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb224-3" title="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
-<a class="sourceLine" id="cb224-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of strams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
-<a class="sourceLine" id="cb224-5" title="5">ggExtra<span class="op">::</span><span class="kw">ggMarginal</span>(p, <span class="dt">type =</span> <span class="st">&quot;histogram&quot;</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-149"></span>
-<img src="_main_files/figure-html/unnamed-chunk-149-1.png" alt="Scatter plot with histogram" width="672" />
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" title="1"><span class="kw">library</span>(ggExtra)</a>
+<a class="sourceLine" id="cb226-2" title="2">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="kw">log</span>(adv_spending), mstreams)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb226-3" title="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, </a>
+<a class="sourceLine" id="cb226-4" title="4">    <span class="dt">y =</span> <span class="st">&quot;Number of strams&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;store&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
+<a class="sourceLine" id="cb226-5" title="5">ggExtra<span class="op">::</span><span class="kw">ggMarginal</span>(p, <span class="dt">type =</span> <span class="st">&quot;histogram&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-151"></span>
+<img src="_main_files/figure-html/unnamed-chunk-151-1.png" alt="Scatter plot with histogram" width="672" />
 <p class="caption">
 Figure 3.20: Scatter plot with histogram
 </p>
@@ -920,29 +924,29 @@ Figure 3.20: Scatter plot with histogram
 <div id="line-plot" class="section level4">
 <h4><span class="header-section-number">3.2.2.5</span> Line plot</h4>
 <p>Another important type of plot is the line plot used if, for example, you have a variable that changes over time and you want to plot how it develops over time. To demonstrate this we first gather the population of Austria from the world bank API (as we did previously).</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" title="1"><span class="kw">library</span>(jsonlite)</a>
-<a class="sourceLine" id="cb225-2" title="2"><span class="co"># specifies url</span></a>
-<a class="sourceLine" id="cb225-3" title="3">url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span></a>
-<a class="sourceLine" id="cb225-4" title="4">ctrydata_at &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url)  <span class="co">#parses the data </span></a>
-<a class="sourceLine" id="cb225-5" title="5"><span class="kw">head</span>(ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;value&quot;</span>, <span class="st">&quot;date&quot;</span>)])  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" title="1"><span class="kw">library</span>(jsonlite)</a>
+<a class="sourceLine" id="cb227-2" title="2"><span class="co"># specifies url</span></a>
+<a class="sourceLine" id="cb227-3" title="3">url &lt;-<span class="st"> &quot;http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&amp;format=json&amp;per_page=100&quot;</span></a>
+<a class="sourceLine" id="cb227-4" title="4">ctrydata_at &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(url)  <span class="co">#parses the data </span></a>
+<a class="sourceLine" id="cb227-5" title="5"><span class="kw">head</span>(ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;value&quot;</span>, <span class="st">&quot;date&quot;</span>)])  <span class="co">#checks if we scraped the desired data</span></a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["value"],"name":[1],"type":["chr"],"align":["left"]},{"label":["date"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"8736668","2":"2016"},{"1":"8642699","2":"2015"},{"1":"8546356","2":"2014"},{"1":"8479823","2":"2013"},{"1":"8429991","2":"2012"},{"1":"8391643","2":"2011"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" title="1">ctrydata_at &lt;-<span class="st"> </span>ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;value&quot;</span>)]</a>
-<a class="sourceLine" id="cb226-2" title="2">ctrydata_at<span class="op">$</span>value &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(ctrydata_at<span class="op">$</span>value)</a>
-<a class="sourceLine" id="cb226-3" title="3">ctrydata_at<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw">as.integer</span>(ctrydata_at<span class="op">$</span>date)</a>
-<a class="sourceLine" id="cb226-4" title="4"><span class="kw">str</span>(ctrydata_at)</a></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" title="1">ctrydata_at &lt;-<span class="st"> </span>ctrydata_at[[<span class="dv">2</span>]][, <span class="kw">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;value&quot;</span>)]</a>
+<a class="sourceLine" id="cb228-2" title="2">ctrydata_at<span class="op">$</span>value &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(ctrydata_at<span class="op">$</span>value)</a>
+<a class="sourceLine" id="cb228-3" title="3">ctrydata_at<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw">as.integer</span>(ctrydata_at<span class="op">$</span>date)</a>
+<a class="sourceLine" id="cb228-4" title="4"><span class="kw">str</span>(ctrydata_at)</a></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    57 obs. of  2 variables:
 ##  $ date : int  2016 2015 2014 2013 2012 2011 2010 2009 2008 2007 ...
 ##  $ value: num  8736668 8642699 8546356 8479823 8429991 ...</code></pre>
 <p>As you can see doing this is very straightforward. Given the correct <code>aes()</code> and geom specification ggplot constructs the correct plot for us.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" title="1"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-151"></span>
-<img src="_main_files/figure-html/unnamed-chunk-151-1.png" alt="Line plot" width="672" />
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1"><span class="kw">ggplot</span>(ctrydata_at, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb230-2" title="2"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Population of Austria&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb230-3" title="3"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-153"></span>
+<img src="_main_files/figure-html/unnamed-chunk-153-1.png" alt="Line plot" width="672" />
 <p class="caption">
 Figure 3.21: Line plot
 </p>
@@ -952,40 +956,40 @@ Figure 3.21: Line plot
 <div id="saving-plots" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Saving plots</h3>
 <p>To save the last displayed plot, simply use the function <code>ggsave()</code>, and it will save the plot to your working directory. Use the arguments <code>height</code>and <code>width</code> to specify the size of the file. You may also choose the file format by adjusting the ending of the file name. E.g., <code>file_name.jpg</code> will create a file in JPG-format, whereas <code>file_name.png</code> saves the file in PNG-format, etc..</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" title="1"><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb229-2" title="2"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb229-3" title="3"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
-<a class="sourceLine" id="cb229-4" title="4"></a>
-<a class="sourceLine" id="cb229-5" title="5"><span class="kw">ggsave</span>(<span class="st">&quot;popularity_genre_regression.jpg&quot;</span>, <span class="dt">height =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb229-6" title="6">    <span class="dt">width =</span> <span class="fl">7.5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" title="1"><span class="kw">ggplot</span>(table_plot_rel, <span class="kw">aes</span>(<span class="dt">x =</span> genre_cat, <span class="dt">y =</span> popularity_factor)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb231-2" title="2"><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Freq)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Popularity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb231-3" title="3"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a>
+<a class="sourceLine" id="cb231-4" title="4"></a>
+<a class="sourceLine" id="cb231-5" title="5"><span class="kw">ggsave</span>(<span class="st">&quot;popularity_genre_regression.jpg&quot;</span>, <span class="dt">height =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb231-6" title="6">    <span class="dt">width =</span> <span class="fl">7.5</span>)</a></code></pre></div>
 </div>
 <div id="additional-options" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> Additional options</h3>
 <p>Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of Shazam users from Germany. The data contains the latitude and longitude information where a music track was “shazamed”.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" title="1"><span class="kw">library</span>(ggmap)</a>
-<a class="sourceLine" id="cb230-2" title="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb230-3" title="3">geo_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat&quot;</span>, </a>
-<a class="sourceLine" id="cb230-4" title="4">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb230-5" title="5"><span class="kw">head</span>(geo_data)</a></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" title="1"><span class="kw">library</span>(ggmap)</a>
+<a class="sourceLine" id="cb232-2" title="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb232-3" title="3">geo_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat&quot;</span>, </a>
+<a class="sourceLine" id="cb232-4" title="4">    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb232-5" title="5"><span class="kw">head</span>(geo_data)</a></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["lat"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["lon"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["latlon"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"50.7","2":"7.7","3":"50.7_7.7"},{"1":"51.0","2":"6.3","3":"51_6.3"},{"1":"52.2","2":"10.5","3":"52.2_10.5"},{"1":"50.9","2":"11.0","3":"50.9_11"},{"1":"49.9","2":"8.2","3":"49.9_8.2"},{"1":"53.3","2":"13.4","3":"53.3_13.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>There is a package called “ggmap”, which is an augmentation for the ggplot packages. It lets you load maps from different web services (e.g., Google maps) and maps the user location within the coordination system of ggplot. With this information, you can create interesting plots like heat maps. We won’t go into detail here but you may go through the following code on your own if you are interested. However, please note that you need to register an API with Google in order to make use of this package.</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" title="1"><span class="co"># register_google(key = &#39;your_api_key&#39;)</span></a>
-<a class="sourceLine" id="cb231-2" title="2"></a>
-<a class="sourceLine" id="cb231-3" title="3"><span class="co"># Download the base map</span></a>
-<a class="sourceLine" id="cb231-4" title="4">de_map_g_str &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="kw">c</span>(<span class="fl">10.018343</span>, <span class="fl">51.133481</span>), </a>
-<a class="sourceLine" id="cb231-5" title="5">    <span class="dt">zoom =</span> <span class="dv">6</span>, <span class="dt">scale =</span> <span class="dv">2</span>)  <span class="co"># results in below map (wohoo!)</span></a>
-<a class="sourceLine" id="cb231-6" title="6"></a>
-<a class="sourceLine" id="cb231-7" title="7"><span class="co"># Draw the heat map</span></a>
-<a class="sourceLine" id="cb231-8" title="8"><span class="kw">ggmap</span>(de_map_g_str, <span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density2d</span>(<span class="dt">data =</span> geo_data, </a>
-<a class="sourceLine" id="cb231-9" title="9">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">size =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_density2d</span>(<span class="dt">data =</span> geo_data, </a>
-<a class="sourceLine" id="cb231-10" title="10">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat, <span class="dt">fill =</span> ..level.., <span class="dt">alpha =</span> ..level..), </a>
-<a class="sourceLine" id="cb231-11" title="11">    <span class="dt">size =</span> <span class="fl">0.01</span>, <span class="dt">bins =</span> <span class="dv">16</span>, <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, </a>
-<a class="sourceLine" id="cb231-12" title="12">    <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>), </a>
-<a class="sourceLine" id="cb231-13" title="13">    <span class="dt">guide =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" title="1"><span class="co"># register_google(key = &#39;your_api_key&#39;)</span></a>
+<a class="sourceLine" id="cb233-2" title="2"></a>
+<a class="sourceLine" id="cb233-3" title="3"><span class="co"># Download the base map</span></a>
+<a class="sourceLine" id="cb233-4" title="4">de_map_g_str &lt;-<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location =</span> <span class="kw">c</span>(<span class="fl">10.018343</span>, <span class="fl">51.133481</span>), </a>
+<a class="sourceLine" id="cb233-5" title="5">    <span class="dt">zoom =</span> <span class="dv">6</span>, <span class="dt">scale =</span> <span class="dv">2</span>)  <span class="co"># results in below map (wohoo!)</span></a>
+<a class="sourceLine" id="cb233-6" title="6"></a>
+<a class="sourceLine" id="cb233-7" title="7"><span class="co"># Draw the heat map</span></a>
+<a class="sourceLine" id="cb233-8" title="8"><span class="kw">ggmap</span>(de_map_g_str, <span class="dt">extent =</span> <span class="st">&quot;device&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density2d</span>(<span class="dt">data =</span> geo_data, </a>
+<a class="sourceLine" id="cb233-9" title="9">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat), <span class="dt">size =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_density2d</span>(<span class="dt">data =</span> geo_data, </a>
+<a class="sourceLine" id="cb233-10" title="10">    <span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat, <span class="dt">fill =</span> ..level.., <span class="dt">alpha =</span> ..level..), </a>
+<a class="sourceLine" id="cb233-11" title="11">    <span class="dt">size =</span> <span class="fl">0.01</span>, <span class="dt">bins =</span> <span class="dv">16</span>, <span class="dt">geom =</span> <span class="st">&quot;polygon&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, </a>
+<a class="sourceLine" id="cb233-12" title="12">    <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_alpha</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>), </a>
+<a class="sourceLine" id="cb233-13" title="13">    <span class="dt">guide =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/ggmaps-1.png" width="672" /></p>
 
 </div>
@@ -1105,7 +1109,7 @@ summary(cars)
 
 plot(dist~speed, cars)
 ```</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" title="1"><span class="kw">summary</span>(cars)</a></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" title="1"><span class="kw">summary</span>(cars)</a></code></pre></div>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
@@ -1113,7 +1117,7 @@ plot(dist~speed, cars)
 ##  Mean   :15.4   Mean   : 42.98  
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" title="1"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</a></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb243-1" title="1"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</a></code></pre></div>
 <p><img src="_main_files/figure-html/cars2-1.png" width="672" /></p>
 <p>A good overview of all available global/chunk options can be found <a href="https://yihui.name/knitr/options/#chunk_options">here</a>.</p>
 </div>

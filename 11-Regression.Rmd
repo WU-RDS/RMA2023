@@ -77,20 +77,6 @@ ggplot(music_data) +
        y = 'Number of observations', 
        x = 'Energy') +
   theme_bw()
-
-#ggplot(music_data, aes(y = energy)) + 
-#  geom_point(size = 3, color = "deepskyblue4") + 
-#  scale_x_continuous(breaks = 1:12) + 
-#  geom_hline(data = att_data, aes(yintercept = mean(duration)), color ="deepskyblue4") +
-#  labs(x = "Observations",y = "Duration of residency", size = 11) +
-#  coord_cartesian(ylim = c(0, 18)) +
-#  geom_segment(aes(x = respodentID,y = duration, xend = respodentID, 
-#                   yend = mean(duration)), color = "deepskyblue4", size = 1) + 
-#  theme(axis.title = element_text(size = 16),
-#        axis.text  = element_text(size=16),
-#        strip.text.x = element_text(size = 16),
-#        legend.position="none") + 
-#  theme_bw()
 ```
 
 You can see that the data for the "energy" variable looks like a normal distribution with a positive skew (lower values are more likely than higher ones).
@@ -105,17 +91,6 @@ ggplot(music_data) +
        y = 'Number of observations', 
        x = 'Loudness') +
   theme_bw()
-
-
-#ggplot(att_data, aes(x = respodentID, y = attitude)) + 
-#  geom_point(size = 3, color = "#f9756d") + 
-#  scale_x_continuous(breaks = 1:12) + 
-#  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
-#  labs(x = "Observations",y = "Attitude", size = 11) +
-#  coord_cartesian(ylim = c(0,18)) +
-#  geom_segment(aes(x = respodentID, y = attitude, xend = respodentID, 
-#                   yend = mean(attitude)), color = "#f9756d", size = 1) + 
-#  theme_bw()
 ```
 
 Again, we can see that some respondents have an above average attitude towards the city (more favorable) and some respondents have a below average attitude towards the city. Let's plot the data in one graph now to see if there is some co-movement: 
@@ -123,37 +98,12 @@ Again, we can see that some respondents have an above average attitude towards t
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE,fig.align="center", fig.cap = "Scores for attitude and duration of residency variables"}
 
 ggplot(music_data, aes(energy, loudness)) + 
-#  geom_point(size = 3, aes(id, energy), color = "#f9756d") +
-#  geom_point(size = 3, aes(id, loudness), color = "deepskyblue4")  + 
-   geom_point() +
-#  scale_x_continuous(breaks = 1:12) + 
-#  geom_hline(data = att_data, aes(yintercept = mean(duration)), color = "deepskyblue4") +
-#  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
+  geom_point() +
   labs(x = "Observations", y = "Duration/Attitude", size = 11) +
-#  coord_cartesian(ylim = c(0, 18)) +
-#  scale_color_manual(values = c("#f9756d", "deepskyblue4")) +
   theme_bw()
-
-#ggplot(att_data) + 
-#  geom_point(size = 3, aes(respodentID, attitude), color = "#f9756d") +
-#  geom_point(size = 3, aes(respodentID, duration), color = "deepskyblue4")  + 
-#  scale_x_continuous(breaks = 1:12) + 
-#  geom_hline(data = att_data, aes(yintercept = mean(duration)), color = "deepskyblue4") +
-#  geom_hline(data = att_data, aes(yintercept = mean(attitude)), color = "#f9756d") +
-#  labs(x = "Observations", y = "Duration/Attitude", size = 11) +
-#  coord_cartesian(ylim = c(0, 18)) +
-#  scale_color_manual(values = c("#f9756d", "deepskyblue4")) +
-#  theme_bw()
 ```
 
 We can see that there is indeed some co-movement here. The variables <b>covary</b> because tracks that are very energetic and intense probably also have a higher level of decibles and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterplot to visualize the relationship between two metric variables:
-
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scatterplot for duration and attitute variables"}
-#ggplot(att_data) + 
-#  geom_point(size = 3, aes(duration, attitude)) + 
-#  labs(x = "Duration",y = "Attitude", size = 11) +
-#  theme_bw()
-```
 
 How can we compute the correlation coefficient? Remember that the variance measures the average deviation from the mean of a variable:
 
