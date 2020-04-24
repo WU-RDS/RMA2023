@@ -85,7 +85,7 @@ knitr::include_graphics("mlp-regression.png")
 ### Specify the interviewing method  
 In the next step you should review the type of interviewing method you will use.
 At this point you need to think in which setting you aim to conduct your survery. For instance, should you do it in a face-to-face setting or rather online. Here you can find some advantages and disadvantages of online surveys:
-```{r, echo=F, fig.align='center'}
+```{r, echo=F, fig.align='center',out.width='50%'}
 knitr::include_graphics("adv-disadv-online-questionnaire.png")
 ```
 
@@ -100,9 +100,10 @@ Additionally, here is the list of the online tools you can use to conduct an onl
 ### Determine the content of questions  
 In this step you are starting to work on the content of you questions. There are several questions you should ask yourself when writing questions:  
 
-* Is the question necessary? Will I obtain the needed information?  
+* Is the question necessary?
+* Will I obtain the needed information?  
 * Are several questions needed instead of one?  
-* What type of data I will receive by asking that question (categorical or continuious)?  
+* What type of data can I collect by asking that question (categorical or continuious)?  
 
 In your survey try to avoid asking **double-barrelled questions.**Those are 
 a single question that attempts to cover two issues. Such questions can be confusing to respondents and result in ambiguous responses. Instead, you might ask multiple questions in order to obtain the inteded information.  
@@ -166,9 +167,140 @@ a) under 25.001 €
 b) 25.001€ to 50.000 €    
 c) 50.001€ to 75.000 €    
 d) 75.001€ to 100.000 €   
-e) over 100.000 €    
+e) over 100.000 €   
+
+### Decide on measurement scales and scaling techniques
+Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
+For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
+
+Therefore, it is crucial to become familiar with possibilities of each scale **before** you choose to add another question to your survey. Consequently, chances to obtain data you did not intend to collect and chances that you will not be able to apply tests you intended are significantly lower.
+
+In the following table you can get a quick overview of possibilities per each measurement scale. :
+
+```{r, echo=FALSE, out.width = '90%',fig.align='center'}
+knitr::include_graphics("measurement-scale.png")
+```
+
+In the table below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side: 
+
+```{r, echo=FALSE, out.width = '90%',fig.align='center'}
+knitr::include_graphics("overview-statistical-test.png")
+```
+
+When it comes to scaling techniques, they are meant to study the relationship between the objects. The basic scaling techniques classification is on **comparative** and **non-comparative scales**. 
+
+```{r, echo=FALSE, out.width = '90%',fig.align='center'}
+knitr::include_graphics("scales.png")
+```
+
+**The noncomparative scale** each object is scaled independently of the other objects. The resulting data is supposed to be measured in an interval and ratio scaled.
+
+**Comparative scales (or nonmetric scaling)** compare direclty the stimulus object. For example, the respondent might be asked directly about his preference between domestic and foreign beer brands. As a result, the comparative data collected can only be interpreted in relative terms. In the following sections we will walk through both types of comparative scales and briefly introduce them.
 
 
+#### Comparative scale: Paired Comparison    
+
+* Respondent is presented with two objects and asked to select one according to some criterion.
+* The nature of resulting data is ordinal
+* Assumption of transitivity (if X > Y and Y > Z, then X > Z) enables the paired comparison data to be converted into a rank order. To do so, you need to indetify the number of times the object is preferred by adding up all the matrices.
+* Effective when the number of objects is limited as it requires the direct comparison, and a bigger number of objects makes the comparison becomes unmanagable.
+* *Example:*  
+For each pair, please indicate which of the two brands of beer in the pair you prefer.
+```{r, echo=FALSE, fig.align='center', out.width='90%'}
+knitr::include_graphics('paired comparison.png')
+```
+
+<hr>
+#### Comparative scale: Rank Order  
+
+* Allow a certain set of brands or products to be simultaneously ranked based upon a specific attribute or characteristic.
+* The rank order scaling is a good proxy for to the shopping setting as there are simultanious comparisons of objects.
+* The rank order scaling results in the data of ordinal nature.
+* *Example:*  
+Rank the various brands of beer in order of preference. Begin by picking out the one brand that you like most and assign it a number 1. Then find the second most preferred brand and assign it a number 2. Continue this procedure until you have ranked all the brands of beer in order of preference.
+No two brands should received the same rank number.
+
+```{r, echo=F, fig.align='center',out.width='50%'}
+knitr::include_graphics('rank-order-scale.png')
+```
+<hr>
+#### Comparative scale: Constant sum  
+
+* Respondents allocate a constant sum of units (e.g., points, dollars) among a set of stimulus objects with respect to some criterion.  
+* Constant sum is similar to rank order, but it carries specific units.  
+* The resulting data does not just indicate important factors, but also by how much a factor supersedes another one.  
+* Constant sum scaling can be used to observe the comparative significance respondents assigned to various factors of a subject.  
+* *Example:*  
+There are 8 attributes of bottled beers. Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each attribute.
+
+```{r, echo=F, fig.align='center',out.width='80%'}
+knitr:: include_graphics('constant-sum-scale.png')
+```
+
+* Basic analysis of constant-sum data involves tabulation of responses and presenting them as either quantities (e.g., "on average, 7 points were allocated to "high alcohol level"), or, as proportions ("On average, 7% of points were allocated to "high alcohol level").  
+<hr>
+
+#### Non-Comparative Scales: Continuous Rating Scales  
+
+* Participants rate the objects by placing a mark at the appropriate position on a line that runs from one extreme of the criterion variable to the other.  
+* One of the advantages of the continuous rating scale is that it is easy to administer.  
+
+```{r, echo=F, fig.align='center',out.width='70%'}
+knitr::include_graphics('continuous-rating-scale.png')
+```
+
+* Once the ratings are collected, you can splits up the obtained ratings into categories and then assign those depending on the category in which the ratings fall.
+<hr>
+
+#### Non-Comparative Scales: Itemized Rating Scales  
+
+* The respondents are provided with a scale that has a number or brief description associated with each category.  
+* The categories are ordered in terms of scale position, and the respondents are required to select the specified category that best describes the object being rated.  
+* The commonly used itemized rating scales are **the Likert, semantic differential and Stapel scales.**
+
+##### Likert scale
+
+* Requires respondents to indicate their attitude towards the given object through the degree of agreement or disagreement with each of a series of statements within typically five or seven categories.  
+* Reversed code of some items increases validity.  
+* One limitation is time required to answer a question on a Likert scale. Compared to other itemized scaling techniques, Likert scale is more time consuming as each respondent is required to read every statement given in a questionnaire before assigning a numerical value to it.
+
+```{r, echo=F, fig.align='center',out.width='70%'}
+knitr::include_graphics('likert.png')
+```
+
+In the table below you can find a couple of commonly measured constructs in marketing research such as attitude, importance, purchase intention and similar.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('likert-marketing-reserach.png')
+```
 
 
+### Decide on measurement scales and scaling techniques
+Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
+For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
 
+Therefore, it is crucial to become familiar with possibilities of each scale **before** you choose to add another question to your survey. Consequently, chances to obtain data you did not intend to collect and chances that you will not be able to apply tests you intended are significantly lower.
+
+In the following table you can get a quick overview of possibilities per each measurement scale. :
+
+```{r, echo=FALSE, out.width = '90%',fig.align='center'}
+knitr::include_graphics("measurement-scale.png")
+```
+
+In the table below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side: 
+
+```{r, echo=FALSE, out.width = '90%',fig.align='center'}
+knitr::include_graphics("overview-statistical-test.png")
+```
+
+For the detailed overview and infomation on analyses per question type check **"Questionnaire design support tool"**.
+
+When it comes to scaling techniques, they are meant to study the relationship between the objects. The basic scaling techniques classification is on **comparative** and **non-comparative scales**. 
+
+```{r, echo=FALSE, out.width = '90%',fig.align='center'}
+knitr::include_graphics("scales.png")
+```
+
+**Comparative scales (or nonmetric scaling)** compare direclty the stimulus object. For example, the respondent might be asked directly about his preference between domestic and foreign beer brands. As a result, the comparative data collected can only be interpreted in relative terms.
+
+For the detailed overview and infomation on analyses per question type check **"Questionnaire design support tool"**.
