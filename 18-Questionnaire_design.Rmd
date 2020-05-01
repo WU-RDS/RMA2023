@@ -210,7 +210,6 @@ For each pair, please indicate which of the two brands of beer in the pair you p
 knitr::include_graphics('paired comparison.png')
 ```
 
-<hr>
 #### Comparative scale: Rank Order  
 
 * Allow a certain set of brands or products to be simultaneously ranked based upon a specific attribute or characteristic.
@@ -223,7 +222,7 @@ No two brands should received the same rank number.
 ```{r, echo=F, fig.align='center',out.width='50%'}
 knitr::include_graphics('rank-order-scale.png')
 ```
-<hr>
+
 #### Comparative scale: Constant sum  
 
 * Respondents allocate a constant sum of units (e.g., points, dollars) among a set of stimulus objects with respect to some criterion.  
@@ -238,7 +237,7 @@ knitr:: include_graphics('constant-sum-scale.png')
 ```
 
 * Basic analysis of constant-sum data involves tabulation of responses and presenting them as either quantities (e.g., "on average, 7 points were allocated to "high alcohol level"), or, as proportions ("On average, 7% of points were allocated to "high alcohol level").  
-<hr>
+
 
 #### Non-Comparative Scales: Continuous Rating Scales  
 
@@ -250,7 +249,7 @@ knitr::include_graphics('continuous-rating-scale.png')
 ```
 
 * Once the ratings are collected, you can splits up the obtained ratings into categories and then assign those depending on the category in which the ratings fall.
-<hr>
+
 
 #### Non-Comparative Scales: Itemized Rating Scales  
 
@@ -258,7 +257,7 @@ knitr::include_graphics('continuous-rating-scale.png')
 * The categories are ordered in terms of scale position, and the respondents are required to select the specified category that best describes the object being rated.  
 * The commonly used itemized rating scales are **the Likert, semantic differential and Stapel scales.**
 
-##### Likert scale
+##### Itemized Rating Scales:  Likert scale
 
 * Requires respondents to indicate their attitude towards the given object through the degree of agreement or disagreement with each of a series of statements within typically five or seven categories.  
 * Reversed code of some items increases validity.  
@@ -275,32 +274,134 @@ knitr::include_graphics('likert-marketing-reserach.png')
 ```
 
 
-### Decide on measurement scales and scaling techniques
-Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
-For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
+##### Itemized Rating Scales: Semantic Differential
 
-Therefore, it is crucial to become familiar with possibilities of each scale **before** you choose to add another question to your survey. Consequently, chances to obtain data you did not intend to collect and chances that you will not be able to apply tests you intended are significantly lower.
+* Typically, participants rate objects on a number of itemized, seven-point rating scales bounded at each end by one of two bipolar adjectives.  
 
-In the following table you can get a quick overview of possibilities per each measurement scale. :
+* Semantic differential can measure respondent attitudes towards something (products,concepts, items, people...).
 
-```{r, echo=FALSE, out.width = '90%',fig.align='center'}
-knitr::include_graphics("measurement-scale.png")
+* It helps you find the repondent's position is on a scale between two bipolar adjectives such as “Sweet-Sour” or “Bright-Dark”. In comparison to Likert scale, which uses generic scales (e.g. extremely dissatisfied to extremely satisfied), semantic differential questions are posed within the context of evaluating attitudes.
+
+* Widely used rating scale in marketing research due to its versatility
+
+```{r, echo=F, fig.align='left',out.width='72%'}
+knitr::include_graphics('semantic-differential.png')
 ```
 
-In the table below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side: 
+When creating a semantical difference question, you should consider the following:
 
-```{r, echo=FALSE, out.width = '90%',fig.align='center'}
-knitr::include_graphics("overview-statistical-test.png")
+* **Number of categories:** 
+
+```{r, echo=F, fig.align='left',out.width='72%'}
+knitr::include_graphics('semantic-differential-1.png')
 ```
 
-For the detailed overview and infomation on analyses per question type check **"Questionnaire design support tool"**.
+* **Balanced vs. unbalanced:**
 
-When it comes to scaling techniques, they are meant to study the relationship between the objects. The basic scaling techniques classification is on **comparative** and **non-comparative scales**. 
-
-```{r, echo=FALSE, out.width = '90%',fig.align='center'}
-knitr::include_graphics("scales.png")
+```{r, echo=F, fig.align='left',out.width='72%'}
+knitr::include_graphics('semantic-differential-2.png')
 ```
 
-**Comparative scales (or nonmetric scaling)** compare direclty the stimulus object. For example, the respondent might be asked directly about his preference between domestic and foreign beer brands. As a result, the comparative data collected can only be interpreted in relative terms.
+* **Odd/even number of categories:**
 
-For the detailed overview and infomation on analyses per question type check **"Questionnaire design support tool"**.
+```{r, echo=F, fig.align='left',out.width='72%'}
+knitr::include_graphics('semantic-differential-3.png')
+```
+
+* **Forced vs. non-forced response**
+
+```{r, echo=F, fig.align='left',out.width='72%'}
+knitr::include_graphics('semantic-differential-4.png')
+```
+
+* **Verbal description:**
+
+```{r, echo=F, fig.align='left',out.width='72%'}
+knitr::include_graphics('semantic-differential-5.png')
+```
+
+### Questionnaire structure
+
+The sequnece of questions in a questionnaire could play imporant role. For instance, more sensitive questions (such as demographic-related questions) are usually placed at the end as they can trigger change in respondent's behavior.  
+If you plan to conduct an online survey, then you need to think about the respondent's experience while doing your questionnaire. For instance, spread the content over more short pages and do not have fewer long pages. In online surveys, two questions on one page is a useful rule of thumb. Generally, respondents are reluctant to read and fill out long questionnaire pages. Hence, long pages will lead to a higher dropout rate. Additionally, consider the fact that the most of people usually use their phones to fill it out. Think about how the questionnaire will appear on a phone screen too. Finally, use filters for questions that are only relevant for a subgroup of respondents.  
+
+Eventually, the questionnaire structure has to be aligned with the research design. For example, if your research design features an experiment, this needs to be reflected in the questionnaire (e.g., you need to assign the respondents randomly to the experimental conditions in case of a between-subjects comparison).
+
+#### Questionnaire structure for a between-subjects design
+
+In a between-subject design you randomly assign each respondent to different experimental conditions. They would then complete tasks only in the condition to which they are assigned.
+
+For instance, we would like to test the effect of two advertisements on purchase intention. Therefore, one group of (randomly assigned) respondents will be exposed to one advertisement version while the other group (of randomly assigned respondents) will be exposed to another version. After that, both groups of respondents should express their willingness to buy the advertised product. Evenutally, if the dependent variable (e.g. willingness to buy) is measured on interval or ratio scale, then you can use independent t-test to compare group means. The whole experimental design should be organised as following:
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('between-subject-design.png')
+```
+
+
+#### Questionnaire structure for a within-subjects design
+
+This type of experimental design involves exposing each respondent to all of the user experimental conditions you’re testing. This way, each respondent will test all of the conditions.
+
+For instance, we would like to test again the effect of two advertisements on purchase intentions, but this time in a within-subject design. First, each respondent will be exposed to the first version of advertisement and right after that asked to rate his/her willingness to buy the advertised product. Subsequently, each participant will be shown another version of advertisement and again rate his/her willingness to purchase the advertised product. Finally, we can compare group means with paired sample t-test (given that data is measured on interval or ratio scale). 
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('within-subject-design.png')
+```
+
+
+### Question wording
+
+Generally, question wording should enable each respondent to understand  questions and to be able to answer them with reliability. Reliability means that, if a respondent was asked the same question again, he/she would give the same answer again. A number of common problems regarding the question wording have been identified, so we will address the most important ones. 
+
+In order to ensure reliability, the issue in terms of **who, what, when and where** should be defined in each question.  
+*Example:* Which brand of shampoo do you use?  
+**Who (the respondent):** It is not clear whether this question relates to the individual respondent or the respondent’s total household.  
+**What (the brand of shampoo):** It is unclear how the respondent is to answer this question if more than one brand is used.  
+**When (unclear):** The time frame is not specified in this question. The respondent could interpret it as meaning the shampoo used this morning, this week, or over the past year.  
+**Where (not specified):** At home, at the gym? Where?
+
+*A more clearly defined question is:*  
+Which brand or brands of shampoo have you personally used at home during the last month? In the case of more than one brand, please list all the brands that apply.
+
+**Use ordinary words.** Words should match the vocabulary level of the participants.  
+<span style="color: red;"><B>Incorrect:</B></span>    
+“Do you think the distribution of soft drinks is adequate?”   
+<span style="color: green;"><B>Correct:</B></span>  
+“Do you think soft drinks are easily available when you want to buy them?”
+
+**Avoid double negative form**. Double negative question forms can confuse respondents, especially when they need to answer with “Agree” or “Disagree”.
+
+<span style="color: red;"><B>Incorrect:</B></span>      
+Do you think that it is not uncommon that boys play basketball?  
+<span style="color: green;"><B>Correct:</B></span>  
+In your opinion, is it common that boys play basketball?
+
+
+
+**Avoid leading questions.**Leading questions clue the participant to what the answer should be. Such questions introduce a bias in a particular direction.  
+<span style="color: red;"><B>Incorrect:</B></span>    
+“Is Colgate your favorite toothpaste?”  
+<span style="color: green;"><B>Correct:</B></span>       
+“What is your favorite brand of toothpaste?”
+
+**Avoid ambiguous words.** Words such as usually, normally, frequently, often, regularly, and other similar words, do not define frequency clearly enough.
+
+<span style="color: red;"><B>Incorrect:</B></span>      
+“In a typically month, how often do you go to a movie theater to see a movie?”  
+a) Never  
+b) Occasionally  
+c) Sometimes   
+d) Often   
+e) Regularly  
+
+<span style="color: green;"><B>Correct:</B></span>     
+"In a typically month, how often do you go to a movie theater to see a movie?"    
+a) Less than once  
+b) 1 or 2 times  
+c) 3 or 4 times  
+d) More than 4 times
+
+### Test your questionnaire
+
+Finally, before you distribute the final questionnaire, there are some things to consider. First, you should always pretest your questionnaire before sharing it!
+Test all aspects of the questionnaire (content, wording, sequence, form & layout, etc.). If possible, use respondents in the pretest that are similar to those who will be included in the actual survey. Ideally, the pretest sample size should be small (in a real scenario this could varyfrom 15 to 30 respondents; for the group project, a lower number will be sufficient). After each significant revision of the questionnaire, conduct another pretest, using a different sample of respondents. Eventually, code and analyze the responses obtained from the pretest so that you make sure that you collected information you intended to collect.
