@@ -50,8 +50,86 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<script src="libs/detect-resize-0.5.3/jquery.resize.js"></script>
+<link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+<script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="libs/d3-3.5.2/d3.min.js"></script>
+<script src="libs/vega-1.4.3/vega.min.js"></script>
+<script src="libs/lodash-2.2.1/lodash.min.js"></script>
+<script>var lodash = _.noConflict();</script>
+<link href="libs/ggvis-0.4.5/css/ggvis.css" rel="stylesheet" />
+<script src="libs/ggvis-0.4.5/js/ggvis.js"></script>
 
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 </head>
 
@@ -236,6 +314,9 @@
 <li class="chapter" data-level="13.1.9" data-path="questionnaire-design.html"><a href="questionnaire-design.html#test-your-questionnaire"><i class="fa fa-check"></i><b>13.1.9</b> Test your questionnaire</a></li>
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="questionnaire-design.html"><a href="questionnaire-design.html#questionnaire-in-qualtrics"><i class="fa fa-check"></i><b>13.2</b> Questionnaire in Qualtrics</a></li>
+<li class="chapter" data-level="13.3" data-path="questionnaire-design.html"><a href="questionnaire-design.html#question-types-and-data-analysis"><i class="fa fa-check"></i><b>13.3</b> Question Types and Data Analysis</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="questionnaire-design.html"><a href="questionnaire-design.html#multiple-choice-with-a-single-answer"><i class="fa fa-check"></i><b>13.3.1</b> Multiple choice with a single answer</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -614,7 +695,339 @@ In the “Create your own” section click on the survey button.</p>
 <p><img src="survey-copy.png" width="72%" style="display: block; margin: auto;" /></p>
 <p>If there is a questionnaire in the Qualtrics Library you would like to use, then you need to choose “From Library”, and indicate one library name in the dropdown menu.</p>
 <p><img src="library-survey.png" width="72%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="question-types-and-data-analysis" class="section level2">
+<h2><span class="header-section-number">13.3</span> Question Types and Data Analysis</h2>
+<p>In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.</p>
+<div id="multiple-choice-with-a-single-answer" class="section level3">
+<h3><span class="header-section-number">13.3.1</span> Multiple choice with a single answer</h3>
+<p>Multiple Choice with a single answer is a type of closed-ended question that lets respondents select <strong>one answer</strong> from a defined list of choices.</p>
+<p><img src="support-multiple-choice-question.png" width="72%" style="display: block; margin: auto;" /></p>
+<p>Type of data you obtain is <strong>categorical</strong>, and the output comes in the following form:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-31">Table 13.1: </span>Multiple Choice Question with Single Answer</caption>
+<thead>
+<tr class="header">
+<th align="right">Q5_1</th>
+<th align="right">Q5_2</th>
+<th align="right">Q5_3</th>
+<th align="right">Q5_4</th>
+<th align="left">Q5_4_TEXT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1</td>
+<td align="left">Vending machines with coffee</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<div id="data-handling-1" class="section level4">
+<h4><span class="header-section-number">13.3.1.1</span> Data handling</h4>
+<p>What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes <strong>as integers</strong>. In order to conduct statistical modelling and properly visualize our results, we need to convert our data to <strong>a factor class.</strong><br />
+A factor (or coding variable) represents different groups of data by using numbers (integers). In fact, factors appear as numeric variables, but they hold meaning of labels/names of data groups, i.e. nominal variable. These data groups are represented in a form of ‘levels’.<br />
+In our case, our multiple choice question output will contain 4 data groups (‘Grocery Store’, ‘Online shop’, ‘Specialised coffee shop’, ‘other’) after converting it to factor:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Data handling</span></a>
+<a class="sourceLine" id="cb1-2" title="2">qualtrics<span class="op">$</span>Q5_<span class="dv">2</span>[qualtrics<span class="op">$</span>Q5_<span class="dv">2</span> <span class="op">==</span><span class="st"> &#39;1&#39;</span>] &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># Substituion of all 1 in with 2</span></a>
+<a class="sourceLine" id="cb1-3" title="3">qualtrics<span class="op">$</span>Q5_<span class="dv">3</span>[qualtrics<span class="op">$</span>Q5_<span class="dv">3</span> <span class="op">==</span><span class="st"> &#39;1&#39;</span>] &lt;-<span class="st"> </span><span class="dv">3</span> <span class="co"># Substituion of all 1 in with 3</span></a>
+<a class="sourceLine" id="cb1-4" title="4">qualtrics<span class="op">$</span>Q5_<span class="dv">4</span>[qualtrics<span class="op">$</span>Q5_<span class="dv">4</span> <span class="op">==</span><span class="st"> &#39;1&#39;</span>] &lt;-<span class="st"> </span><span class="dv">4</span> <span class="co"># Substituion of all 1 in with 4</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># Melting 4 output columns to one column</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">library</span>(reshape2)</a>
+<a class="sourceLine" id="cb1-8" title="8">qualtrics_long &lt;-<span class="st"> </span><span class="kw">melt</span>(qualtrics[, <span class="kw">c</span>(<span class="st">&#39;Q5_1&#39;</span>,<span class="st">&#39;Q5_2&#39;</span>,<span class="st">&#39;Q5_3&#39;</span>,<span class="st">&#39;Q5_4&#39;</span>)], <span class="dt">na.rm =</span> T) </a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co"># Converting values from &#39;numeric&#39; to &#39;factor&#39;</span></a>
+<a class="sourceLine" id="cb1-11" title="11">qualtrics_long<span class="op">$</span>value&lt;-<span class="st"> </span><span class="kw">factor</span>(qualtrics_long<span class="op">$</span>value, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Grocery shop&#39;</span>,<span class="st">&#39;Online shop&#39;</span>,<span class="st">&#39;Specialized coffee shop&#39;</span>,<span class="st">&#39;Other&#39;</span>))</a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co"># Table</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw">table</span>(qualtrics_long<span class="op">$</span>value)</a></code></pre></div>
+<pre><code>## 
+##            Grocery shop             Online shop Specialized coffee shop 
+##                       6                       6                       2 
+##                   Other 
+##                       3</code></pre>
+</div>
+<div id="visualisation" class="section level4">
+<h4><span class="header-section-number">13.3.1.2</span> Visualisation</h4>
+<p>Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data fromat adaptation from the point where we stopped:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Converting long format to the visualisation-friendly format</span></a>
+<a class="sourceLine" id="cb3-2" title="2">mlc_visualisation &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(qualtrics_long<span class="op">$</span>value))</a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># Naming columns</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">names</span>(mlc_visualisation) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Place&#39;</span>,<span class="st">&#39;Count&#39;</span>)</a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># Observing</span></a>
+<a class="sourceLine" id="cb3-8" title="8">mlc_visualisation</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Place"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Grocery shop","2":"6"},{"1":"Online shop","2":"6"},{"1":"Specialized coffee shop","2":"2"},{"1":"Other","2":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>The simpliest way to visualize data obtained from multiple choice question with a single answer is <strong>a barchart</strong>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co">## Basic bar chart</span></a>
+<a class="sourceLine" id="cb4-2" title="2">labels &lt;-<span class="st"> </span><span class="kw">as.character</span>(mlc_visualisation<span class="op">$</span>Place) <span class="co">#Save labels for x-axis in the barplot</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">barplot</span>(mlc_visualisation<span class="op">$</span>Count, <span class="co"># Column to visualize</span></a>
+<a class="sourceLine" id="cb4-4" title="4">        <span class="dt">xlab=</span><span class="st">&#39;Places to buy coffee&#39;</span>, <span class="co"># X-axis label</span></a>
+<a class="sourceLine" id="cb4-5" title="5">        <span class="dt">ylab =</span> <span class="st">&#39;Count(answers)&#39;</span>, <span class="co"># Y-axis label</span></a>
+<a class="sourceLine" id="cb4-6" title="6">        <span class="dt">names.arg =</span> labels,</a>
+<a class="sourceLine" id="cb4-7" title="7">        <span class="dt">main =</span> <span class="st">&#39;Where do you buy your coffee?&#39;</span>) <span class="co"># Title</span></a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>R package <strong>ggplot2</strong> enables you to create visually appealing graphs:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">## ggplot2 bar chart</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb5-3" title="3">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>mlc_visualisation, </a>
+<a class="sourceLine" id="cb5-4" title="4">             <span class="kw">aes</span>(<span class="dt">x=</span>Place, <span class="dt">y=</span>Count, <span class="dt">fill=</span>Place)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">             </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>()</a>
+<a class="sourceLine" id="cb5-6" title="6">p</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>Another R library which can help you make amazing interactive charts in a minute is <strong>plotly</strong>. Here we use a function called <strong>ggplotly()</strong>, which allows you to turn any <strong>ggplot2</strong> chart interactive. Since we have already created a barchart using ggplot2 and saved it as “p”, we will just turn it into plotly graph:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">library</span>(plotly)</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">ggplotly</span>(p)</a></code></pre></div>
+<div id="htmlwidget-a2735b660fcc6a0dd050" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a2735b660fcc6a0dd050">{"x":{"data":[{"orientation":"v","width":0.9,"base":0,"x":[1],"y":[6],"text":"Place: Grocery shop<br />Count: 6<br />Place: Grocery shop","type":"bar","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Grocery shop","legendgroup":"Grocery shop","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[2],"y":[6],"text":"Place: Online shop<br />Count: 6<br />Place: Online shop","type":"bar","marker":{"autocolorscale":false,"color":"rgba(124,174,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Online shop","legendgroup":"Online shop","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[3],"y":[2],"text":"Place: Specialized coffee shop<br />Count: 2<br />Place: Specialized coffee shop","type":"bar","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Specialized coffee shop","legendgroup":"Specialized coffee shop","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[4],"y":[3],"text":"Place: Other<br />Count: 3<br />Place: Other","type":"bar","marker":{"autocolorscale":false,"color":"rgba(199,124,255,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Other","legendgroup":"Other","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":31.4155251141553},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,4.6],"tickmode":"array","ticktext":["Grocery shop","Online shop","Specialized coffee shop","Other"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":["Grocery shop","Online shop","Specialized coffee shop","Other"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Place","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.3,6.3],"tickmode":"array","ticktext":["0","2","4","6"],"tickvals":[0,2,4,6],"categoryorder":"array","categoryarray":["0","2","4","6"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Count","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.96751968503937},"annotations":[{"text":"Place","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"7b8c24787f08":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"7b8c24787f08","visdat":{"7b8c24787f08":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>An improved version of ggplot2 package is the packaged called <strong>ggvis</strong>, which is still in developing:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">library</span>(ggvis)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">ggvis</span>(mlc_visualisation, </a>
+<a class="sourceLine" id="cb7-3" title="3">      <span class="dt">x =</span> <span class="op">~</span>Place, </a>
+<a class="sourceLine" id="cb7-4" title="4">      <span class="dt">y =</span> <span class="op">~</span>Count, </a>
+<a class="sourceLine" id="cb7-5" title="5">      <span class="dt">fill=</span><span class="op">~</span>Place)</a></code></pre></div>
+<div id="plot_id123325398-container" class="ggvis-output-container">
+<div id="plot_id123325398" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id123325398_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id123325398" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id123325398_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id123325398" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id123325398_download" class="ggvis-download" data-plot-id="plot_id123325398">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id123325398_spec = {
+  "data": [
+    {
+      "name": "mlc_visualisation0/group_by1/count2/stack3_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "stack_lwr_": "number",
+          "stack_upr_": "number"
+        }
+      },
+      "values": "\"Place\",\"x_\",\"stack_lwr_\",\"stack_upr_\"\n\"Grocery shop\",\"Grocery shop\",0,6\n\"Online shop\",\"Online shop\",0,6\n\"Specialized coffee shop\",\"Specialized coffee shop\",0,2\n\"Other\",\"Other\",0,3"
+    },
+    {
+      "name": "mlc_visualisation0/group_by1/count2/stack3",
+      "source": "mlc_visualisation0/group_by1/count2/stack3_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.Place"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scale/fill",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"Grocery shop\"\n\"Online shop\"\n\"Specialized coffee shop\"\n\"Other\""
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"Grocery shop\"\n\"Online shop\"\n\"Specialized coffee shop\"\n\"Other\""
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n0\n6.3"
+    }
+  ],
+  "scales": [
+    {
+      "name": "fill",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/fill",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "name": "x",
+      "type": "ordinal",
+      "points": false,
+      "padding": 0.1,
+      "sort": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "data": "mlc_visualisation0/group_by1/count2/stack3"
+      },
+      "marks": [
+        {
+          "type": "rect",
+          "properties": {
+            "update": {
+              "stroke": {
+                "value": "#000000"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.Place"
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.x_"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.stack_lwr_"
+              },
+              "y2": {
+                "scale": "y",
+                "field": "data.stack_upr_"
+              },
+              "width": {
+                "scale": "x",
+                "band": true
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": "mlc_visualisation0/group_by1/count2/stack3"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "orient": "right",
+      "fill": "fill",
+      "title": "Place"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "Place"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "Count"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 672,
+    "height": 480
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id123325398").parseSpec(plot_id123325398_spec);
+</script>
+</div>
+<div id="statistical-analysis" class="section level4">
+<h4><span class="header-section-number">13.3.1.3</span> Statistical analysis</h4>
 
+</div>
+</div>
 </div>
 </div>
             </section>
