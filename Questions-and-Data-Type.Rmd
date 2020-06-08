@@ -1,0 +1,385 @@
+---
+title: "Questions_and_Data_Type.Rmd"
+author: "Mirza Mujanovic - 01553283"
+date: "6/5/2020"
+output:
+  pdf_document: default
+  html_document: default
+encoding: ENCODING
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+```
+
+## Question-Types-and-Data-Analysis
+```{r, echo = FALSE, results='asis', warning=FALSE ,error=FALSE}
+library(qualtRics)
+qualtrics<-read_survey('qualtrics_response_data_final_final.csv')
+```
+
+
+In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
+
+### Multiple choice with a single answer
+
+Multiple Choice with a single answer is a type of closed-ended question that lets respondents select **one answer** from a defined list of choices.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('support-multiple-choice-question.png')
+```
+
+Type of data you obtain is **categorical**, and the output comes in the following form:  
+```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
+knitr::kable(qualtrics[1:6,c("Q8_MC_sa_Likert")], caption = "Multiple Choice Question with Single Answer")
+```
+
+#### Data handling
+
+What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes **as numeric**. In order to conduct statistical modelling and properly visualize our results, we need to convert our data to **a factor class.**   
+
+A factor (or coding variable) represents different groups of data by using numbers (integers). In fact, factors appear as numeric variables, but they hold meaning of labels/names of data groups, i.e. nominal variable. These data groups are represented in a form of 'levels'.  
+In our case, our multiple choice question output will contain 4 data groups ('Grocery Store', 'Online shop', 'Specialised coffee shop', 'other') after converting it to factor:
+
+```{r, eval=TRUE, warning=FALSE, message=FALSE}
+# Convert numeric value to factors
+qualtrics$Q8_MC_sa_Likert <- factor(qualtrics$Q8_MC_sa_Likert, levels = c(1:5), labels = c('Never','1-2 hours','3-4 hours','5-6 hours','more than 6 hours'))
+qualtrics$Q23_Gender <- factor(qualtrics$Q23_Gender,levels = c(1:2),labels = c("Male","Female"))
+qualtrics$Q7_MC_sa_country <- factor(qualtrics$Q7_MC_sa_country, levels = c(1:2), labels=c("Austria","Germany"))
+
+
+# Table
+table(qualtrics$Q8_MC_sa_Likert)
+table(qualtrics$Q23_Gender)
+table(qualtrics$Q7_MC_sa_country)
+
+```
+
+#### Visualisation
+
+Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data fromat adaptation from the point where we stopped:
+
+```{r, eval=TRUE, warning=FALSE, message=FALSE}
+# Converting long format to the visualisation-friendly format
+mlc_visualisation <- as.data.frame(table(qualtrics$Q8_MC_sa_Likert))
+
+# Naming columns
+names(mlc_visualisation) <- c('Time','Count')
+
+# Observing
+mlc_visualisation
+
+```
+
+The simpliest way to visualize data obtained from multiple choice question with a single answer is **a bar chart**:
+```{r}
+## Basic bar chart
+labels <- as.character(mlc_visualisation$Time) #Save labels for x-axis in the barplot
+barplot(mlc_visualisation$Count, # Column to visualize
+        xlab='Time', # X-axis label
+        ylab = 'Count(answers)', # Y-axis label
+        names.arg = labels,
+        main = 'How many hours do you spend watching movies or series on Netflix?') # Title
+```
+
+R package **ggplot2** allows you to create visually appealing graphs:
+
+```{r}
+## ggplot2 bar chart
+library(ggplot2)
+p <- ggplot(data=mlc_visualisation, 
+             aes(x=Time, y=Count, fill=Time)) +
+             geom_bar(stat='identity') + theme_minimal() + labs(title = "In a typical week, how many hours do you spend watching movies or series on Netflix?")
+p
+```
+
+Another R library which can help you make amazing interactive charts in a minute is **plotly**. Here we use a function called **ggplotly()**, which allows you to turn any **ggplot2** chart interactive. Since we have already created a bar chart using ggplot2 and saved it as "p", we will just turn it into plotly graph:
+
+```{r,warning=F,message=F}
+## ggplotly bar chart
+
+library(plotly)
+ggplotly(p)
+```
+
+
+An improved version of ggplot2 package is the packaged called **ggvis**, which is still in developing:
+```{r, warning=FALSE, message=FALSE}
+## ggvis bar chart
+
+library(ggvis)
+ggvis(mlc_visualisation, 
+      x = ~Time, 
+      y = ~Count, 
+      fill=~Time)
+```
+
+#### Statistical analysis
+
+Data type collected from the previous question is ordinal as we are able to make a natural order of the levels. Since it is ordinal data type, it belongs to categorical data. For the analysis of categorical data we can use Chi-square test or Fisher's test if a count for some level is less than 5. 
+
+##### Fischer's exact
+
+Fisher's exact test is used to test a hypothesis with data obtained from multiple choice questions with single answer. Results from multiple choice questions with multiple answers are treated with different test.
+<ul><li> <B> Application: </B> when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li>
+<ul><li> Used when frequency in at least one cell is <B> less than 5 </B>. When frequencies in each cell are greater than 5, Chi-square test should be used.</ul></li>
+<ul><li> <B>Hypothesis:</B> Is there a significant difference in frequencies between values observed in cells and values expected in cells ? (R for Marketing and Research Analytics)</ul></li>
+<ul><li> <B>H0:</B> There is no relationship between the two categorical variables.Therefore, two categorical variables are <B> independent.</B> Knowing the value of one variable does not help to predict the value of the other variable.</ul></li>
+<ul><li> <B>H1:</B> There is a relationship between the two categorical variables.Therefore, two categorical variables are <B> dependent.</B>Knowing the value of one variable helps to predict the value of the other variable.</ul></li>
+<ul><li> Usually, this type of test is used on 2x2 contingency tables. However, it can be applicable on contingency tables of larger dimensions.</ul></li>
+
+<B>Example:</B> We would like to know whether a number of hours spent watching Netflix depends on the respondents' country of origin.
+
+
+```{r}
+# Creation of contingency table
+fisher_test_table <-table(qualtrics$Q7_MC_sa_country,qualtrics$Q8_MC_sa_Likert)
+# Check how our contigency table looks like
+fisher_test_table
+
+# Since we have a count less than 5, we should apply Fisher's test instead of Chi-square.
+
+# Fisher's test
+test <- fisher.test(fisher_test_table)
+test
+
+# p-value
+test$p.value
+```
+
+From the output and from test$p.value we see that the p-value is higher than the significance level of 5%. Like any other statistical test, if the p-value is higher than the significance level, we can not reject the null hypothesis.
+
+In our case, not rejecting the null hypothesis for the Fisher’s exact test of independence means that there is no significant relationship between the two categorical variables. Therefore, knowing the value of one variable does not help to predict the value of the other variable.
+
+##### Chi-square test: Goodness of fit & Independence test
+
+1) Goodness of fit
+<div><ul><li><B> Application: </B>when you only have <B> 1 dependent variable and none independent variables </B></ul></li>
+<ul><li> <B> Hypothesis:</B> Is there a significant difference in frequencies between values observed in cells and values expected in cells ? (R for Marketing and Research Analytics) </ul></li>
+<ul><li> <B> H0: </B> There is no significant difference between the observed and the expected frequencies.</ul></li>
+<ul><li> <B> H1: </B> There is a significant difference between the observed and the expected frequencies. </ul></li>
+<ul><li> If we don't specify expected frequency per cell (see in the code below), then it is expected that all cells show an eqaul frequency. </ul></li>
+<ul><li> <B> Example</B> :'Do the numbers of respondents who are spending different amount of hours watching Netflix <B> significantly differ from each other?</B>'</ul></li></div>
+<ul><li><B> Note that we did not assume any specific distribution, so we are assuming that each count will have the same or similar number. <ul><li><B>  
+```{r} 
+# Creating table 
+(mlc_chi_square <- table(qualtrics$Q8_MC_sa_Likert))
+      
+# Chi-square test (without given expected values = equal values )
+chisq.test(mlc_chi_square)
+```
+
+The p-value of the test is higher than 0.05. We can conclude that the numbers of respondents who spent different amount of hours watching Netflix are commonly distributed. Observed distribution does not differ significantly from the expected. This result does not surprise if you take a look at the values for each level in the table we created before conducting the test. There you can see that count of answers in each level is more or less not deviating too much. It is visible if you take a look at the previous visualisations as well.
+
+
+If we are interested in testing more specific distribution, i.e. expect that 40% of our respondents are watching Netflix 3-4 hours, we can introduce corresponding distribution in the test. 
+
+```{r}
+# Expected values in percentages for each alternative. The sum must be 1.
+expected_values <- c(0.10, # We expect that 10% of our respondents do not watch Netflix at all ("Never").
+                     0.20, # We expect that 20% of our respondents watch Netflix 1-2 hours a week.  
+                     0.40, # We expect that 40% of our respondents watch Netflix 3-4 hours a week.
+                     0.20, # We expect that 20% of our respondents watch Netflix 5-6 hours a week.
+                     0.10 # We expect that 10% of our respondents watch Netflix more than 6 hours a week.
+                    )
+# Chi-square test with expected values
+chisq.test(mlc_chi_square, p=expected_values)
+```
+
+This time the p-value of the test is lower than 0.05.We have an evidance that observed distribution does significantly differ from the expected distribution (10%/20%/40%/20%/10%).
+
+2) Chi-Square Test of Independence
+<div><ul><li> <B> Application: </B>when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li> 
+<ul><li> <B> Hypothesis: </B> Is there an association between categorical variable X and categorical variable Y? </ul></li>
+<ul><li> <B> H0: </B> There is no association between the two variables.</B></ul></li>
+<ul><li> <B> H1: </B> There is an association between the two variables.</B></ul></li>
+<ul><li> <B> Example: </B> Is there an association between gender and the hours spent watching Neflix during a week? </ul></li></div>
+
+```{r}
+# Creation of contingency table
+chi_square_table <-table(qualtrics$Q23_Gender,qualtrics$Q8_MC_sa_Likert)
+
+# Chi-square independence test
+chisq.test(chi_square_table)
+```
+
+Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and number of hours spent watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
+
+### Multiple choice with multiple answers
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('multiple-choice-question-multiple-answers.png')
+```
+
+Before we conduct any test, we will do some simple calculatios and visualise our data. 
+
+```{r}
+# Rename columns
+colnames(qualtrics)[38] <- "ja!Naturlich"
+colnames(qualtrics)[39] <- "Clever"
+colnames(qualtrics)[40] <- "Spar Vital"
+colnames(qualtrics)[41] <- "..."
+
+# Replacing NA with 0
+qualtrics$`ja!Naturlich`[is.na(qualtrics$`ja!Naturlich`)]=0
+qualtrics$Clever[is.na(qualtrics$Clever)]=0
+qualtrics$`Spar Vital`[is.na(qualtrics$`Spar Vital`)]=0
+qualtrics$...[is.na(qualtrics$...)]=0
+
+# Calculating frequency, percentage of respondents and percentage of cases
+df.cochran <- data.frame(Frequnecy = colSums(qualtrics[38:41]),
+                         Share_of_respondents = (colSums(qualtrics[38:41])/sum(qualtrics[38:41]))*100,
+                                Share_of_cases =((colSums(qualtrics[38:41]))/nrow(qualtrics[38:41]))*100)
+# Observing
+df.cochran
+
+# Visualisation
+barplot(df.cochran[,3], names.arg = row.names(df.cochran), main = "% of Respondents familiar with brands", xlab = "Brand",ylab = "Percentage")
+```
+
+The visualisation above depicts the fact that more than 60% percent of people are familiar with the brand "ja!Naturlich", while we can not say the same for other brands considered in our question. 
+
+
+For the analysis of results collected with multiple choice question with multiple possible answers, we can use **Cochran's Q test.**Although we did not mention it before, it is not too different from what you have already learned about other tests. 
+
+The Cochran’s Q test and associated multiple comparisons require the following assumptions:
+1. Responses are dichotomous and from k number of matched samples.
+2. The subjects are independent of one another and were selected at random from a larger population.
+3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the
+responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)
+
+In a within-subjects experiment design with three or more observations of a dichotomous(= just two levels such as "Yes" or "No") categorical outcome, you utilize Cochran's Q test to assess main effects.Similarly, in our multiple choice question with multiple answers we have the same respondent going through three or more potential answers with dichotomous(=yes or no) categorical outcome. 
+
+
+```{r}
+library(nonpar)
+
+# Creation of matrix
+matrix.cochran <- cbind(qualtrics$`ja!Naturlich`,
+                   qualtrics$Clever,
+                   qualtrics$`Spar Vital`,
+                   qualtrics$...)
+# Turning NAs to 0
+matrix.cochran[is.na(matrix.cochran)]=0
+
+# Cochran test                   
+cochrans.q(matrix.cochran, alpha = 0.05)
+
+```
+
+The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.
+
+```{r}
+library(DescTools)
+list.cochran <- list(qualtrics$`ja!Naturlich`,
+                   qualtrics$Clever,
+                   qualtrics$`Spar Vital`,
+                   qualtrics$...)
+
+# Replacing NAs in the list with 0 in order to be able to run the test
+list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
+
+# Post hoc test (Dunn Test)
+DunnTest(list.cochran, method="bonferroni")
+
+```
+
+From the results of the Dunn Test, we can see that there is a big difference between 1 ("ja!Natürlich") and 4("..."), as well as between 4("...") and 3("Spar Vital"). 
+
+### Rank order question
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('rank-order-question.png')
+```
+
+A rank order question asks respondents to compare items to each other by placing them in order of preference. Note that the data obtained from a rank order question shows an order of a respondent's pereference, but not the difference between items. For instance, if the the most important feature of a fitness tracker for a respondendt XY is "Measuring steps" and the second most important feature "Calories burned", we don't know for how much more important is the former one in comparison to the latter one.
+
+Intuitive question to ask is the following: which feature of the fitness tracker is the most important for our respondents?
+
+We can answer this question by calculating a mean rank for each feature. Before we do so, we will create a separate data frame and add columns of the response data.
+```{r}
+rank.data <- data.frame(qualtrics$Q3_Rank_Order_1,
+                        qualtrics$Q3_Rank_Order_2,
+                        qualtrics$Q3_Rank_Order_3,
+                        qualtrics$Q3_Rank_Order_4,
+                        qualtrics$Q3_Rank_Order_5)
+colnames(rank.data)<-c("Measuring steps","Calories burned","Measuring heartbeat","Exercise tracking","Measuring distance")
+
+```
+
+First information we would like to know is how many preference combinations there are, and how repetitive they are. We can obtain that information by creating a summary of the ranking data frame we created. 
+```{r}
+library(pmr)
+test <- rankagg(rank.data)
+test
+```
+The matrix we received as an output is the summary of our ranking data. It shows that, for instance, the preference combination "2,1,3,4,5" repeats 10 times in the data frame. More specifically, it means that there are 10 respondents who prefer the item 2("Calories burned") the most, then the item 1("Measuring steps"), and so on.
+
+Now we can calculate the mean rank for each feature and conclude which feature is the most important to our respondents:
+```{r}
+# Mean rank of each fitness tracker feature
+destat(test)$mean.rank
+```
+As we can observe from the output, the item 1("Measuring steps") shows the best mean rank among all items. Therefore, we can assume that the "Measuring steps" is most important for our respondents. However, in order to statistically prove it and become sure that this is not just by mere chance, we can conduct **Friedman rank sum test**.
+
+Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.
+
+Before we conduct the Friedman rank sum test, we will visualise our data:
+```{r}
+# Preparing data frame for Friedman rank sum test
+library(reshape2)
+library(ggpubr)
+library(rstatix)
+library(ggstatsplot)
+
+rank.data.long <- melt(rank.data,value.name = "Rank",variable.name = "Feature")
+# We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
+tail(rank.data.long)
+head(rank.data.long)
+
+# Quick visualisation
+p <- ggboxplot(rank.data.long, x = "Feature", y = "Rank", add = "jitter",title = "What features are important to you when evualting fitness trackers?")
+ggplotly(p)
+
+# Advanced visualisation
+ggstatsplot::ggwithinstats(
+  data = rank.data.long,
+  x = Feature,
+  y = Rank,
+  type = "np",
+  pairwise.comparisons = TRUE, # show pairwise comparison test results
+  title = "What features are important to you when evualting fitness trackers?")
+```
+
+Already from the advanced visualisation, that includes Friedman rank sum test and pairwise comparison, we can have an insight in significance of differences among features.  
+
+```{r}
+# Friedman test 
+friedman.test(as.matrix(rank.data))
+```
+
+Friedman rank sum test has a p-value lower than 0.05, so we can conclude that here are significant differences between at least two features (what we have already seen in our visualisation). Even though we have identified differences between preferences towards features in our advanced visualisation, we will conduct a post hoc test in order to demonstrate traditional way of calculating pairwise comparisons.
+
+
+```{r}
+wilcox_test(Rank ~ Feature, paired = TRUE, p.adjust.method = "bonferroni", data = rank.data.long)
+```
+The output table provides us with p-values referring to significance of difference in mean ranks of each pair. For instance, the first 4 rows  proves that the differences between the mean rank of the feature "Measuring steps" and each of the rest of features are significant. Consequently, we can conclude that this feature is by far the most important among our respondents. 
+
+
+Another question that may be interesting to explore is whether there are any complementary feautres ? Or features which overlap each other in its funcionality? In order to have a look at that, we can investigate the correlation between ranks assigned to each feature.
+```{r}
+#Correlation Matrix
+cor.matrix<-cor(rank.data, method=c('spearman'))
+cor.matrix
+```
+At the first glance we can observe a lot of negative values, meaning that many features correlate negatively relative to each other. In order to make the interpretation easier, we will try to visualise correlations in a form of a correlation matrix.
+
+```{r}
+library(corrplot)
+corrplot(cor.matrix, method="color", type = "upper", order = "hclust")
+```
+
+From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positvely. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
