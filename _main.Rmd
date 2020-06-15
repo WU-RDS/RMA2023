@@ -1,0 +1,919 @@
+---
+knit: "bookdown::render_book"
+title: "Marketing Research Design & Analysis 2020"
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "An Introduction to Statistics Using R"
+site: bookdown::bookdown_site
+documentclass: book
+favicon: "favicon.ico"
+---
+
+# Welcome! {-}
+
+Placeholder
+
+
+### Main reference {-}
+### Further readings {-}
+### Finding Your Way To R  {-}
+### DataCamp {-}
+### Other web-resources {-}
+
+<!--chapter:end:index.rmd-->
+
+
+# Getting started
+
+Placeholder
+
+
+## How to download and install R and RStudio
+## Getting help
+## Functions
+## Packages
+## A typical R session
+
+<!--chapter:end:00-getting_started.Rmd-->
+
+
+# Data handling
+
+Placeholder
+
+
+## Basic data handling
+### Creating objects
+### Data types
+### Data structures
+#### Accessing data in data frames
+#### Inspecting the content of a data frame
+#### Append and delete variables to/from data frames
+
+<!--chapter:end:01-basic_data_handling.Rmd-->
+
+
+# Selects all columns from top10_track_explicit to top_10_track_release_date
+
+Placeholder
+
+
+## Advanced data handling
+### The dplyr package
+#### Filter rows
+#### Select columns
+#### Arrange rows
+#### Adding and changing variables
+#### Creating custom summaries
+#### Group operations
+#### Pipes
+### Dealing with strings
+#### The ```stringr``` package
+#### A crash course in regex
+##### Other special characters in regex
+###### Square brackets ```[]```
+###### Repetition operators: ```*```,```+``` and ```{}```
+###### Parentheses: ```()```
+###### Optional characters: ```?```
+###### Anchors: ```^``` and ```$```
+### Case study 
+
+<!--chapter:end:02-advanced_data_handling.Rmd-->
+
+
+
+## Data import and export 
+### Getting data for this course
+#### Directly import datasets from GitHub (recommended)
+#### Download and import datasets from "Learn\@WU"
+### Import data created by other software packages
+### Export data
+### Import data from the Web
+#### Scraping data from websites
+#### Scraping data from APIs
+##### Scraping data from APIs directly
+##### Scraping data from APIs via R packages
+
+<!--chapter:end:03-data_import.Rmd-->
+
+
+# Summarizing data
+
+Placeholder
+
+
+## Summary statistics
+### Categorical variables
+### Continuous variables
+#### Descriptive statistics
+#### Creating subsets
+
+<!--chapter:end:04-basic_statistics.Rmd-->
+
+
+
+## Data visualization
+### Categorical variables
+#### Bar plot
+#### Pie plot
+#### Covariation plots
+### Continuous variables
+#### Histogram
+#### Boxplot
+#### Plot of means
+#### Scatter plot
+##### Grouped scatter plot
+##### Combination of scatter plot and histogram
+#### Line plot
+### Saving plots
+### Additional options
+
+<!--chapter:end:05-visualization.Rmd-->
+
+
+
+## Writing reports using R-Markdown
+### Creating a new R-Markdown document
+### Text and Equations
+#### Headings
+#### Lists
+#### Text formatting
+### R-Code
+#### Global and chunk options
+### LaTeX Math
+#### Important symbols
+#### Greek letters
+
+<!--chapter:end:06-rmdIntro.Rmd-->
+
+
+# Introduction to Statistical Inference
+
+Placeholder
+
+
+## If we knew it all 
+### Sampling from a known population
+### Standard error of the mean
+#### Sample size
+#### Population standard deviation
+## The Central Limit Theorem
+## Using what we actually know
+### Confidence Intervals for the Sample Mean
+## Summary
+
+<!--chapter:end:07-statistical_inference.Rmd-->
+
+
+# Hypothesis testing
+
+Placeholder
+
+
+## Introduction
+### The null hypothesis
+### Statistical inference on a sample
+#### Test statistic
+##### z-scores
+##### t-statistic
+#### P-values
+#### Confidence interval
+### Choosing the right test
+#### Parametric vs. non-parametric tests
+#### One-tailed vs. two-tailed test
+### Summary
+## One sample t-test
+## Comparing two means
+### Independent-means t-test
+#### Theory
+#### Application
+### Dependent-means t-test
+#### Theory
+#### Application
+#### Summary
+### Further considerations
+#### Type I and Type II Errors
+#### Significance level, sample size, power, and effect size
+#### P-values, stopping rules and p-hacking
+
+<!--chapter:end:08-hypothesis_testing.Rmd-->
+
+
+
+## Comparing several means
+### Introduction
+### Decomposing variance
+#### Total sum of squares
+#### Model sum of squares
+#### Residual sum of squares
+#### Effect strength
+#### Test of significance
+### One-way ANOVA
+#### Basic ANOVA
+##### Independence of observations {-}
+##### Distributional assumptions {-}
+##### Homogeneity of variance {-}
+#### Post-hoc tests
+##### Bonferroni
+##### Tukey's HSD
+### Summary
+
+<!--chapter:end:09-Anova.Rmd-->
+
+---
+title: "10-non-parametric-tests"
+output:
+  html_document:
+    toc: yes
+  html_notebook: default
+  pdf_document:
+    toc: yes
+---
+
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+library(dplyr)
+library(psych)
+library(ggplot2)
+library(Hmisc)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+```
+
+## Non-parametric tests
+
+**Non-Parametric tests** do not require the sampling distribution to be normally distributed (a.k.a. "assumption free tests"). These tests may be used when the variable of interest is measured on an ordinal scale or when the parametric assumptions do not hold. They often rely on ranking the data instead of analyzing the actual scores. By ranking the data, information on the magnitude of differences is lost. Thus, parametric tests are more powerful if the sampling distribution is normally distributed.
+
+When should you use non-parametric tests?
+
+* When your DV is measured on an ordinal scale
+* When your data is better represented by the median (e.g., there are outliers that you can’t remove)
+* When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
+* You have a very small sample size (i.e., the central limit theorem does not apply)
+
+[You can download the corresponding R-Code here](./Code/09-non_parametric.R)
+
+
+### Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)
+
+The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale. The following assumptions must be fulfilled for the test to be applicable:
+
+* The dependent variable is at least ordinally scaled (i.e. a ranking between values can be established)
+* The independent variable has only two levels
+* A between-subjects design is used (i.e., the subjects are not matched across conditions)
+
+Intuitively, the test compares the frequency of low and high ranks between groups. Under the null hypothesis, the amount of high and low ranks should be roughly equal in the two groups. This is achieved through comparing the expected sum of ranks to the actual sum of ranks. 
+
+As an example, we will be using data obtained from a field experiment with random assignment. In a music download store, new releases were randomly assigned to an experimental group and sold at a reduced price (i.e., 7.95€), or a control group and sold at the standard price (9.95€). A representative sample of 102 new releases were sampled and these albums were randomly assigned to the experimental groups (i.e., 51 albums per group). The sales were tracked over one day. 
+
+Let's load and investigate the data first:    
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+library(psych)
+library(ggplot2)
+rm(music_sales)
+music_sales <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+music_sales$group <- factor(music_sales$group, levels = c(1:2), labels = c("low_price", "high_price")) #convert grouping variable to factor
+str(music_sales) #inspect data
+head(music_sales) #inspect data
+```
+
+Inspect descriptives (overall and by group).
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE, paged.print = FALSE}
+psych::describe(music_sales$unit_sales) #overall descriptives
+describeBy(music_sales$unit_sales, music_sales$group) #descriptives by group
+```
+
+Create boxplot and plot of means.
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot","Plot of means","Histogram"), tidy = FALSE}
+ggplot(music_sales, aes(group, unit_sales)) + 
+  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
+  geom_pointrange(stat = "summary") + 
+  labs(x = "Group", y = "Average number of sales") +
+  theme_bw()
+```
+
+Let's assume that one of the parametric assumptions has been violated and we needed to conduct a non-parametric test. Then, the  Mann-Whitney U test is implemented in R using the function ```wilcox.test()```. Using the ranking data as an independent variable and the listening time as a dependent variable, the test could be executed as follows:
+
+```{r message=FALSE, warning=FALSE}
+wilcox.test(unit_sales ~ group, data = music_sales) #Mann-Whitney U Test
+```
+
+The p-value is smaller than 0.05, which leads us to reject the null hypothesis, i.e. the test yields evidence that the new service feature leads to higher music listening times.
+
+
+### Wilcoxon signed-rank test
+
+The Wilcoxon signed-rank test is a non-parametric test used to analyze the difference between paired observations, analogously to the paired t-test. It can be used when measurements come from the same observational units but the distributional assumptions of the paired t-test do not hold, because it does not require any assumptions about the distribution of the measurements. Since we subtract two values, however, the test requires that the dependent variable is at least interval scaled, meaning that intervals have the same meaning for different points on our measurement scale. 
+
+Under the null hypothesis $H_0$, the differences of the measurements should follow a symmetric distribution around 0, meaning that, on average, there is no difference between the two matched samples. $H_1$ states that the distributions mean is non-zero.
+
+As an example, let's consider a slightly different experimental setup for the music download store. Imagine that new releases were either sold at a reduced price (i.e., 7.95€), or at the standard price (9.95€). Every time a customer came to the store, the prices were randomly determined for every new release. This means that the same 51 albums were either sold at the standard price or at the reduced price and this price was determined randomly. The sales were then recorded over one day. Note the difference to the previous case, where we randomly split the sample and assigned 50% of products to each condition. Now, we randomly vary prices for all albums between high and low prices. 
+
+Let's load and investigate the data first:    
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+rm(music_sales_dep)
+music_sales_dep <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment_dependent.dat", 
+                              sep = "\t", 
+                              header = TRUE) #read in data
+str(music_sales_dep) #inspect data
+head(music_sales_dep) #inspect data
+```
+
+Again, let's assume that one of the prarametric assumptions has been violated and we needed to conduct a non-parametric test. Then the Wilcoxon signed-rank test can be performed with the same command as the Mann-Whitney U test, provided that the argument ```paired``` is set to ```TRUE```.
+
+```{r message=FALSE, warning=FALSE}
+wilcox.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_high_price, paired = TRUE) #Wilcoxon signed-rank test
+```
+
+Using the 95% confidence level, the result would suggest a significant effect of price on sales (i.e., p < 0.05).
+
+
+### Kruskal-Wallis test
+
+When should you use non-parametric tests?
+
+* When the dependent variable is measured at an ordinal scale and we want to compare more than 2 means
+* When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)
+
+The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the ```kruskal.test()``` function. Using the same data as before, we type: 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+kruskal.test(Sales ~ Promotion, data = online_store_promo) 
+```
+
+The test-statistic follows a chi-square distribution and since the test is significant (p < 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. To get a first impression, we can plot the data using a boxplot:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
+#Boxplot
+ggplot(online_store_promo, aes(x = Promotion, y = Sales)) + 
+  geom_boxplot() + 
+  labs(x = "Experimental group (promotion level)", y = "Number of sales") + 
+  theme_bw() 
+```
+
+To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the ```PMCMR``` package.
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+library(PMCMR)
+posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
+```
+
+The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we lose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met. 
+
+## Categorical data
+
+In some instances, you will be confronted with differences between proportions, rather than differences between means. For example, you may conduct an A/B-Test and wish to compare the conversion rates between two advertising campaigns. In this case, your data is binary (0 = no conversion, 1 = conversion) and the sampling distribution for such data is binomial. While binomial probabilities are difficult to calculate, we can use a Normal approximation to the binomial when ```n``` is large (>100) and the true likelihood of a 1 is not too close to 0 or 1. 
+
+Let's use an example: assume a call center where service agents call potential customers to sell a product. We consider two call center agents:
+
+* Service agent 1 talks to 300 customers and gets 200 of them to buy (conversion rate=2/3)
+* Service agent 2 talks to 300 customers and gets 100 of them to buy (conversion rate=1/3)
+
+As always, we load the data first:
+
+[You can download the corresponding R-Code here](./Code/10-categorical_data.R)
+
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+call_center <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+call_center$conversion <- factor(call_center$conversion , levels = c(0:1), labels = c("no", "yes")) #convert to factor
+call_center$agent <- factor(call_center$agent , levels = c(0:1), labels = c("agent_1", "agent_2")) #convert to factor
+```
+
+Next, we create a table to check the relative frequencies:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+rel_freq_table <- as.data.frame(prop.table(table(call_center), 2)) #conditional relative frequencies
+rel_freq_table
+```
+
+We could also plot the data to visualize the frequencies using ggplot:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "proportion of conversions per agent (stacked bar chart)"}
+ggplot(rel_freq_table, aes(x = agent, y = Freq, fill = conversion)) + #plot data
+  geom_col(width = .7) + #position
+  geom_text(aes(label = paste0(round(Freq*100,0),"%")), position = position_stack(vjust = 0.5), size = 4) + #add percentages
+  ylab("Proportion of conversions") + xlab("Agent") + # specify axis labels
+  theme_bw()
+```
+
+... or using the ```mosaicplot()``` function:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "proportion of conversions per agent (mosaic plot)"}
+contigency_table <- table(call_center)
+mosaicplot(contigency_table, main = "Proportion of conversions by agent")
+```
+
+### Confidence intervals for proportions
+
+Recall that we can use confidence intervals to determine the range of values that the true population parameter will take with a certain level of confidence based on the sample. Similar to the confidence interval for means, we can compute a confidence interval for proportions. The (1-$\alpha$)% confidence interval for proportions is approximately 
+
+$$
+CI = p\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p*(1-p)}{N}}
+$$
+
+where $\sqrt{p(1-p)}$ is the equivalent to the standard deviation in the formula for the confidence interval for means. Based on the equation, it is easy to compute the confidence intervals for the conversion rates of the call center agents:
+
+```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+n1 <- nrow(subset(call_center,agent=="agent_1")) #number of observations for agent 1
+n2 <- nrow(subset(call_center,agent=="agent_2")) #number of observations for agent 1
+n1_conv <- nrow(subset(call_center,agent=="agent_1" & conversion=="yes")) #number of conversions for agent 1
+n2_conv <- nrow(subset(call_center,agent=="agent_2" & conversion=="yes")) #number of conversions for agent 2
+p1 <- n1_conv/n1  #proportion of conversions for agent 1
+p2 <- n2_conv/n2  #proportion of conversions for agent 2
+
+error1 <- qnorm(0.975)*sqrt((p1*(1-p1))/n1)
+ci_lower1 <- p1 - error1
+ci_upper1 <- p1 + error1
+ci_lower1
+ci_upper1
+
+error2 <- qnorm(0.975)*sqrt((p2*(1-p2))/n2)
+ci_lower2 <- p2 - error2
+ci_upper2 <- p2 + error2
+ci_lower2
+ci_upper2
+```
+
+Similar to testing for differences in means, we could also ask: Is agent 1 twice as likely as agent 2 to convert a customer? Or, to state it formally:
+
+$$H_0: \pi_1=\pi_2 \\
+H_1: \pi_1\ne \pi_2$$ 
+
+where $\pi$ denotes the population parameter associated with the proportion in the respective population. One approach to test this is based on confidence intervals to estimate the difference between two populations. We can compute an approximate confidence interval for the difference between the proportion of successes in group 1 and group 2, as:
+
+$$
+CI = p_1-p_2\pm z_{1-\frac{\alpha}{2}}*\sqrt{\frac{p_1*(1-p_1)}{n_1}+\frac{p_2*(1-p_2)}{n_2}}
+$$ 
+
+If the confidence interval includes zero, then the data does not suggest a difference between the groups. Let's compute the confidence interval for differences in the proportions by hand first:
+
+```{r}
+ci_lower <- p1 - p2 - qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI lower bound
+ci_upper <- p1 - p2 + qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI upper bound
+ci_lower
+ci_upper
+```
+
+Now we can see that the 95% confidence interval estimate of the difference between the proportion of conversions for agent 1 and the proportion of conversions for agent 2 is between `r round(ci_lower*100,0)`% and `r round(ci_upper*100,0)`%. This interval tells us the range of plausible values for the difference between the two population proportions. According to this interval, zero is not a plausible value for the difference (i.e., interval does not cross zero), so we reject the null hypothesis that the population proportions are the same.
+
+Instead of computing the intervals by hand, we could also use the ```prop.test()``` function:
+
+```{r}
+prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)
+```
+
+Note that the ```prop.test()``` function uses a slightly different (more accurate) way to compute the confidence interval (Wilson's score method is used). It is particularly a better approximation for smaller N. That's why the confidence interval in the output slightly deviates from the manual computation above, which uses the Wald interval. 
+
+You can also see that the output from the ```prop.test()``` includes the results from a &chi;<sup>2</sup> test for the equality of proportions (which will be  discussed below) and the associated p-value. Since the p-value is less than 0.05, we reject the null hypothesis of equal probability. Thus, the reporting would be: 
+
+The test showed that the conversion rate for agent 1 was higher by `r round(((prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[1])-(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$estimate[2]))*100,0)`%. This difference is significant &chi; (1) = 70, p < .05 (95% CI = [`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[1],2)`,`r round(prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)$conf.int[2],2)`]).
+
+
+### Chi-square test
+
+In the previous section, we saw how we can compute the confidence interval for the difference between proportions to decide on whether or not to reject the null hypothesis. Whenever you would like to investigate the relationship between two categorical variables, the $\chi^2$ test may be used to test whether the variables are independent of each other. It achieves this by comparing the expected number of observations in a group to the actual values. Let's continue with the example from the previous section. Under the null hypothesis, the two variables *agent* and *conversion* in our contingency table are independent (i.e., there is no relationship). This means that the frequency in each field will be roughly proportional to the probability of an observation being in that category, calculated under the assumption that they are independent. The difference between that expected quantity and the actual quantity can be used to construct the test statistic. The test statistic is computed as follows:
+
+$$
+\chi^2=\sum_{i=1}^{J}\frac{(f_o-f_e)^2}{f_e}
+$$
+
+where $J$ is the number of cells in the contingency table, $f_o$ are the observed cell frequencies and $f_e$ are the expected cell frequencies. The larger the differences, the larger the test statistic and the smaller the p-value. 
+
+The observed cell frequencies can easily be seen from the contingency table: 
+
+```{r message=FALSE, warning=FALSE}
+obs_cell1 <- contigency_table[1,1]
+obs_cell2 <- contigency_table[1,2]
+obs_cell3 <- contigency_table[2,1]
+obs_cell4 <- contigency_table[2,2]
+```
+
+The expected cell frequencies can be calculated as follows:
+
+$$
+f_e=\frac{(n_r*n_c)}{n}
+$$
+
+where $n_r$ are the total observed frequencies per row, $n_c$ are the total observed frequencies per column, and $n$ is the total number of observations. Thus, the expected cell frequencies under the assumption of independence can be calculated as: 
+
+```{r message=FALSE, warning=FALSE}
+n <- nrow(call_center)
+exp_cell1 <- (nrow(call_center[call_center$agent=="agent_1",])*nrow(call_center[call_center$conversion=="no",]))/n
+exp_cell2 <- (nrow(call_center[call_center$agent=="agent_1",])*nrow(call_center[call_center$conversion=="yes",]))/n
+exp_cell3 <- (nrow(call_center[call_center$agent=="agent_2",])*nrow(call_center[call_center$conversion=="no",]))/n
+exp_cell4 <- (nrow(call_center[call_center$agent=="agent_2",])*nrow(call_center[call_center$conversion=="yes",]))/n
+```
+
+To sum up, these are the expected cell frequencies
+
+```{r message=FALSE, warning=FALSE, paged.print = FALSE}
+data.frame(conversion_no = rbind(exp_cell1,exp_cell3),conversion_yes = rbind(exp_cell2,exp_cell4), row.names = c("agent_1","agent_2")) 
+```
+
+... and these are the observed cell frequencies
+
+```{r message=FALSE, warning=FALSE, paged.print = FALSE}
+data.frame(conversion_no = rbind(obs_cell1,obs_cell2),conversion_yes = rbind(obs_cell3,obs_cell4), row.names = c("agent_1","agent_2")) 
+```
+
+To obtain the test statistic, we simply plug the values into the formula: 
+
+```{r message=FALSE, warning=FALSE}
+chisq_cal <-  sum(((obs_cell1 - exp_cell1)^2/exp_cell1),
+                  ((obs_cell2 - exp_cell2)^2/exp_cell2),
+                  ((obs_cell3 - exp_cell3)^2/exp_cell3),
+                  ((obs_cell4 - exp_cell4)^2/exp_cell4))
+chisq_cal
+```
+
+The test statistic is $\chi^2$ distributed. The chi-square distribution is a non-symmetric distribution. Actually, there are many different chi-square distributions, one for each degree of freedom as show in the following figure. 
+
+```{r echo = F, message=FALSE, warning=FALSE, eval=T, fig.align="center", fig.cap = "The chi-square distribution"}
+library(ggplot2)
+a <- seq(2,10, 2)
+ggplot(data.frame(x=c(0,20)), aes(x))+
+  stat_function(fun = dchisq, args = list(8), aes(colour = '8'))+
+  stat_function(fun = dchisq, args = list(1), aes(colour = '1'))+
+  stat_function(fun = dchisq, args = list(2), aes(colour = '2'))+
+  stat_function(fun = dchisq, args = list(4), aes(colour = '4'))+
+  stat_function(fun = dchisq, args = list(6), aes(colour = '6'))+
+  stat_function(fun = dchisq, args = list(15), aes(colour = '15'))+
+  ylim(min=0, max=0.6) +
+  labs(colour = 'Degrees of Freedom', x = 'Value', y = 'Density') + theme_bw()
+```
+
+You can see that as the degrees of freedom increase, the chi-square curve approaches a normal distribution. To find the critical value, we need to specify the corresponding degrees of freedom, given by:
+
+$$
+df=(r-1)*(c-1)
+$$
+
+where $r$ is the number of rows and $c$ is the number of columns in the contingency table. Recall that degrees of freedom are generally the number of values that can vary freely when calculating a statistic. In a 2 by 2 table as in our case, we have 2 variables (or two samples) with 2 levels and in each one we have 1 that vary freely. Hence, in our example the degrees of freedom can be calculated as:
+
+```{r message=FALSE, warning=FALSE}
+df <-  (nrow(contigency_table) - 1) * (ncol(contigency_table) -1)
+df
+```
+
+Now, we can derive the critical value given the degrees of freedom and the level of confidence using the ```qchisq()``` function and test if the calculated test statistic is larger than the critical value:
+
+```{r message=FALSE, warning=FALSE}
+chisq_crit <- qchisq(0.95, df)
+chisq_crit
+chisq_cal > chisq_crit
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Visual depiction of the test result"}
+df <- 1
+p <- 0.95
+min <- 0
+max <- 15
+chsq1 <- round(qchisq(p,df=df), digits = 3)
+t2 <- round(qt(p2,df=df), digits = 3)
+plot1 <- ggplot(data.frame(x = c(min, max)), aes(x = x)) +
+  stat_function(fun = dchisq, args = list(df))+
+  stat_function(fun = dchisq, args = list(df), xlim = c(qchisq(p,df=df),max), geom = "area") +
+  scale_x_continuous(breaks = c(0, chsq1, chisq_cal)) +
+  geom_vline(xintercept = chisq_cal, color = "red") +
+  labs(title = paste0("Result of chi-square test: reject H0"),
+         subtitle = paste0("Red line: Calculated test statistic;"," Black area: Rejection region"),
+         x = "x", y = "Density") +
+  theme(legend.position="none") + 
+  theme_bw()
+plot1
+```
+
+We could also compute the p-value using the ```pchisq()``` function, which tells us the probability of the observed cell frequencies if the null hypothesis was true (i.e., there was no association):
+
+```{r message=FALSE, warning=FALSE}
+p_val <- 1-pchisq(chisq_cal,df)
+p_val
+```
+
+The test statistic can also be calculated in R directly on the contingency table with the function ```chisq.test()```.
+
+```{r message=FALSE, warning=FALSE}
+chisq.test(contigency_table, correct = FALSE)
+```
+
+Since the p-value is smaller than 0.05 (i.e., the calculated test statistic is larger than the critical value), we reject H<sub>0</sub> that the two variables are independent. 
+
+Note that the test statistic is sensitive to the sample size. To see this, let's assume that we have a sample of 100 observations instead of 1000 observations:
+
+```{r message=FALSE, warning=FALSE}
+chisq.test(contigency_table/10, correct = FALSE)
+```
+
+You can see that even though the proportions haven't changed, the test is insignificant now. The following equation lets you compute a measure of the effect size, which is insensitive to sample size: 
+
+$$
+\phi=\sqrt{\frac{\chi^2}{n}}
+$$
+
+The following guidelines are used to determine the magnitude of the effect size (Cohen, 1988): 
+
+* 0.1 (small effect)
+* 0.3 (medium effect)
+* 0.5 (large effect)
+
+In our example, we can compute the effect sizes for the large and small samples as follows:
+
+```{r message=FALSE, warning=FALSE}
+test_stat <- chisq.test(contigency_table, correct = FALSE)$statistic
+phi1 <- sqrt(test_stat/n)
+test_stat <- chisq.test(contigency_table/10, correct = FALSE)$statistic
+phi2 <- sqrt(test_stat/(n/10))
+phi1
+phi2
+```
+
+You can see that the statistic is insensitive to the sample size. 
+
+Note that the &Phi; coefficient is appropriate for two dichotomous variables (resulting from a 2 x 2 table as above). If any your nominal variables has more than two categories, Cramér's V should be used instead:
+
+$$
+V=\sqrt{\frac{\chi^2}{n*df_{min}}}
+$$
+
+where $df_{min}$ refers to the degrees of freedom associated with the variable that has fewer categories (e.g., if we have two nominal variables with 3 and 4 categories, $df_{min}$ would be 3 - 1 = 2). The degrees of freedom need to be taken into account when judging the magnitude of the effect sizes (see e.g., <a href="http://www.real-statistics.com/chi-square-and-f-distributions/effect-size-chi-square/" target="_blank">here</a>). 
+
+Note that the ```correct = FALSE``` argument above ensures that the test statistic is computed in the same way as we have done by hand above. By default, ```chisq.test()``` applies a correction to prevent overestimation of statistical significance for small data (called the Yates' correction). The correction is implemented by subtracting the value 0.5 from the computed difference between the observed and expected cell counts in the numerator of the test statistic. This means that the calculated test statistic will be smaller (i.e., more conservative). Although the adjustment may go too far in some instances, you should generally rely on the adjusted results, which can be computed as follows:
+
+```{r message=FALSE, warning=FALSE}
+chisq.test(contigency_table)
+```
+
+As you can see, the results don't change much in our example, since the differences between the observed and expected cell frequencies are fairly large relative to the correction.
+
+Caution is warranted when the cell counts in the contingency table are small. The usual rule of thumb is that all cell counts should be at least 5 (this may be a little too stringent though). When some cell counts are too small, you can use Fisher's exact test using the ```fisher.test()``` function. 
+
+```{r message=FALSE, warning=FALSE}
+fisher.test(contigency_table)
+```
+
+The Fisher test, while more conservative, also shows a significant difference between the proportions (p < 0.05). This is not surprising since the cell counts in our example are fairly large.
+
+### Sample size
+
+
+To **calculate the required sample size** when comparing proportions, the ```power.prop.test()``` function can be used. For example, we could ask how large our sample needs to be if we would like to compare two groups with conversion rates of 2% and 2.5%, respectively using the conventional settings for $\alpha$ and $\beta$:
+
+```{r}
+power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)
+```
+
+The output tells us that we need `r round(power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)$n,0)` observations per group to detect a difference of the desired size.
+
+
+### Summary
+
+* Between-subject experimental design: When you run experiment and randomly split sample into two groups whose units/participants are independent of each other, one of which receives a treatment (experimental group) while the other doesn’t (control group). In this case we have two independent samples and use independent t-test.
+
+* Within-subject experimental design: If you run an experiment with two experimental conditions and the same participants/units were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same participants/units in each group. In this case we have two dependent samples and use dependent t-test (Paired test).
+
+* Hypotheses:  
+    + H0: The difference between the two (independent or dependent) groups is equal zero.  
+    + H1: The difference between the two (independent or dependent) groups is not equal 0.
+
+* Both the independent t-test and the dependent t-test are parametric tests based on the normal distribution. 
+
+* Assumptions for both type of tests:
+
+    + The sampling distribution is normally distributed. In the dependent t-test this means that the sampling distribution of the differences between scores should be normal, not the scores themselves.
+
+    + Data are measured at least at the interval level.
+
+* The independent t-test, because it is used to test independent groups of people, also assumes:
+
+    + Scores in different treatment conditions (control group and test group) are independent (because they come from different participants/units/products).
+
+    + Homogeneity of variance – it assumes equal variances.
+
+* Application in marketing: T-test can help marketing department of retailers to answer questions about customers spendings. Since they have collected extensive data about their customers through loyalty program, they may want to use to conduct a research. They might be interested in comparing average amount of Euros spent per purchase between customers who live closer (within range of 500 m) and customers who live further (more than 500m) from their new outlet. Therefore, they could form the following hypotheses:      
+
+    + H0: There is no difference in a spending per purchase between customers who live closer to the outlet and customers who live further.  
+    + H1: There is a difference in a spending per purchase between customers who live closer to the outlet and customers who live further.
+
+<!--chapter:end:10-non_parametric_tests.Rmd-->
+
+
+# Regression 
+
+Placeholder
+
+
+## Correlation
+### Correlation coefficient
+### Significance testing
+### Summary
+## Regression
+### Simple linear regression
+#### Estimating the coefficients
+#### Significance testing
+#### Assessing model fit
+##### R-squared {-}
+##### Adjusted R-squared {-}
+##### F-test {-}
+#### Using the model
+### Multiple linear regression
+### Estimation of the regression plane
+### Calculate z on a grid of x-y values
+#### Draw the plane with "plot_ly" and add points with "add_trace"
+### Summary
+## Potential problems
+### Outliers
+### Influential observations
+### Non-linearity
+### Non-constant error variance
+### Non-normally distributed errors
+### Correlation of errors
+### Collinearity
+### Omitted Variables
+## Categorical predictors
+### Two categories
+### More than two categories
+## Extensions of the linear model
+### Interaction effects
+### Non-linear relationships
+
+<!--chapter:end:11-Regression.Rmd-->
+
+
+# Inspect data
+
+Placeholder
+
+
+## Logistic regression
+### Motivation and intuition
+### Technical details of the model
+### Estimation in R
+#### Logistic model with multiple predictors
+#### Model selection
+#### Predictions
+#### Perfect Prediction Logit
+##### Example
+
+<!--chapter:end:12-Logistic_Regression.Rmd-->
+
+
+# Exploratory factor analysis
+
+Placeholder
+
+
+## Introduction
+## Steps in factor analysis
+### Are the assumptions satisfied?
+### Deriving factors
+### Factor interpretation
+### Creating new variables
+## Reliability analysis
+
+<!--chapter:end:13-factor_analysis.Rmd-->
+
+
+# Appendix
+
+Placeholder
+
+
+## Random Variables & Probability Distributions
+### Random variables
+#### Why Random Variables?
+#### Tossing coins
+#### Sum of two dice
+#### Discrete Random Variables
+#### Continuous Case
+#### Definitions 
+
+<!--chapter:end:14-randomVariables.Rmd-->
+
+
+
+### Probability Distributions
+#### Introduction
+#### Discrete Distributions
+##### Binomial Distribution
+##### Discrete Uniform Distribution
+#### Continuous Distributions
+##### Uniform Distribution
+##### Normal distribution
+##### $\chi^2$ Distribution
+#### t-Distribution
+#### F-Distribution
+### Appendix
+#### Derivation of the varaince of the binomial distribution
+
+<!--chapter:end:15-probabilityDistributions.Rmd-->
+
+
+# This is the same as avPlot
+
+Placeholder
+
+
+## Regression
+### Linear regression 
+### Logistic regression
+#### Maximum likelihood estimation
+#### Estimation of the parameters $\beta_i$
+#### Example
+##### Sum of LN vs Product
+
+<!--chapter:end:16-regression_appendix.Rmd-->
+
+
+# Assignments
+
+Placeholder
+
+
+## Assignment 2 (Hypothesis Testing)
+## Assignment 3 (Hypothesis Testing 2)
+
+<!--chapter:end:17-assignments.Rmd-->
+
+
+# Questionnaire design  
+
+Placeholder
+
+
+## Questionnaire design process  
+### Specification of the information needed  
+### Specify the interviewing method  
+### Determine the content of questions  
+### Inability and unwillingness to answer  
+### Decide on measurement scales and scaling techniques
+#### Comparative scale: Paired Comparison    
+#### Comparative scale: Rank Order  
+#### Comparative scale: Constant sum  
+#### Non-Comparative Scales: Continuous Rating Scales  
+#### Non-Comparative Scales: Itemized Rating Scales  
+##### Itemized Rating Scales:  Likert scale
+##### Itemized Rating Scales: Semantic Differential
+### Questionnaire structure
+#### Questionnaire structure for a between-subjects design
+#### Questionnaire structure for a within-subjects design
+### Question wording
+### Choose adequate order
+### Test your questionnaire
+## Questionnaire in Qualtrics
+## Question-Types-and-Data-Analysis
+### Multiple choice with a single answer
+#### Data handling
+#### Visualisation
+#### Statistical analysis
+##### Fischer's exact
+##### Chi-square test: Goodness of fit & Independence test
+### Multiple choice with multiple answers
+### Rank order question
+
+<!--chapter:end:18-Questionnaire_design.Rmd-->
+
+
+
+## Question-Types-and-Data-Analysis
+### Multiple choice with a single answer
+#### Data handling
+#### Visualisation
+#### Statistical analysis
+##### Fischer's exact
+##### Chi-square test: Goodness of fit & Independence test
+### Multiple choice with multiple answers
+### Rank order question
+### Constant Sum question
+#### Data visualisation
+
+<!--chapter:end:Questions-and-Data-Type.Rmd-->
+
+---
+title: "xgboost"
+author: "Mirza Mujanovic - 01553283"
+date: "6/11/2020"
+output: html_document
+---
+
+## Learning
+
+For the purpose of this tutorial we will load XGBoost package.
+
+`r require(xgboost) `
+
+### Dataset presentation
+
+In this example, we are aiming to predict whether a mushroom can be eaten or not (like in many tutorials, example data are the same as you will use on in your every day life :-).
+
+<!--chapter:end:xgboost.Rmd-->
+
