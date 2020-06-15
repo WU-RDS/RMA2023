@@ -1,11 +1,11 @@
 ---
 title: "07-Regression"
 output:
+  html_document:
+    toc: yes
   pdf_document:
     toc: yes
   html_notebook: default
-  html_document:
-    toc: yes
 ---
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 library(knitr)
@@ -239,6 +239,19 @@ Correlation coefficients give no indication of the direction of causality. In ou
 
 * Third-variable problem: there may be other unobserved factors that affect the results.
 * Direction of causality: Correlations say nothing about which variable causes the other to change (reverse causality: attitudes may just as well cause the years of residence variable).
+
+
+### Summary
+
+* Correlation (Pearson’s) can be observed between 2 or more continuous variables (interval or ratio). If we apply Pearson’s equation on ordinal data, which we ranked beforehand, we will obtain Spearman’s correlation coefficient.
+* Correlation helps us to determine the degree to which the variation in one variable, X, is related to the variation in another variable, Y.
+* A raw measure of the relationship between variables is the covariance.
+* If we standardize the covariance (divide by the product of the two standard deviations) we get Pearson’s correlation coefficient, r.
+* The correlation coefficient can be between −1 and +1.
+* +1 indicates a perfect positive relationship; −1 indicates a perfect negative relationship; 0 indicates no linear relationship at all.
+* The correlation coefficient is a commonly used measure of the size of an effect: values of +/-0.1 are considered a small effect, +/-0.3 a medium effect and +/-0.5 a large effect. However, an interpretation of the size of correlation should be made based on the context of the research rather than on following these benchmarks.
+* Correlation coefficients give no indication of the direction of causality.
+* Consideration of the third-variable problem is necessary when interpreting correlation as there might be other unobserved variables that influence the result.
 
 ## Regression
 
@@ -873,6 +886,28 @@ The results show that for ```adspend``` and ```airplay```, a change by one stand
 <div align="center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BMKgcG9me4s" frameborder="0" allowfullscreen></iframe>
 </div>
+
+
+### Summary
+
+*	Regression analysis is a way of predicting an outcome (dependent) variable from one predictor (independent) variable (simple regression) or several predictor variables (multiple regression).
+*	In a simple linear regression, we do this by fitting a statistical model to the data in the form of a straight line.
+*	The regression line is a line that goes through, or as close as possible to, as many of the data points as possible.
+*	R-squared indicates how much variance is explained by the model compared to how much variance there is to explain at all. It can be defined as the proportion of variance in the outcome variable that is shared by the predictor variable.
+*	F-statistic denotes the extent to which the model can explain variability relative to the extent to which the model cannot explain it.
+*	Beta coefficient in a single linear regression determines the slope of the regression line and the strength of the relationship between a predictor and the outcome. The coefficient is significant if Pr(>|t|) < .05. 
+*	Beta coefficient shows the extent to which the outcome variable changes when comes to one-unit change in the predictor variable.
+*	Intercept shows the value that dependent variable holds when beta coefficients are 0.
+*	Confidence interval of beta coefficient tell us, if we’d collected 100 samples, and calculated the confidence intervals for a beta coefficient, that 95% of these confidence intervals (out of 100) would contain the true value of beta coefficient.
+* Assessing the regression model:
+    + Check for the outliers and influential cases as they can cause a bias, because they influence the values of the estimated regression   coefficients.   
+    + Check for the linearity, meaning that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms.  
+    + Check that the error terms have a constant variance (homoscedasticity).
+    + Check that the error term is normally distributed.
+    + Check for the “third-variables” that are left out the model, but influence the outcome, and therefore introduce a bias in other variables’ coefficients.
+
+* Example of application in marketing: Digital marketers usally have to assess how additional Euros put into online advertising contributes to sales. Most of times companies are running advertising on different channels. If you have run Google ads, Facebook ads and newspaper ads, the question that you as a digital marketer could wonder about is ads performance. Given that you collected enough data, you can apply multiple regression and calucate how much an additional Euro put in each of those channels drives additional sales.
+
 
 ## Potential problems
 

@@ -16,12 +16,29 @@ library(knitr)
 
 ## Question-Types-and-Data-Analysis
 ```{r, echo = FALSE, results='asis', warning=FALSE ,error=FALSE}
+# Load in qualtRics package
 library(qualtRics)
-qualtrics<-read_survey('qualtrics_response_data_final_final.csv')
+library(janitor)
+library(sjlabelled)
+
+# Read the qualtrics survey data
+qualtrics<-read_survey('new_qualtrics_response_data_final_final.csv')
+head(qualtrics)
+dim(qualtrics)
+#View(qualtrics)
+qualtrics$Q23_Gender
+qualtrics$Q7_MC_sa_country
+# Using labels as column name
+old.colnames <-colnames(qualtrics)
+new.colnames <-colnames(label_to_colnames(qualtrics))
+new.colnames <- make.unique(new.colnames, sep="_")
+colnames(qualtrics)<- new.colnames
+
 ```
 
-
 In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
+
+[Here you can find an example of a questionnaire in Qualtrics with guidelines and suggestions related to each question type.](./ExampleQuestionnaireQualtrics.qsf)
 
 ### Multiple choice with a single answer
 
@@ -33,7 +50,7 @@ knitr::include_graphics('support-multiple-choice-question.png')
 
 Type of data you obtain is **categorical**, and the output comes in the following form:  
 ```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
-knitr::kable(qualtrics[1:6,c("Q8_MC_sa_Likert")], caption = "Multiple Choice Question with Single Answer")
+knitr::kable(qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies or TV series on Netflix?")], caption = "Multiple Choice Question with Single Answer")
 ```
 
 #### Data handling
@@ -45,15 +62,17 @@ In our case, our multiple choice question output will contain 4 data groups ('Gr
 
 ```{r, eval=TRUE, warning=FALSE, message=FALSE}
 # Convert numeric value to factors
-qualtrics$Q8_MC_sa_Likert <- factor(qualtrics$Q8_MC_sa_Likert, levels = c(1:5), labels = c('Never','1-2 hours','3-4 hours','5-6 hours','more than 6 hours'))
-qualtrics$Q23_Gender <- factor(qualtrics$Q23_Gender,levels = c(1:2),labels = c("Male","Female"))
-qualtrics$Q7_MC_sa_country <- factor(qualtrics$Q7_MC_sa_country, levels = c(1:2), labels=c("Austria","Germany"))
+qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?' <- factor(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?', levels = c(1:5), labels = c('Never','1-2 hours','3-4 hours','5-6 hours','more than 6 hours'))
+
+qualtrics$` Selected Choice_1` <- factor(qualtrics$` Selected Choice_1`,levels = c(1:2),labels = c("Male","Female"))
+
+qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
 
 
 # Table
-table(qualtrics$Q8_MC_sa_Likert)
-table(qualtrics$Q23_Gender)
-table(qualtrics$Q7_MC_sa_country)
+table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
+table(qualtrics$` Selected Choice`)     #countries
+table(qualtrics$` Selected Choice_1`)   #gender
 
 ```
 
@@ -63,7 +82,7 @@ Second, you might want to visualize your results. In order to do so, the data fo
 
 ```{r, eval=TRUE, warning=FALSE, message=FALSE}
 # Converting long format to the visualisation-friendly format
-mlc_visualisation <- as.data.frame(table(qualtrics$Q8_MC_sa_Likert))
+mlc_visualisation <- as.data.frame(table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
 
 # Naming columns
 names(mlc_visualisation) <- c('Time','Count')
@@ -135,7 +154,7 @@ Fisher's exact test is used to test a hypothesis with data obtained from multipl
 
 ```{r}
 # Creation of contingency table
-fisher_test_table <-table(qualtrics$Q7_MC_sa_country,qualtrics$Q8_MC_sa_Likert)
+fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
 # Check how our contigency table looks like
 fisher_test_table
 
@@ -165,7 +184,7 @@ In our case, not rejecting the null hypothesis for the Fisher’s exact test of 
 <ul><li><B> Note that we did not assume any specific distribution, so we are assuming that each count will have the same or similar number. <ul><li><B>  
 ```{r} 
 # Creating table 
-(mlc_chi_square <- table(qualtrics$Q8_MC_sa_Likert))
+(mlc_chi_square <- table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
       
 # Chi-square test (without given expected values = equal values )
 chisq.test(mlc_chi_square)
@@ -199,7 +218,7 @@ This time the p-value of the test is lower than 0.05.We have an evidance that ob
 
 ```{r}
 # Creation of contingency table
-chi_square_table <-table(qualtrics$Q23_Gender,qualtrics$Q8_MC_sa_Likert)
+chi_square_table <-table(qualtrics$` Selected Choice_1`,qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
 
 # Chi-square independence test
 chisq.test(chi_square_table)
@@ -300,11 +319,11 @@ Intuitive question to ask is the following: which feature of the fitness tracker
 
 We can answer this question by calculating a mean rank for each feature. Before we do so, we will create a separate data frame and add columns of the response data.
 ```{r}
-rank.data <- data.frame(qualtrics$Q3_Rank_Order_1,
-                        qualtrics$Q3_Rank_Order_2,
-                        qualtrics$Q3_Rank_Order_3,
-                        qualtrics$Q3_Rank_Order_4,
-                        qualtrics$Q3_Rank_Order_5)
+rank.data <- data.frame(qualtrics$` Measuring steps`,
+                        qualtrics$` Calories burned`,
+                        qualtrics$` Measuring heartbeat`,
+                        qualtrics$` Exercise tracking`,
+                        qualtrics$` Measuring distance`)
 colnames(rank.data)<-c("Measuring steps","Calories burned","Measuring heartbeat","Exercise tracking","Measuring distance")
 
 ```
@@ -383,3 +402,89 @@ corrplot(cor.matrix, method="color", type = "upper", order = "hclust")
 ```
 
 From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positvely. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
+
+### Constant Sum question
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('constant-sum-question.png')
+```
+
+If you wish to obtain information about how much one attribute is preferred over another one, you may use a constant sum scale. The total box should always be displayed at the bottom to make it easier for respondents.A constant sum question permits collection of ratio data type. With data obtained we would be able to express the relative importance of the options.
+
+```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
+constant.sum <- subset(qualtrics, select =c(" Location"," Price"," Ambience"," Customer Service"))
+constant.sum$id <- seq(1:nrow(constant.sum))
+knitr::kable(constant.sum[1:6,], caption = "Constant Sum Question")
+```
+
+#### Data visualisation
+
+```{r}
+# Compute descriptive statistics
+library(pastecs) 
+res <- stat.desc(constant.sum)
+round(res[,1:4],2)
+```
+
+```{r,error=FALSE,warning=FALSE, message=FALSE}
+# Creation of the long version of data frame
+constant.sum.long <-melt(constant.sum, variable.name ="Factor" ,value.name = "Points")
+constant.sum.long
+# Boxplot basic
+constant.sum[,-5] %>%
+boxplot(constant.sum.long$Points ~ constant.sum.long$Factor , col=rgb(0.3,0.5,0.4,0.6) , ylab="Points",xlab="", main= "What factors do you consider when choosing a place to go for a dinner?")
+
+# Boxplot ggplot2
+p<-constant.sum.long %>% 
+  filter(Factor!="id") %>%
+  ggplot(aes(x=Factor, y=Points, fill= Factor)) +
+    geom_boxplot()  +
+    theme_minimal() +
+    ggtitle("What factors do you consider when choosing a place to go for a dinner?") +
+    xlab("")
+ggplotly(p)
+```
+
+With the data collected we are able to answer the question: what factor is the most important for our respondents when they go out for a dinner?
+
+```{r}
+library(robCompositions)
+constSum(constant.sum,100)
+```
+
+In order to anwser this question we need to conduct **a repeated measures ANOVA**.
+This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
+
+We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumputions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption referrs to extreme outliers. Let's have a look at potential outliers:
+```{r}
+# Outliers
+constant.sum.long %>% 
+  group_by(Factor) %>%
+  identify_outliers(Points)
+```
+
+As we cannot identify any extreme outliers, we can proceed with deploying repeated measures ANOVA.
+
+```{r}
+# Formatting data 
+constant.sum.aov <- gather(constant.sum, key = "Factor", value = "Points", ` Location`,` Price`,` Ambience`,` Customer Service`)
+
+# One-way repeated measures ANOVA  
+res.aov <- anova_test(data = constant.sum.aov, dv = Points,wid = id ,within = Factor)
+get_anova_table(res.aov)
+
+# Post hoc test
+pairwise.t.test(constant.sum.long$Points,constant.sum.long$Factor, paired = T, p.adjust.method = "holm")
+```
+
+```{r}
+ggstatsplot::ggwithinstats(
+  data = constant.sum.long %>% filter(Factor!="id"), # excluding "id" column from the data
+  x = Factor,
+  y = Points,
+  type = "p",
+  pairwise.comparisons = TRUE, # show pairwise comparison test results
+  title = "What factors do you consider when choosing a place to go for a dinner?")
+```
+
+
