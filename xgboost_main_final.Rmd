@@ -114,10 +114,9 @@ First, we perform stratified sampling to break our data set into training and te
 p <- ggplot(ames) + geom_density(aes(x=Sale_Price)) + xlab(label = "Sales price") + ggtitle(label = "Distribution of house sale prices (pre-stratifying)")
 ggplotly(p)
 
-# Stratified sampling with the rsample package
+# Data split on test and train data
 set.seed(1234)
-split <- initial_split(ames, prop = 0.7, 
-                       strata = "Sale_Price")
+split <- initial_split(ames, prop = 0.7)
 ames_train  <- training(split)
 ames_test   <- testing(split)
 
