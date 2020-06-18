@@ -847,3 +847,91 @@ corrplot(cor.matrix, method="color", type = "upper", order = "hclust")
 ```
 
 From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positvely. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
+
+
+### Constant Sum question
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('constant-sum-question.png')
+```
+
+If you wish to obtain information about how much one attribute is preferred over another one, you may use a constant sum scale. The total box should always be displayed at the bottom to make it easier for respondents.A constant sum question permits collection of ratio data type. With data obtained we would be able to express the relative importance of the options.
+
+```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
+constant.sum <- subset(qualtrics, select =c(" Location"," Price"," Ambience"," Customer Service"))
+constant.sum$id <- seq(1:nrow(constant.sum))
+knitr::kable(constant.sum[1:6,], caption = "Constant Sum Question")
+```
+
+#### Data visualisation
+
+```{r}
+# Compute descriptive statistics
+library(pastecs) 
+res <- stat.desc(constant.sum)
+round(res[,1:4],2)
+```
+
+```{r,error=FALSE,warning=FALSE, message=FALSE}
+# Creation of the long version of data frame
+constant.sum.long <-melt(constant.sum, variable.name ="Factor" ,value.name = "Points")
+constant.sum.long
+# Boxplot basic
+constant.sum[,-5] %>%
+boxplot(constant.sum.long$Points ~ constant.sum.long$Factor , col=rgb(0.3,0.5,0.4,0.6) , ylab="Points",xlab="", main= "What factors do you consider when choosing a place to go for a dinner?")
+
+# Boxplot ggplot2
+p<-constant.sum.long %>% 
+  filter(Factor!="id") %>%
+  ggplot(aes(x=Factor, y=Points, fill= Factor)) +
+    geom_boxplot()  +
+    theme_minimal() +
+    ggtitle("What factors do you consider when choosing a place to go for a dinner?") +
+    xlab("")
+ggplotly(p)
+```
+
+With the data collected we are able to answer the question: what factor is the most important for our respondents when they go out for a dinner?
+
+```{r}
+library(robCompositions)
+constSum(constant.sum,100)
+```
+
+In order to anwser this question we need to conduct **a repeated measures ANOVA**.
+This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
+
+We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumputions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption referrs to extreme outliers. Let's have a look at potential outliers:
+```{r}
+# Outliers
+constant.sum.long %>% 
+  group_by(Factor) %>%
+  identify_outliers(Points)
+```
+
+As we cannot identify any extreme outliers, we can proceed with deploying repeated measures ANOVA.
+
+```{r}
+# Formatting data 
+constant.sum.aov <- gather(constant.sum, key = "Factor", value = "Points", ` Location`,` Price`,` Ambience`,` Customer Service`)
+
+# One-way repeated measures ANOVA  
+res.aov <- anova_test(data = constant.sum.aov, dv = Points,wid = id ,within = Factor)
+get_anova_table(res.aov)
+
+# Post hoc test
+pairwise.t.test(constant.sum.long$Points,constant.sum.long$Factor, paired = T, p.adjust.method = "holm")
+```
+
+```{r}
+ggstatsplot::ggwithinstats(
+  data = constant.sum.long %>% filter(Factor!="id"), # excluding "id" column from the data
+  x = Factor,
+  y = Points,
+  type = "p",
+  pairwise.comparisons = TRUE, # show pairwise comparison test results
+  title = "What factors do you consider when choosing a place to go for a dinner?")
+```
+
+
+
