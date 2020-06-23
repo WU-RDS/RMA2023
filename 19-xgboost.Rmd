@@ -36,12 +36,10 @@ The final outcome of supervised machine learning is a predictive model, so it is
 
 Another important term in the context of machine learning are **parameters**. They denote undetermined part that we need to learn from data. For instance, in case of linear regression, the parameters are the **coefficients **.
 
-
 Finally, as we said, models we build with supervised machine learning are predictive models. "Supervised" refers to a supervisory role of the target variable, which indicates the task that model needs to learn. More specifically, it means that the data which is used for training a model contains target variable. Given a set of training data, the learning algorithm attempts to find the combination of feature values that results in a predicted value as close to the actual target variable as possible.
 
 
-
-```{r, eval=F}
+```{r, eval=F, echo=FALSE}
 ### Boosted Trees ####
 ```
 
@@ -251,7 +249,7 @@ getParamSet("regr.xgboost")
 
 To build a well-performing predicitive model many iterations are necessary. Therefore, in order to determine how good or bad one model predicts the target variable, performance evaluation needs to be conducted. A technique that will be used to help us in evaluating performance of our future machine learning models is called **k-fold cross-validation technique.** K-fold cross-validation evaluates a model by training a couple of models on subsets of the available input data and evaluating them on the complementary subset of the data. In this process, training data is splitted into k groups (i.e. folds) of approximately equal size. Then the model is fit on k−1 folds and the remaining fold is used in computation of the model performance. This procedure is repeated k times, where each time, a different fold is treated as the validation set (i.e. used in computation of the model performance). Thus, the final cross-validation k-fold estimate is computed by averaging the k test errors. The final output provided is an approximation of the error we may expect on unseen data.
 
-```{r using-mlr, eval=F}
+```{r using-mlr, eval=F, echo=F}
 # CONSIDERING TO ADD OR DITCH
 ames_train.df <- as.data.frame(ames_train)
 colnames(ames_train.df) <- gsub("&","and",colnames(ames_train.df))

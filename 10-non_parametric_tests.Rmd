@@ -452,17 +452,52 @@ power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)
 The output tells us that we need `r round(power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)$n,0)` observations per group to detect a difference of the desired size.
 
 
-### Summary
+## Summary of hypothesis testing
 
-* Between-subject experimental design: When you run experiment and randomly split sample into two groups whose units/participants are independent of each other, one of which receives a treatment (experimental group) while the other doesn’t (control group). In this case we have two independent samples and use independent t-test.
+* We rarely have information about whole population, so we use hypothesis testing to test our assumptions about certain population parameter. Usually, the population parameter for which we form hypotheses is true population mean ($\mu$). A hypothesis about it would tell us how the corresponding sampling distribution looks like. To revise, a sampling distribution is the distribution of a statistic (mean) that is obtained by repeatedly drawing a large number of samples from certain population. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample assuming that the hypothesis is true. 
 
-* Within-subject experimental design: If you run an experiment with two experimental conditions and the same participants/units were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same participants/units in each group. In this case we have two dependent samples and use dependent t-test (Paired test).
+* The null hypothesis refers to the statement that is being tested and is usually a statement of the status quo, one of no difference or no effect. For instance, that true population mean and hypothesized value are equal. The aim is usually to provide an evidence against the null hypothesis. Remember that the null hypothesis can be either rejected or our data can fail to reject it.
+
+* If the null hypothesis is rejected, this is taken as support for the alternative hypothesis. For instance, that true population mean and the hypothesized value are not equal. The alternative hypothesis assumes that some difference exists.
+
+* The standardised value that tells us how many standard deviations our sample mean is away from the population mean if the null hypothesis was true is z-score. However, z-score calculation requires that we know the true population standard deviation $\sigma$ when computing the standard deviation of the sampling distribution $\sigma_{\bar x}$. As we already learned, parameters of the true population are rarely known. Therefore, there is a t-statistic (or t-score) which, instad the standard deviation of the sampling distribution $\sigma_{\bar x}$), uses an estimate for the standard deviation of the distribution of the sample mean $SE_{\bar x}$.
+
+* The p-value corresponds to the probability that the test statistic (i.e. mean) would take a value as extreme or more extreme than the one that we actually obtained from our sample, assuming that the null hypothesis is true. A small p-value signals that it is unlikely to observe the calculated test statistic under the assumption that the null hypothesis is true. In order to determine significance of our test results, we need to compare our p-value to the given significance level.
+Note that higher the value of the test statistic, the lower the p-value, i.e. lower the probability to observe as extreme or more extreme test statistic from that test statistic that we observed.
+
+* Interpretation of the confidence interval: if we take 100 samples and calculated the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals. 
+
+* To choose correct statistical test, one neeeds to consider the following questions:
+
+1. On what scale are your variables measured? Categorical or continuous?
+2. Do you want to test for relationships or differences?
+3. If you test for differences, how many groups would you like to test?
+4. For parametric tests, are the assumptions fulfilled?
+
+* The sequence of steps in the process of hypothesis testing:
+
+1. Formulate null and alternative hypotheses
+2. Select an appropriate test
+3. Choose the level of significance
+4. Descriptive statistics and data visualization
+5. Conduct significance test
+6. Report results and draw a marketing conclusion
+
+* A one-sample t-test is a statistical test used to test whether a population mean is significantly different from some hypothesized value (e.g. 100).
+
+$$
+H_0: \mu = 100 \\
+H_1: \mu \neq 100
+$$
+
+
+* Between-subject experimental design: When you run experiment and randomly split sample into two groups whose units/participants are independent of each other, one of which receives a treatment (experimental group) while the other doesn’t (control group). In this case we have two independent samples and use independent t-test to compare their means.
+
+* Within-subject experimental design: If you run an experiment with two experimental conditions and the same participants/units were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same participants/units in each group. In this case we have two dependent samples and use dependent t-test (Paired test) to compare their means.
 
 * Hypotheses:  
     + H0: The difference between the two (independent or dependent) groups is equal zero.  
     + H1: The difference between the two (independent or dependent) groups is not equal 0.
-
-* Both the independent t-test and the dependent t-test are parametric tests based on the normal distribution. 
 
 * Assumptions for both type of tests:
 
@@ -472,7 +507,7 @@ The output tells us that we need `r round(power.prop.test(p1=0.02,p2=0.025,sig.l
 
 * The independent t-test, because it is used to test independent groups of people, also assumes:
 
-    + Scores in different treatment conditions (control group and test group) are independent (because they come from different participants/units/products).
+    + Scores in different treatment conditions (control group and test group) are independent (i.e. they come from different participants/units/products).
 
     + Homogeneity of variance – it assumes equal variances.
 
@@ -480,3 +515,8 @@ The output tells us that we need `r round(power.prop.test(p1=0.02,p2=0.025,sig.l
 
     + H0: There is no difference in a spending per purchase between customers who live closer to the outlet and customers who live further.  
     + H1: There is a difference in a spending per purchase between customers who live closer to the outlet and customers who live further.
+
+* When conducting a research, there are factors under direct control of a researcher such as siginificance level ($\alpha$) and the size of the sample($n$). On the other side, factors such as power (1-$β$) and effect size ($d$) are under indirect control of a researcher. Overall, the aim is to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible.
+
+* p-hacking is the misuse and abuse of p-values and results in being fooled by false positives. Some forms of p-hacking are obvious, but other are much more subtle
+ 
