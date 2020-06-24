@@ -491,15 +491,26 @@ H_1: \mu \neq 100
 $$
 
 
-* Between-subject experimental design: When you run experiment and randomly split sample into two groups whose units/participants are independent of each other, one of which receives a treatment (experimental group) while the other doesn’t (control group). In this case we have two independent samples and use independent t-test to compare their means.
+* Between-subject experimental design: When you run experiment and randomly split sample into two groups whose units/participants are independent of each other, one of which receives a treatment (experimental group) while the other doesn’t (control group).**In this case we have two independent samples and use independent t-test to compare their means.**
 
-* Within-subject experimental design: If you run an experiment with two experimental conditions and the same participants/units were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same participants/units in each group. In this case we have two dependent samples and use dependent t-test (Paired test) to compare their means.
+* Within-subject experimental design: If you run an experiment with two experimental conditions and the same participants/units were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same participants/units in each group. **In this case we have two dependent samples and use dependent t-test (Paired test) to compare their means.**
 
 * Hypotheses:  
-    + H0: The difference between the two (independent or dependent) groups is equal zero.  
-    + H1: The difference between the two (independent or dependent) groups is not equal 0.
+    
+    + H0: The difference between the two (independent or dependent) groups is equal zero. 
+    
+$$H_0: \mu_1 - \mu_2=0=\delta$$
 
-* Assumptions for both type of tests:
+
+    + H1: The difference between the two (independent or dependent) groups is not equal 0.
+    
+
+$$
+H_1: \delta \ne 0
+$$
+
+
+* Assumptions for both independent t-test and dependent t-test:
 
     + The sampling distribution is normally distributed. In the dependent t-test this means that the sampling distribution of the differences between scores should be normal, not the scores themselves.
 
@@ -518,5 +529,74 @@ $$
 
 * When conducting a research, there are factors under direct control of a researcher such as siginificance level ($\alpha$) and the size of the sample($n$). On the other side, factors such as power (1-$β$) and effect size ($d$) are under indirect control of a researcher. Overall, the aim is to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible.
 
-* p-hacking is the misuse and abuse of p-values and results in being fooled by false positives. Some forms of p-hacking are obvious, but other are much more subtle
+* Term "p-hacking" refers to misuse of p-value in the way that, although all samples drawn come from the same population, a researcher draws random samples until the differnce between two sample "proves" to be significant. This should be avoided at all costs.
  
+ 
+* In cases when there are more than 2 groups to compare, we can use ANOVA. Requirements for using ANOVA are the following:
+
+1. A metric dependent variable (i.e., measured using an interval or ratio scale).
+2. One or more non-metric (categorical) independent variables (also called factors).
+
+* **Familywise or experiment wise error rate.** The reason why we don’t just carry out multiple t-tests to compare 3 or more means between all combinations of groups lies in the fact that, across the groups of test, we would increase Type 1 error (alpha)  possibility from acceptable 5% to 14.3%.
+
+* The basic concept underlying ANOVA is the decomposition of the variance in the data:
+
+1. Total sum of squares ($SS_T$): coresponds to the total variation that can be attributed to various factors
+2. Model sum of squares($SS_M$): determines how much of the variance can be explained by the model
+3. Residual sum of squares($SS_R$): determines how much of the variance can not be explained by the model
+
+$$SS_T= SS_M+SS_R$$
+
+* In order to test significance of independent variable on the dependent variable we use F-statistic:
+
+$$F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}$$
+...and compare it with the critical value calculated based on degrees of freedom. If the F-statistic exceeds the critical value, zero hypothesis is rejected. More specifically, it means that one or more of the differences between means are statistically significant.
+
+
+* **One-way ANOVA** is used when there is only one categorical variable (factor). One-way ANOVA compares the means of two or more independent groups in order to determine whether there is an evidance that the associated population means are significantly different. In order to conduct it, certain requirements need to be fulfilled:
+
+    +	A metric dependent variable must be continuous (interval or ratio).
+    + There is only one independent non-metric (categorical) variable or factor.
+    + Variances in each group need to be fairly similar (homogeneity of variance).
+    +	Observations in each group must be independent (i.e. randomly assigned to the groups).
+    +	In terms of normality, distributions within groups should be normally distributed. However, this applies when the sample size is small (approximately less than 30 observations).
+
+*	Hypotheses:  
+	H0: Means of all groups are equal (non-directional hypothesis).
+	
+	$$H_0: \mu_1 = \mu_2 = \mu_3$$
+	H1: Means of all groups are not all equal.  
+	
+	$$H_1: \exists {i,j}: {\mu_i \ne \mu_j}$$  
+	
+	**Note that from the alternative hypothesis can not be found out which means are not equal!**
+	
+* One-way ANOVA is an omnibus test statistic,i.e. cannot tell you which specific groups were statistically significantly.If you are interested in exploring the data results for any between-groups mean differences that exist, you use **post hoc test.** Post hoc tests are designed to compare all different combinations of the treatment groups and you can find out which group means are different. They avoid familywise error by correcting the level of significance for each test such that the overall Type I error rate ($\alpha$) across all comparisons remains at 0.05. Among the most used post hoc tests are Bonferroni and Tukey's HSD.
+
+* While 1-sample t-test, independent(and independent) t-test and One-way ANOVA belong to *parametric tests*, there is a whole set of their *non-parametric* such as:
+
+    + Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)- non-parametric peer of independent t-test  
+    + Wilcoxon signed-rank test - non-parametric version of dependent t-test 
+    + Kruskal-Wallis test - non-parametric counterpart of One-way ANOVA
+
+* When should you use non-parametric tests?
+
+    + When your dependent variable is measured on an ordinal scale
+    + When your data is better represented by the median (e.g., there are outliers that you can’t remove)
+    + When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
+    + You have a very small sample size (i.e., the central limit theorem does not apply)
+    
+* In some cases, you will want to compare proportions, rather than differences between means (e.g., A/B-Test to compare the conversion rates between two campaigns). Therefore, confidence interval for proportions could be helpful. That interval shows the range of plausible values for the difference between the two population proportions. If the interval does not cross zero, then zero is not a plausible value for the difference between two proportions, and we reject the null hypothesis that the population proportions are the same.
+
+* Whenever you would like to investigate the relationship between two categorical variables, the $\chi^2$ test may be used to test whether the variables are independent of each other. It achieves this by comparing the expected number of observations in a group to the actual values.
+
+* Question to answer with $\chi^2$ test : Is there an association between categorical variable X (e.g. conversion) and categorical variable Y (e.g. agent)?
+
+* Hypothesis:
+
+    + H0: There is no association between the two variables.
+    + H1: There is an association between the two variables.
+
+* Interpretation: If we find an association between two variables (p < 0.05), we can conclude that the propotion of conversions to proportion of non-conversions between agent 1 and agent 2 significantly differ from each other.
+
+
