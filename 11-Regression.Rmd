@@ -241,18 +241,6 @@ Correlation coefficients give no indication of the direction of causality. In ou
 * Direction of causality: Correlations say nothing about which variable causes the other to change (reverse causality: attitudes may just as well cause the years of residence variable).
 
 
-### Summary
-
-* Correlation (Pearson’s) can be observed between 2 or more continuous variables (interval or ratio). If we apply Pearson’s equation on ordinal data, which we ranked beforehand, we will obtain Spearman’s correlation coefficient.
-* Correlation helps us to determine the degree to which the variation in one variable, X, is related to the variation in another variable, Y.
-* A raw measure of the relationship between variables is the covariance.
-* If we standardize the covariance (divide by the product of the two standard deviations) we get Pearson’s correlation coefficient, r.
-* The correlation coefficient can be between −1 and +1.
-* +1 indicates a perfect positive relationship; −1 indicates a perfect negative relationship; 0 indicates no linear relationship at all.
-* The correlation coefficient is a commonly used measure of the size of an effect: values of +/-0.1 are considered a small effect, +/-0.3 a medium effect and +/-0.5 a large effect. However, an interpretation of the size of correlation should be made based on the context of the research rather than on following these benchmarks.
-* Correlation coefficients give no indication of the direction of causality.
-* Consideration of the third-variable problem is necessary when interpreting correlation as there might be other unobserved variables that influence the result.
-
 ## Regression
 
 Correlations measure relationships between variables (i.e., how much two variables covary). Using regression analysis we can predict the outcome of a dependent variable (Y) from one or more independent variables (X). E.g., how many products will we sell if we increase the advertising expenditures by 1000 Euros? In regression analysis, we fit a model to our data and use it to predict the values of the dependent variable from one predictor variable (bivariate regression) or several predictor variables (multiple regression). The following table shows a comparison of correlation and regression analysis:
@@ -888,27 +876,6 @@ The results show that for ```adspend``` and ```airplay```, a change by one stand
 </div>
 
 
-### Summary
-
-*	Regression analysis is a way of predicting an outcome (dependent) variable from one predictor (independent) variable (simple regression) or several predictor variables (multiple regression).
-*	In a simple linear regression, we do this by fitting a statistical model to the data in the form of a straight line.
-*	The regression line is a line that goes through, or as close as possible to, as many of the data points as possible.
-*	R-squared indicates how much variance is explained by the model compared to how much variance there is to explain at all. It can be defined as the proportion of variance in the outcome variable that is shared by the predictor variable.
-*	F-statistic denotes the extent to which the model can explain variability relative to the extent to which the model cannot explain it.
-*	Beta coefficient in a single linear regression determines the slope of the regression line and the strength of the relationship between a predictor and the outcome. The coefficient is significant if Pr(>|t|) < .05. 
-*	Beta coefficient shows the extent to which the outcome variable changes when comes to one-unit change in the predictor variable.
-*	Intercept shows the value that dependent variable holds when beta coefficients are 0.
-*	Confidence interval of beta coefficient tell us, if we’d collected 100 samples, and calculated the confidence intervals for a beta coefficient, that 95% of these confidence intervals (out of 100) would contain the true value of beta coefficient.
-* Assessing the regression model:
-    + Check for the outliers and influential cases as they can cause a bias, because they influence the values of the estimated regression   coefficients.   
-    + Check for the linearity, meaning that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms.  
-    + Check that the error terms have a constant variance (homoscedasticity).
-    + Check that the error term is normally distributed.
-    + Check for the “third-variables” that are left out the model, but influence the outcome, and therefore introduce a bias in other variables’ coefficients.
-
-* Example of application in marketing: Digital marketers usally have to assess how additional Euros put into online advertising contributes to sales. Most of times companies are running advertising on different channels. If you have run Google ads, Facebook ads and newspaper ads, the question that you as a digital marketer could wonder about is ads performance. Given that you collected enough data, you can apply multiple regression and calucate how much an additional Euro put in each of those channels drives additional sales.
-
-
 ## Potential problems
 
 Once you have built and estimated your model it is important to run diagnostics to ensure that the results are accurate. In the following section we will discuss common problems.
@@ -1290,7 +1257,7 @@ summary(multiple_regression) #summary of results
 
 How can we interpret the coefficient? The ```adspend``` main effect tells you the effect of advertising for the reference group that has the factor level zero. In our example, it is the advertising effect for local artist. This means that for local artists, spending an additional 1,000 Euros on advertising will result in approximately 89 additional unit sales. The interaction effect tells you by how much the effect differs for the other group (i.e., international artists) and whether this difference is significant. In our example, it means that the effect for international artists can be computed as: 0.0885 - 0.0347 = 0.0538. This means that for international artists, spending an additional 1,000 Euros on advertising will result in approximately 54 additional unit sales. Since the interaction effect is significant (p < 0.05) we can conclude that advertising is less effective for international artists.
 
-The above example showed the interaction between a categorical variable (i.e., "country") and a continuous variable (i.e., "adspend"). However, interaction effects can be defined for different combinations of variable types. For example, you might just as well specify an interaction between two continuous variables. In our example, you might suspect that there are synergy effects between advertising expenditures and ratio airplay. It could be that advertising is more effective when an artist receives a large number of radio plays. In this case, we would specify our model as:
+The above example showed the interaction between a categorical variable (i.e., "country") and a continuous variable (i.e., "adspend"). However, interaction effects can be defined for different combinations of variable types. For example, you might just as well specify an interaction between two continuous variables. In our example, you might suspect that there are synergy effects between advertising expenditures and radio airplay. It could be that advertising is more effective when an artist receives a large number of radio plays. In this case, we would specify our model as:
 
 \begin{align}
 Sales =\beta_0 &+\beta_1*adspend\\
@@ -1503,4 +1470,70 @@ For all other levels of advertising we insert the pieces produced into the formu
 
 <p><iframe src="https://learn.wu.ac.at/shiny/imsm/sqrag/" style="border: medium none; width: 100%; height: 650px; transform: scale(1.0);"></iframe></p>
 
+
+## Summary of regression
+
+* Correlation: it helps us to determine the degree to which the variation in one variable, X, is related to the variation in another variable, Y. **Note:** correlation coefficients give no indication of the direction of causality. Moreover, consideration of the third-variable problem is necessary when interpreting correlation as there might be other unobserved variables that influence the result.
+
+* Correlation (Pearson’s) can be observed between 2 or more continuous variables (interval or ratio). If we apply Pearson’s equation on ordinal data, which we ranked beforehand, we will obtain Spearman’s correlation coefficient.
+
+* A raw measure of the relationship between variables is the covariance. The standardized covariance (divided by the product of the two standard deviations) results in Pearson’s correlation coefficient, $r$. The correlation coefficient can be between −1 and +1. +1 indicates a perfectly positive relationship; −1 indicates a perfectly negative relationship; 0 indicates no linear relationship at all.
+
+* The correlation coefficient is a commonly used measure of the size of an effect: values of +/-0.1 are considered a small effect, +/-0.3 a medium effect and +/-0.5 a large effect. However, an interpretation of the size of correlation should be made based on the context of the research rather than on following these benchmarks.
+
+*	Regression analysis is a way of predicting an outcome (dependent) variable from one predictor (independent) variable (simple regression) or several predictor variables (multiple regression).
+
+*	In a simple linear regression, we predict a dependent variable this by fitting a statistical model to the data in the form of a straight line. A regression line is a line that goes as close as possible to as many of the data points as possible.
+
+*	R-squared indicates how much variance is explained by the model compared to how much variance there is to explain at all. It can be defined as the proportion of variance in the outcome variable that is shared by the predictor variable.
+
+*	F-statistic denotes the extent to which the model can explain variability relative to the extent to which the model cannot explain it.
+
+*	Beta coefficient in a single linear regression determines the slope of the regression line and the strength of the relationship between a predictor and the outcome. The coefficient is significant if Pr(>|t|) < .05. It shows the extent to which the outcome variable changes when comes to one-unit change in the predictor variable. Confidence interval of beta coefficient tell us, if we’d collected 100 samples, and calculated the confidence intervals for a beta coefficient, that 95% of these confidence intervals (out of 100) would contain the true value of beta coefficient.
+
+*	Intercept shows the value that dependent variable holds when beta coefficients are 0.
+
+* Assessing the regression model:
+
+    + Check for the outliers and influential cases as they can cause a bias, because they influence the values of the estimated regression  coefficients.   
+    + Check for the linearity, meaning that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms.  
+    + Check that the error terms have a constant variance (homoscedasticity).
+    + Check that the error term is normally distributed.
+    + Check for the “third-variables” that are left out the model, but influence the outcome, and therefore introduce a bias in other variables’ coefficients.
+    
+* In a regression model we can use categrical predictors with 2 or more categories. These predictors are included in the model as “dummy” variables. Dummy variables are factor variables that can only take two values. 
+
+$$\begin{equation} 
+x =
+  \begin{cases}
+    1       & \quad \text{if } i \text{th artist is international}\\
+    0  & \quad \text{if } i \text{th artist is local}
+  \end{cases}
+\end{equation}$$
+
+In case of multiple categorical predictors, one dummy variable cannot represent all possible values, since there are three genres (i.e., 1 = Rock, 2 = Pop, 3 = Electronic). Thus, we need to create additional dummy variables.
+
+$$\begin{equation} 
+x_5 =
+  \begin{cases}
+    1       & \quad \text{if } i \text{th  product is from Pop genre}\\
+    0  & \quad \text{if } i \text{th product is from Rock genre}
+  \end{cases}
+\end{equation}$$ 
+
+$$\begin{equation} 
+x_6 =
+  \begin{cases}
+    1       & \quad \text{if } i \text{th  product is from Electronic genre}\\
+    0  & \quad \text{if } i \text{th product is from Rock genre}
+  \end{cases}
+\end{equation}$$
+
+* The standard linear regression model assumes that the relationships between the response and predictor variable is additive and linear. The additive assumption states that the effect of an independent variable on the dependent variable is independent of the values of the other independent variables included in the model. The additive assumption states that the effect of an independent variable on the dependent variable is independent of the values of the other independent variables included in the model.
+
+* Regarding the additive assumption, it might be argued in reality that the effect of some variables are not fully independent of the values of other variables. In our example, one could argue that the effect of advertising depends on the type of artist. We can incorporate this **interaction effect** by including an interaction term in the regression equation. Interaction effect can be possible for different combinations of variable types. 
+
+* There are cases when a linear specification might not be the best model for this data set. In this chapter we saw that a multiplicative model might be a better representation of the data we had. Multiplicative model means taking logarithms of both sides of the equation. A linear specification with log-transformed variables have important implications on interpreteation of coefficinets:  A 1% increase in independent varibale leads to a XY% increase in dependent variable.
+
+* If our data shows initially diminishing and eventually negative returns, we can use **squared terms** to obtain a model that fits good. This results still in a linear model since the outcome variable is still explained by a linear combination of regressors even though one of the regressors is now just a non-linear function of the same variable (i.e. the squared value).
 
