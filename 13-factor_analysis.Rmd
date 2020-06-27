@@ -559,3 +559,37 @@ library(car)
 test_data$new_variable = (test_data$multi_1 + test_data$multi_2 + test_data$multi_3 + test_data$multi_4_rec) / 4
 ```
 
+## Summary of factor analysis
+
+* Factor analysis belongs to a class of procedures used for data reduction. The basic assumption behind factor analysis is that for the set of observed variables there is a set of underlying variables ("factors") that has smaller number of variables and can explain the relationships among variables.
+
+* Factor analysis can be divided in exploratory and confirmatory.
+An exploratory factor analysis explores the relationships among the variables and does not require an a-priori fixed number of underlying factors to be given. One can have a good guess about what are the underlying factors behind the large set of variables, but still aims to form a specific hypothesis about it. **Principal Components Analysis (PCA)** is one of the most frequently used techniques of this sort. On the other hand, a confirmatory factor analysis requires a firm idea about the number of underlying variables. 
+
+* Main goals of PCA: 
+    + Identification of underlying dimensions, or factors, that explain the correlations among a set of variables.
+    + Identification a new, smaller set of uncorrelated variables to replace the original set of correlated variables in subsequent multivariate analysis.
+    
+* Sequence of steps in PCA. First, we inspect the correlation matrix because, if the variables measure the same construct, we would expect to see a certain degree of correlation between the variables. However, we use **Barttlet's test** to be certain weather the correlations are overall too small. At this point we can face two issues: too high correlation and too low correlation between variables. Too high correlation indicates possible extreme multicollinearity, while too low correlation suggests that variables do not indicate the same underlying construct. As an addtional tool for checking  any extreme or perfect correlations, we can use **determinant**. It tells us whether the correlation matrix is singular (determinant = 0), or if all variables are completely unrelated (determinant = 1), or somewhere in between. Finally, we need to test if the correlation pattern in the matrix is appropriate for factor analysis using the **Kaiser-Meyer-Olkin (KMO)** measure of sampling adequacy. This statistic is a measure of the proportion of variance among variables that might be common variance.
+
+* Second step in PCA is deriving factors. There are different methods used for making a decision on the appropriate number of factors:
+
+    + A priori determination
+    + Determination based on percentage of variance
+    + Method based on Eigenvalues
+    + Method based on a scree plot
+    
+* After we decide on the appropriate number of factors, we inspect a factor loadings in a factor matrix. More specifically, we take a closer look at **communality**, which is the proportion of variance a variable shares with all the other variables being considered. When the communality is very low (e.g. <.30), a variable is “quite unique” and should be removed, as it is certainly measuring “something else”. Finally, in order to double-check whether we extracted the correct number of factors, we check residuals. The difference between the reproduced and the actual correlation matrices are the residuals. A measure of fit can be computed based on the size of the residuals. More specifically, a measure of fit could be the sum of the squared residuals (to account for possitve and negative deviations) divided by the sum of the squared correlations. Values >0.90 are considered indicators of good fit. In a next step, we check the size of the residuals. If fewer residuals than 50% have absolute values greater than 0.05 the model is a good fit. Finally, we need to validate if the residuals are approximately normally distributed, which we do by using a histogram, a Q-Q plot and the Shapiro test.
+
+* What comes next is a factor interpretation. To make an interpretation more convenient, we do **a factor rotation**. It means maximizing the loading of a variable on one factor while minimizing its loading on all other factors. We differ two types of factor rotation:
+
+    + orthogonal (assumes that factors are uncorrelated)
+    + oblique (assumes that factors are intercorrelated)
+
+* After obtaining the rotated matrix, variables with high loading are used for naming the factor. It is important to note that factor loadings can be positive or negative, so we need to be careful when interpreting! In the best case scenario, each variable loads high on 1 factor and low on other factors.
+
+* When you are using multi-item scales to measure a latent construct, it is necessary to check **reliability** of scale. Reliability means that items should consistently reflect the construct that they are intended to measure. For that we can use **Cronbach's alpha**, which calculates the share itmes common variance in the total variance. The share of the items common variance (inter-correlation) in the total variance is supposed to be as high as possible across all items.
+
+
+
+    
