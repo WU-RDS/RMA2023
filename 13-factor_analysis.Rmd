@@ -162,6 +162,7 @@ where the variable names are replaced by the values that were observed for respo
 ## Steps in factor analysis
 
 ```{r, include=FALSE}
+options(stringsAsFactors = F)
 library(openssl)
 passphrase <- charToRaw("MRDAnils")
 key <- sha256(passphrase)
@@ -178,7 +179,7 @@ readRDS("music_data.rds")
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
 music_data <- na.omit(music_data[,c(1,16:26)])
-music_data[,-1] <- as.numeric(unlist(music_data[,-1]))
+#music_data[,-1] <- as.numeric(unlist(music_data[,-1]))
 nsongs <- length(unique(music_data$id))
 nsongs <- formatC(nsongs, big.mark=".")
 ```
