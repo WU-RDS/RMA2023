@@ -571,7 +571,7 @@ RMSE(pred.optimal, ames_test[,307])
 # ...or another way
 as.data.frame(ames_test) %>%
   mutate(residuals = sale_price - pred.optimal) %>%
-  summarize(rmse = sqrt(mean(residuals^2)))
+  dplyr::summarize(rmse = sqrt(mean(residuals^2)))
 ```
 
 Finally, we can nicely visualize predicted and actual sale price.
