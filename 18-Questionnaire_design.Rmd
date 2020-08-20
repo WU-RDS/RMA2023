@@ -994,24 +994,40 @@ psych::describe(dinner)
 ```
 
 We see that difference between mean and median does not suggest (at the first sight) great effect of outliers.
+Let us now do linear regression analysis:
+```{r}
+mlr.dinner <- lm(` Willingness-to-pay (in EUR)` ~ ` Location` + ` Price` + ` Ambience`+` Customer Service`, data = dinner)
+summary(mlr.dinner)
+```
+```{r, echo=FALSE}
+coeff <- summary(mlr.dinner)
+coeff$coefficients[4,1]
+```
 
+Out of all factors of importance when dinning out, the only one that suggests significance at 0.05 level of significance is ambience. From the summary we can conclude that increase in importance of ambience by 1 point, leads to decrease in willingness to pay by `r coeff$coefficients[4,1]`.
 
 ```{r}
-ml.dinner <- lm(dinner$` Willingness-to-pay (in EUR)` ~ dinner$` Location` + dinner$` Price` + dinner$` Ambience`+dinner$` Customer Service`) #estimate linear model
-summary(ml.dinner) #summary of results
+confint(mlr.dinner)
+```
+
+From confidence intervals, We can conclude that when we do not consider any of given factors (location, price, ambience and customer service), willingness to pay  will be somewhere between `r confint(mlr.dinner)[1,1]`EUR and `r confint(mlr.dinner)[1,2]`EUR. Besides that, for each increase in importance of dinner ambience by one point, there will be an average decrease of willingness to pay between `r confint(mlr.dinner)[4,1]` and `r confint(mlr.dinner)[4,2]`.
+
+```{r, warning=FALSE, error=FALSE}
+ggcoefstats(x = mlr.dinner,
+            title = "Willingness to pay predicted by importance of factors")
 ```
 
 
 ```{r}
-# Confidence intervals
-confint(ml.dinner)
+# Outliers
+mlr.dinner$stud_resid <- rstudent(mlr.dinner)
+head(mlr.dinner)
 ```
 
 
 ```{r}
-# visualization
-ggcoefstats(x = ml.dinner,
-            title = "Sales predicted by adspend, airplay, & starpower")
-
+outlier_values <- boxplot.stats(mlr.dinner$residuals)$out  # outlier values.
+outlier_values
+boxplot(mlr.dinner$residuals, main="Willingnes to pay", boxwex=0.1)
 ```
 
