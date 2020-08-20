@@ -956,16 +956,62 @@ ggstatsplot::ggwithinstats(
 
 ### Text or number entry question
 
-A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. 
+```{r,echo=FALSE}
+set.seed(1234567)
+qualtrics$` Willingness-to-pay (in EUR)`<- abs(as.integer(rnorm(n = 117,mean=23,sd=40)))
+qualtrics$` Customer Service` <- abs(as.integer(runif(n=117,min=0,max = 100)))
+```
 
-Here is a glimpse in answers on how active, cool, shopisticated, masculine and funny a respondent finds certain brand:
+
+A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.  
+
+
+Here is a glimpse in answers on how important is each factor to our respondents when it comes to dinning outside:
 ```{r, echo= FALSE}
 knitr::kable(qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")], caption = "Constant sum question")
 ```
 
-We asked our respondents how much are they willing to spend on dinner in average: 
+We asked our respondents how much are they willing to spend on dinner on average: 
+```{r, echo=FALSE}
+knitr::kable(head(qualtrics$` Willingness-to-pay (in EUR)`))
+```
+
+
+In order to handle data easier, we will create a new data frame:
 ```{r}
-knitr::kable(qualtrics)
-qualtrics
+dinner <- subset(qualtrics, select = c(" Location"," Price"," Ambience"," Customer Service", " Willingness-to-pay (in EUR)"))
+knitr::kable(head(dinner))
+```
+Before we conduct a linear regression analysis, we need to take a look at correlation matrix:  
+
+```{r}
+correlation <-cor(dinner, method=c('pearson'))
+correlation
+```
+From our data we see, for instance, that some negative correlation between willingness to pay and importance of ambience as well as some positive correlation between importance of customer service and wilingness-to-pay. Let us observe descriptive statistics as well:  
+```{r}
+psych::describe(dinner)
+```
+
+We see that difference between mean and median does not suggest (at the first sight) great effect of outliers.
+
+
+```{r}
+ml.dinner <- lm(dinner$` Willingness-to-pay (in EUR)` ~ dinner$` Location` + dinner$` Price` + dinner$` Ambience`+dinner$` Customer Service`) #estimate linear model
+summary(ml.dinner) #summary of results
+```
+
+
+```{r}
+# Confidence intervals
+confint(ml.dinner)
+```
+
+
+```{r}
+# visualization
+ggcoefstats(x = ml.dinner,
+            title = "Sales predicted by adspend, airplay, & starpower")
+
 ```
 
