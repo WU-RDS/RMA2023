@@ -509,12 +509,15 @@ Multiple Choice with a single answer is a type of closed-ended question that let
 knitr::include_graphics('support-multiple-choice-question.png')
 ```
 
+
 Type of data you obtain is **categorical**, and the output comes in the following form:  
+
+
 ```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
-knitr::kable(qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies or TV series on Netflix?")], caption = "Multiple Choice Question with Single Answer")
+library(kableExtra)
+knitr::kable(qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies or TV series on Netflix?")], caption = "Multiple Choice Question with Single Answer",align = "c")
 ```
 
-#### Data handling
 
 What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes **as numeric**. In order to conduct statistical modelling and properly visualize our results, we need to convert our data to **a factor class.**   
 
@@ -537,23 +540,23 @@ table(qualtrics$` Selected Choice_1`)   #gender
 
 ```
 
-#### Visualisation
 
-Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data fromat adaptation from the point where we stopped:
+Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format. Here we proceed with data fromat adaptation from the point where we stopped:
 
-```{r, eval=TRUE, warning=FALSE, message=FALSE}
+```{r, eval=TRUE, warning=FALSE, message=FALSE, fig.align="center"}
 # Converting long format to the visualisation-friendly format
 mlc_visualisation <- as.data.frame(table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
 
 # Naming columns
 names(mlc_visualisation) <- c('Time','Count')
 
-# Observing
-mlc_visualisation
+# Prepared data for visualisation
+kable(mlc_visualisation,align = "c")
 
 ```
 
 The simpliest way to visualize data obtained from multiple choice question with a single answer is **a bar chart**:
+
 ```{r}
 ## Basic bar chart
 labels <- as.character(mlc_visualisation$Time) #Save labels for x-axis in the barplot
@@ -596,11 +599,10 @@ ggvis(mlc_visualisation,
       fill=~Time)
 ```
 
-#### Statistical analysis
 
 Data type collected from the previous question is ordinal as we are able to make a natural order of the levels. Since it is ordinal data type, it belongs to categorical data. For the analysis of categorical data we can use Chi-square test or Fisher's test if a count for some level is less than 5. 
 
-##### Fischer's exact
+#### Fischer's exact
 
 Fisher's exact test is used to test a hypothesis with data obtained from multiple choice questions with single answer. Results from multiple choice questions with multiple answers are treated with different test.
 <ul><li> <B> Application: </B> when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li>
@@ -633,7 +635,7 @@ From the output and from test$p.value we see that the p-value is higher than the
 
 In our case, not rejecting the null hypothesis for the Fisher’s exact test of independence means that there is no significant relationship between the two categorical variables. Therefore, knowing the value of one variable does not help to predict the value of the other variable.
 
-##### Chi-square test: Goodness of fit & Independence test
+#### Chi-square test: Goodness of fit & Independence test
 
 1) Goodness of fit
 <div><ul><li><B> Application: </B>when you only have <B> 1 dependent variable and none independent variables </B></ul></li>
