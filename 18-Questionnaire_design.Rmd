@@ -481,7 +481,7 @@ knitr::include_graphics('library-survey.png')
 
 ## Question types and data analysis
 
-```{r, echo = FALSE, results='asis', warning=FALSE ,error=FALSE}
+```{r, echo = FALSE, warning=FALSE ,error=FALSE}
 # Load in qualtRics package
 library(qualtRics)
 library(janitor)
@@ -489,13 +489,8 @@ library(sjlabelled)
 
 # Read the qualtrics survey data
 qualtrics<-read_survey('new_qualtrics_response_data_final_final.csv')
-head(qualtrics)
-dim(qualtrics)
-#View(qualtrics)
-qualtrics$Q23_Gender
-qualtrics$Q7_MC_sa_country
+
 # Using labels as column name
-old.colnames <-colnames(qualtrics)
 new.colnames <-colnames(label_to_colnames(qualtrics))
 new.colnames <- make.unique(new.colnames, sep="_")
 colnames(qualtrics)<- new.colnames
