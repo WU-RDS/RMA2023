@@ -997,7 +997,6 @@ summary(mlr.dinner)
 
 ```{r, echo=FALSE}
 coeff <- summary(mlr.dinner)
-coeff$coefficients[4,1]
 ```
 
 Out of all factors of importance when dinning out, the only one that suggests significance at 0.05 level of significance is ambience. From the summary we can conclude that increase in importance of ambience by 1 point, leads to decrease in willingness to pay by `r coeff$coefficients[4,1]`.
@@ -1013,10 +1012,56 @@ ggcoefstats(x = mlr.dinner,
             title = "Willingness to pay predicted by importance of factors")
 ```
 
+
+There are couple of things we need to consider when we do multiple linear regression. One of them are potential outliers in our data. Here we identify and visualize them:
+
 ```{r}
 # Outliers
 outlier_values <- boxplot.stats(mlr.dinner$residuals)$out  # outlier values.
 outlier_values
+```
+We identified observations that belong to outlier values. We can even visualize them too:
+
+```{r}
 boxplot(mlr.dinner$residuals, main="Willingnes to pay", boxwex=0.1)
 ```
+In addition, we need to observe whether there are any influential observations:
 
+```{r}
+plot(mlr.dinner,4)
+```
+A rule of thumb to determine whether an observation should be classified as influential or not is to look for observation with a Cook’s distance > 1 .We see from the graph that there are no influential observations.
+
+
+Another thing to consider is linearity, i.e. that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms:
+
+```{r}
+# Linear specification
+library(car)
+avPlots(mlr.dinner)
+```
+In our example it does not seem that linear relationships can be reasonably assumed for all variables.
+
+As we already learned, another important assumption of the linear model is that the error terms have a constant variance (i.e., homoscedasticity):
+```{r}
+# Breusch-Pagan Test
+library(lmtest)
+bptest(mlr.dinner)
+```
+
+The null hypothesis for this test is that the error variances are all equal, and our result is insignificant. Therefore, this assumption is met. 
+
+Another assumption to be met is that the error term is normally distributed. One way to check for normal distribution of the data is to employ statistical with the null hypothesis that the data is normally distributed. One of these is a Shapiro–Wilk test:
+
+```{r}
+shapiro.test(resid(mlr.dinner))
+```
+When the assumption of normally distributed errors is not met (as it is not met in our case), this might again be due to a misspecification of your model, in which case it might help to transform your data.
+
+
+Finally, we need to check for multicollinearity, the case when there is a strong linear relationship between the independent variables:
+```{r}
+correlation <-cor(dinner, method=c('pearson'))
+correlation
+```
+By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicolinearity between independent variables.
