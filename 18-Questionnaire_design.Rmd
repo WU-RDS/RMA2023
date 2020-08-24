@@ -481,7 +481,8 @@ knitr::include_graphics('library-survey.png')
 
 ## Question types and data analysis
 
-```{r, echo = FALSE, warning=FALSE ,error=FALSE}
+```{r, echo = FALSE, results='asis', warning=FALSE ,error=FALSE}
+
 # Load in qualtRics package
 library(qualtRics)
 library(janitor)
@@ -491,6 +492,7 @@ library(sjlabelled)
 qualtrics<-read_survey('new_qualtrics_response_data_final_final.csv')
 
 # Using labels as column name
+
 new.colnames <-colnames(label_to_colnames(qualtrics))
 new.colnames <- make.unique(new.colnames, sep="_")
 colnames(qualtrics)<- new.colnames
@@ -509,17 +511,12 @@ Multiple Choice with a single answer is a type of closed-ended question that let
 knitr::include_graphics('support-multiple-choice-question.png')
 ```
 
-
 Type of data you obtain is **categorical**, and the output comes in the following form:  
-
-
 ```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
-library(kableExtra)
 knitr::kable(qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies or TV series on Netflix?")], caption = "Multiple Choice Question with Single Answer",align = "c")
 ```
 
-
-What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes **as numeric**. In order to conduct statistical modelling and properly visualize our results, we need to convert our data to **a factor class.**   
+What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes **as numeric**. In order to conduct statistical modeling and properly visualize our results, we need to convert our data to **a factor class.**   
 
 A factor (or coding variable) represents different groups of data by using numbers (integers). In fact, factors appear as numeric variables, but they hold meaning of labels/names of data groups, i.e. nominal variable. These data groups are represented in a form of 'levels'.  
 In our case, our multiple choice question output will contain 4 data groups ('Grocery Store', 'Online shop', 'Specialised coffee shop', 'other') after converting it to factor:
@@ -541,21 +538,21 @@ table(qualtrics$` Selected Choice_1`)   #gender
 ```
 
 
-Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format. Here we proceed with data fromat adaptation from the point where we stopped:
+Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data fromat adaptation from the point where we stopped:
 
-```{r, eval=TRUE, warning=FALSE, message=FALSE, fig.align="center"}
+```{r, eval=TRUE, warning=FALSE, message=FALSE}
 # Converting long format to the visualisation-friendly format
 mlc_visualisation <- as.data.frame(table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
 
 # Naming columns
 names(mlc_visualisation) <- c('Time','Count')
 
-# Prepared data for visualisation
-kable(mlc_visualisation,align = "c")
+# Observing
+mlc_visualisation
 
 ```
 
-The simpliest way to visualize data obtained from multiple choice question with a single answer is **a bar chart**:
+The simplest way to visualize data obtained from multiple choice question with a single answer is **a bar chart**:
 
 ```{r}
 ## Basic bar chart
@@ -598,6 +595,7 @@ ggvis(mlc_visualisation,
       y = ~Count, 
       fill=~Time)
 ```
+
 
 
 Data type collected from the previous question is ordinal as we are able to make a natural order of the levels. Since it is ordinal data type, it belongs to categorical data. For the analysis of categorical data we can use Chi-square test or Fisher's test if a count for some level is less than 5. 
