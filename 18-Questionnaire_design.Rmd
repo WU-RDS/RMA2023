@@ -548,7 +548,7 @@ mlc_visualisation <- as.data.frame(table(qualtrics$'In a typical week, how many 
 names(mlc_visualisation) <- c('Time','Count')
 
 # Observing
-mlc_visualisation
+knitr::kable(mlc_visualisation)
 
 ```
 
@@ -669,7 +669,8 @@ expected_values <- c(0.10, # We expect that 10% of our respondents do not watch 
 chisq.test(mlc_chi_square, p=expected_values)
 ```
 
-This time the p-value of the test is lower than 0.05.We have an evidance that observed distribution does significantly differ from the expected distribution (10%/20%/40%/20%/10%).
+This time the p-value of the test is lower than 0.05.We have an evidence that observed distribution does significantly differ from the expected distribution (10%/20%/40%/20%/10%).  
+
 
 2) Chi-Square Test of Independence
 <div><ul><li> <B> Application: </B>when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li> 
@@ -757,7 +758,7 @@ library(DescTools)
 list.cochran <- list(qualtrics$`ja!Naturlich`,
                    qualtrics$Clever,
                    qualtrics$`Spar Vital`,
-                   qualtrics$...)
+                   qualtrics$...) # imaginary brand
 
 # Replacing NAs in the list with 0 in order to be able to run the test
 list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
@@ -803,20 +804,26 @@ Now we can calculate the mean rank for each feature and conclude which feature i
 # Mean rank of each fitness tracker feature
 destat(test)$mean.rank
 ```
+
 As we can observe from the output, the item 1("Measuring steps") shows the best mean rank among all items. Therefore, we can assume that the "Measuring steps" is most important for our respondents. However, in order to statistically prove it and become sure that this is not just by mere chance, we can conduct **Friedman rank sum test**.
 
 Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.
 
 Before we conduct the Friedman rank sum test, we will visualise our data:
-```{r}
+```{r,echo=FALSE}
 # Preparing data frame for Friedman rank sum test
 library(reshape2)
 library(ggpubr)
 library(rstatix)
 library(ggstatsplot)
+```
+
+
+```{r}
+# We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
 
 rank.data.long <- melt(rank.data,value.name = "Rank",variable.name = "Feature")
-# We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
+
 tail(rank.data.long)
 head(rank.data.long)
 
@@ -845,17 +852,18 @@ Friedman rank sum test has a p-value lower than 0.05, so we can conclude that he
 
 
 ```{r}
-wilcox_test(Rank ~ Feature, paired = TRUE, p.adjust.method = "bonferroni", data = rank.data.long)
+knitr::kable(wilcox_test(Rank ~ Feature, paired = TRUE, p.adjust.method = "bonferroni", data = rank.data.long))
 ```
 The output table provides us with p-values referring to significance of difference in mean ranks of each pair. For instance, the first 4 rows  proves that the differences between the mean rank of the feature "Measuring steps" and each of the rest of features are significant. Consequently, we can conclude that this feature is by far the most important among our respondents. 
 
 
-Another question that may be interesting to explore is whether there are any complementary feautres ? Or features which overlap each other in its funcionality? In order to have a look at that, we can investigate the correlation between ranks assigned to each feature.
+Another question that may be interesting to explore is whether there are any complementary features ? Or features which overlap each other in its functionality? In order to have a look at that, we can investigate the correlation between ranks assigned to each feature.
 ```{r}
 #Correlation Matrix
 cor.matrix<-cor(rank.data, method=c('spearman'))
 cor.matrix
 ```
+
 At the first glance we can observe a lot of negative values, meaning that many features correlate negatively relative to each other. In order to make the interpretation easier, we will try to visualise correlations in a form of a correlation matrix.
 
 ```{r}
@@ -863,11 +871,11 @@ library(corrplot)
 corrplot(cor.matrix, method="color", type = "upper", order = "hclust")
 ```
 
-From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positvely. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
+From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positively. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
 
 ### Constant Sum question
 
-```{r, echo=F, fig.align='center',out.width='50%'}
+```{r, echo=F, fig.align='center',out.width='72%'}
 knitr::include_graphics('constant-sum-question.png')
 ```
 
@@ -878,8 +886,6 @@ constant.sum <- subset(qualtrics, select =c(" Location"," Price"," Ambience"," C
 constant.sum$id <- seq(1:nrow(constant.sum))
 knitr::kable(constant.sum[1:6,], caption = "Constant Sum Question")
 ```
-
-#### Data visualisation
 
 ```{r}
 # Compute descriptive statistics
@@ -892,10 +898,10 @@ round(res[,1:4],2)
 # Creation of the long version of data frame
 constant.sum.long <-melt(constant.sum, variable.name ="Factor" ,value.name = "Points")
 constant.sum.long
-# Boxplot basic
-constant.sum[,-5] %>%
-boxplot(constant.sum.long$Points ~ constant.sum.long$Factor , col=rgb(0.3,0.5,0.4,0.6) , ylab="Points",xlab="", main= "What factors do you consider when choosing a place to go for a dinner?")
+```
 
+
+```{r,error=FALSE,warning=FALSE, message=FALSE}
 # Boxplot ggplot2
 p<-constant.sum.long %>% 
   filter(Factor!="id") %>%
@@ -966,13 +972,7 @@ Here is a glimpse in answers on how important is each factor to our respondents 
 knitr::kable(qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")], caption = "Constant sum question")
 ```
 
-We asked our respondents how much are they willing to spend on dinner on average: 
-```{r, echo=FALSE}
-knitr::kable(head(qualtrics$` Willingness-to-pay (in EUR)`))
-```
-
-
-In order to handle data easier, we will create a new data frame:
+Additionally, we asked our respondents how much are they willing to spend on dinner on average. In order to handle data easier, we will create a new data frame where we merge all the data together:
 ```{r}
 dinner <- subset(qualtrics, select = c(" Location"," Price"," Ambience"," Customer Service", " Willingness-to-pay (in EUR)"))
 knitr::kable(head(dinner))
@@ -983,9 +983,9 @@ Before we conduct a linear regression analysis, we need to take a look at correl
 correlation <-cor(dinner, method=c('pearson'))
 correlation
 ```
-From our data we see, for instance, that some negative correlation between willingness to pay and importance of ambience as well as some positive correlation between importance of customer service and wilingness-to-pay. Let us observe descriptive statistics as well:  
+From our data we see, for instance, that some negative correlation between willingness to pay and importance of ambiance as well as some positive correlation between importance of customer service and willingness-to-pay. Let us observe descriptive statistics as well:  
 ```{r}
-psych::describe(dinner)
+knitr::kable(psych::describe(dinner))
 ```
 
 We see that difference between mean and median does not suggest (at the first sight) great effect of outliers.
@@ -994,6 +994,7 @@ Let us now do linear regression analysis:
 mlr.dinner <- lm(` Willingness-to-pay (in EUR)` ~ ` Location` + ` Price` + ` Ambience`+` Customer Service`, data = dinner)
 summary(mlr.dinner)
 ```
+
 ```{r, echo=FALSE}
 coeff <- summary(mlr.dinner)
 coeff$coefficients[4,1]
@@ -1005,22 +1006,15 @@ Out of all factors of importance when dinning out, the only one that suggests si
 confint(mlr.dinner)
 ```
 
-From confidence intervals, We can conclude that when we do not consider any of given factors (location, price, ambience and customer service), willingness to pay  will be somewhere between `r confint(mlr.dinner)[1,1]`EUR and `r confint(mlr.dinner)[1,2]`EUR. Besides that, for each increase in importance of dinner ambience by one point, there will be an average decrease of willingness to pay between `r confint(mlr.dinner)[4,1]` and `r confint(mlr.dinner)[4,2]`.
+From confidence intervals, We can conclude that when we do not consider any of given factors (location, price, ambience and customer service), willingness to pay  will be somewhere between `r confint(mlr.dinner)[1,1]`EUR and `r confint(mlr.dinner)[1,2]`EUR. Besides that, for each increase in importance of dinner ambiance by one point, there will be an average decrease of willingness to pay between `r confint(mlr.dinner)[4,1]` and `r confint(mlr.dinner)[4,2]`.
 
 ```{r, warning=FALSE, error=FALSE}
 ggcoefstats(x = mlr.dinner,
             title = "Willingness to pay predicted by importance of factors")
 ```
 
-
 ```{r}
 # Outliers
-mlr.dinner$stud_resid <- rstudent(mlr.dinner)
-head(mlr.dinner)
-```
-
-
-```{r}
 outlier_values <- boxplot.stats(mlr.dinner$residuals)$out  # outlier values.
 outlier_values
 boxplot(mlr.dinner$residuals, main="Willingnes to pay", boxwex=0.1)
