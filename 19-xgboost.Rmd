@@ -1,17 +1,20 @@
 ---
 title: "19-xgboost"
 output:
-  pdf_document:
-    toc: yes
-  html_notebook: default
   html_document:
     toc: yes
-    df_print: paged
+  html_notebook: 
+    default: TRUE
+  pdf_document:
+    toc: yes
 ---
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, error = FALSE, message = FALSE)
+options(scipen = 9999)
 ```
+
+# XGBoost
 
 References:
 
@@ -24,18 +27,32 @@ References:
 7. [A Gentle Introduction to XGBoost for Applied Machine Learning  ](https://machinelearningmastery.com/gentle-introduction-xgboost-applied-machine-learning/)
 8. [Gradient Boosting in R](https://datascienceplus.com/gradient-boosting-in-r/)
 
+
+## What is machine learning?
+
+In essence, the road to machine learning starts with regression. Some typical use cases of machine learning in marketing are:
+
+* Segmenting customers based on common attributes or purchasing behavior for targeted marketing
+* Predicting coupon redemption rates for a given marketing campaign
+* Predicting customer churn so an organization can perform preventative intervention
+
+In its core, these tasks all seek to learn from data. In order to do so, we use a given set of features to train an algorithm and extract information we need. These algorithms, known as learners too, can be divided according to the amount and type of supervision needed during training. We distinguish supervised learners which construct predictive models, and unsupervised learners which build descriptive models. Which type you will need to use depends on the learning task you hope to accomplish. 
+
+In this chapter we will focus on supervised machine learning, more specifically, on one method called extreme gradient boosting.
+
+
 ## Gradient Boosting
 
 When we talk about machine learning, there are two quite important factors that drive successful application: effective statistical models that are capable of capturing the complex data dependencies and how scalable are learning systems that learn the model from large datasets. Among the machine learning methods commonly used in practice are gradient tree boosting methods. Gradient boosting machines (GBMs) are a very popular machine learning method, and in this chapter we will introduce you R package "xgboost" and show how it can be used for marketing purposes. It is a scalable machine learning system for tree boosting and GMBs have proven successful across many domains and are one of the leading methods you can find across Kaggle competitions.
 
-When it comes to marketing, it can be used in uplift modeling, i.e. can help a company to identify those who are likely to buy products as a result of receiving a discount or a personalized advertisement. Consequently, it helps a company to maximize profits by keeping advertising costs and overall efforts to the minimum. In the perspective of data analysis and marketing, performance of a marketing campaign can be predicted using algoritham such as GBMs. For instance, in the banking industry optimizing targeting for telemarketing used to be one of the main issues, especially under a growing pressure induced by financial crisis in 2008. A commercial bank from Portugal used data-driven model to predict the result of a telemarketing phone call to sell long term deposits is a valuable tool to support clientselection decisions of bank campaign managers. As a result, they identified that inbound calls and an increase in other attributes identified as a highly relevant (such as agent experience or duration of pre-vious calls) enhance the probability for a successful deposit sell.  
+When it comes to marketing, it can be used in uplift modeling, i.e. can help a company to identify those who are likely to buy products as a result of receiving a discount or a personalized advertisement. Consequently, it helps a company to maximize profits by keeping advertising costs and overall efforts to the minimum. In the perspective of data analysis and marketing, performance of a marketing campaign can be predicted using algoritham such as GBMs. For instance, in the banking industry optimizing targeting for telemarketing used to be one of the main issues, especially under a growing pressure induced by financial crisis in 2008. A commercial bank from Portugal used data-driven model to predict the result of a telemarketing phone call to sell long term deposits is a valuable tool to support client selection decisions of bank campaign managers. As a result, they identified that inbound calls and an increase in other attributes identified as a highly relevant (such as agent experience or duration of pre-vious calls) enhance the probability for a successful deposit sell.  
 
 
 ### Elements of supervised machine learning
 https://xgboost.readthedocs.io/en/latest/tutorials/model.html
 https://bradleyboehmke.github.io/HOML/intro.html#supervised-learning
 
-xGBoost is used in supervised machine learning. Let us decompose the meaning of supervised machine learning.
+XGBoost is used in supervised machine learning. Let us decompose the meaning of supervised machine learning.
 
 Supervised machine learning can be described as a process in which training data with multiple **features **(also called: predictor variables, independent variables, attributes, predictor) is used to predict a **target variable** (also called, dependent variable, response, outcome measurement). 
 
@@ -46,15 +63,12 @@ Another important term in the context of machine learning are **parameters**. Th
 Finally, as we said, models we build with supervised machine learning are predictive models. "Supervised" refers to a supervisory role of the target variable, which indicates the task that model needs to learn. More specifically, it means that the data which is used for training a model contains target variable. Given a set of training data, the learning algorithm attempts to find the combination of feature values that results in a predicted value as close to the actual target variable as possible.
 
 
-```{r, eval=F, echo=FALSE}
-### Boosted Trees ####
-```
-
 ### Principle behind boosting
 
-Boosting can be explained as a sequential process. That means that at each particular iteration, a new weak model is trained with respect to the error of the whole ensemble learnt by that time. A weak model is one whose predictions (error rate) are only slightly better than random guessing. In simple words, in each iteration a better model is created by adding a new weak model to the existing one, where the purpose of the weak model is to slightly improve the remaining errors of the existing model. This process slowly learns from data and tries to improve its prediction in subsequent iterations.
+Boosting can be explained as a sequential process. That means that at each particular iteration, a new weak model is trained with respect to the error of the whole ensemble learned by that time. A weak model is one whose predictions (error rate) are only slightly better than random guessing. In simple words, in each iteration a better model is created by adding a new weak model to the existing one, where the purpose of the weak model is to slightly improve the remaining errors of the existing model. This process slowly learns from data and tries to improve its prediction in subsequent iterations.
 
 Among other, boosting is used for solving both regression and classification problems.
+
 Below you can find an illustrative example and explanation for each of them.
 ```{r,echo = FALSE, error=FALSE,warning=FALSE,message=FALSE,fig.width=10, fig.height = 20,fig.align='center'}
 knitr::include_graphics("bigd.png")
@@ -73,7 +87,7 @@ In the box 3, our model is becoming even better in classifying. It splitted the 
 Finally, in the box 4 we see the result from combining information obtained from numerous weak learners. It is a weighted combination of the weak classifiers resulting in a strong classifier.Each classifier individually proved pretty poor performance in predicting, as they all show certain misclassification error. However, after combining them, the ultimate goal to classify all points correctly is reached and strong classifier created.
 
 
-```{r, echo=F, error=FALSE,warning=FALSE,message=FALSE,fig.width=10,fig.height = 20, fig.cap="Fig 1. Boosted regression tree predictions (courtesy of [Brandon Greenwell](https://github.com/bgreenwell))"}
+```{r, echo=F, error=FALSE,warning=FALSE,message=FALSE,fig.width=10,fig.height = 20,fig.align='center',fig.cap="Boosted regression tree predictions (courtesy of [Brandon Greenwell](https://github.com/bgreenwell))"}
 knitr::include_graphics("boosted_stumps.gif")
 ```
 
@@ -119,7 +133,7 @@ library(janitor)
 ames<- ames%>%clean_names()
 
 # Use mlr package to get an overview of your data
-summarizeColumns(ames)
+knitr::kable(head(summarizeColumns(ames)))
 ```
 
 ### Data preparation
@@ -129,9 +143,9 @@ Usually, when between several categories exist ordinal relationship (e.g. variab
 
 ```{r, echo=FALSE,message=FALSE, warnings=FALSE, results='asis', fig.height=20, fig.width=10}
 tabl <- "
-|   | dog | cat | rabbit|
+|   |dog  |cat  |rabbit |
 |---|-----|-----|-------|
-| 1 |  1  |  0  | 0     |
+| 1 |  1  |  0  |   0   |
 | 2 |  0  |  1  |   0   |
 | 3 |  0  |  0  |   1   |
 "
@@ -171,6 +185,7 @@ head(index)
 ```
 
 Now we use ```index``` to address columns we want to assign to our train data (```ames_train```), i.e. columns that we want to assign to our test data (```ames_test```).
+
 Note that by using "-" in front of ```index``` we assign to ```ames_test``` all observations **except** those that are in ```index```.
 
 ```{r}
@@ -189,7 +204,7 @@ dim(ames_test) # 877 observations for testing data
 #colnames(ames_test)
 ```
 
-We are not done with preparation of data. Since our task is to build a predictive model for house pricing based on multiple features, our target variable (sale price) needs to be exluded from the test data. Newly created variable will be used at the end to test accuracy of our final model. 
+We are not done with preparation of data. Since our task is to build a predictive model for house pricing based on multiple features, our target variable (sale price) needs to be excluded from the test data. Newly created variable will be used at the end to test accuracy of our final model. 
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Test data 
@@ -206,7 +221,7 @@ For training purposes, target variable (sale price) needs to be excluded from th
 ames_x_train <- as.matrix(ames_train[,-307])
 ```
 
-However, the target variable is going to be stored seprately because the learning algorithm in a predictive model attempts to discover and model the relationships among the target variable and the other features.
+However, the target variable is going to be stored separately because the learning algorithm in a predictive model attempts to discover and model the relationships among the target variable and the other features.
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Dependent/Target variable "Sales_Price" from the train data in a from of a vector
@@ -215,7 +230,7 @@ ames_y_train <- ames_train[,307]
 
 ### Engineering
 
-In order to create a good predictive model, usually the most of time is spent optimizing parameters. Before we start training our model, let us take a closer look at what paramters we need to handle. 
+In order to create a good predictive model, usually the most of time is spent optimizing parameters. Before we start training our model, let us take a closer look at what parameters we need to handle. 
 
 There are 3 categories XGBoost parameters can be divided into:  
 
@@ -247,14 +262,14 @@ Finally, learning task parameters define methods for the loss function and model
 2. ```eval_metric``` - this parameter depends on ```objective```. Here we set metrics used to evaluate a model's accuracy on validation data. When "reg:linear" set as objective, default metric is RMSE.
 
 
-A package with useful tools for parameter optimization is ```mlr```. It includes extensive list of parameters for any type of algorithm. We can take a look at list with paramters for regression and check parameters we just dicussed.
+A package with useful tools for parameter optimization is ```mlr```. It includes extensive list of parameters for any type of algorithm. We can take a look at list with parameters for regression and check parameters we just discussed.
 
 ```{r}
 # Parameters for regression
 getParamSet("regr.xgboost")
 ```
 
-To build a well-performing predicitive model many iterations are necessary. Therefore, in order to determine how good or bad one model predicts the target variable, performance evaluation needs to be conducted. A technique that will be used to help us in evaluating performance of our future machine learning models is called **k-fold cross-validation technique.** K-fold cross-validation evaluates a model by training a couple of models on subsets of the available input data and evaluating them on the complementary subset of the data. In this process, training data is splitted into k groups (i.e. folds) of approximately equal size. Then the model is fit on k−1 folds and the remaining fold is used in computation of the model performance. This procedure is repeated k times, where each time, a different fold is treated as the validation set (i.e. used in computation of the model performance). Thus, the final cross-validation k-fold estimate is computed by averaging the k test errors. The final output provided is an approximation of the error we may expect on unseen data.
+To build a well-performing predictive model many iterations are necessary. Therefore, in order to determine how good or bad one model predicts the target variable, performance evaluation needs to be conducted. A technique that will be used to help us in evaluating performance of our future machine learning models is called **k-fold cross-validation technique.** K-fold cross-validation evaluates a model by training a couple of models on subsets of the available input data and evaluating them on the complementary subset of the data. In this process, training data is split into k groups (i.e. folds) of approximately equal size. Then the model is fit on k−1 folds and the remaining fold is used in computation of the model performance. This procedure is repeated k times, where each time, a different fold is treated as the validation set (i.e. used in computation of the model performance). Thus, the final cross-validation k-fold estimate is computed by averaging the k test errors. The final output provided is an approximation of the error we may expect on unseen data.
 
 ```{r using-mlr, eval=F, echo=F}
 # CONSIDERING TO ADD OR DITCH
@@ -356,9 +371,9 @@ ames_xgb <- xgb.cv(
   booster = "gbtree",
   data = ames_x_train,      # matrix with train data without sale price
   label = ames_y_train,     # numerical vector with sale price with train data 
-  nrounds = 200,            # numer of iterations 
-  objective = "reg:linear", # parameter refering to the function to be me minimised (RMSE)
-  nfold = 10,                # data is randomly partitioned into nfold equal size subsamples.
+  nrounds = 200,            # number of iterations 
+  objective = "reg:linear", # parameter referring to the function to be me minimised (RMSE)
+  nfold = 10,                # data is randomly partitioned into n-fold equal size subsamples.
   params = list(            # defining the list of parameters
     eta = 0.3,              # learning rate 
     max_depth = 6,          # maximal depth of tree
@@ -380,9 +395,9 @@ ames_xgb <- xgb.cv(
 
 After conducting the 10-fold cross validation, we sorted the output so that it shows us at what iteration (round) our model reached the lowest error (RMSE) when fitted to the seen part of training data (rmse.train) and unseen part of the training data (rmse.test).
 
-*Side note: unseen part of the training data (rmse.test) has nothing to do with test data from the initial split we did at the very begining of the chapter and named as ```ames_test``` . Here we talk about unseen data in the process of k-fold cross-validation.*
+*Side note: unseen part of the training data (rmse.test) has nothing to do with test data from the initial split we did at the very beginNing of the chapter and named as ```ames_test``` . Here we talk about unseen data in the process of k-fold cross-validation.*
 
-Unsprisingly, our model performed very well when fitted to the seen data, suggesting the RMSE of ```eval$rmse.train```. Here we see an evidance of overfitting. In other words, our model fits the training part of the training data very well, but is not generalizable, i.e. when confronted with unseen data, its predictions are not as good as for the trained part.
+Unsurprisingly, our model performed very well when fitted to the seen data, suggesting the RMSE of ```eval$rmse.train```. Here we see an evidence of overfitting. In other words, our model fits the training part of the training data very well, but is not generalizable, i.e. when confronted with unseen data, its predictions are not as good as for the trained part.
 
 ```{r}
 # Plot error vs number trees
@@ -398,7 +413,8 @@ ggplotly(pe)
 The gap between the blue and the red line in the graph above depicts the performance difference of our model when fitted to the seen data (the red line) and when fitted to the unseen data (the blue line).
 Our goal is to make our model perform with unseen data as good as possible, i.e. to minimize RMSE as much as possible.
 
-To pursue that goal, parameters, that we dicussed earlier, need to be as optimally tuned as possible.
+To pursue that goal, parameters, that we discussed earlier, need to be as optimally tuned as possible.
+
 Therefore, some parameters should be adapted. For the following cross-validation process, we will slightly adapt parameters:
 
 1. Decrease the learning rate ```eta``` from 0.3 to 0.03
@@ -414,7 +430,7 @@ ames_xgb1 <- xgb.cv(
   booster = "gbtree",
   data = ames_x_train,           # matrix with train data without sale price
   label = ames_y_train,          # numerical vector with sale price with train data 
-  nrounds = 2301,                # numer of iterations 
+  nrounds = 2301,                # number of iterations 
   objective = "reg:linear",      # indicating regression model
   early_stopping_rounds = 50,    # stopping the training model as soon as evaluation metric (RMSE) does not improve for a given number of rounds
   nfold = 10,                     # data is randomly partitioned into nfold equal size subsamples
@@ -443,7 +459,7 @@ pr1 <-ggplot(ames_xgb1$evaluation_log) +
 ggplotly(pr1)
 ```
 
-We can see that the training error increased. However, the error on unseen data reaches a minimum RMSE of `r print(eval1$rmse.test)` with `r print(eval1$ntrees.test)` iterations. With simple adaptation of our parameters we managed to decrease it to some extent. At this point it should be clear that it would take increadible effort to manualy compute those errors for each possible combination of parameters that would potentially decrease the error further. Luckily, there are more elegant, automated solution for it. We can create our hyperparameter search grid along with columns to dump our results in. 
+We can see that the training error increased. However, the error on unseen data reaches a minimum RMSE of `r print(eval1$rmse.test)` with `r print(eval1$ntrees.test)` iterations. With simple adaptation of our parameters we managed to decrease it to some extent. At this point it should be clear that it would take incredible effort to manually compute those errors for each possible combination of parameters that would potentially decrease the error further. Luckily, there are more elegant, automated solution for it. We can create our hyperparameter search grid along with columns to dump our results in. 
 
 ### [STRATEGY FOR TUNING] ###
 
@@ -500,26 +516,37 @@ hg <- hyper_grid %>%
   filter(rmse > 0) %>%
   arrange(rmse) %>%
   glimpse()
+
 ```
 
 Here is a glimpse of results we obtained after several hours of processing:
 
 ```{r, fig.width=10}
-hyper_grid_optimal_3 <-read.csv("hyper_grid_optimal_3.csv")
-knitr::kable(head(hyper_grid_optimal_3), caption = "Hyper grid output")
+## Observations: 98
+## Variables: 10
+## $ eta              <dbl> 0.01, 0.01, 0.01, 0.01, 0.01, 0.0…
+## $ max_depth        <dbl> 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, …
+## $ min_child_weight <dbl> 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, …
+## $ subsample        <dbl> 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5…
+## $ colsample_bytree <dbl> 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5…
+## $ gamma            <dbl> 0, 1, 10, 100, 1000, 0, 1, 10, 10…
+## $ lambda           <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ alpha            <dbl> 0.00, 0.00, 0.00, 0.00, 0.00, 0.1…
+## $ rmse             <dbl> 20488, 20488, 20488, 20488, 20488…
+## $ trees            <dbl> 3944, 3944, 3944, 3944, 3944, 381…
 ```
 
-In the first row we see the combination of parameters given that results in the lowest estimated error (RMSE) possible for the combination given. Subsequently, we will use those parameters to enhance prediction perfromance of our model. 
+In the first "column" we see the combination of parameters given that results in the lowest estimated error (RMSE) possible for the combination given. Subsequently, we will use those parameters to enhance prediction performance of our model. 
 
 ```{r}
 # The list of optimal hyperparameters
 params_optimal <- list(
   eta = 0.01,
-  max_depth = 1,
+  max_depth = 3,
   min_child_weight = 3,
   subsample = 0.5,
   colsample_bytree = 0.5,
-  lambda = 0.1
+  lambda = 1
 )
 
 # Train final model  with optimal combination of the given parameters 
@@ -528,9 +555,7 @@ xgb.fit.optimal <- xgboost(
   params = params_optimal,
   data = ames_x_train,
   label = ames_y_train,
-  nrounds = 3497,
-  nthreads = 1,
-  early_stopping_rounds = 50,
+  nrounds = 3944,
   objective = "reg:linear",
   verbose = 0
 )
@@ -545,6 +570,7 @@ After computing the final model, we can make inferences about how features (i.e.
 importance_matrix <- xgb.importance(model = xgb.fit.optimal)
 # Variable importance plot with ggplot2
 xgb.ggplot.importance(importance_matrix, top_n = 15, measure = "Gain")
+
 
 ```
 
@@ -563,7 +589,7 @@ pdp <- xgb.fit.optimal %>%
 ggplotly(pdp)
 ```
 
-We use predict function to predict unseen observations from the test data set we created at the begining of the chapter. Since we already know the real sale prices from the test data set, we will be able to calculate the error of our predictive model. 
+We use predict function to predict unseen observations from the test data set we created at the beginning of the chapter. Since we already know the real sale prices from the test data set, we will be able to calculate the error of our predictive model. 
 
 ```{r}
 # Predict values for test data optimal
