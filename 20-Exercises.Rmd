@@ -1,0 +1,54 @@
+---
+title: "20-exercises"
+author: "Mirza Mujanovic - 01553283"
+date: "8/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Exercises
+
+## Exercise in Machine learning (IN PROGRESS)
+
+```{r,error=FALSE,message=FALSE,warning=FALSE,eval=FALSE,echo=FALSE}
+escooter.may <- read.csv("bikesJuly.csv")
+escooter.aug <- read.csv("bikesAugust.csv")
+```
+
+In this exercise you will fit a gradient boosting model using xgboost package to predict the number of e-scooters rented in an hour. Features in the data set are related to weather conditions and other important information. Your task will be to train the model on data from one month (i.e. May) and do prediction on data for another month (i.e. June).
+
+### Exercise to download (IN PROGRESS)
+
+In this exercise you will fit a gradient boosting model using xgboost package to predict the number of e-scooters rented in an hour. Features in the data set are related to weather conditions and other important information. Your task will be to train the model on data from one month (i.e. May) and do prediction on data for another month (i.e. June).
+
+```{r,eval=F,echo=F}
+# The number of trees to use, as determined by xgb.cv
+ntrees
+
+# Run xgboost
+bike_model_xgb <- xgboost(data = as.matrix(bikesJuly.treat), # training data as matrix
+                          label = bikesJuly$cnt,  # column of outcomes
+                          nrounds = ntrees,       # number of trees to build
+                          objective = "reg:linear", # objective
+                          eta = 0.3,
+                          depth = 6,
+                          verbose = 0  # silent
+)
+
+# Make predictions
+bikesAugust$pred <- predict(bike_model_xgb, as.matrix(bikesAugust.treat))
+
+# Plot predictions vs actual bike rental count
+ggplot(bikesAugust, aes(x = pred, y = cnt)) + 
+  geom_point() + 
+  geom_abline()
+
+
+```
+
+
+------------------------------------------------
+

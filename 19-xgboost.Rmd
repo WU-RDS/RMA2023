@@ -158,14 +158,16 @@ cat(tabl)
 
 We can apply one hot encoding to our data set by using R's base function ```model.matrix```. In the code below, ~.+0 leads to encoding of all categorical variables without producing an intercept. 
 
-```{r}
+```{r, echo=FALSE}
 options("contrasts")
+```
+
+```{r}
 # One hot encoding (turning the test data into matrix with all numerical values)
 ames.he <- model.matrix(~.+0,data = ames)
 
 # Save variable names due to more practical addressing columns later on
 setcol <- colnames(ames.he)
-head(ames.he[,307] )# Sale price column
 ```
 
 We need to break our data set into training and test data, while ensuring we have consistent distributions between the training and test sets. 
@@ -175,15 +177,11 @@ We need to break our data set into training and test data, while ensuring we hav
 set.seed(1234)
 
 # Create partition
-#library(caret)
+library(caret)
 index <- caret::createDataPartition(ames$sale_price, p = 0.7, list = F)
 ```
 
 ```index``` is a matrix with just one column that contains approximately 70% of rows from our original data set.  
-```{r}
-head(index)
-```
-
 Now we use ```index``` to address columns we want to assign to our train data (```ames_train```), i.e. columns that we want to assign to our test data (```ames_test```).
 
 Note that by using "-" in front of ```index``` we assign to ```ames_test``` all observations **except** those that are in ```index```.
@@ -197,19 +195,18 @@ ames_test <- ames.he[-index, ]
 If we take lake look at the dimensions of our test and train data, we can see that our split was successful.
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
+dim(ames.he)   # 2930 observations in total
 dim(ames_train)# 2053 observations for training data
 dim(ames_test) # 877 observations for testing data
-
-#colnames(ames_train)
-#colnames(ames_test)
 ```
 
-We are not done with preparation of data. Since our task is to build a predictive model for house pricing based on multiple features, our target variable (sale price) needs to be excluded from the test data. Newly created variable will be used at the end to test accuracy of our final model. 
+We are still not done with preparation of data. Since our task is to build a predictive model for house pricing based on multiple features, our target variable (sale price) needs to be excluded from the test data. Newly created variable will be used at the end to test accuracy of our final model. 
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Test data 
 ## Matrix containing all columns from the test data except dependent variable "Sale_Price"
-ames_x_test <- as.matrix(ames_test[,-307]) # addressing "Sale Price" column in matrix and excluding it
+colnames(ames_test[,300:308])# "sale_price" is a column number 308
+ames_x_test <- as.matrix(ames_test[,-308]) # addressing "Sale Price" column in matrix and excluding it
 colnames(ames_x_test)[300:308] # No "Sale Price" anymore here! It used to be among last columns.
 ```
 
@@ -218,14 +215,17 @@ For training purposes, target variable (sale price) needs to be excluded from th
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Train data set
 # Matrix containing all columns from the train data except dependent variable "Sale_Price"
-ames_x_train <- as.matrix(ames_train[,-307])
+
+colnames(ames_train[,300:308])# "sale_price" is a column number 308
+ames_x_train <- as.matrix(ames_train[,-308])# addressing "Sale Price" column in matrix and excluding it
+colnames(ames_x_train[,300:308])# No "Sale Price" anymore here!
 ```
 
 However, the target variable is going to be stored separately because the learning algorithm in a predictive model attempts to discover and model the relationships among the target variable and the other features.
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Dependent/Target variable "Sales_Price" from the train data in a from of a vector
-ames_y_train <- ames_train[,307]
+ames_y_train <- ames_train[,308]
 ```
 
 ### Engineering
@@ -264,111 +264,18 @@ Finally, learning task parameters define methods for the loss function and model
 
 A package with useful tools for parameter optimization is ```mlr```. It includes extensive list of parameters for any type of algorithm. We can take a look at list with parameters for regression and check parameters we just discussed.
 
-```{r}
+```{r,}
 # Parameters for regression
 getParamSet("regr.xgboost")
 ```
 
 To build a well-performing predictive model many iterations are necessary. Therefore, in order to determine how good or bad one model predicts the target variable, performance evaluation needs to be conducted. A technique that will be used to help us in evaluating performance of our future machine learning models is called **k-fold cross-validation technique.** K-fold cross-validation evaluates a model by training a couple of models on subsets of the available input data and evaluating them on the complementary subset of the data. In this process, training data is split into k groups (i.e. folds) of approximately equal size. Then the model is fit on k−1 folds and the remaining fold is used in computation of the model performance. This procedure is repeated k times, where each time, a different fold is treated as the validation set (i.e. used in computation of the model performance). Thus, the final cross-validation k-fold estimate is computed by averaging the k test errors. The final output provided is an approximation of the error we may expect on unseen data.
 
-```{r using-mlr, eval=F, echo=F}
-# CONSIDERING TO ADD OR DITCH
-ames_train.df <- as.data.frame(ames_train)
-colnames(ames_train.df) <- gsub("&","and",colnames(ames_train.df))
-colnames(ames_train.df) <- gsub(" ","",colnames(ames_train.df))
-
-ames_test.df <- as.data.frame(ames_test)
-colnames(ames_test.df) <- gsub("&","and",colnames(ames_test.df))
-colnames(ames_test.df) <- gsub(" ","",colnames(ames_test.df))
-
-trainTask <- makeRegrTask(data = ames_train.df, target = "sale_price")
-testTask <- makeRegrTask(data = ames_test.df, target = "sale_price")
-
-set.seed(1234)
-# Create an xgboost learner that is classification based and outputs
-# labels (as opposed to probabilities)
-xgb_learner <- makeLearner(
-  cl= "regr.xgboost",
-  predict.type = "response",
-  par.vals = list(
-    objective = "reg:linear",
-    nrounds = 200,
-     eta = 0.01,
-  max_depth = 5,
-  min_child_weight = 3,
-  subsample = 0.5,
-  colsample_bytree = 0.5,
-  lambda = 0.1,
-  alpha = 0
-  )
-)
-# Parameters for regression
-getParamSet("regr.xgboost")
-# Create a model
-xgb_model <- mlr::train(xgb_learner, task = trainTask)
-
-result <- predict(xgb_model, testTask)
-
-
-# Tuning 
-
-xgb_params <- makeParamSet(
-  # The number of trees in the model (each one built sequentially)
-  makeIntegerParam("nrounds", lower = 100, upper = 100),
-  # number of splits in each tree
-  makeIntegerParam("max_depth", lower = 6, upper = 6),
-  # "shrinkage" - prevents overfitting
-  makeNumericParam("eta", lower = 0.3, upper = 0.3),
-  # L2 regularization - prevents overfitting
-  makeNumericParam("lambda", lower = 0, upper = 10000),
-  makeNumericParam("min_child_weight", lower = 1, upper = 1),
-  makeNumericParam("subsample",lower = 1, upper = 1),
-  makeNumericParam("colsample_bytree",lower = 1,upper = 1)
-  makeIntegerParam("early_stopping_rounds", lower = 10, upper = 100),
-  makeNumericParam("alpha",lower = 0, upper = 10000),
-  makeNumericParam("gamma",lower = 0, upper = 1000)
-  
-)
-
-control <- makeTuneControlRandom(maxit = 5)
-
-# Create a description of the resampling plan
-resample_desc <- makeResampleDesc("CV", iters = 5L)
-
-tuned_params <- tuneParams(
-  learner = xgb_learner,
-  task = trainTask,
-  resampling = resample_desc,
-  par.set = xgb_params,
-  control = control
-)
-
-
-# Create a new model using tuned hyperparameters
-xgb_tuned_learner <- setHyperPars(
-  learner = xgb_learner,
-  par.vals = tuned_params$x
-)
-
-# Re-train parameters using tuned hyperparameters (and full training set)
-xgb_model <- mlr::train(xgb_tuned_learner, trainTask)
-
-# Make a new prediction
-result <- predict(xgb_model, testTask)
-
-# Calculate RMSE
-result$data %>%
-  mutate(residuals = truth - response) %>%
-  summarize(rmse = sqrt(mean(residuals^2)))
-
-```
-
 The first model to pass to the k-fold cross validation will be built using default parameters. As default for  number of iterations (```nrounds```) is zero, we will set it on 200.
 
 ```{r,error=FALSE,message=FALSE,warning=FALSE}
 set.seed(1234)
 ames_xgb <- xgb.cv(
-  booster = "gbtree",
   data = ames_x_train,      # matrix with train data without sale price
   label = ames_y_train,     # numerical vector with sale price with train data 
   nrounds = 200,            # number of iterations 
@@ -391,9 +298,12 @@ ames_xgb <- xgb.cv(
     ntrees.test  = which(test_rmse_mean == min(test_rmse_mean))[1],
     rmse.test   = min(test_rmse_mean)))
 
+print(eval$rmse.train)
+
+
 ```
 
-After conducting the 10-fold cross validation, we sorted the output so that it shows us at what iteration (round) our model reached the lowest error (RMSE) when fitted to the seen part of training data (rmse.train) and unseen part of the training data (rmse.test).
+After conducting the 10-fold cross validation, we sorted the output so that it shows us at what iteration (round) our model reached the lowest error (```eval$rmse.train```=`r print(eval$rmse.train)`)  when fitted to the seen part of training data and unseen part of the training data (```eval$rmse.test```=`r print(eval$rmse.test)`).
 
 *Side note: unseen part of the training data (rmse.test) has nothing to do with test data from the initial split we did at the very beginNing of the chapter and named as ```ames_test``` . Here we talk about unseen data in the process of k-fold cross-validation.*
 
@@ -427,7 +337,6 @@ Therefore, some parameters should be adapted. For the following cross-validation
 ```{r}
 set.seed(1234)
 ames_xgb1 <- xgb.cv(
-  booster = "gbtree",
   data = ames_x_train,           # matrix with train data without sale price
   label = ames_y_train,          # numerical vector with sale price with train data 
   nrounds = 2301,                # number of iterations 
@@ -477,8 +386,6 @@ hyper_grid <- expand.grid(
   rmse = 0,          # a place to dump RMSE results
   trees = 0          # a place to dump required number of trees
 )
-
-nrow(hyper_grid)
 
 ```
 
@@ -562,16 +469,14 @@ xgb.fit.optimal <- xgboost(
 
 ```
 
-After computing the final model, we can make inferences about how features (i.e. variables in our data set besides sale price) are influencing our model. Measurement of feature importance occurs based on the sum of the reduction in the loss function (e.g. SSE) attributed to each variable at each split in a respective tree. In simplier terms, it is the relative contribution of the respective feature to the model computed by taking each feature’s contribution for each tree in the model. Therefore, those features with the highest average decrease in SSE (for regression) are identified as the one with the highest contribution. Thus, these features are among most important ones. To visualize feature importance plot we need to create imporance matrix first then plot it with ggplot-besed function "xgb.ggplot.importance". 
+After computing the final model, we can make inferences about how features (i.e. variables in our data set besides sale price) are influencing our model. Measurement of feature importance occurs based on the sum of the reduction in the loss function (e.g. SSE) attributed to each variable at each split in a respective tree. In simpler terms, it is the relative contribution of the respective feature to the model computed by taking each feature’s contribution for each tree in the model. Therefore, those features with the highest average decrease in SSE (for regression) are identified as the one with the highest contribution. Thus, these features are among most important ones. To visualize feature importance plot we need to create importance matrix first then plot it with ggplot-based function "xgb.ggplot.importance". 
 
 ```{r}
-#https://liuyanguu.github.io/post/2018/07/09/extreme-gradient-boosting-xgboost-better-than-random-forest-or-gradient-boosting/
 # Construct importance matrix
 importance_matrix <- xgb.importance(model = xgb.fit.optimal)
+
 # Variable importance plot with ggplot2
-xgb.ggplot.importance(importance_matrix, top_n = 15, measure = "Gain")
-
-
+xgb.ggplot.importance(importance_matrix, top_n = 15)
 ```
 
 As we identified the most relevant features, now we can try to understand how the response variable (i.e. predicted sale price) changes based on these variables. For this we can use partial dependence plots (PDPs). They show the marginal effect one or two features have on the predicted outcome.
@@ -596,17 +501,8 @@ We use predict function to predict unseen observations from the test data set we
 pred.optimal <- predict(xgb.fit.optimal, ames_x_test)
 
 # Results with optimal parameters
-RMSE(pred.optimal, ames_test[,307])
+RMSE(pred.optimal, ames_test[,308])
 ```
-
-
-```{r}
-# ...or another way
-as.data.frame(ames_test) %>%
-  mutate(residuals = sale_price - pred.optimal) %>%
-  dplyr::summarize(rmse = sqrt(mean(residuals^2)))
-```
-
 Finally, we can nicely visualize predicted and actual sale price.
 
 ```{r,message=F,warning=F,error=F}
@@ -621,47 +517,3 @@ p<-ggplot(ames_test, aes(x = pred.optimal, y = sale_price, Predicted=pred.optima
   ggtitle(label = "Predicted sale price vs sales price")
 ggplotly(p,tooltip = c("Predicted","Tested"))
 ```
-
-
-
-## Exercise (IN PROGRESS)
-
-```{r,error=FALSE,message=FALSE,warning=FALSE,eval=FALSE,echo=FALSE}
-escooter.may <- read.csv("bikesJuly.csv")
-escooter.aug <- read.csv("bikesAugust.csv")
-```
-
-In this exercise you will fit a gradient boosting model using xgboost package to predict the number of e-scooters rented in an hour. Features in the data set are related to weather conditions and other important information. Your task will be to train the model on data from one month (i.e. May) and do prediction on data for another month (i.e. June).
-
-### Exercise to download (IN PROGRESS)
-
-In this exercise you will fit a gradient boosting model using xgboost package to predict the number of e-scooters rented in an hour. Features in the data set are related to weather conditions and other important information. Your task will be to train the model on data from one month (i.e. May) and do prediction on data for another month (i.e. June).
-
-```{r,eval=F,echo=F}
-# The number of trees to use, as determined by xgb.cv
-ntrees
-
-# Run xgboost
-bike_model_xgb <- xgboost(data = as.matrix(bikesJuly.treat), # training data as matrix
-                          label = bikesJuly$cnt,  # column of outcomes
-                          nrounds = ntrees,       # number of trees to build
-                          objective = "reg:linear", # objective
-                          eta = 0.3,
-                          depth = 6,
-                          verbose = 0  # silent
-)
-
-# Make predictions
-bikesAugust$pred <- predict(bike_model_xgb, as.matrix(bikesAugust.treat))
-
-# Plot predictions vs actual bike rental count
-ggplot(bikesAugust, aes(x = pred, y = cnt)) + 
-  geom_point() + 
-  geom_abline()
-
-
-```
-
-
-------------------------------------------------
-
