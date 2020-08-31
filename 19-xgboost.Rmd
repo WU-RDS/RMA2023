@@ -45,8 +45,8 @@ In this chapter we will focus on supervised machine learning, more specifically,
 
 When we talk about machine learning, there are two quite important factors that drive successful application:
 
-    - effective statistical models that are capable of capturing the complex data dependencies 
-    - and how scalable are learning systems that learn the model from large datasets.
+* effective statistical models that are capable of capturing the complex data dependencies 
+* and how scalable are learning systems that learn the model from large datasets.
 
 Among the machine learning methods commonly used in practice are gradient tree boosting methods. Gradient boosting machines (GBMs) are a very popular machine learning method, and in this chapter we will introduce you R package "xgboost" and show how it can be used for marketing purposes. It is a scalable machine learning system for tree boosting and GMBs have proven successful across many domains and are one of the leading methods you can find across Kaggle competitions.
 
@@ -150,7 +150,7 @@ Usually, when between several categories exist ordinal relationship (e.g. variab
 
 ```{r, echo=FALSE,message=FALSE, warnings=FALSE, results='asis', fig.height=20, fig.width=10}
 tabl <- "
-|   |dog  |cat  |rabbit |
+|   |dog|cat|rabbit|
 |---|-----|-----|-------|
 | 1 |  1  |  0  |   0   |
 | 2 |  0  |  1  |   0   |
@@ -165,7 +165,7 @@ cat(tabl)
 
 We can apply one hot encoding to our data set by using R's base function ```model.matrix```. In the code below, ~.+0 leads to encoding of all categorical variables without producing an intercept. 
 
-```{r, echo=FALSE, warning=FALSE,message=FALSE,error=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE,error=FALSE, results='hide'}
 options("contrasts")
 ```
 
@@ -289,7 +289,7 @@ To build a well-performing predictive model many iterations are necessary. There
 
 The first model to pass to the k-fold cross validation will be built using default parameters. As default for number of iterations (```nrounds```) is zero, we will set it on 200.
 
-```{r,error=FALSE,message=FALSE,warning=FALSE}
+```{r,error=FALSE,message=FALSE,warning=FALSE,results='hide'}
 set.seed(1234)
 ames_xgb <- xgb.cv(
   data = ames_x_train,      # matrix with train data without sale price
@@ -305,9 +305,12 @@ ames_xgb <- xgb.cv(
     colsample_bytree = 1    # percent of columns to sample from for each tree
     ),
   verbose = 0               # print the statistics during the process (1 or 0)
-  )  
+  )
+```
 
-(eval <- ames_xgb$evaluation_log %>%
+
+```{r,error=FALSE,message=FALSE,warning=FALSE}
+(eval<- ames_xgb$evaluation_log %>%
   dplyr::summarise(
     ntrees.train = which(train_rmse_mean == min(train_rmse_mean))[1],
     rmse.train   = min(train_rmse_mean),
@@ -316,11 +319,11 @@ ames_xgb <- xgb.cv(
 
 ```
 
-After conducting the 10-fold cross validation, we sorted the output so that it shows us at what iteration (round) our model reached the lowest error (```eval$rmse.train```=`r print(eval$rmse.train)`)  when fitted to the seen part of training data and unseen part of the training data (```eval$rmse.test```=`r print(eval$rmse.test)`).
+After conducting the 10-fold cross validation, we sorted the output so that it shows us at what iteration (round) our model reached the lowest errors when fitted to the seen part of training data (`r eval$rmse.train`) and unseen part of the training data (`r print(eval$rmse.test)`).
 
 *Side note: unseen part of the training data (rmse.test) has nothing to do with test data from the initial split we did at the very beginNing of the chapter and named as ```ames_test``` . Here we talk about unseen data in the process of k-fold cross-validation.*
 
-Unsurprisingly, our model performed very well when fitted to the seen data, suggesting the RMSE of ```eval$rmse.train```. Here we see an evidence of overfitting. In other words, our model fits the training part of the training data very well (i.e. suggests low RMSE for train data), but is not generalizable, i.e. when confronted with unseen data, its predictions are not as good as for the trained part(i.e. suggests high RMSE for unseen, test data).
+Unsurprisingly, our model performed very well when fitted to the seen data, suggesting the RMSE being`r print(eval$rmse.train)```. Here we see an evidence of overfitting. In other words, our model fits the training part of the training data very well (i.e. suggests low RMSE for train data), but is not generalizable, i.e. when confronted with unseen data, its predictions are not as good as for the trained part(i.e. suggests high RMSE for unseen, test data).
 
 ```{r}
 # Plot error vs number trees
@@ -347,7 +350,7 @@ Therefore, some parameters should be adapted. For the following cross-validation
 4. Reduce ```subsample``` to 0.5
 5. ```colsample_bytree``` reduced to 0.5
 
-```{r}
+```{r,warning=FALSE,error=FALSE,message=FALSE, results='hide'}
 set.seed(1234)
 ames_xgb1 <- xgb.cv(
   data = ames_x_train,           # matrix with train data without sale price
@@ -532,3 +535,4 @@ p<-ggplot(ames_test_pred, aes(x = pred.optimal, y = sale_price, Predicted=pred.o
   ggtitle(label = "Predicted sale price vs sales price")
 ggplotly(p,tooltip = c("Predicted","Tested"))
 ```
+
