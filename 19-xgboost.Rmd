@@ -43,22 +43,27 @@ In this chapter we will focus on supervised machine learning, more specifically,
 
 ## Gradient Boosting
 
-When we talk about machine learning, there are two quite important factors that drive successful application: effective statistical models that are capable of capturing the complex data dependencies and how scalable are learning systems that learn the model from large datasets. Among the machine learning methods commonly used in practice are gradient tree boosting methods. Gradient boosting machines (GBMs) are a very popular machine learning method, and in this chapter we will introduce you R package "xgboost" and show how it can be used for marketing purposes. It is a scalable machine learning system for tree boosting and GMBs have proven successful across many domains and are one of the leading methods you can find across Kaggle competitions.
+When we talk about machine learning, there are two quite important factors that drive successful application:
 
-When it comes to marketing, it can be used in uplift modeling, i.e. can help a company to identify those who are likely to buy products as a result of receiving a discount or a personalized advertisement. Consequently, it helps a company to maximize profits by keeping advertising costs and overall efforts to the minimum. In the perspective of data analysis and marketing, performance of a marketing campaign can be predicted using algoritham such as GBMs. For instance, in the banking industry optimizing targeting for telemarketing used to be one of the main issues, especially under a growing pressure induced by financial crisis in 2008. A commercial bank from Portugal used data-driven model to predict the result of a telemarketing phone call to sell long term deposits is a valuable tool to support client selection decisions of bank campaign managers. As a result, they identified that inbound calls and an increase in other attributes identified as a highly relevant (such as agent experience or duration of pre-vious calls) enhance the probability for a successful deposit sell.  
+    - effective statistical models that are capable of capturing the complex data dependencies 
+    - and how scalable are learning systems that learn the model from large datasets.
+
+Among the machine learning methods commonly used in practice are gradient tree boosting methods. Gradient boosting machines (GBMs) are a very popular machine learning method, and in this chapter we will introduce you R package "xgboost" and show how it can be used for marketing purposes. It is a scalable machine learning system for tree boosting and GMBs have proven successful across many domains and are one of the leading methods you can find across Kaggle competitions.
+
+When it comes to marketing, it can be used in uplift modeling, i.e. can help a company to identify those who are likely to buy products as a result of receiving a discount or a personalized advertisement. Consequently, it helps a company to maximize profits by keeping advertising costs and overall efforts to the minimum. In the perspective of data analysis and marketing, performance of a marketing campaign can be predicted using algoritham such as GBMs. For instance, in the banking industry optimizing targeting for telemarketing used to be one of the main issues, especially under a growing pressure induced by financial crisis in 2008. A commercial bank from Portugal used data-driven model to predict the result of a telemarketing phone call to sell long term deposits. It was a valuable tool to support client selection decisions made by bank managers. As a result, they identified that inbound calls and an increase in other, highly relevant attributes (such as agent experience or duration of pre-vious calls) enhance the probability for a successful deposit sell.  
 
 
 ### Elements of supervised machine learning
-https://xgboost.readthedocs.io/en/latest/tutorials/model.html
-https://bradleyboehmke.github.io/HOML/intro.html#supervised-learning
+```{r, echo=FALSE}
+#https://xgboost.readthedocs.io/en/latest/tutorials/model.html
+#https://bradleyboehmke.github.io/HOML/intro.html#supervised-learning
+```
 
 XGBoost is used in supervised machine learning. Let us decompose the meaning of supervised machine learning.
 
 Supervised machine learning can be described as a process in which training data with multiple **features **(also called: predictor variables, independent variables, attributes, predictor) is used to predict a **target variable** (also called, dependent variable, response, outcome measurement). 
 
-The final outcome of supervised machine learning is a predictive model, so it is important to define what a model is. **A model**, in the context of supervised machine learning, contains a mathematical structure or algorithm by which the prediction of a target variable is made from the multiple features used as input. For instance, algorithm that helps you to predict the sale price of your house based on the house attributes.
-
-Another important term in the context of machine learning are **parameters**. They denote undetermined part that we need to learn from data. For instance, in case of linear regression, the parameters are the **coefficients **.
+The final outcome of supervised machine learning is a predictive model, so it is important to define what a model is. **A model**, in the context of supervised machine learning, contains a mathematical structure or algorithm by which the prediction of a target variable is made from the multiple features used as input. For instance, algorithm that helps you to predict the sale price of your house based on the house attributes. Another important term in the context of machine learning are **parameters**. They denote undetermined part that we need to learn from data.
 
 Finally, as we said, models we build with supervised machine learning are predictive models. "Supervised" refers to a supervisory role of the target variable, which indicates the task that model needs to learn. More specifically, it means that the data which is used for training a model contains target variable. Given a set of training data, the learning algorithm attempts to find the combination of feature values that results in a predicted value as close to the actual target variable as possible.
 
@@ -78,9 +83,9 @@ In the illustration above you can see 4 boxes with pluses and minuses within the
 
 It is important to mention that at the begining all observations are assigned equal weights. However, weights are subject to change after each iteration as misclassified observations in one iteration will be assigned higher weight in the next one. Opposingly, observations that are correctly classified in one iteration will be assigned lower weight in the subsequent iteration.  
 
-In the box 1, the first weak learner identified "+" signs just on the left side of the box. It simply missclassified three "+" signs in the middle "-" upper part and recognized only the two on the left side. Consequently, it split the box in two parts (blue and light red), meaning that everything that appears in the blue "-" marked area is classified as "+", while the rest is classified as "-". 
+In the box 1, the first weak learner identified "+" signs just on the left side of the box. It simply misclassified three "+" signs in the middle "-" upper part and recognized only the two on the left side. Consequently, it split the box in two parts (blue and light red), meaning that everything that appears in the blue "-" marked area is classified as "+", while the rest is classified as "-". 
 
-Although our prediction model at this point does not do great job, it contains information useful for the next weak lerner that is being added in the box 2. Next weak learner assigns more weight to three "+" signs that were previously missclassified. Similarly to the previous split, the weak learner split the box 2 again in blue "-" and red "-" marked area. Again, everything in the blue area (left from the splitting line) was classified as "+", including three minus signs being missclassified. The rest was classified as -". Even though our predicting model looks a bit better, its classification is still incorrect.  
+Although our prediction model at this point does not do great job, it contains information useful for the next weak learner that is being added in the box 2. Next weak learner assigns more weight to three "+" signs that were previously misclassified. Similarly to the previous split, the weak learner split the box 2 again in blue "-" and red "-" marked area. Again, everything in the blue area (left from the splitting line) was classified as "+", including three minus signs being misclassified. The rest was classified as -". Even though our predicting model looks a bit better, its classification is still incorrect.  
 
 In the box 3, our model is becoming even better in classifying. It splitted the box horizontally, so that everything below the line was classified as "-" and above the line as "+". Despite the progress we still have some missclassified "-" in the blue-marked area as well as wrongly classified "+" below the splitting line (circled signs in the box 3).
 
@@ -138,7 +143,9 @@ knitr::kable(head(summarizeColumns(ames)))
 
 ### Data preparation
 
-First, we need to deal with data preparation. When using xgboost package, it is necessary to convert the categorical variables into numeric using one hot encoding. What is one hot encoding?
+First, we need to deal with data preparation. When using xgboost package, it is necessary to convert the categorical variables into numeric using one hot encoding. 
+
+What is one hot encoding?
 Usually, when between several categories exist ordinal relationship (e.g. variable "place" can be "1st", "2nd" and so on), all you need to do is so called the integer encoding. In the ordinal variable (such as "place") the integer values have a natural ordered relationship between each other, so machine learning algorithms are able to understand this relationship. However, for categorical variables where no ordinal relationship exists (e.g. variable "pet" with "dog", "cat" and "rabbit"), the integer encoding is not sufficient and you need one hot encoding. In the “pet” example, there are 3 categories, thus 3 binary variables are required. Therefore, “1” value is placed in the binary variable for the respective "color" and “0” values for the other colors. 
 
 ```{r, echo=FALSE,message=FALSE, warnings=FALSE, results='asis', fig.height=20, fig.width=10}
@@ -158,7 +165,7 @@ cat(tabl)
 
 We can apply one hot encoding to our data set by using R's base function ```model.matrix```. In the code below, ~.+0 leads to encoding of all categorical variables without producing an intercept. 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE,error=FALSE}
 options("contrasts")
 ```
 
@@ -170,7 +177,7 @@ ames.he <- model.matrix(~.+0,data = ames)
 setcol <- colnames(ames.he)
 ```
 
-We need to break our data set into training and test data, while ensuring we have consistent distributions between the training and test sets. 
+Next,we need to break our data set into training and test data, while ensuring we have consistent distributions between the training and test sets. 
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Data split on test and train data
@@ -179,10 +186,12 @@ set.seed(1234)
 # Create partition
 library(caret)
 index <- caret::createDataPartition(ames$sale_price, p = 0.7, list = F)
+
 ```
 
-```index``` is a matrix with just one column that contains approximately 70% of rows from our original data set.  
-Now we use ```index``` to address columns we want to assign to our train data (```ames_train```), i.e. columns that we want to assign to our test data (```ames_test```).
+```index``` is a matrix with just one column that contains approximately 70% of rows (i.e. numbers of rows) from our original data set.
+
+Now we use ```index``` to address columns we want to assign to our train data (```ames_train```), and columns that we want to assign to our test data (```ames_test```).
 
 Note that by using "-" in front of ```index``` we assign to ```ames_test``` all observations **except** those that are in ```index```.
 
@@ -194,34 +203,41 @@ ames_test <- ames.he[-index, ]
 
 If we take lake look at the dimensions of our test and train data, we can see that our split was successful.
 
-```{r, error=FALSE,warning=FALSE,message=FALSE}
+```{r, error=FALSE,warning=FALSE,message=FALSE, results='hide'}
 dim(ames.he)   # 2930 observations in total
 dim(ames_train)# 2053 observations for training data
 dim(ames_test) # 877 observations for testing data
 ```
 
-We are still not done with preparation of data. Since our task is to build a predictive model for house pricing based on multiple features, our target variable (sale price) needs to be excluded from the test data. Newly created variable will be used at the end to test accuracy of our final model. 
+We are still not done with preparation of data. Since our task is to build a predictive model for house pricing based on multiple features, our target variable (sale price) needs to be excluded from the test data. The "real" target variable data (the real sales price) will be used at the end when we test accuracy of our predictive model. 
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Test data 
 ## Matrix containing all columns from the test data except dependent variable "Sale_Price"
 colnames(ames_test[,300:308])# "sale_price" is a column number 308
-ames_x_test <- as.matrix(ames_test[,-308]) # addressing "Sale Price" column in matrix and excluding it
-colnames(ames_x_test)[300:308] # No "Sale Price" anymore here! It used to be among last columns.
+
+# Addressing "Sale Price" column in matrix and excluding it
+ames_x_test <- as.matrix(ames_test[,-308]) 
+
+# No "Sale Price" anymore here! It used to be among last columns.
+colnames(ames_x_test)[300:308] 
 ```
 
-For training purposes, target variable (sale price) needs to be excluded from the train data set as well. 
+For training purposes, target variable (sale price) needs to be excluded from the rest of features, but not totally from the train data set. 
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Train data set
 # Matrix containing all columns from the train data except dependent variable "Sale_Price"
-
 colnames(ames_train[,300:308])# "sale_price" is a column number 308
-ames_x_train <- as.matrix(ames_train[,-308])# addressing "Sale Price" column in matrix and excluding it
-colnames(ames_x_train[,300:308])# No "Sale Price" anymore here!
+
+# Addressing "Sale Price" column in matrix and excluding it
+ames_x_train <- as.matrix(ames_train[,-308])
+
+# No "Sale Price" anymore here!
+colnames(ames_x_train[,300:308])
 ```
 
-However, the target variable is going to be stored separately because the learning algorithm in a predictive model attempts to discover and model the relationships among the target variable and the other features.
+Therefore, the target variable is going to be stored separately because the learning algorithm in a predictive model attempts to discover and model the relationships among the target variable and the other features.
 
 ```{r, error=FALSE,warning=FALSE,message=FALSE}
 # Dependent/Target variable "Sales_Price" from the train data in a from of a vector
@@ -236,7 +252,7 @@ There are 3 categories XGBoost parameters can be divided into:
 
 1. General parameters
 2. Boosting parameters
-3. Tree-specific paramters
+3. Tree-specific parameters
 
 General parameters will not be discussed in further details, but it consists of 3 parameters:
 
@@ -271,7 +287,7 @@ getParamSet("regr.xgboost")
 
 To build a well-performing predictive model many iterations are necessary. Therefore, in order to determine how good or bad one model predicts the target variable, performance evaluation needs to be conducted. A technique that will be used to help us in evaluating performance of our future machine learning models is called **k-fold cross-validation technique.** K-fold cross-validation evaluates a model by training a couple of models on subsets of the available input data and evaluating them on the complementary subset of the data. In this process, training data is split into k groups (i.e. folds) of approximately equal size. Then the model is fit on k−1 folds and the remaining fold is used in computation of the model performance. This procedure is repeated k times, where each time, a different fold is treated as the validation set (i.e. used in computation of the model performance). Thus, the final cross-validation k-fold estimate is computed by averaging the k test errors. The final output provided is an approximation of the error we may expect on unseen data.
 
-The first model to pass to the k-fold cross validation will be built using default parameters. As default for  number of iterations (```nrounds```) is zero, we will set it on 200.
+The first model to pass to the k-fold cross validation will be built using default parameters. As default for number of iterations (```nrounds```) is zero, we will set it on 200.
 
 ```{r,error=FALSE,message=FALSE,warning=FALSE}
 set.seed(1234)
@@ -298,16 +314,13 @@ ames_xgb <- xgb.cv(
     ntrees.test  = which(test_rmse_mean == min(test_rmse_mean))[1],
     rmse.test   = min(test_rmse_mean)))
 
-print(eval$rmse.train)
-
-
 ```
 
 After conducting the 10-fold cross validation, we sorted the output so that it shows us at what iteration (round) our model reached the lowest error (```eval$rmse.train```=`r print(eval$rmse.train)`)  when fitted to the seen part of training data and unseen part of the training data (```eval$rmse.test```=`r print(eval$rmse.test)`).
 
 *Side note: unseen part of the training data (rmse.test) has nothing to do with test data from the initial split we did at the very beginNing of the chapter and named as ```ames_test``` . Here we talk about unseen data in the process of k-fold cross-validation.*
 
-Unsurprisingly, our model performed very well when fitted to the seen data, suggesting the RMSE of ```eval$rmse.train```. Here we see an evidence of overfitting. In other words, our model fits the training part of the training data very well, but is not generalizable, i.e. when confronted with unseen data, its predictions are not as good as for the trained part.
+Unsurprisingly, our model performed very well when fitted to the seen data, suggesting the RMSE of ```eval$rmse.train```. Here we see an evidence of overfitting. In other words, our model fits the training part of the training data very well (i.e. suggests low RMSE for train data), but is not generalizable, i.e. when confronted with unseen data, its predictions are not as good as for the trained part(i.e. suggests high RMSE for unseen, test data).
 
 ```{r}
 # Plot error vs number trees
@@ -320,7 +333,7 @@ pe<-ggplot(ames_xgb$evaluation_log) +
 ggplotly(pe)
 ```
 
-The gap between the blue and the red line in the graph above depicts the performance difference of our model when fitted to the seen data (the red line) and when fitted to the unseen data (the blue line).
+The gap between the blue and the red line in the graph above depicts the performance difference of our model when fitted to the seen data (```eval$rmse.train```) and when fitted to the unseen data (```eval$rmse.test```).
 Our goal is to make our model perform with unseen data as good as possible, i.e. to minimize RMSE as much as possible.
 
 To pursue that goal, parameters, that we discussed earlier, need to be as optimally tuned as possible.
@@ -364,13 +377,12 @@ ames_xgb1 <- xgb.cv(
 # Plot error vs number trees
 pr1 <-ggplot(ames_xgb1$evaluation_log) +
   geom_line(aes(iter, train_rmse_mean), color = "red") +
-  geom_line(aes(iter, test_rmse_mean), color = "blue")
+  geom_line(aes(iter, test_rmse_mean), color = "blue") +
+  ggtitle(label = "10-fold Cross-validation")
 ggplotly(pr1)
 ```
 
-We can see that the training error increased. However, the error on unseen data reaches a minimum RMSE of `r print(eval1$rmse.test)` with `r print(eval1$ntrees.test)` iterations. With simple adaptation of our parameters we managed to decrease it to some extent. At this point it should be clear that it would take incredible effort to manually compute those errors for each possible combination of parameters that would potentially decrease the error further. Luckily, there are more elegant, automated solution for it. We can create our hyperparameter search grid along with columns to dump our results in. 
-
-### [STRATEGY FOR TUNING] ###
+We can see that the training error increased. However, the error on unseen data reaches a minimum RMSE of `r print(eval1$rmse.test)` with `r print(eval1$ntrees.test)` iterations. With simple adaptation of our parameters we managed to decrease it to some extent. At this point it should be clear that it would take incredible effort to manually compute those errors for each possible combination of parameters that would potentially decrease the error further. Luckily, there are more elegant, automated solution for it. We can create a hyperparameter search grid along with columns to dump results in. Each row of the grid contains a combination of parameters we would like to model:
 
 ```{r}
 # Hyperparameter grid
@@ -387,6 +399,8 @@ hyper_grid <- expand.grid(
   trees = 0          # a place to dump required number of trees
 )
 
+# Head of the hyperparameter grid
+kable(head(hyper_grid))
 ```
 
 Besides those parameters we discussed, xgboost provides additional hyperparameters ```alpha```, ```gamma``` and ```lambda``` that can help to constrain model complexity and reduce overfitting. We introduced them in the grid as well. With the code above we create a pretty large search grid consisting of `r nrow(hyper_grid)` different hyperparameter combinations to model. It is important to note that running such a grid in a loop procedure could take a couple of hours. We will create such a loop procedure to loop through and apply a xgboost model for each hyperparameter combination (`r nrow(hyper_grid)` in our case) and finally provide us the results in the hyper_grid data frame.
@@ -419,7 +433,7 @@ for(i in seq_len(nrow(hyper_grid))) {
 }
 
 # Results
-hg <- hyper_grid %>%
+hyper_grid %>%
   filter(rmse > 0) %>%
   arrange(rmse) %>%
   glimpse()
@@ -445,7 +459,7 @@ Here is a glimpse of results we obtained after several hours of processing:
 
 In the first "column" we see the combination of parameters given that results in the lowest estimated error (RMSE) possible for the combination given. Subsequently, we will use those parameters to enhance prediction performance of our model. 
 
-```{r}
+```{r, error=FALSE, message=FALSE, warning=FALSE}
 # The list of optimal hyperparameters
 params_optimal <- list(
   eta = 0.01,
@@ -469,7 +483,7 @@ xgb.fit.optimal <- xgboost(
 
 ```
 
-After computing the final model, we can make inferences about how features (i.e. variables in our data set besides sale price) are influencing our model. Measurement of feature importance occurs based on the sum of the reduction in the loss function (e.g. SSE) attributed to each variable at each split in a respective tree. In simpler terms, it is the relative contribution of the respective feature to the model computed by taking each feature’s contribution for each tree in the model. Therefore, those features with the highest average decrease in SSE (for regression) are identified as the one with the highest contribution. Thus, these features are among most important ones. To visualize feature importance plot we need to create importance matrix first then plot it with ggplot-based function "xgb.ggplot.importance". 
+After computing the final model, we can make inferences about how features (i.e. variables in our data set besides sale price) are influencing our model. Measurement of feature importance occurs based on the sum of the reduction in the loss function (e.g. SSE) attributed to each variable at each split in a respective tree. In other words, it is the relative contribution of the respective feature to the model computed by taking each feature’s contribution for each tree in the model. Therefore, those features with the highest average decrease in SSE (for regression) are identified as the one with the highest contribution. Thus, these features are among most important ones. To visualize feature importance plot we need to create importance matrix first then plot it with ggplot-based function "xgb.ggplot.importance". 
 
 ```{r}
 # Construct importance matrix
@@ -478,19 +492,18 @@ importance_matrix <- xgb.importance(model = xgb.fit.optimal)
 # Variable importance plot with ggplot2
 xgb.ggplot.importance(importance_matrix, top_n = 15)
 ```
-
 As we identified the most relevant features, now we can try to understand how the response variable (i.e. predicted sale price) changes based on these variables. For this we can use partial dependence plots (PDPs). They show the marginal effect one or two features have on the predicted outcome.
-Let's consider the "Gr_Liv_Area" variable. The PDP plot below displays the average change in predicted sales price as we vary "Gr_Liv_Area" while holding all other variables constant. More specifically, it shows the movement of the predicted sales price as the square footage of the ground floor in a house changes, while holding other variables constant. It is important to mention that PDPs are valid as long as the target variable (sale price) and the variable under observation ("Gr_Liv_Area") are not correlated. If this assumption is violated, the averages calculated for the partial dependence plot will include data points that are very unlikely or even impossible.
+Let's consider the ```r importance_matrix$Feature[1]``` variable. The PDP plot below displays the average change in predicted sales price as we vary ```r importance_matrix$Feature[1]``` while holding all other variables constant. More specifically, it shows the movement of the predicted sales price as the square footage of the ground floor in a house changes, while holding other variables constant. It is important to mention that PDPs are valid as long as the target variable (sale price) and the variable under observation (```r importance_matrix$Feature[1]```) are not correlated. If this assumption is violated, the averages calculated for the partial dependence plot will include data points that are very unlikely or even impossible.
 
 ```{r,error=F,warning=F,message=F}
 library(pdp)
 pdp <- xgb.fit.optimal %>%
-  pdp::partial(pred.var = "gr_liv_area", n.trees = 3497, grid.resolution = 100, train = ames_x_train) %>%
+  pdp::partial(pred.var = "gr_liv_area", n.trees = 3944, grid.resolution = 100, train = ames_x_train) %>%
   autoplot(rug = TRUE, train = ames_x_train) +
   scale_y_continuous(labels = scales::dollar) +
   ggplot2::xlab(label= "Ground floor living area")+
   ggplot2::ylab(label="Predicted sale price")+
-  ggtitle("Partial dependency plot - Influence of the ground floor size on a house sale price")
+  ggtitle("PDP - Influence of the ground floor size on a house sale price")
 ggplotly(pdp)
 ```
 
@@ -507,9 +520,11 @@ Finally, we can nicely visualize predicted and actual sale price.
 
 ```{r,message=F,warning=F,error=F}
 # Plot predictions vs actual sale price
-ames_test<- cbind(ames_test,pred.optimal)
-ames_test <- as.data.frame(ames_test)
-p<-ggplot(ames_test, aes(x = pred.optimal, y = sale_price, Predicted=pred.optimal, Tested=sale_price)) + 
+pred.optimal <- as.data.frame(pred.optimal)
+ames_test_pred<- data.frame(ames_test[,308],pred.optimal)
+colnames(ames_test_pred) <- c("sale_price","pred.optimal")
+
+p<-ggplot(ames_test_pred, aes(x = pred.optimal, y = sale_price, Predicted=pred.optimal, Tested=sale_price)) + 
   geom_point() +
   geom_smooth(method = "lm", se = TRUE)+
   xlab(label = "Predicted sale price" )+
