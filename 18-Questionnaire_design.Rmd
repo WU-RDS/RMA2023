@@ -827,11 +827,7 @@ rank.data.long <- melt(rank.data,value.name = "Rank",variable.name = "Feature")
 tail(rank.data.long)
 head(rank.data.long)
 
-# Quick visualisation
-p <- ggboxplot(rank.data.long, x = "Feature", y = "Rank", add = "jitter",title = "What features are important to you when evualting fitness trackers?")
-ggplotly(p)
-
-# Advanced visualisation
+# Visualisation
 ggstatsplot::ggwithinstats(
   data = rank.data.long,
   x = Feature,
