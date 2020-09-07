@@ -822,7 +822,7 @@ library(ggstatsplot)
 ```{r}
 # We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
 
-rank.data.long <- melt(rank.data,value.name = "Rank",variable.name = "Feature")
+rank.data.long <- reshape2::melt(rank.data,value.name = "Rank",variable.name = "Feature", stringsAsFactors=TRUE)
 
 tail(rank.data.long)
 head(rank.data.long)
@@ -863,8 +863,8 @@ cor.matrix
 At the first glance we can observe a lot of negative values, meaning that many features correlate negatively relative to each other. In order to make the interpretation easier, we will try to visualise correlations in a form of a correlation matrix.
 
 ```{r}
-library(corrplot)
-corrplot(cor.matrix, method="color", type = "upper", order = "hclust")
+library(ggcorrplot)
+ggcorrplot(cor.matrix)
 ```
 
 From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positively. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
@@ -892,7 +892,7 @@ round(res[,1:4],2)
 
 ```{r,error=FALSE,warning=FALSE, message=FALSE}
 # Creation of the long version of data frame
-constant.sum.long <-melt(constant.sum, variable.name ="Factor" ,value.name = "Points")
+constant.sum.long <-melt(constant.sum[,-5], variable.name ="Factor" ,value.name = "Points")
 constant.sum.long
 ```
 
@@ -913,13 +913,14 @@ With the data collected we are able to answer the question: what factor is the m
 
 ```{r}
 library(robCompositions)
-constSum(constant.sum,100)
+constSum(constant.sum,100)[,-5]
 ```
 
 In order to anwser this question we need to conduct **a repeated measures ANOVA**.
 This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
 
 We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumputions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption referrs to extreme outliers. Let's have a look at potential outliers:
+
 ```{r}
 # Outliers
 constant.sum.long %>% 
@@ -940,6 +941,7 @@ get_anova_table(res.aov)
 # Post hoc test
 pairwise.t.test(constant.sum.long$Points,constant.sum.long$Factor, paired = T, p.adjust.method = "holm")
 ```
+Now we can clearly see that our respondents consider price more than location, or ambience, while customer service is perceived almost equally important as prices.
 
 ```{r}
 ggstatsplot::ggwithinstats(
