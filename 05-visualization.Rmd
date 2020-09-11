@@ -1,5 +1,4 @@
 ---
-title: "05-visualization"
 output:
   html_document:
     toc: yes
@@ -416,7 +415,7 @@ Another important type of plot is the line plot used if, for example, you have a
 ```{r message=FALSE, warning=FALSE}
 library(jsonlite)
 #specifies url
-url <- "http://api.worldbank.org/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&format=json&per_page=100" 
+url <- "http://api.worldbank.org/v2/country/at/indicator/SP.POP.TOTL?date=1960:2016&format=json" 
 ctrydata_at <- fromJSON(url) #parses the data 
 head(ctrydata_at[[2]][, c("value", "date")]) #checks if we scraped the desired data
 ctrydata_at <- ctrydata_at[[2]][, c("date","value")]
