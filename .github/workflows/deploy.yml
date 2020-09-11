@@ -1,0 +1,16 @@
+name: GitHub Pages deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  checkout-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Deploy to GitHub Pages
+      uses: IMSMWU/GitHub-Pages-deploy@master
+      env:
+        EMAIL: danielw2904@disroot.org
+        GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
