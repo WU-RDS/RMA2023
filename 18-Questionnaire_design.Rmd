@@ -1,5 +1,4 @@
 ---
-title: "18-Questionnaire_design"
 output:
   pdf_document:
     toc: yes
@@ -742,7 +741,7 @@ library(nonpar)
 matrix.cochran <- cbind(qualtrics$`ja!Naturlich`,
                    qualtrics$Clever,
                    qualtrics$`Spar Vital`,
-                   qualtrics$...)
+                   qualtrics$`...`)
 # Turning NAs to 0
 matrix.cochran[is.na(matrix.cochran)]=0
 
@@ -997,7 +996,7 @@ summary(mlr.dinner)
 coeff <- summary(mlr.dinner)
 ```
 
-Out of all factors of importance when dinning out, the only one that suggests significance at 0.05 level of significance is ambience. From the summary we can conclude that increase in importance of ambience by 1 point, leads to decrease in willingness to pay by `r coeff$coefficients[4,1]`.
+Out of all factors of importance when dinning out, the only one that suggests significance at 0.05 level of significance is ambience. From the summary we can conclude that increase in importance of ambience by 1 point, leads to decrease in willingness to pay by `r summary(mlr.dinner)$coefficients[4,1]`.
 
 ```{r}
 confint(mlr.dinner)
