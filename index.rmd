@@ -24,7 +24,7 @@ lapply(reqPackages, install.packages)
 
 # Welcome! {-}
 
-This is an introduction to statistics using the statistical software R presented by the Institute for Interactive Marketing and Social Media at WU Vienna. TEST. change something.<br>
+This is an introduction to statistics using the statistical software R presented at WU Vienna. TEST. change something.<br>
 
 <br>
 ```{r, out.width = "60%", echo = FALSE, fig.align = "center"}
@@ -42,27 +42,190 @@ None of the material on the following pages is new, nor is it invented by us. We
 
 TBC
 
-### Schedule {-}
+## Schedule {-}
 
-TBC
+### Lecture notes Q&A {-}
 
-### Grading {-}
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable = data.frame(
+    Date_A = c("Oct. 6", 
+             "Oct. 12", 
+             "Oct. 19",
+             "Oct. 29",
+             "Nov. 2",
+             "Nov. 9",
+             "Dec. 15"
+             ),
+    Time_A = c("02:00PM - 03:30PM",
+             "01:00PM - 02:30PM", 
+             "01:00PM - 02:30PM", 
+             "01:00PM - 02:30PM",
+             "01:00PM - 02:30PM",
+             "01:00PM - 02:30PM",
+             "08:30PM - 10:30PM"
+             ),
+    Date_B = c("Oct. 7", 
+             "Oct. 14", 
+             "Oct. 21",
+             "Oct. 28",
+             "Nov. 4",
+             "Nov. 11",
+             "Dec. 15"
+             ),
+        Time_B = c("01:00PM - 02:30PM",
+             "01:00PM - 02:30PM", 
+             "01:00PM - 02:30PM", 
+             "01:30PM - 03:00PM",
+             "01:00PM - 02:30PM",
+             "01:00PM - 02:30PM",
+             "08:30PM - 10:30PM"
+             ),
+    Topics = c("* Introduction to the course <br>Basic concepts", 
+               "* Introduction to R <br>Introduction to inferential statistics", 
+               "* Hypothesis testing I",
+               "* Hypothesis testing II",
+               "* Regression",
+               "* Exploratory factor analysis",
+               "* Final exam (online)"
+               ),
+    Chapters = c("1",
+                 "2,3,4,5", 
+                 "6.1 - 6.3", 
+                 "6.4 - 6.6",
+                 "7",
+                 "8",""
+                 ))
 
-TBC
+#pander::pander(mytable, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable %>% kable(escape = F, format = "html") %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for groups A and B respectively",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+```
 
-### Getting help {-}
+### Group project {-}
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Date_A = c("Oct. 21", 
+             "Oct. 23*", 
+             "Nov. 1",
+             "Nov. 16*",
+             "Nov. 23*",
+             "Dec. 7"
+             ),
+    Time_A = c(
+      "11:59PM","09:00AM - 02:30PM","11:59PM","01:30PM - 04:30PM","01:30PM - 06:30PM","11:59PM"
+    ),Date_B = c("Oct. 25", 
+             "Oct. 27*", 
+             "Nov. 4",
+             "Nov. 18*",
+             "Nov. 25*",
+             "Dec. 9"
+             ),
+    Time_B = c(
+      "11:59PM","02:00PM - 08:00PM","11:59PM","02:00PM - 05:00PM","03:00PM - 08:00PM","11:59PM"
+    ),
+    Task = c(  "* Submit questionnaire draft", 
+               "* Coaching: Questionnaire design (live video coaching)", 
+               "* Submit revised questionnaire",
+               "* Coaching: Data handling (live video coaching)",
+               "* Coaching: Data analysis (live video coaching)",
+               "* Submit video recording of presentation (pre-recorded)"
+               ),
+    Chapters = c("10","10","10","","","")
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for groups A and B respectively.
+           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+### Individual assignments {-}
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub_1 = data.frame(
+    Date_A = c("Oct. 18", 
+             "Oct. 20",
+             "Oct. 28",
+             "TBC*",
+             "Nov. 1",
+             "TBC*",
+             "Nov. 8"
+             ),
+    Time_A = c(
+      "11:59PM",
+      "02:00PM - 05:00PM",
+      "11:59PM",
+      "TBC",
+      "11:59PM",
+      "TBC",
+      "11:59PM"
+    ),Date_B = c("Oct. 20", 
+             "Oct. 23",
+             "Oct. 27",
+             "TBC*",
+             "Nov. 5",
+             "TBC*",
+             "Nov. 11"
+             ),
+    Time_B = c(
+      "11:59PM",
+      "02:00PM - 05:00PM",
+      "11:59PM",
+      "TBC",
+      "11:59PM",
+      "TBC",
+      "11:59PM"
+    ),
+    Task = c(  "* Submit assignment 1: DataCamp",
+               "* Coaching assignment 2 & R markdown tutorial (live video coaching)",
+               "* Submit assignment 2: Hypothesis testing I",
+               "* Coaching assignment 3 (live video coaching)",
+               "* Submit assignment 3: Hypothesis testing II",
+               "* Coaching assignment 4 (live video coaching)",
+               "* Submit assignment 4: Regression"
+               ),
+    Chapters = c("","9","","","","","")
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub_1 %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for groups A and B respectively. 
+           Dates indicated with '*' are optional time slots for individual coaching.
+           If you would like to schedule a meeting, please contact Mirza (mirza.mujanovic@wu.ac.at)",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+## Grading {-}
 
 TBC
 
 # Course materials {-}
 
-### Main reference {-}
+## Main reference {-}
 
-<p style="text-align:center;"><img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/dsur.jpg" alt="DSUR cover" width="20%" align="middle"/></p>
+The main reference for this course is this tutorial. (...)
 
-* __"[Discovering Statistics Using R](https://www.amazon.de/Discovering-Statistics-Using-Andy-Field/dp/1446200469)"__ (Field, A., Miles, J., & Field Zoe, 2012, 1st Edtn.) This textbook offers an accessible and comprehensive introduction to statistics and will be the main reference for this class. 
-  
-### Further readings {-}
+## Further readings {-}
 
 <p style="text-align:center;">
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/R4ds.png" alt="DSUR cover" height="120"  />&nbsp;
@@ -75,55 +238,53 @@ TBC
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/rgraph.jpg" alt="Rgraph cover" height="120"/>
 </p>
 
-In addition to the main readings, there are many excellent books available (many of them for free) that focus on different aspects of R. In case you would like to learn more about the capabilities of R, I can recommend the following books:
+In addition to these lecture notes, there are many excellent books available (many of them for free) that focus on different aspects of R. In case you would like to learn more about the capabilities of R, I can recommend the following books:
 
 * __"[R for Data Science](http://r4ds.had.co.nz/)"__ An excellent book by Hadley Wickham, which introduces you to R as a tool for doing data science, focussing on a consistent set of packages known as the tidyverse. [FREE online version]
 
 * __"[An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/)"__ This book provides an introduction to statistical learning methods and covers basic methods (e.g., linear regression) as well as more advanced methods (e.g., Support Vector Machines). [FREE online version]
 
-* __"[R for Marketing Research and Analytics](http://r-marketing.r-forge.r-project.org/)"__ A great book that is designed to teach R to marketing practitioners and data scientists.echo=
+* __"[R for Marketing Research and Analytics](http://r-marketing.r-forge.r-project.org/)"__ A great book that is designed to teach R to marketing practitioners and data scientists.
 
-* __"[Text Mining with R](http://tidytextmining.com/)"__ This book explains how you can analyse unstrunctured data (texts) using R. [FREE online version]
+* __"[Statistical Inference via Data Science](https://moderndive.com/)"__ XXX. [FREE online version]
+
+* __"[Text Mining with R](http://tidytextmining.com/)"__ This book explains how you can analyze unstructured data (texts) using R. [FREE online version]
 
 * __"[Advanced R](http://adv-r.had.co.nz/)"__ another great book written by Hadley Wickham. Explains more advanced R concepts. [FREE online version]
 
 * __"[Hands-On Machine Learning with R](https://bradleyboehmke.github.io/HOML/)"__ to learn about the approach and to gain intuition about methods accepted in the machine learning in R. The book favors a hands-on approach, growing an intuitive understanding of machine learning through concrete examples and just a little bit of theory.[FREE online version]
 
-* __"[Hands-On Data Science for Marketing](https://github.com/PacktPublishing/Hands-On-Data-Science-for-Marketing)"__ another great book written by Hadley Wickham. Explains more advanced R concepts. [FREE Code exercises]
+* __"[Hands-On Data Science for Marketing](https://github.com/PacktPublishing/Hands-On-Data-Science-for-Marketing)"__ XXX. [FREE Code exercises]
+
+* __"[R Markdown](https://bookdown.org/yihui/rmarkdown/)"__ XXX. [FREE Code exercises]
+
+* __"[R Packages](http://r-pkgs.had.co.nz/)"__ which teaches you how to make the most of R's fantastic package system. [FREE online version]
+
+* __"[R Graphics Cookbook](https://r-graphics.org/)"__ a practical guide that provides more than 150 recipes to help you generate high-quality graphs quickly. [FREE online version]
+
+*__"[Using R For Introductory Econometrics](http://www.urfie.net/read/index.html)"__ This book covers a nice introduction to R with a focus on the implementation of standard tools and methods used in econometrics. [FREE online version]
+
+* __"[Data Science in a Box](https://datasciencebox.org/)"__ XXX. [FREE online version]
+
+* __"[Discovering Statistics Using R](https://www.amazon.de/Discovering-Statistics-Using-Andy-Field/dp/1446200469)"__ (Field, A., Miles, J., & Field Zoe, 2012, 1st Edtn.) This textbook offers an accessible and comprehensive introduction to statistics and will be the main reference for this class. 
 
 
 ```{r, eval=FALSE, echo=FALSE}
-#*__"[Using R For Introductory Econometrics](http://www.urfie.net/read/mobile/index.html#p=1)"__ This book covers a nice introduction to R with a focus on the implementation of standard tools and methods used in econometrics. [FREE online version]
-
-#* __"[R Packages](http://r-pkgs.had.co.nz/)"__ which teaches you how to make the most of R's fantastic package system. [FREE online version]
-
-#* __"[R Graphics Cookbook](https://r-graphics.org/)"__ a practical guide that provides more than 150 recipes to help you generate high-quality graphs quickly. [FREE online version]
 
 #* __"[More books](http://ucanalytics.com/blogs/learn-r-12-books-and-online-resources/)"__ For more recommendations, please refer to this list of excellent books on specific topics related to R.
 ```
 
 
-### Finding Your Way To R {-}
+## DataCamp {-}
 
 <p style="text-align:center;">
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/DataCamp50h1.png" alt="DSUR cover" height="50"  />&nbsp;
 </p>
 
-In order to successfully embark on your R journey, Rstudio has created three tracks to help learners navigate the R ecosystem. These tracks are not meant to be exhaustive, but instead are designed to help you become productive in the minimum amount of time, based on your experience level. Therefore, you can choose among 3 different tracks: beginner, intermediate and expert.
-
-* __"[https://education.rstudio.com/learn/](https://education.rstudio.com/learn/)"__ free interactive tutorials by Rstudio.
-
-
-### DataCamp {-}
-
-<p style="text-align:center;">
-<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/Logo-R-Studio-Education.png" alt="DSUR cover" height="50"  />&nbsp;
-</p>
-
 Please also make use of the abundance of web resources. For students who would like to further train the materials covered in class, we recommend DataCamp, an online platform that offers interactive courses in data science at different levels. To facilitate the learning process you will obtain full access to the entire DataCamp course curriculum for the duration of the course. 
 
 
-### Other web-resources {-}
+## Other web-resources {-}
 
 * __"[https://www.r-project.org/](https://www.r-project.org/)"__ official website
   
@@ -140,3 +301,5 @@ Please also make use of the abundance of web resources. For students who would l
 * __"[http://www.cookbook-r.com/](http://www.cookbook-r.com/)"__ useful examples for all kind of R problems
 
 * __"[https://ggplot2.tidyverse.org/reference/index.html](https://ggplot2.tidyverse.org/reference/index.html)"__ reference for data visualization
+
+## Acknowledgements {-}
