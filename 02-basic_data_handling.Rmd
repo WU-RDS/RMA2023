@@ -2,18 +2,17 @@
 output:
   html_document:
     toc: yes
-    df_print: paged
+    css: style.css
+    includes:
+      in_header: style.css
+  bookdown::html_book:
+    includes:
+      in_header: style.css
+  theme: united
   html_notebook: default
   pdf_document:
     toc: yes
 ---
-```{r, echo=FALSE}
-library(knitr)
-options(scipen = F)
-#This code automatically tidies code so that it does not reach over the page
-opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
-```
-
 
 # Data handling
 
@@ -23,7 +22,9 @@ This chapter covers the basics of data handling in R
 
 ## Basic data handling
 
+::: {.infobox .download data-latex="{download}"}
 [You can download the corresponding R-Code here](./Code/01-basic_data_handling.R)
+:::
 
 ### Creating objects
 
@@ -80,14 +81,14 @@ Please note that object names must start with a letter and can only contain lett
 The most important types of data are:
 
 
-Data type	 | Description	 
-------------- | --------------------------------------------------------------------------
-Numeric | Approximations of the real numbers,  $\normalsize\mathbb{R}$ (e.g., mileage a car gets: 23.6, 20.9, etc.)
-Integer  | Whole numbers,  $\normalsize\mathbb{Z}$ (e.g., number of sales: 7, 0, 120, 63, etc.)
-Character | Text data (strings, e.g., product names)
-Factor  | Categorical data for classification (e.g., product groups)
-Logical  | TRUE, FALSE
-Date  | Date variables (e.g., sales dates: 21-06-2015, 06-21-15, 21-Jun-2015, etc.)
+Data type   | Description	 
+-------------   | --------------------------------------------------------------------------
+Numeric   | Approximations of the real numbers,  $\normalsize\mathbb{R}$ (e.g., mileage a car gets: 23.6, 20.9, etc.)
+Integer   | Whole numbers,  $\normalsize\mathbb{Z}$ (e.g., number of sales: 7, 0, 120, 63, etc.)
+Character   | Text data (strings, e.g., product names)
+Factor    | Categorical data for classification (e.g., product groups)
+Logical   | TRUE, FALSE
+Date    | Date variables (e.g., sales dates: 21-06-2015, 06-21-15, 21-Jun-2015, etc.)
 
 Variables can be converted from one type to another using the appropriate functions (e.g., ```as.numeric()```,```as.integer()```,```as.character()```, ```as.factor()```,```as.logical()```, ```as.Date()```). For example, we could convert the object ```y``` to character as follows:
 
@@ -311,5 +312,4 @@ music_data <- data.frame(top10_track_streams,
                          stringsAsFactors = FALSE)
 
 ```
-
 

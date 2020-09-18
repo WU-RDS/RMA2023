@@ -28,8 +28,9 @@ When should you use non-parametric tests?
 * When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
 * You have a very small sample size (i.e., the central limit theorem does not apply)
 
+::: {.infobox .download data-latex="{download}"}
 [You can download the corresponding R-Code here](./Code/09-non_parametric.R)
-
+:::
 
 ### Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)
 
@@ -451,7 +452,7 @@ power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)
 The output tells us that we need `r round(power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)$n,0)` observations per group to detect a difference of the desired size.
 
 
-## Summary of hypothesis testing
+## Summary {-}
 
 * We rarely have information about whole population, so we use hypothesis testing to test our assumptions about certain population parameter. Usually, the population parameter for which we form hypotheses is true population mean ($\mu$). A hypothesis about it would tell us how the corresponding sampling distribution looks like. To revise, a sampling distribution is the distribution of a statistic (mean) that is obtained by repeatedly drawing a large number of samples from certain population. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample assuming that the hypothesis is true. 
 
@@ -596,4 +597,7 @@ $$F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}$$
 
 * Interpretation: If we find an association between two variables (p < 0.05), we can conclude that the propotion of conversions to proportion of non-conversions between agent 1 and agent 2 significantly differ from each other.
 
+## References {-}
+
+* Field, A., Miles J., & Field, Z. (2012): Discovering Statistics Using R. Sage Publications, **chapters 5, 9, 10, 12, 15, 18**.
 
