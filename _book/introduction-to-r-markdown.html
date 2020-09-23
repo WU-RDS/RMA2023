@@ -172,17 +172,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>II Lecture notes</b></span></li>
 <li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a><ul>
-<li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#the-marketing-research-process"><i class="fa fa-check"></i><b>1.1</b> The marketing research process</a></li>
-<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.2</b> Choosing a research design</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#descriptive-research"><i class="fa fa-check"></i><b>1.2.1</b> Descriptive research</a></li>
-<li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#predictive-research"><i class="fa fa-check"></i><b>1.2.2</b> Predictive research</a></li>
-<li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#causal-inference"><i class="fa fa-check"></i><b>1.2.3</b> Causal inference</a></li>
+<li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-research-design"><i class="fa fa-check"></i><b>1.1</b> Marketing research design</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-foundations-recap"><i class="fa fa-check"></i><b>1.1.1</b> Marketing foundations (recap)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.1.2</b> The research process</a></li>
+<li class="chapter" data-level="1.1.3" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.1.3</b> Choosing a research design</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="preliminaries.html"><a href="preliminaries.html#measurement-and-scaling"><i class="fa fa-check"></i><b>1.3</b> Measurement and scaling</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="preliminaries.html"><a href="preliminaries.html#scale-characteristics"><i class="fa fa-check"></i><b>1.3.1</b> Scale characteristics</a></li>
-<li class="chapter" data-level="1.3.2" data-path="preliminaries.html"><a href="preliminaries.html#levels-of-measurement"><i class="fa fa-check"></i><b>1.3.2</b> Levels of measurement</a></li>
-<li class="chapter" data-level="1.3.3" data-path="preliminaries.html"><a href="preliminaries.html#measurement-accuracy"><i class="fa fa-check"></i><b>1.3.3</b> Measurement accuracy</a></li>
-<li class="chapter" data-level="1.3.4" data-path="preliminaries.html"><a href="preliminaries.html#scaling-techniques"><i class="fa fa-check"></i><b>1.3.4</b> Scaling techniques</a></li>
+<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#measurement-and-scaling"><i class="fa fa-check"></i><b>1.2</b> Measurement and scaling</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#scale-characteristics"><i class="fa fa-check"></i><b>1.2.1</b> Scale characteristics</a></li>
+<li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#levels-of-measurement"><i class="fa fa-check"></i><b>1.2.2</b> Levels of measurement</a></li>
+<li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#measurement-accuracy"><i class="fa fa-check"></i><b>1.2.3</b> Measurement accuracy</a></li>
+<li class="chapter" data-level="1.2.4" data-path="preliminaries.html"><a href="preliminaries.html#scaling-techniques"><i class="fa fa-check"></i><b>1.2.4</b> Scaling techniques</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#learning-check"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#references"><i class="fa fa-check"></i>References</a></li>
@@ -456,16 +455,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="global-and-chunk-options" class="section level3 unnumbered">
 <h3>Global and chunk options</h3>
 <p>The first chunk always looks as follows</p>
-<pre><code>```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```</code></pre>
+<p><code>{r setup, include = FALSE}     knitr::opts_chunk$set(echo = TRUE)</code></p>
 <p>It is added to the document automatically and sets options for all the following chunks. These options can be overwritten on a per-chunk basis.</p>
 <p>Keep <code>knitr::opts_chunk$set(echo = TRUE)</code> to print your code to the document you will hand in. Changing it to <code>knitr::opts_chunk$set(echo = FALSE)</code> will not print your code by default. This can be changed on a per-chunk basis.</p>
-<pre><code>```{r cars, echo = FALSE}
-summary(cars)
-
-plot(dist~speed, cars)
-```</code></pre>
+<p>```{r cars, echo = FALSE}
+summary(cars)</p>
+<p>plot(dist~speed, cars)
+```</p>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
@@ -474,12 +470,11 @@ plot(dist~speed, cars)
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
 <p><img src="_main_files/figure-html/cars-1.png" width="672" /></p>
-<pre><code>```{r cars2, echo = TRUE}
-summary(cars)
-
-plot(dist~speed, cars)
-```</code></pre>
-<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="introduction-to-r-markdown.html#cb644-1"></a><span class="kw">summary</span>(cars)</span></code></pre></div>
+<p>```{r cars2, echo = TRUE}
+summary(cars)</p>
+<p>plot(dist~speed, cars)
+```</p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="introduction-to-r-markdown.html#cb641-1"></a><span class="kw">summary</span>(cars)</span></code></pre></div>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
@@ -487,7 +482,7 @@ plot(dist~speed, cars)
 ##  Mean   :15.4   Mean   : 42.98  
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="introduction-to-r-markdown.html#cb646-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="introduction-to-r-markdown.html#cb643-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</span></code></pre></div>
 <p><img src="_main_files/figure-html/cars2-1.png" width="672" /></p>
 <p>A good overview of all available global/chunk options can be found <a href="https://yihui.name/knitr/options/#chunk_options">here</a>.</p>
 </div>

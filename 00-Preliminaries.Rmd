@@ -21,68 +21,193 @@ opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE
 
 # Preliminaries
 
-Before we will discuss , it is useful to re In this chapter you will learn:
+Before we will start to analyze data in R, it is useful to recap some basics that you may remember from previous courses in marketing analytics. This chapter will serve as a foundation of the methods that we will learn and apply later, so make sure you are familiar with the concepts discussed here before proceeding. In particular, in this chapter you will learn:
 
 * Why marketing research is important
-* The marketing research process
 * What type of research design is appropriate in which situation
 * The difference between causality and correlation
-* The primary scales of measurement
-* The difference between measurement validity and reliability
+* Which scales of measurement to use for different purposes
+* The difference between validity and reliability
 
-## The marketing research process
+## Marketing research design
 
+This chapter provides an overview over the parameters you need to consider when planning a marketing research study. It is very important to carefully consider these parameters when designing a study because empirical studies can be quite costly and you need to make sure that you will be able to interpret the results from your study in the desired way. For example, in many cases marketing research is about measuring the effectiveness of a firm's marketing instruments. As the nineteenth century Philadelphia retailer John Wanamaker supposedly said 
 
+> "Half the money I spend on advertising is wasted;  
+> the trouble is I don't know which half."
+>
+> `r tufte::quote_footer('--- John Wanamaker')`
+
+As a marketing manager you may want to know the return on your marketing expenditures in order to allocate your marketing budget effectively. Measuring these causal effects is not trivial and requires careful planning as we will see later in this chapter.     
+
+### Marketing foundations (recap)
+
+You will surely have come across various definitions of the term *Marketing* during your studies. For example, the popular textbook by Kotler & Armstrong (2009) defines *Marketing* as: 
 
 > "The process by which companies create value for customers and build strong 
 > customer relationships in order to capture value from customers in return."
 >
 > `r tufte::quote_footer('--- Kotler & Armstrong (2009)')`
 
+The corresponding process is depicted by Kotler & Armstrong (2009) as follows: 
+
 <br>
 ```{r,echo=FALSE,out.width = '90%',fig.align='center', fig.cap = "The marketing process Kotler & Armstrong (2009)"}
 knitr::include_graphics("./images/mr_process.JPG")
 ```
 
-<br><br><br>
-```{r,echo=FALSE,out.width = '90%',fig.align='center', fig.cap = "The marketing research process"}
-knitr::include_graphics("./images/mr_process_marketing.JPG")
-```
+As the figure above shows, the goal of marketing is to capture value from customers to create profits and customer equity. However, in order to achieve this goal, a company needs to first build profitable relationships by creating customer value through an integrated marketing program. As you will also recall, the set of controllable tactical marketing tools can be described in terms of the `four Ps' taxonomy, which is also referred to as the **Marketing Mix**, consisting of:
 
-* Primary vs. secondary data
-* Qualitative vs. quantitative data
-* Longitudinal vs. cross-sectional data
-* Exploratory vs. conclusive research
-* Focus on quantitative conclusive studies
+* **Product** (design, quality, branding, technology, services, etc.)
+* **Price** (list price, discounts, payment period, payment methods, etc.)
+* **Place** (trade channels, locations, logistics, e-commerce, etc.)
+* **Promotion** (advertising, sales promotion, public relations, etc.)
+
+The firm blends these marketing tools to produce the desired response in the target market. As can be seen from the marketing process, the first step towards capturing customer value is to understand the marketplace and customer needs. Gaining a better understanding of the target customers through marketing research enables firms to design their marketing mix in accordance with the consumers needs and wants, which will then lead to positive outcomes on the customer side (e.g., trust, loyalty, satisfaction, engagement) and on the firm side (e.g., revenue, sales, profit, stock prices). Ultimately, this will lead to  
+
+### The research process
+
+--> Foundations
+
+--> motivating example: behavioral targeting
+
+Initial observation
+Something that needs explaining (e.g. differences in sales between products)
+Collect data and look for initial evidence 
+Theory
+A hypothesized general principle or set of principles that explains known findings about a topic and from which new hypotheses can be generated
+Hypothesis
+A prediction from a theory
+E.g., personalized advertising is more effective than non-personalized advertising
+
 
 <br><br><br>
 ```{r,echo=FALSE,out.width = '50%',fig.align='center',fig.cap = "The research process (Field et al. 2012)"}
 knitr::include_graphics("./images/research_process.JPG")
 ```
 
-## Choosing a research design
+<br><br><br>
+
+Collect data to test your theory
+
+Example: 
+Personalized advertising leads to higher sales
+
+DV:
+The proposed effect (an outcome variable)
+Measured, not manipulated (in experiments)
+E.g., sales in the above example
+
+IDV:
+The proposed cause (a predictor variable)
+A manipulated variable (in experiments)
+E.g., type of advertising in the above example
+
+
+
+```{r,echo=FALSE,out.width = '90%',fig.align='center', fig.cap = "The marketing research process"}
+knitr::include_graphics("./images/mr_process_marketing.JPG")
+```
+
+* Descriptive, predictive, prescriptive
+
+* Primary vs. secondary data
+Primary: 
+Data originated by the researcher for the specific purpose of addressing the research problem
+This data is analyzed and may be published by the researcher
+
+Secondary data:
+Data collected for some purpose other than the problem at hand
+Published in the form of books, articles, and databases by governments, business sources, or market research firms
+
+
+* Qualitative vs. quantitative data
+--> Exploratory vs. conclusive research (include in quant vs. qual)
+-->  Focus on quantitative conclusive studies
+
+* Longitudinal vs. cross-sectional data
 
 <br><br><br>
-```{r,echo=FALSE,out.width = '70%',fig.align='center',fig.cap = "Data Science Tasks (Hernán et al. (2019))"}
-knitr::include_graphics("./images/data_science_tasks.JPG")
+```{r,echo=FALSE,out.width = '60%',fig.align='center',fig.cap = "Cross-sectional vs. longitudinal design"}
+knitr::include_graphics("./images/longitudinal.JPG")
 ```
+
+### Choosing a research design
+
+--> research design in alignment with objective
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE, fig.cap="Test"}
+library(dplyr)
+library(kableExtra)
+mytable_sub_1 = data.frame(
+  "X" = c("Example of scientific questions", 
+             "Data",
+             "Example of analytics"
+             ),
+    Description = c("How can the customers of our online store be partitioned in classes defined by their characteristics?", 
+             "<b>Features</b>: user characteristics (age, gender, location, ...), product characteristics of visited pages, ...; ",
+             "Cluster Anaylsis <br> ..."
+             ),
+    Prediction = c(
+      "What is the probability that users who visited our online store last year will purchase from our store within the next month?", 
+             "<b>Output</b>: making a purchases within the next month<br>
+              <b>Inputs</b>: age, gender, frequency of past purchases, recency of last purchases, monetary value of past purchases, past ad exposures, ...",
+             "Regression<br>Decision trees<br>Random forests<br>Support vector machines<br>Neural networks<br> ..."
+    ),
+    "Causal Inference" = c(
+      "Will behavioral targeting in online advertising increase, on average, the probability of purchasing from our store within the next month?", 
+             "<b>Outcome</b>: making a purchases within the next month<br>
+              <b>Treatment</b>: initiation of re-targeting campaign<br>
+              <b>Confounders</b>: for non-experimental settings (interest in product category, eligibility criteria used for targeting ...)",
+             "Experiments with random assignment<br>
+              Regression<br>
+              Instrumental variables<br>
+              Regression discontinuity<br>
+              Difference-in-differences<br>
+              ...
+              "
+             )
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub_1 %>% kable(escape = F,col.names = c("","Description","Prediction","Causal Inference")) %>% 
+  column_spec(1,width =  "100",extra_css = 'vertical-align: top !important;') %>% 
+  column_spec(2,width =  "100",extra_css = "vertical-align: top !important;") %>% 
+  column_spec(3,width =  "100",extra_css = "vertical-align: top !important;") %>% 
+  column_spec(4,width =  "100",extra_css = "vertical-align: top !important;") %>%
+  kable_paper(full_width = F) %>%
+  footnote(general = "Based on the classification of data science tasks by Hernán et al. (2019)",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) %>% 
+  #add_header_above(c("Data Science Tasks" = 4), font_size = 20) %>% 
+  row_spec(2, background = "#E0E0E0") %>% row_spec(c(0,1,3), background = "white") %>%
+  row_spec(0, align = "c",bold=T) 
+```
+
+--> the exposed and unexposed populations are different in outcomes for reasons having nothing to do with the advertising
+
+
+<br><br><br>
 
 * Determine the research objective
 * Descriptive, predictive, prescriptive
 
-### Descriptive research
+#### Descriptive research
 
 * Capture the data structure
 
-Although not the focus of this article, a third type of modeling, which is the most commonly used and developed by statisticians, is descriptive modeling. This type of modeling is aimed at summarizing or representing the data structure in a compact manner. Unlike explanatory modeling, in descriptive modeling the reliance on an underlying causal theory is absent or incorporated in a less formal way. Also, the focus is at the measurable level rather than at the construct level. Unlike predictive modeling, descriptive modeling is not aimed at prediction. Fitting a regression model can be descriptive if it is used for capturing the association between the dependent and independent variables rather than for causal inference or for prediction.We mention this type of modeling to avoid confusion with causal explanatory and predictive modeling, and also to highlight the different approaches of statisticians and nonstatisticians.
+Although not the focus of this course, a third type of modeling, which is the most commonly used and developed by statisticians, is descriptive modeling. This type of modeling is aimed at summarizing or representing the data structure in a compact manner. Unlike explanatory modeling, in descriptive modeling the reliance on an underlying causal theory is absent or incorporated in a less formal way. Also, the focus is at the measurable level rather than at the construct level. Unlike predictive modeling, descriptive modeling is not aimed at prediction. Fitting a regression model can be descriptive if it is used for capturing the association between the dependent and independent variables rather than for causal inference or for prediction.We mention this type of modeling to avoid confusion with causal explanatory and predictive modeling, and also to highlight the different approaches of statisticians and nonstatisticians.
 
-### Predictive research
+--> shifting paradime where you have access to large data sets and descriptive research becomes more important (Ailawadi)
+
+#### Predictive research
 
 * Interest in predictions of future observations (e.g., R2, hold-out prediction)
 * No concern about causality
 * E.g., concerns about overfitting
 
-### Causal inference
+#### Causal inference
 
 In social sciences, most research questions are causal.
 
@@ -107,9 +232,9 @@ knitr::include_graphics("./images/confounder.JPG")
 * Role of theory ...
 * Examples for spurious correlation
 * Shmueli
-* E.g., rooster crow in the morning to prevent the sun from coming up
+* E.g., rooster crow in the morning to prevent the sun from coming up --> example of reverse causality
 
-#### Experimentation
+##### Experimentation
 
 > "To find out what happens when you change something, 
 > it is necessary to change it."
@@ -117,16 +242,17 @@ knitr::include_graphics("./images/confounder.JPG")
 > `r tufte::quote_footer('--- Box, Hunter, and Hunter 1978')`
 
 
-> "\The most credible and influential research designs use 
+> "The most credible and influential research designs use 
 > random assignment."
 >
 > `r tufte::quote_footer('--- Angrist and Pischke 2009')`
 
 
 
-* Systematic vs. unsystematic variation (the signal and the noise)
+* Systematic vs. unsystematic variation (e.g., measurement error) (the signal and the noise)
 * Within vs. between subject 
 * Control groups --> within vs. between
+* Experimental factors (e.g., 2x2 design)
 
 <br><br><br>
 
@@ -159,13 +285,71 @@ knitr::include_graphics("./images/ab_test.JPG")
 knitr::include_graphics("./images/field_experiments_1.JPG")
 ```
 
-#### Observational research
-
-* Longitudinal research; 
-* Difference-in-Differences Design
-* Simulate an experiment - get as close as possible. 
+##### Observational research
 
 However, in many situations, experiments are not feasible, not appropriate, or too costly. In general, if we think of the `four Ps' taxonomy, while experimentation is increasingly used to inform advertising decisions, practitioners and researchers rarely run field experiments to inform channels and product development because they are too time-consuming or often require a level of measurement of long-term implications that precludes feasible experimentation. In addition, field experiments with pricing are often problematic in that customers can find them unfair. More generally, as Andrew Gelman writes, Given the manifest virtues of experiments, why do I almost always analyze observational data? The short answer is ...
+
+Angrist and Pischke (8) describe what they call the “Furious Five methods of causal inference”: random assignment, regression, instrumental variables, regression discontinuity, and differences in differences.
+
+Quasi-experimental tools mimic the random assignment that is inherent in lab experi-
+ments and that is often referred to as the `gold standard' for identifying causal relationships.
+
+* Difference-in-Differences Design/Example - Longitudinal research, ; 
+* Simulate an experiment - get as close as possible. 
+* Synthetic control
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.width=5.5, fig.height=3.75, fig.cap = "Difference-In-Differences Estimation"}
+library(ggplot2)
+library(ggthemes)
+x <- c("pre", "post") 
+y1 <- c(1.5,2.5)
+y2 <- c(2,3)
+y3 <- c(2,3.5)
+data_1 <- data.frame(x,y1,y2,y3)
+title_size = 10
+font_size = 10
+line_size = 0.5
+ggplot(data_1) + 
+  geom_point(aes(x=reorder(x, y1),y=y1), color="cyan4", size = 3) + 
+  geom_path(aes(x=reorder(x, y1),y=y1), color="cyan4", size = 1, group = 1) + 
+  geom_point(aes(x=reorder(x, y1),y=y3), color="purple4", size = 3) + 
+  geom_path(aes(x=reorder(x, y1),y=y3), color="purple4", size = 1, group = 1) + 
+  geom_point(aes(x=reorder(x, y2),y=y2), color="steelblue", size = 3) + 
+  geom_path(aes(x=reorder(x, y2),y=y2), color="steelblue", size = 1, linetype = "dashed", group = 1) + 
+  geom_segment(aes(x="post",y=data_1$y2[2], xend="post", yend=data_1$y3[2]),size=1, color="darkmagenta", arrow = arrow(length = unit(0.1, "inches"))) + 
+  geom_segment(aes(x="post",y=data_1$y3[2], xend="post", yend=data_1$y2[2]),size=1, color="darkmagenta", arrow = arrow(length = unit(0.1, "inches"))) + 
+  annotate("text", x = 2.03, y = (data_1$y3[2]+data_1$y2[2])/2, label =  expression(Delta), size = 5, color = "darkmagenta") +
+  geom_vline(xintercept = 1.5, col='grey', lwd=1,linetype="dotted") +
+  annotate("text", x = 1.59, y = 0.5, label =  "Intervention", size = 3) +
+  annotate("text", x = 2.08, y = data_1$y3[2], label =  "Yt,post", size = 3) +
+  annotate("text", x = 2.08, y = data_1$y1[2], label =  "Yc,post", size = 3) +
+  annotate("text", x = 0.93, y = data_1$y3[1], label =  "Yt,pre", size = 3) +
+  annotate("text", x = 0.93, y = data_1$y1[1], label =  "Yc,pre", size = 3) +
+  theme_base() +
+  labs(y="Outcome",x="Time",
+       title = "Difference-In-Differences Estimation"
+  ) +
+  scale_x_discrete("Time", expand=c(0.05,0.1)) +
+  theme( legend.position = "none",
+         plot.title = element_text(size=title_size,hjust = 0.5),
+         axis.title=element_text(size=font_size),
+         axis.text.x =element_text(size=font_size),
+         axis.text.y =element_blank(),
+         axis.ticks.y = element_blank(), 
+         plot.background = element_rect(colour = NA)
+         )
+```
+
+
+
+<br><br><br>
+```{r,echo=FALSE,out.width = '90%',fig.align='center',fig.cap = "Example of DID study design (Wlömert & Papies 2016)"}
+knitr::include_graphics("./images/spotify_study.JPG")
+```
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+Synthetic control; for example: [Causal Impact Package](https://google.github.io/CausalImpact/CausalImpact.html) 
+:::
 
 ## Measurement and scaling
 
@@ -246,8 +430,6 @@ knitr::include_graphics("./images/formative_reflextive.JPG")
 
 ## Learning check {-}
 
-::: {.infobox_green .check data-latex="{check}"}
-
 **(LC1.1) Indicate the level of measurement of the following variables:**
 
 * Occupation of survey participants
@@ -262,19 +444,25 @@ knitr::include_graphics("./images/formative_reflextive.JPG")
 * Temperature in °C
 * Number of products sold
 
-:::
 
 ## References {-}
 
+* Box, Hunter, & Hunter (1978). Statistics for experimenters, John Wiley & Sons, Inc.
+* Chandar, B., Gneezy, U., List, J.A., Muir, I. (2019). The Drivers of Social Preferences: Evidence from a Nationwide Tipping Field Experiment, Working Paper. 
+* Field, A., Miles J., & Field, Z. (2012). Discovering Statistics Using R. Sage Publications.
 * Goldfarb, A. & Tucker, C. E. (2014). Conducting Research with Quasi-Experiments: A Guide for Marketers. Working Paper.
 * Kotler, P. & Armstrong, G. (2009). Principles of Marketing (13th ed.), Prentice Hall.
-* Field, A., Miles J., & Field, Z. (2012). Discovering Statistics Using R. Sage Publications.
-* Miguel A. Hernán, John Hsu & Brian Healy (2019). A Second Chance to Get Causal Inference Right: A Classification of Data Science Tasks, CHANCE, 32:1, 42-49, DOI:10.1080/09332480.2019.1579578 
+* Lambrecht, A., & Tucker, C. E. (2018). Field experiments. In: Hanssens, D M & Mizik, N. (eds.), Handbook of Marketing Analytics, Edward Elgar, 32-51. 
+* Lambrecht, A. & Tucker, C. E. (2013). When Does Retargeting Work? Information Specificity in Online Advertising, Journal of Markering Research 50(5), 561–576.
+* Lewis, Randall A., Justin M. Rao, and David H. Reiley (2011). Here, There, Everywhere: Correlated Online Behaviors Can Lead to Overestimates of the Effects of Advertising,” in Proceedings of the International Conference on World Wide Web. New York: Association for Computing Machinery, 156–66.
+* Malhotra, N. K.(2010). Marketing Research: An Applied Orientation (6th. ed.). Prentice Hall.
+* Miguel A. Hernán, John Hsu & Brian Healy (2019). A Second Chance to Get Causal Inference Right: A Classification of Data Science Tasks, CHANCE, 32:1, 42-49.
 * Pearl, J. (2009). Causal inference in statistics: An overview. Statistics Surveys, 3, 96–146. 
 * Pearl, J. (2018). The Book of Why: The New Science of Cause and Effect, Basic Books.
-* Box, Hunter, & Hunter (1978). Statistics for experimenters, John Wiley & Sons, Inc.
-* Lambrecht, A., & Tucker, C. E. (2018). Field experiments. In: Hanssens, D M & Mizik, N. (eds.), Handbook of Marketing Analytics, Edward Elgar, 32-51. 
-* Chandar, B., Gneezy, U., List, J.A., Muir, I. (2019). The Drivers of Social Preferences: Evidence from a Nationwide Tipping Field Experiment, Working Paper. 
+* Shmueli, G. (2010). To Explain or to Predict?, Statistical Science, 25(3), 289-310.
+* Varian, H.R. (2016). Causal inference in economics and marketing, Proceedings of the National Academy of Sciences, 113(27), 7310-7315.
+* Wlömert N, Papies D (2016) On-demand streaming services and music industry revenues - Insights from Spotify's market entry. Internat. J. Res. Marketing 33(2):314-327.
+
 
 
 
