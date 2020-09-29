@@ -73,7 +73,7 @@ knitr::include_graphics("./images/research_process.JPG")
 
 The first step in the research process is to identify a management problem and to derive a research question from it. As a motivating example, imagine that you are a marketing manager at a firm and you are running online advertising campaigns to promote your products. In order to reach your target group more effectively, you make use of targeting criteria based on user profiles, which are available at an additional cost. The head of your department wonders if the extra expenditures associated with the targeting of the advertising campaigns are justified or if the advertising would be similarly effective without the targeting. As depicted in the stylized flow chart above, the research process often starts with the identification of a **management problem**; something that needs explaining. In our example, this would be the extra expenditures associated with the targeting of online advertising campaigns. This leads to your research question: *Is advertising with behavioral targeting more effective compared to advertising without targeting?* 
 
-Based on this research question, you should, if possible, collect some existing data and look for initial evidence. If you have used behavioral targeting in the past, you may want to compare the performance of campaign that used targeting to campaigns that didn't. Following this initial data screening, you should try to come up with a **theory** that could explain the effects of targeting. A theory can be thought of as a hypothesized general principle or set of principles that explains known findings about a topic and from which new hypotheses can be generated. In our example, we could build on a rich body of literature on tailoring communications that consistently indicates that tailoring improves communications’ performance (e.g., Lambrecht & Tucker 2013, Lewis et al. 2011). Following this theory, you should formulate a prediction regarding the direction of the expected effects. This **hypothesis** can be thought of as a prediction from a theory, i.e., in our example: targeting in online advertising increase, on average, the probability of purchasing from our store. 
+Based on this research question, you should, if possible, collect some existing data and look for initial evidence. If you have used behavioral targeting in the past, you may want to compare the performance of campaign that used targeting to campaigns that didn't. Following this initial data screening, you should try to come up with a **theory** that could explain the effects of targeting. A theory can be thought of as a hypothesized general principle or set of principles that explains known findings about a topic and from which new hypotheses can be generated. In our example, we could build on a rich body of literature on tailoring communications that consistently indicates that tailoring improves communications’ performance (e.g., Lambrecht & Tucker 2013, Lewis et al. 2011). Following this theory, you should formulate a prediction regarding the direction of the expected effects. This **hypothesis** can be thought of as a prediction from a theory, i.e., in our example: targeting online ads increases, on average, the probability of purchasing from our store. 
 
 In a next step, you should identify the variables you need to consider in order to test your hypothesis. Particularly, you should clarify what your dependent variable and independent variables are. The **dependent variable** is the outcome variable referring to the proposed effect. If we would, for example, conduct an experiment to test our hypothesis regarding targeting, the dependent variable would be a relevant response variable we are interested in (e.g., the number of sales). The **independent variable**, in contrast, is the proposed cause (a predictor variable). In our experiment, this would be the variable we manipulate, i.e., the type of advertising (targeted vs. non-targeted) in the above example. 
 
@@ -178,7 +178,7 @@ In other words, the correlations observed between the dependent measure and adve
 knitr::include_graphics("./images/murder_rate.JPG")
 ```
 
-Although it appears from the graphic that there is an association between the Internet Explorer market share and the number of murders in the U.S., it wouldn't really make sense to assume that one of them *causes* the other. For a causal relationship, three conditions have to be met (Field et al. 2012): 
+Although it appears from the graphic that there is an association between the Internet Explorer market share and the number of murders in the U.S., it wouldn't really make sense to assume that one of them *causes* the other. The main difference between **correlation** and **causality** is that with correlation we observe changes in an input variable (X) and a change in the outcome (Y), whereas causality means that we change the input variable (X) and observe the resulting changes in the outcome variable (Y). For a causal relationship, three conditions have to be met (Field et al. 2012):
 
 1. **Concomitant variation**: A cause, X, and an effect, Y, should vary together in the way predicted by the hypothesis under consideration.  
 2. **Time order of occurrence**: The causing event must occur before the effect; it cannot occur afterwards.
@@ -259,6 +259,7 @@ With regard to the specification of the test and control conditions there are di
 
 * Measure the effect of multiple actions on different test groups (e.g., include a group with standard (non-targeted) ads)
 * Advantages: controls for alternative explanations using random assignment & allows to test multiple advertising strategies
+* Disadvantage: fewer observations per test group
 
 ::::
 
@@ -297,9 +298,9 @@ In contrast to experimental research, in observational research the researcher o
 
 The answer to this question is related to the fact that in many situations, experiments are not feasible, not appropriate, or simply too costly to conduct. Going back to the 'four Ps' taxonomy from the beginning of this chapter, experimentation is increasingly used to inform advertising decisions where many platforms such as the [Google Ad Manager](https://support.google.com/admanager/answer/7661678?hl=en) offer easy-to-use solutions for the implementation of A/B testing. However, as Goldfarb & Tucker (2014) note, it is far more difficult for practitioners and researchers to run field experiments to inform channels and product development decisions because such experiments would be too time-consuming or often require a level of measurement of long-term implications that is difficult to attain. In addition, field experiments with varying prices are often challenging to conduct because customers may find them unfair. In these situations, experiments are difficult to conduct and Observational data, in contrast, are often easy to obtain. Many firms, for example, keep records about prices and sales of products over time. With this retrospective observational data it is possible to calculate price elasticity, i.e., the relative change in sales due to a relative change in price. The problem with this type of data is, however, that the price setting behavior of managers may be driven by unobserved factors that could bias the estimates. As an example, consider an ice cream seller who sets her prices according to the weather - if the weather is good, she increases prices and if the weather is bad, she decreases prices. As you can image, the sales pattern reveals that, despite the higher prices, she sells more ice cream on warmer than on colder days. If you would attempt to estimate the price elasticity without controlling for weather, the analysis would suggest a positive relationship between price and sales, i.e., the higher the prices, the more ice cream she will sell. It is easy to see that the weather is an unobserved factor in the analysis that confounds the effect of price on sales. Similar issues can often be observed when estimating advertising effects in settings where managers set advertising budgets according to unobserved factors. This, among other things, is the reason why it is generally more challenging to estimate causal effects from observational data. In cases like this, researchers need to carefully consider their identification strategy, i.e., the procedure of estimating causal effects from observational data. As Angrist and Pischke (2009) put it:
 
-> "Underlying this is the recognition, description, and presentation of the identication strategy, 
-> or the manner in which a researcher uses observational data (i.e., data not generated by a randomized trial) 
-> to approximate a real experiment"
+> "Underlying this is the recognition, description, and presentation of the identification strategy, 
+> or the manner in which a researcher uses observational data (i.e., data not generated by a 
+> randomized trial) to approximate a real experiment"
 >
 > `r tufte::quote_footer('--- Angrist and Pischke (2009), p. 7')`
 
@@ -379,6 +380,7 @@ In this stylized example, we observe both groups the test group and the control 
 * $Yc,post$: outcome after intervention for control groups
 
 As mentioned above, the counterfactual is based on the assumption that the (unobserved) change in the outcome by the treated would be the same as the (observed) change in purchases by the control group. To get the impact of the intervention, we then compare the predicted counterfactual outcome to the actual outcome base on the following table:
+
 <br>
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE, fig.cap="Test"}
 library(dplyr)
@@ -483,7 +485,7 @@ knitr::include_graphics("./images/permissible_statistics.JPG")
 
 As already mentioned, a good understanding of scale types is important to decide which method to apply to test your hypothesis given the data at hand. There are many different flow charts like the one below that can be used as a guide to decide which method to select based on the scale types. 
 
-```{r,echo=FALSE,out.width = '70%',fig.align='center',fig.cap = "Flow chart for test selection"}
+```{r,echo=FALSE,out.width = '70%',fig.align='center',fig.cap = "Flow chart for test selection (McElreath 2015)"}
 knitr::include_graphics("./images/testselection.JPG")
 ```
 
@@ -492,7 +494,7 @@ knitr::include_graphics("./images/testselection.JPG")
 There are also many web resources that are useful to determine what type of test is appropriate given the scale type of the dependent and independent variables. For example, check out [this website](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/) by UCLA which not only shows which type of test is appropriate but also has R code available for each of these tests. 
 :::
 
-For survey-based research, there are many different scale types to choose from. Below you can find a summary of some of the most common scaling techniques. For details regaring these scaling techniques, please refer to chapter 10, which dedicated to the topic of questionnaire design.   
+For survey-based research, there are many different scale types to choose from. Below you can find a summary of some of the most common scaling techniques. For details regarding these scaling techniques, please refer to chapter 10, which dedicated to the topic of questionnaire design.   
 
 ```{r,echo=FALSE,out.width = '80%',fig.align='center',fig.cap = "Scaling techniques"}
 knitr::include_graphics("./images/scaling_techniques.JPG")
@@ -580,11 +582,68 @@ After discussing all the steps in the research process up to the data collection
 
 **(LC1.3) Which of these statements regarding formative constructs are true?**
 
-- [ ] Indicators (items) measure the cause for the change of the not directly observable construct.
-- [ ] The reliability of the scale can be measures using Cronbach’s Alpha.
-- [ ] The indicators (items) of the scale should be highly correlated.
-- [ ] The validity of the scale can be measures using Cronbach’s Alpha.
+- [ ] Indicators (items) measure the cause for the change of the not directly observable construct
+- [ ] Indicators (items) measure the effect of the change in a not directly observable construct
+- [ ] The indicators (items) of the scale should be highly correlated
+- [ ] Multi-item measurement is particularly important for the increase in the reliability of the measurement
 - [ ] None of the above
+
+**(LC1.4) In causal inference tasks, ...**
+
+- [ ] …the main concern is to generate predictions of future outcomes 
+- [ ] …the main concern is to maximize the explained variance
+- [ ] …observational research is the 'gold standard'
+- [ ] …randomization minimizes unsystematic variation
+- [ ] None of the above 	
+
+**(LC1.5) True or false? Reliability refers to the consistency of a measurement.**
+
+- [ ] True 
+- [ ] False
+
+**(LC1.5) Using a between-subjects design, we ... **
+
+- [ ] ... manipulate the independent variable (treatment) using different persons for each group
+- [ ] ... manipulate independent variable using the same participants for each group 
+- [ ] ... manipulate the dependent variable (treatment) using different persons for each group
+- [ ] ... manipulate dependent variable using the same participants for each group 
+- [ ] None of the above
+
+**(LC1.6) When conducting field experiments, the term crossover effect means ...**
+
+- [ ] ... that an individual who was supposed to be assigned to one treatment is accidentally exposed to another treatment 
+- [ ] ... that a treated individual affects the outcomes for other untreated individuals  
+- [ ] ... that individuals can be part of both the test and the control condition
+- [ ] None of the above
+
+**(LC1.7) Conditions for causality are ...**
+
+- [ ] ... a cause and an effect should vary together in the way predicted by the hypothesis under consideration 
+- [ ] ... random assignment of test units
+- [ ] ... the causing event must occur before the effect
+- [ ] ... absence of other possible causal factors
+- [ ] None of the above
+
+**(LC1.8) The effect of the treatment on the treated in DID models can be written as ...**
+
+- [ ] $(Yt,pre - Yt,post) − (Yc,post - Yc,pre)$  
+- [ ] $(Yt,post - Yt,pre) − (Yc,post - Yc,pre)$ 
+- [ ] $(Yt,pre - Yt,post) − (Yc,pre - Yc,post)$  
+- [ ] $(Yt,post - Yt,pre) − (Yc,pre - Yc,post)$  
+- [ ] None of the above
+
+**(LC1.9) In predictive modeling tasks ...**
+
+- [ ] ... once major concern are unobserved confounders
+- [ ] ... one major concern is overfitting 
+- [ ] ... we primarily care about the predictive ability of the model  
+- [ ] ... we primarily care about causal effects 
+- [ ] None of the above
+
+**(LC1.10) True or false? For ordinal scales, the magnitude of difference between scale points is known**
+
+- [ ] True 
+- [ ] False
 
 
 ## References {-}

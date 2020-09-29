@@ -15,7 +15,9 @@ knitr::opts_chunk$set(echo = TRUE, error = FALSE, warning = FALSE, message = FAL
 
 # (PART) Group project {-}
 
-# Intro {-}
+# Survey design & analysis
+
+## Your task 
 
 Welcome to the introduction to the group project!
 
@@ -30,9 +32,9 @@ Here you will find all important points related to the group project. In the fol
 knitr::include_graphics("images/group_project.PNG")
 ```
 
-## Groups {-}
+### Groups {-}
 
-## Topics for the group project {-}
+### Topics {-}
 
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 library(dplyr)
@@ -73,7 +75,7 @@ mytable_sub %>% kable(escape = T) %>%
 
 
 
-# Part 1: Before collecting data {-}
+## Part 1: Questionnaire design
 
 <div style="text-align: justify">
 
@@ -98,7 +100,7 @@ extent to which their project requires this.
 :::
 
 
-## Research design
+### Research design
 
 <div style="text-align: justify">
 
@@ -141,7 +143,7 @@ If you would like to analyze the effects of multiple categorical or continuous (
 knitr::include_graphics("mlp-regression.png")
 ```
 
-## Survey method  
+### Survey method  
 
 In the next step you should review the type of survey method you will use.
 
@@ -212,7 +214,7 @@ Some useful tips when creating a questionnaire in Qualtrics:
 * Check the usability on mobile devices using the preview option (make sure the "Mobile friendly" option is checked).
 :::
 
-## Questionnaire
+### Questionnaire
 
 After you set up everything, you should develop 20 - 25 questions. However, there are some important objectives to keep in mind while developing a questionnaire:
 
@@ -229,7 +231,7 @@ If you have sorted out all answers on the previous questions, you are ready to s
 * Ask questions in a logical order & use the right type of questions
 * Aim for brevity & use simple language
 
-### Questionnaire and research design {-}
+#### Questionnaire and research design {-}
 
 The questionnaire design should be aligned with the research design! Therefore, in the following sections we will explain some suggested steps on how to approach questionnaire creation.
 
@@ -241,7 +243,7 @@ An objective of a questionnaire is threefold:
 * to motivate, and encourage respondents to become involved, to cooperate, and to complete the questionnaire,
 * to minimize response error.
 
-### Content in a questionnaire {-}
+#### Content in a questionnaire {-}
 
 In this step you are starting to work on the content of you questions.
 
@@ -286,7 +288,7 @@ Do you think Nike Town offers better prices than other Nike stores?
 \vspace{-0.10in}
 ```
            
-### Inability and unwillingness to answer {-}  
+#### Inability and unwillingness to answer {-}  
 
 The quality of collected data you highly depends on your ability to address correct participants. Therefore, you need to make sure that your respondents are able to meaningfully answer your questions.   
 
@@ -406,7 +408,7 @@ What is your household’s exact annual income?
 \vspace{-0.10in}
 ```
 
-### Decide on measurement scales and scaling techniques {-}
+#### Decide on measurement scales and scaling techniques {-}
 
 Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
 For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
@@ -435,7 +437,7 @@ Here you can find extremely nice overview of statistical test associated with di
 :::
 
 
-### The most frequent types of questions {-}
+#### The most frequent types of questions {-}
 
 Here we want to show you the most frequent types of questions students use and what type of data can be collected by using them.
 
@@ -453,7 +455,7 @@ new.colnames <- make.unique(new.colnames, sep="_")
 colnames(qualtrics)<- new.colnames
 ```
 
-#### Multiple choice question {-}
+##### Multiple choice question {-}
 
 Multiple Choice with a single answer is a type of closed-ended question that lets respondents select **one answer** from a defined list of choices.Type of data you obtain is **categorical.** 
 
@@ -482,8 +484,6 @@ Statistical test that you can think of when analysing categorical data:
 * Categorical variables can be used as predictors in regression (as dummy variables).
 
 :::
-
-
 ```{r, echo=F, fig.align='center',out.width='72%',fig.cap="Multiple choice question with multiple answers"}
 knitr::include_graphics('multiple-choice-question-multiple-answers.png')
 ```
@@ -500,7 +500,7 @@ The Cochran’s Q test and associated multiple comparisons require the following
   3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)
 :::
 
-#### Rank order question {-}
+##### Rank order question {-}
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Rank order question"}
 knitr::include_graphics('rank-order-question.png')
@@ -514,7 +514,7 @@ In order to analyze results from a rank order question, we use **Friedman rank s
 Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.
 :::
 
-#### Constant Sum question {-}
+##### Constant Sum question {-}
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Constant sum question"}
 knitr::include_graphics('constant-sum-question.png')
@@ -530,7 +530,7 @@ In order to answer this question we need to conduct **a repeated measures ANOVA*
 This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
 :::
 
-#### Text or number entry question {-}
+##### Text or number entry question {-}
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Text or number entry question"}
 knitr::include_graphics('images/text-entry.PNG')
@@ -538,7 +538,7 @@ knitr::include_graphics('images/text-entry.PNG')
 
 A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.  
 
-### Scaling techniques {-}
+#### Scaling techniques {-}
 
 When it comes to scaling techniques, they are meant to study the relationship between objects. The basic scaling techniques classification is on **comparative** and **non-comparative scales**. 
 
@@ -551,7 +551,7 @@ knitr::include_graphics("scales.png")
 **Comparative scales (or nonmetric scaling)** compare direclty the stimulus object. For example, the respondent might be asked directly about his preference between domestic and foreign beer brands. As a result, the comparative data collected can only be interpreted in relative terms. In the following sections we will walk through both types of comparative scales and briefly introduce them.
 
 
-#### Comparative scale: Paired Comparison {-}    
+##### Comparative scale: Paired Comparison {-}    
 
 * Respondent is presented with two objects and asked to select one according to some criterion.
 * The nature of resulting data is ordinal
@@ -563,7 +563,7 @@ For each pair, please indicate which of the two brands of beer in the pair you p
 knitr::include_graphics('paired comparison.png')
 ```
 
-#### Comparative scale: Rank Order {-}  
+##### Comparative scale: Rank Order {-}  
 
 * Allow a certain set of brands or products to be simultaneously ranked based upon a specific attribute or characteristic.
 * The rank order scaling is a good proxy for to the shopping setting as there are simultaneous comparisons of objects.
@@ -576,7 +576,7 @@ No two brands should received the same rank number.
 knitr::include_graphics('rank-order-scale.png')
 ```
 
-#### Comparative scale: Constant sum {-}  
+##### Comparative scale: Constant sum {-}  
 
 * Respondents allocate a constant sum of units (e.g., points, dollars) among a set of stimulus objects with respect to some criterion.  
 * Constant sum is similar to rank order, but it carries specific units.  
@@ -592,7 +592,7 @@ knitr:: include_graphics('constant-sum-scale.png')
 * Basic analysis of constant-sum data involves tabulation of responses and presenting them as either quantities (e.g., "on average, 7 points were allocated to "high alcohol level"), or, as proportions ("On average, 7% of points were allocated to "high alcohol level").  
 
 
-#### Non-Comparative Scales: Continuous Rating Scales {-}  
+##### Non-Comparative Scales: Continuous Rating Scales {-}  
 
 * Participants rate the objects by placing a mark at the appropriate position on a line that runs from one extreme of the criterion variable to the other.  
 * One of the advantages of the continuous rating scale is that it is easy to administer.  
@@ -604,13 +604,13 @@ knitr::include_graphics('continuous-rating-scale.png')
 * Once the ratings are collected, you can splits up the obtained ratings into categories and then assign those depending on the category in which the ratings fall.
 
 
-#### Non-Comparative Scales: Itemized Rating Scales {-} 
+##### Non-Comparative Scales: Itemized Rating Scales {-} 
 
 * The respondents are provided with a scale that has a number or brief description associated with each category.  
 * The categories are ordered in terms of scale position, and the respondents are required to select the specified category that best describes the object being rated.  
 * The commonly used itemized rating scales are **the Likert, semantic differential and Stapel scales.**
 
-##### Itemized Rating Scales: Likert scale {-}
+###### Itemized Rating Scales: Likert scale {-}
 
 * Requires respondents to indicate their attitude towards the given object through the degree of agreement or disagreement with each of a series of statements within typically five or seven categories.  
 * Reversed code of some items increases validity.  
@@ -627,7 +627,7 @@ knitr::include_graphics('likert-marketing-reserach.png')
 ```
 
 
-##### Itemized Rating Scales: Semantic Differential {-}
+###### Itemized Rating Scales: Semantic Differential {-}
 
 * Typically, participants rate objects on a number of itemized, seven-point rating scales bounded at each end by one of two bipolar adjectives.  
 
@@ -675,7 +675,7 @@ knitr::include_graphics('semantic-differential-5.png')
 
 
 
-### Questionnaire structure {-}
+#### Questionnaire structure {-}
 
 The sequence of questions in a questionnaire could play important role. For instance, more sensitive questions (such as demographic-related questions) are usually placed at the end as they can trigger change in respondent's behavior. 
 
@@ -688,7 +688,7 @@ Consider that the most of people usually use their phones to fill it out. Think 
 
 In the end, the questionnaire structure has to be aligned with the research design. For example, if your research design features an experiment, this needs to be reflected in the questionnaire (e.g., you need to assign the respondents randomly to the experimental conditions in case of a between-subjects comparison).
 
-#### Questionnaire structure for a between-subjects design {-}
+##### Questionnaire structure for a between-subjects design {-}
 
 In a between-subject design you randomly assign each respondent to different experimental conditions. They would then complete tasks only in the condition to which they are assigned.
 
@@ -699,7 +699,7 @@ knitr::include_graphics('between-subject-design.png')
 ```
 
 
-#### Questionnaire structure for a within-subjects design {-}
+##### Questionnaire structure for a within-subjects design {-}
 
 This type of experimental design involves exposing each respondent to all of the user experimental conditions you’re testing. This way, each respondent will test all of the conditions.
 
@@ -710,7 +710,7 @@ knitr::include_graphics('within-subject-design.png')
 ```
 
 
-### Question wording {-}
+#### Question wording {-}
 
 Generally, question wording should enable each respondent to understand  questions and to be able to answer them with reliability. Reliability means that, if a respondent was asked the same question again, he/she would give the same answer again. A number of common problems regarding the question wording have been identified, so we will address the most important ones. 
 
@@ -868,7 +868,7 @@ d) More than 4 times
 \vspace{-0.1in}
 ```
 
-### Choose adequate order {-}
+#### Choose adequate order {-}
 
 One of the last steps in a process of designing a questionnaire is choosing adequate order of questions and instructions for respondents. 
 
@@ -884,7 +884,7 @@ As respondents are moving towards the end of the questionnaire, they are likely 
 
 Finally, you should pay particular attention to provide all prescribed definitions and explanations before you ask a question. This ensures that the questions are understood in consistent way by every respondent.
 
-### Test your questionnaire {-}
+#### Test your questionnaire {-}
 
 Finally, before you distribute the final questionnaire, there are some things to consider. First, you should always pretest your questionnaire before sharing it!
 Test all aspects of the questionnaire (content, wording, sequence, form & layout, etc.). If possible, use respondents in the pretest that are similar to those who will be included in the actual survey. Ideally, the pretest sample size should be small (in a real scenario this could vary from 15 to 30 respondents; for the group project, a lower number will be sufficient). After each significant revision of the questionnaire, conduct another pretest, using a different sample of respondents. Eventually, code and analyze the responses obtained from the pretest so that you make sure that you collected information you intended to collect.
@@ -897,7 +897,7 @@ After testing your questionnaire you should be able to determine whether:
 * The questions are understandable  
 * Specifying questions are needed or some need to be eliminated  
 
-## Pitch, revision & submission
+### Pitch, revision & submission
 
 At this stage, you should be ready for pitching your questionnaire. Please keep in mind the timetable.
 
@@ -940,9 +940,9 @@ mytable_sub %>% kable(escape = T) %>%
 ```
 
 
-# Part 2: Collecting data and analysis {-}
+## Part 2: Data analysis
 
-## Data analysis {-}
+### Data analysis {-}
 
 ```{r, echo = FALSE, results='asis', warning=FALSE ,error=FALSE}
 # Load in qualtRics package
@@ -960,7 +960,7 @@ colnames(qualtrics)<- new.colnames
 In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
 
 
-### Multiple choice with a single answer {-}
+#### Multiple choice with a single answer {-}
 
 Multiple Choice with a single answer is a type of closed-ended question that lets respondents select **one answer** from a defined list of choices.
 
@@ -1134,7 +1134,7 @@ chisq.test(chi_square_table)
 
 Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and number of hours spent watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
 
-### Multiple choice with multiple answers
+### Multiple choice with multiple answers {-}
 
 ```{r, echo=F, fig.align='center',out.width='72%'}
 knitr::include_graphics('multiple-choice-question-multiple-answers.png')
@@ -1206,13 +1206,13 @@ DunnTest(list.cochran, method="bonferroni")
 
 From the results of the Dunn Test, we can see that there is a big difference between 1 ("ja!Natürlich") and 4("..."), as well as between 4("...") and 3("Spar Vital"). 
 
-### Rank order question {-}
+#### Rank order question {-}
 
 ```{r, echo=F, fig.align='center',out.width='72%'}
 knitr::include_graphics('rank-order-question.png')
 ```
 
-A rank order question asks respondents to compare items to each other by placing them in order of preference. Note that the data obtained from a rank order question shows an order of a respondent's pereference, but not the difference between items. For instance, if the the most important feature of a fitness tracker for a respondendt XY is "Measuring steps" and the second most important feature "Calories burned", we don't know for how much more important is the former one in comparison to the latter one.
+A rank order question asks respondents to compare items to each other by placing them in order of preference. Note that the data obtained from a rank order question shows an order of a respondent's preference, but not the difference between items. For instance, if the the most important feature of a fitness tracker for a respondent XY is "Measuring steps" and the second most important feature "Calories burned", we don't know for how much more important is the former one in comparison to the latter one.
 
 Intuitive question to ask is the following: which feature of the fitness tracker is the most important for our respondents?
 
@@ -1303,7 +1303,7 @@ ggcorrplot(cor.matrix)
 
 From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positively. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
 
-### Constant Sum question {-}
+#### Constant Sum question {-}
 
 ```{r, echo=F, fig.align='center',out.width='72%'}
 knitr::include_graphics('constant-sum-question.png')
@@ -1350,10 +1350,10 @@ library(robCompositions)
 constSum(constant.sum,100)[,-5]
 ```
 
-In order to anwser this question we need to conduct **a repeated measures ANOVA**.
+In order to answer this question we need to conduct **a repeated measures ANOVA**.
 This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
 
-We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumputions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption referrs to extreme outliers. Let's have a look at potential outliers:
+We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumptions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption refers to extreme outliers. Let's have a look at potential outliers:
 
 ```{r}
 # Outliers
@@ -1501,16 +1501,14 @@ correlation <-cor(dinner, method=c('pearson'))
 correlation
 ```
 
-By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicolinearity between independent variables.
+By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicollinearity between independent variables.
 
 
-## Reporting {-}
+### Reporting {-}
 
- inttor
+test
 
-
-
-## Presentation guidelines & grading {-}
+#### Presentation guidelines & grading {-}
 
 Your performance in this part will be evaluated based on the following criteria:
 
@@ -1537,7 +1535,7 @@ Your performance in this part will be evaluated based on the following criteria:
 
 
 
-### Final presentation and submission {-}
+#### Final presentation and submission {-}
 
 
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
