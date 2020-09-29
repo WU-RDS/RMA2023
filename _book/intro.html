@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Intro | Marketing Research Design &amp; Analysis 2020</title>
+  <meta name="description" content="An Introduction to Data Analytics Using R" />
+  <meta name="generator" content="bookdown 0.20.6 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Intro | Marketing Research Design &amp; Analysis 2020" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="An Introduction to Data Analytics Using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Intro | Marketing Research Design &amp; Analysis 2020" />
+  
+  <meta name="twitter:description" content="An Introduction to Data Analytics Using R" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="prev" href="introduction-to-r-markdown.html"/>
+<link rel="next" href="part-1-before-collecting-data.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<script src="libs/detect-resize-0.5.3/jquery.resize.js"></script>
+<link href="libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+<script src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="libs/d3-3.5.2/d3.min.js"></script>
+<script src="libs/vega-1.4.3/vega.min.js"></script>
+<script src="libs/lodash-2.2.1/lodash.min.js"></script>
+<script>var lodash = _.noConflict();</script>
+<link href="libs/ggvis-0.4.5/css/ggvis.css" rel="stylesheet" />
+<script src="libs/ggvis-0.4.5/js/ggvis.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">MRDA 2020</a></strong></li>
+<li class="divider"></li>
+<li class="part"><span><b>I Course outline</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="course-structure.html"><a href="course-structure.html"><i class="fa fa-check"></i>Course structure</a><ul>
+<li class="chapter" data-level="" data-path="course-structure.html"><a href="course-structure.html#schedule"><i class="fa fa-check"></i>Schedule</a><ul>
+<li class="chapter" data-level="" data-path="course-structure.html"><a href="course-structure.html#lecture-notes-qa"><i class="fa fa-check"></i>Lecture notes Q&amp;A</a></li>
+<li class="chapter" data-level="" data-path="course-structure.html"><a href="course-structure.html#individual-assignments"><i class="fa fa-check"></i>Individual assignments</a></li>
+<li class="chapter" data-level="" data-path="course-structure.html"><a href="course-structure.html#group-project"><i class="fa fa-check"></i>Group project</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="course-structure.html"><a href="course-structure.html#grading"><i class="fa fa-check"></i>Grading</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html"><i class="fa fa-check"></i>Course materials</a><ul>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#discussion-forum"><i class="fa fa-check"></i>Discussion forum</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#datacamp"><i class="fa fa-check"></i>DataCamp</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#contact"><i class="fa fa-check"></i>Contact</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>II Lecture notes</b></span></li>
+<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a><ul>
+<li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-foundations-recap"><i class="fa fa-check"></i><b>1.1</b> Marketing foundations (recap)</a></li>
+<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#research-question-and-hypothesis"><i class="fa fa-check"></i><b>1.2.1</b> Research question and hypothesis</a></li>
+<li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.2.2</b> Choosing a research design</a></li>
+<li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#collecting-data"><i class="fa fa-check"></i><b>1.2.3</b> Collecting data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#learning-check"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> How to download and install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.2</b> Getting help</a></li>
+<li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#packages"><i class="fa fa-check"></i><b>2.4</b> Packages</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#a-typical-r-session"><i class="fa fa-check"></i><b>2.5</b> A typical R session</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#references-1"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>3.1.1</b> Creating objects</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>3.1.2</b> Data types</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>3.1.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>3.2.1</b> Getting data for this course</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>3.2.2</b> Import data created by other software packages</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-handling.html"><a href="data-handling.html#export-data"><i class="fa fa-check"></i><b>3.2.3</b> Export data</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-handling.html"><a href="data-handling.html#import-data-from-the-web"><i class="fa fa-check"></i><b>3.2.4</b> Import data from the Web</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="data-handling.html"><a href="data-handling.html#references-2"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a><ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>4.1.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="4.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>4.1.2</b> Continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>4.2.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> Continuous variables</a></li>
+<li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>4.2.3</b> Saving plots</a></li>
+<li class="chapter" data-level="4.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#additional-options"><i class="fa fa-check"></i><b>4.2.4</b> Additional options</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Introduction to Statistical Inference</a><ul>
+<li class="chapter" data-level="5.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>5.1.1</b> Sampling from a known population</a></li>
+<li class="chapter" data-level="5.1.2" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>5.1.2</b> Standard error of the mean</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>5.2</b> The Central Limit Theorem</a></li>
+<li class="chapter" data-level="5.3" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#using-what-we-actually-know"><i class="fa fa-check"></i><b>5.3</b> Using what we actually know</a></li>
+<li class="chapter" data-level="5.4" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#confidence-intervals-for-the-sample-mean"><i class="fa fa-check"></i><b>5.4</b> Confidence Intervals for the Sample Mean</a></li>
+<li class="chapter" data-level="" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-null-hypothesis"><i class="fa fa-check"></i><b>6.1.1</b> The null hypothesis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#statistical-inference-on-a-sample"><i class="fa fa-check"></i><b>6.1.2</b> Statistical inference on a sample</a></li>
+<li class="chapter" data-level="6.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>6.1.3</b> Choosing the right test</a></li>
+<li class="chapter" data-level="6.1.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>6.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.2</b> One sample t-test</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>6.3.1</b> Independent-means t-test</a></li>
+<li class="chapter" data-level="6.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Dependent-means t-test</a></li>
+<li class="chapter" data-level="6.3.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#further-considerations"><i class="fa fa-check"></i><b>6.3.3</b> Further considerations</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.4</b> Comparing several means</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>6.4.2</b> Decomposing variance</a></li>
+<li class="chapter" data-level="6.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>6.4.3</b> One-way ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.5</b> Non-parametric tests</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>6.5.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
+<li class="chapter" data-level="6.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>6.5.2</b> Wilcoxon signed-rank test</a></li>
+<li class="chapter" data-level="6.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>6.5.3</b> Kruskal-Wallis test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.6</b> Categorical data</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#confidence-intervals-for-proportions"><i class="fa fa-check"></i><b>6.6.1</b> Confidence intervals for proportions</a></li>
+<li class="chapter" data-level="6.6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>6.6.2</b> Chi-square test</a></li>
+<li class="chapter" data-level="6.6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#sample-size-1"><i class="fa fa-check"></i><b>6.6.3</b> Sample size</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#summary-2"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#references-3"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>7.1.1</b> Correlation coefficient</a></li>
+<li class="chapter" data-level="7.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>7.1.2</b> Significance testing</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>7.2.1</b> Simple linear regression</a></li>
+<li class="chapter" data-level="7.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>7.2.2</b> Multiple linear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>7.3.1</b> Outliers</a></li>
+<li class="chapter" data-level="7.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>7.3.2</b> Influential observations</a></li>
+<li class="chapter" data-level="7.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>7.3.3</b> Non-linearity</a></li>
+<li class="chapter" data-level="7.3.4" data-path="regression.html"><a href="regression.html#non-constant-error-variance"><i class="fa fa-check"></i><b>7.3.4</b> Non-constant error variance</a></li>
+<li class="chapter" data-level="7.3.5" data-path="regression.html"><a href="regression.html#non-normally-distributed-errors"><i class="fa fa-check"></i><b>7.3.5</b> Non-normally distributed errors</a></li>
+<li class="chapter" data-level="7.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>7.3.6</b> Correlation of errors</a></li>
+<li class="chapter" data-level="7.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>7.3.7</b> Collinearity</a></li>
+<li class="chapter" data-level="7.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>7.3.8</b> Omitted Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
+<li class="chapter" data-level="7.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>7.4.2</b> More than two categories</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>7.5.1</b> Interaction effects</a></li>
+<li class="chapter" data-level="7.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>7.5.2</b> Non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>7.6.1</b> Motivation and intuition</a></li>
+<li class="chapter" data-level="7.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>7.6.2</b> Technical details of the model</a></li>
+<li class="chapter" data-level="7.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>7.6.3</b> Estimation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#summary-3"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#references-4"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-2"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>8.2.1</b> Are the assumptions satisfied?</a></li>
+<li class="chapter" data-level="8.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>8.2.2</b> Deriving factors</a></li>
+<li class="chapter" data-level="8.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>8.2.3</b> Factor interpretation</a></li>
+<li class="chapter" data-level="8.2.4" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#creating-new-variables"><i class="fa fa-check"></i><b>8.2.4</b> Creating new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#reliability-analysis"><i class="fa fa-check"></i><b>8.3</b> Reliability analysis</a></li>
+<li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#summary-4"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#references-5"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="part"><span><b>III Assignments</b></span></li>
+<li class="chapter" data-level="9" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html"><i class="fa fa-check"></i><b>9</b> Introduction to R Markdown</a><ul>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i>Creating a new R Markdown document</a></li>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#text-and-equations"><i class="fa fa-check"></i>Text and Equations</a><ul>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#headings"><i class="fa fa-check"></i>Headings</a></li>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#lists"><i class="fa fa-check"></i>Lists</a></li>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#text-formatting"><i class="fa fa-check"></i>Text formatting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#r-code"><i class="fa fa-check"></i>R-Code</a><ul>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#global-and-chunk-options"><i class="fa fa-check"></i>Global and chunk options</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#latex-math"><i class="fa fa-check"></i>LaTeX Math</a><ul>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#important-symbols"><i class="fa fa-check"></i>Important symbols</a></li>
+<li class="chapter" data-level="" data-path="introduction-to-r-markdown.html"><a href="introduction-to-r-markdown.html#greek-letters"><i class="fa fa-check"></i>Greek letters</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Group project</b></span></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i>Intro</a><ul>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#groups"><i class="fa fa-check"></i>Groups</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html#topics-for-the-group-project"><i class="fa fa-check"></i>Topics for the group project</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html"><i class="fa fa-check"></i>Part 1: Before collecting data</a><ul>
+<li class="chapter" data-level="9.1" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#research-design"><i class="fa fa-check"></i><b>9.1</b> Research design</a></li>
+<li class="chapter" data-level="9.2" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#survey-method"><i class="fa fa-check"></i><b>9.2</b> Survey method</a></li>
+<li class="chapter" data-level="9.3" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#questionnaire"><i class="fa fa-check"></i><b>9.3</b> Questionnaire</a><ul>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#questionnaire-and-research-design"><i class="fa fa-check"></i>Questionnaire and research design</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#content-in-a-questionnaire"><i class="fa fa-check"></i>Content in a questionnaire</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#inability-and-unwillingness-to-answer"><i class="fa fa-check"></i>Inability and unwillingness to answer</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#decide-on-measurement-scales-and-scaling-techniques"><i class="fa fa-check"></i>Decide on measurement scales and scaling techniques</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#the-most-frequent-types-of-questions"><i class="fa fa-check"></i>The most frequent types of questions</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#scaling-techniques"><i class="fa fa-check"></i>Scaling techniques</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#questionnaire-structure"><i class="fa fa-check"></i>Questionnaire structure</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#question-wording"><i class="fa fa-check"></i>Question wording</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#choose-adequate-order"><i class="fa fa-check"></i>Choose adequate order</a></li>
+<li class="chapter" data-level="" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#test-your-questionnaire"><i class="fa fa-check"></i>Test your questionnaire</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="part-1-before-collecting-data.html"><a href="part-1-before-collecting-data.html#pitch-revision-submission"><i class="fa fa-check"></i><b>9.4</b> Pitch, revision &amp; submission</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html"><i class="fa fa-check"></i>Part 2: Collecting data and analysis</a><ul>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#data-analysis"><i class="fa fa-check"></i>Data analysis</a><ul>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#multiple-choice-with-a-single-answer"><i class="fa fa-check"></i>Multiple choice with a single answer</a></li>
+<li class="chapter" data-level="9.4.1" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#multiple-choice-with-multiple-answers"><i class="fa fa-check"></i><b>9.4.1</b> Multiple choice with multiple answers</a></li>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#rank-order-question-1"><i class="fa fa-check"></i>Rank order question</a></li>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#constant-sum-question-1"><i class="fa fa-check"></i>Constant Sum question</a></li>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#text-or-number-entry-question-1"><i class="fa fa-check"></i>Text or number entry question</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#reporting"><i class="fa fa-check"></i>Reporting</a></li>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#presentation-guidelines-grading"><i class="fa fa-check"></i>Presentation guidelines &amp; grading</a><ul>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#final-presentation-and-submission"><i class="fa fa-check"></i>Final presentation and submission</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2020</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1 unnumbered">
+<h1>Intro</h1>
+<p>Welcome to the introduction to the group project!</p>
+<div style="text-align: justify">
+<p>Here you will find all important points related to the group project. In the following subchapters, you can find explanations for each step you should take in your group project. Generally, the group project comprises two parts. In the first part, you will work with your group on creating and conducting a survey. Once you have created a draft of your questionnaire, you will receive a feedback from us. After implementing the feedback, you will be ready to start collecting data! In the second part, you will have a chance to apply statistical knowledge acquired in the class and from online script. In fact, you will analyze the collected data, present your findings and finally submit your final report (R code and presentation).</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-403"></span>
+<img src="images/group_project.png" alt="Structure of the group project" width="70%" />
+<p class="caption">
+Figure 9.1: Structure of the group project
+</p>
+</div>
+<div id="groups" class="section level2 unnumbered">
+<h2>Groups</h2>
+</div>
+<div id="topics-for-the-group-project" class="section level2 unnumbered">
+<h2>Topics for the group project</h2>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Topic
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Car-sharing vs. vehicle ownership
+</td>
+<td style="text-align:left;">
+Develop a questionnaire to explore the attractiveness of car sharing options for consumers (e.g., Car2go). Are consumers willing and planning to substitute a personal vehicle through car sharing option? Is car sharing likely to affect the amount of driving? Which factors influence these decisions?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Student canteen (Mensa) and the WU campus*
+</td>
+<td style="text-align:left;">
+Develop a questionnaire to measure students‘ attitudes and its drivers (e.g., quality of meals, price, etc.) toward the canteen and other restaurantson the campus.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Privacy and security in social media
+</td>
+<td style="text-align:left;">
+Develop a questionnaire to measure consumers’ willingness to switch from WhatsApp to a secure messaging service (e.g., Threema). What are the main motives (e.g., security concerns, costs, usability, etc.), and are consumers willing to pay for the secure service provider?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer preferences for fair-trade products in the apparel industry
+</td>
+<td style="text-align:left;">
+Develop a questionnaire to measure consumers’ preferences for sustainable brands and eco fashion. Conduct an experiment to determine whether there are different perceptions regarding the “Fair Trade” effect.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The climate debate and green consumption
+</td>
+<td style="text-align:left;">
+The climate debate is currently on the top of the agenda of many news outlets. Some public figures that strongly favor one side dominate and emotionalize the debate (e.g., Greta Thunberg, DonaldTrump). Explore in how far consumers are willing to change their behavior (e.g.,cut air-travel) to help protect the environment. What factors influence the willingness to change (e.g., social factors, convenience)?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Self-driving cars
+</td>
+<td style="text-align:left;">
+Companies such as Google heavily invest in the development of self-driving cars. Develop a questionnaire to measure consumers attitude and usage intention for self-driving cars. What are the drivers and deterrents of the consumers’ willingness to adopt this innovation?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Freemium businessmodels in the music industry
+</td>
+<td style="text-align:left;">
+Many music streaming services (e.g., Spotify) offer a baseline version free of charge to consumers but charge for a premium version with additional features. Develop a questionnaire to measure consumers’ attitude towards legal music streaming providers.What factors influence the attitude(e.g., occupation, gender, usage behavior etc.), and how could companies motivate consumers to convertto the premium version of the service?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumers’ attitude towards legal video streaming providers and piracy
+</td>
+<td style="text-align:left;">
+Video streaming providers like Netflix record a continuous increase in registered users. On the other hand, illegal video streaming portals (e.g., Popcorn Time) are heavily used by other consumers. Develop a questionnaire to measure consumers’ attitude and drivers (e.g. occupation, gender, usage behavior etc.) towards legal video streaming providers. What could be reasons for piracy?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Impact of Coronavirus on online shopping services
+</td>
+<td style="text-align:left;">
+More and more people use online shopping services (e.g., Amazon Fresh, BillaOnline) to buy groceries since Coronavirus started spreading. Develop a questionnaire to measure consumers’ attitude and its drivers (e.g., price, service) towards the online services during and before Coronavirus outbreak. Are consumers less price sensitive when shopping online than in the offline stores? How likely are consumers to continue using online shopping services in the future?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Implications of Coronavirus on brand loyalty
+</td>
+<td style="text-align:left;">
+After outbreak of Coronavirus many consumers strayed from normal shopping patterns and began stockpiling products. Many retailers were working around the clock with their selling partners to ensure availability on all of our products, and bring on additional capacity. How did it affect brand loyalty? Did consumers try out alternative brands? If so, by what factors were consumers driven to change the brand they used before?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumers’ willingness to pay for organic products
+</td>
+<td style="text-align:left;">
+Develop a questionnaire to measure consumers’ willingness to pay for organic products (e.g., milk). How much are consumers willing to pay for organic milk vs. conventional milk? What is the observed price premium? How does this vary across consumers? What are the drivers? Does it reflect a desire to achieve better health, eat better quality food, or to contribute to environmental protection?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The most liveablecity in the world
+</td>
+<td style="text-align:left;">
+Vienna is frequently listed as one of the most liveablecities in the world (e.g., by the Economist Intelligence Unit). Develop a questionnaire to investigate the reasons why Vienna ranksso high in different rankings. What are the factors that contribute to its image? Are there differences between different groups of people?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Design your own questionnaire on a topic of your choice
+</td>
+<td style="text-align:left;">
+Feel free to choose topic of your choice as well.
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-r-markdown.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="part-1-before-collecting-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
