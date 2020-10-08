@@ -1,11 +1,11 @@
 ---
 output:
+  pdf_document:
+    toc: yes
+  html_notebook: default
   html_document: 
     toc: yes
     df_print: paged
-  html_notebook: default
-  pdf_document:
-    toc: yes
 ---
 <link rel="stylesheet" type="text/css" media="all" href="style.css" />
 
@@ -17,80 +17,17 @@ knitr::opts_chunk$set(echo = TRUE, error = FALSE, warning = FALSE, message = FAL
 
 # Survey design & analysis
 
-## Your task 
+## Your tasks
 
-Welcome to the introduction to the group project!
+In this section you will find all information related to the group project. Generally, the group project comprises two parts:
 
-<div style="text-align: justify">
-
-Here you will find all important points related to the group project. In the following subchapters, you can find explanations for each step you should take in your group project. Generally, the group project comprises two parts. In the first part, you will work with your group on creating and conducting a survey. Once you have created a draft of your questionnaire, you will receive a feedback from us. After implementing the feedback, you will be ready to start collecting data! In the second part, you will have a chance to apply statistical knowledge acquired in the class and from online script. In fact, you will analyze the collected data, present your findings and finally submit your final report (R code and presentation).
-
-</div>
-
+1. **Questionnaire design & data collection**: In the first part, you will work with your group on creating a questionnaire. Once you have created a draft of your questionnaire, you will receive a feedback from us. After implementing the feedback, you will be ready to collect your data using an online survey. 
+2. **Data analysis & presentation**: In the second part, you will apply the statistical knowledge acquired during the course. You will analyze the collected data, present your findings using an video recording and finally submit your final report (R code and presentation).
 
 ```{r,echo=FALSE,out.width = '70%',fig.align='center',fig.cap="Structure of the group project"}
 knitr::include_graphics("images/group_project.PNG")
 ```
 
-### Groups {-}
-
-### Topics {-}
-
-```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
-library(dplyr)
-library(kableExtra)
-mytable_sub = data.frame(
-    Topic = c("Car-sharing vs. vehicle ownership",
-             "Student canteen (Mensa) and the WU campus*",
-             "Privacy and security in social media",
-             "Consumer preferences for fair-trade products in the apparel industry",
-             "The climate debate and green consumption",
-             "Self-driving cars",
-             "Freemium businessmodels in the music industry",
-             "Consumers’ attitude towards legal video streaming providers and piracy",
-             "Impact of Coronavirus on online shopping services",
-             "Implications of Coronavirus on brand loyalty",
-             "Consumers’ willingness to pay for organic products",
-             "The most liveablecity in the world",
-             "Design your own questionnaire on a topic of your choice"
-             ),
-    Description = c(
-      "Develop a questionnaire to explore the attractiveness of car sharing options for consumers (e.g., Car2go). Are consumers willing and planning to substitute a personal vehicle through car sharing option? Is car sharing likely to affect the amount of driving? Which factors influence these decisions?",
-      "Develop a questionnaire to measure students‘ attitudes and its drivers (e.g., quality of meals, price, etc.) toward the canteen and other restaurantson the campus.",
-      "Develop a questionnaire to measure consumers’ willingness to switch from WhatsApp to a secure messaging service (e.g., Threema). What are the main motives (e.g., security concerns, costs, usability, etc.), and are consumers willing to pay for the secure service provider?",
-      "Develop a questionnaire to measure consumers’ preferences for sustainable brands and eco fashion. Conduct an experiment to determine whether there are different perceptions regarding the “Fair Trade” effect.",
-      "The climate debate is currently on the top of the agenda of many news outlets. Some public figures that strongly favor one side dominate and emotionalize the debate (e.g., Greta Thunberg, DonaldTrump). Explore in how far consumers are willing to change their behavior (e.g.,cut air-travel) to help protect the environment. What factors influence the willingness to change (e.g., social factors, convenience)?",
-      "Companies such as Google heavily invest in the development of self-driving cars. Develop a questionnaire to measure consumers attitude and usage intention for self-driving cars. What are the drivers and deterrents of the consumers’ willingness to adopt this innovation?",
-      "Many music streaming services (e.g., Spotify) offer a baseline version free of charge to consumers but charge for a premium version with additional features. Develop a questionnaire to measure consumers’ attitude towards legal music streaming providers.What factors influence the attitude(e.g., occupation, gender, usage behavior etc.), and how could companies motivate consumers to convertto the premium version of the service?",
-      "Video streaming providers like Netflix record a continuous increase in registered users. On the other hand, illegal video streaming portals (e.g., Popcorn Time) are heavily used by other consumers. Develop a questionnaire to measure consumers’ attitude and drivers (e.g. occupation, gender, usage behavior etc.) towards legal video streaming providers. What could be reasons for piracy?",
-      "More and more people use online shopping services (e.g., Amazon Fresh, BillaOnline) to buy groceries since Coronavirus started spreading. Develop a questionnaire to measure consumers’ attitude and its drivers (e.g., price, service) towards the online services during and before Coronavirus outbreak. Are consumers less price sensitive when shopping online than in the offline stores? How likely are consumers to continue using online shopping services in the future?",
-      "After outbreak of Coronavirus many consumers strayed from normal shopping patterns and began stockpiling products. Many retailers were working around the clock with their selling partners to ensure availability on all of our products, and bring on additional capacity. How did it affect brand loyalty? Did consumers try out alternative brands? If so, by what factors were consumers driven to change the brand they used before?",
-      "Develop a questionnaire to measure consumers’ willingness to pay for organic products (e.g., milk). How much are consumers willing to pay for organic milk vs. conventional milk? What is the observed price premium? How does this vary across consumers? What are the drivers? Does it reflect a desire to achieve better health, eat better quality food, or to contribute to environmental protection?",
-      "Vienna is frequently listed as one of the most liveablecities in the world (e.g., by the Economist Intelligence Unit). Develop a questionnaire to investigate the reasons why Vienna ranksso high in different rankings. What are the factors that contribute to its image? Are there differences between different groups of people?",
-      "Feel free to choose topic of your choice as well."
-    ))
-mytable_sub %>% kable(escape = T) %>%
-  kable_paper(c("hover"), full_width = F)
-```
-
-
-
-## Part 1: Questionnaire design
-
-<div style="text-align: justify">
-
-An aim of this course is to develop your ability to translate business problems into actionable research questions and to design an adequate research plan to answer these questions. Therefore, you need to be equiped with knowledge on how to create a survey and properly conduct a research. 
-
-Generally, what you can expect from the survey design is similar to what one experiences in a relationship. If you try to take more than you commit, it doesn’t work out. Now on a serious note, if you follow guidelines mentioned here, you will certainly avoid usual traps your fellow collegues were caught in.
-
-In a research process, conducting a survey is a part of (primary) data collection. Before we collect data, we have to make sure that preceding steps are correctly done. However, in the following sections we will focus on the process of designing a questionnaire. Eventually, you will be able to collect relevant data and apply appropriate statistical tests.    
-
-</div>
-
-
-```{r,echo=FALSE,out.width = '70%',fig.align='center'}
-knitr::include_graphics("research-process.PNG")
-```
 
 ::: {.infobox_red .caution data-latex="{caution}"}
 Note that this assignment may require you to deal with and integrate
@@ -98,6 +35,245 @@ knowledge that has not yet been covered in class! Students are
 expected to read ahead and collect additional information to the
 extent to which their project requires this.
 :::
+
+### Topics for the group project
+
+The first step is to select a topic from the list below. We will send out a survey, asking you to rank the top 3 topics so that we can assign the topics according to your preferences. Please note that only one person per group needs to fill out the survey after you discussed which topic to chose within your groups. 
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    No. = c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"),
+    Topic = c("Consumers’ willingness to pay for organic products",
+             "The impact of social distancing on student's learning experience",
+             "Student canteen (Mensa) and the WU campus",
+             "Privacy in social media – consumers’ willingness to switch to a secure messaging service",
+             "Consumers‘ attitude and willingness to pay for store brands",
+             "COVID-19 and consumers’ preference and attitude towards online grocery shopping",
+             "The most liveable city in the world",
+             "Self-driving cars",
+             "Front-of-package nutrition labels",
+             "Consumer preferences for fair-trade products in the apparel industry",
+             "Going and being vegan: consumers willingness to make the change",
+             "Freemium business models in the music industry",
+             "Local vs. global brands",
+             "The climate debate and green consumption",
+             "Car-sharing vs. vehicle ownership",
+             "Consumers’ attitude towards legal video streaming providers and piracy",
+             "Design your own questionnaire on a topic of your choice"
+             ),
+    Description = c(
+      "Develop a questionnaire to measure consumers’ willingness to pay for organic products (e.g., milk). How much are consumers willing to pay for organic milk vs. conventional milk? What is the observed price premium? How does this vary across consumers? What are the drivers? Does it reflect a desire to achieve better health, eat better quality food, or to contribute to environmental protection?",
+      "The recent COVID-19 pandemic affected virtually all aspects of people's lives. For university students, many courses that were previously delivered on campus switched to distance learning mode. Develop a questionnaire to assess how distance learning affects student's learning experiences. What are advantages and disadvantages of online teaching? What teaching aids are most helpful to students? What tools should teachers use to overcome the disadvantages?",
+      "Develop a questionnaire to measure students‘ attitudes and its drivers (e.g., quality of meals, price, etc.) toward the canteen and other restaurants on the campus",
+      "Develop a questionnaire to measure consumers’ willingness to switch from WhatsApp to a secure messaging service (e.g., Threema). What are the main motives (e.g., security concerns, costs, usability, etc.), and are consumers willing to pay for the secure service provider? Can you find evidence for the “privacy paradox”? What factors make users give up their privacy?",
+      "Develop a questionnaire to measure consumers’ willingness to pay for a store brand  (e.g., “Clever”, “Billa”). Are consumers willing to pay more for the manufacturer’s brand than for the store brand? What factors affect consumers’ choice?",
+      "More and more people use online shopping services (e.g., Amazon Fresh, BillaOnline) to buy groceries, especially since the Coronavirus outbreak. Develop a questionnaire to measure consumers’ attitude and its drivers (e.g., price, service) towards the online grocery shopping. Are there differences before, during and after the pandemic. Are consumers less price sensitive when shopping online than in the offline stores? How likely are consumers to continue using online shopping services in the future?",
+      "Vienna is frequently listed as one of the most liveable cities in the world (e.g., by the Economist Intelligence Unit). Develop a questionnaire to investigate the reasons why Vienna ranks so high in different rankings. What are the factors that contribute to its image? Are there differences between different groups of people?",
+      "Companies such as Google heavily invest in the development of self-driving cars. Develop a questionnaire to measure consumers attitude and usage intention for self-driving cars. What are the drivers and deterrents of the consumers’ willingness to adopt this innovation?",
+      "Frequent consumption of unhealthy foods can lead to overweight or obesity, hypertension, and cardiovascular disease. The consequences of poor diets is putting a burdon on health care systems and front-of-package labels have been proposed as a means to help consumers to gain a better understanding of the ingredients of a product. Develop a questionnaire to test how front-of-package nutrition labels affect consumer choice. Which type of label is most effective?",
+      "Develop a questionnaire to measure consumers’ preferences for sustainable brands and eco fashion. Conduct an experiment to determine whether there are different perceptions regarding the “Fair Trade” effect.",
+      "More and more people are turning to a vegan diet for many reasons, including health, concerns about animal welfare or a desire to protect environment. Develop a questionnaire to measure consumers’ willingness to become a vegan and its drivers (e.g., health, environment, compassion for animals). Did the Coronavirus outbreak change consumer attitudes towards meat-based products?",
+      "Many music streaming services (e.g., Spotify) offer a baseline version free of charge to consumers but charge for a premium version with additional features. Develop a questionnaire to measure consumers’ attitude towards legal music streaming providers. What factors influence the attitude (e.g., occupation, gender, usage behavior etc.), and how could companies motivate consumers to convert to the premium version of the service?",
+      "Some researchers argue that the increasing globalization leads to the homogenization of consumer needs and desires across the globe and companies address this trend with standardized global products. However, some consumers appear to prefer local brands over global brands. Develop a questionnaire that investigates the drivers of consumers’ attitudes toward global and local brands.",
+      "The climate debate is currently on the top of the agenda of many news outlets. Some public figures that strongly favor one side dominate and emotionalize the debate (e.g., Greta Thunberg, Donald Trump). Explore in how far consumers are willing to change their behavior (e.g., cut air-travel) to help protect the environment. What factors influence the willingness to change (e.g., social factors, convenience)?",
+      "Develop a questionnaire to explore the attractiveness of car sharing options for consumers (e.g., Car2go). Are consumers willing and planning to substitute a personal vehicle through car sharing option? Is car sharing likely to affect the amount of driving? Which factors influence these decisions?",
+      "Video streaming providers like Netflix record a continuous increase in registered users. On the other hand, illegal video streaming portals (e.g., Popcorn Time) are heavily used by other consumers. Develop a questionnaire to measure consumers’ attitude and drivers (e.g. occupation, gender, usage behavior etc.) towards legal video streaming providers. What could be reasons for piracy?",
+      "Feel free to choose topic of your choice as well."
+    ))
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F)
+```
+
+
+### Guidelines
+
+In this section, you can find some guidelines that might be useful to know when designing your questionnaire and the final presentation.
+
+**Individual responsibility:**
+
+* Group members should plan to share responsibilities equally
+* All members of the group must contribute to the project
+* Each student will receive an individual grade for presentation 
+* To ensure an equal contribution of group members, a peer assessment will be conducted, which enters into the computation of the individual grades for the group project 
+
+**Submission**
+
+There are two grading components: 
+
+* Questionnaire design & data collection: When you submit your questionnaire draft, please submit 1) the pdf printout from Qualtrics, 2) a short slide deck explaining your research problem and how you intend to solve it (research design, measurement & scaling, intended analyses). We will go through the presentation during the first coaching session. After this, you'll have time to revise the questionnaire based on the feedback that you received.
+* Data analysis & presentation: When you submit your final presentation, please submit a .zip folder containing 1) the video recording, 2) the data, 3) the R code file, and 4) your slides.
+
+#### Questionnaire design & data collection
+
+For the presentation of your questionnaire design, you should consider the following points:
+
+**Problem statement & research hypotheses**
+
+* What is the research problem & why is it relevant from a managerial perspective?
+* What research questions do you intend to answer with your research?
+* What are your hypotheses?
+
+**Questionnaire structure & research design**
+
+* Please provide a justification for the structure of your questionnaire
+* Use appropriate wording in the questionnaire to obtain the desired information
+* Provide explanations regarding your choice of research design to answer the research questions
+
+**Reasons for variable selection & measurement and scaling**
+
+* Please provide a justification of why you chose your variables and the associated choices regarding the measurement & scaling of these variables
+* What are the expected relationships between the independent variable(s) and your dependent variable(s)?
+
+**Plan your statistical analyses**
+
+* Although we won't have covered all methods when you submit your questionnaire design, you should plan ahead and present some ideas in the questionnaire design part on how you plan to analyze your data
+* It is important to consider this before collecting your data, since the type of data you will obtain affects the type of methods you can use
+
+#### Data analysis & presentation
+
+For your data analysis & final presentation, you should consider the following points:
+
+**Problem statement**
+
+* Be clear about the problem that you are trying to solve or the research question(s) you would like to answer
+* Why is the problem relevant from a managerial perspective?
+
+**Presentation structure**
+
+* Think about the overall structure of your presentation before you start designing the individual slides.
+* Given your research problem/question, what slides/content do you need to have in the presentation to answer your research question or solve your problem?
+* Please don’t include an accumulation of visualizations that lead nowhere. Instead, ask yourself, is this chart contributing to the answer of your research question?
+* It is usually a good idea to start with an introduction to the topic and the research question(s). Next, you may describe and justify your research design (e.g., causal vs. predictive vs. prescriptive) that you chose to address the research questions(s). After that, you should provide some descriptive statistics about your sample. In a next step, you should present your results regarding the central research questions. Remember to include all the necessary information that are required to understand the results (e.g., number of observations, wording of questions, etc.). It is usually a good idea to include appropriate visualizations of the variables that you are investigating. You do not need to include all assumption tests for the methods in the main body of the presentation. However, you should still test if the assumptions are met and include the results in the appendix in case there are questions. Finally, you should discuss/interpret your results with regard to the managerial research question(s) and list potential limitations of your research.
+
+**Choice of appropriate statistical tests**
+
+* Please provide a justification for the choice of statistical test (e.g., t-test, regression, ANOVA, parametric vs. non-parametric) given your choices regarding the types of variables.
+* Remember to use the correct terminology and e.g., state the dependent and independent variables.
+* If you use a regression model, also include a formal statement of the regression equation so it is clear what is being analyzed, e.g., $log(DV)=\beta_0+\beta_1*log(IDV1)+\beta_2*log(IDV2)+\epsilon$. From the regression equation, it should be clear what type of model it is (linear regression vs. logistic regression), what the dependent variable is, what the independent variables are, and whether the values are transformed (e.g., logarithms) or not.
+* If your analyses include multiple steps, make sure that it is clear to the audience why the individual steps were conducted and how they relate to each other (e.g., if you do a PCA first to reduce the dimensionality of the data and then include the resulting factor scores in a regression model, make sure that the purpose of each step is clear).
+
+**Implementation of analysis**
+
+* Make sure that you store the R code you used for your analysis and submit it along with your data & the slides to the assignment on Learn. This way, it is transparent how you arrived at your results.
+* We should be able to replicate your results by running the code.
+
+**Visualizations**
+
+* Select appropriate plots to visualize your variables (e.g., scatter plot, boxplot, mean plot, histogram)
+* Not every visualization that you could potentially come up with really makes sense to put into a presentation. Again, ask yourself, is this chart contributing to the answer of your research question(s)?
+* Do not forget legends and labels of the axes in your visualization!
+* Remember to include all information that are required to understand the visualization (e.g., the wording of the question, the number of observations, axis labels)
+* Keep it simple and make sure that a visualization can be easily understood. Adding too much information into a visualization is very often misleading for your audience and hurts more than you might think.
+* In case a visualization is not easily comprehensible, you might think about adding a note that explains the audience how-to-read the visualization using an example.
+
+**Reporting and interpretation of model results**
+
+* Report your analysis in an appropriate way (e.g., use the ‘stargazer’ package to report the results of regression models or use the ‘ggstatsplot’ package to provide test summaries).
+* Interpret all relevant test statistics (e.g., test statistics, confidence intervals, coefficients and their significance and relative importance, R-squared, effect sizes, etc.).
+* Discuss the recommendations derived from analysis. Do not skip this part! Always assume that you have an audience of decision makers. You need to tell them what to do based on your analysis.
+
+
+### Timeline
+
+This section summarizes important dates for the first part of your group project:
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Date_A = c("Oct. 21", 
+             "Oct. 23*", 
+             "Nov. 1"
+             ),
+    Time_A = c(
+      "11:59PM","09:00AM - 02:30PM","11:59PM"
+    ),Date_B = c("Oct. 25", 
+             "Oct. 27*", 
+             "Nov. 4"
+             ),
+    Time_B = c(
+      "11:59PM","02:00PM - 08:00PM","11:59PM"
+    ),
+    Task = c(  "* Submit questionnaire draft", 
+               "* Coaching: Questionnaire design (live video coaching)", 
+               "* Submit revised questionnaire"
+               ),
+    Chapters = c("10","10","10"),
+    Link = c("",
+                 "TBC", 
+                 ""
+                 )
+    )
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for groups A and B respectively.
+           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+<br>
+In the second part of your project, after you have collected your data, the following dates are important:
+<br>
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Date_A = c("Nov. 16*",
+             "Nov. 23*",
+             "Dec. 7"
+             ),
+    Time_A = c(
+      "01:30PM - 04:30PM","01:30PM - 06:30PM","11:59PM"
+    ),Date_B = c("Nov. 18*",
+             "Nov. 25*",
+             "Dec. 9"
+             ),
+    Time_B = c(
+      "02:00PM - 05:00PM","03:00PM - 08:00PM","11:59PM"
+    ),
+    Task = c(  "* Coaching: Data handling (live video coaching)",
+               "* Coaching: Data analysis (live video coaching)",
+               "* Submit video recording of presentation (pre-recorded)"
+               ),
+    Chapters = c("","",""),
+    Link = c(    "TBC",
+                 "TBC",
+                 ""
+                 )
+    )
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for groups A and B respectively.
+           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+
+## Part 1: Before collecting data
+
+This section provides some information regarding the first part of the group project: questionnaire design & data collection. 
+
+An aim of this course is to develop your ability to translate business problems into actionable research questions and to design an adequate research plan to answer these questions. Therefore, you need to be equipped with knowledge on how to create a survey and properly conduct a research. 
+
+Generally, what you can expect from the survey design is similar to what one experiences in a relationship. If you try to take more than you commit, it doesn’t work out. Now on a serious note, if you follow guidelines mentioned here, you will certainly avoid usual traps your fellow colleagues were caught in.
+
+In a research process, conducting a survey is a part of (primary) data collection. Before we collect data, we have to make sure that preceding steps are correctly done. However, in the following sections we will focus on the process of designing a questionnaire. Eventually, you will be able to collect relevant data and apply appropriate statistical tests.    
+
+
+```{r,echo=FALSE,out.width = '70%',fig.align='center'}
+knitr::include_graphics("research-process.PNG")
+```
 
 
 ### Research design
@@ -149,9 +325,27 @@ In the next step you should review the type of survey method you will use.
 
 At this point you need to think in which setting you aim to conduct your survey. For instance, should you do it in a face-to-face setting or rather online. Here you can find some advantages and disadvantages of online surveys:
 
-```{r, echo=F, fig.align='center',out.width='50%'}
-knitr::include_graphics("adv-disadv-online-questionnaire.png")
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Advantages = c("Speed",
+             "Cost",
+             "Quality of response",
+             "No interviewer bias",
+             "Access to unique populations"
+             ),
+    Disadvantages = c(
+      "Sampling issues",
+      "Access issues",
+      "Technical problems",
+      "",
+      ""
+    ))
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) 
 ```
+
 
 Here is the list of the online tools you can use to conduct an online survey (usually for free):  
 
@@ -203,16 +397,6 @@ If there is a questionnaire in the Qualtrics Library you would like to use, then
 knitr::include_graphics('library-survey.png')
 ```
 
-::: {.infobox_orange .hint data-latex="{hint}"}
-
-Some useful tips when creating a questionnaire in Qualtrics:
-
-* Add a progress bar so that respondents know how many pages are left (see "Look & Feel" menu in Qualtrics).
-
-* Remember to activate the "Force Response" field under "Validation Options" if you don't want to allow respondents to skip questions.
-
-* Check the usability on mobile devices using the preview option (make sure the "Mobile friendly" option is checked).
-:::
 
 ### Questionnaire
 
@@ -231,7 +415,7 @@ If you have sorted out all answers on the previous questions, you are ready to s
 * Ask questions in a logical order & use the right type of questions
 * Aim for brevity & use simple language
 
-#### Questionnaire and research design {-}
+#### Questionnaire and research design
 
 The questionnaire design should be aligned with the research design! Therefore, in the following sections we will explain some suggested steps on how to approach questionnaire creation.
 
@@ -243,7 +427,7 @@ An objective of a questionnaire is threefold:
 * to motivate, and encourage respondents to become involved, to cooperate, and to complete the questionnaire,
 * to minimize response error.
 
-#### Content in a questionnaire {-}
+#### Content in a questionnaire
 
 In this step you are starting to work on the content of you questions.
 
@@ -288,7 +472,7 @@ Do you think Nike Town offers better prices than other Nike stores?
 \vspace{-0.10in}
 ```
            
-#### Inability and unwillingness to answer {-}  
+#### Inability and unwillingness to answer  
 
 The quality of collected data you highly depends on your ability to address correct participants. Therefore, you need to make sure that your respondents are able to meaningfully answer your questions.   
 
@@ -408,7 +592,7 @@ What is your household’s exact annual income?
 \vspace{-0.10in}
 ```
 
-#### Decide on measurement scales and scaling techniques {-}
+#### Decide on measurement scales and scaling techniques
 
 Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
 For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
@@ -423,21 +607,22 @@ In the following table you can get a quick overview of possibilities per each me
 knitr::include_graphics("measurement-scale.png")
 ```
 
-In the table below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side: 
+In the figure below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side: 
 
 ```{r, echo=FALSE, out.width = '90%',fig.align='center'}
 knitr::include_graphics("overview-statistical-test.jpg")
 ```
 
 ::: {.infobox_red .caution data-latex="{caution}"}
+
 It is highly recommended to think about what type of data you want to collect and what test to use, before you form a question and add to the survey. We highly recommend you NOT to add questions without thinking what type of data you are going to collect with it. If you do so, you may end up with data you did not want to collect, and moreover, with data unsuitable for the test you intended to use.
 
-Here you can find extremely nice overview of statistical test associated with different types of variables: [CHOOSING THE CORRECT STATISTICAL TEST - UCLA](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/)
+Here you can find extremely nice overview of statistical test associated with different types of variables:[LINK](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/)
 
 :::
 
 
-#### The most frequent types of questions {-}
+#### The most frequent types of questions
 
 Here we want to show you the most frequent types of questions students use and what type of data can be collected by using them.
 
@@ -448,14 +633,23 @@ library(janitor)
 library(sjlabelled)
 library(kableExtra)
 # Read the qualtrics survey data
-qualtrics<-read_survey('new_qualtrics_response_data_final_final.csv')
+qualtrics<-read_survey('data_analysis_survey.csv')
 # Using labels as column name
 new.colnames <-colnames(label_to_colnames(qualtrics))
 new.colnames <- make.unique(new.colnames, sep="_")
 colnames(qualtrics)<- new.colnames
 ```
 
-##### Multiple choice question {-}
+##### Number entry question
+
+```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Text or number entry question"}
+knitr::include_graphics('images/text-entry.PNG')
+```
+
+A number entry question is a recommended type of question if you are interested in obtaining **ratio data type**. Ratio data type gives you flexibility to apply a broad range of statistical analyses such as regression analysis, correlation computation, t-test (or ANOVA), or factor analysis. Data collected by number entry question is handy to use with data collected by slider questions or with a constant sum question. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.
+
+
+##### Multiple choice question
 
 Multiple Choice with a single answer is a type of closed-ended question that lets respondents select **one answer** from a defined list of choices.Type of data you obtain is **categorical.** 
 
@@ -484,6 +678,8 @@ Statistical test that you can think of when analysing categorical data:
 * Categorical variables can be used as predictors in regression (as dummy variables).
 
 :::
+
+
 ```{r, echo=F, fig.align='center',out.width='72%',fig.cap="Multiple choice question with multiple answers"}
 knitr::include_graphics('multiple-choice-question-multiple-answers.png')
 ```
@@ -500,7 +696,7 @@ The Cochran’s Q test and associated multiple comparisons require the following
   3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)
 :::
 
-##### Rank order question {-}
+##### Rank order question
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Rank order question"}
 knitr::include_graphics('rank-order-question.png')
@@ -514,7 +710,7 @@ In order to analyze results from a rank order question, we use **Friedman rank s
 Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.
 :::
 
-##### Constant Sum question {-}
+##### Constant Sum question
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Constant sum question"}
 knitr::include_graphics('constant-sum-question.png')
@@ -530,15 +726,9 @@ In order to answer this question we need to conduct **a repeated measures ANOVA*
 This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
 :::
 
-##### Text or number entry question {-}
 
-```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Text or number entry question"}
-knitr::include_graphics('images/text-entry.PNG')
-```
 
-A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.  
-
-#### Scaling techniques {-}
+#### Scaling techniques
 
 When it comes to scaling techniques, they are meant to study the relationship between objects. The basic scaling techniques classification is on **comparative** and **non-comparative scales**. 
 
@@ -551,7 +741,7 @@ knitr::include_graphics("scales.png")
 **Comparative scales (or nonmetric scaling)** compare direclty the stimulus object. For example, the respondent might be asked directly about his preference between domestic and foreign beer brands. As a result, the comparative data collected can only be interpreted in relative terms. In the following sections we will walk through both types of comparative scales and briefly introduce them.
 
 
-##### Comparative scale: Paired Comparison {-}    
+##### Comparative scale: Paired Comparison    
 
 * Respondent is presented with two objects and asked to select one according to some criterion.
 * The nature of resulting data is ordinal
@@ -563,7 +753,7 @@ For each pair, please indicate which of the two brands of beer in the pair you p
 knitr::include_graphics('paired comparison.png')
 ```
 
-##### Comparative scale: Rank Order {-}  
+##### Comparative scale: Rank Order  
 
 * Allow a certain set of brands or products to be simultaneously ranked based upon a specific attribute or characteristic.
 * The rank order scaling is a good proxy for to the shopping setting as there are simultaneous comparisons of objects.
@@ -576,7 +766,7 @@ No two brands should received the same rank number.
 knitr::include_graphics('rank-order-scale.png')
 ```
 
-##### Comparative scale: Constant sum {-}  
+##### Comparative scale: Constant sum  
 
 * Respondents allocate a constant sum of units (e.g., points, dollars) among a set of stimulus objects with respect to some criterion.  
 * Constant sum is similar to rank order, but it carries specific units.  
@@ -592,7 +782,7 @@ knitr:: include_graphics('constant-sum-scale.png')
 * Basic analysis of constant-sum data involves tabulation of responses and presenting them as either quantities (e.g., "on average, 7 points were allocated to "high alcohol level"), or, as proportions ("On average, 7% of points were allocated to "high alcohol level").  
 
 
-##### Non-Comparative Scales: Continuous Rating Scales {-}  
+##### Non-Comparative Scales: Continuous Rating Scales  
 
 * Participants rate the objects by placing a mark at the appropriate position on a line that runs from one extreme of the criterion variable to the other.  
 * One of the advantages of the continuous rating scale is that it is easy to administer.  
@@ -604,13 +794,13 @@ knitr::include_graphics('continuous-rating-scale.png')
 * Once the ratings are collected, you can splits up the obtained ratings into categories and then assign those depending on the category in which the ratings fall.
 
 
-##### Non-Comparative Scales: Itemized Rating Scales {-} 
+##### Non-Comparative Scales: Itemized Rating Scales 
 
 * The respondents are provided with a scale that has a number or brief description associated with each category.  
 * The categories are ordered in terms of scale position, and the respondents are required to select the specified category that best describes the object being rated.  
 * The commonly used itemized rating scales are **the Likert, semantic differential and Stapel scales.**
 
-###### Itemized Rating Scales: Likert scale {-}
+##### Itemized Rating Scales: Likert scale
 
 * Requires respondents to indicate their attitude towards the given object through the degree of agreement or disagreement with each of a series of statements within typically five or seven categories.  
 * Reversed code of some items increases validity.  
@@ -627,7 +817,7 @@ knitr::include_graphics('likert-marketing-reserach.png')
 ```
 
 
-###### Itemized Rating Scales: Semantic Differential {-}
+##### Itemized Rating Scales: Semantic Differential
 
 * Typically, participants rate objects on a number of itemized, seven-point rating scales bounded at each end by one of two bipolar adjectives.  
 
@@ -675,7 +865,7 @@ knitr::include_graphics('semantic-differential-5.png')
 
 
 
-#### Questionnaire structure {-}
+#### Questionnaire structure
 
 The sequence of questions in a questionnaire could play important role. For instance, more sensitive questions (such as demographic-related questions) are usually placed at the end as they can trigger change in respondent's behavior. 
 
@@ -688,7 +878,7 @@ Consider that the most of people usually use their phones to fill it out. Think 
 
 In the end, the questionnaire structure has to be aligned with the research design. For example, if your research design features an experiment, this needs to be reflected in the questionnaire (e.g., you need to assign the respondents randomly to the experimental conditions in case of a between-subjects comparison).
 
-##### Questionnaire structure for a between-subjects design {-}
+##### Questionnaire structure for a between-subjects design
 
 In a between-subject design you randomly assign each respondent to different experimental conditions. They would then complete tasks only in the condition to which they are assigned.
 
@@ -698,8 +888,50 @@ For instance, we would like to test the effect of two advertisements on purchase
 knitr::include_graphics('between-subject-design.png')
 ```
 
+::: {.infobox_red .caution data-latex="{caution}"}
 
-##### Questionnaire structure for a within-subjects design {-}
+Qualtrics is a great tool to conduct an appropriate survey in between-subject design. In order to randomly assign your respondents to a test group or a control group, and to know to which condition each respondent belongs, **a randomizer** needs to be set up in advance in the survey flow. Below you can find detailed explanation how to add it to your survey.
+
+:::
+
+
+###### How to set up a randomizer in Qualtrics {-}
+
+Here is how to set up a randomizer in Qualtrics, so that your participants are going to be assigned either to A or B condition.
+
+First, navigate to the Survey tab and open your Survey Flow.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow1.png')
+```
+
+Then click Add Below or Add a New Element Here, depending to where you want to place a randomizer. 
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow2.png')
+```
+Then choose Randomizer.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow3.png')
+```
+
+Finally, you set the number (the one between - and +) to 1 and check the option "Evenly Present Elements". Next you edit embedded data fields by naming it (e.g., "Group" and "Control","Test Group 1","Test Group 2".)
+
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow4.png')
+```
+
+It is very imporant to think about the place to set a randomizer in a survey workflow. You want to place it always before you branch your survey flow, so that you can keep track of which respondent was exposed to which condition. If you do not set a randomizer before branching, it would remain unknown what condition each respondent was exposed to. Here is how it was done in our example of Qualtrics survey.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow7.png')
+```
+
+After respondents are randomly assigned either to A or B condition, this was used as a criterion for branching, i.e., asking respondents in a condition A and B different block of questions.
+
+##### Questionnaire structure for a within-subjects design
 
 This type of experimental design involves exposing each respondent to all of the user experimental conditions you’re testing. This way, each respondent will test all of the conditions.
 
@@ -710,7 +942,7 @@ knitr::include_graphics('within-subject-design.png')
 ```
 
 
-#### Question wording {-}
+#### Question wording
 
 Generally, question wording should enable each respondent to understand  questions and to be able to answer them with reliability. Reliability means that, if a respondent was asked the same question again, he/she would give the same answer again. A number of common problems regarding the question wording have been identified, so we will address the most important ones. 
 
@@ -868,7 +1100,7 @@ d) More than 4 times
 \vspace{-0.1in}
 ```
 
-#### Choose adequate order {-}
+#### Choose adequate order
 
 One of the last steps in a process of designing a questionnaire is choosing adequate order of questions and instructions for respondents. 
 
@@ -884,7 +1116,7 @@ As respondents are moving towards the end of the questionnaire, they are likely 
 
 Finally, you should pay particular attention to provide all prescribed definitions and explanations before you ask a question. This ensures that the questions are understood in consistent way by every respondent.
 
-#### Test your questionnaire {-}
+#### Test your questionnaire
 
 Finally, before you distribute the final questionnaire, there are some things to consider. First, you should always pretest your questionnaire before sharing it!
 Test all aspects of the questionnaire (content, wording, sequence, form & layout, etc.). If possible, use respondents in the pretest that are similar to those who will be included in the actual survey. Ideally, the pretest sample size should be small (in a real scenario this could vary from 15 to 30 respondents; for the group project, a lower number will be sufficient). After each significant revision of the questionnaire, conduct another pretest, using a different sample of respondents. Eventually, code and analyze the responses obtained from the pretest so that you make sure that you collected information you intended to collect.
@@ -897,81 +1129,87 @@ After testing your questionnaire you should be able to determine whether:
 * The questions are understandable  
 * Specifying questions are needed or some need to be eliminated  
 
-### Pitch, revision & submission
+::: {.infobox_orange .hint data-latex="{hint}"}
 
-At this stage, you should be ready for pitching your questionnaire. Please keep in mind the timetable.
+Some useful tips:
 
-```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
-library(dplyr)
-library(kableExtra)
-mytable_sub = data.frame(
-    Date_A = c("Oct. 21", 
-             "Oct. 23*", 
-             "Nov. 1"
-             ),
-    Time_A = c(
-      "11:59PM","09:00AM - 02:30PM","11:59PM"
-    ),Date_B = c("Oct. 25", 
-             "Oct. 27*", 
-             "Nov. 4"
-             ),
-    Time_B = c(
-      "11:59PM","02:00PM - 08:00PM","11:59PM"
-    ),
-    Task = c(  "* Submit questionnaire draft", 
-               "* Coaching: Questionnaire design (live video coaching)", 
-               "* Submit revised questionnaire"
-               ),
-    Chapters = c("10","10","10"),
-    Link = c("",
-                 "TBC", 
-                 ""
-                 )
-    )
-#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable_sub %>% kable(escape = T) %>%
-  kable_paper(c("hover"), full_width = F) %>%
-  footnote(general = "Dates and times are indicated for groups A and B respectively.
-           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
-           general_title = "Note: ", 
-           footnote_as_chunk = T, title_format = c("italic")
-           ) 
-#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
-```
+* Add a progress bar so that respondents know how many pages are left (see "Look & Feel" menu in Qualtrics).
+
+* Remember to activate the "Force Response" field under "Validation Options" if you don't want to allow respondents to skip questions.
+
+* Check the usability on mobile devices using the preview option (make sure the "Mobile friendly" option is checked).
+:::
 
 
-## Part 2: Data analysis
+## Part 2: Collecting data and analysis
 
-### Data analysis {-}
+### Collecting data
 
-```{r, echo = FALSE, results='asis', warning=FALSE ,error=FALSE}
-# Load in qualtRics package
-library(qualtRics)
+Your task in this part is to collect real data from real people. More specifically, 
+each group member is supposed to administer the questionnaire to 20 persons, i.e. a group of 6 = 120 people per group project.
+
+### Data analysis
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, error=FALSE}
 library(janitor)
 library(sjlabelled)
-# Read the qualtrics survey data
-qualtrics<-read_survey('new_qualtrics_response_data_final_final.csv')
-# Using labels as column name
-new.colnames <-colnames(label_to_colnames(qualtrics))
-new.colnames <- make.unique(new.colnames, sep="_")
-colnames(qualtrics)<- new.colnames
 ```
 
-In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
+In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you in handling your survey data in R, and show you which statistical tests you might apply. Note that in focus of this chapter are not statistical test as they are extensively discussed in the previous chapters.
+
+::: {.infobox_red .caution data-latex="{caution}"}
+The purpose of this chapter is primary to help you handle and determine data types from your Qualtrics survey. For more information in regards to what statistical tests to use, assumptions or other details, please consult relevant chapters. 
+:::
+
+#### Load in a Qualtrics survey data via package "qualtRics" {-}
+
+After downloading your survey in CSV format, you need to install `qualtRics` and load it in.
+
+```{r, echo = TRUE, message=FALSE , warning=FALSE ,error=FALSE}
+# Load in qualtRics package
+# install.packages("qualtRics")
+library(qualtRics)
+```
+
+`read_survey()` is a function that loads in survey results in CSV to R.
+
+```{r, echo = TRUE, message=FALSE, warning=FALSE ,error=FALSE}
+# Read the qualtrics survey data
+qualtrics<-read_survey('data_analysis_survey.csv')
+head(qualtrics,3)
+```
+Current column names are not much helpful in identifying questions from the questionnaire. In order to name columns after corresponding question, the function `label_to_colnames()` from package `sjlabelled` can help. 
+
+```{r, echo = TRUE, results='asis', warning=FALSE ,error=FALSE}
+# Using labels as column name
+new.colnames <-colnames(label_to_colnames(qualtrics))
+```
+
+As it can happen that two or more column names are identical, we can use `make.unique()` function to assign different names to columns that are supposed to have same names. For instance, in our case it is column name 'Selected choice' that appears twice for two different questions. After we run the function, the resulting names will be 'Selected choice' and 'Selected choice_1'. 
+
+```{r, echo = TRUE, message=FALSE, warning=FALSE ,error=FALSE}
+new.colnames <- make.unique(new.colnames, sep="_")
+```
+
+Finally, we can assign unique corresponding names to the columns in our survey data.
+
+```{r, echo = TRUE, results='asis', warning=FALSE ,error=FALSE}
+colnames(qualtrics)<- new.colnames
+head(qualtrics,3)
+```
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+In this [link](https://cran.csiro.au/web/packages/qualtRics/vignettes/qualtRics.html
+) you can find a brief, but insightful Introduction to qualtRics package and how to combine Qualtrics and R
+:::
 
 
 #### Multiple choice with a single answer {-}
 
-Multiple Choice with a single answer is a type of closed-ended question that lets respondents select **one answer** from a defined list of choices.
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('support-multiple-choice-question.png')
-```
-
 Type of data you obtain is **categorical**, and the output comes in the following form:  
 
-```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center',eval=FALSE}
-qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies or TV series on Netflix?")] %>%
+```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center',eval=TRUE}
+qualtrics[1:6,c("During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?")] %>%
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = F)
 ```
@@ -979,107 +1217,45 @@ qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies 
 What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes **as numeric**. In order to conduct statistical modeling and properly visualize our results, we need to convert our data to **a factor class.**
 
 A factor (or coding variable) represents different groups of data by using numbers (integers). In fact, factors appear as numeric variables, but they hold meaning of labels/names of data groups, i.e. nominal variable. These data groups are represented in a form of 'levels'.  
-In our case, our multiple choice question output will contain 4 data groups ('Grocery Store', 'Online shop', 'Specialised coffee shop', 'other') after converting it to factor:
+In our case, our multiple choice question output will contain 5 data groups after converting it to factor:
 
-```{r, eval=TRUE, warning=FALSE, message=FALSE}
+```{r, eval=TRUE, warning=FALSE, message=FALSE,}
 # Convert numeric value to factors
-qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?' <- factor(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?', levels = c(1:5), labels = c('Never','1-2 hours','3-4 hours','5-6 hours','more than 6 hours'))
-qualtrics$` Selected Choice_1` <- factor(qualtrics$` Selected Choice_1`,levels = c(1:2),labels = c("Male","Female"))
-qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
+qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?` <- factor(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`, levels = c(1:5), labels = c('Never','Early morning(00:00-06:00)','Morning(06:00-12:00)','Afternoon(12:00-18:00','Evening (18:00-22:00)'))
 # Table
-table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
-table(qualtrics$` Selected Choice`)     #countries
-table(qualtrics$` Selected Choice_1`)   #gender
+table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 ```
 
-Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data format adaptation from the point where we stopped:
-
-```{r, eval=TRUE, warning=FALSE, message=FALSE}
-# Converting long format to the visualisation-friendly format
-mlc_visualisation <- as.data.frame(table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
-# Naming columns
-names(mlc_visualisation) <- c('Time','Count')
-# Observing
-knitr::kable(mlc_visualisation)
-```
-
-The simplest way to visualize data obtained from multiple choice question with a single answer is **a bar chart**:
-
-```{r}
-## Basic bar chart
-labels <- as.character(mlc_visualisation$Time) #Save labels for x-axis in the barplot
-barplot(mlc_visualisation$Count, # Column to visualize
-        xlab='Time', # X-axis label
-        ylab = 'Count(answers)', # Y-axis label
-        names.arg = labels,
-        main = 'How many hours do you spend watching movies or series on Netflix?') # Title
-```
-
-R package **ggplot2** allows you to create visually appealing graphs:
-
-```{r}
-## ggplot2 bar chart
-library(ggplot2)
-p <- ggplot(data=mlc_visualisation, 
-             aes(x=Time, y=Count, fill=Time)) +
-             geom_bar(stat='identity') + theme_minimal() + labs(title = "In a typical week, how many hours do you spend watching movies or series on Netflix?")
-p
-```
-
-Another R library which can help you make amazing interactive charts in a minute is **plotly**. Here we use a function called **ggplotly()**, which allows you to turn any **ggplot2** chart interactive. Since we have already created a bar chart using ggplot2 and saved it as "p", we will just turn it into plotly graph:
-
-```{r,warning=F,message=F}
-## ggplotly bar chart
-library(plotly)
-ggplotly(p)
-```
-
-
-An improved version of ggplot2 package is the packaged called **ggvis**, which is still in developing:
-```{r, warning=FALSE, message=FALSE}
-## ggvis bar chart
-library(ggvis)
-ggvis(mlc_visualisation, 
-      x = ~Time, 
-      y = ~Count, 
-      fill=~Time)
-```
-
-
-
-Data type collected from the previous question is ordinal as we are able to make a natural order of the levels. Since it is ordinal data type, it belongs to categorical data. For the analysis of categorical data we can use Chi-square test or Fisher's test if a count for some level is less than 5. 
-
-#### Fischer's exact {-}
+##### Fischer's exact
 
 Fisher's exact test is used to test a hypothesis with data obtained from multiple choice questions with single answer. Results from multiple choice questions with multiple answers are treated with different test.
 <ul><li> <B> Application: </B> when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li>
 <ul><li> Used when frequency in at least one cell is <B> less than 5 </B>. When frequencies in each cell are greater than 5, Chi-square test should be used.</ul></li>
-<ul><li> <B>Hypothesis:</B> Is there a significant difference in frequencies between values observed in cells and values expected in cells ? (R for Marketing and Research Analytics)</ul></li>
+<ul><li> <B>Hypothesis:</B> Is there a significant difference in frequencies between values observed in cells and values expected in cells ? </ul></li>
 <ul><li> <B>H0:</B> There is no relationship between the two categorical variables.Therefore, two categorical variables are <B> independent.</B> Knowing the value of one variable does not help to predict the value of the other variable.</ul></li>
 <ul><li> <B>H1:</B> There is a relationship between the two categorical variables.Therefore, two categorical variables are <B> dependent.</B>Knowing the value of one variable helps to predict the value of the other variable.</ul></li>
 <ul><li> Usually, this type of test is used on 2x2 contingency tables. However, it can be applicable on contingency tables of larger dimensions.</ul></li>
 
-<B>Example:</B> We would like to know whether a number of hours spent watching Netflix depends on the respondents' country of origin.
+<B>Example:</B> We would like to know whether the preferred period of the day for watching Netflix depends on the respondents' country of origin.
 
 
 ```{r}
+# Converting characters to factors
+qualtrics$` Selected Choice_1` <- factor(qualtrics$` Selected Choice_1`,levels = c(1:2),labels = c("Male","Female"))
+qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
 # Creation of contingency table
-fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
-# Check how our contigency table looks like
-fisher_test_table
+fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 # Since we have a count less than 5, we should apply Fisher's test instead of Chi-square.
 # Fisher's test
 test <- fisher.test(fisher_test_table)
 test
-# p-value
-test$p.value
 ```
 
-From the output and from test$p.value we see that the p-value is higher than the significance level of 5%. Like any other statistical test, if the p-value is higher than the significance level, we can not reject the null hypothesis.
+From the output and from `test$p.value` we see that the p-value is higher than the significance level of 5%. Like any other statistical test, if the p-value is higher than the significance level, we can not reject the null hypothesis.
 
 In our case, not rejecting the null hypothesis for the Fisher’s exact test of independence means that there is no significant relationship between the two categorical variables. Therefore, knowing the value of one variable does not help to predict the value of the other variable.
 
-#### Chi-square test: Goodness of fit & Independence test {-}
+##### Chi-square test: Goodness of fit & Independence test {-}
 
 1) Goodness of fit
 <div><ul><li><B> Application: </B>when you only have <B> 1 dependent variable and none independent variables </B></ul></li>
@@ -1087,35 +1263,33 @@ In our case, not rejecting the null hypothesis for the Fisher’s exact test of 
 <ul><li> <B> H0: </B> There is no significant difference between the observed and the expected frequencies.</ul></li>
 <ul><li> <B> H1: </B> There is a significant difference between the observed and the expected frequencies. </ul></li>
 <ul><li> If we don't specify expected frequency per cell (see in the code below), then it is expected that all cells show an eqaul frequency. </ul></li>
-<ul><li> <B> Example</B> :'Do the numbers of respondents who are spending different amount of hours watching Netflix <B> significantly differ from each other?</B>'</ul></li></div>
+<ul><li> <B> Example</B> :'Do the numbers of respondents who prefer watching Netflix in different periods of a day <B> significantly differ from each other?</B>'</ul></li></div>
 <ul><li><B> Note that we did not assume any specific distribution, so we are assuming that each count will have the same or similar number. </ul></li></B>
 
 ```{r} 
 # Creating table 
-(mlc_chi_square <- table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
+mlc_chi_square <- table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
       
 # Chi-square test (without given expected values = equal values )
 chisq.test(mlc_chi_square)
 ```
 
-The p-value of the test is higher than 0.05. We can conclude that the numbers of respondents who spent different amount of hours watching Netflix are commonly distributed. Observed distribution does not differ significantly from the expected. This result does not surprise if you take a look at the values for each level in the table we created before conducting the test. There you can see that count of answers in each level is more or less not deviating too much. It is visible if you take a look at the previous visualisations as well.
+The p-value of the test is higher than 0.05. We can conclude that the numbers of respondents who watch Netflix in different periods of a day are commonly distributed. Observed distribution does not differ significantly from the expected. This result does not surprise if you take a look at the values for each level in the table we created before conducting the test. There you can see that count of answers in each level is more or less not deviating too much. It is visible if you take a look at the previous visualizations as well.
 
-
-If we are interested in testing more specific distribution, i.e. expect that 40% of our respondents are watching Netflix 3-4 hours, we can introduce corresponding distribution in the test. 
-
+If we are interested in testing more specific distribution, i.e. expect that 40% of our respondents are watching Netflix during evening hours, we can introduce corresponding distribution in the test. 
 ```{r}
 # Expected values in percentages for each alternative. The sum must be 1.
-expected_values <- c(0.10, # We expect that 10% of our respondents do not watch Netflix at all ("Never").
-                     0.20, # We expect that 20% of our respondents watch Netflix 1-2 hours a week.  
-                     0.40, # We expect that 40% of our respondents watch Netflix 3-4 hours a week.
-                     0.20, # We expect that 20% of our respondents watch Netflix 5-6 hours a week.
-                     0.10 # We expect that 10% of our respondents watch Netflix more than 6 hours a week.
+expected_values <- c(0.10, # We expect that 10% of our respondents do not watch Netflix at all.
+                     0.20, # We expect that 20% of our respondents watch Netflix in early morning.
+                     0.10, # We expect that 10% of our respondents watch Netflix in morning.
+                     0.20, # We expect that 20% of our respondents watch Netflix in afternoon.
+                     0.40  # We expect that 40% of our respondents watch Netflix in evening.
                     )
 # Chi-square test with expected values
 chisq.test(mlc_chi_square, p=expected_values)
 ```
 
-This time the p-value of the test is lower than 0.05.We have an evidence that observed distribution does significantly differ from the expected distribution (10%/20%/40%/20%/10%).  
+This time the p-value of the test is lower than 0.05. We have an evidence that observed distribution does significantly differ from the expected distribution (10%/20%/10%/20%/40%).  
 
 
 2) Chi-Square Test of Independence
@@ -1123,110 +1297,98 @@ This time the p-value of the test is lower than 0.05.We have an evidence that ob
 <ul><li> <B> Hypothesis: </B> Is there an association between categorical variable X and categorical variable Y? </ul></li>
 <ul><li> <B> H0: </B> There is no association between the two variables.</B></ul></li>
 <ul><li> <B> H1: </B> There is an association between the two variables.</B></ul></li>
-<ul><li> <B> Example: </B> Is there an association between gender and the hours spent watching Neflix during a week? </ul></li></div>
+<ul><li> <B> Example: </B> Is there an association between gender and the preferred period of a day for watching Netflix? </ul></li></div>
 
 ```{r}
 # Creation of contingency table
-chi_square_table <-table(qualtrics$` Selected Choice_1`,qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
+chi_square_table <-table(qualtrics$` Selected Choice_1`,qualtrics$'During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?')
 # Chi-square independence test
 chisq.test(chi_square_table)
 ```
 
-Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and number of hours spent watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
+Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and the preferred period of a day for watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
 
-### Multiple choice with multiple answers {-}
+#### Multiple choice with multiple answers {-}
 
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('multiple-choice-question-multiple-answers.png')
+In Qualtrics, multiple answers on multiple choice questions are captured in separate columns. For instance, the second respondents chose "Ja!Natürlich" and "Clever" as answers, thus, the rest of alternatives have none value in this row.
+
+```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center',eval=TRUE}
+qualtrics[1:6,c(38,39,40,41)] %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-Before we conduct any test, we will do some simple calculations and visualise our data. 
+Since this type of question provides multiple possible answers, one way to analyze data obtained from this question is in the following form:
 
-```{r}
-# Rename columns
-colnames(qualtrics)[38] <- "ja!Naturlich"
-colnames(qualtrics)[39] <- "Clever"
-colnames(qualtrics)[40] <- "Spar Vital"
-colnames(qualtrics)[41] <- "..."
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Replacing NA with 0
-qualtrics$`ja!Naturlich`[is.na(qualtrics$`ja!Naturlich`)]=0
-qualtrics$Clever[is.na(qualtrics$Clever)]=0
-qualtrics$`Spar Vital`[is.na(qualtrics$`Spar Vital`)]=0
-qualtrics$...[is.na(qualtrics$...)]=0
+qualtrics$` ja! Natürlich.`[is.na(qualtrics$` ja! Natürlich.`)]=0
+qualtrics$` Clever`[is.na(qualtrics$` Clever`)]=0
+qualtrics$` Spar Vital`[is.na(qualtrics$` Spar Vital`)]=0
+qualtrics$` ...`[is.na(qualtrics$` ...`)]=0
+# qualtrics[38] accesses ja!Natürlich column
+# qualtrics[39] accesses Clever column
+# qualtrics[40] accesses  Spar Vital column
+# qualtrics[41] accesses ... column
 # Calculating frequency, percentage of respondents and percentage of cases
 df.cochran <- data.frame(Frequnecy = colSums(qualtrics[38:41]),
                          Share_of_respondents = (colSums(qualtrics[38:41])/sum(qualtrics[38:41]))*100,
                                 Share_of_cases =((colSums(qualtrics[38:41]))/nrow(qualtrics[38:41]))*100)
-# Observing
-df.cochran
-# Visualisation
-barplot(df.cochran[,3], names.arg = row.names(df.cochran), main = "% of Respondents familiar with brands", xlab = "Brand",ylab = "Percentage")
+df.cochran %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-The visualisation above depicts the fact that more than 60% percent of people are familiar with the brand "ja!Naturlich", while we can not say the same for other brands considered in our question. 
-
+The share of cases column suggests that, for instance, almost 70% percent of people are familiar with the brand "ja!Naturlich". 
 
 For the analysis of results collected with multiple choice question with multiple possible answers, we can use **Cochran's Q test.**Although we did not mention it before, it is not too different from what you have already learned about other tests. 
 
-The Cochran’s Q test and associated multiple comparisons require the following assumptions:
-1. Responses are dichotomous and from k number of matched samples.
-2. The subjects are independent of one another and were selected at random from a larger population.
-3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the
-responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)
+The Cochran’s Q test and associated multiple comparisons require the following assumptions:  
 
-In a within-subjects experiment design with three or more observations of a dichotomous(= just two levels such as "Yes" or "No") categorical outcome, you utilize Cochran's Q test to assess main effects.Similarly, in our multiple choice question with multiple answers we have the same respondent going through three or more potential answers with dichotomous(=yes or no) categorical outcome. 
+1. Responses are dichotomous and from k number of matched samples.  
 
+2. The subjects are independent of one another and were selected at random from a larger population.  
 
-```{r}
-library(nonpar)
-# Creation of matrix
-#matrix.cochran <- cbind(qualtrics$`ja!Naturlich`,
-#                   qualtrics$Clever,
-#                   qualtrics$`Spar Vital`,
-#                   qualtrics$`...`)
-# Turning NAs to 0
-#matrix.cochran[is.na(matrix.cochran)]=0
-# Cochran test                   
-#cochrans.q(matrix.cochran, alpha = 0.05)
-```
+3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)  
 
-The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.
+In a within-subjects experiment design with three or more observations of a dichotomous(= just two levels such as "Yes" or "No") categorical outcome, you utilize Cochran's Q test to assess main effects. Similarly, in a multiple choice question with multiple answers we have the same respondent going through three or more potential answers with dichotomous(=yes or no) categorical outcome, meaning that responses are **not independent from each other.** 
 
 ```{r}
 library(DescTools)
-list.cochran <- list(qualtrics$`ja!Naturlich`,
-                   qualtrics$Clever,
-                   qualtrics$`Spar Vital`,
-                   qualtrics$...) # imaginary brand
+list.cochran <- list(qualtrics$` ja! Natürlich.`,
+                   qualtrics$` Clever`,
+                   qualtrics$` Spar Vital`,
+                   qualtrics$` ...`) # imaginary brand
 # Replacing NAs in the list with 0 in order to be able to run the test
 list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
+# Cochran test
+matrix.cochran <- do.call(cbind,list.cochran)
+DescTools::CochranQTest(matrix.cochran, alpha=0.05)
+```
+The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.
+
+```{r}
 # Post hoc test (Dunn Test)
 DunnTest(list.cochran, method="bonferroni")
 ```
 
 From the results of the Dunn Test, we can see that there is a big difference between 1 ("ja!Natürlich") and 4("..."), as well as between 4("...") and 3("Spar Vital"). 
 
-#### Rank order question {-}
+#### Rank order question
 
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('rank-order-question.png')
-```
-
-A rank order question asks respondents to compare items to each other by placing them in order of preference. Note that the data obtained from a rank order question shows an order of a respondent's preference, but not the difference between items. For instance, if the the most important feature of a fitness tracker for a respondent XY is "Measuring steps" and the second most important feature "Calories burned", we don't know for how much more important is the former one in comparison to the latter one.
-
-Intuitive question to ask is the following: which feature of the fitness tracker is the most important for our respondents?
+Intuitive question to ask when it comes to this type of question is the following: which feature is the most important for respondents?
 
 We can answer this question by calculating a mean rank for each feature. Before we do so, we will create a separate data frame and add columns of the response data.
+
 ```{r}
-rank.data <- data.frame(qualtrics$` Measuring steps`,
-                        qualtrics$` Calories burned`,
-                        qualtrics$` Measuring heartbeat`,
-                        qualtrics$` Exercise tracking`,
-                        qualtrics$` Measuring distance`)
-colnames(rank.data)<-c("Measuring steps","Calories burned","Measuring heartbeat","Exercise tracking","Measuring distance")
+rank.data <- subset(qualtrics,select = c(" Measuring steps"," Calories burned"," Measuring heartbeat"," Exercise tracking"," Measuring distance")) 
+head(rank.data)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 First information we would like to know is how many preference combinations there are, and how repetitive they are. We can obtain that information by creating a summary of the ranking data frame we created. 
+
 ```{r}
 library(pmr)
 test <- rankagg(rank.data)
@@ -1246,48 +1408,26 @@ As we can observe from the output, the item 1("Measuring steps") shows the best 
 
 Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.
 
-Before we conduct the Friedman rank sum test, we will visualise our data:
-```{r,echo=FALSE}
-# Preparing data frame for Friedman rank sum test
-library(reshape2)
-library(ggpubr)
-library(rstatix)
-library(ggstatsplot)
-```
-
-
-```{r}
-# We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
-rank.data.long <- reshape2::melt(rank.data,value.name = "Rank",variable.name = "Feature", stringsAsFactors=TRUE)
-tail(rank.data.long)
-head(rank.data.long)
-# Visualisation
-ggstatsplot::ggwithinstats(
-  data = rank.data.long,
-  x = Feature,
-  y = Rank,
-  type = "np",
-  pairwise.comparisons = TRUE, # show pairwise comparison test results
-  title = "What features are important to you when evualting fitness trackers?")
-```
-
-Already from the advanced visualisation, that includes Friedman rank sum test and pairwise comparison, we can have an insight in significance of differences among features.  
-
 ```{r}
 # Friedman test 
 friedman.test(as.matrix(rank.data))
 ```
 
-Friedman rank sum test has a p-value lower than 0.05, so we can conclude that here are significant differences between at least two features (what we have already seen in our visualisation). Even though we have identified differences between preferences towards features in our advanced visualisation, we will conduct a post hoc test in order to demonstrate traditional way of calculating pairwise comparisons.
+Friedman rank sum test has a p-value lower than 0.05, so we can conclude that here are significant differences between at least two features (what we have already seen in our visualization). Even though we have identified differences between preferences towards features in our advanced visualization, we will conduct a post hoc test in order to demonstrate traditional way of calculating pairwise comparisons.
 
 
-```{r}
-knitr::kable(wilcox_test(Rank ~ Feature, paired = TRUE, p.adjust.method = "bonferroni", data = rank.data.long))
+```{r,error=FALSE,message=FALSE,warning=FALSE}
+library(rstatix)
+rank.data.long <- reshape2::melt(rank.data,value.name = "Rank",variable.name = "Feature", stringsAsFactors=TRUE)
+posthoc <- wilcox_test(Rank ~ Feature, paired = TRUE, p.adjust.method = "bonferroni", data = rank.data.long)
+posthoc%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 The output table provides us with p-values referring to significance of difference in mean ranks of each pair. For instance, the first 4 rows  proves that the differences between the mean rank of the feature "Measuring steps" and each of the rest of features are significant. Consequently, we can conclude that this feature is by far the most important among our respondents. 
 
-
 Another question that may be interesting to explore is whether there are any complementary features ? Or features which overlap each other in its functionality? In order to have a look at that, we can investigate the correlation between ranks assigned to each feature.
+
 ```{r}
 #Correlation Matrix
 cor.matrix<-cor(rank.data, method=c('spearman'))
@@ -1303,89 +1443,71 @@ ggcorrplot(cor.matrix)
 
 From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positively. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
 
-#### Constant Sum question {-}
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('constant-sum-question.png')
-```
+#### Constant Sum question
 
 If you wish to obtain information about how much one attribute is preferred over another one, you may use a constant sum scale. The total box should always be displayed at the bottom to make it easier for respondents. A constant sum question permits collection of ratio data type. With data obtained we would be able to express the relative importance of the options.
 
 ```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
+library(robCompositions)
 constant.sum <- subset(qualtrics, select =c(" Location"," Price"," Ambience"," Customer Service"))
 constant.sum$id <- seq(1:nrow(constant.sum))
-knitr::kable(constant.sum[1:6,], caption = "Constant Sum Question")
+constant.sum[1:6,] %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
+
+By computing descriptive statistics per column we get very useful insight in our data: 
 
 ```{r}
 # Compute descriptive statistics
 library(pastecs) 
 res <- stat.desc(constant.sum)
-round(res[,1:4],2)
+round(res[,1:4],2) %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-```{r,error=FALSE,warning=FALSE, message=FALSE}
-# Creation of the long version of data frame
-constant.sum.long <-melt(constant.sum[,-5], variable.name ="Factor" ,value.name = "Points")
-constant.sum.long
-```
-
-
-```{r,error=FALSE,warning=FALSE, message=FALSE}
-# Boxplot ggplot2
-p<-constant.sum.long %>% 
-  filter(Factor!="id") %>%
-  ggplot(aes(x=Factor, y=Points, fill= Factor)) +
-    geom_boxplot()  +
-    theme_minimal() +
-    ggtitle("What factors do you consider when choosing a place to go for a dinner?") +
-    xlab("")
-ggplotly(p)
-```
 
 With the data collected we are able to answer the question: what factor is the most important for our respondents when they go out for a dinner?
 
-```{r}
-library(robCompositions)
-constSum(constant.sum,100)[,-5]
-```
-
 In order to answer this question we need to conduct **a repeated measures ANOVA**.
-This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
+This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambiance and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
 
 We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumptions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption refers to extreme outliers. Let's have a look at potential outliers:
 
-```{r}
+```{r,error=FALSE,warning=FALSE, message=FALSE}
+# Creation of the long version of data frame
+library(reshape2)
+constant.sum.long <-melt(constant.sum[,-5], variable.name ="Factor" ,value.name = "Points")
 # Outliers
 constant.sum.long %>% 
   group_by(Factor) %>%
-  identify_outliers(Points)
+  identify_outliers(Points)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-As we cannot identify any extreme outliers, we can proceed with deploying repeated measures ANOVA.
+The p value seems to be significant, i.e., less than 0.05. As we cannot identify any extreme outliers, we can proceed with deploying repeated measures ANOVA.
 
-```{r}
+```{r,error=FALSE, message=FALSE,warning=FALSE}
 # Formatting data 
 constant.sum.aov <- gather(constant.sum, key = "Factor", value = "Points", ` Location`,` Price`,` Ambience`,` Customer Service`)
 # One-way repeated measures ANOVA  
 res.aov <- anova_test(data = constant.sum.aov, dv = Points,wid = id ,within = Factor)
-get_anova_table(res.aov)
+get_anova_table(res.aov)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+As we know that ANOVA is an omnibus test, we need to conduct post hoc test for further details:
+
+```{r}
 # Post hoc test
 pairwise.t.test(constant.sum.long$Points,constant.sum.long$Factor, paired = T, p.adjust.method = "holm")
 ```
-Now we can clearly see that our respondents consider price more than location, or ambience, while customer service is perceived almost equally important as prices.
 
-```{r}
-ggstatsplot::ggwithinstats(
-  data = constant.sum.long %>% filter(Factor!="id"), # excluding "id" column from the data
-  x = Factor,
-  y = Points,
-  type = "p",
-  pairwise.comparisons = TRUE, # show pairwise comparison test results
-  title = "What factors do you consider when choosing a place to go for a dinner?")
-```
+Now we can clearly see that difference between perceived importance of price and location, or price and ambiance, are significant. On the other hand, the difference in perceived importance between customer service and price is not significant.
 
-### Text or number entry question {-}
+#### Number entry question
 
 ```{r,echo=FALSE}
 set.seed(1234567)
@@ -1394,19 +1516,25 @@ qualtrics$` Customer Service` <- abs(as.integer(runif(n=117,min=0,max = 100)))
 ```
 
 
-A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.  
-
+A number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analyzed with regression analysis.**Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.**  
 
 Here is a glimpse in answers on how important is each factor to our respondents when it comes to dinning outside:
+
 ```{r, echo= FALSE}
-knitr::kable(qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")], caption = "Constant sum question")
+qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")]%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 Additionally, we asked our respondents how much are they willing to spend on dinner on average. In order to handle data easier, we will create a new data frame where we merge all the data together:
+
 ```{r}
 dinner <- subset(qualtrics, select = c(" Location"," Price"," Ambience"," Customer Service", " Willingness-to-pay (in EUR)"))
-knitr::kable(head(dinner))
+head(dinner)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = T)
 ```
+
 Before we conduct a linear regression analysis, we need to take a look at correlation matrix:  
 
 ```{r}
@@ -1414,12 +1542,17 @@ correlation <-cor(dinner, method=c('pearson'))
 correlation
 ```
 From our data we see, for instance, that some negative correlation between willingness to pay and importance of ambiance as well as some positive correlation between importance of customer service and willingness-to-pay. Let us observe descriptive statistics as well:  
+
 ```{r}
-knitr::kable(psych::describe(dinner))
+psych::describe(dinner)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 We see that difference between mean and median does not suggest (at the first sight) great effect of outliers.
+
 Let us now do linear regression analysis:
+
 ```{r}
 mlr.dinner <- lm(` Willingness-to-pay (in EUR)` ~ ` Location` + ` Price` + ` Ambience`+` Customer Service`, data = dinner)
 summary(mlr.dinner)
@@ -1432,12 +1565,15 @@ coeff <- summary(mlr.dinner)
 Out of all factors of importance when dinning out, the only one that suggests significance at 0.05 level of significance is ambience. From the summary we can conclude that increase in importance of ambience by 1 point, leads to decrease in willingness to pay by `r summary(mlr.dinner)$coefficients[4,1]`.
 
 ```{r}
-confint(mlr.dinner)
+confint(mlr.dinner)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 From confidence intervals, We can conclude that when we do not consider any of given factors (location, price, ambience and customer service), willingness to pay  will be somewhere between `r confint(mlr.dinner)[1,1]`EUR and `r confint(mlr.dinner)[1,2]`EUR. Besides that, for each increase in importance of dinner ambiance by one point, there will be an average decrease of willingness to pay between `r confint(mlr.dinner)[4,1]` and `r confint(mlr.dinner)[4,2]`.
 
-```{r, warning=FALSE, error=FALSE}
+```{r, warning=FALSE, error=FALSE,message=FALSE}
+library(ggstatsplot)
 ggcoefstats(x = mlr.dinner,
             title = "Willingness to pay predicted by importance of factors")
 ```
@@ -1468,7 +1604,7 @@ A rule of thumb to determine whether an observation should be classified as infl
 
 Another thing to consider is linearity, i.e. that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms:
 
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Linear specification
 library(car)
 avPlots(mlr.dinner)
@@ -1477,7 +1613,7 @@ avPlots(mlr.dinner)
 In our example it does not seem that linear relationships can be reasonably assumed for all variables.
 
 As we already learned, another important assumption of the linear model is that the error terms have a constant variance (i.e., homoscedasticity):
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Breusch-Pagan Test
 library(lmtest)
 bptest(mlr.dinner)
@@ -1487,7 +1623,7 @@ The null hypothesis for this test is that the error variances are all equal, and
 
 Another assumption to be met is that the error term is normally distributed. One way to check for normal distribution of the data is to employ statistical with the null hypothesis that the data is normally distributed. One of these is a Shapiro–Wilk test:
 
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 shapiro.test(resid(mlr.dinner))
 ```
 
@@ -1496,82 +1632,183 @@ When the assumption of normally distributed errors is not met (as it is not met 
 
 Finally, we need to check for multicollinearity, the case when there is a strong linear relationship between the independent variables:
 
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 correlation <-cor(dinner, method=c('pearson'))
 correlation
 ```
 
-By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicollinearity between independent variables.
+By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicolinearity between independent variables.
 
+### Reporting
 
-### Reporting {-}
+After you are done with statistical analysis, you are ready to create visually appealing and understandable graphs for your final report. In the following sections you can get certain ideas (and R code) for visualization of data obtained by frequently asked types of questions.
 
-test
+::: {.infobox_orange .hint data-latex="{hint}"}
 
-#### Presentation guidelines & grading {-}
+The format (e.g., data frame, matrix, list or similar) in which you have your data stored in R plays important role when you visualize that data. Therefore, reshaping data to the required form will be always a prerequisite for any visualization.  
 
-Your performance in this part will be evaluated based on the following criteria:
+:::
 
-* **Individual Responsibility:**
+::: {.infobox_red .caution data-latex="{caution}"}
 
-    + Group members should plan to share presentation responsibilities and field questions equally.
-    + All members of the group must contribute to the presentation.
-    + Individual grade for presentation and oral participation during the class.
-    + To ensure an equal contribution of group members, a peer assessment will be conducted, which enters into the computation of the individual grades for the group project. 
+The focus of the reporting section is on data visualisation, but do not forget to make correct interpretations and add them to your final report. How to communicate results of respective statistical test is a part of chapters before, so consult corresponding chapters if you are not sure how to report results of certain statistical test.
 
-* **Quality of questionnaire design:**
+:::
 
-    + Survey method
-    + Question structure / wording
+##### Multiple choice question visualisation {-}
 
-* **Data Analysis:**
+In order to visualize a survey data obtained from multiple choice question with single answer, a data format needs to be in the appropriate format. Here we proceed with data format adaptation from the point where we stopped:
 
-    + Clarity / appropriateness
-    + Completeness / accuracy
-    
-* **Presentation:**
-
-    + Introduction/problem, approach, solution/inclusion
-
-
-
-#### Final presentation and submission {-}
-
-
-```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
-library(dplyr)
+```{r, eval=TRUE, warning=FALSE, message=FALSE}
+# Converting long format to the visualisation-friendly format
+mlc_visualisation <- as.data.frame(table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`))
+# Naming columns
+names(mlc_visualisation) <- c('Time','Count')
+# Observing
 library(kableExtra)
-mytable_sub = data.frame(
-    D = c("Nov. 16*",
-             "Nov. 23*",
-             "Dec. 7"
-             ),
-    Time_A = c(
-      "01:30PM - 04:30PM","01:30PM - 06:30PM","11:59PM"
-    ),Date_B = c("Nov. 18*",
-             "Nov. 25*",
-             "Dec. 9"
-             ),
-    Time_B = c(
-      "02:00PM - 05:00PM","03:00PM - 08:00PM","11:59PM"
-    ),
-    Task = c(  "* Coaching: Data handling (live video coaching)",
-               "* Coaching: Data analysis (live video coaching)",
-               "* Submit video recording of presentation (pre-recorded)"
-               ),
-    Chapters = c("","",""),
-    Link = c(    "TBC",
-                 "TBC",
-                 ""
-                 )
-    )
-#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable_sub %>% kable(escape = T) %>%
-  kable_paper(c("hover"), full_width = F) %>%
-  footnote(general = "Dates and times are indicated for groups A and B respectively.
-           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
-           general_title = "Note: ", 
-           footnote_as_chunk = T, title_format = c("italic")
-           ) 
-#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+mlc_visualisation %>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+
+R package `ggplot2` allows you to create visually appealing graphs. Below you can see how to create simple versions of a bar chart and a pie chart.
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Multiple choice question with single answer - a bar chart
+library(ggplot2)
+p <- ggplot(data=mlc_visualisation,aes(x=Time, y=Count, fill=Time)) +
+  geom_bar(stat='identity') + 
+  geom_text(aes(label = paste0("n=",round(Count))), position = position_stack(vjust = 0.5))+
+  scale_fill_brewer(palette = "Blues") +
+  labs(x = NULL, y = NULL, fill = NULL, title = "The period of the day you prefer watching movies?") +
+  theme_classic() + 
+  theme(axis.line = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "#666666"))
+p
+```
+
+```{r}
+# Multiple choice question with single answer - a pie chart
+p<-ggplot(mlc_visualisation, aes(x="", y=Count, fill=Time))+
+  geom_bar(width = 1, stat = "identity") + 
+  coord_polar("y", start=0) +
+  geom_text(aes(label = paste0("n=",round(Count))), position = position_stack(vjust = 0.5))+
+  scale_fill_brewer(palette = "Blues") +
+  labs(x = NULL, y = NULL, fill = NULL, title = "The period of the day you prefer watching movies?") +
+  theme_minimal() + 
+  theme(axis.line = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "#666666"))
+p
+```
+
+#### Multiple choice question with multiple answers
+
+If our multiple choice question has more possible answers, we would need first to calculate share of cases when each possible answer was selected.
+
+```{r}
+setDT(df.cochran, keep.rownames = TRUE)
+colnames(df.cochran)[1]<-"Brand"
+df.cochran %>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+After we make sure we have our data in the required form, we can create a nice bar chart:
+
+```{r}
+# Multiple choice question with multiple answers - a bar chart
+library(ggplot2)
+p <- ggplot(data=df.cochran,aes(x=Brand, y=Share_of_cases, fill=Brand)) +
+  geom_bar(stat='identity') + 
+  geom_text(aes(label = paste0(round(Share_of_cases),"%")), position = position_stack(vjust = 0.5))+
+  scale_fill_brewer(palette = "Blues") +
+  labs(x = NULL, y = NULL, fill = NULL, title = "Brands repsondents are familiar with") +
+  theme_minimal() + 
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "#666666"))
+p
+```
+
+##### Rank order question
+
+In case of ranked data, one need to transform data from wide format to long format first.
+
+```{r}
+# Packages
+library(reshape2)
+library(ggpubr)
+library(rstatix)
+library(ggstatsplot)
+# Data in wide format
+head(rank.data)%>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+# Data in long format
+head(rank.data.long)%>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+Simple way to depict ranks is a chart of box plots:
+
+```{r}
+# Rank order question - box plots
+p <-ggplot(rank.data.long, aes(x=Feature, y=Rank, fill= Feature)) +
+    geom_boxplot()  +
+    theme_minimal() +
+    ggtitle(label="Perceived importance of features")+
+    theme(axis.text = element_blank())
+p
+```
+Package `ggstatsplot()` provides a great feature, which enables creation of a plot and conducting a statistical test at the same time. 
+
+```{r}
+# Rank order question - ggstatsplot
+ggstatsplot::ggwithinstats(
+  data = rank.data.long,
+  x = Feature,
+  y = Rank,
+  type = "np",
+  pairwise.comparisons = TRUE, # show pairwise comparison test results
+  title = "What features are important to you when evualting fitness trackers?")
+```
+
+
+#### Constant Sum question
+
+Required data format for a data obtained from constant sum question is similar to ranked data.
+
+```{r}
+# Data in long format
+head(constant.sum.long) %>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+
+Here is one way to visualize data obtained from constant sum question.
+
+```{r,error=FALSE,warning=FALSE, message=FALSE}
+# Constant sum question
+p<-constant.sum.long %>% 
+  filter(Factor!="id") %>%
+  ggplot(aes(x=Factor, y=Points, fill= Factor)) +
+    geom_boxplot()  +
+    theme_minimal() +
+    ggtitle("What factors do you consider when choosing a place to go for a dinner?") 
+p
+```
+
+The following type of visualisation includes statistical test as well:
+
+```{r}
+ggstatsplot::ggwithinstats(
+  data = constant.sum.long %>% filter(Factor!="id"), # excluding "id" column from the data
+  x = Factor,
+  y = Points,
+  type = "p",
+  pairwise.comparisons = TRUE, # show pairwise comparison test results
+  title = "What factors do you consider when choosing a place to go for a dinner?")
 ```
