@@ -25,7 +25,6 @@ library(ggplot2)
 library(latex2exp)
 set.seed(321)
 hours <- rnorm(25000, 50, 10)
-
 ggplot(data.frame(hours)) +
   geom_histogram(aes(hours), bins = 50, fill = 'white', color = 'black') +
   labs(title = "Histogram of listening times",
@@ -44,7 +43,7 @@ ggplot(data.frame(hours)) +
   annotate("text", x = mean(hours) -28, y = 1100, label = "Mean - 2 * SD" )
 ```
 
-In this case, we refere to all WU students as **the population**. In general, the population is the entire group we are interested in. This group does not have to necessarily consist of people, but could also be companies, stores, animals, etc.. The parameters of the distribution of population values (in hour case: "hours") are called population parameters. As already mentioned, we do not usually know population parameters but use inferential statistics to infer them based on our sample from the population, i.e., we measure statistics from a sample (e.g., the sample mean $\bar x$) to estimate population parameters (the population mean $\mu$). Here, we will use the following notation to refer to either the population parameters or the sample statistic: 
+In this case, we refer to all WU students as **the population**. In general, the population is the entire group we are interested in. This group does not have to necessarily consist of people, but could also be companies, stores, animals, etc.. The parameters of the distribution of population values (in hour case: "hours") are called population parameters. As already mentioned, we do not usually know population parameters but use inferential statistics to infer them based on our sample from the population, i.e., we measure statistics from a sample (e.g., the sample mean $\bar x$) to estimate population parameters (the population mean $\mu$). Here, we will use the following notation to refer to either the population parameters or the sample statistic: 
 
 Variable	 | Sample statistic	 | Population parameter
 ------------------------- | ------------------------- | -------------------------
@@ -54,11 +53,15 @@ Variance  | $s^2 = {1 \over n-1}\sum_{i=1}^n (x_i-\bar{x})^2$  | $\sigma^2 = {1 
 Standard deviation | $s = \sqrt{s^2}$  | $\sigma = \sqrt{\sigma^2}$  
 Standard error | $SE_{\bar x} = {s \over \sqrt{n}}$  | $\sigma_{\bar x} = {\sigma \over \sqrt{n}}$  
 
+::: {.infobox_orange .hint data-latex="{hint}"}
+Notice that in the code above
+:::
+
 ### Sampling from a known population
 
-In the first step towards a realistic research setting, let us take one sample from this population and calculate the mean listening time. We can simply sample the row numbers of students and then subset the ```hours``` vector with the sampled rownumbers. The ```sample()``` function will be used to draw a sample of size 100 from the population of 25,000 students, and one student can only be drawn once (i.e., ```replace = FALSE```). The following plot shows the distribution of listening times for our sample.
+In the first step towards a realistic research setting, let us take one sample from this population and calculate the mean listening time. We can simply sample the row numbers of students and then subset the ```hours``` vector with the sampled row numbers. The ```sample()``` function will be used to draw a sample of size 100 from the population of 25,000 students, and one student can only be drawn once (i.e., ```replace = FALSE```). The following plot shows the distribution of listening times for our sample.
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 4, fig.width = 6}
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.height = 4, fig.width = 6}
 student_sample <- sample(1:25000, size = 100, replace = FALSE)
 sample_1 <- hours[student_sample]
 ggplot(data.frame(sample_1)) +
@@ -70,7 +73,7 @@ ggplot(data.frame(sample_1)) +
 
 Observe that in this first draw the mean ($\bar x =$ `r round(mean(sample_1),2)`) is quite close to the actual mean ($\mu = $ `r round(mean(hours),2)`). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.  
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
 #student_sample <- sample(1:25000, size = 100, replace = FALSE)
 #means <- hours[student_sample]
 library(cowplot)
@@ -554,7 +557,7 @@ ci_upper
 such that if we collected 100 samples and computed the mean and confidence interval for each of them, in $95\%$ of the cases, the true population mean is going to be within this interval between `r round(ci_lower,2)` and `r round(ci_upper,2)`. This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:
 
 ```{r, fig.height = 15, fig.width=10}
-set.seed(12)
+set.seed(12345)
 samples <- 100
 hours <- rgamma(25000, shape = 2, scale = 10)
 means <- matrix(NA, nrow = samples)

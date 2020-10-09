@@ -10,9 +10,7 @@ output:
 
 # Data handling
 
-This chapter covers the basics of data handling in R
-
---> reference to 'base R'
+This chapter covers the basics of data handling in R.
 
 ## Basic data handling
 
@@ -203,29 +201,41 @@ music_data[order(top10_artist_genre,-top10_track_streams),]
 ```
 
 #### Inspecting the content of a data frame
+
 The ```head()``` function displays the first X elements/rows of a vector, matrix, table, data frame or function.
+
 ```{r}
 head(music_data, 3) # returns the first X rows (here, the first 3 rows)
 ```
+
 The ```tail()``` function is similar, except it displays the last elements/rows.
+
 ```{r}
 tail(music_data, 3) # returns the last X rows (here, the last 3 rows)
 ```  
+
 ```names()``` returns the names of an R object. When, for example, it is called on a data frame, it returns the names of the columns. 
+
 ```{r}
 names(music_data) # returns the names of the variables in the data frame
 ```
+
 ```str()``` displays the internal structure of an R object. In the case of a data frame, it returns the class (e.g., numeric, factor, etc.) of each variable, as well as the number of observations and the number of variables. 
+
 ```{r}
 str(music_data) # returns the structure of the data frame
 ```
+
 ```nrow()``` and ```ncol()``` return the rows and columns of a data frame or matrix, respectively. ```dim()``` displays the dimensions of an R object.
+
 ```{r}
 nrow(music_data) # returns the number of rows 
 ncol(music_data) # returns the number of columns 
 dim(music_data) # returns the dimensions of a data frame
 ```
+
 ```ls()``` can be used to list all objects that are associated with an R object. 
+
 ```{r}
 ls(music_data) # list all objects associated with an object
 ```
@@ -307,3 +317,6 @@ music_data <- data.frame(top10_track_streams,
 
 ```
 
+::: {.infobox_orange .hint data-latex="{hint}"}
+Note that the data handling approach explained in this chapter uses the so-called 'base R' dialect. There are other dialects in R, which are basically different ways of achieving the same thing. Two other popular dialects in R are 'data.table' and the 'tidyverse' see e.g., [here](https://wetlandscapes.com/blog/a-comparison-of-r-dialects/) and [here](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/). Once you become more advanced, you may want to look into the other dialects to achieve certain tasks more efficiently. For now, it is sufficient to be aware that there are other approaches to data handling and each dialect has it's strengths and weaknesses. We will be using 'base R' throughout this website.   
+:::

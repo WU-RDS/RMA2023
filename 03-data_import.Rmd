@@ -18,13 +18,13 @@ opts_chunk$set(cache=T)
 ```
 
 ```{r echo=FALSE, eval=FALSE}
-install.packages("rvest")
-install.packages("jsonlite")
-install.packages("readxl")
-install.packages("haven")
-install.packages("devtools")
+library(rvest)
+library(jsonlite)
+library(readxl)
+library(haven)
 library(devtools)
-devtools::install_github('PMassicotte/gtrendsR',force=T)
+#devtools::install_github('PMassicotte/gtrendsR',force=T)
+library(gtrendsR)
 ```
 
 ::: {.infobox .download data-latex="{download}"}
@@ -39,25 +39,20 @@ In the previous chapter, we saw how we may use the keyboard to input data in R. 
 
 ### Getting data for this course
 
-Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). There are two ways for you to obtain access to the data sets:
+Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). You can directly import these data sets from GitHub without having to copy data sets from one place to another. If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
 
-#### Directly import datasets from GitHub (recommended)
-
-All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
-
 test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
                         sep = "\t", 
                         header = TRUE)
+head(test_data)
 ```
 
-
-#### Download and import datasets from "Learn\@WU"
-
-It is also possible to download the data from the respective folder on the "Learn\@WU" platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
+Note that it is also possible to download the data from the respective folder on the "Learn\@WU" platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-music_data <- read.table("music.data.extension", header=TRUE)
+test_data <- read.table("test_data.csv", header=TRUE, sep = ",")
+head(test_data)
 ```
 
 ### Import data created by other software packages
@@ -65,22 +60,32 @@ music_data <- read.table("music.data.extension", header=TRUE)
 Sometimes, you may need to import data files created by other software packages, such as Excel or SPSS. In this section we will use the ```readxl``` and ```haven``` packages to do this. To import a certain file you should first make sure that the file is stored in your current working directory. You can list all file names in your working directory using the ```list.files()``` function. If the file is not there, either copy it to your current working directory, or set your working directory to the folder where the file is located using ```setwd("/path/to/file")```. This tells R the folder you are working in. Remember that you have to use ```/``` instead of ```\``` to specify the path (if you use Windows paths copied from the explorer they will not work). When your file is in your working directory you can simply enter the filename into the respective import command. The import commands offer various options. For more details enter ```?read_excel```, ```?read_spss``` after loading the packages.
 
 ```{r, eval=FALSE}
-list.files() #lists all files in the current working directory
-#setwd("/path/to/file") #may be used to change the working directory to the folder that contains the desired file
 
 #import excel files
 library(readxl) #load package to import Excel files
-excel_sheets("music_data.xlsx")
-music_data_excel <- read_excel("music_data.xlsx", sheet = "mrda_2016_survey") # "sheet=x"" specifies which sheet to import
-head(music_data_excel)
+excel_sheets("test_data.xlsx")
+survey_data_xlsx <- read_excel("test_data.xlsx", sheet = "mrda_2016_survey") # "sheet=x"" specifies which sheet to import
+head(survey_data_xlsx)
 
 library(haven) #load package to import SPSS files
 #import SPSS files
-music_data_spss <- read_sav("music_data.sav")
-head(music_data_spss)
+survey_data_spss <- read_sav("test_data.sav")
+head(survey_data_spss)
 ```
 
 The import of other file formats works in a very similar way (e.g., Stata, SAS). Please refer to the respective help-files (e.g., ```?read_dta```, ```?read_sas``` ...) if you wish to import data created by other software packages. 
+
+### Import data from Qualtrics
+
+There is also a dedicated package 'qualtRics' which lets you conveniently import data from surveys you conducted via Qualtrics. Simply export your data from Qualtrics as a .csv file (standard option) and you can read it into R as follows:  
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+library(qualtRics)
+qualtrics <- read_survey('qualtrics_survey.csv')
+head(qualtrics)
+```
+
+When you inspect the data frame in R after you imported the data, you will find that it has some additional information compared to a standard .csv file. For example, each question (column) has the question number that you assigned in Qualtrics but also the Question text as an additional label. 
 
 ### Export data
 
@@ -96,7 +101,7 @@ write_sav(music_data, "my_file.sav")
 
 #### Scraping data from websites
 
-Sometimes you may come across interesting data on websites that you would like to analyse. Reading data from websites is possible in R, e.g., using the ```rvest``` package. Let's assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is ```<table>```. So let's read the entire website using ```read_html(url)``` and filter all tables using ```read_html(html_nodes(...,"table"))```.
+Sometimes you may come across interesting data on websites that you would like to analyze. Reading data from websites is possible in R, e.g., using the ```rvest``` package. Let's assume you would like to read a table that lists the population of different countries from <a href="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population" target="_blank">this Wikipedia page</a>. It helps to first inspect the structure of the website (e.g., using tools like <a href="http://selectorgadget.com/" target="_blank">SelectorGadget</a>), so you know which elements you would like to extract. In this case it is fairly obvious that the data are stored in a table for which the associated html-tag is ```<table>```. So let's read the entire website using ```read_html(url)``` and filter all tables using ```read_html(html_nodes(...,"table"))```.
 
 ```{r message=FALSE, warning=FALSE}
 library(rvest)
@@ -149,11 +154,11 @@ The process of obtaining data from APIs consists of the following steps:
 * Write a parser to pull out the elements you want and put them into a of simpler format
 * Store, process or analyze data according the marketing research question.
 
-Let's assume that you would like to obtain population data again. The World Bank has an API that allows you to easily obtain this kind of data. The details are usually provided in the API reference, e.g., <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-api-documentation" target="_blank">here</a>. You simply "call" the API for the desired information and get a structured JSON file with the desired key-value pairs in return. For example, the population for Austria from 1960 to 2016 can be obtained using <a href="http://api.worldbank.org/v2/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&format=json&per_page=100" target="_blank">this call</a>. The file can be easily read into R using the ```fromJSON()```-function from the ```jsonlite```-package. Again, the result is a list and the second element ```ctrydata[[2]]``` contains the desired data, from which we select the "value" and "data" columns using the square brackets as usual ```[,c("value","date")]```
+Let's assume that you would like to obtain population data again. The World Bank has an API that allows you to easily obtain this kind of data. The details are usually provided in the API reference, e.g., <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-api-documentation" target="_blank">here</a>. You simply "call" the API for the desired information and get a structured JSON file with the desired key-value pairs in return. For example, the population for Austria from 1960 to 2019 can be obtained using <a href="http://api.worldbank.org/v2/countries/AT/indicators/SP.POP.TOTL/?date=1960:2019&format=json&per_page=100" target="_blank">this call</a>. The file can be easily read into R using the ```fromJSON()```-function from the ```jsonlite```-package. Again, the result is a list and the second element ```ctrydata[[2]]``` contains the desired data, from which we select the "value" and "data" columns using the square brackets as usual ```[,c("value","date")]```
 
 ```{r message=FALSE, warning=FALSE}
 library(jsonlite)
-url <- "http://api.worldbank.org/v2/countries/AT/indicators/SP.POP.TOTL/?date=1960:2016&format=json&per_page=100" #specifies url
+url <- "http://api.worldbank.org/v2/countries/AT/indicators/SP.POP.TOTL/?date=1960:2019&format=json&per_page=100" #specifies url
 ctrydata <- fromJSON(url) #parses the data 
 str(ctrydata)
 head(ctrydata[[2]][,c("value","date")]) #checks if we scraped the desired data
@@ -161,28 +166,37 @@ head(ctrydata[[2]][,c("value","date")]) #checks if we scraped the desired data
 
 ##### Scraping data from APIs via R packages
 
---> COVID-19 example! (extra points - call at random one person to explain the model)
-
 An even more convenient way to obtain data from web APIs is to use existing R packages that someone else has already created. There are R packages available for various web-services. For example, the ```gtrendsR``` package can be used to conveniently obtain data from the <a href="https://trends.google.at/trends/" target="_blank">Google Trends</a> page. The ```gtrends()``` function is easy to use and returns a list of elements (e.g., "interest over time", "interest by city", "related topics"), which can be inspected using the ```ls()``` function. The following example can be used to obtain data for the search term "data science" in the US between September 1 and October 6: 
 
 ```{r message=FALSE, warning=TRUE}
 library(gtrendsR)
-index = 1
-success = FALSE
-while(!(success | index == 10)){
-  google_trends <- try(gtrends("data science", geo = c("US"), gprop = c("web"), time = "2017-09-01 2017-10-06"), silent = TRUE)
-  
-  if(!is(google_trends, "try-error")){
-    ls(google_trends)
-    head(google_trends$interest_over_time)
-    success = TRUE
-  }else{
-  index = index + 1
-  Sys.sleep(runif(1,0,3))}
-}
-if(success == FALSE){
-  warning("Google Trends has exited unsuccessfully")
-}
+#specify search term, area, source and time frame
+google_trends <- gtrends("data science", geo = c("US"), gprop = c("web"), time = "2012-09-01 2020-10-06")
+#inspect object
+head(google_trends)
+#inspect objects
+head(google_trends$interest_over_time)
 ```    
 
-## References {-}
+Although we haven't covered data visualization yet (see chapter 5), you could also easily plot the data to see the increasing trend for the search term we selected using the `plot()`-function. Note that the argument `type = "b"` indicates that <u>b</u>oth - a combination of line and points - should be used.   
+
+```{r message=FALSE, warning=TRUE}
+# plot data
+plot(google_trends$interest_over_time[,c("date","hits")],type = "b")
+```  
+
+Another advantage of R is that it is open to user contributions. This often means that packages that allow users to collect data to investigate timely issues are available fairly quickly. As an example, consider the recent pandemic where many resources were made available via R packages to researchers (see [here](https://mine-cetinkaya-rundel.github.io/covid19-r/) for an overview). For example, we might want to get information on the number of daily confirmed cases in the US on the state level. We could obtain this information in just one line of code using the 'COVID19' package. 
+
+```{r message=FALSE, warning=FALSE}
+library(COVID19)
+covid_data <- covid19(country = "US",level = 2,start = "2020-01-01")
+head(covid_data)
+```  
+
+Again, we could plot this data easily. In the following example, we first subset the data to the state of New York and then plot the development over time using the `plot()`-function. The argument `type = "l"` indicates that a <u>l</u>ine plot should be produced.   
+
+```{r message=FALSE, warning=TRUE}
+# plot data
+plot(covid_data[covid_data$administrative_area_level_2=="New York",c("date","confirmed")],type = "l")
+``` 
+
