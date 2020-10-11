@@ -13,8 +13,14 @@ output:
 ## Summary statistics
 
 ::: {.infobox .download data-latex="{download}"}
-[You can download the corresponding R-Code here](./Code/04-basic_statistics.R)
+[You can download the corresponding R-Code here](./Code/03-basic_statistics.R)
 :::
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wGBbLyjUquY" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 library(knitr)
@@ -185,6 +191,7 @@ In this example, we used the arguments `skew = FALSE` and `range = FALSE` to exc
 R is open to user contributions and various users have contributed packages that aim at making it easier for researchers to summarize statistics. For example, the ['summarytools'](https://cran.r-project.org/web/packages/summarytools/vignettes/Recommendations-rmarkdown.html) package can be used to summarize the variables.  
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+library(summarytools)
 st_css()
 ```
 
@@ -205,6 +212,12 @@ As you can see, the output also includes a visualization of the frequency distri
 
 #### Using frequency distributions to go beyond the data
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O6zyyV1ycgA" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 The frequency distribution can be used to make statements about the probability that a certain observed value will occur if the observations come from a known probability distribution. For normally distributed data, the following table can be used to look up the probability that a certain value will occur. For example, the value of -1.96 has a probability of 2.5% (i.e., .0250).  
 
 ```{r,echo=FALSE,out.width = '70%',fig.align='center',fig.cap = "Standard normal table"}
@@ -223,6 +236,7 @@ Z=\frac{X_i-\bar{X}}{s}
 $$
 
 By subtracting the mean of the variable from each observation and dividing by the standard deviation, the data is converted to a scale with mean = 0 and SD = 1, so we can use the tables of probabilities for the normal distribution to see how likely it is that a particular score will occur in the data. In other words, **the z-score tells us how many standard deviations above or below the mean a particular x-value is**. 
+
 
 To see how this works in practice, let's inspect the distribution of the 'tempo' variable from the music data set, which is defined as the overall estimated tempo of a track in beats per minute (BPM). The `hist()`-function can be used to draw the corresponding histogram.
 

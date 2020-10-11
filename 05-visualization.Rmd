@@ -26,7 +26,7 @@ register_google(key = "AIzaSyDMxadfjNH489ueRgo9S62PuZU6PbwAyiM")
 ## Data visualization
 
 ::: {.infobox .download data-latex="{download}"}
-[You can download the corresponding R-Code here](./Code/05-visualization.R)
+[You can download the corresponding R-Code here](./Code/04-visualization.R)
 :::
 
 This section discusses the important topic of data visualization and how to produce appropriate graphics to describe your data visually. You should always visualize your data first. The plots we created in the previous chapters used R's in-built functions. In this section, we will be using the `ggplot2` package by Hadley Wickham. It has the advantage of being fairly straightforward to learn and being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham as well as <a href="https://r-graphics.org/" target="_blank">"R Graphics Cookbook"</a> by Winston Chang.
@@ -39,6 +39,12 @@ ggplot2 is built around the idea of constructing plots by stacking layers on top
 </p>
 
 ### Categorical variables
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Eer3BHhS5IY" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
 
 #### Bar plot
 
@@ -83,12 +89,6 @@ You can see that the coordinate system is empty. This is because so far, we have
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (step 2)"}
 bar_chart + geom_col() 
-```
-
-Note that the same could be achieved using ```geom_bar```. However, by default ```geom_bar``` counts the number of observations within each category of a variable. This is not required in our case because we have already used the ```prop.table()``` function to compute the relative frequencies. The argument ```stat = "identity"``` prevents ```geom_bar``` from performing counting operations and uses the data "as it is".   
-
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Bar chart (alternative specification)"}
-bar_chart + geom_bar(stat = "identity") 
 ```
 
 Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follows now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the ```ylab()``` and ```xlab()``` functions:
@@ -160,7 +160,7 @@ bar_chart + geom_col(aes(fill = Genre)) +
   scale_fill_brewer(palette = "Blues") +
   theme(axis.text.x = element_text(angle=45,vjust=0.75),
         plot.title = element_text(hjust = 0.5,color = "#666666"),
-        legend.position = "none"
+        legend.title = element_blank()
         ) 
 ```
 These were examples of built-in formatting options of ```ggolot()```, where the default is ```theme_classic()```. For even more options, check out the ```ggthemes``` package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example ```theme_economist()``` uses the formatting of the journal "The Economist":
@@ -279,12 +279,17 @@ ggplot(table_plot_rel, aes(x = speech_cat, y = streams_cat)) +
 
 ### Continuous variables
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1ttdoi_QMAw" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 #### Histogram
 
-Histograms can be created for continuous data using the ```geom_histogram()``` function. Note that the ```aes()``` function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let's consider our data set containing the advertising expenditures and product sales of a company selling products in two different stores: 
+Histograms can be created for continuous data using the ```geom_histogram()``` function. Note that the ```aes()``` function only needs one argument here, since a histogram is a plot of the distribution of only one variable. As an example, let's consider our data set containing the music data: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Histogram"}
-
 head(music_data)
 ```
 
@@ -294,7 +299,6 @@ Now we can create the histogram using ```geom_histogram()```. The argument ```bi
 ggplot(music_data,aes(streams)) + 
   geom_histogram(binwidth = 4000, col = "black", fill = "darkblue") + 
   labs(x = "Number of streams", y = "Frequency", title = "Distribution of streams") + 
-  labs(x = "Number of streams", y = "Frequency") + 
   theme_bw()
 ```
 
@@ -306,7 +310,6 @@ ggplot(music_data,aes(streams)) +
   labs(x = "Number of streams", y = "Frequency", title = "Distribution of streams", subtitle = "Red vertical line = mean, green vertical line = median") + 
   geom_vline(xintercept = mean(music_data$streams), color = "red", size = 1) +
   geom_vline(xintercept = median(music_data$streams), color = "green", size = 1) +
-  labs(x = "Number of streams", y = "Frequency") + 
   theme_bw()
 ```
 In this case, you should indicate what the lines refer to. In the plot above, the 'subtitle' argument was used to add this information to the plot. 
@@ -371,22 +374,6 @@ ggplot(music_data,aes(x = log_streams, y = "")) +
   labs(x = "Number of streams (log-scale)", y = "") 
 ```
 
-::: {.infobox_orange .hint data-latex="{hint}"}
-Alternatively, you may use one of the many user contributed packages to visualize your data. One example is the <a href="https://indrajeetpatil.github.io/ggstatsplot/index.html" target="_blank">ggstatplot</a> package, which also reports the results from statistical analysis, such as an ANOVA. See also the presentation <a href="https://indrajeetpatil.github.io/ggstatsplot_slides/slides/ggstatsplot_presentation.html#1" target="_blank">here</a>. You can find one example how to create a boxplot below. 
-:::
-
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Boxplot using ggstatsplot package"}
-ggbetweenstats(
-    data = music_data,
-    title = "Number of streams by explicitness", # title for the plot
-    plot.type = "box",
-    x = genre, # 2 groups
-    y = log_streams,
-    type = "p", # default
-    messages = FALSE,
-    bf.message = FALSE
-  )
-```
 
 #### Plot of means
 
@@ -415,6 +402,7 @@ ggplot(mean_data,aes(x = genre_dummy, y = streams)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
 ```
+
 As can be seen, there is a large difference between the genres with respect to the average number of streams. 
 
 #### Grouped plot of means
@@ -422,7 +410,6 @@ As can be seen, there is a large difference between the genres with respect to t
 We might also be interested to investigate a second factor. Say, we would like to find out if there is a difference between genres with respect to the lyrics (i.e., whether the lyrics are explicit or not). Can we find evidence that explicit lyrics affect streams of songs from the HipHop & Rap genre differently compared to other genres. We can compute the statistics using the ```summarySE()``` function by simply adding the second variable to the 'groupvars' argument.  
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-library(Rmisc)
 mean_data2 <- summarySE(music_data, measurevar="streams", groupvars=c("genre_dummy","explicit"))
 mean_data2
 ```
@@ -470,23 +457,6 @@ ggplot(music_data, aes(speechiness, log_streams, colour = explicit)) +
 ```
 
 It appears from the plot that the association between speechiness and the number of streams is stronger for songs without explicit lyrics. 
-
-##### Combination of scatter plot and histogram
-
-Using the ```ggExtra()``` package, you may also augment the scatterplot with a histogram:
-
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Scatter plot with histogram"}
-library(ggExtra)
-p <- ggplot(music_data, aes(x = speechiness, y = log_streams)) + 
-  geom_point() +
-    labs(x = "Speechiness", y = "Number of streams (log-scale)", title = "Scatterplot & histograms of streams and speechiness") + 
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
-ggExtra::ggMarginal(p, type = "histogram")
-
-```
-
-In this case, the ```type = "histogram"``` argument specifies that we would like to plot a histogram. However, you could also opt for ```type = "boxplot"``` or ```type = "density"``` to use a boxplot or density plot instead.
 
 #### Line plot
 
@@ -599,7 +569,10 @@ ggplot(data_wide) +
     scale_colour_manual(values = c("#999999", "#E69F00"),guide=FALSE) + 
     theme_minimal() +
     labs(x = "Week", y = "Total streams AT (in million)", title = "Weekly number of streams by country") +
-    theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+    theme(plot.title = element_text(hjust = 0.5,color = "#666666"),
+          legend.title = element_blank(),
+          legend.position = "bottom"
+          ) 
 ```
 
 In this plot it is easy to see the difference in trends between the countries.  
@@ -614,7 +587,50 @@ ggsave("test_plot.jpg", height = 5, width = 8.5)
 
 ### Additional options
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wGBbLyjUquY" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 As the ggplot2 package became more and more popular over the past years, more and more extensions have been developed by users that can be used for specific purposes that are not yet covered by the standard functionality of ggplot2. You can find a list of the extensions <a href="https://exts.ggplot2.tidyverse.org/gallery/" target="_blank">here</a>. Below, you can find some example for the additional options.  
+
+#### Results of statistical tests
+
+You may use the <a href="https://indrajeetpatil.github.io/ggstatsplot/index.html" target="_blank">ggstatplot</a> package to augment your plots with the results from statistical tests, such as an ANOVA. You can find a presentation about the capabilities of this package <a href="https://indrajeetpatil.github.io/ggstatsplot_slides/slides/ggstatsplot_presentation.html#1" target="_blank">here</a>. The boxplot below shows an example. 
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, fig.height=6, eval=TRUE, fig.align="center", fig.cap = "Boxplot using ggstatsplot package"}
+library(ggstatsplot)
+music_data_subs <- subset(music_data, genre %in% c("HipHop & Rap", "Soundtrack","Pop","Rock"))
+ggbetweenstats(
+    data = music_data_subs,
+    title = "Number of streams by genre", # title for the plot
+    plot.type = "box",
+    x = genre, # 2 groups
+    y = log_streams,
+    type = "p", # default
+    messages = FALSE,
+    bf.message = FALSE,
+    pairwise.comparisons = TRUE # display results from pairwise comparisons
+  )
+```
+
+##### Combination of plots
+
+Using the ```ggExtra()``` package, you may combine two type of plots. For example, the following plot combines a scatterplot with a histogram:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Scatter plot with histogram"}
+library(ggExtra)
+p <- ggplot(music_data, aes(x = speechiness, y = log_streams)) + 
+  geom_point() +
+    labs(x = "Speechiness", y = "Number of streams (log-scale)", title = "Scatterplot & histograms of streams and speechiness") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+ggExtra::ggMarginal(p, type = "histogram")
+
+```
+
+In this case, the ```type = "histogram"``` argument specifies that we would like to plot a histogram. However, you could also opt for ```type = "boxplot"``` or ```type = "density"``` to use a boxplot or density plot instead.
 
 #### Location data
 

@@ -2,7 +2,7 @@
 #-----------------------Basic data handling-------------------------#
 #-------------------------------------------------------------------#
 # The following code is taken from the second chapter of the online script, which provides more detailed explanations:
-# https://imsmwu.github.io/MRDA2019/_book/data-handling.html#basic-data-handling
+# https://imsmwu.github.io/MRDA2020/data-handling.html
 
 
 #-------------------------------------------------------------------#
@@ -13,7 +13,7 @@
 # The working directory is the location where R will look for files you would like to load and where any files you write to disk will be saved.
 ## ------------------------------------------------------------------------
 getwd() #check the current working directory
-#setwd(path/to/workingdirectory) #set working directory in case you would like to change it
+#setwd("path/to/file") #set working directory in case you would like to change it
 #whenever setting paths in R, remember to use forward slashed (not backslashes)
 
 #-------------------------------------------------------------------#
@@ -39,8 +39,20 @@ seq(10,1) #produces reversed sequence
 ## ------------------------------------------------------------------------
 install.packages("plyr")
 # After a package is installed, you may access the functions by loading the package using the "library()" function
-# Note that you only have to install packages once! Aber the package has been installed, you may load it anytime using "library()"
+# Note that you only have to install packages once! After the package has been installed, you may load it anytime using "library()"
 library(plyr)
+
+# list all packages where an update is available
+old.packages()
+
+# update all available packages
+# update.packages()
+
+# update, without prompts for permission/clarification
+# update.packages(ask = FALSE)
+
+# update only a specific package use install.packages()
+# install.packages("ggplot2")
 
 #-------------------------------------------------------------------#
 #--------------------------Creating objects-------------------------#
@@ -206,4 +218,4 @@ names(music_data)[names(music_data)=="genre"] <- "top10_artist_genre"
 head(music_data)
 # or by referring to the index directly
 names(music_data)[4] <- "genre"
-head(music_data)
+head(music_data) 
