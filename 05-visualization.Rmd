@@ -326,7 +326,7 @@ Another common way to display the distribution of continuous variables is throug
 music_data$log_streams <- log(music_data$streams)
 ```
 
-Now, let's create a boxplot based on this variables and plot the log-transformed number of streams by genre. 
+Now, let's create a boxplot based on these variables and plot the log-transformed number of streams by genre. 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Boxplot by group"}
 ggplot(music_data,aes(x = genre, y = log_streams, fill = genre)) +
@@ -356,7 +356,7 @@ ggplot(music_data,aes(x = log_streams, y = genre, fill = genre)) +
         ) 
 ```
 
-It is often meaningful to augment the boxplot with the data points using ```geom_jitter()```. This way, differences in the distribution of the varibale between the genres become even more apparent. 
+It is often meaningful to augment the boxplot with the data points using ```geom_jitter()```. This way, differences in the distribution of the variable between the genres become even more apparent. 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "Boxplot by group"}
 ggplot(music_data,aes(x = log_streams , y = genre)) +
