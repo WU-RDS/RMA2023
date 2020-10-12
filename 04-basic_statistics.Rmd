@@ -86,7 +86,7 @@ The data set contains information about all songs that appeared in the Top200 ch
 * release_date: release_date of the song
 * explicit: indicates whether a song has explicit lyrics (1) or not (0)
 * duration: the duration in milliseconds
-* danceability, egergy, loudness, speechiness, instrumentalness, liveness, valence, tempo are the [audio features](https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/), describing the music style across various dimension
+* danceability, energy, loudness, speechiness, instrumentalness, liveness, valence, tempo are the [audio features](https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/), describing the music style across various dimension
 * label: the music label an artist is signed to
 * rep_ctry: the repertoire country
 * genre: the song genre
@@ -286,7 +286,7 @@ And the associated probability is:
 ```{r message=FALSE, warning=FALSE}
 pnorm(min(music_data$tempo_std))*2
 ```
-Although the probability of observing this minimum value is very low, there are very few observations in the extreme regions at each end of the histogram, so this doesn't seem too unusual. A a rule of thumb, you can remember that 68% of the observations of a normally distributed variable should be within 1 standard deviation of the mean, 95% within 2 standard deviations, and 99.7% within 3 standard deviations. This is also shown in the following plot: 
+Although the probability of observing this minimum value is very low, there are very few observations in the extreme regions at each end of the histogram, so this doesn't seem too unusual. As a rule of thumb, you can remember that 68% of the observations of a normally distributed variable should be within 1 standard deviation of the mean, 95% within 2 standard deviations, and 99.7% within 3 standard deviations. This is also shown in the following plot: 
 
 ```{r,echo=FALSE,out.width = '70%',fig.align='center',fig.cap = "The 68, 95, 99.7 rule (source: Wikipedia)"}
 knitr::include_graphics("./images/prob_rule.JPG")
