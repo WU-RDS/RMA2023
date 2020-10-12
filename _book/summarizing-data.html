@@ -202,7 +202,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>4.2.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> Continuous variables</a></li>
 <li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>4.2.3</b> Saving plots</a></li>
-<li class="chapter" data-level="4.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#additional-options"><i class="fa fa-check"></i><b>4.2.4</b> Additional options</a></li>
+<li class="chapter" data-level="4.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#ggplot-extensions"><i class="fa fa-check"></i><b>4.2.4</b> ggplot extensions</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
@@ -495,7 +495,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>release_date: release_date of the song</li>
 <li>explicit: indicates whether a song has explicit lyrics (1) or not (0)</li>
 <li>duration: the duration in milliseconds</li>
-<li>danceability, egergy, loudness, speechiness, instrumentalness, liveness, valence, tempo are the <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/">audio features</a>, describing the music style across various dimension</li>
+<li>danceability, energy, loudness, speechiness, instrumentalness, liveness, valence, tempo are the <a href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/">audio features</a>, describing the music style across various dimension</li>
 <li>label: the music label an artist is signed to</li>
 <li>rep_ctry: the repertoire country</li>
 <li>genre: the song genre</li>
@@ -879,7 +879,7 @@ Figure 4.4: Histogram of standardized tempo variable
 <p>And the associated probability is:</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="summarizing-data.html#cb143-1"></a><span class="kw">pnorm</span>(<span class="kw">min</span>(music_data<span class="op">$</span>tempo_std)) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 0.002642526</code></pre>
-<p>Although the probability of observing this minimum value is very low, there are very few observations in the extreme regions at each end of the histogram, so this doesn’t seem too unusual. A a rule of thumb, you can remember that 68% of the observations of a normally distributed variable should be within 1 standard deviation of the mean, 95% within 2 standard deviations, and 99.7% within 3 standard deviations. This is also shown in the following plot:</p>
+<p>Although the probability of observing this minimum value is very low, there are very few observations in the extreme regions at each end of the histogram, so this doesn’t seem too unusual. As a rule of thumb, you can remember that 68% of the observations of a normally distributed variable should be within 1 standard deviation of the mean, 95% within 2 standard deviations, and 99.7% within 3 standard deviations. This is also shown in the following plot:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-106"></span>
 <img src="images/prob_rule.JPG" alt="The 68, 95, 99.7 rule (source: Wikipedia)" width="70%" />
 <p class="caption">
@@ -1211,7 +1211,7 @@ Figure 4.21: Histogram 2
 <h4><span class="header-section-number">4.2.2.2</span> Boxplot</h4>
 <p>Another common way to display the distribution of continuous variables is through boxplots. ggplot will construct a boxplot if given the geom <code>geom_boxplot()</code>. In our case we might want to show the difference in streams between the genres. For this analysis, we will transform the streaming variable using a logarithmic transformation, which is common with such data (as we will see later). So let’s first create a new variable by taking the logarithm of the streams variable.</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="summarizing-data.html#cb170-1"></a>music_data<span class="op">$</span>log_streams &lt;-<span class="st"> </span><span class="kw">log</span>(music_data<span class="op">$</span>streams)</span></code></pre></div>
-<p>Now, let’s create a boxplot based on this variables and plot the log-transformed number of streams by genre.</p>
+<p>Now, let’s create a boxplot based on these variables and plot the log-transformed number of streams by genre.</p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="summarizing-data.html#cb171-1"></a><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> genre, <span class="dt">y =</span> log_streams, </span>
 <span id="cb171-2"><a href="summarizing-data.html#cb171-2"></a>    <span class="dt">fill =</span> genre)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Genre&quot;</span>, </span>
 <span id="cb171-3"><a href="summarizing-data.html#cb171-3"></a>    <span class="dt">y =</span> <span class="st">&quot;Number of streams (log-scale)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></span>
@@ -1241,7 +1241,7 @@ Figure 4.22: Boxplot by group
 Figure 4.23: Boxplot by group
 </p>
 </div>
-<p>It is often meaningful to augment the boxplot with the data points using <code>geom_jitter()</code>. This way, differences in the distribution of the varibale between the genres become even more apparent.</p>
+<p>It is often meaningful to augment the boxplot with the data points using <code>geom_jitter()</code>. This way, differences in the distribution of the variable between the genres become even more apparent.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="summarizing-data.html#cb173-1"></a><span class="kw">ggplot</span>(music_data, <span class="kw">aes</span>(<span class="dt">x =</span> log_streams, <span class="dt">y =</span> genre)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb173-2"><a href="summarizing-data.html#cb173-2"></a><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">coef =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of streams (log-scale)&quot;</span>, </span>
 <span id="cb173-3"><a href="summarizing-data.html#cb173-3"></a>    <span class="dt">y =</span> <span class="st">&quot;Genre&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>, </span>
@@ -1491,11 +1491,11 @@ Figure 4.35: Secondary y-axis
 <p>To save the last displayed plot, simply use the function <code>ggsave()</code>, and it will save the plot to your working directory. Use the arguments <code>height</code>and <code>width</code> to specify the size of the file. You may also choose the file format by adjusting the ending of the file name. E.g., <code>file_name.jpg</code> will create a file in JPG-format, whereas <code>file_name.png</code> saves the file in PNG-format, etc..</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="summarizing-data.html#cb194-1"></a><span class="kw">ggsave</span>(<span class="st">&quot;test_plot.jpg&quot;</span>, <span class="dt">height =</span> <span class="dv">5</span>, <span class="dt">width =</span> <span class="fl">8.5</span>)</span></code></pre></div>
 </div>
-<div id="additional-options" class="section level3">
-<h3><span class="header-section-number">4.2.4</span> Additional options</h3>
+<div id="ggplot-extensions" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> ggplot extensions</h3>
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wGBbLyjUquY" frameborder="0" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/X8zGovLeCrk" frameborder="0" allowfullscreen>
 </iframe>
 </div>
 <p><br></p>
