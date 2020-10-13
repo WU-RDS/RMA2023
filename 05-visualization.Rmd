@@ -595,7 +595,7 @@ ggsave("test_plot.jpg", height = 5, width = 8.5)
 
 As the ggplot2 package became more and more popular over the past years, more and more extensions have been developed by users that can be used for specific purposes that are not yet covered by the standard functionality of ggplot2. You can find a list of the extensions <a href="https://exts.ggplot2.tidyverse.org/gallery/" target="_blank">here</a>. Below, you can find some example for the additional options.  
 
-#### Results of statistical tests
+#### Results of statistical tests (ggstatsplot)
 
 You may use the <a href="https://indrajeetpatil.github.io/ggstatsplot/index.html" target="_blank">ggstatplot</a> package to augment your plots with the results from statistical tests, such as an ANOVA. You can find a presentation about the capabilities of this package <a href="https://indrajeetpatil.github.io/ggstatsplot_slides/slides/ggstatsplot_presentation.html#1" target="_blank">here</a>. The boxplot below shows an example. 
 
@@ -615,7 +615,7 @@ ggbetweenstats(
   )
 ```
 
-##### Combination of plots
+##### Combination of plots (ggExtra)
 
 Using the ```ggExtra()``` package, you may combine two type of plots. For example, the following plot combines a scatterplot with a histogram:
 
@@ -632,7 +632,7 @@ ggExtra::ggMarginal(p, type = "histogram")
 
 In this case, the ```type = "histogram"``` argument specifies that we would like to plot a histogram. However, you could also opt for ```type = "boxplot"``` or ```type = "density"``` to use a boxplot or density plot instead.
 
-#### Location data
+#### Location data (ggmap)
 
 Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of Shazam users from Germany. The data contains the latitude and longitude information where a music track was "shazamed". 
 
@@ -662,6 +662,109 @@ ggmap(de_map_g_str, extent = "device") +
   scale_alpha(range = c(0, 0.3), guide = FALSE)
 
 ```
+
+## Learning check {-}
+
+**(LC4.1) For which data types is it meaningful to compute the mean?**
+
+- [ ] Nominal
+- [ ] Ordinal
+- [ ] Interval
+- [ ] Ratio
+
+**(LC4.2) How can you compute the standardized variate of a variable X?**
+
+- [ ] $Z=\frac{X_i-\bar{X}}{s}$
+- [ ] $Z=\frac{\bar{X}+X_i}{s}$
+- [ ] $Z=\frac{s}{\bar{X}+X_i}$
+- [ ] $Z=s*({\bar{X}+X_i)}$
+- [ ] None of the above 	
+
+**You wish to analyze the following data frame 'df' containing information about cars**
+
+```{r,echo=FALSE}
+head(mtcars,6)
+```
+
+**(LC4.3) How could you add a new variable containing the z-scores of the variable 'mpg' in R?**
+
+- [ ] `df$mpg_std <- zscore(df$mpg)`
+- [ ] `df$mpg_std <- stdv(df$mpg)`
+- [ ] `df$mpg_std <- std.scale(df$mpg)`
+- [ ] `df$mpg_std <- scale(df$mpg)`
+- [ ] None of the above 	
+
+**(LC4.4) How could you produce the below output?**
+
+```{r,echo=FALSE,message=FALSE, warning=FALSE, error=FALSE}
+library(psych)
+as.data.frame(psych::describe(mtcars[,c("hp","mpg","qsec")]))
+```
+
+- [ ] `describe(mtcars[,c("hp","mpg","qsec")])`
+- [ ] `summary(mtcars[,c("hp","mpg","qsec")])`
+- [ ] `table(mtcars[,c("hp","mpg","qsec")])`
+- [ ] `str(mtcars[,c("hp","mpg","qsec")])`
+- [ ] None of the above 	
+
+**(LC4.5) The last column "carb" indicates the number of carburetors each model has. By using a function we got to know the number of car models that have a certain number carburetors. Which function helped us to obtain this information?** 
+
+```{r,echo=FALSE}
+table(mtcars$carb)
+```
+
+- [ ] `describe(mtcars$carb)`
+- [ ] `table(mtcars$carb)`
+- [ ] `str(mtcars$carb)`
+- [ ] `prop.table(mtcars$carb)`
+- [ ] None of the above 	
+
+**(LC4.6) What type of data can be meaningfully depicted in a scatter plot?**
+
+- [ ] Two categorical variables
+- [ ] One categorical and one continuous variable
+- [ ] Two continuous variables
+- [ ] One continuous variable
+- [ ] None of the above 	
+
+**(LC4.7) Which statement about the graph below is true?** 
+
+```{r,echo=FALSE}
+hist(mtcars$mpg,xlab="miles per gallon", main="miles per gallon")
+```
+
+- [ ] This is a bar chart
+- [ ] This is a histogram
+- [ ] It shows the frequency distribution of a continuous variable
+- [ ] It shows the frequency distribution of a categorical variable
+- [ ] None of the above 	
+
+**(LC4.8) Which statement about the graph below is true?** 
+
+```{r, echo=FALSE,strip.white=TRUE, out.width="50%"}
+boxplot(mtcars$mpg, outline = T, notch = F)
+```
+
+- [ ] This is a bar chart
+- [ ] 50% of observations are contained in the gray area
+- [ ] The horizontal black line indicates the mean
+- [ ] This is a boxplot
+- [ ] None of the above 	
+
+**(LC4.9) Which function can help you to save a graph made with `ggplot()`?** 
+
+- [ ] `ggsave()`
+- [ ] `write.plot()`
+- [ ] `save.plot()`
+- [ ] `export.plot()`
+
+**(LC4.10) For a variable that follows a normal distribution, within how many standard deviations of the mean are 95% of values?**
+
+- [ ] 1.645
+- [ ] 1.960
+- [ ] 2.580
+- [ ] 3.210
+- [ ] None of the above 	
 
 ## References {-}
 

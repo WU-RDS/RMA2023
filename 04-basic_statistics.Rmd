@@ -37,7 +37,7 @@ This section discusses how to produce and analyze basic summary statistics. Summ
 A **measure of central tendency** is a single value that attempts to describe the data by identifying the central position within the data. There are various measures of central tendency as the following table shows. 
 
 Statistic    | Description   | Definition 
-------------- | ------------- | ------------- 
+---- | ------------------------------  | -----
 Mean | The average value when you sum up all elements and divide by the number of elements  | $\bar{X}=\frac{\sum_{i=1}^{n}{X_i}}{n}$  
 Mode  | The value that occurs most frequently (i.e., the highest peak of the frequency distribution)  |   
 Median | The middle value when the data are arranged in ascending or descending order (i.e., the 50th percentile) |   
@@ -47,7 +47,7 @@ Median | The middle value when the data are arranged in ascending or descending 
 The **dispersion** refers to the degree to which the data is distributed around the central tendency and can be described in terms of the range, interquartile range, variance, and standard deviation. 
 
 Statistic    | Description   | Definition 
-------------- | ------------- | ------------- 
+---- | ------------------------------  | -----
 Range | The difference between the largest and smallest values in the sample | $Range=X_{largest}-X_{smallest}$  
 Interquartile range  | The range of the middle 50% of scores | $IQR=Q_3-Q_1$   
 Variance | The mean squared deviation of all the values of the mean | $s^2=\frac{1}{n-1}*\sum_{i=1}^{n}{(X_i-\bar{X})^2}$
@@ -195,7 +195,7 @@ library(summarytools)
 st_css()
 ```
 
-```{r, message=FALSE, warning=FALSE,results='asis'}
+```{r, message=FALSE, error = FALSE, warning = FALSE, results='asis'}
 library(summarytools)
 print(dfSummary(music_data[,c("streams","duration_ms","valence","genre","label","explicit")], plain.ascii = FALSE, style = "grid",valid.col = FALSE, tmp.img.dir = "tmp"),  method = 'render',headings = FALSE,footnote= NA)
 ```
