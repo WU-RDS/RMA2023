@@ -10,21 +10,21 @@ options(digits = 7)
 # Introduction to Statistical Inference
 
 ::: {.infobox .download data-latex="{download}"}
-[You can download the corresponding R-Code here](./Code/06-statistical_inference.R)
+[You can download the corresponding R-Code here](./Code/05-statistical_inference.R)
 :::
 
 This chapter will provide you with a basic intuition on statistical inference. As marketing researchers we are usually faced with "imperfect" data in the sense that we cannot collect **all** the data we would like. Imagine you are interested in the average amount of time WU students spend listening to music every month. Ideally, we could force all WU students to fill out our survey. Realistically we will only be able to observe a small fraction of students (maybe 500 out of the $25.000+$). With the data from this small fraction at hand, we want to make an inference about the true average listening time of all WU students. We are going to start with the assumption that we know everything. That is, we first assume that we know all WU students' listening times and analyze the distribution of the listening time in the entire population. Subsequently, we are going to look at the uncertainty that is introduced by only knowing some of the students' listening times (i.e., a sample from the population) and how that influences our analysis.
 
 ## If we knew it all 
 
-Assume there are $25,000$ students at WU and every single one has kindly provided us with the hours they listened to music in the past month. In this case, we know the true mean ($49.93$ hours) and the true standard deviation (SD = $10.02$) and thus we can easily summarize the entire distribution. Since the data follows a normal distribution, roughly 95% of the values lie within 2 standard deviations from the mean, as the following plot shows:
+Assume there are $25,000$ students at WU and every single one has kindly provided us with the hours they listened to music in the past month. Using the code below, the ```rnorm()``` function will be used to generate 25,000 observations from a normal distribution with a mean of 50 and a standard deviation of 10. Although you might not be used to working with this type of simulated (i.e., synthetic) data, it is useful when explaining statistical concepts because the properties of the data are known. In this case, for example, we know the true mean ($49.93$ hours) and the true standard deviation (SD = $10.02$) and thus we can easily summarize the entire distribution. Since the data follows a normal distribution, roughly 95% of the values lie within 2 standard deviations from the mean, as the following plot shows:
 
 ```{r, message = FALSE, warning=FALSE}
 library(tidyverse)
 library(ggplot2)
 library(latex2exp)
 set.seed(321)
-hours <- rnorm(25000, 50, 10)
+hours <- rnorm(n = 25000, mean = 50, sd = 10)
 ggplot(data.frame(hours)) +
   geom_histogram(aes(hours), bins = 50, fill = 'white', color = 'black') +
   labs(title = "Histogram of listening times",
@@ -43,16 +43,22 @@ ggplot(data.frame(hours)) +
   annotate("text", x = mean(hours) -28, y = 1100, label = "Mean - 2 * SD" )
 ```
 
+::: {.infobox_orange .hint data-latex="{hint}"}
+Notice the `set.seed()` function we used in the code above. By specifying the seed, we can make sure that the results will be the same as here on the website when you execute the code on your computer. Otherwise, you would end up with a slightly different data set since the observations are generated randomly from the normal distribution. 
+:::
+
+
 In this case, we refer to all WU students as **the population**. In general, the population is the entire group we are interested in. This group does not have to necessarily consist of people, but could also be companies, stores, animals, etc.. The parameters of the distribution of population values (in hour case: "hours") are called population parameters. As already mentioned, we do not usually know population parameters but use inferential statistics to infer them based on our sample from the population, i.e., we measure statistics from a sample (e.g., the sample mean $\bar x$) to estimate population parameters (the population mean $\mu$). Here, we will use the following notation to refer to either the population parameters or the sample statistic: 
 
 Variable	 | Sample statistic	 | Population parameter
-------------------------- | ------------------------- | -------------------------
+---------------------- | ------------------------- | -------------------------
 Size  | n  | N 
 Mean  |  $\bar{x} = {1 \over n}\sum_{i=1}^n x_i$ | $\mu = {1 \over N}\sum_{i=1}^N x_i$  |
 Variance  | $s^2 = {1 \over n-1}\sum_{i=1}^n (x_i-\bar{x})^2$  | $\sigma^2 = {1 \over N}\sum_{i=1}^N (x_i-\mu)^2$  
 Standard deviation | $s = \sqrt{s^2}$  | $\sigma = \sqrt{\sigma^2}$  
 Standard error | $SE_{\bar x} = {s \over \sqrt{n}}$  | $\sigma_{\bar x} = {\sigma \over \sqrt{n}}$  
 
+Using this notation, $N$ refers to the number of observations in the entire population (i.e., 25,000 in our example) and $n$ refers to a subset of the population (i.e., a sample). As you can see, we will use different Greek letters to denote the sample statistics and the population parameters. Another difference, you might have noticed is that in the computation of the sample variance, we divide by $n-1$, not $n$. This is also know as the *‘Bessel’s correction’* and it corrects the bias in the estimation of the population variance based on a sample. More specifically, due to the correction, the corrected variance will be larger, since the denominator gets smaller by subtracting 1. This is done because the variance will most of the time be smaller when calculated using the sum of squared deviations from the sample mean, compared to using the sum of deviations from the population mean. The intuition is that, the larger your sample is, the more likely it is to get more population-representative points. Or, to put it another way, it is less likely to get a sample mean which results in differences which are too small. Thus, the larger your sample size $n$, the less of a correction you need and, hence, the smaller the impact the correction component will be.   
 
 ### Sampling from a known population
 
@@ -68,11 +74,9 @@ ggplot(data.frame(sample_1)) +
   ggtitle(TeX(sprintf("Distribution of listening times ($\\bar{x}$ = %.2f)",round(mean(sample_1),2))))
 ```
 
-Observe that in this first draw the mean ($\bar x =$ `r round(mean(sample_1),2)`) is quite close to the actual mean ($\mu = $ `r round(mean(hours),2)`). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.  
+Observe that in this first draw the mean ($\bar x =$ `r round(mean(sample_1),2)`) is quite close to the actual mean ($\mu =$ `r round(mean(hours),2)`). It seems like the sample mean is a decent estimate of the population mean. However, we could just be lucky this time and the next sample could turn out to have a different mean. Let us continue by looking at four additional random samples, consisting of 100 students each. The following plot shows the distribution of listening times for the four different samples from the population.  
 
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
-#student_sample <- sample(1:25000, size = 100, replace = FALSE)
-#means <- hours[student_sample]
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.height = 6, fig.width = 8}
 library(cowplot)
 set.seed(8830)
 student_sample <- sample(1:25000, size = 100, replace = FALSE)
@@ -343,11 +347,11 @@ The attentive reader might have noticed that the population above was generated 
 
 The central limit theorem states that if **(1)** the population distribution has a mean (there are examples of distributions that don't have a mean , but we will ignore these here), and **(2)** we take a large enough sample, then the sampling distribution of the sample mean is approximately normally distributed. What exactly "large enough" means depends on the setting, but the interactive element at the end of this chapter illustrates how the sample size influences how accurately we can estimate the population parameters from the sample statistics.
 
-To illustrate this, let's repeat the analysis above with a population from a gamma distribution. In the previous example, we assumed a normal distribution so it was more likely for a given student to spend around 50 hours per week listening to music. The following example depicts the case in which most students spend a similar amount of time listening to music, but there are a few students who very rarely listen to music, and some music enthusiasts with a very high level of listening time. Here is a histogram of the listening times in the population:
+To illustrate this, let's repeat the analysis above with a population from a gamma distribution. In the previous example, we assumed a normal distribution so it was more likely for a given student to spend around 50 hours per week listening to music. The following example depicts the case in which most students spend a similar amount of time listening to music, but there are a few students who very rarely listen to music, and some music enthusiasts with a very high level of listening time. In the following code, we will use the `rgamma()` function to generate 25,000 random observations from the gamma distribution. The gamma distribution is specified by shape and scale parameters instead of the mean and standard deviation of the normal distribution. Here is a histogram of the listening times in the population:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.height = 4, fig.width = 6}
 set.seed(321)
-hours <- rgamma(25000, shape = 2, scale = 10)
+hours <- rgamma(n = 25000, shape = 2, scale = 10)
 ggplot(data.frame(hours)) +
   geom_histogram(aes(x = hours), bins = 30, fill='white', color='black') +
     geom_vline(xintercept = mean(hours), size = 1)  +  theme_bw() +
@@ -551,9 +555,15 @@ ci_lower
 ci_upper
 ```
 
-such that if we collected 100 samples and computed the mean and confidence interval for each of them, in $95\%$ of the cases, the true population mean is going to be within this interval between `r round(ci_lower,2)` and `r round(ci_upper,2)`. This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:
+such that if we collected 100 samples and computed the mean and confidence interval for each of them, in $95\%$ of the cases, the true population mean is going to be within this interval between `r round(ci_lower,2)` and `r round(ci_upper,2)`. 
 
-```{r, fig.height = 15, fig.width=10}
+::: {.infobox_orange .hint data-latex="{hint}"}
+Note the correct interpretation of the confidence interval: If we’d collected 100 samples, calculated the mean and then calculated a confidence interval for that mean, then, for 95 of these samples, the confidence intervals we constructed would contain the true value of the mean in the population.
+:::
+
+This is illustrated in the plot below that shows the mean of the first 100 samples and their confidence intervals:
+
+```{r, echo = FALSE, eval = TRUE, fig.height = 15, fig.width=10}
 set.seed(12345)
 samples <- 100
 hours <- rgamma(25000, shape = 2, scale = 10)
@@ -582,7 +592,59 @@ ggplot2::ggplot(means_sd, aes(y = y)) +
 Note that this does **not** mean that for a specific sample there is a $95\%$ chance that the population mean lies within its confidence interval. The statement depends on the large number of samples we do not actually draw in a real setting. You can view the set of all possible confidence intervals similarly to the sides of a coin or a die. If we throw a coin many times, we are going to observe head roughly half of the times. This does not, however, exclude the possibility of observing tails for the first 10 throws. Similarly, any specific confidence interval might or might not include the population mean but if we take many samples on average $95\%$ of the confidence intervals are going to include the population mean.
 :::
 
+## Learning check {-}
 
-## Summary {-}
+**(LC5.1) What is the correct interpretation of a confidence interval for a significance level of $\alpha$=0.05?**
 
-When conducting research, we are (almost) always faced with the problem of not having access to the entire group we are interested in. Therefore, we use sample properties that we have derived in this chapter to do statistical inference based on a single sample. We use statistics of the sample as well as the sample size to calculate the confidence interval of our choice (e.g. $95\%$). In practice most of this is done for us, so you won't need to do this by hand. With a sample at hand, we need to choose the appropriate test and a null hypothesis. How this is done will be discussed in the next chapter. 
+- [ ] If we take 100 samples and calculate mean and confidence interval for each one of them, then the true population mean would be included in 95% of these intervals.
+- [ ] If we take 100 samples and calculate mean and confidence interval for each one of them, then the true population mean would be included in 5% of these intervals.
+- [ ] If we take 100 samples and calculate mean and confidence interval for each one of them, then the true population mean would be included in 100% of these intervals.
+- [ ] For a given sample, there is a 95% chance that the true population mean lies within the confidence interval.
+
+**(LC5.2) Which statements regarding standard error are TRUE?**
+
+- [ ] There is no connection between the standard deviation and the standard error.
+- [ ] The standard error is a function of the sample size and the standard deviation.
+- [ ] The standard error of the mean decreases as the sample size increases.
+- [ ] The standard error of the mean increases as the standard deviation increases.
+- [ ] None of the above 	
+
+**(LC5.3) What is the correct definition for the standard error ($SE_{\bar x}$)?**
+
+- [ ] ${s \over \sqrt{n}}$
+- [ ] ${s * \sqrt{n}}$
+- [ ] ${\sqrt{s^2} \over \sqrt{n}}$
+- [ ] ${\sqrt{s} \over n}$
+- [ ] None of the above 	
+
+**(LC5.4) Which of the following do you need to compute a confidence interval around a sample mean?**
+
+- [ ] The critical value of the test statistic given a certain level of confidence 
+- [ ] A continuous variable (i.e., at least measured at the interval level) 
+- [ ] The sample the mean
+- [ ] The standard error
+- [ ] None of the above 	
+
+**(LC5.5) What is the correct definition for the confidence interval?**
+
+- [ ] $CI=\bar{x} \pm \frac{z_{1-\frac{a}{n}}}{\sigma_{\bar{x}}}$
+- [ ] $CI=\bar{x} * z_{1-\frac{a}{n}}*\sigma_{\bar{x}}$
+- [ ] $CI= z_{1-\frac{a}{n}}*\sigma_{\bar{x}}-\bar{x}$
+- [ ] $CI=\bar{x} \pm z_{1-\frac{a}{n}}*\sigma_{\bar{x}}$
+- [ ] None of the above 	
+
+*As a marketing manager at Spotify you wish to find the average listening time of your users. Based on a random sample of 180 users you found that the mean listening time for the sample is 7.34 hours per week and the standard deviation is 6.87 hours.* 
+
+**(LC5.6) What is the 95% confidence interval for the mean listening time (the corresponding z-value for the 95% CI is 1.96)?**
+
+- [ ] [6.34;8.34]
+- [ ] [7.15;7.55]
+- [ ] [6.25;8.15]
+- [ ] [6.54;8.54]
+- [ ] None of the above 
+
+## References {-}
+
+* Field, A., Miles J., & Field, Z. (2012). Discovering Statistics Using R. Sage Publications.
+* Malhotra, N. K.(2010). Marketing Research: An Applied Orientation (6th. ed.). Prentice Hall.
+* Vasishth, S. (2014). An introduction to statistical data analysis (lecture notes)
