@@ -399,7 +399,7 @@ Accepting the alternative hypothesis in turn will often lead to changes in opini
 <span id="cb214-7"><a href="hypothesis-testing.html#cb214-7"></a>    <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb214-8"><a href="hypothesis-testing.html#cb214-8"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> mean_sample, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, </span>
 <span id="cb214-9"><a href="hypothesis-testing.html#cb214-9"></a>        <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">TeX</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Distribution of values in the sample ($n =$ %.0f, $</span><span class="ch">\\</span><span class="st">bar{x] = $ %.2f, s = %.2f)&quot;</span>, </span>
-<span id="cb214-10"><a href="hypothesis-testing.html#cb214-10"></a>    n, <span class="kw">mean</span>(student_sample), <span class="kw">sd</span>(student_sample))), </span>
+<span id="cb214-10"><a href="hypothesis-testing.html#cb214-10"></a>    n, mean_sample, <span class="kw">sd</span>(music_listening_sample<span class="op">$</span>hours))), </span>
 <span id="cb214-11"><a href="hypothesis-testing.html#cb214-11"></a>    <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <p>The mean listening time in the sample (black line) <span class="math inline">\(\bar x\)</span> is 11457.94. We can already see from the graphic above that such a value is rather unlikely under the hypothesis that the population mean is <span class="math inline">\(10\)</span>. Intuitively, such a result would therefore provide evidence against our null hypothesis. But how could we quantify specifically how unlikely it is to obtain such a value and decide whether or not to reject the null hypothesis? Significance tests can be used to provide answers to these questions.</p>
@@ -1065,6 +1065,10 @@ H_0: \mu_D \ne 0
 <li>That the null hypothesis is false? → No, it is always false.</li>
 <li>That the null hypothesis is true? → No, it is never true.</li>
 </ul>
+<p>It is important to understand what the p-value actually tells you.</p>
+<div class="infobox_orange hint">
+<p>A p-value of &lt; 0.05 means that the probability of finding a difference of at least the observed magnitude is less than 5% if the null hypothesis was true. In other words, if there really wouldn’t be a difference between the groups, it tells you the probability of observing the difference that you found in your data (or more extreme differences).</p>
+</div>
 <p>The following points provide some guidance on how to interpret significant and insignificant test results.</p>
 <p><strong>Significant result</strong></p>
 <ul>

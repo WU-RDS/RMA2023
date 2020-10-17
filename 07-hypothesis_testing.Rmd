@@ -99,7 +99,7 @@ mean_sample <- mean(music_listening_sample$hours)
 ggplot(music_listening_sample) + 
   geom_histogram(aes(x = hours), fill = 'white', color = 'black', bins = 20) +
   theme_bw() +  geom_vline(xintercept = mean_sample, color = 'black', size=1) +
-  labs(title = TeX(sprintf("Distribution of values in the sample ($n =$ %.0f, $\\bar{x] = $ %.2f, s = %.2f)",n,mean(student_sample),sd(student_sample))),x = "Hours", y = "Frequency") 
+  labs(title = TeX(sprintf("Distribution of values in the sample ($n =$ %.0f, $\\bar{x] = $ %.2f, s = %.2f)",n,mean_sample,sd(music_listening_sample$hours))),x = "Hours", y = "Frequency") 
 ```
 
 The mean listening time in the sample (black line) $\bar x$ is `r round(mean(student_sample),2)`. We can already see from the graphic above that such a value is rather unlikely under the hypothesis that the population mean is $10$. Intuitively, such a result would therefore provide evidence against our null hypothesis. But how could we quantify specifically how unlikely it is to obtain such a value and decide whether or not to reject the null hypothesis? Significance tests can be used to provide answers to these questions. 
@@ -1006,6 +1006,12 @@ From my experience, students tend to place a lot of weight on p-values when inte
 * The importance of an effect? &rarr; No, significance depends on sample size.
 * That the null hypothesis is false? &rarr; No, it is always false.
 * That the null hypothesis is true? &rarr; No, it is never true.
+
+It is important to understand what the p-value actually tells you. 
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+A p-value of < 0.05 means that the probability of finding a difference of at least the observed magnitude is less than 5% if the null hypothesis was true. In other words, if there really wouldn't be a difference between the groups, it tells you the probability of observing the difference that you found in your data (or more extreme differences).  
+:::
 
 The following points provide some guidance on how to interpret significant and insignificant test results. 
 
