@@ -1,5 +1,5 @@
 # The following code is taken from the fifth chapter of the online script, which provides more detailed explanations:
-# https://imsmwu.github.io/MRDA2019/_book/introduction-to-statistical-inference.html
+# https://imsmwu.github.io/MRDA2020/introduction-to-statistical-inference.html
 
 #-------------------------------------------------------------------#
 #---------------------Install missing packages----------------------#

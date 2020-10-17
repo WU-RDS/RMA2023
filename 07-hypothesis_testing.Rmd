@@ -17,7 +17,7 @@ options(scipen = 999, digits = 7)
 # Hypothesis testing
 
 ::: {.infobox .download data-latex="{download}"}
-[You can download the corresponding R-Code here](./Code/07-hypothesis_testing (2).R)
+[You can download the corresponding R-Code here](./Code/06-hypothesis_testing.R)
 :::
 
 ## Introduction
@@ -31,7 +31,7 @@ library(tidyverse)
 library(ggplot2)
 library(latex2exp)
 set.seed(321)
-hours <- rgamma(25000, shape = 2, scale = 10)
+hours <- rgamma(n = 25000, shape = 2, scale = 10)
 ggplot(data.frame(hours)) +
   geom_histogram(aes(x = hours), bins = 30, fill='white', color='black') +
     geom_vline(xintercept = mean(hours), size = 1)  +  theme_bw() +
@@ -94,11 +94,11 @@ We also know that 95% of the probability is within `r round(qnorm(p2),2)` standa
 set.seed(12567)
 H_0 <- 10
 student_sample <- sample(1:25000, size = 50, replace = FALSE)
-student_sample <- hours[student_sample]
-mean_sample <- mean(student_sample)
-ggplot(data.frame(student_sample)) + 
-  geom_histogram(aes(x = student_sample), fill = 'white', color = 'black', bins = 20) +
-  theme_bw() +  geom_vline(xintercept = mean(student_sample), color = 'black', size=1) +
+music_listening_sample <- data.frame(hours = hours[student_sample])
+mean_sample <- mean(music_listening_sample$hours)
+ggplot(music_listening_sample) + 
+  geom_histogram(aes(x = hours), fill = 'white', color = 'black', bins = 20) +
+  theme_bw() +  geom_vline(xintercept = mean_sample, color = 'black', size=1) +
   labs(title = TeX(sprintf("Distribution of values in the sample ($n =$ %.0f, $\\bar{x] = $ %.2f, s = %.2f)",n,mean(student_sample),sd(student_sample))),x = "Hours", y = "Frequency") 
 ```
 
@@ -242,7 +242,7 @@ print(p)
 Notice that as $n$ gets larger, the t-distribution gets closer and closer to the normal distribution, reflecting the fact that the uncertainty introduced by $s$ is reduced. To summarize, we now have an estimate for the standard deviation of the distribution of the sample mean (i.e., $SE_{\bar x}$) and an appropriate distribution that takes into account the necessary uncertainty (i.e., the t-distribution). Let us now compute the t-statistic according to the formula above:
 
 ```{r}
-SE <- (sd(student_sample)/sqrt(n))
+SE <- (sd(music_listening_sample$hours)/sqrt(n))
 t_score <- (mean_sample - H_0)/SE
 t_score
 ```
@@ -459,18 +459,18 @@ We choose the conventional 5% significance level.
 
 **4. Descriptive statistics and data visualization**
 
-Provide descriptive statistics using the ```stat.desc()``` function: 
+Provide descriptive statistics using the ```describe()``` function: 
 
 ```{r, message = FALSE, warning=FALSE}
-library(pastecs)
-stat.desc(student_sample)
+library(psych)
+describe(student_sample)
 ```
 
 From this, we can already see that the mean is different from the hypothesized value. The question however remains, whether this difference is significantly different, given the sample size and the variability in the data. Since we only have one continuous variable, we can visualize the distribution in a histogram. 
 
 ```{r}
-ggplot(data.frame(student_sample)) + 
-  geom_histogram(aes(x = student_sample), fill = 'white', color = 'black', bins = 20) +
+ggplot(music_listening_sample) + 
+  geom_histogram(aes(x = hours), fill = 'white', color = 'black', bins = 20) +
   theme_bw() +
   labs(title = "Distribution of values in the sample",x = "Hours", y = "Frequency") 
 ```
@@ -481,16 +481,42 @@ In the beginning of the chapter, we saw, how you could conduct significance test
 
 ```{r}
 H_0 <- 10
-t.test(student_sample, mu = H_0, alternative = 'two.sided')
+t.test(music_listening_sample$hours, mu = H_0, alternative = 'two.sided')
 ```
 
 Note that if you would have stated a directional hypothesis (i.e., the mean is either greater or smaller than 10 hours), you could easily amend the code to conduct a one sided test by changing the argument ```alternative```from ```'two.sided'``` to either ```'less'``` or ```'greater'```.
+
+Note that you could also combine the results from the statistical test and the visualization using the `ggstatsplot` package as follows. 
+
+```{r, message = FALSE, warning=FALSE, fig.align="center"}
+library(ggstatsplot)
+gghistostats(
+  data = music_listening_sample, # dataframe from which variable is to be taken
+  x = hours, # numeric variable whose distribution is of interest
+  title = "Distribution of listening times", # title for the plot
+  caption = "Notes: Test based on a random sample of 50 students.",
+  type = "parametric", # one sample t-test
+  conf.level = 0.95, # changing confidence level for effect size
+  bar.measure = "mix", # what does the bar length denote
+  test.value = 10, # default value is 0
+  test.value.line = TRUE, # display a vertical line at test value
+  effsize.type = "d", # display effect size (Cohen's d in output)
+  test.value.color = "#0072B2", # color for the line for test value
+  centrality.para = "mean", # which measure of central tendency is to be plotted
+  centrality.color = "darkred", # decides color for central tendency line
+  binwidth = 2, # binwidth value (experiment)
+  messages = FALSE, # turn off the messages
+  bf.message = FALSE
+)
+```
+
+You may nice some additional output in this plot related to the measure of effect size (Cohen's d). Don't worry about it at this stage, we will come back to this later in this chapter. 
 
 **6. Report results and draw a marketing conclusion**
 
 Note that the results are the same as above, when we computed the test by hand. You could summarize the results as follows:
 
-On average, the listening times in our sample were different form 10 hours per month (Mean = 18.99 hours, SE = 1.78). This difference was significant t(49) = 5.058, p < .05 (95% CI = [15.42; 22.56]). Based on this evidence, we can conclude that the mean in our sample is significantly lower compared to the hypothesized population mean of $10$ hours, providing evidence against the null hypothesis. 
+On average, the listening times in our sample were different form 10 hours per month (Mean = 18.59 hours, SE = 1.77). This difference was significant t(49) = 4.842, p < .05 (95% CI = [15.03; 22.16]). Based on this evidence, we can conclude that the mean in our sample is significantly lower compared to the hypothesized population mean of $10$ hours, providing evidence against the null hypothesis. 
 
 Note that in the reporting above, the number ```49``` in parenthesis refers to the degrees of freedom that are available from the output. 
 
@@ -503,9 +529,9 @@ In the one-sample test above, we tested the hypothesis that the population mean 
 
 Using an independent-means t-test, we can compare the means of two possibly different populations. It is, for example, quite common for online companies to test new service features by running an experiment and randomly splitting their website visitors into two groups: one is exposed to the website with the new feature (experimental group) and the other group is not exposed to the new feature (control group). This is a typical A/B-Test scenario.
 
-As an example, imagine that a music streaming service would like to introduce a new playlist feature that let's their users access playlists created by other users. The goal is to analyse how the new service feature impacts the listening time of users. The service randomly splits a representative subset of their users into two groups and collects data about their listening times over one month. Let's create a data set to simulate such a scenario. 
+As an example, imagine that a music streaming service would like to introduce a new playlist feature that let's their users access playlists created by other users. The goal is to analyze how the new service feature impacts the listening time of users. The service randomly splits a representative subset of their users into two groups and collects data about their listening times over one month. Let's create a data set to simulate such a scenario. 
 
-```{r, message = FALSE, warning=FALSE}
+```{r, eval = TRUE, echo = FALSE, message = FALSE, warning=FALSE}
 set.seed(321)
 hours_population_1 <- rgamma(25000, shape = 2, scale = 10)
 set.seed(12567)
@@ -519,6 +545,13 @@ sample_2 <- sample(1:25000, size = 112, replace = FALSE)
 sample_2_hours <- hours_population_2[sample_2]
 sample_2_df <- data.frame(hours = round(sample_2_hours,0), group = "B")
 hours_a_b <- rbind(sample_1_df,sample_2_df) 
+head(hours_a_b)
+```
+
+```{r, eval = TRUE, echo = TRUE, message = FALSE, warning=FALSE}
+hours_a_b <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/hours_a_b.csv", 
+                         sep = ",", 
+                         header = TRUE)
 head(hours_a_b)
 ```
 
@@ -670,18 +703,12 @@ library(psych)
 describeBy(hours_a_b$hours, hours_a_b$group)
 ```
 
-This already shows us that the mean between groups A and B are different. We can visualize the data using a plot of means, boxplot, and a histogram. 
+This already shows us that the mean between groups A and B are different. We can visualize the data using a boxplot and a histogram. 
 
 ```{r, message = FALSE, warning=FALSE}
-ggplot(hours_a_b,aes(group, hours)) + 
-  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
-  geom_pointrange(stat = "summary") + 
-  labs(x = "Group", y = "Listening time (hours)") +
-  ggtitle("Means and standard errors of listening times") +
-  theme_bw()
-
 ggplot(hours_a_b, aes(x = group, y = hours)) + 
   geom_boxplot() + 
+  geom_jitter(alpha = 0.2, color = "red") +
   labs(x = "Group", y = "Listening time (hours)") + 
   ggtitle("Boxplot of listening times") +
   theme_bw() 
@@ -702,9 +729,27 @@ To conduct the independent means t-test, we can use the ```t.test()``` function:
 t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided", conf.level = 0.95, var.equal = FALSE)
 ```
 
+Again, we could combine the results of the statistical test and the visualization using the `ggstatsplot` package. 
+
+```{r, message = FALSE, warning=FALSE, fig.align="center"}
+library(ggstatsplot)
+ggbetweenstats(
+  data = hours_a_b,
+  plot.type = "box",
+  x = group, # 2 groups
+  y = hours ,
+  type = "p", # default
+  effsize.type = "d", # display effect size (Cohen's d in output)
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  title = "Mean listening times for different groups"
+)
+```
+
 **6. Report results and draw a marketing conclusion**
 
-The results showed that listening times were higher in the experimental group (Mean = 26.43, SE = 1.54) compared to the control group (Mean = 20.91, SE = 1.37). This means that the listening times were `r abs(round(d,2))` hours higher on average in the experimental group, compared to the control group. An independent-means t-test showed that this difference is significant t(207) = 2.684, p < .05 (95% CI = [1.46,9.58]).
+The results showed that listening times were higher in the experimental group (Mean = 28.50, SE = 1.70) compared to the control group (Mean = 18.11, SE = 1.22). This means that the listening times were `r abs(round(d,2))` hours higher on average in the experimental group, compared to the control group. An independent-means t-test showed that this difference is significant t(195.73) = 4.96, p < .05 (95% CI = [6.26, 14.51]).
 
 
 ### Dependent-means t-test
@@ -713,7 +758,7 @@ While the independent-means t-test is used when different units (e.g., participa
 
 Imagine, for example, a slightly different experimental setup for the above experiment. Imagine that we do not assign different users to the groups, but that a sample of 100 users gets to use the music streaming service with the new feature for one month and we compare the music listening times of these users during the month of the experiment with the listening time in the previous month. Let us generate data for this example: 
 
-```{r, message = FALSE, warning=FALSE}
+```{r, eval = TRUE, echo = FALSE, message = FALSE, warning=FALSE}
 set.seed(321)
 hours_population_1 <- rgamma(25000, shape = 2, scale = 10)
 set.seed(12567)
@@ -725,6 +770,13 @@ set.seed(12567)
 sample_2 <- sample(1:25000, size = 100, replace = FALSE)
 sample_2_hours <- hours_population_2[sample_2]
 hours_a_b_paired <- data.frame(hours_a = round(sample_1_hours,0),hours_b = round(sample_2_hours,0)) 
+head(hours_a_b_paired)
+```
+
+```{r, eval = TRUE, echo = TRUE, message = FALSE, warning=FALSE}
+hours_a_b_paired <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/hours_a_b_paired.csv", 
+                         sep = ",", 
+                         header = TRUE)
 head(hours_a_b_paired)
 ```
 
@@ -830,15 +882,9 @@ head(hours_a_b_paired_long)
 Now we are ready to plot the data:
 
 ```{r, message = FALSE, warning=FALSE}
-ggplot(hours_a_b_paired_long,aes(group, hours)) + 
-  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
-  geom_pointrange(stat = "summary") + 
-  labs(x = "Group", y = "Listening time (hours)") +
-  ggtitle("Means and standard errors of listining times") +
-  theme_bw()
-
 ggplot(hours_a_b_paired_long, aes(x = group, y = hours)) + 
   geom_boxplot() + 
+  geom_jitter(alpha = 0.2, color = "red") +
   labs(x = "Group", y = "Listening time (hours)") + 
   ggtitle("Boxplot of listening times") +
   theme_bw() 
@@ -858,11 +904,29 @@ To conduct the independent means t-test, we can use the ```t.test()``` function 
 ```{r, message = FALSE, warning=FALSE}
 t.test(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b, mu = 0, alternative = "two.sided", conf.level = 0.95, paired=TRUE)
 ```
+Again, we could combine the results of the statistical test and the visualization using the `ggstatsplot` package. 
 
+```{r, message = FALSE, warning=FALSE, fig.align="center"}
+library(ggstatsplot)
+ggwithinstats(
+  data = hours_a_b_paired_long,
+  x = group,
+  y = hours,
+  path.point = FALSE,
+  path.mean = TRUE,
+  sort = "descending", # ordering groups along the x-axis based on
+  sort.fun = median, # values of `y` variable
+  title = "Mean listening times for different treatments",
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  effsize.type = "d" # display effect size (Cohen's d in output)
+)
+```
 
 **6. Report results and draw a marketing conclusion**
 
-On average, the same users used the service more when it included the new feature (M = 25.96, SE = 1.68) compared to the service without the feature (M = 20.99, SE = 1.34). This difference was significant t(99) = 2.3781, p < .05 (95% CI = [0.82, 9.12]).
+On average, the same users used the service more when it included the new feature (M = 29.58, SE = 1.84) compared to the service without the feature (M = 17.93, SE = 1.21). This difference was significant t(99) = 5.41, p < .05 (95% CI = [7.38, 15.91]).
 
 
 ### Further considerations
@@ -937,11 +1001,17 @@ pwr.t.test(n = 51, d = 0.6, sig.level = 0.05, type = c("two.sample"), alternativ
 
 #### P-values, stopping rules and p-hacking
 
-From my experience, students tend to place a lot of weight on p-values when interpreting their research findings. It is therefore important to note some points that hopefully help to put the meaning of a "significant" vs. "insignificant" test result into perspective.
+From my experience, students tend to place a lot of weight on p-values when interpreting their research findings. It is therefore important to note some points that hopefully help to put the meaning of a "significant" vs. "insignificant" test result into perspective. So what does a significant test result actually tell us? 
+
+* The importance of an effect? &rarr; No, significance depends on sample size.
+* That the null hypothesis is false? &rarr; No, it is always false.
+* That the null hypothesis is true? &rarr; No, it is never true.
+
+The following points provide some guidance on how to interpret significant and insignificant test results. 
 
 **Significant result**
 
-* Even if the probability of the effect being a chance result is small (e.g., less than .05) it doesn't necessarily mean that the effect is important. 
+* Even if the probability of the effect being a chance result is small (e.g., less than .05) it doesn't necessarily mean that the effect is important.
 * Very small and unimportant effects can turn out to be statistically significant if the sample size is large enough. 
 
 **Insignificant result**

@@ -452,150 +452,77 @@ power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)
 The output tells us that we need `r round(power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)$n,0)` observations per group to detect a difference of the desired size.
 
 
-## Summary {-}
+## Learning check {-}
 
-* We rarely have information about whole population, so we use hypothesis testing to test our assumptions about certain population parameter. Usually, the population parameter for which we form hypotheses is true population mean ($\mu$). A hypothesis about it would tell us how the corresponding sampling distribution looks like. To revise, a sampling distribution is the distribution of a statistic (mean) that is obtained by repeatedly drawing a large number of samples from certain population. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample assuming that the hypothesis is true. 
+**(LC6.1) The Null Hypothesis ($H_0$) is a statement of:**
 
-* The null hypothesis refers to the statement that is being tested and is usually a statement of the status quo, one of no difference or no effect. For instance, that true population mean and hypothesized value are equal. The aim is usually to provide an evidence against the null hypothesis. Remember that the null hypothesis can be either rejected or our data can fail to reject it.
+- [ ] The status-quo/no effect
+- [ ] The desired status
+- [ ] The expected status
+- [ ] None of the above 
 
-* If the null hypothesis is rejected, this is taken as support for the alternative hypothesis. For instance, that true population mean and the hypothesized value are not equal. The alternative hypothesis assumes that some difference exists.
+**(LC6.2) Which statements about the Null Hypothesis ($H_0$) are TRUE?**
 
-* The standardised value that tells us how many standard deviations our sample mean is away from the population mean if the null hypothesis was true is z-score. However, z-score calculation requires that we know the true population standard deviation $\sigma$ when computing the standard deviation of the sampling distribution $\sigma_{\bar x}$. As we already learned, parameters of the true population are rarely known. Therefore, there is a t-statistic (or t-score) which, instad the standard deviation of the sampling distribution $\sigma_{\bar x}$), uses an estimate for the standard deviation of the distribution of the sample mean $SE_{\bar x}$.
+- [ ] In scientific research, the goal is usually to confirm it
+- [ ] In scientific research, the goal is usually to reject it
+- [ ] It can be confirmed with one test
+- [ ] None of the above 
 
-* The p-value corresponds to the probability that the test statistic (i.e. mean) would take a value as extreme or more extreme than the one that we actually obtained from our sample, assuming that the null hypothesis is true. A small p-value signals that it is unlikely to observe the calculated test statistic under the assumption that the null hypothesis is true. In order to determine significance of our test results, we need to compare our p-value to the given significance level.
-Note that higher the value of the test statistic, the lower the p-value, i.e. lower the probability to observe as extreme or more extreme test statistic from that test statistic that we observed.
+**(LC6.3) The t-distribution:**
 
-* Interpretation of the confidence interval: if we take 100 samples and calculated the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals. 
+- [ ] Has more probability mass in its tails compared to the normal distribution and therefore corrects for small samples
+- [ ] Approaches the normal distribution as n increases
+- [ ] Is the distribution of the t-statistic
+- [ ] Has less probability mass in its tails compared to the normal distribution and therefore corrects for small samples
 
-* To choose correct statistical test, one neeeds to consider the following questions:
+**(LC6.4) Type I vs. Type II Errors: Which of the following statements is TRUE?**
 
-1. On what scale are your variables measured? Categorical or continuous?
-2. Do you want to test for relationships or differences?
-3. If you test for differences, how many groups would you like to test?
-4. For parametric tests, are the assumptions fulfilled?
+- [ ] Type II Error: We believe there is no effect, when in fact there is
+- [ ] Type I Error: We believe there is an effect, when in fact there isn’t
+- [ ] Type I Error: We believe there is no effect, when in fact there is
+- [ ] Type II Error: We believe there is an effect, when in fact there isn’t
+- [ ] None of the above 
 
-* The sequence of steps in the process of hypothesis testing:
+**(LC6.5) When planning an experiment, which of the following information would you need to compute the required sample size?**
 
-1. Formulate null and alternative hypotheses
-2. Select an appropriate test
-3. Choose the level of significance
-4. Descriptive statistics and data visualization
-5. Conduct significance test
-6. Report results and draw a marketing conclusion
+- [ ] The p-value (p)
+- [ ] The significance level (alpha)
+- [ ] The effect size (d)
+- [ ] The critical value of the test statistic (t)
+- [ ] None of the above 
 
-* A one-sample t-test is a statistical test used to test whether a population mean is significantly different from some hypothesized value (e.g. 100).
+**(LC6.6) In which setting would you reject the null hypothesis when conducting a statistical test?**
 
-$$
-H_0: \mu = 100 \\
-H_1: \mu \neq 100
-$$
+- [ ] When the test-statistic (e.g., t-value) exceeds the critical value of the test statistic at your specified significance level (e.g., 0.05)
+- [ ] When the p-value is smaller than your specified significance level (e.g., 0.05)
+- [ ] When the confidence interval associated with the test does not contain zero
+- [ ] When the test-statistic (e.g., t-value) is lower than the critical value of the test statistic at your specified significance level (e.g., 0.05)
+- [ ] None of the above 
 
+**(LC6.7) After conducting a statistical test, what is the relationship between the test statistic (e.g., t-value) and the p-value?**
 
-* Between-subject experimental design: When you run experiment and randomly split sample into two groups whose units/participants are independent of each other, one of which receives a treatment (experimental group) while the other doesn’t (control group).**In this case we have two independent samples and use independent t-test to compare their means.**
+- [ ] The lower the absolute value of the test statistic, the lower the p-value
+- [ ] The higher the absolute value of the test statistic, the higher the p-value
+- [ ] There is no connection between the test statistic and the p-value
+- [ ] None of the above 
 
-* Within-subject experimental design: If you run an experiment with two experimental conditions and the same participants/units were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same participants/units in each group. **In this case we have two dependent samples and use dependent t-test (Paired test) to compare their means.**
+**(LC6.8) What does a significant test result tell you?**
 
+- [ ] The importance of an effect
+- [ ] That the null hypothesis is false
+- [ ] That the null hypothesis is true
+- [ ] None of the above 
 
-* Hypotheses:
+**(LC6.9) In an experiment in which you compare the means between two groups, you should collect data until your test shows a significant results. True or false?**
 
-    + H0: The difference between the two (independent or dependent) groups is equal zero. 
-    
-    $$H_0: \mu_1 - \mu_2=0=\delta$$
-    + H1: The difference between the two (independent or dependent) groups is not equal 0.
-    
-    $$H_1: \delta \ne 0$$
+- [ ] True
+- [ ] False
 
+**(LC6.10) If you have data from an within-subjects experimental design, you should use the independent-means t-test. True or false?**
 
-* Assumptions for both independent t-test and dependent t-test:
-
-    + The sampling distribution is normally distributed. In the dependent t-test this means that the sampling distribution of the differences between scores should be normal, not the scores themselves.
-
-    + Data are measured at least at the interval level.
-
-* The independent t-test, because it is used to test independent groups of people, also assumes:
-
-    + Scores in different treatment conditions (control group and test group) are independent (i.e. they come from different participants/units/products).
-
-    + Homogeneity of variance – it assumes equal variances.
-
-* Application in marketing: T-test can help marketing department of retailers to answer questions about customers spendings. Since they have collected extensive data about their customers through loyalty program, they may want to use to conduct a research. They might be interested in comparing average amount of Euros spent per purchase between customers who live closer (within range of 500 m) and customers who live further (more than 500m) from their new outlet. Therefore, they could form the following hypotheses:      
-
-    + H0: There is no difference in a spending per purchase between customers who live closer to the outlet and customers who live further.  
-    + H1: There is a difference in a spending per purchase between customers who live closer to the outlet and customers who live further.
-
-* When conducting a research, there are factors under direct control of a researcher such as siginificance level ($\alpha$) and the size of the sample($n$). On the other side, factors such as power (1-$β$) and effect size ($d$) are under indirect control of a researcher. Overall, the aim is to maximize the power of the test while maintaining an acceptable significance level and keeping the sample as small as possible.
-
-* Term "p-hacking" refers to misuse of p-value in the way that, although all samples drawn come from the same population, a researcher draws random samples until the differnce between two sample "proves" to be significant. This should be avoided at all costs.
+- [ ] True
+- [ ] False
  
- 
-* In cases when there are more than 2 groups to compare, we can use ANOVA. Requirements for using ANOVA are the following:
-
-1. A metric dependent variable (i.e., measured using an interval or ratio scale).
-2. One or more non-metric (categorical) independent variables (also called factors).
-
-* **Familywise or experiment wise error rate.** The reason why we don’t just carry out multiple t-tests to compare 3 or more means between all combinations of groups lies in the fact that, across the groups of test, we would increase Type 1 error (alpha)  possibility from acceptable 5% to 14.3%.
-
-* The basic concept underlying ANOVA is the decomposition of the variance in the data:
-
-1. Total sum of squares ($SS_T$): coresponds to the total variation that can be attributed to various factors
-2. Model sum of squares($SS_M$): determines how much of the variance can be explained by the model
-3. Residual sum of squares($SS_R$): determines how much of the variance can not be explained by the model
-
-$$SS_T= SS_M+SS_R$$
-
-* In order to test significance of independent variable on the dependent variable we use F-statistic:
-
-$$F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}$$
-...and compare it with the critical value calculated based on degrees of freedom. If the F-statistic exceeds the critical value, zero hypothesis is rejected. More specifically, it means that one or more of the differences between means are statistically significant.
-
-
-* **One-way ANOVA** is used when there is only one categorical variable (factor). One-way ANOVA compares the means of two or more independent groups in order to determine whether there is an evidance that the associated population means are significantly different. In order to conduct it, certain requirements need to be fulfilled:
-
-    +	A metric dependent variable must be continuous (interval or ratio).
-    + There is only one independent non-metric (categorical) variable or factor.
-    + Variances in each group need to be fairly similar (homogeneity of variance).
-    +	Observations in each group must be independent (i.e. randomly assigned to the groups).
-    +	In terms of normality, distributions within groups should be normally distributed. However, this applies when the sample size is small (approximately less than 30 observations).
-
-*	Hypotheses:
-    
-    + H0: Means of all groups are equal (non-directional hypothesis).
-    
-    $$H_0: \mu_1 = \mu_2 = \mu_3$$
-    + H1: Means of all groups are not all equal.  
-    
-    $$H_1: \exists {i,j}: {\mu_i \ne \mu_j}$$  
-
-	
-**Note that from the alternative hypothesis can not be found out which means are not equal!**
-	
-* One-way ANOVA is an omnibus test statistic,i.e. cannot tell you which specific groups were statistically significantly.If you are interested in exploring the data results for any between-groups mean differences that exist, you use **post hoc test.** Post hoc tests are designed to compare all different combinations of the treatment groups and you can find out which group means are different. They avoid familywise error by correcting the level of significance for each test such that the overall Type I error rate ($\alpha$) across all comparisons remains at 0.05. Among the most used post hoc tests are Bonferroni and Tukey's HSD.
-
-* While 1-sample t-test, independent(and independent) t-test and One-way ANOVA belong to *parametric tests*, there is a whole set of their *non-parametric* such as:
-
-    + Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)- non-parametric peer of independent t-test  
-    + Wilcoxon signed-rank test - non-parametric version of dependent t-test 
-    + Kruskal-Wallis test - non-parametric counterpart of One-way ANOVA
-
-* When should you use non-parametric tests?
-
-    + When your dependent variable is measured on an ordinal scale
-    + When your data is better represented by the median (e.g., there are outliers that you can’t remove)
-    + When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
-    + You have a very small sample size (i.e., the central limit theorem does not apply)
-    
-* In some cases, you will want to compare proportions, rather than differences between means (e.g., A/B-Test to compare the conversion rates between two campaigns). Therefore, confidence interval for proportions could be helpful. That interval shows the range of plausible values for the difference between the two population proportions. If the interval does not cross zero, then zero is not a plausible value for the difference between two proportions, and we reject the null hypothesis that the population proportions are the same.
-
-* Whenever you would like to investigate the relationship between two categorical variables, the $\chi^2$ test may be used to test whether the variables are independent of each other. It achieves this by comparing the expected number of observations in a group to the actual values.
-
-* Question to answer with $\chi^2$ test : Is there an association between categorical variable X (e.g. conversion) and categorical variable Y (e.g. agent)?
-
-* Hypothesis:
-
-    + H0: There is no association between the two variables.
-    + H1: There is an association between the two variables.
-
-* Interpretation: If we find an association between two variables (p < 0.05), we can conclude that the propotion of conversions to proportion of non-conversions between agent 1 and agent 2 significantly differ from each other.
 
 ## References {-}
 
