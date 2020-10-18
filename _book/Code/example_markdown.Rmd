@@ -1,0 +1,132 @@
+---
+title: "Example R Markdown"
+author: "Your Name"
+output: html_document
+---
+
+```{r load_packages, eval=T, echo=FALSE, warning=FALSE, message=FALSE, include=FALSE}
+req_packages <- c("dplyr", "psych", "ggplot2", "pastecs","Hmisc", "knitr","plyr", "ggthemes", "ggExtra","reshape2","lsr","pwr","ggstatsplot","kableExtra")
+req_packages <- req_packages[!req_packages %in% installed.packages()]
+lapply(req_packages, install.packages)
+library(knitr)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents, which is useful for documenting your research output. For more details on using R Markdown see <http://rmarkdown.rstudio.com> and <https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf>.
+
+When you click the "Knit" button above the code editor, a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+### Load data
+
+```{r load_data}
+hours_a_b <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/hours_a_b.csv", 
+                                           sep = ";", 
+                                           header = TRUE)
+str(hours_a_b) 
+head(hours_a_b) 
+```
+
+The code above uses an example we covered during the session. The R code has to be included within two "```", which tells R to interpret the input as code. The "r" parameter within the curly brackets tells R that the code entered is R code and "load_data" is simply the name of the code chunk for internal reference (i.e., "{r load_data}"). Within the code chunk, you may use the R code as you would in a plain script file (like the ones we use during the sessions). The code will automatically be executed when you click the "knit" button to create your output file and the output will be displayed below it. You may also execute the code chunk while working in the code editor to inspect the output before creating the document by clicking the green "play" button in the top right corner of the code chunk. For example, the above code loads the data and uses the "head()" and "str()" functions to inspect the data.
+
+Note that there are packages that have been developed to make the output look nicer. For example, the "kable()" function from the "knitr" package may be used in combination with the "kableExtra" package to format tables (for details see here: <https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html>). The output above could, for example, be shown as follows:
+
+```{r kable_format, warning=FALSE}
+library(kableExtra)
+kable_styling(kable(head(hours_a_b)),bootstrap_options = "striped", full_width = F) 
+```
+
+You may include as many code chunks as you like. For example, the next chunk includes the descriptive statistics. 
+
+### Descriptive statistics
+
+```{r desc_stat}
+library(psych)
+psych::describe(hours_a_b$hours) #overall descriptives
+describeBy(hours_a_b$hours, hours_a_b$group) #descriptives by group
+```
+
+Again, you could adjust the display of the output using the "kable()"-function, along with some formatting options using the "kable_styling()"-function:
+
+```{r desc_stat_kable}
+kable_styling(kable(describe(hours_a_b)),bootstrap_options = "striped", full_width = F) 
+```
+
+You should include your interpretation of the results directly below the output.
+
+It is also easy to structure your document by using headlines (e.g., "#" will be the first level, "##" the next, "###" the next, etc.). In this example, the next section would include the statistical test and "### Statistical test" would indicate the headline for this section. 
+
+### Statistical test
+
+```{r stat_test}
+t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided", conf.level = 0.95, var.equal = FALSE)
+```
+
+
+You can also highlight text by printing it in **bold** or *italics* using either `**` or `*` to wrap the respective text. 
+
+Using the `*` symbol at the beginning of a line will create an ordered list:
+
+* Element 1
+* Element 2
+* Element 3
+
+
+## Including Plots
+
+You can also embed plots, like the ones that we have created during the session:
+
+```{r mean_plot, fig.align="center", echo=TRUE, fig.cap=c("Fig. 1: Plot of means"), message = FALSE, warning = FALSE, fig.width=6, fig.height=5}
+library(ggplot2)
+ggplot(hours_a_b, aes(x = group, y = hours)) + geom_boxplot() + 
+    geom_jitter(alpha = 0.2, color = "red") + labs(x = "Group", 
+    y = "Listening time (hours)") + ggtitle("Boxplot of listening times") + 
+    theme_bw()
+```
+
+Note that the additional (optional) parameters within the curly brackets:
+
+* `fig.align="center"`: aligns the plot horizontally at the center of the page 
+* `fig.cap=c("Plot of means")`: adds a plot name below the plot
+* `fig.width` and `fig.height`: set the width and height of the plot 
+* `warning = FALSE`: prevents warning messages from being displayed 
+* `message = FALSE`: prevents any other messages from being displayed 
+
+Again, there are many packages available that you can use to enrich the display of your data. For example, you can use the functionalities provided by the "ggstatsplot" package, see <https://github.com/IndrajeetPatil/ggstatsplot> and <https://indrajeetpatil.github.io/ggstatsplot_slides/slides/ggstatsplot_presentation.html>.
+
+```{r ggstatsplot, fig.align="center", echo=TRUE, fig.cap=c("Fig. 2: Differences between groups"), message = FALSE, warning = FALSE, fig.width=6, fig.height=5}
+library(ggstatsplot)
+ggbetweenstats(
+  data = hours_a_b,
+  plot.type = "box",
+  x = group, # 2 groups
+  y = hours ,
+  type = "p", # default
+  effsize.type = "d", # display effect size (Cohen's d in output)
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  title = "Mean listening times for different groups"
+)
+```
+
+
+## Include equations
+
+It is also possible to include equations in your file using LaTeX math notation. For example, to state your hypothesis, you could use:
+
+$$H_0: \mu_1 = \mu_2 \\
+H_1: \mu_1 \neq \mu_2$$
+
+You can see that math notation is wrapped by `$$` symbols, which tells R that it is math notation. The text within the pair of `$$` symbols is interpreted as LaTeX math notation. For example, separating the letter "H" and the number "0" by `_` created a subscript (i.e., `H_0` creates $H_0$). Greek letters are displayed as such when they are preceded by a `\` (i.e., `\mu` creates $\mu$). In addition, you may use all kind of mathematical operator using the appropriate LaTeX notation (e.g., `\neq` creates the operator $\neq$) . Here you can find an overview of the different symbols and their LaTeX notation: <http://reu.dimacs.rutgers.edu/Symbols.pdf>. For further examples, see <http://www.statpower.net/Content/310/R%20Stuff/SampleMarkdown.html> and <http://www.stat.cmu.edu/~cshalizi/rmarkdown/>.
+
+Not that using the double `$$` symbol, R will display the math notation in a new line and the `\\` symbol may be used to create line breaks. If you wanted to include math symbols in the text without starting a new line, you can use the single `$` symbol (e.g., $\mu$).
+
+## Submitting your assignment
+
+When you are done with your analysis for your assignment, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. 
+
+**The file name should be "assignment2_studentID_name.html"**
+
+

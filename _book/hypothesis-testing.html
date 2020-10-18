@@ -349,11 +349,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="hypothesis-testing" class="section level1">
 <h1><span class="header-section-number">6</span> Hypothesis testing</h1>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> Introduction</h2>
 <div class="infobox download">
 <p><a href="./Code/06-hypothesis_testing.R">You can download the corresponding R-Code here</a></p>
 </div>
-<div id="introduction-1" class="section level2">
-<h2><span class="header-section-number">6.1</span> Introduction</h2>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cJRwmWWCpZE" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <p>We test hypotheses because we are confined to taking samples – we rarely work with the entire population. In the previous chapter, we introduced the standard error (i.e., the standard deviation of a large number of hypothetical samples) as an estimate of how well a particular sample represents the population. We also saw how we can construct confidence intervals around the sample mean <span class="math inline">\(\bar x\)</span> by computing <span class="math inline">\(SE_{\bar x}\)</span> as an estimate of <span class="math inline">\(\sigma_{\bar x}\)</span> using <span class="math inline">\(s\)</span> as an estimate of <span class="math inline">\(\sigma\)</span> and calculating the 95% CI as <span class="math inline">\(\bar x \pm 1.96 * SE_{\bar x}\)</span>. Although we do not know the true population mean (<span class="math inline">\(\mu\)</span>), we might have an hypothesis about it and this would tell us how the corresponding sampling distribution looks like. Based on the sampling distribution of the hypothesized population mean, we could then determine the probability of a given sample <strong>assuming that the hypothesis is true</strong>.</p>
 <p>Let us again begin by assuming we know the entire population using the example of music listening times among students from the previous example. As a reminder, the following plot shows the distribution of music listening times in the population of WU students.</p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="hypothesis-testing.html#cb211-1"></a><span class="kw">library</span>(tidyverse)</span>
@@ -371,6 +377,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this example, the population mean (<span class="math inline">\(\mu\)</span>) is equal to 19.98, and the population standard deviation <span class="math inline">\(\sigma\)</span> is equal to 14.15.</p>
 <div id="the-null-hypothesis" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> The null hypothesis</h3>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DZOVAkWNgTg" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <p>Let us assume that we were planning to take a random sample of 50 students from this population and our hypothesis was that the mean listening time is equal to some specific value <span class="math inline">\(\mu_0\)</span>, say <span class="math inline">\(10\)</span>. This would be our <strong>null hypothesis</strong>. The null hypothesis refers to the statement that is being tested and is usually a statement of the status quo, one of no difference or no effect. In our example, the null hypothesis would state that there is no difference between the true population mean <span class="math inline">\(\mu\)</span> and the hypothesized value <span class="math inline">\(\mu_0\)</span> (in our example <span class="math inline">\(10\)</span>), which can be expressed as follows:</p>
 <p><span class="math display">\[
 H_0: \mu = \mu_0
@@ -402,7 +414,7 @@ Accepting the alternative hypothesis in turn will often lead to changes in opini
 <span id="cb214-10"><a href="hypothesis-testing.html#cb214-10"></a>    n, mean_sample, <span class="kw">sd</span>(music_listening_sample<span class="op">$</span>hours))), </span>
 <span id="cb214-11"><a href="hypothesis-testing.html#cb214-11"></a>    <span class="dt">x =</span> <span class="st">&quot;Hours&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
-<p>The mean listening time in the sample (black line) <span class="math inline">\(\bar x\)</span> is 11457.94. We can already see from the graphic above that such a value is rather unlikely under the hypothesis that the population mean is <span class="math inline">\(10\)</span>. Intuitively, such a result would therefore provide evidence against our null hypothesis. But how could we quantify specifically how unlikely it is to obtain such a value and decide whether or not to reject the null hypothesis? Significance tests can be used to provide answers to these questions.</p>
+<p>The mean listening time in the sample (black line) <span class="math inline">\(\bar x\)</span> is 18.59. We can already see from the graphic above that such a value is rather unlikely under the hypothesis that the population mean is <span class="math inline">\(10\)</span>. Intuitively, such a result would therefore provide evidence against our null hypothesis. But how could we quantify specifically how unlikely it is to obtain such a value and decide whether or not to reject the null hypothesis? Significance tests can be used to provide answers to these questions.</p>
 </div>
 <div id="statistical-inference-on-a-sample" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> Statistical inference on a sample</h3>
@@ -612,6 +624,12 @@ H_1: \mu \neq 10
 <p>In the one-sample test above, we tested the hypothesis that the population mean has some specific value <span class="math inline">\(\mu_0\)</span> using data from only one sample. In marketing (as in many other disciplines), you will often be confronted with a situation where you wish to compare the means of two groups. For example, you may conduct an experiment and randomly split your sample into two groups, one of which receives a treatment (experimental group) while the other doesn’t (control group). In this case, the units (e.g., participants, products) in each group are different (‘between-subjects design’) and the samples are said to be independent. Hence, we would use a <strong>independent-means t-test</strong>. If you run an experiment with two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions, the sample is said to be dependent in the sense that you have the same units in each group (‘within-subjects design’). In this case, we would need to conduct an <strong>dependent-means t-test</strong>. Both tests are described in the following sections, beginning with the independent-means t-test.</p>
 <div id="independent-means-t-test" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Independent-means t-test</h3>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7APeiQ3_46A" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <p>Using an independent-means t-test, we can compare the means of two possibly different populations. It is, for example, quite common for online companies to test new service features by running an experiment and randomly splitting their website visitors into two groups: one is exposed to the website with the new feature (experimental group) and the other group is not exposed to the new feature (control group). This is a typical A/B-Test scenario.</p>
 <p>As an example, imagine that a music streaming service would like to introduce a new playlist feature that let’s their users access playlists created by other users. The goal is to analyze how the new service feature impacts the listening time of users. The service randomly splits a representative subset of their users into two groups and collects data about their listening times over one month. Let’s create a data set to simulate such a scenario.</p>
 <div data-pagedtable="false">
@@ -796,6 +814,12 @@ H_1: \mu_1 \ne \mu_2
 </div>
 <div id="dependent-means-t-test" class="section level3">
 <h3><span class="header-section-number">6.3.2</span> Dependent-means t-test</h3>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vIcrWJ6sJu8" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <p>While the independent-means t-test is used when different units (e.g., participants, products) were assigned to the different condition, the <strong>dependent-means t-test</strong> is used when there are two experimental conditions and the same units (e.g., participants, products) were observed in both experimental conditions.</p>
 <p>Imagine, for example, a slightly different experimental setup for the above experiment. Imagine that we do not assign different users to the groups, but that a sample of 100 users gets to use the music streaming service with the new feature for one month and we compare the music listening times of these users during the month of the experiment with the listening time in the previous month. Let us generate data for this example:</p>
 <div data-pagedtable="false">
@@ -963,6 +987,12 @@ H_0: \mu_D \ne 0
 </div>
 <div id="further-considerations" class="section level3">
 <h3><span class="header-section-number">6.3.3</span> Further considerations</h3>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ctwQn6YYUBM" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <div id="type-i-and-type-ii-errors" class="section level4">
 <h4><span class="header-section-number">6.3.3.1</span> Type I and Type II Errors</h4>
 <p>When choosing the level of significance (<span class="math inline">\(\alpha\)</span>). It is important to note that the choice of the significance level affects the type 1 and type 2 error:</p>
