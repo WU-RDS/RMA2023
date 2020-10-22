@@ -19,11 +19,17 @@ opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE
 
 ## Non-parametric tests
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cJRwmWWCpZE" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 ::: {.infobox .download data-latex="{download}"}
-[You can download the corresponding R-Code here](./Code/09-non_parametric.R)
+[You can download the corresponding R-Code here](./Code/08-non_parametric.R)
 :::
 
-**Non-Parametric tests** do not require the sampling distribution to be normally distributed (a.k.a. "assumption free tests"). These tests may be used when the variable of interest is measured on an ordinal scale or when the parametric assumptions do not hold. They often rely on ranking the data instead of analyzing the actual scores. By ranking the data, information on the magnitude of differences is lost. Thus, parametric tests are more powerful if the sampling distribution is normally distributed.
+**Non-Parametric tests** do not require the sampling distribution to be normally distributed (a.k.a. "assumption free tests"). These tests may be used when the variable of interest is measured on an ordinal scale or when the parametric assumptions do not hold. They often rely on ranking the data instead of analyzing the actual scores. By ranking the data, information on the magnitude of differences is lost. Thus, parametric tests are more powerful if the sampling distribution is normally distributed and you have a continuous variable.
 
 When should you use non-parametric tests?
 
@@ -32,9 +38,19 @@ When should you use non-parametric tests?
 * When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
 * You have a very small sample size (i.e., the central limit theorem does not apply)
 
+In these cases, you should resort to the non-parametric equivalent of the tests we have discussed so far, as summarized in the following table.  
+
+Parametric test | Non-parametric equivalent 
+------------------------------ | ------------------------------  
+Independent-means t-test | Mann-Whitney U Test 
+Dependent-means t-test  | Wilcoxon signed-rank test
+ANOVA |  Kruskal-Wallis test
+
+These non-parametric tests will be briefly discussed in the following sections.  
+
 ### Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)
 
-The Mann-Whitney U test is a non-parametric test of differences between groups, similar to the two sample t-test. In contrast to the two sample t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a ratio scale. The following assumptions must be fulfilled for the test to be applicable:
+The Mann-Whitney U test is a non-parametric test of differences between groups (i.e., it is the non-parametric equivalent of the independent-means t-test). In contrast to the independent-means t-test it only requires ordinally scaled data and relies on weaker assumptions. Thus it is often useful if the assumptions of the t-test are violated, especially if the data is not on a continuous scale. The following assumptions must be fulfilled for the test to be applicable:
 
 * The dependent variable is at least ordinally scaled (i.e. a ranking between values can be established)
 * The independent variable has only two levels
@@ -65,14 +81,16 @@ psych::describe(music_sales$unit_sales) #overall descriptives
 describeBy(music_sales$unit_sales, music_sales$group) #descriptives by group
 ```
 
-Create boxplot and plot of means.
+In the case of non-parametric tests, the data is better represented by the median (compared to the mean). Thus, we will visualize the data using a boxplot.
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot","Plot of means","Histogram"), tidy = FALSE}
-ggplot(music_sales, aes(group, unit_sales)) + 
-  geom_bar(stat = "summary",  color = "black", fill = "white", width = 0.7) +
-  geom_pointrange(stat = "summary") + 
-  labs(x = "Group", y = "Average number of sales") +
-  theme_bw()
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
+ggplot(music_sales,aes(x = group, y = unit_sales)) + 
+  geom_boxplot() +
+  geom_jitter(colour="red", alpha = 0.1) +
+  theme_bw() +
+  labs(x = "Group", y = "Sales", title = "Sales by group")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
 ```
 
 Let's assume that one of the parametric assumptions has been violated and we needed to conduct a non-parametric test. Then, the  Mann-Whitney U test is implemented in R using the function ```wilcox.test()```. Using the ranking data as an independent variable and the listening time as a dependent variable, the test could be executed as follows:
@@ -83,10 +101,27 @@ wilcox.test(unit_sales ~ group, data = music_sales) #Mann-Whitney U Test
 
 The p-value is smaller than 0.05, which leads us to reject the null hypothesis, i.e. the test yields evidence that the new service feature leads to higher music listening times.
 
+Alternatively, you could also use the `ggstatsplot` package to obtain the result of the test by specifying the argument `type = "nonparametric"` as follows:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap="Mann-Whitney U Test using ggstatsplot"}
+library(ggstatsplot)
+ggbetweenstats(
+  data = music_sales,
+  plot.type = "box",
+  x = group, # 2 groups
+  y = unit_sales ,
+  type = "nonparametric",
+  effsize.type = "r", # display effect size (Cohen's d in output)
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  title = "Mean sales for different groups"
+)
+```
 
 ### Wilcoxon signed-rank test
 
-The Wilcoxon signed-rank test is a non-parametric test used to analyze the difference between paired observations, analogously to the paired t-test. It can be used when measurements come from the same observational units but the distributional assumptions of the paired t-test do not hold, because it does not require any assumptions about the distribution of the measurements. Since we subtract two values, however, the test requires that the dependent variable is at least interval scaled, meaning that intervals have the same meaning for different points on our measurement scale. 
+The Wilcoxon signed-rank test is a non-parametric test used to analyze the difference between paired observations, analogously to the dependent-means t-test. It can be used when measurements come from the same observational units but the distributional assumptions of the dependent-means t-test do not hold, because it does not require any assumptions about the distribution of the measurements. Since we subtract two values, however, the test requires that the dependent variable is at least interval scaled, meaning that intervals have the same meaning for different points on our measurement scale. 
 
 Under the null hypothesis $H_0$, the differences of the measurements should follow a symmetric distribution around 0, meaning that, on average, there is no difference between the two matched samples. $H_1$ states that the distributions mean is non-zero.
 
@@ -103,7 +138,23 @@ str(music_sales_dep) #inspect data
 head(music_sales_dep) #inspect data
 ```
 
-Again, let's assume that one of the prarametric assumptions has been violated and we needed to conduct a non-parametric test. Then the Wilcoxon signed-rank test can be performed with the same command as the Mann-Whitney U test, provided that the argument ```paired``` is set to ```TRUE```.
+We can visualize the data using a boxplot as follows:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
+library(reshape2)
+music_sales_dep_long <- melt(music_sales_dep[, c("unit_sales_low_price", "unit_sales_high_price")]) 
+names(music_sales_dep_long) <- c("group","sales")
+head(music_sales_dep_long)
+ggplot(music_sales_dep_long,aes(x = group, y = sales)) + 
+  geom_boxplot() +
+  geom_jitter(colour="red", alpha = 0.1) +
+  theme_bw() +
+  labs(x = "Group", y = "Average number of sales", title = "Average number of sales by group")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+```
+
+Again, let's assume that one of the parametric assumptions has been violated and we needed to conduct a non-parametric test. Then the Wilcoxon signed-rank test can be performed with the same command as the Mann-Whitney U test, provided that the argument ```paired``` is set to ```TRUE```.
 
 ```{r message=FALSE, warning=FALSE}
 wilcox.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_high_price, paired = TRUE) #Wilcoxon signed-rank test
@@ -111,40 +162,101 @@ wilcox.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_hig
 
 Using the 95% confidence level, the result would suggest a significant effect of price on sales (i.e., p < 0.05).
 
+Again, you could also use the `ggstatsplot` package to obtain the result of the test by specifying the argument `type = "nonparametric"` as follows:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap="Wilcoxon signed-rank test using ggstatsplot"}
+library(ggstatsplot)
+ggwithinstats(
+  data = music_sales_dep_long,
+  x = group,
+  y = sales,
+  path.point = FALSE,
+  type="nonparametric",
+  sort = "descending", # ordering groups along the x-axis based on
+  sort.fun = median, # values of `y` variable
+  title = "Mean sales for different treatments",
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  mean.plotting = F,
+  effsize.type = "r" # display effect size (Cohen's d in output)
+)
+```
 
 ### Kruskal-Wallis test
 
-When should you use non-parametric tests?
+The Kruskal–Wallis test is the non-parametric counterpart of the one-way ANOVA. It is designed to test for significant differences in population medians when you have more than two groups (with two groups, you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. 
 
-* When the dependent variable is measured at an ordinal scale and we want to compare more than 2 means
-* When the assumptions of independent ANOVA are not met (e.g., assumptions regarding the sampling distribution in small samples)
+As an example, let's use a data set containing data from an experiment at an online store where products were randomly assigned to three groups with three different levels of promotion (i.e., "low", "medium", "high") and the sales where recorded for these groups. 
 
-The Kruskal–Wallis test is the non-parametric counterpart of the one-way independent ANOVA. It is designed to test for significant differences in population medians when you have more than two samples (otherwise you would use the Mann-Whitney U-test). The theory is very similar to that of the Mann–Whitney U-test since it is also based on ranked data. The Kruskal-Wallis test is carried out using the ```kruskal.test()``` function. Using the same data as before, we type: 
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE}
+online_store_promo <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/online_store_promo.dat", 
+                                 sep = "\t", 
+                                 header = TRUE) #read in data
+online_store_promo$Promotion <- factor(online_store_promo$Promotion, levels = c(1:3), labels = c("high", "medium","low")) #convert grouping variable to factor
+head(online_store_promo)
+```
+
+To get a first impression, we can plot the data using a boxplot:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
+#Boxplot
+ggplot(online_store_promo,aes(x = Promotion, y = Sales)) + 
+  geom_boxplot() +
+  geom_jitter(colour="red", alpha = 0.1) +
+  theme_bw() +
+  labs(x = "Experimental group (promotion level)", y = "Number of sales", title = "Number of sales by group")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+```
+
+To test if there is a difference in medians between the groups, we can carry out the Kruskal-Wallis test using the ```kruskal.test()``` function: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 kruskal.test(Sales ~ Promotion, data = online_store_promo) 
 ```
 
-The test-statistic follows a chi-square distribution and since the test is significant (p < 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. To get a first impression, we can plot the data using a boxplot:
+The test-statistic follows a chi-square distribution and since the test is significant (p < 0.05), we can conclude that there are significant differences in population medians. Provided that the overall effect is significant, you may perform a post hoc test to find out which groups are different. 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
-#Boxplot
-ggplot(online_store_promo, aes(x = Promotion, y = Sales)) + 
-  geom_boxplot() + 
-  labs(x = "Experimental group (promotion level)", y = "Number of sales") + 
-  theme_bw() 
-```
-
-To test for differences between groups, we can, for example, apply post hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the ```PMCMR``` package.
+To test for differences between groups, we can, for example, apply post-hoc tests according to Nemenyi for pairwise multiple comparisons of the ranked data using the appropriate function from the ```PMCMR``` package.
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 library(PMCMR)
 posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
 ```
+The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from a parametric test, which we could obtain as follows: 
 
-The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from the parametric test above. This difference occurs because non-parametric tests have more power to detect differences between groups since we lose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met. 
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+pairwise.t.test(online_store_promo$Sales, online_store_promo$Promotion, data = online_store_promo, p.adjust.method = "bonferroni")
+```
+This difference occurs because non-parametric tests have more power to detect differences between groups since we lose information by ranking the data. Thus, you should rely on parametric tests if the assumptions are met.
+
+Again, you could also use the `ggstatsplot` package to obtain the result of the test by specifying the argument `type = "nonparametric"` as follows:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap="Kruskal-Wallis test using ggstatsplot"}
+library(ggstatsplot)
+ggbetweenstats(
+  data = online_store_promo,
+  plot.type = "box",
+  x = Promotion, # 2 groups
+  y = Sales ,
+  type = "nonparametric",
+  messages = FALSE,
+  title = "Mean sales for different groups"
+)
+```
 
 ## Categorical data
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cJRwmWWCpZE" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
+::: {.infobox .download data-latex="{download}"}
+[You can download the corresponding R-Code here](./Code/09-categorical_data.R)
+:::
 
 In some instances, you will be confronted with differences between proportions, rather than differences between means. For example, you may conduct an A/B-Test and wish to compare the conversion rates between two advertising campaigns. In this case, your data is binary (0 = no conversion, 1 = conversion) and the sampling distribution for such data is binomial. While binomial probabilities are difficult to calculate, we can use a Normal approximation to the binomial when ```n``` is large (>100) and the true likelihood of a 1 is not too close to 0 or 1. 
 
@@ -154,9 +266,6 @@ Let's use an example: assume a call center where service agents call potential c
 * Service agent 2 talks to 300 customers and gets 100 of them to buy (conversion rate=1/3)
 
 As always, we load the data first:
-
-[You can download the corresponding R-Code here](./Code/10-categorical_data.R)
-
 
 ```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 call_center <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat", 
@@ -181,13 +290,6 @@ ggplot(rel_freq_table, aes(x = agent, y = Freq, fill = conversion)) + #plot data
   geom_text(aes(label = paste0(round(Freq*100,0),"%")), position = position_stack(vjust = 0.5), size = 4) + #add percentages
   ylab("Proportion of conversions") + xlab("Agent") + # specify axis labels
   theme_bw()
-```
-
-... or using the ```mosaicplot()``` function:
-
-```{r  message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap = "proportion of conversions per agent (mosaic plot)"}
-contigency_table <- table(call_center)
-mosaicplot(contigency_table, main = "Proportion of conversions by agent")
 ```
 
 ### Confidence intervals for proportions
@@ -269,6 +371,7 @@ where $J$ is the number of cells in the contingency table, $f_o$ are the observe
 The observed cell frequencies can easily be seen from the contingency table: 
 
 ```{r message=FALSE, warning=FALSE}
+contigency_table <- table(call_center)
 obs_cell1 <- contigency_table[1,1]
 obs_cell2 <- contigency_table[1,2]
 obs_cell3 <- contigency_table[2,1]
@@ -416,7 +519,7 @@ phi2
 
 You can see that the statistic is insensitive to the sample size. 
 
-Note that the &Phi; coefficient is appropriate for two dichotomous variables (resulting from a 2 x 2 table as above). If any your nominal variables has more than two categories, Cramér's V should be used instead:
+Note that the &Phi; coefficient is appropriate for two dichotomous variables (resulting from a 2 x 2 table as above). If any your nominal variables has more than two categories, Cramer's V should be used instead:
 
 $$
 V=\sqrt{\frac{\chi^2}{n*df_{min}}}
@@ -432,6 +535,23 @@ chisq.test(contigency_table)
 
 As you can see, the results don't change much in our example, since the differences between the observed and expected cell frequencies are fairly large relative to the correction.
 
+As usual, you could also use the `ggstatsplot` package to obtain the result of the test, this time by using `ggbarstats` function:
+
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap="Kruskal-Wallis test using ggstatsplot"}
+library(ggstatsplot)
+ggbarstats(
+  data = call_center,
+  x = conversion,
+  y = agent,
+  title = "Conversion by agent",
+  xlab = "Agent",
+  palette = "Blues",
+  messages = FALSE,
+  bar.proptest = FALSE,
+  bf.message = FALSE
+)
+```
+
 Caution is warranted when the cell counts in the contingency table are small. The usual rule of thumb is that all cell counts should be at least 5 (this may be a little too stringent though). When some cell counts are too small, you can use Fisher's exact test using the ```fisher.test()``` function. 
 
 ```{r message=FALSE, warning=FALSE}
@@ -441,7 +561,6 @@ fisher.test(contigency_table)
 The Fisher test, while more conservative, also shows a significant difference between the proportions (p < 0.05). This is not surprising since the cell counts in our example are fairly large.
 
 ### Sample size
-
 
 To **calculate the required sample size** when comparing proportions, the ```power.prop.test()``` function can be used. For example, we could ask how large our sample needs to be if we would like to compare two groups with conversion rates of 2% and 2.5%, respectively using the conventional settings for $\alpha$ and $\beta$:
 
@@ -523,8 +642,92 @@ The output tells us that we need `r round(power.prop.test(p1=0.02,p2=0.025,sig.l
 - [ ] True
 - [ ] False
  
+-------------------------------------------------------
+**Questions for chapters 6.4 and following from here**
+-------------------------------------------------------
+
+**(LC6.11) When should you use an ANOVA rather than a t-test?**   
+
+- [ ] To compare the means for two or more populations
+- [ ] To compare the means of two groups
+- [ ] To adjust the variance of different sets
+- [ ] To test for causality
+- [ ] None of the above 
+
+**(LC6.12) What is the correct representation of the null hypothesis for an ANOVA??**   
+
+- [ ] H0:μ1≠μ2≠μ3
+- [ ] H1:μ1=μ2=μ3
+- [ ] H0:μ1=μ2=μ3
+- [ ]  H0:μ1≠μ2=μ3
+- [ ] None of the above 
+
+**(LC6.13) Using an experimental design with three groups, why can't we just compare the means between the groups using multiple t-test?**   
+
+- [ ] Because the parametric assumptions of the t-test are not met
+- [ ] Because of deflated Type III Error rates
+- [ ] Due to the family-wise error rate the Type II Error is inflated
+- [ ] Because the Type I Error rate (alpha) wouldn't be 0.05
+- [ ] None of the above 
+
+**(LC6.14) Which assumptions have to be satisfied to be able to use ANOVA on data from a between-subject design with three groups?**   
+
+- [ ] Same mean for all groups
+- [ ] Normal distribution of data
+- [ ] Homogeneity of variances
+- [ ] Independence of observation
+- [ ] None of the above 
+
+**(LC6.15) What procedures are designed to correct of family-wise error rate in ANOVA?**   
+
+- [ ] Bonferroni correction
+- [ ] Tukey’s HSD
+- [ ] t-test
+- [ ] Post-hoc tests
+- [ ] None of the above 
+
+**(LC6.16) Which of the following are examples for non-parametric tests?**   
+
+- [ ] Chi-Squared test
+- [ ] ANOVA
+- [ ] Kruskal-Wilcoxon test
+- [ ] T-test
+- [ ] None of the above 
+
+**(LC6.17) When should you use non-parametric tests?**   
+
+- [ ] When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
+- [ ] You have a very small sample size
+- [ ] When your dependent variable is measured on an ordinal scale
+- [ ] When your data is better represented by the median
+- [ ] None of the above 
+
+**(LC6.18) When should you use a Wilcoxon Rank Sum Test (= Mann-Whitney U Test)?**   
+
+- [ ] When the assumptions of the t-test have been violated
+- [ ] The variances are not significantly different between groups
+- [ ] As a non-parametric alternative to the independent-means t-test
+- [ ] When the assumptions of the ANOVA have been violated
+- [ ] None of the above 
+
+**(LC6.19) What does a Chi squared test do?**   
+
+- [ ] Tests the statistical significance of the observed association in a cross-tabulation
+- [ ] Tests whether group A affects group B
+- [ ] Produces a test statistic that is Chi Squared distributed
+- [ ] Tests for association between two or more categorical variables
+- [ ] None of the above 
+
+**(LC6.20) Which R-function would be suitable if you wanted to perform a test with ranked (ordinal) data in a two-group between-subject design?**   
+
+- [ ] `kruskal.test(x, ...)`
+- [ ] `wilcox.test(x, ...)`
+- [ ] `aov(formula, data = ,...)`
+- [ ] `t.test(x, ...)`
+- [ ] None of the above 
+
 
 ## References {-}
 
 * Field, A., Miles J., & Field, Z. (2012): Discovering Statistics Using R. Sage Publications, **chapters 5, 9, 10, 12, 15, 18**.
-
+* McCullough, B.D. & Feit, E. (2020). Business Experiments with R.

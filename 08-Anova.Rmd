@@ -26,23 +26,37 @@ online_store_promo$Promotion <- factor(online_store_promo$Promotion, levels = c(
 
 ## Comparing several means
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cJRwmWWCpZE" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 ::: {.infobox .download data-latex="{download}"}
-[You can download the corresponding R-Code here](./Code/08-anova.R)
+[You can download the corresponding R-Code here](./Code/07-anova.R)
 :::
 
-
 ### Introduction
-In the previous section we learned how to compare means using a t-test. The t-test has some limitations since it only lets you compare 2 means and you can only use it with one independent variable. However, often we would like to compare means from 3 or more groups. In addition, there may be instances in which you manipulate more than one independent variable. For these applications, ANOVA (ANalysis Of VAriance) can be used. Hence, to conduct ANOVA you need: 
+
+
+In the previous section we learned how to compare two means using a t-test. The t-test has some limitations since it only lets you compare two means and you can only use it with one independent variable. However, often we would like to compare means from 3 or more groups. In addition, there may be instances in which you manipulate more than one independent variable. For these applications, ANOVA (<u>AN</u>alysis <u>O</u>f <u>VA</u>riance) can be used. Hence, to conduct ANOVA you need: 
 
 * A metric dependent variable (i.e., measured using an interval or ratio scale)
 * One or more non-metric (categorical) independent variables (also called factors) 
 
-A treatment is a particular combination of factor levels, or categories. One-way ANOVA is used when there is only one categorical variable (factor). In this case, a treatment is the same as a factor level. N-way ANOVA is used with two or more factors. Note that we are only going to talk about a single independent variable in the context of ANOVA. If you have multiple independent variables please refere to the chapter on **Regression**.
+A **treatment** is a particular combination of factor levels, or categories. So-called **one-way ANOVA** is used when there is only one categorical variable (factor). In this case, a treatment is the same as a factor level. **N-way ANOVA** is used with two or more factors. Note that we are only going to talk about a single independent variable in the context of ANOVA on this website. If you have multiple independent variables please refer to the chapter on **Regression**.
 
-Let's use an example to see how ANOVA works. Similar to the previous example it is also imaginable that the music streaming service experiments with a recommendation system for user created playlists. We now have three groups, the control group "A" with the current system, treatment group "B" who have access to playlists created by other users but are not shown recommendations and treatment group "C" who are shown recommendations for user created playlists.  
-As always, we load and inspect the data first:
+Let's use an example to see how ANOVA works. Similar to the previous example it is also imaginable that the music streaming service experiments with a recommendation system for user created playlists. We now have three groups, the control group "A" with the current system, treatment group "B" who have access to playlists created by other users but are not shown personalized recommendations, and treatment group "C" who are shown personalized recommendations in addition to having access to curated playlists. As always, we load and inspect the data first:
 
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+```{r, eval = TRUE, echo = TRUE, message = FALSE, warning=FALSE}
+hours_abc <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/hours_abc.dat", 
+                                 sep = "\t", 
+                                 header = TRUE) #read in data
+hours_abc$group <- factor(hours_abc$group, levels = c("A","B","C"), labels = c("A", "B","C")) #convert grouping variable to factor
+str(hours_abc) #inspect data
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE}
 set.seed(321)
 hours_population_1 <- rnorm(25000, 15, 5)
 set.seed(125671)
@@ -89,17 +103,30 @@ library(psych)
 describeBy(hours_abc$hours, hours_abc$group) #inspect data
 ```
 
-In addition, you should visualize the data using appropriate plots:
+In addition, you should visualize the data using appropriate plots. Appropriate plots in this case would be a plot of means, including the 95% confidence interval, or a boxplot. 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Plot of means"), tidy = FALSE}
-#Plot of means
-library(plyr)
+#Plot of mean
+library(Rmisc)
 library(ggplot2)
-ggplot(hours_abc, aes(group, hours)) + 
-  stat_summary(fun.y = mean, geom = "bar", fill = "White", colour = "Black") +
-  stat_summary(fun.data = mean_cl_normal, geom = "pointrange") + 
-  labs(x = "Experimental group ", y = "Listening time") + 
-  theme_bw()
+mean_data <- summarySE(hours_abc, measurevar="hours", groupvars=c("group"))
+ggplot(mean_data,aes(x = group, y = hours)) + 
+  geom_bar(position=position_dodge(1), colour="black", fill = "#CCCCCC", stat="identity", width = 0.65) +
+  geom_errorbar(position=position_dodge(.9), width=.15, aes(ymin=hours-ci, ymax=hours+ci)) +
+  theme_bw() +
+  labs(x = "Group", y = "Average number of hours", title = "Average number of hours by group")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+```
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Boxplot"), tidy = FALSE}
+ggplot(hours_abc,aes(x = group, y = hours)) + 
+  geom_boxplot() +
+  geom_jitter(colour="red", alpha = 0.1) +
+  theme_bw() +
+  labs(x = "Group", y = "Average number of hours", title = "Average number of hours by group")+
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
 ```
 
 Note that ANOVA is an omnibus test, which means that we test for an overall difference between groups. Hence, the test will only tell you if the group means are different, but it won't tell you exactly which groups are different from another.
@@ -116,15 +143,17 @@ This means that the overall probability of making a Type I error is 1-(0.95<sup>
 
 The basic concept underlying ANOVA is the decomposition of the variance in the data. There are three variance components which we need to consider:
 
-* We calculate how much variability there is between scores: <b>Total sum of squares (SS<sub>T</sub>)</b>
+* We calculate how much variability there is overall between scores: <b>Total sum of squares (SS<sub>T</sub>)</b>
 * We then calculate how much of this variability can be explained by the model we fit to the data (i.e., how much variability is due to the experimental manipulation): <b>Model sum of squares (SS<sub>M</sub>)</b>
 * … and how much cannot be explained (i.e., how much variability is due to individual differences in performance): <b>Residual sum of squares (SS<sub>R</sub>)</b>
 
 The following figure shows the different variance components using a generalized data matrix:
 
-![Decomposing variance](https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/sum_of_squares.JPG)
+<p style="text-align:center;">
+<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/sum_of_squares.JPG" alt="decomposing_variance"/>
+</p>
 
-The total variation is determined by the variation between the categories (due to our experimental manipulation) and the within-category variation that is due to extraneous factors (e.g., promotion of artists on a social network):   
+The total variation is determined by the variation between the categories (due to our experimental manipulation) and the within-category variation that is due to extraneous factors (e.g., unobserved factors such as the promotion of artists on a social network):   
 
 $$SS_T= SS_M+SS_R$$
 
@@ -216,7 +245,7 @@ SST
 ``` 
 
 
-For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b>. Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. In our example, we used all 300 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:
+For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b>. Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. Thus, the degrees of freedom of an estimate can also be thought of as the number of independent pieces of information that went into calculating the estimate. In our example, we used all 300 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:
 
 \begin{equation} 
 \begin{split}
@@ -225,9 +254,14 @@ df_T = N-1=300-1=299
 (\#eq:dfT)
 \end{equation} 
 
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+Why do we subtract 1 from the number of items when computing the **degrees of freedom**? As mentioned above, the degrees of freedom refer to the number of values that are free to vary in a data set. To understand what this means, imagine that we try to estimate the mean hours of music listening in a population and that mean is 20 hours. We could take different samples from the population and we assume that the sample mean is equal to the population mean. Imagine, we only take three small samples of 3 students each: i) 19, 20, 21, ii) 18, 20, 22, iii) 15, 20, 25. Once you have chosen the first two values in each set, the third item cannot be chosen freely (i.e., it is fixed) because it needs to be the value that gets you to the population mean. Hence, only the first two values are 'free to vary'. You can select 19 + 20 or 15 + 25, but once you have chosen the first two values, you must choose a particular value that will give you the population mean you are looking for (i.e., 20 hours). In this case, the degrees of freedom for each set of three numbers is two.
+:::
+
 #### Model sum of squares
 
-Now we know that there are 26646.33 units of total variation in our data. Next, we compute how much of the total variation can be explained by the differences between groups (i.e., our experimental manipulation). To compute the explained variation in the data, we consider the difference between the values predicted by our model for each observation (i.e., the group mean) and the grand mean. The group mean refers to the mean value within the experimental group. The vertical lines in the following plot measure how far the predicted value for each observation (i.e., the group mean) is away from the grand mean:
+Now we know that there are `r format(round(SST,2),scientific=FALSE)` units of total variation in our data. Next, we compute how much of the total variation can be explained by the differences between groups (i.e., our experimental manipulation). To compute the explained variation in the data, we consider the difference between the values predicted by our model for each observation (i.e., the group mean) and the grand mean. The group mean refers to the mean value within the experimental group. The vertical lines in the following plot measure how far the predicted value for each observation (i.e., the group mean) is away from the grand mean:
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap="Model Sum of Squares"}
 ggplot(d, aes(x=index,y=hours,color=group)) + 
@@ -334,7 +368,7 @@ eta <- SSM/SST
 eta
 ```
 
-The statistic can only take values between 0 and 1. It is equal to 0 when all the category means are equal, indicating that X has no effect on Y. In contrast, it has a value of 1 when there is no variability within each category of X but there is some variability between categories.
+The statistic can only take values between 0 and 1. It is equal to 0 when all the category means are equal, indicating that X has no effect on Y. In contrast, it has a value of 1 when there is no variability within each category of X but there is some variability between categories. You can think of it as the equivalent to the R-squared statistic in regression model since it also represents a measure of the share of explained variance. 
 
 #### Test of significance
 
@@ -343,15 +377,13 @@ How can we determine whether the effect of X on Y is significant?
 * First, we calculate the fit of the most basic model (i.e., the grand mean)
 * Then, we calculate the fit of the “best” model (i.e., the group means)
 * A good model should fit the data significantly better than the basic model
-* The F-statistic or F-ratio compares the amount of systematic variance in the data to the amount of unsystematic variance
+* The F-statistic, or F-ratio, compares the amount of systematic variance in the data to the amount of unsystematic variance
 
 The F-statistic uses the ratio of mean square related to X (explained variation) and the mean square related to the error (unexplained variation):
 
-<p style="text-align:center;">
-$\frac{SS_M}{SS_R}$ <br>
-</p>
+$$\frac{SS_M}{SS_R}$$
 
-However, since these are summed values, their magnitude is influenced by the number of scores that were summed. For example, to calculate SS<sub>M</sub> we only used the sum of 3 values (the group means), while we used 30 and 27 values to calculate SS<sub>T</sub> and SS<sub>R</sub>, respectively. Thus, we calculate the average sum of squares (“mean square”) to compare the average amount of systematic vs. unsystematic variation by dividing the SS values by the degrees of freedom associated with the respective statistic.
+However, since these are summed values, their magnitude is influenced by the number of scores that were summed. For example, to calculate SS<sub>M</sub> we only used the sum of 3 values (the group means), while we used 300 values to calculate SS<sub>T</sub> and SS<sub>R</sub>, respectively. Thus, we calculate the average sum of squares (“mean square”) to compare the average amount of systematic vs. unsystematic variation by dividing the SS values by the degrees of freedom associated with the respective statistic.
 
 Mean square due to X:
 
@@ -365,7 +397,7 @@ $$
 MS_R= \frac{SS_R}{df_R}=\frac{SS_R}{N-c}=\frac{`r format(round(SSR,2),scientific=FALSE)`}{(300-3)}
 $$
 
-Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-radio can be derived as follows:
+Now, we compare the amount of variability explained by the model (experiment), to the error in the model (variation due to extraneous variables). If the model explains more variability than it can’t explain, then the experimental manipulation has had a significant effect on the outcome (DV). The F-ratio can be derived as follows:
 
 $$
 F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{`r format(round(SSM,2),scientific=FALSE)`}{(3-1)}}{\frac{`r format(round(SSR,2),scientific=FALSE)`}{(300-3)}}=`r format(round((SSM/2)/(SSR/297),2),scientific=FALSE)`
@@ -378,7 +410,12 @@ f_ratio <- (SSM/2)/(SSR/297)
 f_ratio
 ```
 
-This statistic follows the F distribution with (m = c – 1) and (n = N – c) degrees of freedom. This means that, like the $\chi^2$ distribution, the shape of the F-distribution depends on the degrees of freedom. In this case, the shape depends on the degrees of freedom associated with the numerator and denominator used to compute the F-ratio. The following figure shows the shape of the F-distribution for different degrees of freedom:  
+Similar to the t-test, the outcome of the significance test will be one of the following:
+
+* If the null hypothesis of equal category means is not rejected, then the independent variable does not have a significant effect on the dependent variable
+* If the null hypothesis is rejected, then the effect of the independent variable is significant  
+
+To decide which one it is, we proceed as with the t-test. That is, we calculate the test statistic and compare it to the critical value for a given level of confidence. If the calculated test statistic is larger than the critical value, we can reject the null hypothesis of equal group means and conclude that the independent variable has a significant effect on our outcome. In this case, however, the test statistic follows a F distribution (instead of the t-distribution) with (m = c – 1) and (n = N – c) degrees of freedom. This means that the shape of the F-distribution depends on the degrees of freedom. In this case, the shape depends on the degrees of freedom associated with the numerator and denominator used to compute the F-ratio. The following figure shows the shape of the F-distribution for different degrees of freedom:  
 
 ```{r echo = F, message=FALSE, warning=FALSE, eval=T, fig.align="center", fig.cap = "The F distribution"}
 library(ggplot2)
@@ -401,11 +438,6 @@ library(ggplot2)
 ```
 
 ![The F distribution](./fdistributions.png)
-
-The outcome of the test is one of the following:
-
-* If the null hypothesis of equal category means is not rejected, then the independent variable does not have a significant effect on the dependent variable
-* If the null hypothesis is rejected, then the effect of the independent variable is significant  
 
 For 2 and 297 degrees of freedom, the critical value of F is `r  round(qf(.95, df1 = 2, df2 = 297), 3)` for &alpha;=0.05. As usual, you can either look up these values in a table or use the appropriate function in R:
 
@@ -443,13 +475,15 @@ f_cal <- f_ratio
 
 Thus, we conclude that because F<sub>CAL</sub> = `r round(f_cal,2)` > F<sub>CR</sub> = 3.03, H<sub>0</sub> is rejected!
 
-Interpretation: one or more of the differences between means are statistically significant.
+Now we can interpret our findings as follows: one or more of the differences between means are statistically significant.
 
-Reporting: There was a significant effect of promotion on sales levels, F(2,297) = `r round(f_cal,2)`, p < 0.05, $\eta^2$ = `r round(eta,2)`. 
+::: {.infobox_red .caution data-latex="{caution}"}
+Remember: The ANOVA tests for an overall difference in means between the groups. It doesn’t tell us where the differences between groups lie, e.g., whether group A is different from B or C is different from B or C is different from A. To find out which group means exactly differ, we need to use post-hoc procedures, which are described below. However, when the ANOVA tells you that the there is no differences between the means, then you also shouldn't proceed to conduct post-hoc tests. In other words, you should only proceed to conduct post-hoc tests when you found a significant overall effect in your ANOVA.  
+:::
 
-Remember: This doesn’t tell us where the differences between groups lie. To find out which group means exactly differ, we need to use post-hoc procedures (see below).
+Finally, you should report your findings in an appropriate way. You could do this by saying: There was a significant effect of playlists and personalized recommendations on listening times, F(2,297) = `r round(f_cal,2)`, p < 0.05, $\eta^2$ = `r round(eta,2)`. 
 
-*You don't have to compute these statistics manually!* Luckily, there is a function for ANOVA in R, which does the above calculations for you as we will see in the next section.
+As usual, you don't have to compute these statistics manually! Luckily, there is a function for ANOVA in R, which does the above calculations for you as we will see in the next section.
 
 ### One-way ANOVA
 
@@ -491,7 +525,7 @@ The Q-Q plots suggest an approximately Normal distribution. If the assumption ha
 
 ##### Homogeneity of variance {-}
 
-Let's return to our original dataset with 100 observations in each group for the rest of the analysis.
+Let's return to our original data set with 100 observations in each group for the rest of the analysis.
 
 You can test the homogeneity of variances in R using Levene's test:
 
@@ -541,7 +575,7 @@ shapiro.test(resid(aov))
 
 Confirming the impression from the Q-Q plot, we cannot reject the Null that the residuals are approximately normally distributed. 
 
-Note that if Levene's test would have been significant (i.e., variances are not equal), we would have needed to either resort to non-parametric tests (see below), or compute the Welch's F-ratio instead:
+Note that if Levene's test would have been significant (i.e., variances are not equal), we would have needed to either resort to non-parametric tests (see below), or compute the Welch's F-ratio instead, which is correcting for unequal variances between the groups:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 oneway.test(hours ~ group, hours_abc)
@@ -551,7 +585,7 @@ You can see that the results are fairly similar, since the variances turned out 
 
 #### Post-hoc tests
 
-Provided that significant differences were detected by the overall ANOVA you can find out which group means are different using post hoc procedures. Post hoc procedures are designed to conduct pairwise comparisons of all different combinations of the treatment groups by correcting the level of significance for each test such that the overall Type I error rate (&alpha;) across all comparisons remains at 0.05.
+Provided that significant differences were detected by the overall ANOVA you can find out which group means are different using post-hoc procedures. Post-hoc procedures are designed to conduct pairwise comparisons of all different combinations of the treatment groups by correcting the level of significance for each test such that the overall Type I error rate (&alpha;) across all comparisons remains at 0.05.
 
 In other words, we rejected H<sub>0</sub>: &mu;<sub>1</sub>= &mu;<sub>2</sub>= &mu;<sub>3</sub>, and now we would like to test:
 
@@ -567,7 +601,7 @@ Test3:
 
 $$H_0: \mu_2 = \mu_3$$
 
-There are several post hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey's HSD ("honest significant differences"). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’ HSDs is better when testing large numbers of means. 
+There are several post-hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey's HSD ("honest significant differences"). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’ HSDs is better when testing large numbers of means. 
 
 ##### Bonferroni
 
@@ -575,13 +609,12 @@ One of the most popular (and easiest) methods to correct for the family-wise err
 
 $$
 p_{CR}= \frac{\alpha}{k}
-$$ 
-
+$$
 In our example with three groups:
 
 $$p_{CR}= \frac{0.05}{3}=0.017$$
 
-Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., the critical t value is higher). You can implement the Bonferroni procedure in R using:
+Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., the critical t value is higher). This means that the test is more conservative to account for the family-wise error. Remember that, to reject the null hypothesis at a 5%  significance level, we usually check if the p-value in our analysis is smaller than 0.05. The corrected p-value above requires us to obtain a p-value smaller than 0.017 in order to reject the null hypothesis at the 5% significance level, which means that the critical value of the test statistic is higher. You can implement the Bonferroni procedure in R using:
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 bonferroni <- pairwise.t.test(hours_abc$hours, hours_abc$group, data = hours_abc, p.adjust.method = "bonferroni")
@@ -589,7 +622,7 @@ bonferroni
 
 ```
 
-In the output, you will get the corrected p-values for the individual tests. In our example, we can reject H<sub>0</sub> of equal means for all three tests, since p < 0.05 for all combinations of groups.
+In the output, you will get the corrected p-values for the individual tests. This mean, to reject the null hypothesis, we require the p-value to be smaller than 0.05 again, since the reported p-values are already corrected for the family-wise error. In our example, we can reject H<sub>0</sub> of equal means for all three tests, since p < 0.05 for all combinations of groups.
 
 Note the difference between the results from the post-hoc test compared to individual t-tests. For example, when we test the "B" vs. "C" groups, the result from a t-test would be: 
 
@@ -657,7 +690,7 @@ We may also plot the result for the mean differences incl. their confidence inte
 plot(tukeys)
 ```
 
-You can see that the CIs do not cross zero, which means that the true difference between group means is unlikely zero.  
+You can see that the CIs do not cross zero, which means that the true difference between group means is unlikely zero. It is sufficient to report the results in the way described above. However, you could also manually compute the differences between the groups and their confidence interval as follows: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 mean1 <- mean(hours_abc[hours_abc$group=="A","hours"]) #mean group "A"
@@ -688,17 +721,40 @@ ci_low_med_upper <- mean_diff_med_low+hsd
 ci_low_med_lower
 ci_low_med_upper
 ```
+The results of a post-hoc test can be reported as follows:  
 
-Reporting of post hoc results: 
+The post-hoc tests based on Bonferroni and Tukey’s HSD revealed that users listened to music significantly more when:
 
-The post hoc tests based on Bonferroni and Tukey’s HSD revealed that people listened to music significantly more when:
+ - they had access to curated playlists (group "B") vs. those who did not (group "A"), 
+ - they received personalized recommendations in addition to having access to curated playlists (group "c") vs. those who did not (group "B"). 
+ - they received personalized recommendations in addition to having access to curated playlists (group "c") vs. those who only only had access to curated playlists 
 
- - they had access to user created playlists vs. those who did not, 
- - they got recommendations vs. those who did not. This is true for both the control group "A" as well as treatment "B".
- 
+As with the t-test, you could also use the functions contained in the `ggstatsplot` package to combine a visual depiction of the data with the results of statistical tests. In the case of an ANOVA, the output would also include the pairwise comparisons. 
 
-**The following video summarizes how to conduct a one-way ANOVA in R**
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, fig.align="center", fig.cap="ANOVA using ggstatsplot"}
+library(ggstatsplot)
+ggbetweenstats(
+  data = hours_abc,
+  x = group,
+  y = hours,
+  plot.type = "box",
+  pairwise.comparisons = TRUE,
+  pairwise.annotation = "p.value",
+  p.adjust.method = "bonferroni",
+  effsize.type = "partial_eta",
+  var.equal = FALSE,
+  mean.plotting = TRUE, # whether mean for each group is to be displayed
+  mean.ci = TRUE, # whether to display confidence interval for means
+  mean.label.size = 2.5, # size of the label for mean
+  type = "parametric", # which type of test is to be run
+  k = 3, # number of decimal places for statistical results
+  outlier.label.color = "darkgreen", # changing the color for the text label
+  title = "Comparison of listening times between groups",
+  xlab = "Experimental group", # label for the x-axis variable
+  ylab = "Listening time", # label for the y-axis variable
+  messages = FALSE,
+  bf.message = FALSE
+)
+```
 
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vl32om-3KpY" frameborder="0" allowfullscreen></iframe>
-</div>
+
