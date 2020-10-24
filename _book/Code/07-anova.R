@@ -1,7 +1,6 @@
 # The following code is taken from the fourth chapter of the online script, which provides more detailed explanations:
 # https://imsmwu.github.io/MRDA2020/hypothesis-testing.html#comparing-several-means
 
-
 #-------------------------------------------------------------------#
 #---------------------Install missing packages----------------------#
 #-------------------------------------------------------------------#

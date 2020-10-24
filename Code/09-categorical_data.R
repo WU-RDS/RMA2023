@@ -11,7 +11,6 @@ req_packages <- c("psych", "plyr", "ggplot2", "reshape2", "PMCMR", "car", "multc
 req_packages <- req_packages[!req_packages %in% installed.packages()]
 lapply(req_packages, install.packages)
 
-
 #-------------------------------------------------------------------#
 #--------------------------Categorical data-------------------------#
 #-------------------------------------------------------------------#

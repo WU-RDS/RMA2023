@@ -281,7 +281,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>7.6.2</b> Technical details of the model</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>7.6.3</b> Estimation in R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#summary"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#references-4"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a><ul>
@@ -293,7 +293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.4" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#creating-new-variables"><i class="fa fa-check"></i><b>8.2.4</b> Creating new variables</a></li>
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#reliability-analysis"><i class="fa fa-check"></i><b>8.3</b> Reliability analysis</a></li>
-<li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#summary-1"><i class="fa fa-check"></i>Summary</a></li>
+<li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#summary"><i class="fa fa-check"></i>Summary</a></li>
 <li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#references-5"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="part"><span><b>III Assignments</b></span></li>
@@ -1148,15 +1148,15 @@ Figure 6.1: p-hacking (red indicates false positives)
 <li>One or more non-metric (categorical) independent variables (also called factors)</li>
 </ul>
 <p>A <strong>treatment</strong> is a particular combination of factor levels, or categories. So-called <strong>one-way ANOVA</strong> is used when there is only one categorical variable (factor). In this case, a treatment is the same as a factor level. <strong>N-way ANOVA</strong> is used with two or more factors. Note that we are only going to talk about a single independent variable in the context of ANOVA on this website. If you have multiple independent variables please refer to the chapter on <strong>Regression</strong>.</p>
-<p>Let’s use an example to see how ANOVA works. Similar to the previous example it is also imaginable that the music streaming service experiments with a recommendation system for user created playlists. We now have three groups, the control group “A” with the current system, treatment group “B” who have access to playlists created by other users but are not shown personalized recommendations, and treatment group “C” who are shown personalized recommendations in addition to having access to curated playlists. As always, we load and inspect the data first:</p>
+<p>Let’s use an example to see how ANOVA works. Similar to the previous example, imagine that the music streaming service experiments with a recommender system and manipulates the intensity of personalized recommendations using three levels: ‘low’, ‘medium’, and ‘high’. The service randomly assigns 100 users to each condition and records the listening times in hours in the following week. As always, we load and inspect the data first:</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="hypothesis-testing.html#cb292-1"></a>hours_abc &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/hours_abc.dat&quot;</span>, </span>
 <span id="cb292-2"><a href="hypothesis-testing.html#cb292-2"></a>    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
 <span id="cb292-3"><a href="hypothesis-testing.html#cb292-3"></a>hours_abc<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">factor</span>(hours_abc<span class="op">$</span>group, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, </span>
-<span id="cb292-4"><a href="hypothesis-testing.html#cb292-4"></a>    <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>))  <span class="co">#convert grouping variable to factor</span></span>
+<span id="cb292-4"><a href="hypothesis-testing.html#cb292-4"></a>    <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;medium&quot;</span>, <span class="st">&quot;high&quot;</span>))  <span class="co">#convert grouping variable to factor</span></span>
 <span id="cb292-5"><a href="hypothesis-testing.html#cb292-5"></a><span class="kw">str</span>(hours_abc)  <span class="co">#inspect data</span></span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    300 obs. of  3 variables:
 ##  $ hours: int  18 13 3 13 20 18 18 10 11 20 ...
-##  $ group: Factor w/ 3 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ group: Factor w/ 3 levels &quot;low&quot;,&quot;medium&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ index: int  1 2 3 4 5 6 7 8 9 10 ...</code></pre>
 <p>The null hypothesis, typically, is that all means are equal (non-directional hypothesis). Hence, in our case:</p>
 <p><span class="math display">\[H_0: \mu_1 = \mu_2 = \mu_3\]</span></p>
@@ -1169,18 +1169,18 @@ Figure 6.1: p-hacking (red indicates false positives)
 <span id="cb294-2"><a href="hypothesis-testing.html#cb294-2"></a><span class="kw">describeBy</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group)  <span class="co">#inspect data</span></span></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
-## group: A
+## group: low
 ##    vars   n  mean   sd median trimmed  mad min max range  skew kurtosis   se
 ## X1    1 100 14.34 4.62     14   14.36 4.45   3  25    22 -0.03    -0.32 0.46
 ## ------------------------------------------------------------ 
-## group: B
+## group: medium
 ##    vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
 ## X1    1 100 24.7 5.81     25   24.79 5.93  12  42    30 0.05      0.2 0.58
 ## ------------------------------------------------------------ 
-## group: C
+## group: high
 ##    vars   n  mean   sd median trimmed  mad min max range  skew kurtosis   se
 ## X1    1 100 34.99 6.42   34.5   35.02 6.67  17  50    33 -0.05    -0.23 0.64</code></pre>
-<p>In addition, you should visualize the data using appropriate plots. Appropriate plots in this case would be a plot of means, including the 95% confidence interval, or a boxplot.</p>
+<p>In addition, you should visualize the data using appropriate plots. Appropriate plots in this case would be a plot of means, including the 95% confidence interval around the mean, or a boxplot.</p>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="hypothesis-testing.html#cb296-1"></a><span class="co">#Plot of mean</span></span>
 <span id="cb296-2"><a href="hypothesis-testing.html#cb296-2"></a><span class="kw">library</span>(Rmisc)</span>
 <span id="cb296-3"><a href="hypothesis-testing.html#cb296-3"></a><span class="kw">library</span>(ggplot2)</span>
@@ -1212,11 +1212,11 @@ Figure 6.3: Boxplot
 </p>
 </div>
 <p>Note that ANOVA is an omnibus test, which means that we test for an overall difference between groups. Hence, the test will only tell you if the group means are different, but it won’t tell you exactly which groups are different from another.</p>
-<p>So why don’t we then just conduct a series of t-tests for all combinations of groups (i.e., A vs. B, A vs. C, B vs. C)? The reason is that if we assume each test to be independent, then there is a 5% probability of falsely rejecting the null hypothesis (Type I error) for each test. In our case:</p>
+<p>So why don’t we then just conduct a series of t-tests for all combinations of groups (i.e., “low” vs. “medium”, “low” vs. “high”, “medium” vs. “high”)? The reason is that if we assume each test to be independent, then there is a 5% probability of falsely rejecting the null hypothesis (Type I error) for each test. In our case:</p>
 <ul>
-<li>A vs. B (α = 0.05)</li>
-<li>A vs. C (α = 0.05)</li>
-<li>B vs. C (α = 0.05)</li>
+<li>“low” vs. “medium” (α = 0.05)</li>
+<li>“low” vs. “high” (α = 0.05)</li>
+<li>“medium” vs. “high” (α = 0.05)</li>
 </ul>
 <p>This means that the overall probability of making a Type I error is 1-(0.95<sup>3</sup>) = 0.143, since the probability of no Type I error is 0.95 for each of the three tests. Consequently, the Type I error probability would be 14.3%, which is above the conventional standard of 5%. This is also known as the family-wise or experiment-wise error.</p>
 </div>
@@ -1239,20 +1239,20 @@ Figure 6.3: Boxplot
 <span id="cb298-2"><a href="hypothesis-testing.html#cb298-2"></a><span class="kw">dcast</span>(hours_abc, index <span class="op">~</span><span class="st"> </span>group, <span class="dt">value.var =</span> <span class="st">&quot;hours&quot;</span>)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["index"],"name":[1],"type":["int"],"align":["right"]},{"label":["A"],"name":[2],"type":["int"],"align":["right"]},{"label":["B"],"name":[3],"type":["int"],"align":["right"]},{"label":["C"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"18","3":"26","4":"34"},{"1":"2","2":"13","3":"32","4":"34"},{"1":"3","2":"3","3":"29","4":"32"},{"1":"4","2":"13","3":"31","4":"25"},{"1":"5","2":"20","3":"13","4":"35"},{"1":"6","2":"18","3":"31","4":"20"},{"1":"7","2":"18","3":"26","4":"30"},{"1":"8","2":"10","3":"21","4":"33"},{"1":"9","2":"11","3":"31","4":"31"},{"1":"10","2":"20","3":"24","4":"42"},{"1":"11","2":"23","3":"13","4":"40"},{"1":"12","2":"14","3":"21","4":"44"},{"1":"13","2":"25","3":"31","4":"39"},{"1":"14","2":"16","3":"21","4":"33"},{"1":"15","2":"14","3":"28","4":"27"},{"1":"16","2":"14","3":"39","4":"48"},{"1":"17","2":"22","3":"22","4":"32"},{"1":"18","2":"23","3":"27","4":"35"},{"1":"19","2":"20","3":"28","4":"32"},{"1":"20","2":"15","3":"19","4":"35"},{"1":"21","2":"19","3":"20","4":"44"},{"1":"22","2":"16","3":"20","4":"32"},{"1":"23","2":"15","3":"26","4":"39"},{"1":"24","2":"15","3":"26","4":"35"},{"1":"25","2":"6","3":"12","4":"42"},{"1":"26","2":"12","3":"25","4":"29"},{"1":"27","2":"12","3":"23","4":"45"},{"1":"28","2":"15","3":"24","4":"27"},{"1":"29","2":"11","3":"24","4":"35"},{"1":"30","2":"10","3":"22","4":"38"},{"1":"31","2":"14","3":"16","4":"44"},{"1":"32","2":"5","3":"14","4":"39"},{"1":"33","2":"13","3":"29","4":"38"},{"1":"34","2":"12","3":"32","4":"44"},{"1":"35","2":"22","3":"29","4":"17"},{"1":"36","2":"16","3":"20","4":"38"},{"1":"37","2":"7","3":"32","4":"34"},{"1":"38","2":"20","3":"34","4":"31"},{"1":"39","2":"13","3":"27","4":"29"},{"1":"40","2":"21","3":"26","4":"46"},{"1":"41","2":"13","3":"20","4":"36"},{"1":"42","2":"13","3":"23","4":"32"},{"1":"43","2":"12","3":"42","4":"35"},{"1":"44","2":"5","3":"19","4":"30"},{"1":"45","2":"17","3":"26","4":"27"},{"1":"46","2":"18","3":"32","4":"44"},{"1":"47","2":"12","3":"29","4":"40"},{"1":"48","2":"8","3":"22","4":"31"},{"1":"49","2":"5","3":"25","4":"21"},{"1":"50","2":"18","3":"24","4":"29"},{"1":"51","2":"18","3":"28","4":"29"},{"1":"52","2":"19","3":"38","4":"32"},{"1":"53","2":"12","3":"26","4":"33"},{"1":"54","2":"11","3":"16","4":"28"},{"1":"55","2":"13","3":"21","4":"44"},{"1":"56","2":"16","3":"27","4":"37"},{"1":"57","2":"5","3":"24","4":"33"},{"1":"58","2":"17","3":"28","4":"45"},{"1":"59","2":"9","3":"28","4":"41"},{"1":"60","2":"8","3":"24","4":"33"},{"1":"61","2":"11","3":"32","4":"31"},{"1":"62","2":"12","3":"25","4":"42"},{"1":"63","2":"13","3":"18","4":"31"},{"1":"64","2":"10","3":"29","4":"25"},{"1":"65","2":"15","3":"25","4":"43"},{"1":"66","2":"16","3":"20","4":"38"},{"1":"67","2":"22","3":"18","4":"40"},{"1":"68","2":"10","3":"28","4":"36"},{"1":"69","2":"16","3":"27","4":"25"},{"1":"70","2":"18","3":"32","4":"30"},{"1":"71","2":"12","3":"22","4":"36"},{"1":"72","2":"22","3":"21","4":"46"},{"1":"73","2":"13","3":"28","4":"33"},{"1":"74","2":"14","3":"30","4":"39"},{"1":"75","2":"10","3":"30","4":"40"},{"1":"76","2":"9","3":"12","4":"31"},{"1":"77","2":"9","3":"21","4":"39"},{"1":"78","2":"11","3":"23","4":"43"},{"1":"79","2":"17","3":"22","4":"36"},{"1":"80","2":"17","3":"17","4":"37"},{"1":"81","2":"16","3":"29","4":"46"},{"1":"82","2":"14","3":"29","4":"28"},{"1":"83","2":"16","3":"22","4":"30"},{"1":"84","2":"14","3":"12","4":"31"},{"1":"85","2":"19","3":"23","4":"32"},{"1":"86","2":"24","3":"32","4":"31"},{"1":"87","2":"17","3":"21","4":"29"},{"1":"88","2":"12","3":"18","4":"50"},{"1":"89","2":"12","3":"27","4":"37"},{"1":"90","2":"17","3":"31","4":"32"},{"1":"91","2":"14","3":"23","4":"41"},{"1":"92","2":"20","3":"21","4":"36"},{"1":"93","2":"10","3":"27","4":"33"},{"1":"94","2":"13","3":"17","4":"40"},{"1":"95","2":"12","3":"21","4":"25"},{"1":"96","2":"20","3":"22","4":"38"},{"1":"97","2":"9","3":"25","4":"31"},{"1":"98","2":"16","3":"28","4":"28"},{"1":"99","2":"12","3":"27","4":"39"},{"1":"100","2":"17","3":"19","4":"34"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["index"],"name":[1],"type":["int"],"align":["right"]},{"label":["low"],"name":[2],"type":["int"],"align":["right"]},{"label":["medium"],"name":[3],"type":["int"],"align":["right"]},{"label":["high"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"18","3":"26","4":"34"},{"1":"2","2":"13","3":"32","4":"34"},{"1":"3","2":"3","3":"29","4":"32"},{"1":"4","2":"13","3":"31","4":"25"},{"1":"5","2":"20","3":"13","4":"35"},{"1":"6","2":"18","3":"31","4":"20"},{"1":"7","2":"18","3":"26","4":"30"},{"1":"8","2":"10","3":"21","4":"33"},{"1":"9","2":"11","3":"31","4":"31"},{"1":"10","2":"20","3":"24","4":"42"},{"1":"11","2":"23","3":"13","4":"40"},{"1":"12","2":"14","3":"21","4":"44"},{"1":"13","2":"25","3":"31","4":"39"},{"1":"14","2":"16","3":"21","4":"33"},{"1":"15","2":"14","3":"28","4":"27"},{"1":"16","2":"14","3":"39","4":"48"},{"1":"17","2":"22","3":"22","4":"32"},{"1":"18","2":"23","3":"27","4":"35"},{"1":"19","2":"20","3":"28","4":"32"},{"1":"20","2":"15","3":"19","4":"35"},{"1":"21","2":"19","3":"20","4":"44"},{"1":"22","2":"16","3":"20","4":"32"},{"1":"23","2":"15","3":"26","4":"39"},{"1":"24","2":"15","3":"26","4":"35"},{"1":"25","2":"6","3":"12","4":"42"},{"1":"26","2":"12","3":"25","4":"29"},{"1":"27","2":"12","3":"23","4":"45"},{"1":"28","2":"15","3":"24","4":"27"},{"1":"29","2":"11","3":"24","4":"35"},{"1":"30","2":"10","3":"22","4":"38"},{"1":"31","2":"14","3":"16","4":"44"},{"1":"32","2":"5","3":"14","4":"39"},{"1":"33","2":"13","3":"29","4":"38"},{"1":"34","2":"12","3":"32","4":"44"},{"1":"35","2":"22","3":"29","4":"17"},{"1":"36","2":"16","3":"20","4":"38"},{"1":"37","2":"7","3":"32","4":"34"},{"1":"38","2":"20","3":"34","4":"31"},{"1":"39","2":"13","3":"27","4":"29"},{"1":"40","2":"21","3":"26","4":"46"},{"1":"41","2":"13","3":"20","4":"36"},{"1":"42","2":"13","3":"23","4":"32"},{"1":"43","2":"12","3":"42","4":"35"},{"1":"44","2":"5","3":"19","4":"30"},{"1":"45","2":"17","3":"26","4":"27"},{"1":"46","2":"18","3":"32","4":"44"},{"1":"47","2":"12","3":"29","4":"40"},{"1":"48","2":"8","3":"22","4":"31"},{"1":"49","2":"5","3":"25","4":"21"},{"1":"50","2":"18","3":"24","4":"29"},{"1":"51","2":"18","3":"28","4":"29"},{"1":"52","2":"19","3":"38","4":"32"},{"1":"53","2":"12","3":"26","4":"33"},{"1":"54","2":"11","3":"16","4":"28"},{"1":"55","2":"13","3":"21","4":"44"},{"1":"56","2":"16","3":"27","4":"37"},{"1":"57","2":"5","3":"24","4":"33"},{"1":"58","2":"17","3":"28","4":"45"},{"1":"59","2":"9","3":"28","4":"41"},{"1":"60","2":"8","3":"24","4":"33"},{"1":"61","2":"11","3":"32","4":"31"},{"1":"62","2":"12","3":"25","4":"42"},{"1":"63","2":"13","3":"18","4":"31"},{"1":"64","2":"10","3":"29","4":"25"},{"1":"65","2":"15","3":"25","4":"43"},{"1":"66","2":"16","3":"20","4":"38"},{"1":"67","2":"22","3":"18","4":"40"},{"1":"68","2":"10","3":"28","4":"36"},{"1":"69","2":"16","3":"27","4":"25"},{"1":"70","2":"18","3":"32","4":"30"},{"1":"71","2":"12","3":"22","4":"36"},{"1":"72","2":"22","3":"21","4":"46"},{"1":"73","2":"13","3":"28","4":"33"},{"1":"74","2":"14","3":"30","4":"39"},{"1":"75","2":"10","3":"30","4":"40"},{"1":"76","2":"9","3":"12","4":"31"},{"1":"77","2":"9","3":"21","4":"39"},{"1":"78","2":"11","3":"23","4":"43"},{"1":"79","2":"17","3":"22","4":"36"},{"1":"80","2":"17","3":"17","4":"37"},{"1":"81","2":"16","3":"29","4":"46"},{"1":"82","2":"14","3":"29","4":"28"},{"1":"83","2":"16","3":"22","4":"30"},{"1":"84","2":"14","3":"12","4":"31"},{"1":"85","2":"19","3":"23","4":"32"},{"1":"86","2":"24","3":"32","4":"31"},{"1":"87","2":"17","3":"21","4":"29"},{"1":"88","2":"12","3":"18","4":"50"},{"1":"89","2":"12","3":"27","4":"37"},{"1":"90","2":"17","3":"31","4":"32"},{"1":"91","2":"14","3":"23","4":"41"},{"1":"92","2":"20","3":"21","4":"36"},{"1":"93","2":"10","3":"27","4":"33"},{"1":"94","2":"13","3":"17","4":"40"},{"1":"95","2":"12","3":"21","4":"25"},{"1":"96","2":"20","3":"22","4":"38"},{"1":"97","2":"9","3":"25","4":"31"},{"1":"98","2":"16","3":"28","4":"28"},{"1":"99","2":"12","3":"27","4":"39"},{"1":"100","2":"17","3":"19","4":"34"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>In this example, X<sub>1</sub> from the generalized data matrix above would refer to the factor level “A”, X<sub>2</sub> to the level “B”, and X<sub>3</sub> to the level “C”. Y<sub>11</sub> refers to the first data point in the first row (i.e., “13”), Y<sub>12</sub> to the second data point in the first row (i.e., “21”), etc.. The grand mean (<span class="math inline">\(\overline{Y}\)</span>) and the category means (<span class="math inline">\(\overline{Y}_c\)</span>) can be easily computed:</p>
+<p>In this example, X<sub>1</sub> from the generalized data matrix above would refer to the factor level “low”, X<sub>2</sub> to the level “medium”, and X<sub>3</sub> to the level “high”. Y<sub>11</sub> refers to the first data point in the first row (i.e., “13”), Y<sub>12</sub> to the second data point in the first row (i.e., “21”), etc.. The grand mean (<span class="math inline">\(\overline{Y}\)</span>) and the category means (<span class="math inline">\(\overline{Y}_c\)</span>) can be easily computed:</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="hypothesis-testing.html#cb299-1"></a><span class="kw">mean</span>(hours_abc<span class="op">$</span>hours)  <span class="co">#grand mean</span></span></code></pre></div>
 <pre><code>## [1] 24.67667</code></pre>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="hypothesis-testing.html#cb301-1"></a><span class="kw">by</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, mean)  <span class="co">#category mean</span></span></code></pre></div>
-<pre><code>## hours_abc$group: A
+<pre><code>## hours_abc$group: low
 ## [1] 14.34
 ## ------------------------------------------------------------ 
-## hours_abc$group: B
+## hours_abc$group: medium
 ## [1] 24.7
 ## ------------------------------------------------------------ 
-## hours_abc$group: C
+## hours_abc$group: high
 ## [1] 34.99</code></pre>
 <p>To see how each variance component can be derived, let’s look at the data again. The following graph shows the individual observations by experimental group:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
@@ -1287,7 +1287,7 @@ SS_T =&amp;(13−24.67)^2 + (14−24.67)^2 + … + (2−24.67)^2\\
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="hypothesis-testing.html#cb303-1"></a>SST &lt;-<span class="st"> </span><span class="kw">sum</span>((hours_abc<span class="op">$</span>hours <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(hours_abc<span class="op">$</span>hours))<span class="op">^</span><span class="dv">2</span>)</span>
 <span id="cb303-2"><a href="hypothesis-testing.html#cb303-2"></a>SST</span></code></pre></div>
 <pre><code>## [1] 30855.64</code></pre>
-<p>For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b>. Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. Thus, the degrees of freedom of an estimate can also be thought of as the number of independent pieces of information that went into calculating the estimate. In our example, we used all 300 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:</p>
+<p>For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b> (df). Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. Thus, the degrees of freedom of an estimate can also be thought of as the number of independent pieces of information that went into calculating the estimate. In our example, we used all 300 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:</p>
 <p><span class="math display" id="eq:dfT">\[\begin{equation} 
 \begin{split}
 df_T = N-1=300-1=299
@@ -1427,7 +1427,7 @@ F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{21321
 <p>Thus, we conclude that because F<sub>CAL</sub> = 332.08 &gt; F<sub>CR</sub> = 3.03, H<sub>0</sub> is rejected!</p>
 <p>Now we can interpret our findings as follows: one or more of the differences between means are statistically significant.</p>
 <div class="infobox_red caution">
-<p>Remember: The ANOVA tests for an overall difference in means between the groups. It doesn’t tell us where the differences between groups lie, e.g., whether group A is different from B or C is different from B or C is different from A. To find out which group means exactly differ, we need to use post-hoc procedures, which are described below. However, when the ANOVA tells you that the there is no differences between the means, then you also shouldn’t proceed to conduct post-hoc tests. In other words, you should only proceed to conduct post-hoc tests when you found a significant overall effect in your ANOVA.</p>
+<p>Remember: The ANOVA tests for an overall difference in means between the groups. It doesn’t tell us where the differences between groups lie, e.g., whether group “low” is different from “medium” or “high” is different from “medium” or “high” is different from “low”. To find out which group means exactly differ, we need to use post-hoc procedures, which are described below. However, when the ANOVA tells you that the there is no differences between the means, then you also shouldn’t proceed to conduct post-hoc tests. In other words, you should only proceed to conduct post-hoc tests when you found a significant overall effect in your ANOVA.</p>
 </div>
 <p>Finally, you should report your findings in an appropriate way. You could do this by saying: There was a significant effect of playlists and personalized recommendations on listening times, F(2,297) = 332.08, p &lt; 0.05, <span class="math inline">\(\eta^2\)</span> = 0.69.</p>
 <p>As usual, you don’t have to compute these statistics manually! Luckily, there is a function for ANOVA in R, which does the above calculations for you as we will see in the next section.</p>
@@ -1447,10 +1447,18 @@ F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{21321
 <p>ANOVA is relatively immune to violations to the normality assumption when sample sizes are large due to the Central Limit Theorem. However, if your sample is small (i.e., n &lt; 30 per group) you may nevertheless want to check the normality of your data, e.g., by using the Shapiro-Wilk test or QQ-Plot. In our example, we have 100 observations in each group which is plenty but let’s create another example with only 10 observations in each group. In the latter case we cannot rely on the Central Limit Theorem and we should test the normality of our data. This can be done using the Shapiro-Wilk Test, which has the Null Hypothesis that the data is normally distributed. Hence, an insignificant test results means that the data can be assumed to be approximately normally distributed:</p>
 <div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="hypothesis-testing.html#cb317-1"></a><span class="kw">set.seed</span>(<span class="dv">321</span>)</span>
 <span id="cb317-2"><a href="hypothesis-testing.html#cb317-2"></a>hours_fewobs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">hours =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">20</span>, </span>
-<span id="cb317-3"><a href="hypothesis-testing.html#cb317-3"></a>    <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">60</span>, <span class="dv">5</span>)), <span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, </span>
-<span id="cb317-4"><a href="hypothesis-testing.html#cb317-4"></a>    <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;C&quot;</span>, <span class="dv">10</span>)))</span>
+<span id="cb317-3"><a href="hypothesis-testing.html#cb317-3"></a>    <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">60</span>, <span class="dv">5</span>)), <span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;low&quot;</span>, </span>
+<span id="cb317-4"><a href="hypothesis-testing.html#cb317-4"></a>    <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;medium&quot;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;high&quot;</span>, <span class="dv">10</span>)))</span>
 <span id="cb317-5"><a href="hypothesis-testing.html#cb317-5"></a><span class="kw">by</span>(hours_fewobs<span class="op">$</span>hours, hours_fewobs<span class="op">$</span>group, shapiro.test)</span></code></pre></div>
-<pre><code>## hours_fewobs$group: A
+<pre><code>## hours_fewobs$group: high
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  dd[x, ]
+## W = 0.9595, p-value = 0.7801
+## 
+## ------------------------------------------------------------ 
+## hours_fewobs$group: low
 ## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -1458,41 +1466,35 @@ F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{21321
 ## W = 0.91625, p-value = 0.3267
 ## 
 ## ------------------------------------------------------------ 
-## hours_fewobs$group: B
+## hours_fewobs$group: medium
 ## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  dd[x, ]
-## W = 0.91486, p-value = 0.3161
-## 
-## ------------------------------------------------------------ 
-## hours_fewobs$group: C
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  dd[x, ]
-## W = 0.9595, p-value = 0.7801</code></pre>
+## W = 0.91486, p-value = 0.3161</code></pre>
 <p>Since the test result is insignificant for all groups, we can conclude that the data approximately follow a normal distribution.</p>
 <p>We could also test the distributional assumptions visually using a Q-Q plot (i.e., quantile-quantile plot). This plot can be used to assess if a set of data plausibly came from some theoretical distribution such as the Normal distribution. Since this is just a visual check, it is somewhat subjective. But it may help us to judge if our assumption is plausible, and if not, which data points contribute to the violation. A Q-Q plot is a scatterplot created by plotting two sets of quantiles against one another. If both sets of quantiles came from the same distribution, we should see the points forming a line that’s roughly straight. In other words, Q-Q plots take your sample data, sort it in ascending order, and then plot them versus quantiles calculated from a theoretical distribution. Quantiles are often referred to as “percentiles” and refer to the points in your data below which a certain proportion of your data fall. Recall, for example, the standard Normal distribution with a mean of 0 and a standard deviation of 1. Since the 50th percentile (or 0.5 quantile) is 0, half the data lie below 0. The 95th percentile (or 0.95 quantile), is about 1.64, which means that 95 percent of the data lie below 1.64. The 97.5th quantile is about 1.96, which means that 97.5% of the data lie below 1.96. In the Q-Q plot, the number of quantiles is selected to match the size of your sample data.</p>
 <p>To create the Q-Q plot for the normal distribution, you may use the <code>qqnorm()</code> function, which takes the data to be tested as an argument. Using the <code>qqline()</code> function subsequently on the data creates the line on which the data points should fall based on the theoretical quantiles. If the individual data points deviate a lot from this line, it means that the data is not likely to follow a normal distribution.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="hypothesis-testing.html#cb319-1"></a><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, ]<span class="op">$</span>hours)</span>
-<span id="cb319-2"><a href="hypothesis-testing.html#cb319-2"></a><span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, ]<span class="op">$</span>hours)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="hypothesis-testing.html#cb319-1"></a><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;low&quot;</span>, ]<span class="op">$</span>hours)</span>
+<span id="cb319-2"><a href="hypothesis-testing.html#cb319-2"></a><span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;low&quot;</span>, ]<span class="op">$</span>hours)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-251-1"></span>
 <img src="_main_files/figure-html/unnamed-chunk-251-1.png" alt="Q-Q plot 1" width="672" />
 <p class="caption">
 Figure 6.8: Q-Q plot 1
 </p>
 </div>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="hypothesis-testing.html#cb320-1"></a><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, ]<span class="op">$</span>hours)</span>
-<span id="cb320-2"><a href="hypothesis-testing.html#cb320-2"></a><span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, ]<span class="op">$</span>hours)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="hypothesis-testing.html#cb320-1"></a><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;medium&quot;</span>, </span>
+<span id="cb320-2"><a href="hypothesis-testing.html#cb320-2"></a>    ]<span class="op">$</span>hours)</span>
+<span id="cb320-3"><a href="hypothesis-testing.html#cb320-3"></a><span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;medium&quot;</span>, </span>
+<span id="cb320-4"><a href="hypothesis-testing.html#cb320-4"></a>    ]<span class="op">$</span>hours)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-251-2"></span>
 <img src="_main_files/figure-html/unnamed-chunk-251-2.png" alt="Q-Q plot 2" width="672" />
 <p class="caption">
 Figure 6.9: Q-Q plot 2
 </p>
 </div>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="hypothesis-testing.html#cb321-1"></a><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, ]<span class="op">$</span>hours)</span>
-<span id="cb321-2"><a href="hypothesis-testing.html#cb321-2"></a><span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, ]<span class="op">$</span>hours)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="hypothesis-testing.html#cb321-1"></a><span class="kw">qqnorm</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;high&quot;</span>, ]<span class="op">$</span>hours)</span>
+<span id="cb321-2"><a href="hypothesis-testing.html#cb321-2"></a><span class="kw">qqline</span>(hours_fewobs[hours_fewobs<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;high&quot;</span>, ]<span class="op">$</span>hours)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-251-3"></span>
 <img src="_main_files/figure-html/unnamed-chunk-251-3.png" alt="Q-Q plot 3" width="672" />
 <p class="caption">
@@ -1531,7 +1533,7 @@ Figure 6.10: Q-Q plot 3
 <p>We will use the first plot to inspect if the residual variances are equal across the experimental groups:</p>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="hypothesis-testing.html#cb328-1"></a><span class="kw">plot</span>(aov, <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-255-1.png" width="672" /></p>
-<p>Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels of our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is higher in group “B” than in group “C”. However, the differences are not that large and since the Levene’s test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case.</p>
+<p>Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels of our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is higher in group “medium” than in group “high”. However, the differences are not that large and since the Levene’s test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case.</p>
 <p>The second plot can be used to test the assumption that the residuals are approximately normally distributed. We use a Q-Q plot to test this assumption:</p>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="hypothesis-testing.html#cb329-1"></a><span class="kw">plot</span>(aov, <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-256-1.png" width="672" /></p>
@@ -1556,21 +1558,21 @@ Figure 6.10: Q-Q plot 3
 <div id="post-hoc-tests" class="section level4">
 <h4><span class="header-section-number">6.4.3.2</span> Post-hoc tests</h4>
 <p>Provided that significant differences were detected by the overall ANOVA you can find out which group means are different using post-hoc procedures. Post-hoc procedures are designed to conduct pairwise comparisons of all different combinations of the treatment groups by correcting the level of significance for each test such that the overall Type I error rate (α) across all comparisons remains at 0.05.</p>
-<p>In other words, we rejected H<sub>0</sub>: μ<sub>1</sub>= μ<sub>2</sub>= μ<sub>3</sub>, and now we would like to test:</p>
+<p>In other words, we rejected H<sub>0</sub>: μ<sub>low</sub>= μ<sub>medium</sub>= μ<sub>high</sub>, and now we would like to test:</p>
 <p>Test1:</p>
-<p><span class="math display">\[H_0: \mu_1 = \mu_2\]</span></p>
+<p><span class="math display">\[H_0: \mu_{low} = \mu_{medium}\]</span></p>
 <p>Test2:</p>
-<p><span class="math display">\[H_0: \mu_1 = \mu_3\]</span></p>
+<p><span class="math display">\[H_0: \mu_{low} = \mu_{high}\]</span></p>
 <p>Test3:</p>
-<p><span class="math display">\[H_0: \mu_2 = \mu_3\]</span></p>
-<p>There are several post-hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey’s HSD (“honest significant differences”). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’ HSDs is better when testing large numbers of means.</p>
+<p><span class="math display">\[H_0: \mu_{medium} = \mu_{high}\]</span></p>
+<p>There are several post-hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey’s HSD (“honest significant differences”). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’s HSDs is better when testing large numbers of means.</p>
 <div id="bonferroni" class="section level5">
 <h5><span class="header-section-number">6.4.3.2.1</span> Bonferroni</h5>
 <p>One of the most popular (and easiest) methods to correct for the family-wise error rate is to conduct the individual t-tests and divide α by the number of comparisons („k“):</p>
 <p><span class="math display">\[
 p_{CR}= \frac{\alpha}{k}
-\]</span>
-In our example with three groups:</p>
+\]</span></p>
+<p>In our example with three groups:</p>
 <p><span class="math display">\[p_{CR}= \frac{0.05}{3}=0.017\]</span></p>
 <p>Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., the critical t value is higher). This means that the test is more conservative to account for the family-wise error. Remember that, to reject the null hypothesis at a 5% significance level, we usually check if the p-value in our analysis is smaller than 0.05. The corrected p-value above requires us to obtain a p-value smaller than 0.017 in order to reject the null hypothesis at the 5% significance level, which means that the critical value of the test statistic is higher. You can implement the Bonferroni procedure in R using:</p>
 <div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="hypothesis-testing.html#cb334-1"></a>bonferroni &lt;-<span class="st"> </span><span class="kw">pairwise.t.test</span>(hours_abc<span class="op">$</span>hours, hours_abc<span class="op">$</span>group, </span>
@@ -1581,14 +1583,14 @@ In our example with three groups:</p>
 ## 
 ## data:  hours_abc$hours and hours_abc$group 
 ## 
-##   A                   B                  
-## B &lt;0.0000000000000002 -                  
-## C &lt;0.0000000000000002 &lt;0.0000000000000002
+##        low                 medium             
+## medium &lt;0.0000000000000002 -                  
+## high   &lt;0.0000000000000002 &lt;0.0000000000000002
 ## 
 ## P value adjustment method: bonferroni</code></pre>
 <p>In the output, you will get the corrected p-values for the individual tests. This mean, to reject the null hypothesis, we require the p-value to be smaller than 0.05 again, since the reported p-values are already corrected for the family-wise error. In our example, we can reject H<sub>0</sub> of equal means for all three tests, since p &lt; 0.05 for all combinations of groups.</p>
-<p>Note the difference between the results from the post-hoc test compared to individual t-tests. For example, when we test the “B” vs. “C” groups, the result from a t-test would be:</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="hypothesis-testing.html#cb336-1"></a>data_subset &lt;-<span class="st"> </span><span class="kw">subset</span>(hours_abc, group <span class="op">!=</span><span class="st"> &quot;A&quot;</span>)</span>
+<p>Note the difference between the results from the post-hoc test compared to individual t-tests. For example, when we test the “medium” vs. “high” groups, the result from a t-test would be:</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="hypothesis-testing.html#cb336-1"></a>data_subset &lt;-<span class="st"> </span><span class="kw">subset</span>(hours_abc, group <span class="op">!=</span><span class="st"> &quot;low&quot;</span>)</span>
 <span id="cb336-2"><a href="hypothesis-testing.html#cb336-2"></a>ttest &lt;-<span class="st"> </span><span class="kw">t.test</span>(hours <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> data_subset, </span>
 <span id="cb336-3"><a href="hypothesis-testing.html#cb336-3"></a>    <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb336-4"><a href="hypothesis-testing.html#cb336-4"></a>ttest</span></code></pre></div>
@@ -1601,8 +1603,8 @@ In our example with three groups:</p>
 ## 95 percent confidence interval:
 ##  -11.997471  -8.582529
 ## sample estimates:
-## mean in group B mean in group C 
-##           24.70           34.99</code></pre>
+## mean in group medium   mean in group high 
+##                24.70                34.99</code></pre>
 <p>Usually the p-value is lower in the t-test, reflecting the fact that the family-wise error is not corrected (i.e., the test is less conservative). In this case the p-value is extremely small in both cases and thus indistinguishable.</p>
 </div>
 <div id="tukeys-hsd" class="section level5">
@@ -1647,10 +1649,10 @@ HSD= q\sqrt{\frac{MS_R}{n_c}}
 ## Fit: aov(formula = hours ~ group, data = hours_abc)
 ## 
 ## Linear Hypotheses:
-##            Estimate Std. Error t value            Pr(&gt;|t|)    
-## B - A == 0  10.3600     0.8013   12.93 &lt;0.0000000000000002 ***
-## C - A == 0  20.6500     0.8013   25.77 &lt;0.0000000000000002 ***
-## C - B == 0  10.2900     0.8013   12.84 &lt;0.0000000000000002 ***
+##                    Estimate Std. Error t value            Pr(&gt;|t|)    
+## medium - low == 0   10.3600     0.8013   12.93 &lt;0.0000000000000002 ***
+## high - low == 0     20.6500     0.8013   25.77 &lt;0.0000000000000002 ***
+## high - medium == 0  10.2900     0.8013   12.84 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## (Adjusted p values reported -- single-step method)</code></pre>
@@ -1668,10 +1670,10 @@ HSD= q\sqrt{\frac{MS_R}{n_c}}
 ##  
 ## 
 ## Linear Hypotheses:
-##            Estimate lwr     upr    
-## B - A == 0 10.3600   8.4723 12.2477
-## C - A == 0 20.6500  18.7623 22.5377
-## C - B == 0 10.2900   8.4023 12.1777</code></pre>
+##                    Estimate lwr     upr    
+## medium - low == 0  10.3600   8.4723 12.2477
+## high - low == 0    20.6500  18.7623 22.5377
+## high - medium == 0 10.2900   8.4023 12.1777</code></pre>
 <p>We may also plot the result for the mean differences incl. their confidence intervals:</p>
 <div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="hypothesis-testing.html#cb346-1"></a><span class="kw">plot</span>(tukeys)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-264"></span>
@@ -1681,14 +1683,16 @@ Figure 6.11: Tukey’s HSD
 </p>
 </div>
 <p>You can see that the CIs do not cross zero, which means that the true difference between group means is unlikely zero. It is sufficient to report the results in the way described above. However, you could also manually compute the differences between the groups and their confidence interval as follows:</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="hypothesis-testing.html#cb347-1"></a>mean1 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;A&quot;</span>, <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;A&#39;</span></span>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="hypothesis-testing.html#cb347-1"></a>mean1 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;low&quot;</span>, <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;low&#39;</span></span>
 <span id="cb347-2"><a href="hypothesis-testing.html#cb347-2"></a>mean1</span></code></pre></div>
 <pre><code>## [1] 14.34</code></pre>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="hypothesis-testing.html#cb349-1"></a>mean2 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;B&quot;</span>, <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;B&#39;</span></span>
-<span id="cb349-2"><a href="hypothesis-testing.html#cb349-2"></a>mean2</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="hypothesis-testing.html#cb349-1"></a>mean2 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;medium&quot;</span>, </span>
+<span id="cb349-2"><a href="hypothesis-testing.html#cb349-2"></a>    <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;medium&#39;</span></span>
+<span id="cb349-3"><a href="hypothesis-testing.html#cb349-3"></a>mean2</span></code></pre></div>
 <pre><code>## [1] 24.7</code></pre>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="hypothesis-testing.html#cb351-1"></a>mean3 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;C&quot;</span>, <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;C&#39;</span></span>
-<span id="cb351-2"><a href="hypothesis-testing.html#cb351-2"></a>mean3</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="hypothesis-testing.html#cb351-1"></a>mean3 &lt;-<span class="st"> </span><span class="kw">mean</span>(hours_abc[hours_abc<span class="op">$</span>group <span class="op">==</span><span class="st"> &quot;high&quot;</span>, </span>
+<span id="cb351-2"><a href="hypothesis-testing.html#cb351-2"></a>    <span class="st">&quot;hours&quot;</span>])  <span class="co">#mean group &#39;high&#39;</span></span>
+<span id="cb351-3"><a href="hypothesis-testing.html#cb351-3"></a>mean3</span></code></pre></div>
 <pre><code>## [1] 34.99</code></pre>
 <div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="hypothesis-testing.html#cb353-1"></a><span class="co"># CI high vs. medium</span></span>
 <span id="cb353-2"><a href="hypothesis-testing.html#cb353-2"></a>mean_diff_high_med &lt;-<span class="st"> </span>mean2 <span class="op">-</span><span class="st"> </span>mean1</span>
@@ -1721,12 +1725,7 @@ Figure 6.11: Tukey’s HSD
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="hypothesis-testing.html#cb369-1"></a>ci_low_med_upper</span></code></pre></div>
 <pre><code>## [1] 12.17743</code></pre>
 <p>The results of a post-hoc test can be reported as follows:</p>
-<p>The post-hoc tests based on Bonferroni and Tukey’s HSD revealed that users listened to music significantly more when:</p>
-<ul>
-<li>they had access to curated playlists (group “B”) vs. those who did not (group “A”),</li>
-<li>they received personalized recommendations in addition to having access to curated playlists (group “c”) vs. those who did not (group “B”).</li>
-<li>they received personalized recommendations in addition to having access to curated playlists (group “c”) vs. those who only only had access to curated playlists</li>
-</ul>
+<p>The post-hoc tests based on Bonferroni and Tukey’s HSD revealed that users listened to music significantly more when the intensity of personalized recommendations was increased. This is true for “low” vs. “medium” intensity, as well as for “low” vs. “high” and “medium” vs. “high” intensity.</p>
 <p>As with the t-test, you could also use the functions contained in the <code>ggstatsplot</code> package to combine a visual depiction of the data with the results of statistical tests. In the case of an ANOVA, the output would also include the pairwise comparisons.</p>
 <div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="hypothesis-testing.html#cb371-1"></a><span class="kw">library</span>(ggstatsplot)</span>
 <span id="cb371-2"><a href="hypothesis-testing.html#cb371-2"></a><span class="kw">ggbetweenstats</span>(</span>

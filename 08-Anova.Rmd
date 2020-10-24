@@ -46,13 +46,13 @@ In the previous section we learned how to compare two means using a t-test. The 
 
 A **treatment** is a particular combination of factor levels, or categories. So-called **one-way ANOVA** is used when there is only one categorical variable (factor). In this case, a treatment is the same as a factor level. **N-way ANOVA** is used with two or more factors. Note that we are only going to talk about a single independent variable in the context of ANOVA on this website. If you have multiple independent variables please refer to the chapter on **Regression**.
 
-Let's use an example to see how ANOVA works. Similar to the previous example it is also imaginable that the music streaming service experiments with a recommendation system for user created playlists. We now have three groups, the control group "A" with the current system, treatment group "B" who have access to playlists created by other users but are not shown personalized recommendations, and treatment group "C" who are shown personalized recommendations in addition to having access to curated playlists. As always, we load and inspect the data first:
+Let's use an example to see how ANOVA works. Similar to the previous example, imagine that the music streaming service experiments with a recommender system and manipulates the intensity of personalized recommendations using three levels: 'low', 'medium', and 'high'. The service randomly assigns 100 users to each condition and records the listening times in hours in the following week. As always, we load and inspect the data first:
 
 ```{r, eval = TRUE, echo = TRUE, message = FALSE, warning=FALSE}
 hours_abc <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/hours_abc.dat", 
                                  sep = "\t", 
                                  header = TRUE) #read in data
-hours_abc$group <- factor(hours_abc$group, levels = c("A","B","C"), labels = c("A", "B","C")) #convert grouping variable to factor
+hours_abc$group <- factor(hours_abc$group, levels = c("A","B","C"), labels = c("low", "medium","high")) #convert grouping variable to factor
 str(hours_abc) #inspect data
 ```
 
@@ -90,11 +90,11 @@ $$H_0: \mu_1 = \mu_2 = \mu_3$$
 
 The alternative hypothesis is simply that the means are not all equal, i.e., 
 
-$$H_1: \textrm{Means are not all equal}$$  
+$$H_1: \textrm{Means are not all equal}$$
 
 If you wanted to put this in mathematical notation, you could also write:
 
-$$H_1: \exists {i,j}: {\mu_i \ne \mu_j} $$  
+$$H_1: \exists {i,j}: {\mu_i \ne \mu_j} $$
 
 To get a first impression if there are any differences in listening times across the experimental groups, we use the ```describeBy(...)``` function from the ```psych``` package:
 
@@ -103,7 +103,7 @@ library(psych)
 describeBy(hours_abc$hours, hours_abc$group) #inspect data
 ```
 
-In addition, you should visualize the data using appropriate plots. Appropriate plots in this case would be a plot of means, including the 95% confidence interval, or a boxplot. 
+In addition, you should visualize the data using appropriate plots. Appropriate plots in this case would be a plot of means, including the 95% confidence interval around the mean, or a boxplot. 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, fig.align="center", echo=TRUE, fig.cap=c("Plot of means"), tidy = FALSE}
 #Plot of mean
@@ -131,11 +131,11 @@ ggplot(hours_abc,aes(x = group, y = hours)) +
 
 Note that ANOVA is an omnibus test, which means that we test for an overall difference between groups. Hence, the test will only tell you if the group means are different, but it won't tell you exactly which groups are different from another.
 
-So why don’t we then just conduct a series of t-tests for all combinations of groups (i.e., A vs. B, A vs. C, B vs. C)? The reason is that if we assume each test to be independent, then there is a 5% probability of falsely rejecting the null hypothesis (Type I error) for each test. In our case:
+So why don’t we then just conduct a series of t-tests for all combinations of groups (i.e., "low" vs. "medium", "low" vs. "high", "medium" vs. "high")? The reason is that if we assume each test to be independent, then there is a 5% probability of falsely rejecting the null hypothesis (Type I error) for each test. In our case:
 
-* A vs. B (&alpha; = 0.05)
-* A vs. C (&alpha; = 0.05)
-* B vs. C (&alpha; = 0.05)
+* "low" vs. "medium" (&alpha; = 0.05)
+* "low" vs. "high" (&alpha; = 0.05)
+* "medium" vs. "high" (&alpha; = 0.05)
 
 This means that the overall probability of making a Type I error is 1-(0.95<sup>3</sup>) = 0.143, since the probability of no Type I error is 0.95 for each of the three tests. Consequently, the Type I error probability would be 14.3%, which is above the conventional standard of 5%. This is also known as the family-wise or experiment-wise error.
 
@@ -164,7 +164,7 @@ library(reshape2)
 dcast(hours_abc, index ~ group, value.var = "hours")
 ```
 
-In this example, X<sub>1</sub> from the generalized data matrix above would refer to the factor level "A", X<sub>2</sub> to the level "B", and X<sub>3</sub> to the level "C". Y<sub>11</sub> refers to the first data point in the first row (i.e., "13"), Y<sub>12</sub> to the second data point in the first row (i.e., "21"), etc.. The grand mean ($\overline{Y}$) and the category means ($\overline{Y}_c$) can be easily computed: 
+In this example, X<sub>1</sub> from the generalized data matrix above would refer to the factor level "low", X<sub>2</sub> to the level "medium", and X<sub>3</sub> to the level "high". Y<sub>11</sub> refers to the first data point in the first row (i.e., "13"), Y<sub>12</sub> to the second data point in the first row (i.e., "21"), etc.. The grand mean ($\overline{Y}$) and the category means ($\overline{Y}_c$) can be easily computed: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 mean(hours_abc$hours) #grand mean
@@ -178,7 +178,7 @@ To see how each variance component can be derived, let's look at the data again.
 #promotion <-c(rep(1,10), rep(2,10), rep(3,10))
 #count <- c(rep(1:10,3))
 d <- hours_abc
-d$promotion <- factor(d$group, levels = c(1:3), labels = c("A", "B", "C"))
+d$promotion <- factor(d$group, levels = c(1:3), labels = c("low", "medium", "high"))
 means <- aggregate(d[,1], list(d$group), mean)
 means <- plyr::rename(means, c(Group.1="group"))
 d$groupmean <- c(rep(means[1,2],100),rep(means[2,2],100),rep(means[3,2],100))
@@ -244,8 +244,7 @@ SST <- sum((hours_abc$hours - mean(hours_abc$hours))^2)
 SST
 ``` 
 
-
-For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b>. Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. Thus, the degrees of freedom of an estimate can also be thought of as the number of independent pieces of information that went into calculating the estimate. In our example, we used all 300 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:
+For the subsequent analyses, it is important to understand the concept behind the <b>degrees of freedom</b> (df). Remember that in order to estimate a population value from a sample, we need to hold something in the population constant. In ANOVA, the df are generally one less than the number of values used to calculate the SS. For example, when we estimate the population mean from a sample, we assume that the sample mean is equal to the population mean. Then, in order to estimate the population mean from the sample, all but one scores are free to vary and the remaining score needs to be the value that keeps the population mean constant. Thus, the degrees of freedom of an estimate can also be thought of as the number of independent pieces of information that went into calculating the estimate. In our example, we used all 300 observations to calculate the sum of square, so the total degrees of freedom (df<sub>T</sub>) are:
 
 \begin{equation} 
 \begin{split}
@@ -253,7 +252,6 @@ df_T = N-1=300-1=299
 \end{split}
 (\#eq:dfT)
 \end{equation} 
-
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
 Why do we subtract 1 from the number of items when computing the **degrees of freedom**? As mentioned above, the degrees of freedom refer to the number of values that are free to vary in a data set. To understand what this means, imagine that we try to estimate the mean hours of music listening in a population and that mean is 20 hours. We could take different samples from the population and we assume that the sample mean is equal to the population mean. Imagine, we only take three small samples of 3 students each: i) 19, 20, 21, ii) 18, 20, 22, iii) 15, 20, 25. Once you have chosen the first two values in each set, the third item cannot be chosen freely (i.e., it is fixed) because it needs to be the value that gets you to the population mean. Hence, only the first two values are 'free to vary'. You can select 19 + 20 or 15 + 25, but once you have chosen the first two values, you must choose a particular value that will give you the population mean you are looking for (i.e., 20 hours). In this case, the degrees of freedom for each set of three numbers is two.
@@ -478,7 +476,7 @@ Thus, we conclude that because F<sub>CAL</sub> = `r round(f_cal,2)` > F<sub>CR</
 Now we can interpret our findings as follows: one or more of the differences between means are statistically significant.
 
 ::: {.infobox_red .caution data-latex="{caution}"}
-Remember: The ANOVA tests for an overall difference in means between the groups. It doesn’t tell us where the differences between groups lie, e.g., whether group A is different from B or C is different from B or C is different from A. To find out which group means exactly differ, we need to use post-hoc procedures, which are described below. However, when the ANOVA tells you that the there is no differences between the means, then you also shouldn't proceed to conduct post-hoc tests. In other words, you should only proceed to conduct post-hoc tests when you found a significant overall effect in your ANOVA.  
+Remember: The ANOVA tests for an overall difference in means between the groups. It doesn’t tell us where the differences between groups lie, e.g., whether group "low" is different from "medium" or "high" is different from "medium" or "high" is different from "low". To find out which group means exactly differ, we need to use post-hoc procedures, which are described below. However, when the ANOVA tells you that the there is no differences between the means, then you also shouldn't proceed to conduct post-hoc tests. In other words, you should only proceed to conduct post-hoc tests when you found a significant overall effect in your ANOVA.  
 :::
 
 Finally, you should report your findings in an appropriate way. You could do this by saying: There was a significant effect of playlists and personalized recommendations on listening times, F(2,297) = `r round(f_cal,2)`, p < 0.05, $\eta^2$ = `r round(eta,2)`. 
@@ -502,7 +500,7 @@ ANOVA is relatively immune to violations to the normality assumption when sample
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, paged.print = FALSE}
 set.seed(321)
 hours_fewobs <- data.frame(hours = c(rnorm(10, 20, 5), rnorm(10, 40, 5), rnorm(10, 60, 5)),
-                          group =  c(rep('A', 10), rep('B', 10), rep('C', 10)))
+                          group =  c(rep('low', 10), rep('medium', 10), rep('high', 10)))
 by(hours_fewobs$hours, hours_fewobs$group, shapiro.test)
 ```
 
@@ -513,12 +511,12 @@ We could also test the distributional assumptions visually using a Q-Q plot (i.e
 To create the Q-Q plot for the normal distribution, you may use the ```qqnorm()``` function, which takes the data to be tested as an argument. Using the ```qqline()``` function subsequently on the data creates the line on which the data points should fall based on the theoretical quantiles. If the individual data points deviate a lot from this line, it means that the data is not likely to follow a normal distribution. 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE, paged.print = FALSE, fig.align="center", fig.cap = c("Q-Q plot 1","Q-Q plot 2","Q-Q plot 3")}
-qqnorm(hours_fewobs[hours_fewobs$group=="A",]$hours) 
-qqline(hours_fewobs[hours_fewobs$group=="A",]$hours)
-qqnorm(hours_fewobs[hours_fewobs$group=="B",]$hours) 
-qqline(hours_fewobs[hours_fewobs$group=="B",]$hours)
-qqnorm(hours_fewobs[hours_fewobs$group=="C",]$hours) 
-qqline(hours_fewobs[hours_fewobs$group=="C",]$hours)
+qqnorm(hours_fewobs[hours_fewobs$group=="low",]$hours) 
+qqline(hours_fewobs[hours_fewobs$group=="low",]$hours)
+qqnorm(hours_fewobs[hours_fewobs$group=="medium",]$hours) 
+qqline(hours_fewobs[hours_fewobs$group=="medium",]$hours)
+qqnorm(hours_fewobs[hours_fewobs$group=="high",]$hours) 
+qqline(hours_fewobs[hours_fewobs$group=="high",]$hours)
 ```
 
 The Q-Q plots suggest an approximately Normal distribution. If the assumption had been violated, you might consider transforming your data or resort to a non-parametric test. 
@@ -559,7 +557,7 @@ We will use the first plot to inspect if the residual variances are equal across
 plot(aov,1)
 ```
 
-Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels of our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is higher in group "B" than in group "C". However, the differences are not that large and since the Levene's test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case. 
+Generally, the residual variance (i.e., the range of values on the y-axis) should be the same for different levels of our independent variable. The plot shows, that there are some slight differences. Notably, the range of residuals is higher in group "medium" than in group "high". However, the differences are not that large and since the Levene's test could not reject the Null of equal variances, we conclude that the variances are similar enough in this case. 
 
 The second plot can be used to test the assumption that the residuals are approximately normally distributed. We use a Q-Q plot to test this assumption:
 
@@ -587,21 +585,21 @@ You can see that the results are fairly similar, since the variances turned out 
 
 Provided that significant differences were detected by the overall ANOVA you can find out which group means are different using post-hoc procedures. Post-hoc procedures are designed to conduct pairwise comparisons of all different combinations of the treatment groups by correcting the level of significance for each test such that the overall Type I error rate (&alpha;) across all comparisons remains at 0.05.
 
-In other words, we rejected H<sub>0</sub>: &mu;<sub>1</sub>= &mu;<sub>2</sub>= &mu;<sub>3</sub>, and now we would like to test:
+In other words, we rejected H<sub>0</sub>: &mu;<sub>low</sub>= &mu;<sub>medium</sub>= &mu;<sub>high</sub>, and now we would like to test:
 
 Test1: 
 
-$$H_0: \mu_1 = \mu_2$$
+$$H_0: \mu_{low} = \mu_{medium}$$
 
 Test2: 
 
-$$H_0: \mu_1 = \mu_3$$
+$$H_0: \mu_{low} = \mu_{high}$$
 
 Test3: 
 
-$$H_0: \mu_2 = \mu_3$$
+$$H_0: \mu_{medium} = \mu_{high}$$
 
-There are several post-hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey's HSD ("honest significant differences"). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’ HSDs is better when testing large numbers of means. 
+There are several post-hoc procedures available to choose from. In this tutorial, we will cover Bonferroni and Tukey's HSD ("honest significant differences"). Both tests control for family-wise error. Bonferroni tends to have more power when the number of comparisons is small, whereas Tukey’s HSDs is better when testing large numbers of means. 
 
 ##### Bonferroni
 
@@ -610,6 +608,7 @@ One of the most popular (and easiest) methods to correct for the family-wise err
 $$
 p_{CR}= \frac{\alpha}{k}
 $$
+
 In our example with three groups:
 
 $$p_{CR}= \frac{0.05}{3}=0.017$$
@@ -624,10 +623,10 @@ bonferroni
 
 In the output, you will get the corrected p-values for the individual tests. This mean, to reject the null hypothesis, we require the p-value to be smaller than 0.05 again, since the reported p-values are already corrected for the family-wise error. In our example, we can reject H<sub>0</sub> of equal means for all three tests, since p < 0.05 for all combinations of groups.
 
-Note the difference between the results from the post-hoc test compared to individual t-tests. For example, when we test the "B" vs. "C" groups, the result from a t-test would be: 
+Note the difference between the results from the post-hoc test compared to individual t-tests. For example, when we test the "medium" vs. "high" groups, the result from a t-test would be: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-data_subset <- subset(hours_abc, group != "A")
+data_subset <- subset(hours_abc, group != "low")
 ttest <- t.test(hours ~ group, data = data_subset, var.equal= TRUE)
 ttest
 ```
@@ -693,11 +692,11 @@ plot(tukeys)
 You can see that the CIs do not cross zero, which means that the true difference between group means is unlikely zero. It is sufficient to report the results in the way described above. However, you could also manually compute the differences between the groups and their confidence interval as follows: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
-mean1 <- mean(hours_abc[hours_abc$group=="A","hours"]) #mean group "A"
+mean1 <- mean(hours_abc[hours_abc$group=="low","hours"]) #mean group "low"
 mean1
-mean2 <- mean(hours_abc[hours_abc$group=="B","hours"]) #mean group "B"
+mean2 <- mean(hours_abc[hours_abc$group=="medium","hours"]) #mean group "medium"
 mean2
-mean3 <- mean(hours_abc[hours_abc$group=="C","hours"]) #mean group "C"
+mean3 <- mean(hours_abc[hours_abc$group=="high","hours"]) #mean group "high"
 mean3
 #CI high vs. medium
 mean_diff_high_med <- mean2-mean1
@@ -723,11 +722,7 @@ ci_low_med_upper
 ```
 The results of a post-hoc test can be reported as follows:  
 
-The post-hoc tests based on Bonferroni and Tukey’s HSD revealed that users listened to music significantly more when:
-
- - they had access to curated playlists (group "B") vs. those who did not (group "A"), 
- - they received personalized recommendations in addition to having access to curated playlists (group "c") vs. those who did not (group "B"). 
- - they received personalized recommendations in addition to having access to curated playlists (group "c") vs. those who only only had access to curated playlists 
+The post-hoc tests based on Bonferroni and Tukey’s HSD revealed that users listened to music significantly more when the intensity of personalized recommendations was increased. This is true for "low" vs. "medium" intensity, as well as for "low" vs. "high" and "medium" vs. "high" intensity. 
 
 As with the t-test, you could also use the functions contained in the `ggstatsplot` package to combine a visual depiction of the data with the results of statistical tests. In the case of an ANOVA, the output would also include the pairwise comparisons. 
 
