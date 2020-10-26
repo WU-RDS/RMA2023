@@ -267,6 +267,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>7.3.6</b> Correlation of errors</a></li>
 <li class="chapter" data-level="7.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>7.3.7</b> Collinearity</a></li>
 <li class="chapter" data-level="7.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>7.3.8</b> Omitted Variables</a></li>
+<li class="chapter" data-level="7.3.9" data-path="regression.html"><a href="regression.html#overfitting"><i class="fa fa-check"></i><b>7.3.9</b> Overfitting</a></li>
+<li class="chapter" data-level="7.3.10" data-path="regression.html"><a href="regression.html#variable-selection"><i class="fa fa-check"></i><b>7.3.10</b> Variable selection</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
@@ -356,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>Questionnaire design &amp; data collection</strong>: In the first part, you will work with your group on creating a questionnaire. Once you have created a draft of your questionnaire, you will present the draft to us and we will provide feedback. After implementing the feedback, you will submit the final version of the questionnaire and start the data collection using an online survey.</li>
 <li><strong>Data analysis &amp; presentation</strong>: In the second part, you will apply the statistical knowledge acquired during the course to analyze your data and present your findings using a video recording and submit your report (R code and video presentation).</li>
 </ol>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-451"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-452"></span>
 <img src="images/group_project.png" alt="Structure of the group project" width="70%" />
 <p class="caption">
 Figure 10.1: Structure of the group project
@@ -1183,7 +1185,7 @@ For instance, it would not make sense to compute an average of genders. An avera
 <p>Here we want to show you the most frequent types of questions students use and what type of data can be collected by using them.</p>
 <div id="number-entry-question" class="section level5">
 <h5><span class="header-section-number">10.2.3.5.1</span> Number entry question</h5>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-483"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-484"></span>
 <img src="images/text-entry.png" alt="Text or number entry question" width="72%" />
 <p class="caption">
 Figure 10.2: Text or number entry question
@@ -1194,7 +1196,7 @@ Figure 10.2: Text or number entry question
 <div id="multiple-choice-question" class="section level5">
 <h5><span class="header-section-number">10.2.3.5.2</span> Multiple choice question</h5>
 <p>Multiple Choice with a single answer is a type of closed-ended question that lets respondents select <strong>one answer</strong> from a defined list of choices.Type of data you obtain is <strong>categorical.</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-484"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-485"></span>
 <img src="support-multiple-choice-question.png" alt="Multiple choice question with single answer" width="72%" />
 <p class="caption">
 Figure 10.3: Multiple choice question with single answer
@@ -1227,7 +1229,7 @@ Figure 10.3: Multiple choice question with single answer
 <li>Categorical variables can be used as predictors in regression (as dummy variables).</li>
 </ul>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-485"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-486"></span>
 <img src="multiple-choice-question-multiple-answers.png" alt="Multiple choice question with multiple answers" width="72%" />
 <p class="caption">
 Figure 10.4: Multiple choice question with multiple answers
@@ -1246,7 +1248,7 @@ Figure 10.4: Multiple choice question with multiple answers
 </div>
 <div id="rank-order-question" class="section level5">
 <h5><span class="header-section-number">10.2.3.5.3</span> Rank order question</h5>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-486"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-487"></span>
 <img src="rank-order-question.png" alt="Rank order question" width="72%" />
 <p class="caption">
 Figure 10.5: Rank order question
@@ -1260,7 +1262,7 @@ Figure 10.5: Rank order question
 </div>
 <div id="constant-sum-question" class="section level5">
 <h5><span class="header-section-number">10.2.3.5.4</span> Constant Sum question</h5>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-487"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-488"></span>
 <img src="constant-sum-question.png" alt="Constant sum question" width="72%" />
 <p class="caption">
 Figure 10.6: Constant sum question
@@ -1597,26 +1599,26 @@ each group member is supposed to administer the questionnaire to 20 persons, i.e
 <div id="load-in-a-qualtrics-survey-data-via-package-qualtrics" class="section level4 unnumbered">
 <h4>Load in a Qualtrics survey data via package “qualtRics”</h4>
 <p>After downloading your survey in CSV format, you need to install <code>qualtRics</code> and load it in.</p>
-<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="survey-design-analysis.html#cb702-1"></a><span class="co"># Load in qualtRics package</span></span>
-<span id="cb702-2"><a href="survey-design-analysis.html#cb702-2"></a><span class="co"># install.packages(&#39;qualtRics&#39;)</span></span>
-<span id="cb702-3"><a href="survey-design-analysis.html#cb702-3"></a><span class="kw">library</span>(qualtRics)</span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="survey-design-analysis.html#cb704-1"></a><span class="co"># Load in qualtRics package</span></span>
+<span id="cb704-2"><a href="survey-design-analysis.html#cb704-2"></a><span class="co"># install.packages(&#39;qualtRics&#39;)</span></span>
+<span id="cb704-3"><a href="survey-design-analysis.html#cb704-3"></a><span class="kw">library</span>(qualtRics)</span></code></pre></div>
 <p><code>read_survey()</code> is a function that loads in survey results in CSV to R.</p>
-<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="survey-design-analysis.html#cb703-1"></a><span class="co"># Read the qualtrics survey data</span></span>
-<span id="cb703-2"><a href="survey-design-analysis.html#cb703-2"></a>qualtrics &lt;-<span class="st"> </span><span class="kw">read_survey</span>(<span class="st">&quot;data_analysis_survey.csv&quot;</span>)</span>
-<span id="cb703-3"><a href="survey-design-analysis.html#cb703-3"></a><span class="kw">head</span>(qualtrics, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="survey-design-analysis.html#cb705-1"></a><span class="co"># Read the qualtrics survey data</span></span>
+<span id="cb705-2"><a href="survey-design-analysis.html#cb705-2"></a>qualtrics &lt;-<span class="st"> </span><span class="kw">read_survey</span>(<span class="st">&quot;data_analysis_survey.csv&quot;</span>)</span>
+<span id="cb705-3"><a href="survey-design-analysis.html#cb705-3"></a><span class="kw">head</span>(qualtrics, <span class="dv">3</span>)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["StartDate"],"name":[1],"type":["chr"],"align":["left"]},{"label":["EndDate"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Status"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IPAddress"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["Progress"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Duration (in seconds)"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Finished"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["RecordedDate"],"name":[8],"type":["chr"],"align":["left"]},{"label":["ResponseId"],"name":[9],"type":["chr"],"align":["left"]},{"label":["RecipientLastName"],"name":[10],"type":["lgl"],"align":["right"]},{"label":["RecipientFirstName"],"name":[11],"type":["lgl"],"align":["right"]},{"label":["RecipientEmail"],"name":[12],"type":["lgl"],"align":["right"]},{"label":["ExternalReference"],"name":[13],"type":["lgl"],"align":["right"]},{"label":["LocationLatitude"],"name":[14],"type":["chr"],"align":["left"]},{"label":["LocationLongitude"],"name":[15],"type":["chr"],"align":["left"]},{"label":["DistributionChannel"],"name":[16],"type":["chr"],"align":["left"]},{"label":["UserLanguage"],"name":[17],"type":["chr"],"align":["left"]},{"label":["Q3_Rank_Order_1"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["Q3_Rank_Order_2"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["Q3_Rank_Order_3"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["Q3_Rank_Order_4"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["Q3_Rank_Order_5"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["Q4_Constant_Sum_1"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["Q4_Constant_Sum_2"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["Q4_Constant_Sum_3"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["Q4_Constant_Sum_4"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["Q5_Matrix_table_1"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["Q5_Matrix_table_2"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["Q5_Matrix_table_3"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["Q5_Matrix_table_4"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["Q5_Matrix_table_5"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["Q6_Bipolar_scale_1"],"name":[32],"type":["dbl"],"align":["right"]},{"label":["Q6_Bipolar_scale_2"],"name":[33],"type":["dbl"],"align":["right"]},{"label":["Q6_Bipolar_scale_3"],"name":[34],"type":["dbl"],"align":["right"]},{"label":["Q7_MC_sa_country"],"name":[35],"type":["dbl"],"align":["right"]},{"label":["Q7_MC_sa_country_3_TEXT"],"name":[36],"type":["lgl"],"align":["right"]},{"label":["Q8_MC_SA_Likert_Time"],"name":[37],"type":["dbl"],"align":["right"]},{"label":["Q9_MC_ma_1"],"name":[38],"type":["dbl"],"align":["right"]},{"label":["Q9_MC_ma_2"],"name":[39],"type":["dbl"],"align":["right"]},{"label":["Q9_MC_ma_3"],"name":[40],"type":["dbl"],"align":["right"]},{"label":["Q9_MC_ma_4"],"name":[41],"type":["dbl"],"align":["right"]},{"label":["Q10_Slider_1"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["Q11_Open_ended_EUR_1"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["Q12_cond_question"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["Q13_YES_following_q"],"name":[45],"type":["dbl"],"align":["right"]},{"label":["Q17_1"],"name":[46],"type":["dbl"],"align":["right"]},{"label":["Q18"],"name":[47],"type":["dbl"],"align":["right"]},{"label":["Q19"],"name":[48],"type":["dbl"],"align":["right"]},{"label":["Q21#1_1_1"],"name":[49],"type":["dbl"],"align":["right"]},{"label":["Q21#2_1_1"],"name":[50],"type":["dbl"],"align":["right"]},{"label":["Q23_Gender"],"name":[51],"type":["dbl"],"align":["right"]},{"label":["Q23_Gender_3_TEXT"],"name":[52],"type":["lgl"],"align":["right"]},{"label":["Q24"],"name":[53],"type":["dbl"],"align":["right"]},{"label":["Condition"],"name":[54],"type":["chr"],"align":["left"]}],"data":[{"1":"25- 5-2 2   3:2 :45 PM","2":"25- 5-2 2   3:22:22 PM","3":"1","4":"NA","5":"1","6":"96","7":"1","8":"25- 5-2 2   3:22:23 PM","9":"R_2P5PIcN9kqNJNCG","10":"NA","11":"NA","12":"NA","13":"NA","14":"44.5384 6372 7 3","15":"18.667 98999 234","16":"preview","17":"EN","18":"2","19":"4","20":"1","21":"5","22":"3","23":"32","24":"23","25":"32","26":"13","27":"2","28":"3","29":"4","30":"4","31":"4","32":"7","33":"2","34":"5","35":"2","36":"NA","37":"3","38":"NA","39":"1","40":"NA","41":"1","42":"57","43":"153","44":"1","45":"2","46":"23","47":"5","48":"7","49":"12","50":"54","51":"2","52":"NA","53":"3","54":"A"},{"1":"4- 6-2 2   2:56:36 AM","2":"4- 6-2 2   2:58:26 AM","3":"1","4":"NA","5":"1","6":"11","7":"1","8":"4- 6-2 2   2:58:26 AM","9":"R_3JgUt8HfVB6vFXf","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"3","20":"5","21":"2","22":"4","23":"25","24":"30","25":"22","26":"23","27":"1","28":"2","29":"3","30":"4","31":"5","32":"4","33":"3","34":"4","35":"2","36":"NA","37":"4","38":"1","39":"1","40":"NA","41":"NA","42":"42","43":"7","44":"2","45":"NA","46":"5","47":"6","48":"6","49":"4","50":"3","51":"2","52":"NA","53":"4","54":"B"},{"1":"4- 6-2 2   3: 1:58 AM","2":"4- 6-2 2   3: 4:52 AM","3":"1","4":"NA","5":"1","6":"173","7":"1","8":"4- 6-2 2   3: 4:52 AM","9":"R_zerJWBGzioeaoLv","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"2","20":"4","21":"5","22":"3","23":"19","24":"21","25":"30","26":"30","27":"4","28":"4","29":"3","30":"4","31":"4","32":"3","33":"6","34":"7","35":"1","36":"NA","37":"5","38":"1","39":"NA","40":"NA","41":"1","42":"84","43":"7","44":"1","45":"2","46":"21","47":"6","48":"2","49":"21","50":"32","51":"2","52":"NA","53":"5","54":"A"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Current column names are not much helpful in identifying questions from the questionnaire. In order to name columns after corresponding question, the function <code>label_to_colnames()</code> from package <code>sjlabelled</code> can help.</p>
-<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="survey-design-analysis.html#cb704-1"></a><span class="co"># Using labels as column name</span></span>
-<span id="cb704-2"><a href="survey-design-analysis.html#cb704-2"></a>new.colnames &lt;-<span class="st"> </span><span class="kw">colnames</span>(<span class="kw">label_to_colnames</span>(qualtrics))</span></code></pre></div>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="survey-design-analysis.html#cb706-1"></a><span class="co"># Using labels as column name</span></span>
+<span id="cb706-2"><a href="survey-design-analysis.html#cb706-2"></a>new.colnames &lt;-<span class="st"> </span><span class="kw">colnames</span>(<span class="kw">label_to_colnames</span>(qualtrics))</span></code></pre></div>
 <p>As it can happen that two or more column names are identical, we can use <code>make.unique()</code> function to assign different names to columns that are supposed to have same names. For instance, in our case it is column name ‘Selected choice’ that appears twice for two different questions. After we run the function, the resulting names will be ‘Selected choice’ and ‘Selected choice_1’.</p>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="survey-design-analysis.html#cb705-1"></a>new.colnames &lt;-<span class="st"> </span><span class="kw">make.unique</span>(new.colnames, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="survey-design-analysis.html#cb707-1"></a>new.colnames &lt;-<span class="st"> </span><span class="kw">make.unique</span>(new.colnames, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
 <p>Finally, we can assign unique corresponding names to the columns in our survey data.</p>
-<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="survey-design-analysis.html#cb706-1"></a><span class="kw">colnames</span>(qualtrics) &lt;-<span class="st"> </span>new.colnames</span>
-<span id="cb706-2"><a href="survey-design-analysis.html#cb706-2"></a><span class="kw">head</span>(qualtrics, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="survey-design-analysis.html#cb708-1"></a><span class="kw">colnames</span>(qualtrics) &lt;-<span class="st"> </span>new.colnames</span>
+<span id="cb708-2"><a href="survey-design-analysis.html#cb708-2"></a><span class="kw">head</span>(qualtrics, <span class="dv">3</span>)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Start Date"],"name":[1],"type":["chr"],"align":["left"]},{"label":["End Date"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Response Type"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IP Address"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["Progress"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Duration (in seconds)"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Finished"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Recorded Date"],"name":[8],"type":["chr"],"align":["left"]},{"label":["Response ID"],"name":[9],"type":["chr"],"align":["left"]},{"label":["Recipient Last Name"],"name":[10],"type":["lgl"],"align":["right"]},{"label":["Recipient First Name"],"name":[11],"type":["lgl"],"align":["right"]},{"label":["Recipient Email"],"name":[12],"type":["lgl"],"align":["right"]},{"label":["External Data Reference"],"name":[13],"type":["lgl"],"align":["right"]},{"label":["Location Latitude"],"name":[14],"type":["chr"],"align":["left"]},{"label":["Location Longitude"],"name":[15],"type":["chr"],"align":["left"]},{"label":["Distribution Channel"],"name":[16],"type":["chr"],"align":["left"]},{"label":["User Language"],"name":[17],"type":["chr"],"align":["left"]},{"label":[" Measuring steps"],"name":[18],"type":["dbl"],"align":["right"]},{"label":[" Calories burned"],"name":[19],"type":["dbl"],"align":["right"]},{"label":[" Measuring heartbeat"],"name":[20],"type":["dbl"],"align":["right"]},{"label":[" Exercise tracking"],"name":[21],"type":["dbl"],"align":["right"]},{"label":[" Measuring distance"],"name":[22],"type":["dbl"],"align":["right"]},{"label":[" Location"],"name":[23],"type":["dbl"],"align":["right"]},{"label":[" Price"],"name":[24],"type":["dbl"],"align":["right"]},{"label":[" Ambience"],"name":[25],"type":["dbl"],"align":["right"]},{"label":[" Customer Service"],"name":[26],"type":["dbl"],"align":["right"]},{"label":[" Active"],"name":[27],"type":["dbl"],"align":["right"]},{"label":[" Cool"],"name":[28],"type":["dbl"],"align":["right"]},{"label":[" Sophisticated"],"name":[29],"type":["dbl"],"align":["right"]},{"label":[" Masculine"],"name":[30],"type":["dbl"],"align":["right"]},{"label":[" Funny"],"name":[31],"type":["dbl"],"align":["right"]},{"label":[" good:bad"],"name":[32],"type":["dbl"],"align":["right"]},{"label":[" pleasant:unpleasant"],"name":[33],"type":["dbl"],"align":["right"]},{"label":[" helpful:not helpful"],"name":[34],"type":["dbl"],"align":["right"]},{"label":[" Selected Choice"],"name":[35],"type":["dbl"],"align":["right"]},{"label":[" Other - Text"],"name":[36],"type":["lgl"],"align":["right"]},{"label":["During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?"],"name":[37],"type":["dbl"],"align":["right"]},{"label":[" ja! Natürlich."],"name":[38],"type":["dbl"],"align":["right"]},{"label":[" Clever"],"name":[39],"type":["dbl"],"align":["right"]},{"label":[" Spar Vital"],"name":[40],"type":["dbl"],"align":["right"]},{"label":[" ..."],"name":[41],"type":["dbl"],"align":["right"]},{"label":[" Percentage groceries"],"name":[42],"type":["dbl"],"align":["right"]},{"label":[" Willingness-to-pay (in EUR)"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["Conditional Questions     Sometimes, you may want to ask questions that are only appropriate for a sub-group of respondents. In this case, you may use filters that can be used to show questions depending on an answer to a previous question. Say, you want to ask a follow-up questions only to respondents who answered \"Yes\" to a previous question. First, you would collect the response to the initial question: Initial question:"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["This is the follow-up questions that is only displayed if the initial question has been answered \"Yes\" (see Option \"Add Display Logic\" in the question menu. Follow-up question:"],"name":[45],"type":["dbl"],"align":["right"]},{"label":[" Willingness to pay (in EUR):"],"name":[46],"type":["dbl"],"align":["right"]},{"label":["In a within-subjects design, you manipulate the independent variable using the same participants (a.k.a. repeated-measures designs). This means, you collect information twice from the same respondents under the different experimental conditions. For example, at the beginning of the questionnaire, you may show respondents the current advertising of Brand X and ask for the purchase probability:     Please consider the follwing advertisement:     A     How likely are you to purchase Brand X in the following 6 months?"],"name":[47],"type":["dbl"],"align":["right"]},{"label":["At a later stage in the questionnaire, you may show the respondent the new advertisement of Brand X and ask for the purchase likelihood again.       Please consider the follwing advertisement:     B     How likely are you to purchase Brand X in the following 6 months?"],"name":[48],"type":["dbl"],"align":["right"]},{"label":[" A"],"name":[49],"type":["dbl"],"align":["right"]},{"label":[" B"],"name":[50],"type":["dbl"],"align":["right"]},{"label":[" Selected Choice_1"],"name":[51],"type":["dbl"],"align":["right"]},{"label":[" Text"],"name":[52],"type":["lgl"],"align":["right"]},{"label":["In a typical week, how many hours do you spend using fitness tracker?"],"name":[53],"type":["dbl"],"align":["right"]},{"label":["Condition"],"name":[54],"type":["chr"],"align":["left"]}],"data":[{"1":"25- 5-2 2   3:2 :45 PM","2":"25- 5-2 2   3:22:22 PM","3":"1","4":"NA","5":"1","6":"96","7":"1","8":"25- 5-2 2   3:22:23 PM","9":"R_2P5PIcN9kqNJNCG","10":"NA","11":"NA","12":"NA","13":"NA","14":"44.5384 6372 7 3","15":"18.667 98999 234","16":"preview","17":"EN","18":"2","19":"4","20":"1","21":"5","22":"3","23":"32","24":"23","25":"32","26":"13","27":"2","28":"3","29":"4","30":"4","31":"4","32":"7","33":"2","34":"5","35":"2","36":"NA","37":"3","38":"NA","39":"1","40":"NA","41":"1","42":"57","43":"153","44":"1","45":"2","46":"23","47":"5","48":"7","49":"12","50":"54","51":"2","52":"NA","53":"3","54":"A"},{"1":"4- 6-2 2   2:56:36 AM","2":"4- 6-2 2   2:58:26 AM","3":"1","4":"NA","5":"1","6":"11","7":"1","8":"4- 6-2 2   2:58:26 AM","9":"R_3JgUt8HfVB6vFXf","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"3","20":"5","21":"2","22":"4","23":"25","24":"30","25":"22","26":"23","27":"1","28":"2","29":"3","30":"4","31":"5","32":"4","33":"3","34":"4","35":"2","36":"NA","37":"4","38":"1","39":"1","40":"NA","41":"NA","42":"42","43":"7","44":"2","45":"NA","46":"5","47":"6","48":"6","49":"4","50":"3","51":"2","52":"NA","53":"4","54":"B"},{"1":"4- 6-2 2   3: 1:58 AM","2":"4- 6-2 2   3: 4:52 AM","3":"1","4":"NA","5":"1","6":"173","7":"1","8":"4- 6-2 2   3: 4:52 AM","9":"R_zerJWBGzioeaoLv","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"2","20":"4","21":"5","22":"3","23":"19","24":"21","25":"30","26":"30","27":"4","28":"4","29":"3","30":"4","31":"4","32":"3","33":"6","34":"7","35":"1","36":"NA","37":"5","38":"1","39":"NA","40":"NA","41":"1","42":"84","43":"7","44":"1","45":"2","46":"21","47":"6","48":"2","49":"21","50":"32","51":"2","52":"NA","53":"5","54":"A"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1673,13 +1675,13 @@ During a typical day, in what period of the day you prefer watching movies or TV
 <p>What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes <strong>as numeric</strong>. In order to conduct statistical modeling and properly visualize our results, we need to convert our data to <strong>a factor class.</strong></p>
 <p>A factor (or coding variable) represents different groups of data by using numbers (integers). In fact, factors appear as numeric variables, but they hold meaning of labels/names of data groups, i.e. nominal variable. These data groups are represented in a form of ‘levels’.<br />
 In our case, our multiple choice question output will contain 5 data groups after converting it to factor:</p>
-<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="survey-design-analysis.html#cb707-1"></a><span class="co"># Convert numeric value to factors</span></span>
-<span id="cb707-2"><a href="survey-design-analysis.html#cb707-2"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="kw">factor</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>, </span>
-<span id="cb707-3"><a href="survey-design-analysis.html#cb707-3"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Never&quot;</span>, <span class="st">&quot;Early morning(00:00-06:00)&quot;</span>, </span>
-<span id="cb707-4"><a href="survey-design-analysis.html#cb707-4"></a>        <span class="st">&quot;Morning(06:00-12:00)&quot;</span>, <span class="st">&quot;Afternoon(12:00-18:00&quot;</span>, </span>
-<span id="cb707-5"><a href="survey-design-analysis.html#cb707-5"></a>        <span class="st">&quot;Evening (18:00-22:00)&quot;</span>))</span>
-<span id="cb707-6"><a href="survey-design-analysis.html#cb707-6"></a><span class="co"># Table</span></span>
-<span id="cb707-7"><a href="survey-design-analysis.html#cb707-7"></a><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="survey-design-analysis.html#cb709-1"></a><span class="co"># Convert numeric value to factors</span></span>
+<span id="cb709-2"><a href="survey-design-analysis.html#cb709-2"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="kw">factor</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>, </span>
+<span id="cb709-3"><a href="survey-design-analysis.html#cb709-3"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Never&quot;</span>, <span class="st">&quot;Early morning(00:00-06:00)&quot;</span>, </span>
+<span id="cb709-4"><a href="survey-design-analysis.html#cb709-4"></a>        <span class="st">&quot;Morning(06:00-12:00)&quot;</span>, <span class="st">&quot;Afternoon(12:00-18:00&quot;</span>, </span>
+<span id="cb709-5"><a href="survey-design-analysis.html#cb709-5"></a>        <span class="st">&quot;Evening (18:00-22:00)&quot;</span>))</span>
+<span id="cb709-6"><a href="survey-design-analysis.html#cb709-6"></a><span class="co"># Table</span></span>
+<span id="cb709-7"><a href="survey-design-analysis.html#cb709-7"></a><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## 
 ##                      Never Early morning(00:00-06:00) 
 ##                         19                         18 
@@ -1721,19 +1723,19 @@ Usually, this type of test is used on 2x2 contingency tables. However, it can be
 </ul>
 </li>
 <p><B>Example:</B> We would like to know whether the preferred period of the day for watching Netflix depends on the respondents’ country of origin.</p>
-<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="survey-design-analysis.html#cb709-1"></a><span class="co"># Converting characters to factors</span></span>
-<span id="cb709-2"><a href="survey-design-analysis.html#cb709-2"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice_1</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="kw">factor</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice_1</span><span class="st">`</span>, </span>
-<span id="cb709-3"><a href="survey-design-analysis.html#cb709-3"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
-<span id="cb709-4"><a href="survey-design-analysis.html#cb709-4"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="kw">factor</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice</span><span class="st">`</span>, </span>
-<span id="cb709-5"><a href="survey-design-analysis.html#cb709-5"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Austria&quot;</span>, <span class="st">&quot;Germany&quot;</span>))</span>
-<span id="cb709-6"><a href="survey-design-analysis.html#cb709-6"></a><span class="co"># Creation of contingency table</span></span>
-<span id="cb709-7"><a href="survey-design-analysis.html#cb709-7"></a>fisher_test_table &lt;-<span class="st"> </span><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice</span><span class="st">`</span>, </span>
-<span id="cb709-8"><a href="survey-design-analysis.html#cb709-8"></a>    qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>)</span>
-<span id="cb709-9"><a href="survey-design-analysis.html#cb709-9"></a><span class="co"># Since we have a count less than 5, we should</span></span>
-<span id="cb709-10"><a href="survey-design-analysis.html#cb709-10"></a><span class="co"># apply Fisher&#39;s test instead of Chi-square.</span></span>
-<span id="cb709-11"><a href="survey-design-analysis.html#cb709-11"></a><span class="co"># Fisher&#39;s test</span></span>
-<span id="cb709-12"><a href="survey-design-analysis.html#cb709-12"></a>test &lt;-<span class="st"> </span><span class="kw">fisher.test</span>(fisher_test_table)</span>
-<span id="cb709-13"><a href="survey-design-analysis.html#cb709-13"></a>test</span></code></pre></div>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="survey-design-analysis.html#cb711-1"></a><span class="co"># Converting characters to factors</span></span>
+<span id="cb711-2"><a href="survey-design-analysis.html#cb711-2"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice_1</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="kw">factor</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice_1</span><span class="st">`</span>, </span>
+<span id="cb711-3"><a href="survey-design-analysis.html#cb711-3"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
+<span id="cb711-4"><a href="survey-design-analysis.html#cb711-4"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="kw">factor</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice</span><span class="st">`</span>, </span>
+<span id="cb711-5"><a href="survey-design-analysis.html#cb711-5"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Austria&quot;</span>, <span class="st">&quot;Germany&quot;</span>))</span>
+<span id="cb711-6"><a href="survey-design-analysis.html#cb711-6"></a><span class="co"># Creation of contingency table</span></span>
+<span id="cb711-7"><a href="survey-design-analysis.html#cb711-7"></a>fisher_test_table &lt;-<span class="st"> </span><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice</span><span class="st">`</span>, </span>
+<span id="cb711-8"><a href="survey-design-analysis.html#cb711-8"></a>    qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>)</span>
+<span id="cb711-9"><a href="survey-design-analysis.html#cb711-9"></a><span class="co"># Since we have a count less than 5, we should</span></span>
+<span id="cb711-10"><a href="survey-design-analysis.html#cb711-10"></a><span class="co"># apply Fisher&#39;s test instead of Chi-square.</span></span>
+<span id="cb711-11"><a href="survey-design-analysis.html#cb711-11"></a><span class="co"># Fisher&#39;s test</span></span>
+<span id="cb711-12"><a href="survey-design-analysis.html#cb711-12"></a>test &lt;-<span class="st"> </span><span class="kw">fisher.test</span>(fisher_test_table)</span>
+<span id="cb711-13"><a href="survey-design-analysis.html#cb711-13"></a>test</span></code></pre></div>
 <pre><code>## 
 ##  Fisher&#39;s Exact Test for Count Data
 ## 
@@ -1786,12 +1788,12 @@ If we don’t specify expected frequency per cell (see in the code below), then 
 </li>
 </B></li>
 </ol>
-<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="survey-design-analysis.html#cb711-1"></a><span class="co"># Creating table</span></span>
-<span id="cb711-2"><a href="survey-design-analysis.html#cb711-2"></a>mlc_chi_square &lt;-<span class="st"> </span><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>)</span>
-<span id="cb711-3"><a href="survey-design-analysis.html#cb711-3"></a></span>
-<span id="cb711-4"><a href="survey-design-analysis.html#cb711-4"></a><span class="co"># Chi-square test (without given expected values =</span></span>
-<span id="cb711-5"><a href="survey-design-analysis.html#cb711-5"></a><span class="co"># equal values )</span></span>
-<span id="cb711-6"><a href="survey-design-analysis.html#cb711-6"></a><span class="kw">chisq.test</span>(mlc_chi_square)</span></code></pre></div>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="survey-design-analysis.html#cb713-1"></a><span class="co"># Creating table</span></span>
+<span id="cb713-2"><a href="survey-design-analysis.html#cb713-2"></a>mlc_chi_square &lt;-<span class="st"> </span><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>)</span>
+<span id="cb713-3"><a href="survey-design-analysis.html#cb713-3"></a></span>
+<span id="cb713-4"><a href="survey-design-analysis.html#cb713-4"></a><span class="co"># Chi-square test (without given expected values =</span></span>
+<span id="cb713-5"><a href="survey-design-analysis.html#cb713-5"></a><span class="co"># equal values )</span></span>
+<span id="cb713-6"><a href="survey-design-analysis.html#cb713-6"></a><span class="kw">chisq.test</span>(mlc_chi_square)</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
@@ -1799,15 +1801,15 @@ If we don’t specify expected frequency per cell (see in the code below), then 
 ## X-squared = 7.9145, df = 4, p-value = 0.09476</code></pre>
 <p>The p-value of the test is higher than 0.05. We can conclude that the numbers of respondents who watch Netflix in different periods of a day are commonly distributed. Observed distribution does not differ significantly from the expected. This result does not surprise if you take a look at the values for each level in the table we created before conducting the test. There you can see that count of answers in each level is more or less not deviating too much. It is visible if you take a look at the previous visualizations as well.</p>
 <p>If we are interested in testing more specific distribution, i.e. expect that 40% of our respondents are watching Netflix during evening hours, we can introduce corresponding distribution in the test.</p>
-<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="survey-design-analysis.html#cb713-1"></a><span class="co"># Expected values in percentages for each alternative. The sum must be 1.</span></span>
-<span id="cb713-2"><a href="survey-design-analysis.html#cb713-2"></a>expected_values &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.10</span>, <span class="co"># We expect that 10% of our respondents do not watch Netflix at all.</span></span>
-<span id="cb713-3"><a href="survey-design-analysis.html#cb713-3"></a>                     <span class="fl">0.20</span>, <span class="co"># We expect that 20% of our respondents watch Netflix in early morning.</span></span>
-<span id="cb713-4"><a href="survey-design-analysis.html#cb713-4"></a>                     <span class="fl">0.10</span>, <span class="co"># We expect that 10% of our respondents watch Netflix in morning.</span></span>
-<span id="cb713-5"><a href="survey-design-analysis.html#cb713-5"></a>                     <span class="fl">0.20</span>, <span class="co"># We expect that 20% of our respondents watch Netflix in afternoon.</span></span>
-<span id="cb713-6"><a href="survey-design-analysis.html#cb713-6"></a>                     <span class="fl">0.40</span>  <span class="co"># We expect that 40% of our respondents watch Netflix in evening.</span></span>
-<span id="cb713-7"><a href="survey-design-analysis.html#cb713-7"></a>                    )</span>
-<span id="cb713-8"><a href="survey-design-analysis.html#cb713-8"></a><span class="co"># Chi-square test with expected values</span></span>
-<span id="cb713-9"><a href="survey-design-analysis.html#cb713-9"></a><span class="kw">chisq.test</span>(mlc_chi_square, <span class="dt">p=</span>expected_values)</span></code></pre></div>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="survey-design-analysis.html#cb715-1"></a><span class="co"># Expected values in percentages for each alternative. The sum must be 1.</span></span>
+<span id="cb715-2"><a href="survey-design-analysis.html#cb715-2"></a>expected_values &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.10</span>, <span class="co"># We expect that 10% of our respondents do not watch Netflix at all.</span></span>
+<span id="cb715-3"><a href="survey-design-analysis.html#cb715-3"></a>                     <span class="fl">0.20</span>, <span class="co"># We expect that 20% of our respondents watch Netflix in early morning.</span></span>
+<span id="cb715-4"><a href="survey-design-analysis.html#cb715-4"></a>                     <span class="fl">0.10</span>, <span class="co"># We expect that 10% of our respondents watch Netflix in morning.</span></span>
+<span id="cb715-5"><a href="survey-design-analysis.html#cb715-5"></a>                     <span class="fl">0.20</span>, <span class="co"># We expect that 20% of our respondents watch Netflix in afternoon.</span></span>
+<span id="cb715-6"><a href="survey-design-analysis.html#cb715-6"></a>                     <span class="fl">0.40</span>  <span class="co"># We expect that 40% of our respondents watch Netflix in evening.</span></span>
+<span id="cb715-7"><a href="survey-design-analysis.html#cb715-7"></a>                    )</span>
+<span id="cb715-8"><a href="survey-design-analysis.html#cb715-8"></a><span class="co"># Chi-square test with expected values</span></span>
+<span id="cb715-9"><a href="survey-design-analysis.html#cb715-9"></a><span class="kw">chisq.test</span>(mlc_chi_square, <span class="dt">p=</span>expected_values)</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
@@ -1844,11 +1846,11 @@ If we don’t specify expected frequency per cell (see in the code below), then 
 </li>
 </div></li>
 </ol>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="survey-design-analysis.html#cb715-1"></a><span class="co"># Creation of contingency table</span></span>
-<span id="cb715-2"><a href="survey-design-analysis.html#cb715-2"></a>chi_square_table &lt;-<span class="st"> </span><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice_1</span><span class="st">`</span>, </span>
-<span id="cb715-3"><a href="survey-design-analysis.html#cb715-3"></a>    qualtrics<span class="op">$</span><span class="st">&quot;During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?&quot;</span>)</span>
-<span id="cb715-4"><a href="survey-design-analysis.html#cb715-4"></a><span class="co"># Chi-square independence test</span></span>
-<span id="cb715-5"><a href="survey-design-analysis.html#cb715-5"></a><span class="kw">chisq.test</span>(chi_square_table)</span></code></pre></div>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="survey-design-analysis.html#cb717-1"></a><span class="co"># Creation of contingency table</span></span>
+<span id="cb717-2"><a href="survey-design-analysis.html#cb717-2"></a>chi_square_table &lt;-<span class="st"> </span><span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Selected Choice_1</span><span class="st">`</span>, </span>
+<span id="cb717-3"><a href="survey-design-analysis.html#cb717-3"></a>    qualtrics<span class="op">$</span><span class="st">&quot;During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?&quot;</span>)</span>
+<span id="cb717-4"><a href="survey-design-analysis.html#cb717-4"></a><span class="co"># Chi-square independence test</span></span>
+<span id="cb717-5"><a href="survey-design-analysis.html#cb717-5"></a><span class="kw">chisq.test</span>(chi_square_table)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
@@ -1965,23 +1967,23 @@ NA
 </tbody>
 </table>
 <p>Since this type of question provides multiple possible answers, one way to analyze data obtained from this question is in the following form:</p>
-<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="survey-design-analysis.html#cb717-1"></a><span class="co"># Replacing NA with 0</span></span>
-<span id="cb717-2"><a href="survey-design-analysis.html#cb717-2"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ja! Natürlich.</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ja! Natürlich.</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb717-3"><a href="survey-design-analysis.html#cb717-3"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Clever</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Clever</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb717-4"><a href="survey-design-analysis.html#cb717-4"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Spar Vital</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Spar Vital</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb717-5"><a href="survey-design-analysis.html#cb717-5"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ...</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ...</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb717-6"><a href="survey-design-analysis.html#cb717-6"></a><span class="co"># qualtrics[38] accesses ja!Natürlich column</span></span>
-<span id="cb717-7"><a href="survey-design-analysis.html#cb717-7"></a><span class="co"># qualtrics[39] accesses Clever column</span></span>
-<span id="cb717-8"><a href="survey-design-analysis.html#cb717-8"></a><span class="co"># qualtrics[40] accesses Spar Vital column</span></span>
-<span id="cb717-9"><a href="survey-design-analysis.html#cb717-9"></a><span class="co"># qualtrics[41] accesses ... column Calculating</span></span>
-<span id="cb717-10"><a href="survey-design-analysis.html#cb717-10"></a><span class="co"># frequency, percentage of respondents and</span></span>
-<span id="cb717-11"><a href="survey-design-analysis.html#cb717-11"></a><span class="co"># percentage of cases</span></span>
-<span id="cb717-12"><a href="survey-design-analysis.html#cb717-12"></a>df.cochran &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Frequnecy =</span> <span class="kw">colSums</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>]), </span>
-<span id="cb717-13"><a href="survey-design-analysis.html#cb717-13"></a>    <span class="dt">Share_of_respondents =</span> (<span class="kw">colSums</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>])<span class="op">/</span><span class="kw">sum</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>])) <span class="op">*</span><span class="st"> </span></span>
-<span id="cb717-14"><a href="survey-design-analysis.html#cb717-14"></a><span class="st">        </span><span class="dv">100</span>, <span class="dt">Share_of_cases =</span> ((<span class="kw">colSums</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>]))<span class="op">/</span><span class="kw">nrow</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>])) <span class="op">*</span><span class="st"> </span></span>
-<span id="cb717-15"><a href="survey-design-analysis.html#cb717-15"></a><span class="st">        </span><span class="dv">100</span>)</span>
-<span id="cb717-16"><a href="survey-design-analysis.html#cb717-16"></a>df.cochran <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
-<span id="cb717-17"><a href="survey-design-analysis.html#cb717-17"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="survey-design-analysis.html#cb719-1"></a><span class="co"># Replacing NA with 0</span></span>
+<span id="cb719-2"><a href="survey-design-analysis.html#cb719-2"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ja! Natürlich.</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ja! Natürlich.</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb719-3"><a href="survey-design-analysis.html#cb719-3"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Clever</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Clever</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb719-4"><a href="survey-design-analysis.html#cb719-4"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Spar Vital</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Spar Vital</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb719-5"><a href="survey-design-analysis.html#cb719-5"></a>qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ...</span><span class="st">`</span>[<span class="kw">is.na</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ...</span><span class="st">`</span>)] =<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb719-6"><a href="survey-design-analysis.html#cb719-6"></a><span class="co"># qualtrics[38] accesses ja!Natürlich column</span></span>
+<span id="cb719-7"><a href="survey-design-analysis.html#cb719-7"></a><span class="co"># qualtrics[39] accesses Clever column</span></span>
+<span id="cb719-8"><a href="survey-design-analysis.html#cb719-8"></a><span class="co"># qualtrics[40] accesses Spar Vital column</span></span>
+<span id="cb719-9"><a href="survey-design-analysis.html#cb719-9"></a><span class="co"># qualtrics[41] accesses ... column Calculating</span></span>
+<span id="cb719-10"><a href="survey-design-analysis.html#cb719-10"></a><span class="co"># frequency, percentage of respondents and</span></span>
+<span id="cb719-11"><a href="survey-design-analysis.html#cb719-11"></a><span class="co"># percentage of cases</span></span>
+<span id="cb719-12"><a href="survey-design-analysis.html#cb719-12"></a>df.cochran &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Frequnecy =</span> <span class="kw">colSums</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>]), </span>
+<span id="cb719-13"><a href="survey-design-analysis.html#cb719-13"></a>    <span class="dt">Share_of_respondents =</span> (<span class="kw">colSums</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>])<span class="op">/</span><span class="kw">sum</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>])) <span class="op">*</span><span class="st"> </span></span>
+<span id="cb719-14"><a href="survey-design-analysis.html#cb719-14"></a><span class="st">        </span><span class="dv">100</span>, <span class="dt">Share_of_cases =</span> ((<span class="kw">colSums</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>]))<span class="op">/</span><span class="kw">nrow</span>(qualtrics[<span class="dv">38</span><span class="op">:</span><span class="dv">41</span>])) <span class="op">*</span><span class="st"> </span></span>
+<span id="cb719-15"><a href="survey-design-analysis.html#cb719-15"></a><span class="st">        </span><span class="dv">100</span>)</span>
+<span id="cb719-16"><a href="survey-design-analysis.html#cb719-16"></a>df.cochran <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
+<span id="cb719-17"><a href="survey-design-analysis.html#cb719-17"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -2066,24 +2068,24 @@ Spar Vital
 <li><p>The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)</p></li>
 </ol>
 <p>In a within-subjects experiment design with three or more observations of a dichotomous(= just two levels such as “Yes” or “No”) categorical outcome, you utilize Cochran’s Q test to assess main effects. Similarly, in a multiple choice question with multiple answers we have the same respondent going through three or more potential answers with dichotomous(=yes or no) categorical outcome, meaning that responses are <strong>not independent from each other.</strong></p>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="survey-design-analysis.html#cb718-1"></a><span class="kw">library</span>(DescTools)</span>
-<span id="cb718-2"><a href="survey-design-analysis.html#cb718-2"></a>list.cochran &lt;-<span class="st"> </span><span class="kw">list</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ja! Natürlich.</span><span class="st">`</span>, qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Clever</span><span class="st">`</span>, </span>
-<span id="cb718-3"><a href="survey-design-analysis.html#cb718-3"></a>    qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Spar Vital</span><span class="st">`</span>, qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ...</span><span class="st">`</span>)  <span class="co"># imaginary brand</span></span>
-<span id="cb718-4"><a href="survey-design-analysis.html#cb718-4"></a><span class="co"># Replacing NAs in the list with 0 in order to be</span></span>
-<span id="cb718-5"><a href="survey-design-analysis.html#cb718-5"></a><span class="co"># able to run the test</span></span>
-<span id="cb718-6"><a href="survey-design-analysis.html#cb718-6"></a>list.cochran &lt;-<span class="st"> </span><span class="kw">rapply</span>(list.cochran, <span class="dt">f =</span> <span class="cf">function</span>(x) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(x), </span>
-<span id="cb718-7"><a href="survey-design-analysis.html#cb718-7"></a>    <span class="dv">0</span>, x), <span class="dt">how =</span> <span class="st">&quot;replace&quot;</span>)</span>
-<span id="cb718-8"><a href="survey-design-analysis.html#cb718-8"></a><span class="co"># Cochran test</span></span>
-<span id="cb718-9"><a href="survey-design-analysis.html#cb718-9"></a>matrix.cochran &lt;-<span class="st"> </span><span class="kw">do.call</span>(cbind, list.cochran)</span>
-<span id="cb718-10"><a href="survey-design-analysis.html#cb718-10"></a>DescTools<span class="op">::</span><span class="kw">CochranQTest</span>(matrix.cochran, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="survey-design-analysis.html#cb720-1"></a><span class="kw">library</span>(DescTools)</span>
+<span id="cb720-2"><a href="survey-design-analysis.html#cb720-2"></a>list.cochran &lt;-<span class="st"> </span><span class="kw">list</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ja! Natürlich.</span><span class="st">`</span>, qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Clever</span><span class="st">`</span>, </span>
+<span id="cb720-3"><a href="survey-design-analysis.html#cb720-3"></a>    qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> Spar Vital</span><span class="st">`</span>, qualtrics<span class="op">$</span><span class="st">`</span><span class="dt"> ...</span><span class="st">`</span>)  <span class="co"># imaginary brand</span></span>
+<span id="cb720-4"><a href="survey-design-analysis.html#cb720-4"></a><span class="co"># Replacing NAs in the list with 0 in order to be</span></span>
+<span id="cb720-5"><a href="survey-design-analysis.html#cb720-5"></a><span class="co"># able to run the test</span></span>
+<span id="cb720-6"><a href="survey-design-analysis.html#cb720-6"></a>list.cochran &lt;-<span class="st"> </span><span class="kw">rapply</span>(list.cochran, <span class="dt">f =</span> <span class="cf">function</span>(x) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(x), </span>
+<span id="cb720-7"><a href="survey-design-analysis.html#cb720-7"></a>    <span class="dv">0</span>, x), <span class="dt">how =</span> <span class="st">&quot;replace&quot;</span>)</span>
+<span id="cb720-8"><a href="survey-design-analysis.html#cb720-8"></a><span class="co"># Cochran test</span></span>
+<span id="cb720-9"><a href="survey-design-analysis.html#cb720-9"></a>matrix.cochran &lt;-<span class="st"> </span><span class="kw">do.call</span>(cbind, list.cochran)</span>
+<span id="cb720-10"><a href="survey-design-analysis.html#cb720-10"></a>DescTools<span class="op">::</span><span class="kw">CochranQTest</span>(matrix.cochran, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Cochran&#39;s Q test
 ## 
 ## data:  y
 ## Q = 25.568, df = 3, p-value = 0.00001174</code></pre>
 <p>The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.</p>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="survey-design-analysis.html#cb720-1"></a><span class="co"># Post hoc test (Dunn Test)</span></span>
-<span id="cb720-2"><a href="survey-design-analysis.html#cb720-2"></a><span class="kw">DunnTest</span>(list.cochran, <span class="dt">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="survey-design-analysis.html#cb722-1"></a><span class="co"># Post hoc test (Dunn Test)</span></span>
+<span id="cb722-2"><a href="survey-design-analysis.html#cb722-2"></a><span class="kw">DunnTest</span>(list.cochran, <span class="dt">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Dunn&#39;s test of multiple comparisons using rank sums : bonferroni  
 ## 
@@ -2102,11 +2104,11 @@ Spar Vital
 <h4><span class="header-section-number">10.3.2.1</span> Rank order question</h4>
 <p>Intuitive question to ask when it comes to this type of question is the following: which feature is the most important for respondents?</p>
 <p>We can answer this question by calculating a mean rank for each feature. Before we do so, we will create a separate data frame and add columns of the response data.</p>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="survey-design-analysis.html#cb722-1"></a>rank.data &lt;-<span class="st"> </span><span class="kw">subset</span>(qualtrics, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot; Measuring steps&quot;</span>, </span>
-<span id="cb722-2"><a href="survey-design-analysis.html#cb722-2"></a>    <span class="st">&quot; Calories burned&quot;</span>, <span class="st">&quot; Measuring heartbeat&quot;</span>, <span class="st">&quot; Exercise tracking&quot;</span>, </span>
-<span id="cb722-3"><a href="survey-design-analysis.html#cb722-3"></a>    <span class="st">&quot; Measuring distance&quot;</span>))</span>
-<span id="cb722-4"><a href="survey-design-analysis.html#cb722-4"></a><span class="kw">head</span>(rank.data) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb722-5"><a href="survey-design-analysis.html#cb722-5"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="survey-design-analysis.html#cb724-1"></a>rank.data &lt;-<span class="st"> </span><span class="kw">subset</span>(qualtrics, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot; Measuring steps&quot;</span>, </span>
+<span id="cb724-2"><a href="survey-design-analysis.html#cb724-2"></a>    <span class="st">&quot; Calories burned&quot;</span>, <span class="st">&quot; Measuring heartbeat&quot;</span>, <span class="st">&quot; Exercise tracking&quot;</span>, </span>
+<span id="cb724-3"><a href="survey-design-analysis.html#cb724-3"></a>    <span class="st">&quot; Measuring distance&quot;</span>))</span>
+<span id="cb724-4"><a href="survey-design-analysis.html#cb724-4"></a><span class="kw">head</span>(rank.data) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb724-5"><a href="survey-design-analysis.html#cb724-5"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -2233,9 +2235,9 @@ Measuring distance
 </tbody>
 </table>
 <p>First information we would like to know is how many preference combinations there are, and how repetitive they are. We can obtain that information by creating a summary of the ranking data frame we created.</p>
-<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="survey-design-analysis.html#cb723-1"></a><span class="kw">library</span>(pmr)</span>
-<span id="cb723-2"><a href="survey-design-analysis.html#cb723-2"></a>test &lt;-<span class="st"> </span><span class="kw">rankagg</span>(rank.data)</span>
-<span id="cb723-3"><a href="survey-design-analysis.html#cb723-3"></a>test</span></code></pre></div>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="survey-design-analysis.html#cb725-1"></a><span class="kw">library</span>(pmr)</span>
+<span id="cb725-2"><a href="survey-design-analysis.html#cb725-2"></a>test &lt;-<span class="st"> </span><span class="kw">rankagg</span>(rank.data)</span>
+<span id="cb725-3"><a href="survey-design-analysis.html#cb725-3"></a>test</span></code></pre></div>
 <pre><code>##                  n
 ##  [1,] 2 1 3 4 5 10
 ##  [2,] 1 3 2 4 5 19
@@ -2251,26 +2253,26 @@ Measuring distance
 ## [12,] 2 3 4 5 1  8</code></pre>
 <p>The matrix we received as an output is the summary of our ranking data. It shows that, for instance, the preference combination “2,1,3,4,5” repeats 10 times in the data frame. More specifically, it means that there are 10 respondents who prefer the item 2(“Calories burned”) the most, then the item 1(“Measuring steps”), and so on.</p>
 <p>Now we can calculate the mean rank for each feature and conclude which feature is the most important to our respondents:</p>
-<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="survey-design-analysis.html#cb725-1"></a><span class="co"># Mean rank of each fitness tracker feature</span></span>
-<span id="cb725-2"><a href="survey-design-analysis.html#cb725-2"></a><span class="kw">destat</span>(test)<span class="op">$</span>mean.rank</span></code></pre></div>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="survey-design-analysis.html#cb727-1"></a><span class="co"># Mean rank of each fitness tracker feature</span></span>
+<span id="cb727-2"><a href="survey-design-analysis.html#cb727-2"></a><span class="kw">destat</span>(test)<span class="op">$</span>mean.rank</span></code></pre></div>
 <pre><code>## [1] 1.811966 2.581197 2.598291 4.051282 3.957265</code></pre>
 <p>As we can observe from the output, the item 1(“Measuring steps”) shows the best mean rank among all items. Therefore, we can assume that the “Measuring steps” is most important for our respondents. However, in order to statistically prove it and become sure that this is not just by mere chance, we can conduct <strong>Friedman rank sum test</strong>.</p>
 <p>Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.</p>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="survey-design-analysis.html#cb727-1"></a><span class="co"># Friedman test</span></span>
-<span id="cb727-2"><a href="survey-design-analysis.html#cb727-2"></a><span class="kw">friedman.test</span>(<span class="kw">as.matrix</span>(rank.data))</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="survey-design-analysis.html#cb729-1"></a><span class="co"># Friedman test</span></span>
+<span id="cb729-2"><a href="survey-design-analysis.html#cb729-2"></a><span class="kw">friedman.test</span>(<span class="kw">as.matrix</span>(rank.data))</span></code></pre></div>
 <pre><code>## 
 ##  Friedman rank sum test
 ## 
 ## data:  as.matrix(rank.data)
 ## Friedman chi-squared = 176.42, df = 4, p-value &lt; 0.00000000000000022</code></pre>
 <p>Friedman rank sum test has a p-value lower than 0.05, so we can conclude that here are significant differences between at least two features (what we have already seen in our visualization). Even though we have identified differences between preferences towards features in our advanced visualization, we will conduct a post hoc test in order to demonstrate traditional way of calculating pairwise comparisons.</p>
-<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="survey-design-analysis.html#cb729-1"></a><span class="kw">library</span>(rstatix)</span>
-<span id="cb729-2"><a href="survey-design-analysis.html#cb729-2"></a>rank.data.long &lt;-<span class="st"> </span>reshape2<span class="op">::</span><span class="kw">melt</span>(rank.data, <span class="dt">value.name =</span> <span class="st">&quot;Rank&quot;</span>, </span>
-<span id="cb729-3"><a href="survey-design-analysis.html#cb729-3"></a>    <span class="dt">variable.name =</span> <span class="st">&quot;Feature&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb729-4"><a href="survey-design-analysis.html#cb729-4"></a>posthoc &lt;-<span class="st"> </span><span class="kw">wilcox_test</span>(Rank <span class="op">~</span><span class="st"> </span>Feature, <span class="dt">paired =</span> <span class="ot">TRUE</span>, </span>
-<span id="cb729-5"><a href="survey-design-analysis.html#cb729-5"></a>    <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>, <span class="dt">data =</span> rank.data.long)</span>
-<span id="cb729-6"><a href="survey-design-analysis.html#cb729-6"></a>posthoc <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
-<span id="cb729-7"><a href="survey-design-analysis.html#cb729-7"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="survey-design-analysis.html#cb731-1"></a><span class="kw">library</span>(rstatix)</span>
+<span id="cb731-2"><a href="survey-design-analysis.html#cb731-2"></a>rank.data.long &lt;-<span class="st"> </span>reshape2<span class="op">::</span><span class="kw">melt</span>(rank.data, <span class="dt">value.name =</span> <span class="st">&quot;Rank&quot;</span>, </span>
+<span id="cb731-3"><a href="survey-design-analysis.html#cb731-3"></a>    <span class="dt">variable.name =</span> <span class="st">&quot;Feature&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb731-4"><a href="survey-design-analysis.html#cb731-4"></a>posthoc &lt;-<span class="st"> </span><span class="kw">wilcox_test</span>(Rank <span class="op">~</span><span class="st"> </span>Feature, <span class="dt">paired =</span> <span class="ot">TRUE</span>, </span>
+<span id="cb731-5"><a href="survey-design-analysis.html#cb731-5"></a>    <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>, <span class="dt">data =</span> rank.data.long)</span>
+<span id="cb731-6"><a href="survey-design-analysis.html#cb731-6"></a>posthoc <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
+<span id="cb731-7"><a href="survey-design-analysis.html#cb731-7"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -2598,9 +2600,9 @@ ns
 </table>
 <p>The output table provides us with p-values referring to significance of difference in mean ranks of each pair. For instance, the first 4 rows proves that the differences between the mean rank of the feature “Measuring steps” and each of the rest of features are significant. Consequently, we can conclude that this feature is by far the most important among our respondents.</p>
 <p>Another question that may be interesting to explore is whether there are any complementary features ? Or features which overlap each other in its functionality? In order to have a look at that, we can investigate the correlation between ranks assigned to each feature.</p>
-<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="survey-design-analysis.html#cb730-1"></a><span class="co"># Correlation Matrix</span></span>
-<span id="cb730-2"><a href="survey-design-analysis.html#cb730-2"></a>cor.matrix &lt;-<span class="st"> </span><span class="kw">cor</span>(rank.data, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;spearman&quot;</span>))</span>
-<span id="cb730-3"><a href="survey-design-analysis.html#cb730-3"></a>cor.matrix</span></code></pre></div>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="survey-design-analysis.html#cb732-1"></a><span class="co"># Correlation Matrix</span></span>
+<span id="cb732-2"><a href="survey-design-analysis.html#cb732-2"></a>cor.matrix &lt;-<span class="st"> </span><span class="kw">cor</span>(rank.data, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;spearman&quot;</span>))</span>
+<span id="cb732-3"><a href="survey-design-analysis.html#cb732-3"></a>cor.matrix</span></code></pre></div>
 <pre><code>##                       Measuring steps  Calories burned  Measuring heartbeat
 ##  Measuring steps           1.00000000      -0.04651331           -0.6569094
 ##  Calories burned          -0.04651331       1.00000000           -0.2221626
@@ -2614,9 +2616,9 @@ ns
 ##  Exercise tracking            1.0000000         -0.47176821
 ##  Measuring distance          -0.4717682          1.00000000</code></pre>
 <p>At the first glance we can observe a lot of negative values, meaning that many features correlate negatively relative to each other. In order to make the interpretation easier, we will try to visualise correlations in a form of a correlation matrix.</p>
-<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="survey-design-analysis.html#cb732-1"></a><span class="kw">library</span>(ggcorrplot)</span>
-<span id="cb732-2"><a href="survey-design-analysis.html#cb732-2"></a><span class="kw">ggcorrplot</span>(cor.matrix)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-550-1.png" width="672" /></p>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="survey-design-analysis.html#cb734-1"></a><span class="kw">library</span>(ggcorrplot)</span>
+<span id="cb734-2"><a href="survey-design-analysis.html#cb734-2"></a><span class="kw">ggcorrplot</span>(cor.matrix)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-551-1.png" width="672" /></p>
 <p>From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature “Measuring steps” and “Exercise tracking”, which correlates positively. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature “Measuring steps” and “Exercise tracking” correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked “Exercise tracking” high, ranked “Measuring steps” high as well, because they perceive it as another type of “Exercise tracking”.</p>
 </div>
 <div id="constant-sum-question-1" class="section level4">
@@ -2748,11 +2750,11 @@ id
 </tbody>
 </table>
 <p>By computing descriptive statistics per column we get very useful insight in our data:</p>
-<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="survey-design-analysis.html#cb733-1"></a><span class="co"># Compute descriptive statistics</span></span>
-<span id="cb733-2"><a href="survey-design-analysis.html#cb733-2"></a><span class="kw">library</span>(pastecs)</span>
-<span id="cb733-3"><a href="survey-design-analysis.html#cb733-3"></a>res &lt;-<span class="st"> </span><span class="kw">stat.desc</span>(constant.sum)</span>
-<span id="cb733-4"><a href="survey-design-analysis.html#cb733-4"></a><span class="kw">round</span>(res[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb733-5"><a href="survey-design-analysis.html#cb733-5"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="survey-design-analysis.html#cb735-1"></a><span class="co"># Compute descriptive statistics</span></span>
+<span id="cb735-2"><a href="survey-design-analysis.html#cb735-2"></a><span class="kw">library</span>(pastecs)</span>
+<span id="cb735-3"><a href="survey-design-analysis.html#cb735-3"></a>res &lt;-<span class="st"> </span><span class="kw">stat.desc</span>(constant.sum)</span>
+<span id="cb735-4"><a href="survey-design-analysis.html#cb735-4"></a><span class="kw">round</span>(res[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb735-5"><a href="survey-design-analysis.html#cb735-5"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -3017,14 +3019,14 @@ coef.var
 <p>In order to answer this question we need to conduct <strong>a repeated measures ANOVA</strong>.
 This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambiance and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.</p>
 <p>We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumptions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption refers to extreme outliers. Let’s have a look at potential outliers:</p>
-<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="survey-design-analysis.html#cb734-1"></a><span class="co"># Creation of the long version of data frame</span></span>
-<span id="cb734-2"><a href="survey-design-analysis.html#cb734-2"></a><span class="kw">library</span>(reshape2)</span>
-<span id="cb734-3"><a href="survey-design-analysis.html#cb734-3"></a>constant.sum.long &lt;-<span class="st"> </span><span class="kw">melt</span>(constant.sum[, <span class="dv">-5</span>], <span class="dt">variable.name =</span> <span class="st">&quot;Factor&quot;</span>, </span>
-<span id="cb734-4"><a href="survey-design-analysis.html#cb734-4"></a>    <span class="dt">value.name =</span> <span class="st">&quot;Points&quot;</span>)</span>
-<span id="cb734-5"><a href="survey-design-analysis.html#cb734-5"></a><span class="co"># Outliers</span></span>
-<span id="cb734-6"><a href="survey-design-analysis.html#cb734-6"></a>constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Factor) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">identify_outliers</span>(Points) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb734-7"><a href="survey-design-analysis.html#cb734-7"></a><span class="st">    </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
-<span id="cb734-8"><a href="survey-design-analysis.html#cb734-8"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="survey-design-analysis.html#cb736-1"></a><span class="co"># Creation of the long version of data frame</span></span>
+<span id="cb736-2"><a href="survey-design-analysis.html#cb736-2"></a><span class="kw">library</span>(reshape2)</span>
+<span id="cb736-3"><a href="survey-design-analysis.html#cb736-3"></a>constant.sum.long &lt;-<span class="st"> </span><span class="kw">melt</span>(constant.sum[, <span class="dv">-5</span>], <span class="dt">variable.name =</span> <span class="st">&quot;Factor&quot;</span>, </span>
+<span id="cb736-4"><a href="survey-design-analysis.html#cb736-4"></a>    <span class="dt">value.name =</span> <span class="st">&quot;Points&quot;</span>)</span>
+<span id="cb736-5"><a href="survey-design-analysis.html#cb736-5"></a><span class="co"># Outliers</span></span>
+<span id="cb736-6"><a href="survey-design-analysis.html#cb736-6"></a>constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Factor) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">identify_outliers</span>(Points) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb736-7"><a href="survey-design-analysis.html#cb736-7"></a><span class="st">    </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
+<span id="cb736-8"><a href="survey-design-analysis.html#cb736-8"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -3368,15 +3370,15 @@ FALSE
 </tbody>
 </table>
 <p>The p value seems to be significant, i.e., less than 0.05. As we cannot identify any extreme outliers, we can proceed with deploying repeated measures ANOVA.</p>
-<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="survey-design-analysis.html#cb735-1"></a><span class="co"># Formatting data</span></span>
-<span id="cb735-2"><a href="survey-design-analysis.html#cb735-2"></a>constant.sum.aov &lt;-<span class="st"> </span><span class="kw">gather</span>(constant.sum, <span class="dt">key =</span> <span class="st">&quot;Factor&quot;</span>, </span>
-<span id="cb735-3"><a href="survey-design-analysis.html#cb735-3"></a>    <span class="dt">value =</span> <span class="st">&quot;Points&quot;</span>, <span class="st">`</span><span class="dt"> Location</span><span class="st">`</span>, <span class="st">`</span><span class="dt"> Price</span><span class="st">`</span>, <span class="st">`</span><span class="dt"> Ambience</span><span class="st">`</span>, </span>
-<span id="cb735-4"><a href="survey-design-analysis.html#cb735-4"></a>    <span class="st">`</span><span class="dt"> Customer Service</span><span class="st">`</span>)</span>
-<span id="cb735-5"><a href="survey-design-analysis.html#cb735-5"></a><span class="co"># One-way repeated measures ANOVA</span></span>
-<span id="cb735-6"><a href="survey-design-analysis.html#cb735-6"></a>res.aov &lt;-<span class="st"> </span><span class="kw">anova_test</span>(<span class="dt">data =</span> constant.sum.aov, <span class="dt">dv =</span> Points, </span>
-<span id="cb735-7"><a href="survey-design-analysis.html#cb735-7"></a>    <span class="dt">wid =</span> id, <span class="dt">within =</span> Factor)</span>
-<span id="cb735-8"><a href="survey-design-analysis.html#cb735-8"></a><span class="kw">get_anova_table</span>(res.aov) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb735-9"><a href="survey-design-analysis.html#cb735-9"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="survey-design-analysis.html#cb737-1"></a><span class="co"># Formatting data</span></span>
+<span id="cb737-2"><a href="survey-design-analysis.html#cb737-2"></a>constant.sum.aov &lt;-<span class="st"> </span><span class="kw">gather</span>(constant.sum, <span class="dt">key =</span> <span class="st">&quot;Factor&quot;</span>, </span>
+<span id="cb737-3"><a href="survey-design-analysis.html#cb737-3"></a>    <span class="dt">value =</span> <span class="st">&quot;Points&quot;</span>, <span class="st">`</span><span class="dt"> Location</span><span class="st">`</span>, <span class="st">`</span><span class="dt"> Price</span><span class="st">`</span>, <span class="st">`</span><span class="dt"> Ambience</span><span class="st">`</span>, </span>
+<span id="cb737-4"><a href="survey-design-analysis.html#cb737-4"></a>    <span class="st">`</span><span class="dt"> Customer Service</span><span class="st">`</span>)</span>
+<span id="cb737-5"><a href="survey-design-analysis.html#cb737-5"></a><span class="co"># One-way repeated measures ANOVA</span></span>
+<span id="cb737-6"><a href="survey-design-analysis.html#cb737-6"></a>res.aov &lt;-<span class="st"> </span><span class="kw">anova_test</span>(<span class="dt">data =</span> constant.sum.aov, <span class="dt">dv =</span> Points, </span>
+<span id="cb737-7"><a href="survey-design-analysis.html#cb737-7"></a>    <span class="dt">wid =</span> id, <span class="dt">within =</span> Factor)</span>
+<span id="cb737-8"><a href="survey-design-analysis.html#cb737-8"></a><span class="kw">get_anova_table</span>(res.aov) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb737-9"><a href="survey-design-analysis.html#cb737-9"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -3431,9 +3433,9 @@ Factor
 </table>
 As we know that ANOVA is an omnibus test, we need to conduct post hoc test for further details:</li>
 </ul>
-<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="survey-design-analysis.html#cb736-1"></a><span class="co"># Post hoc test</span></span>
-<span id="cb736-2"><a href="survey-design-analysis.html#cb736-2"></a><span class="kw">pairwise.t.test</span>(constant.sum.long<span class="op">$</span>Points, constant.sum.long<span class="op">$</span>Factor, </span>
-<span id="cb736-3"><a href="survey-design-analysis.html#cb736-3"></a>    <span class="dt">paired =</span> T, <span class="dt">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="survey-design-analysis.html#cb738-1"></a><span class="co"># Post hoc test</span></span>
+<span id="cb738-2"><a href="survey-design-analysis.html#cb738-2"></a><span class="kw">pairwise.t.test</span>(constant.sum.long<span class="op">$</span>Points, constant.sum.long<span class="op">$</span>Factor, </span>
+<span id="cb738-3"><a href="survey-design-analysis.html#cb738-3"></a>    <span class="dt">paired =</span> T, <span class="dt">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using paired t tests 
 ## 
@@ -3556,10 +3558,10 @@ Customer Service
 </tbody>
 </table>
 <p>Additionally, we asked our respondents how much are they willing to spend on dinner on average. In order to handle data easier, we will create a new data frame where we merge all the data together:</p>
-<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="survey-design-analysis.html#cb738-1"></a>dinner &lt;-<span class="st"> </span><span class="kw">subset</span>(qualtrics, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot; Location&quot;</span>, </span>
-<span id="cb738-2"><a href="survey-design-analysis.html#cb738-2"></a>    <span class="st">&quot; Price&quot;</span>, <span class="st">&quot; Ambience&quot;</span>, <span class="st">&quot; Customer Service&quot;</span>, <span class="st">&quot; Willingness-to-pay (in EUR)&quot;</span>))</span>
-<span id="cb738-3"><a href="survey-design-analysis.html#cb738-3"></a><span class="kw">head</span>(dinner) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
-<span id="cb738-4"><a href="survey-design-analysis.html#cb738-4"></a>    <span class="dt">full_width =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="survey-design-analysis.html#cb740-1"></a>dinner &lt;-<span class="st"> </span><span class="kw">subset</span>(qualtrics, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot; Location&quot;</span>, </span>
+<span id="cb740-2"><a href="survey-design-analysis.html#cb740-2"></a>    <span class="st">&quot; Price&quot;</span>, <span class="st">&quot; Ambience&quot;</span>, <span class="st">&quot; Customer Service&quot;</span>, <span class="st">&quot; Willingness-to-pay (in EUR)&quot;</span>))</span>
+<span id="cb740-3"><a href="survey-design-analysis.html#cb740-3"></a><span class="kw">head</span>(dinner) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
+<span id="cb740-4"><a href="survey-design-analysis.html#cb740-4"></a>    <span class="dt">full_width =</span> T)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -3686,8 +3688,8 @@ Willingness-to-pay (in EUR)
 </tbody>
 </table>
 <p>Before we conduct a linear regression analysis, we need to take a look at correlation matrix:</p>
-<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="survey-design-analysis.html#cb739-1"></a>correlation &lt;-<span class="st"> </span><span class="kw">cor</span>(dinner, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;pearson&quot;</span>))</span>
-<span id="cb739-2"><a href="survey-design-analysis.html#cb739-2"></a>correlation</span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="survey-design-analysis.html#cb741-1"></a>correlation &lt;-<span class="st"> </span><span class="kw">cor</span>(dinner, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;pearson&quot;</span>))</span>
+<span id="cb741-2"><a href="survey-design-analysis.html#cb741-2"></a>correlation</span></code></pre></div>
 <pre><code>##                                Location       Price    Ambience
 ##  Location                     1.0000000 -0.31732620 -0.36134355
 ##  Price                       -0.3173262  1.00000000 -0.21962027
@@ -3701,8 +3703,8 @@ Willingness-to-pay (in EUR)
 ##  Customer Service                   1.00000000                   0.12125571
 ##  Willingness-to-pay (in EUR)        0.12125571                   1.00000000</code></pre>
 <p>From our data we see, for instance, that some negative correlation between willingness to pay and importance of ambiance as well as some positive correlation between importance of customer service and willingness-to-pay. Let us observe descriptive statistics as well:</p>
-<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="survey-design-analysis.html#cb741-1"></a>psych<span class="op">::</span><span class="kw">describe</span>(dinner) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb741-2"><a href="survey-design-analysis.html#cb741-2"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="survey-design-analysis.html#cb743-1"></a>psych<span class="op">::</span><span class="kw">describe</span>(dinner) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb743-2"><a href="survey-design-analysis.html#cb743-2"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -3974,9 +3976,9 @@ Willingness-to-pay (in EUR)
 </table>
 <p>We see that difference between mean and median does not suggest (at the first sight) great effect of outliers.</p>
 <p>Let us now do linear regression analysis:</p>
-<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="survey-design-analysis.html#cb742-1"></a>mlr.dinner &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="st">`</span><span class="dt"> Willingness-to-pay (in EUR)</span><span class="st">`</span> <span class="op">~</span><span class="st"> `</span><span class="dt"> Location</span><span class="st">`</span> <span class="op">+</span><span class="st"> </span></span>
-<span id="cb742-2"><a href="survey-design-analysis.html#cb742-2"></a><span class="st">    `</span><span class="dt"> Price</span><span class="st">`</span> <span class="op">+</span><span class="st"> `</span><span class="dt"> Ambience</span><span class="st">`</span> <span class="op">+</span><span class="st"> `</span><span class="dt"> Customer Service</span><span class="st">`</span>, <span class="dt">data =</span> dinner)</span>
-<span id="cb742-3"><a href="survey-design-analysis.html#cb742-3"></a><span class="kw">summary</span>(mlr.dinner)</span></code></pre></div>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="survey-design-analysis.html#cb744-1"></a>mlr.dinner &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="st">`</span><span class="dt"> Willingness-to-pay (in EUR)</span><span class="st">`</span> <span class="op">~</span><span class="st"> `</span><span class="dt"> Location</span><span class="st">`</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb744-2"><a href="survey-design-analysis.html#cb744-2"></a><span class="st">    `</span><span class="dt"> Price</span><span class="st">`</span> <span class="op">+</span><span class="st"> `</span><span class="dt"> Ambience</span><span class="st">`</span> <span class="op">+</span><span class="st"> `</span><span class="dt"> Customer Service</span><span class="st">`</span>, <span class="dt">data =</span> dinner)</span>
+<span id="cb744-3"><a href="survey-design-analysis.html#cb744-3"></a><span class="kw">summary</span>(mlr.dinner)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = ` Willingness-to-pay (in EUR)` ~ ` Location` + ` Price` + 
@@ -4000,8 +4002,8 @@ Willingness-to-pay (in EUR)
 ## Multiple R-squared:  0.1449, Adjusted R-squared:  0.1144 
 ## F-statistic: 4.745 on 4 and 112 DF,  p-value: 0.001421</code></pre>
 <p>Out of all factors of importance when dinning out, the only one that suggests significance at 0.05 level of significance is ambience. From the summary we can conclude that increase in importance of ambience by 1 point, leads to decrease in willingness to pay by -0.697554.</p>
-<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="survey-design-analysis.html#cb744-1"></a><span class="kw">confint</span>(mlr.dinner) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb744-2"><a href="survey-design-analysis.html#cb744-2"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="survey-design-analysis.html#cb746-1"></a><span class="kw">confint</span>(mlr.dinner) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb746-2"><a href="survey-design-analysis.html#cb746-2"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -4074,33 +4076,33 @@ Willingness-to-pay (in EUR)
 </tbody>
 </table>
 <p>From confidence intervals, We can conclude that when we do not consider any of given factors (location, price, ambience and customer service), willingness to pay will be somewhere between 32.383272EUR and 78.2477971EUR. Besides that, for each increase in importance of dinner ambiance by one point, there will be an average decrease of willingness to pay between -1.0757599 and -0.3193481.</p>
-<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="survey-design-analysis.html#cb745-1"></a><span class="kw">library</span>(ggstatsplot)</span>
-<span id="cb745-2"><a href="survey-design-analysis.html#cb745-2"></a><span class="kw">ggcoefstats</span>(<span class="dt">x =</span> mlr.dinner, <span class="dt">title =</span> <span class="st">&quot;Willingness to pay predicted by importance of factors&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-564-1.png" width="672" /></p>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="survey-design-analysis.html#cb747-1"></a><span class="kw">library</span>(ggstatsplot)</span>
+<span id="cb747-2"><a href="survey-design-analysis.html#cb747-2"></a><span class="kw">ggcoefstats</span>(<span class="dt">x =</span> mlr.dinner, <span class="dt">title =</span> <span class="st">&quot;Willingness to pay predicted by importance of factors&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-565-1.png" width="672" /></p>
 <p>There are couple of things we need to consider when we do multiple linear regression. One of them are potential outliers in our data. Here we identify and visualize them:</p>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="survey-design-analysis.html#cb746-1"></a><span class="co"># Outliers</span></span>
-<span id="cb746-2"><a href="survey-design-analysis.html#cb746-2"></a>outlier_values &lt;-<span class="st"> </span><span class="kw">boxplot.stats</span>(mlr.dinner<span class="op">$</span>residuals)<span class="op">$</span>out  <span class="co"># outlier values.</span></span>
-<span id="cb746-3"><a href="survey-design-analysis.html#cb746-3"></a>outlier_values</span></code></pre></div>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="survey-design-analysis.html#cb748-1"></a><span class="co"># Outliers</span></span>
+<span id="cb748-2"><a href="survey-design-analysis.html#cb748-2"></a>outlier_values &lt;-<span class="st"> </span><span class="kw">boxplot.stats</span>(mlr.dinner<span class="op">$</span>residuals)<span class="op">$</span>out  <span class="co"># outlier values.</span></span>
+<span id="cb748-3"><a href="survey-design-analysis.html#cb748-3"></a>outlier_values</span></code></pre></div>
 <pre><code>##       12       44       49 
 ## 70.56037 64.19796 74.27359</code></pre>
 <p>We identified observations that belong to outlier values. We can even visualize them too:</p>
-<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="survey-design-analysis.html#cb748-1"></a><span class="kw">boxplot</span>(mlr.dinner<span class="op">$</span>residuals, <span class="dt">main =</span> <span class="st">&quot;Willingnes to pay&quot;</span>, </span>
-<span id="cb748-2"><a href="survey-design-analysis.html#cb748-2"></a>    <span class="dt">boxwex =</span> <span class="fl">0.1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-566-1.png" width="672" /></p>
-<p>In addition, we need to observe whether there are any influential observations:</p>
-<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="survey-design-analysis.html#cb749-1"></a><span class="kw">plot</span>(mlr.dinner, <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="survey-design-analysis.html#cb750-1"></a><span class="kw">boxplot</span>(mlr.dinner<span class="op">$</span>residuals, <span class="dt">main =</span> <span class="st">&quot;Willingnes to pay&quot;</span>, </span>
+<span id="cb750-2"><a href="survey-design-analysis.html#cb750-2"></a>    <span class="dt">boxwex =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-567-1.png" width="672" /></p>
+<p>In addition, we need to observe whether there are any influential observations:</p>
+<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="survey-design-analysis.html#cb751-1"></a><span class="kw">plot</span>(mlr.dinner, <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-568-1.png" width="672" /></p>
 <p>A rule of thumb to determine whether an observation should be classified as influential or not is to look for observation with a Cook’s distance &gt; 1 .We see from the graph that there are no influential observations.</p>
 <p>Another thing to consider is linearity, i.e. that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms:</p>
-<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="survey-design-analysis.html#cb750-1"></a><span class="co"># Linear specification</span></span>
-<span id="cb750-2"><a href="survey-design-analysis.html#cb750-2"></a><span class="kw">library</span>(car)</span>
-<span id="cb750-3"><a href="survey-design-analysis.html#cb750-3"></a><span class="kw">avPlots</span>(mlr.dinner)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-568-1.png" width="672" /></p>
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="survey-design-analysis.html#cb752-1"></a><span class="co"># Linear specification</span></span>
+<span id="cb752-2"><a href="survey-design-analysis.html#cb752-2"></a><span class="kw">library</span>(car)</span>
+<span id="cb752-3"><a href="survey-design-analysis.html#cb752-3"></a><span class="kw">avPlots</span>(mlr.dinner)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-569-1.png" width="672" /></p>
 <p>In our example it does not seem that linear relationships can be reasonably assumed for all variables.</p>
 <p>As we already learned, another important assumption of the linear model is that the error terms have a constant variance (i.e., homoscedasticity):</p>
-<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="survey-design-analysis.html#cb751-1"></a><span class="co"># Breusch-Pagan Test</span></span>
-<span id="cb751-2"><a href="survey-design-analysis.html#cb751-2"></a><span class="kw">library</span>(lmtest)</span>
-<span id="cb751-3"><a href="survey-design-analysis.html#cb751-3"></a><span class="kw">bptest</span>(mlr.dinner)</span></code></pre></div>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="survey-design-analysis.html#cb753-1"></a><span class="co"># Breusch-Pagan Test</span></span>
+<span id="cb753-2"><a href="survey-design-analysis.html#cb753-2"></a><span class="kw">library</span>(lmtest)</span>
+<span id="cb753-3"><a href="survey-design-analysis.html#cb753-3"></a><span class="kw">bptest</span>(mlr.dinner)</span></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
@@ -4108,7 +4110,7 @@ Willingness-to-pay (in EUR)
 ## BP = 1.1478, df = 4, p-value = 0.8866</code></pre>
 <p>The null hypothesis for this test is that the error variances are all equal, and our result is insignificant. Therefore, this assumption is met.</p>
 <p>Another assumption to be met is that the error term is normally distributed. One way to check for normal distribution of the data is to employ statistical with the null hypothesis that the data is normally distributed. One of these is a Shapiro–Wilk test:</p>
-<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="survey-design-analysis.html#cb753-1"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(mlr.dinner))</span></code></pre></div>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="survey-design-analysis.html#cb755-1"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(mlr.dinner))</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -4116,8 +4118,8 @@ Willingness-to-pay (in EUR)
 ## W = 0.94757, p-value = 0.0001763</code></pre>
 <p>When the assumption of normally distributed errors is not met (as it is not met in our case), this might again be due to a misspecification of your model, in which case it might help to transform your data.</p>
 <p>Finally, we need to check for multicollinearity, the case when there is a strong linear relationship between the independent variables:</p>
-<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="survey-design-analysis.html#cb755-1"></a>correlation &lt;-<span class="st"> </span><span class="kw">cor</span>(dinner, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;pearson&quot;</span>))</span>
-<span id="cb755-2"><a href="survey-design-analysis.html#cb755-2"></a>correlation</span></code></pre></div>
+<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="survey-design-analysis.html#cb757-1"></a>correlation &lt;-<span class="st"> </span><span class="kw">cor</span>(dinner, <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;pearson&quot;</span>))</span>
+<span id="cb757-2"><a href="survey-design-analysis.html#cb757-2"></a>correlation</span></code></pre></div>
 <pre><code>##                                Location       Price    Ambience
 ##  Location                     1.0000000 -0.31732620 -0.36134355
 ##  Price                       -0.3173262  1.00000000 -0.21962027
@@ -4145,15 +4147,15 @@ Willingness-to-pay (in EUR)
 <div id="multiple-choice-question-visualisation" class="section level5 unnumbered">
 <h5>Multiple choice question visualisation</h5>
 <p>In order to visualize a survey data obtained from multiple choice question with single answer, a data format needs to be in the appropriate format. Here we proceed with data format adaptation from the point where we stopped:</p>
-<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="survey-design-analysis.html#cb757-1"></a><span class="co"># Converting long format to the</span></span>
-<span id="cb757-2"><a href="survey-design-analysis.html#cb757-2"></a><span class="co"># visualisation-friendly format</span></span>
-<span id="cb757-3"><a href="survey-design-analysis.html#cb757-3"></a>mlc_visualisation &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>))</span>
-<span id="cb757-4"><a href="survey-design-analysis.html#cb757-4"></a><span class="co"># Naming columns</span></span>
-<span id="cb757-5"><a href="survey-design-analysis.html#cb757-5"></a><span class="kw">names</span>(mlc_visualisation) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Time&quot;</span>, <span class="st">&quot;Count&quot;</span>)</span>
-<span id="cb757-6"><a href="survey-design-analysis.html#cb757-6"></a><span class="co"># Observing</span></span>
-<span id="cb757-7"><a href="survey-design-analysis.html#cb757-7"></a><span class="kw">library</span>(kableExtra)</span>
-<span id="cb757-8"><a href="survey-design-analysis.html#cb757-8"></a>mlc_visualisation <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb757-9"><a href="survey-design-analysis.html#cb757-9"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb759-1"><a href="survey-design-analysis.html#cb759-1"></a><span class="co"># Converting long format to the</span></span>
+<span id="cb759-2"><a href="survey-design-analysis.html#cb759-2"></a><span class="co"># visualisation-friendly format</span></span>
+<span id="cb759-3"><a href="survey-design-analysis.html#cb759-3"></a>mlc_visualisation &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(qualtrics<span class="op">$</span><span class="st">`</span><span class="dt">During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?</span><span class="st">`</span>))</span>
+<span id="cb759-4"><a href="survey-design-analysis.html#cb759-4"></a><span class="co"># Naming columns</span></span>
+<span id="cb759-5"><a href="survey-design-analysis.html#cb759-5"></a><span class="kw">names</span>(mlc_visualisation) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Time&quot;</span>, <span class="st">&quot;Count&quot;</span>)</span>
+<span id="cb759-6"><a href="survey-design-analysis.html#cb759-6"></a><span class="co"># Observing</span></span>
+<span id="cb759-7"><a href="survey-design-analysis.html#cb759-7"></a><span class="kw">library</span>(kableExtra)</span>
+<span id="cb759-8"><a href="survey-design-analysis.html#cb759-8"></a>mlc_visualisation <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb759-9"><a href="survey-design-analysis.html#cb759-9"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -4209,40 +4211,40 @@ Evening (18:00-22:00)
 </tbody>
 </table>
 <p>R package <code>ggplot2</code> allows you to create visually appealing graphs. Below you can see how to create simple versions of a bar chart and a pie chart.</p>
-<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="survey-design-analysis.html#cb758-1"></a><span class="co"># Multiple choice question with single answer - a</span></span>
-<span id="cb758-2"><a href="survey-design-analysis.html#cb758-2"></a><span class="co"># bar chart</span></span>
-<span id="cb758-3"><a href="survey-design-analysis.html#cb758-3"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb758-4"><a href="survey-design-analysis.html#cb758-4"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> mlc_visualisation, <span class="kw">aes</span>(<span class="dt">x =</span> Time, </span>
-<span id="cb758-5"><a href="survey-design-analysis.html#cb758-5"></a>    <span class="dt">y =</span> Count, <span class="dt">fill =</span> Time)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb758-6"><a href="survey-design-analysis.html#cb758-6"></a><span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;n=&quot;</span>, <span class="kw">round</span>(Count))), </span>
-<span id="cb758-7"><a href="survey-design-analysis.html#cb758-7"></a>        <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb758-8"><a href="survey-design-analysis.html#cb758-8"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;The period of the day you prefer watching movies?&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb758-9"><a href="survey-design-analysis.html#cb758-9"></a><span class="st">    </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(), </span>
-<span id="cb758-10"><a href="survey-design-analysis.html#cb758-10"></a>    <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(), </span>
-<span id="cb758-11"><a href="survey-design-analysis.html#cb758-11"></a>    <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
-<span id="cb758-12"><a href="survey-design-analysis.html#cb758-12"></a>p</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-573-1.png" width="672" /></p>
-<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb759-1"><a href="survey-design-analysis.html#cb759-1"></a><span class="co"># Multiple choice question with single answer - a</span></span>
-<span id="cb759-2"><a href="survey-design-analysis.html#cb759-2"></a><span class="co"># pie chart</span></span>
-<span id="cb759-3"><a href="survey-design-analysis.html#cb759-3"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mlc_visualisation, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> Count, </span>
-<span id="cb759-4"><a href="survey-design-analysis.html#cb759-4"></a>    <span class="dt">fill =</span> Time)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb759-5"><a href="survey-design-analysis.html#cb759-5"></a><span class="st">    </span><span class="kw">coord_polar</span>(<span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;n=&quot;</span>, </span>
-<span id="cb759-6"><a href="survey-design-analysis.html#cb759-6"></a>    <span class="kw">round</span>(Count))), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb759-7"><a href="survey-design-analysis.html#cb759-7"></a><span class="st">    </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, </span>
-<span id="cb759-8"><a href="survey-design-analysis.html#cb759-8"></a>    <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;The period of the day you prefer watching movies?&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb759-9"><a href="survey-design-analysis.html#cb759-9"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(), </span>
-<span id="cb759-10"><a href="survey-design-analysis.html#cb759-10"></a>    <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(), </span>
-<span id="cb759-11"><a href="survey-design-analysis.html#cb759-11"></a>    <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
-<span id="cb759-12"><a href="survey-design-analysis.html#cb759-12"></a>p</span></code></pre></div>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="survey-design-analysis.html#cb760-1"></a><span class="co"># Multiple choice question with single answer - a</span></span>
+<span id="cb760-2"><a href="survey-design-analysis.html#cb760-2"></a><span class="co"># bar chart</span></span>
+<span id="cb760-3"><a href="survey-design-analysis.html#cb760-3"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb760-4"><a href="survey-design-analysis.html#cb760-4"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> mlc_visualisation, <span class="kw">aes</span>(<span class="dt">x =</span> Time, </span>
+<span id="cb760-5"><a href="survey-design-analysis.html#cb760-5"></a>    <span class="dt">y =</span> Count, <span class="dt">fill =</span> Time)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb760-6"><a href="survey-design-analysis.html#cb760-6"></a><span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;n=&quot;</span>, <span class="kw">round</span>(Count))), </span>
+<span id="cb760-7"><a href="survey-design-analysis.html#cb760-7"></a>        <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb760-8"><a href="survey-design-analysis.html#cb760-8"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;The period of the day you prefer watching movies?&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb760-9"><a href="survey-design-analysis.html#cb760-9"></a><span class="st">    </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(), </span>
+<span id="cb760-10"><a href="survey-design-analysis.html#cb760-10"></a>    <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(), </span>
+<span id="cb760-11"><a href="survey-design-analysis.html#cb760-11"></a>    <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
+<span id="cb760-12"><a href="survey-design-analysis.html#cb760-12"></a>p</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-574-1.png" width="672" /></p>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="survey-design-analysis.html#cb761-1"></a><span class="co"># Multiple choice question with single answer - a</span></span>
+<span id="cb761-2"><a href="survey-design-analysis.html#cb761-2"></a><span class="co"># pie chart</span></span>
+<span id="cb761-3"><a href="survey-design-analysis.html#cb761-3"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mlc_visualisation, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> Count, </span>
+<span id="cb761-4"><a href="survey-design-analysis.html#cb761-4"></a>    <span class="dt">fill =</span> Time)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb761-5"><a href="survey-design-analysis.html#cb761-5"></a><span class="st">    </span><span class="kw">coord_polar</span>(<span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;n=&quot;</span>, </span>
+<span id="cb761-6"><a href="survey-design-analysis.html#cb761-6"></a>    <span class="kw">round</span>(Count))), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb761-7"><a href="survey-design-analysis.html#cb761-7"></a><span class="st">    </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, </span>
+<span id="cb761-8"><a href="survey-design-analysis.html#cb761-8"></a>    <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;The period of the day you prefer watching movies?&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb761-9"><a href="survey-design-analysis.html#cb761-9"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(), </span>
+<span id="cb761-10"><a href="survey-design-analysis.html#cb761-10"></a>    <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(), </span>
+<span id="cb761-11"><a href="survey-design-analysis.html#cb761-11"></a>    <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
+<span id="cb761-12"><a href="survey-design-analysis.html#cb761-12"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-575-1.png" width="672" /></p>
 </div>
 <div id="multiple-choice-question-with-multiple-answers" class="section level4">
 <h4><span class="header-section-number">10.3.3.1</span> Multiple choice question with multiple answers</h4>
 <p>If our multiple choice question has more possible answers, we would need first to calculate share of cases when each possible answer was selected.</p>
-<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="survey-design-analysis.html#cb760-1"></a><span class="kw">setDT</span>(df.cochran, <span class="dt">keep.rownames =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb760-2"><a href="survey-design-analysis.html#cb760-2"></a><span class="kw">colnames</span>(df.cochran)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Brand&quot;</span></span>
-<span id="cb760-3"><a href="survey-design-analysis.html#cb760-3"></a>df.cochran <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
-<span id="cb760-4"><a href="survey-design-analysis.html#cb760-4"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="survey-design-analysis.html#cb762-1"></a><span class="kw">setDT</span>(df.cochran, <span class="dt">keep.rownames =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb762-2"><a href="survey-design-analysis.html#cb762-2"></a><span class="kw">colnames</span>(df.cochran)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;Brand&quot;</span></span>
+<span id="cb762-3"><a href="survey-design-analysis.html#cb762-3"></a>df.cochran <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, </span>
+<span id="cb762-4"><a href="survey-design-analysis.html#cb762-4"></a>    <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -4320,31 +4322,31 @@ Spar Vital
 </tbody>
 </table>
 <p>After we make sure we have our data in the required form, we can create a nice bar chart:</p>
-<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="survey-design-analysis.html#cb761-1"></a><span class="co"># Multiple choice question with multiple answers -</span></span>
-<span id="cb761-2"><a href="survey-design-analysis.html#cb761-2"></a><span class="co"># a bar chart</span></span>
-<span id="cb761-3"><a href="survey-design-analysis.html#cb761-3"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb761-4"><a href="survey-design-analysis.html#cb761-4"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.cochran, <span class="kw">aes</span>(<span class="dt">x =</span> Brand, <span class="dt">y =</span> Share_of_cases, </span>
-<span id="cb761-5"><a href="survey-design-analysis.html#cb761-5"></a>    <span class="dt">fill =</span> Brand)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb761-6"><a href="survey-design-analysis.html#cb761-6"></a><span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Share_of_cases), </span>
-<span id="cb761-7"><a href="survey-design-analysis.html#cb761-7"></a>        <span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb761-8"><a href="survey-design-analysis.html#cb761-8"></a><span class="st">    </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, </span>
-<span id="cb761-9"><a href="survey-design-analysis.html#cb761-9"></a>    <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;Brands repsondents are familiar with&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb761-10"><a href="survey-design-analysis.html#cb761-10"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(), </span>
-<span id="cb761-11"><a href="survey-design-analysis.html#cb761-11"></a>    <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(), <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
-<span id="cb761-12"><a href="survey-design-analysis.html#cb761-12"></a>        <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
-<span id="cb761-13"><a href="survey-design-analysis.html#cb761-13"></a>p</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-576-1.png" width="672" /></p>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="survey-design-analysis.html#cb763-1"></a><span class="co"># Multiple choice question with multiple answers -</span></span>
+<span id="cb763-2"><a href="survey-design-analysis.html#cb763-2"></a><span class="co"># a bar chart</span></span>
+<span id="cb763-3"><a href="survey-design-analysis.html#cb763-3"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb763-4"><a href="survey-design-analysis.html#cb763-4"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.cochran, <span class="kw">aes</span>(<span class="dt">x =</span> Brand, <span class="dt">y =</span> Share_of_cases, </span>
+<span id="cb763-5"><a href="survey-design-analysis.html#cb763-5"></a>    <span class="dt">fill =</span> Brand)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb763-6"><a href="survey-design-analysis.html#cb763-6"></a><span class="st">    </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Share_of_cases), </span>
+<span id="cb763-7"><a href="survey-design-analysis.html#cb763-7"></a>        <span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb763-8"><a href="survey-design-analysis.html#cb763-8"></a><span class="st">    </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, </span>
+<span id="cb763-9"><a href="survey-design-analysis.html#cb763-9"></a>    <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;Brands repsondents are familiar with&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb763-10"><a href="survey-design-analysis.html#cb763-10"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(), </span>
+<span id="cb763-11"><a href="survey-design-analysis.html#cb763-11"></a>    <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(), <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
+<span id="cb763-12"><a href="survey-design-analysis.html#cb763-12"></a>        <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
+<span id="cb763-13"><a href="survey-design-analysis.html#cb763-13"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-577-1.png" width="672" /></p>
 <div id="rank-order-question-2" class="section level5">
 <h5><span class="header-section-number">10.3.3.1.1</span> Rank order question</h5>
 <p>In case of ranked data, one need to transform data from wide format to long format first.</p>
-<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="survey-design-analysis.html#cb762-1"></a><span class="co"># Packages</span></span>
-<span id="cb762-2"><a href="survey-design-analysis.html#cb762-2"></a><span class="kw">library</span>(reshape2)</span>
-<span id="cb762-3"><a href="survey-design-analysis.html#cb762-3"></a><span class="kw">library</span>(ggpubr)</span>
-<span id="cb762-4"><a href="survey-design-analysis.html#cb762-4"></a><span class="kw">library</span>(rstatix)</span>
-<span id="cb762-5"><a href="survey-design-analysis.html#cb762-5"></a><span class="kw">library</span>(ggstatsplot)</span>
-<span id="cb762-6"><a href="survey-design-analysis.html#cb762-6"></a><span class="co"># Data in wide format</span></span>
-<span id="cb762-7"><a href="survey-design-analysis.html#cb762-7"></a><span class="kw">head</span>(rank.data) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb762-8"><a href="survey-design-analysis.html#cb762-8"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="survey-design-analysis.html#cb764-1"></a><span class="co"># Packages</span></span>
+<span id="cb764-2"><a href="survey-design-analysis.html#cb764-2"></a><span class="kw">library</span>(reshape2)</span>
+<span id="cb764-3"><a href="survey-design-analysis.html#cb764-3"></a><span class="kw">library</span>(ggpubr)</span>
+<span id="cb764-4"><a href="survey-design-analysis.html#cb764-4"></a><span class="kw">library</span>(rstatix)</span>
+<span id="cb764-5"><a href="survey-design-analysis.html#cb764-5"></a><span class="kw">library</span>(ggstatsplot)</span>
+<span id="cb764-6"><a href="survey-design-analysis.html#cb764-6"></a><span class="co"># Data in wide format</span></span>
+<span id="cb764-7"><a href="survey-design-analysis.html#cb764-7"></a><span class="kw">head</span>(rank.data) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb764-8"><a href="survey-design-analysis.html#cb764-8"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -4470,9 +4472,9 @@ Measuring distance
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="survey-design-analysis.html#cb763-1"></a><span class="co"># Data in long format</span></span>
-<span id="cb763-2"><a href="survey-design-analysis.html#cb763-2"></a><span class="kw">head</span>(rank.data.long) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb763-3"><a href="survey-design-analysis.html#cb763-3"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="survey-design-analysis.html#cb765-1"></a><span class="co"># Data in long format</span></span>
+<span id="cb765-2"><a href="survey-design-analysis.html#cb765-2"></a><span class="kw">head</span>(rank.data.long) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb765-3"><a href="survey-design-analysis.html#cb765-3"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -4536,31 +4538,31 @@ Measuring steps
 </tbody>
 </table>
 <p>Simple way to depict ranks is a chart of box plots:</p>
-<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="survey-design-analysis.html#cb764-1"></a><span class="co"># Rank order question - box plots</span></span>
-<span id="cb764-2"><a href="survey-design-analysis.html#cb764-2"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rank.data.long, <span class="kw">aes</span>(<span class="dt">x =</span> Feature, <span class="dt">y =</span> Rank, </span>
-<span id="cb764-3"><a href="survey-design-analysis.html#cb764-3"></a>    <span class="dt">fill =</span> Feature)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb764-4"><a href="survey-design-analysis.html#cb764-4"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Perceived importance of features&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb764-5"><a href="survey-design-analysis.html#cb764-5"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>())</span>
-<span id="cb764-6"><a href="survey-design-analysis.html#cb764-6"></a>p</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-578-1.png" width="672" />
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="survey-design-analysis.html#cb766-1"></a><span class="co"># Rank order question - box plots</span></span>
+<span id="cb766-2"><a href="survey-design-analysis.html#cb766-2"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rank.data.long, <span class="kw">aes</span>(<span class="dt">x =</span> Feature, <span class="dt">y =</span> Rank, </span>
+<span id="cb766-3"><a href="survey-design-analysis.html#cb766-3"></a>    <span class="dt">fill =</span> Feature)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb766-4"><a href="survey-design-analysis.html#cb766-4"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Perceived importance of features&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb766-5"><a href="survey-design-analysis.html#cb766-5"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>())</span>
+<span id="cb766-6"><a href="survey-design-analysis.html#cb766-6"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-579-1.png" width="672" />
 Package <code>ggstatsplot()</code> provides a great feature, which enables creation of a plot and conducting a statistical test at the same time.</p>
-<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="survey-design-analysis.html#cb765-1"></a><span class="co"># Rank order question - ggstatsplot</span></span>
-<span id="cb765-2"><a href="survey-design-analysis.html#cb765-2"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
-<span id="cb765-3"><a href="survey-design-analysis.html#cb765-3"></a>  <span class="dt">data =</span> rank.data.long,</span>
-<span id="cb765-4"><a href="survey-design-analysis.html#cb765-4"></a>  <span class="dt">x =</span> Feature,</span>
-<span id="cb765-5"><a href="survey-design-analysis.html#cb765-5"></a>  <span class="dt">y =</span> Rank,</span>
-<span id="cb765-6"><a href="survey-design-analysis.html#cb765-6"></a>  <span class="dt">type =</span> <span class="st">&quot;np&quot;</span>,</span>
-<span id="cb765-7"><a href="survey-design-analysis.html#cb765-7"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
-<span id="cb765-8"><a href="survey-design-analysis.html#cb765-8"></a>  <span class="dt">title =</span> <span class="st">&quot;What features are important to you when evualting fitness trackers?&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-579-1.png" width="672" /></p>
+<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="survey-design-analysis.html#cb767-1"></a><span class="co"># Rank order question - ggstatsplot</span></span>
+<span id="cb767-2"><a href="survey-design-analysis.html#cb767-2"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
+<span id="cb767-3"><a href="survey-design-analysis.html#cb767-3"></a>  <span class="dt">data =</span> rank.data.long,</span>
+<span id="cb767-4"><a href="survey-design-analysis.html#cb767-4"></a>  <span class="dt">x =</span> Feature,</span>
+<span id="cb767-5"><a href="survey-design-analysis.html#cb767-5"></a>  <span class="dt">y =</span> Rank,</span>
+<span id="cb767-6"><a href="survey-design-analysis.html#cb767-6"></a>  <span class="dt">type =</span> <span class="st">&quot;np&quot;</span>,</span>
+<span id="cb767-7"><a href="survey-design-analysis.html#cb767-7"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
+<span id="cb767-8"><a href="survey-design-analysis.html#cb767-8"></a>  <span class="dt">title =</span> <span class="st">&quot;What features are important to you when evualting fitness trackers?&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-580-1.png" width="672" /></p>
 </div>
 </div>
 <div id="constant-sum-question-2" class="section level4">
 <h4><span class="header-section-number">10.3.3.2</span> Constant Sum question</h4>
 <p>Required data format for a data obtained from constant sum question is similar to ranked data.</p>
-<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="survey-design-analysis.html#cb766-1"></a><span class="co"># Data in long format</span></span>
-<span id="cb766-2"><a href="survey-design-analysis.html#cb766-2"></a><span class="kw">head</span>(constant.sum.long) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb766-3"><a href="survey-design-analysis.html#cb766-3"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="survey-design-analysis.html#cb768-1"></a><span class="co"># Data in long format</span></span>
+<span id="cb768-2"><a href="survey-design-analysis.html#cb768-2"></a><span class="kw">head</span>(constant.sum.long) <span class="op">%&gt;%</span><span class="st"> </span>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb768-3"><a href="survey-design-analysis.html#cb768-3"></a><span class="st">    </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -4624,21 +4626,21 @@ Location
 </tbody>
 </table>
 <p>Here is one way to visualize data obtained from constant sum question.</p>
-<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="survey-design-analysis.html#cb767-1"></a><span class="co"># Constant sum question</span></span>
-<span id="cb767-2"><a href="survey-design-analysis.html#cb767-2"></a>p &lt;-<span class="st"> </span>constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Factor <span class="op">!=</span><span class="st"> &quot;id&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb767-3"><a href="survey-design-analysis.html#cb767-3"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Factor, <span class="dt">y =</span> Points, <span class="dt">fill =</span> Factor)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb767-4"><a href="survey-design-analysis.html#cb767-4"></a><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>)</span>
-<span id="cb767-5"><a href="survey-design-analysis.html#cb767-5"></a>p</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-581-1.png" width="672" /></p>
-<p>The following type of visualisation includes statistical test as well:</p>
-<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="survey-design-analysis.html#cb768-1"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
-<span id="cb768-2"><a href="survey-design-analysis.html#cb768-2"></a>  <span class="dt">data =</span> constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Factor<span class="op">!=</span><span class="st">&quot;id&quot;</span>), <span class="co"># excluding &quot;id&quot; column from the data</span></span>
-<span id="cb768-3"><a href="survey-design-analysis.html#cb768-3"></a>  <span class="dt">x =</span> Factor,</span>
-<span id="cb768-4"><a href="survey-design-analysis.html#cb768-4"></a>  <span class="dt">y =</span> Points,</span>
-<span id="cb768-5"><a href="survey-design-analysis.html#cb768-5"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>,</span>
-<span id="cb768-6"><a href="survey-design-analysis.html#cb768-6"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
-<span id="cb768-7"><a href="survey-design-analysis.html#cb768-7"></a>  <span class="dt">title =</span> <span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="survey-design-analysis.html#cb769-1"></a><span class="co"># Constant sum question</span></span>
+<span id="cb769-2"><a href="survey-design-analysis.html#cb769-2"></a>p &lt;-<span class="st"> </span>constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Factor <span class="op">!=</span><span class="st"> &quot;id&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb769-3"><a href="survey-design-analysis.html#cb769-3"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Factor, <span class="dt">y =</span> Points, <span class="dt">fill =</span> Factor)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb769-4"><a href="survey-design-analysis.html#cb769-4"></a><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>)</span>
+<span id="cb769-5"><a href="survey-design-analysis.html#cb769-5"></a>p</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-582-1.png" width="672" /></p>
+<p>The following type of visualisation includes statistical test as well:</p>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="survey-design-analysis.html#cb770-1"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
+<span id="cb770-2"><a href="survey-design-analysis.html#cb770-2"></a>  <span class="dt">data =</span> constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Factor<span class="op">!=</span><span class="st">&quot;id&quot;</span>), <span class="co"># excluding &quot;id&quot; column from the data</span></span>
+<span id="cb770-3"><a href="survey-design-analysis.html#cb770-3"></a>  <span class="dt">x =</span> Factor,</span>
+<span id="cb770-4"><a href="survey-design-analysis.html#cb770-4"></a>  <span class="dt">y =</span> Points,</span>
+<span id="cb770-5"><a href="survey-design-analysis.html#cb770-5"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>,</span>
+<span id="cb770-6"><a href="survey-design-analysis.html#cb770-6"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
+<span id="cb770-7"><a href="survey-design-analysis.html#cb770-7"></a>  <span class="dt">title =</span> <span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-583-1.png" width="672" /></p>
 
 </div>
 </div>

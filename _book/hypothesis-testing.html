@@ -267,6 +267,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>7.3.6</b> Correlation of errors</a></li>
 <li class="chapter" data-level="7.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>7.3.7</b> Collinearity</a></li>
 <li class="chapter" data-level="7.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>7.3.8</b> Omitted Variables</a></li>
+<li class="chapter" data-level="7.3.9" data-path="regression.html"><a href="regression.html#overfitting"><i class="fa fa-check"></i><b>7.3.9</b> Overfitting</a></li>
+<li class="chapter" data-level="7.3.10" data-path="regression.html"><a href="regression.html#variable-selection"><i class="fa fa-check"></i><b>7.3.10</b> Variable selection</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
@@ -1133,7 +1135,7 @@ Figure 6.1: p-hacking (red indicates false positives)
 <h2><span class="header-section-number">6.4</span> Comparing several means</h2>
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cJRwmWWCpZE" frameborder="0" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9cGZcALfU5k" frameborder="0" allowfullscreen>
 </iframe>
 </div>
 <p><br></p>
@@ -1148,6 +1150,12 @@ Figure 6.1: p-hacking (red indicates false positives)
 <li>One or more non-metric (categorical) independent variables (also called factors)</li>
 </ul>
 <p>A <strong>treatment</strong> is a particular combination of factor levels, or categories. So-called <strong>one-way ANOVA</strong> is used when there is only one categorical variable (factor). In this case, a treatment is the same as a factor level. <strong>N-way ANOVA</strong> is used with two or more factors. Note that we are only going to talk about a single independent variable in the context of ANOVA on this website. If you have multiple independent variables please refer to the chapter on <strong>Regression</strong>.</p>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cG0HAWqObJs" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <p>Let’s use an example to see how ANOVA works. Similar to the previous example, imagine that the music streaming service experiments with a recommender system and manipulates the intensity of personalized recommendations using three levels: ‘low’, ‘medium’, and ‘high’. The service randomly assigns 100 users to each condition and records the listening times in hours in the following week. As always, we load and inspect the data first:</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="hypothesis-testing.html#cb292-1"></a>hours_abc &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/hours_abc.dat&quot;</span>, </span>
 <span id="cb292-2"><a href="hypothesis-testing.html#cb292-2"></a>    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
@@ -1435,6 +1443,12 @@ F= \frac{MS_M}{MS_R}=\frac{\frac{SS_M}{c-1}}{\frac{SS_R}{N-c}}=\frac{\frac{21321
 </div>
 <div id="one-way-anova" class="section level3">
 <h3><span class="header-section-number">6.4.3</span> One-way ANOVA</h3>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ElghkF6rwBQ" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <div id="basic-anova" class="section level4">
 <h4><span class="header-section-number">6.4.3.1</span> Basic ANOVA</h4>
 <p>As already indicated, one-way ANOVA is used when there is only one categorical variable (factor). Before conducting ANOVA, you need to check if the assumptions of the test are fulfilled. The assumptions of ANOVA are discussed in the following sections.</p>
@@ -1557,6 +1571,12 @@ Figure 6.10: Q-Q plot 3
 </div>
 <div id="post-hoc-tests" class="section level4">
 <h4><span class="header-section-number">6.4.3.2</span> Post-hoc tests</h4>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wNwKx0TZ7fQ" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <p>Provided that significant differences were detected by the overall ANOVA you can find out which group means are different using post-hoc procedures. Post-hoc procedures are designed to conduct pairwise comparisons of all different combinations of the treatment groups by correcting the level of significance for each test such that the overall Type I error rate (α) across all comparisons remains at 0.05.</p>
 <p>In other words, we rejected H<sub>0</sub>: μ<sub>low</sub>= μ<sub>medium</sub>= μ<sub>high</sub>, and now we would like to test:</p>
 <p>Test1:</p>
@@ -1765,7 +1785,7 @@ Figure 6.12: ANOVA using ggstatsplot
 <h2><span class="header-section-number">6.5</span> Non-parametric tests</h2>
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cJRwmWWCpZE" frameborder="0" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O1Xpedqwr3o" frameborder="0" allowfullscreen>
 </iframe>
 </div>
 <p><br></p>
@@ -2057,7 +2077,7 @@ Figure 6.18: Kruskal-Wallis test using ggstatsplot
 <h2><span class="header-section-number">6.6</span> Categorical data</h2>
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cJRwmWWCpZE" frameborder="0" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4x0KYLGZXKc" frameborder="0" allowfullscreen>
 </iframe>
 </div>
 <p><br></p>

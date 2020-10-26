@@ -45,7 +45,7 @@ psych::describe(att_data[, c("attitude","duration")])
 att_data
 ```
 
-Let's look at the data. The following graph shows the individual data points for the "duration of residency"" variable, where the blue horizontal line represents the mean of the variable (`r round(mean(att_data$duration),2)`) and the vertical lines show the distance of the individual data points from the mean.
+Let's look at the data first. The following graph shows the individual data points for the "duration of residency"" variable, where the y-axis shows the duration of residency in years and the x-axis shows the respondent ID. The blue horizontal line represents the mean of the variable (`r round(mean(att_data$duration),2)`) and the vertical lines show the distance of the individual data points from the mean.
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scores for duration of residency variable"}
 library(ggplot2)
@@ -65,7 +65,7 @@ ggplot(att_data, aes(x = respodentID, y = duration)) +
   theme_bw()
 ```
 
-You can see that there are some respondents that have been living in the city longer than average and some respondents that have been living in the city shorter than average. Let's do the same for the second variable ("Attitude"): 
+You can see that there are some respondents that have been living in the city longer than average and some respondents that have been living in the city shorter than average. Let's do the same for the second variable ("Attitude"). Again, the y-axis shows the observed scores for this variable and the x-axis shows the respondent ID.  
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scores for attitude variable"}
 ggplot(att_data, aes(x = respodentID, y = attitude)) + 
@@ -79,7 +79,7 @@ ggplot(att_data, aes(x = respodentID, y = attitude)) +
   theme_bw()
 ```
 
-Again, we can see that some respondents have an above average attitude towards the city (more favorable) and some respondents have a below average attitude towards the city. Let's plot the data in one graph now to see if there is some co-movement: 
+Again, we can see that some respondents have an above average attitude towards the city (more favorable) and some respondents have a below average attitude towards the city. Let's combine both variables in one graph now to see if there is some co-movement: 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE,fig.align="center", fig.cap = "Scores for attitude and duration of residency variables"}
 ggplot(att_data) + 
@@ -94,7 +94,7 @@ ggplot(att_data) +
   theme_bw()
 ```
 
-We can see that there is indeed some co-movement here. The variables <b>covary</b> because respondents who have an above (below) average attitude towards the city also appear to have been living in the city for an above (below) average amount of time and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterpot to visualize the relationship between two metric variables:
+We can see that there is indeed some co-movement here. The variables <b>covary</b> because respondents who have an above (below) average attitude towards the city also appear to have been living in the city for an above (below) average amount of time and vice versa. Correlation helps us to quantify this relationship. Before you proceed to compute the correlation coefficient, you should first look at the data. We usually use a scatterplot to visualize the relationship between two metric variables:
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Scatterplot for durationand attitute variables"}
 ggplot(att_data) + 
@@ -152,7 +152,7 @@ cov(att_data$duration, att_data$attitude)          # apply the cov function
 
 A positive covariance indicates that as one variable deviates from the mean, the other variable deviates in the same direction. A negative covariance indicates that as one variable deviates from the mean (e.g., increases), the other variable deviates in the opposite direction (e.g., decreases).
 
-However, the size of the covariance depends on the scale of measurement. Larger scale units will lead to larger covariance. To overcome the problem of dependence on measurement scale, we need to convert covariance to a standard set of units through standardization by dividing the covariance by the standard deviation (i.e., similar to how we compute z-scores).
+However, the size of the covariance depends on the scale of measurement. Larger scale units will lead to larger covariance. To overcome the problem of dependence on measurement scale, we need to convert the covariance to a standard set of units through standardization by dividing the covariance by the standard deviation (similar to how we compute z-scores).
 
 With two variables, there are two standard deviations. We simply multiply the two standard deviations. We then divide the covariance by the product of the two standard deviations to get the standardized covariance, which is known as a correlation coefficient r:
 
@@ -176,7 +176,7 @@ Or you could just use the ```cor()``` function:
 cor(att_data[, c("attitude", "duration")], method = "pearson", use = "complete")
 ```
 
-Properties of r:
+The properties of the correlation coefficient ('r') are:
 
 * ranges from -1 to + 1
 * +1 indicates perfect linear relationship
@@ -188,7 +188,7 @@ Properties of r:
 
 ### Significance testing
 
-How can we determine if our two variables are significantly related? To test this, we denote the population moment correlation &rho;. Then we test the null of no relationship between variables:
+How can we determine if our two variables are significantly related? To test this, we denote the population moment correlation *&rho;*. Then we test the null of no relationship between variables:
 
 $$H_0:\rho=0$$
 $$H_1:\rho\ne0$$
@@ -233,15 +233,15 @@ A Pearson product-moment correlation coefficient was computed to assess the rela
 
 **A note on the interpretation of correlation coefficients:**
 
-Correlation coefficients give no indication of the direction of causality. In our example, we can conclude that the attitude toward the city is more positive as the years of residence increases. However, we cannot say that the years of residence cause the attitudes to be more positive. There are two main reasons for caution when interpreting correlations:
+As we have already seen in chapter 1, correlation coefficients give no indication of the direction of causality. In our example, we can conclude that the attitude toward the city is more positive as the years of residence increases. However, we cannot say that the years of residence cause the attitudes to be more positive. There are two main reasons for caution when interpreting correlations:
 
-* Third-variable problem: there may be other unobserved factors that affect the results.
+* Third-variable problem: there may be other unobserved factors that affect both the 'attitude towards a city' and the 'duration of residency' variables
 * Direction of causality: Correlations say nothing about which variable causes the other to change (reverse causality: attitudes may just as well cause the years of residence variable).
 
 
 ## Regression
 
-Correlations measure relationships between variables (i.e., how much two variables covary). Using regression analysis we can predict the outcome of a dependent variable (Y) from one or more independent variables (X). E.g., how many products will we sell if we increase the advertising expenditures by 1000 Euros? In regression analysis, we fit a model to our data and use it to predict the values of the dependent variable from one predictor variable (bivariate regression) or several predictor variables (multiple regression). The following table shows a comparison of correlation and regression analysis:
+Correlations measure relationships between variables (i.e., how much two variables covary). Using regression analysis we can predict the outcome of a dependent variable (Y) from one or more independent variables (X). For example, we could be interested in how many products will we will sell if we increase the advertising expenditures by 1000 Euros? In regression analysis, we fit a model to our data and use it to predict the values of the dependent variable from one predictor variable (bivariate regression) or several predictor variables (multiple regression). The following table shows a comparison of correlation and regression analysis:
 
 <br>
 
@@ -257,7 +257,7 @@ Role of theory | Theory neither required nor testable  | Theory required and tes
 
 In simple linear regression, we assess the relationship between one dependent (regressand) and one independent (regressor) variable. The goal is to fit a line through a scatterplot of observations in order to find the line that best describes the data (scatterplot).
 
-Suppose you are a marketing research analyst at a music label and your task is to suggest, on the basis of past data, a marketing plan for the next year that will maximize product sales. The data set that is available to you includes information on the sales of music downloads (thousands of units), advertising expenditures (in Euros), the number of radio plays an artist received per week (airplay), the number of previous releases of an artist (starpower), repertoire origin (country; 0 = local, 1 = international), and genre (1 = rock, 2 = pop, 3 = electronic). Let's load and inspect the data first: 
+Suppose you are a marketing research analyst at a music label and your task is to suggest, on the basis of historical data, a marketing plan for the next year that will maximize product sales. The data set that is available to you includes information on the sales of music downloads (thousands of units), advertising expenditures (in Euros), the number of radio plays an artist received per week (airplay), the number of previous releases of an artist (starpower), repertoire origin (country; 0 = local, 1 = international), and genre (1 = rock, 2 = pop, 3 = electronic). Let's load and inspect the data first: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 regression <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_sales_regression.dat", 
@@ -272,7 +272,7 @@ head(regression)
 psych::describe(regression) #descriptive statistics using psych
 ```
 
-As stated above, regression analysis may be used to relate a quantitative response ("dependent variable") to one or more predictor variables ("independent variables"). In a simple linear regression, we have one dependent and one independent variable.  
+As stated above, regression analysis may be used to relate a quantitative response ("dependent variable") to one or more predictor variables ("independent variables"). In a simple linear regression, we have one dependent and one independent variable and we regress the dependent variable on the independent variable.  
 
 Here are a few important questions that we might seek to address based on the data:
 
@@ -284,7 +284,7 @@ Here are a few important questions that we might seek to address based on the da
 * Is the relationship linear?
 * Is there synergy among the advertising activities?
 
-We may use linear regression to answer these questions. Let's start with the first question and investigate the effect of advertising on sales. 
+We may use linear regression to answer these questions. We will see later that the interpretation of the results strongly depends on the goal of the analysis - whether you would like to simply predict an outcome variable or you would like to explain the causal effect of the independent variable on the dependent variable (see chapter 1). Let's start with the first question and investigate the relationship between advertising and sales. 
 
 #### Estimating the coefficients
 
@@ -311,7 +311,7 @@ Once we have used our training data to produce estimates for the model coefficie
 (\#eq:predreg)
 \end{equation} 
 
-We use the hat symbol, <sup>^</sup>, to denote the estimated value for an unknown parameter or coefficient, or to denote the predicted value of the response (sales). In practice, &beta;<sub>0</sub> and &beta;<sub>1</sub> are unknown and must be estimated from the data to make predictions. In the case of our advertising example, the data set consists of the advertising budget and product sales (n = 200). Our goal is to obtain coefficient estimates such that the linear model fits the available data well. In other words, we fit a line through the scatterplot of observations and try to find the line that best describes the data. The following graph shows the scatterplot for our data, where the black line shows the regression line. The grey vertical lines shows the difference between the predicted values (the regression line) and the observed values. This difference is referred to as the residuals ("e").
+We use the hat symbol, <sup>^</sup>, to denote the estimated value for an unknown parameter or coefficient, or to denote the predicted value of the response (sales). In practice, &beta;<sub>0</sub> and &beta;<sub>1</sub> are unknown and must be estimated from the data to make predictions. In the case of our advertising example, the data set consists of the advertising budget and product sales of 200 music songs (n = 200). Our goal is to obtain coefficient estimates such that the linear model fits the available data well. In other words, we fit a line through the scatterplot of observations and try to find the line that best describes the data. The following graph shows the scatterplot for our data, where the black line shows the regression line. The grey vertical lines shows the difference between the predicted values (the regression line) and the observed values. This difference is referred to as the residuals ("e").
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE, fig.align="center", fig.cap = "Ordinary least squares (OLS)"}
 library(dplyr)
@@ -337,7 +337,7 @@ ggplot(regression, aes(x = adspend,y = sales)) +
   theme_bw()
 ```
 
-Estimation of the regression function is based on the idea of the method of least squares (OLS = ordinary least squares). The first step is to calculate the residuals by subtracting the observed values from the predicted values.
+The estimation of the regression function is based on the idea of the method of least squares (OLS = ordinary least squares). The first step is to calculate the residuals by subtracting the observed values from the predicted values.
 
 <p style="text-align:center;">
 $e_i = Y_i-(\beta_0+\beta_1X_i)$
@@ -354,7 +354,7 @@ e<sub>i</sub>: Residuals (i = 1,2,...,N)<br>
 Y<sub>i</sub>: Values of the dependent variable (i = 1,2,...,N) <br>
 &beta;<sub>0</sub>: Intercept<br>
 &beta;<sub>1</sub>: Regression coefficient / slope parameters<br>
-X<sub>ni</sub>: Values of the nth independent variables and the ith observation<br>
+X<sub>ni</sub>: Values of the nth independent variables and the i*th* observation<br>
 N: Number of observations<br>
 
 This is also referred to as the <b>residual sum of squares (RSS)</b>. Now we need to choose the values for &beta;<sub>0</sub> and &beta;<sub>1</sub> that minimize RSS. So how can we derive these values for the regression coefficient? The equation for &beta;<sub>1</sub> is given by:
@@ -379,7 +379,7 @@ The interpretation of &beta;<sub>1</sub> is as follows:
 
 For every extra Euros spent on advertising, sales can be expected to increase by `r round(beta_1,3)` units. Or, in other words, if we increase our marketing budget by 1,000 Euros, sales can be expected to increase by `r round(beta_1,3)*1000` units.
 
-Using the estimated coefficient for &beta;<sub>1</sub> , it is easy to compute &beta;<sub>0</sub> (the intercept) as follows:
+Using the estimated coefficient for &beta;<sub>1</sub>, it is easy to compute &beta;<sub>0</sub> (the intercept) as follows:
 
 \begin{equation} 
 \hat{\beta_0}=\overline{Y}-\hat{\beta_1}\overline{X}
@@ -430,7 +430,7 @@ t = \frac{\hat{\beta_1}}{SE(\hat{\beta_1})}
 (\#eq:teststatreg)
 \end{equation} 
 
-After calculating the test statistic, we compare its value to the values that we would expect to find if there was no effect based on the t-distribution. In a regression context, the degrees of freedom are given by ```N - p - 1``` where N is the sample size and p is the number of predictors. In our case, we have 200 observations and one predictor. Thus, the degrees of freedom is 200 - 1 - 1 = 198. In the regression output below, R provides the exact probability of observing a t value of this magnitude (or larger) if the null hypothesis was true. This probability is the p-value. A small p-value indicates that it is unlikely to observe such a substantial association between the predictor and the outcome variable due to chance in the absence of any real association between the predictor and the outcome.
+After calculating the test statistic, we compare its value to the values that we would expect to find if there was no effect based on the t-distribution. In a regression context, the degrees of freedom are given by ```N - p - 1``` where N is the sample size and p is the number of predictors. In our case, we have 200 observations and one predictor. Thus, the degrees of freedom is 200 - 1 - 1 = 198. In the regression output below, R provides the exact probability of observing a t value of this magnitude (or larger) if the null hypothesis was true. This probability - as we already saw in chapter 6 - is the p-value. A small p-value indicates that it is unlikely to observe such a substantial association between the predictor and the outcome variable due to chance in the absence of any real association between the predictor and the outcome.
 
 To estimate the regression model in R, you can use the ```lm()``` function. Within the function, you first specify the dependent variable ("sales") and independent variable ("adspend") separated by a ```~``` (tilde). As mentioned previously, this is known as _formula notation_ in R. The ```data = regression``` argument specifies that the variables come from the data frame named "regression". Strictly speaking, you use the ```lm()``` function to create an object called "simple_regression," which holds the regression output. You can then view the results using the ```summary()``` function: 
 
@@ -439,9 +439,9 @@ simple_regression <- lm(sales ~ adspend, data = regression) #estimate linear mod
 summary(simple_regression) #summary of results
 ```
 
-Note that the estimated coefficients for &beta;<sub>0</sub> (`r round(summary(simple_regression)$coefficients[1],3)`) and &beta;<sub>1</sub> (`r round(summary(simple_regression)$coefficients[2],3)`) correspond to the results of our manual computation above. The associated t-values and p-values are given in the output. The t-values are larger than the critical t-values for the 95% confidence level, since the associated p-values are smaller than 0.05. In case of the coefficient for &beta;<sub>1</sub> this means that the probability of an association between the advertising and sales of the observed magnitude (or larger) is smaller than 0.05, if the value of &beta;<sub>1</sub> was, in fact, 0.     
+Note that the estimated coefficients for &beta;<sub>0</sub> (`r round(summary(simple_regression)$coefficients[1],3)`) and &beta;<sub>1</sub> (`r round(summary(simple_regression)$coefficients[2],3)`) correspond to the results of our manual computation above. The associated t-values and p-values are given in the output. The t-values are larger than the critical t-values for the 95% confidence level, since the associated p-values are smaller than 0.05. In case of the coefficient for &beta;<sub>1</sub> this means that the probability of an association between the advertising and sales of the observed magnitude (or larger) is smaller than 0.05, if the value of &beta;<sub>1</sub> was, in fact, 0. This finding leads us to reject the null hypothesis of no association between advertising and sales. 
 
-The coefficients associated with the respective variables represent <b>point estimates</b>. To get a better feeling for the range of values that the coefficients could take, it is helpful to compute <b>confidence intervals</b>. A 95% confidence interval is defined as a range of values such that with a 95% probability, the range will contain the true unknown value of the parameter. For example, for &beta;<sub>1</sub>, the confidence interval can be computed as.
+The coefficients associated with the respective variables represent <b>point estimates</b>. To obtain a better understanding of the range of values that the coefficients could take, it is helpful to compute <b>confidence intervals</b>. A 95% confidence interval is defined as a range of values such that with a 95% probability, the range will contain the true unknown value of the parameter. For example, for &beta;<sub>1</sub>, the confidence interval can be computed as.
 
 \begin{equation} 
 CI = \hat{\beta_1}\pm(t_{1-\frac{\alpha}{2}}*SE(\beta_1))
@@ -454,7 +454,7 @@ It is easy to compute confidence intervals in R using the ```confint()``` functi
 confint(simple_regression)
 ```
 
-For our model, the 95% confidence interval for &beta;<sub>0</sub> is [`r round(confint(simple_regression)[1,1],2)`,`r round(confint(simple_regression)[1,2],2)`], and the 95% confidence interval for &beta;<sub>1</sub> is [`r round(confint(simple_regression)[2,1],2)`,`r round(confint(simple_regression)[2,2],2)`]. Thus, we can conclude that when we do not spend any money on advertising, sales will be somewhere between `r round(confint(simple_regression)[1,1],0)` and `r round(confint(simple_regression)[1,2],0)` units on average. In addition, for each increase in advertising expenditures by one Euro, there will be an average increase in sales of between `r round(confint(simple_regression)[2,1],2)` and `r round(confint(simple_regression)[2,2],2)`. 
+For our model, the 95% confidence interval for &beta;<sub>0</sub> is [`r round(confint(simple_regression)[1,1],2)`,`r round(confint(simple_regression)[1,2],2)`], and the 95% confidence interval for &beta;<sub>1</sub> is [`r round(confint(simple_regression)[2,1],2)`,`r round(confint(simple_regression)[2,2],2)`]. Thus, we can conclude that when we do not spend any money on advertising, sales will be somewhere between `r round(confint(simple_regression)[1,1],0)` and `r round(confint(simple_regression)[1,2],0)` units on average. In addition, for each increase in advertising expenditures by one Euro, there will be an average increase in sales of between `r round(confint(simple_regression)[2,1],2)` and `r round(confint(simple_regression)[2,2],2)`. If you revisit the graphic depiction of the regression model above, the uncertainty regarding the intercept and slope parameters can be seen in the confidence bounds (blue area) around the regression line. 
 
 #### Assessing model fit
 
@@ -466,7 +466,7 @@ Once we have rejected the null hypothesis in favor of the alternative hypothesis
 * R<sup>2</sup>: Represents the percentage of the variation in the outcome that can be explained by the model
 * The F-ratio measures how much the model has improved the prediction of the outcome compared to the level of inaccuracy in the model
 
-Similar to ANOVA, the calculation of model fit statistics relies on estimating the different sum of squares values. SS<sub>T</sub> is the difference between the observed data and the mean value of Y (aka. total variation). In the absence of any other information, the mean value of Y represents the best guess on where an observation at a given level of advertising will fall:
+Similar to ANOVA, the calculation of model fit statistics relies on estimating the different sum of squares values. SS<sub>T</sub> is the difference between the observed data and the mean value of Y (aka. total variation). In the absence of any other information, the mean value of Y ($\overline{Y}$) represents the best guess on where a particular observation $Y_{i}$ at a given level of advertising will fall:
 
 \begin{equation} 
 SS_T= \sum_{i=1}^{N} (Y_i-\overline{Y})^2
@@ -501,10 +501,10 @@ ggplot(regression, aes(x = adspend, y = sales)) +
   theme_bw()
 ```
 
-Based on our linear model, the best guess about the sales level at a given level of advertising is the predicted value. The model sum of squares (SS<sub>M</sub>) has the mathematical representation:
+Based on our linear model, the best guess about the sales level at a given level of advertising is the predicted value $\hat{Y}_i$. The model sum of squares (SS<sub>M</sub>) therefore has the mathematical representation:
 
 \begin{equation} 
-SS_M= \sum_{j=1}^{c}  n_j(\overline{Y}_j-\overline{Y})^2
+SS_M= \sum_{i=1}^{N}  (\hat{Y}_i-\overline{Y})^2
 (\#eq:regSSM)
 \end{equation} 
 
@@ -525,10 +525,10 @@ ggplot(regression, aes(x = adspend, y = sales)) +
   theme_bw()
 ```
 
-The residual sum of squares (SS<sub>R</sub>) is the difference between the observed data and the predicted values along the regression line (i.e., the variation not explained by the model)
+The residual sum of squares (SS<sub>R</sub>) is the difference between the observed data points ($Y_{i}$) and the predicted values along the regression line ($\hat{Y}_{i}$), i.e., the variation *not* explained by the model.
 
 \begin{equation} 
-SS_R= \sum_{j=1}^{c} \sum_{i=1}^{n} ({Y}_{ij}-\overline{Y}_{j})^2
+SS_R= \sum_{i=1}^{N} ({Y}_{i}-\hat{Y}_{i})^2
 (\#eq:regSSR)
 \end{equation} 
 
@@ -548,6 +548,8 @@ ggplot(regression, aes(x = adspend, y = sales)) +
   theme_bw()
 ```
 
+Based on these statistics, we can determine have well the model fits the data as we will see next. 
+
 ##### R-squared {-}
 
 The R<sup>2</sup> statistic represents the proportion of variance that is explained by the model and is computed as:
@@ -557,7 +559,7 @@ R^2= \frac{SS_M}{SS_T}
 (\#eq:regSSR)
 \end{equation} 
 
-It takes values between 0 (very bad fit) and 1 (very good fit). Note that when the goal of your model is to predict future outcomes, a "too good" model fit can pose severe challenges. The reason is that the model might fit your specific sample so well, that it will only predict well within the sample but not generalize to other samples. This is called **overfitting** and it shows that there is a trade-off between model fit and out-of-sample predictive ability of the model, if the goal is to predict beyond the sample.
+It takes values between 0 (very bad fit) and 1 (very good fit). Note that when the goal of your model is to *predict* future outcomes, a "too good" model fit can pose severe challenges. The reason is that the model might fit your specific sample so well, that it will only predict well within the sample but not generalize to other samples. This is called **overfitting** and it shows that there is a trade-off between model fit and out-of-sample predictive ability of the model, if the goal is to predict beyond the sample. We will come back to this point later in this chapter. 
 
 You can get a first impression of the fit of the model by inspecting the scatter plot as can be seen in the plot below. If the observations are highly dispersed around the regression line (left plot), the fit will be lower compared to a data set where the values are less dispersed (right plot).
 
@@ -634,6 +636,7 @@ Now we can compute R<sup>2</sup> in the same way that we have computed Eta<sup>2
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE,paged.print = FALSE}
 r2 <- anova(simple_regression)$'Sum Sq'[1]/(anova(simple_regression)$'Sum Sq'[1] + anova(simple_regression)$'Sum Sq'[2]) #compute R2
+r2
 ```
 
 ##### Adjusted R-squared {-}
@@ -647,21 +650,21 @@ To account for this, there exists a test statistic closely related to the R<sup>
 (\#eq:adjustedR2)
 \end{equation} 
 
-where ```n``` is the total number of observations and ```k``` is the total number of explanatory variables. The adjusted R<sup>2</sup> is equal to or less than the regular R<sup>2</sup> and can be negative. It will only increase if the added variable adds more explanatory power than one expect by pure chance. Essentially, it contains a "penalty" for including unnecessary variables and therefore favors more parsimonious models. As such, it is a measure of suitability, good for comparing different models and is very useful in the model selection stage of a project. In R, the standard ```lm()``` function automatically also reports the adjusted R<sup>2</sup>.
+where ```n``` is the total number of observations and ```k``` is the total number of explanatory variables. The adjusted R<sup>2</sup> is equal to or less than the regular R<sup>2</sup> and can be negative. It will only increase if the added variable adds more explanatory power than one would expect by pure chance. Essentially, it contains a "penalty" for including unnecessary variables and therefore favors more parsimonious models. As such, it is a measure of suitability, good for comparing different models and is very useful in the model selection stage of a project. In R, the standard ```lm()``` function automatically also reports the adjusted R<sup>2</sup> as you can see above.
 
 ##### F-test {-}
 
-Another significance test is the F-test. It tests the null hypothesis:
+Similar to the ANOVA in chapter 6, another significance test is the F-test, which tests the null hypothesis:
 
 $$H_0:R^2=0$$
 
 <br>
 
-This is equivalent to the following null hypothesis: 
+Or, to state it slightly differently: 
 
 $$H_0:\beta_1=\beta_2=\beta_3=\beta_k=0$$
-
 <br>
+This means that, similar to the ANOVA, we test whether any of the included independent variables has a significant effect on the dependent variable. So far, we have only included one independent variable, but we will extend the set of predictor variables below.   
 
 The F-test statistic is calculated as follows:
 
@@ -717,14 +720,14 @@ Y=(\beta_0+\beta_1*X_1+\beta_2*X_2+\beta_n*X_n)+\epsilon
 
 Again, we aim to find the linear combination of predictors that correlate maximally with the outcome variable. Note that if you change the composition of predictors, the partial regression coefficient of an independent variable will be different from that of the bivariate regression coefficient. This is because the regressors are usually correlated, and any variation in Y that was shared by X1 and X2 was attributed to X1. The interpretation of the partial regression coefficients is the expected change in Y when X is changed by one unit and all other predictors are held constant. 
 
-Let's extend the previous example. Say, in addition to the influence of advertising, you are interested in estimating the influence of airplay on the number of album downloads. The corresponding equation would then be given by:
+Let's extend the previous example. Say, in addition to the influence of advertising, you are interested in estimating the influence of radio airplay on the number of album downloads. The corresponding equation would then be given by:
 
 \begin{equation} 
 Sales=\beta_0+\beta_1*adspend+\beta_2*airplay+\epsilon
 (\#eq:regequadv)
 \end{equation} 
 
-The words "adspend" and "airplay" represent data that we have observed on advertising expenditures and number of radio plays, and &beta;<sub>1</sub> and &beta;<sub>2</sub> represent the unknown relationship between sales and advertising expenditures and radio airplay, respectively. The coefficients tells you by how much sales will increase for an additional Euro spent on advertising (when radio airplay is held constant) and by how much sales will increase for an additional radio play (when advertising expenditures are held constant). Thus, we can make predictions about album sales based not only on advertising spending, but also on radio airplay.
+The words "adspend" and "airplay" represent data that we have observed on advertising expenditures and number of radio plays, and &beta;<sub>1</sub> and &beta;<sub>2</sub> represent the unknown relationship between sales and advertising expenditures and radio airplay, respectively. The corresponding coefficients tell you by how much sales will increase for an additional Euro spent on advertising (when radio airplay is held constant) and by how much sales will increase for an additional radio play (when advertising expenditures are held constant). Thus, we can make predictions about album sales based not only on advertising spending, but also on radio airplay.
 
 With several predictors, the partitioning of sum of squares is the same as in the bivariate model, except that the model is no longer a 2-D straight line. With two predictors, the regression line becomes a 3-D regression plane. In our example:
 
@@ -799,7 +802,13 @@ Again, to get a better feeling for the range of values that the coefficients cou
 confint(multiple_regression)
 ```
 
-What does this tell you? Recall that a 95% confidence interval is defined as a range of values such that with a 95% probability, the range will contain the true unknown value of the parameter. For example, for &beta;<sub>3</sub>, the confidence interval is [`r confint(multiple_regression)[4,1]`,`r confint(multiple_regression)[4,2]`]. Thus, although we have computed a point estimate of `r round(summary(multiple_regression)$coefficients[4],3)` for the effect of starpower on sales based on our sample, the effect might actually just as well take any other value within this range, considering the sample size and the variability in our data.  
+What does this tell you? Recall that a 95% confidence interval is defined as a range of values such that with a 95% probability, the range will contain the true unknown value of the parameter. For example, for &beta;<sub>3</sub>, the confidence interval is [`r confint(multiple_regression)[4,1]`,`r confint(multiple_regression)[4,2]`]. Thus, although we have computed a point estimate of `r round(summary(multiple_regression)$coefficients[4],3)` for the effect of starpower on sales based on our sample, the effect might actually just as well take any other value within this range, considering the sample size and the variability in our data. You could also visualize the output from your regression model including the confidence intervals using the `ggstatsplot` package as follows: 
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE,fig.align="center", fig.cap = "Confidence intervals for regression model"}
+library(ggstatsplot)
+ggcoefstats(x = multiple_regression,
+            title = "Sales predicted by adspend, airplay, & starpower")
+```
 
 The output also tells us that `r summary(multiple_regression)$r.squared*100`% of the variation can be explained by our model. You may also visually inspect the fit of the model by plotting the predicted values against the observed values. We can extract the predicted values using the ```predict()``` function. So let's create a new variable ```yhat```, which contains those predicted values.  
 
@@ -807,7 +816,7 @@ The output also tells us that `r summary(multiple_regression)$r.squared*100`% of
 regression$yhat <- predict(simple_regression)
 ```
 
-We can now use this variable to plot the predicted values against the observed values. In the following plot, the model fit would be perfect if all points would fall on the diagonal line. The larger the distance between the points and the line, the worse the model fit.
+We can now use this variable to plot the predicted values against the observed values. In the following plot, the model fit would be perfect if all points would fall on the diagonal line. The larger the distance between the points and the line, the worse the model fit. In other words, if all points would fall exactly on the diagonal line, the model would perfectly predict the observed values. 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE,fig.align="center", fig.cap = "Model fit"}
 ggplot(regression,aes(yhat,sales)) +  
@@ -1123,6 +1132,14 @@ To calculate the biased coefficient, simply add the bias to the coefficient from
 b1_bias <- coef(concert_mod)["avg_rating"] + bias
 cat("Biased Beta:", b1_bias)
 ```
+
+### Overfitting
+
+--> for prediction 
+
+### Variable selection
+
+--> A parsimonious model is a model that accomplishes a desired level of explanation or prediction with as few predictor variables as possible.
 
 
 ## Categorical predictors

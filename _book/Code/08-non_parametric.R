@@ -148,10 +148,6 @@ kruskal.test(Sales ~ Promotion, data = online_store_promo)
 library(PMCMR)
 posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
 
-# compare to parametric test
-## ------------------------------------------------------------------------
-pairwise.t.test(online_store_promo$Sales, online_store_promo$Promotion, data = online_store_promo, p.adjust.method = "bonferroni")
-
 # Alternatively you can use the "ggstatsplot" package
 ## ------------------------------------------------------------------------
 ggbetweenstats(

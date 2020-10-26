@@ -23,6 +23,8 @@ call_center <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/mas
 call_center$conversion <- factor(call_center$conversion , levels = c(0:1), labels = c("no", "yes")) #convert to factor
 call_center$agent <- factor(call_center$agent , levels = c(0:1), labels = c("agent_1", "agent_2")) #convert to factor
 # Inspect data
+head(call_center)
+table(call_center)
 
 # Conditional relative frequencies
 ## ------------------------------------------------------------------------

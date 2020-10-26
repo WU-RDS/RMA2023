@@ -139,11 +139,6 @@ oneway.test(hours ~ group, data = hours_abc)
 # Bonferroni
 pairwise.t.test(hours_abc$hours, hours_abc$group, data = hours_abc, p.adjust.method = "bonferroni")
 
-# compare results to a normal t-test without correction
-## ------------------------------------------------------------------------
-data_subset <- subset(hours_abc,group != "low")
-t.test(hours ~ group, data = data_subset)
-
 # Tukey
 ## ------------------------------------------------------------------------
 # derive q
@@ -160,37 +155,6 @@ summary(tukeys)
 confint(tukeys)
 # plot CIs
 plot(tukeys)
-
-## ------------------------------------------------------------------------
-# compute CIs manually (optional)
-# compute means
-mean1 <- mean(hours_abc[hours_abc$group=="high","hours"]) #mean group "high"
-mean1
-mean2 <- mean(hours_abc[hours_abc$group=="medium","hours"]) #mean group "medium"
-mean2
-mean3 <- mean(hours_abc[hours_abc$group=="low","hours"]) #mean group "low"
-mean3
-# CI high vs. medium
-mean_diff_high_med <- mean2-mean1
-mean_diff_high_med
-ci_med_high_lower <- mean_diff_high_med-hsd
-ci_med_high_upper <- mean_diff_high_med+hsd
-ci_med_high_lower
-ci_med_high_upper
-# CI high vs.low
-mean_diff_high_low <- mean3-mean1
-mean_diff_high_low
-ci_low_high_lower <- mean_diff_high_low-hsd
-ci_low_high_upper <- mean_diff_high_low+hsd
-ci_low_high_lower
-ci_low_high_upper
-# CI medium vs.low
-mean_diff_med_low <- mean3-mean2
-mean_diff_med_low
-ci_low_med_lower <- mean_diff_med_low-hsd
-ci_low_med_upper <- mean_diff_med_low+hsd
-ci_low_med_lower
-ci_low_med_upper
 
 # Using the ggstatsplot package
 ## ------------------------------------------------------------------------
