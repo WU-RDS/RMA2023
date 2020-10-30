@@ -16,7 +16,9 @@ opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE
 
 # (PART) Assignments {-}
 
-# Introduction to R Markdown
+# R Markdown & assignments
+
+## Introduction to R Markdown
 
 ::: {.infobox .download data-latex="{download}"}
 [You can download the example markdown file here](./Code/example_markdown.Rmd)
@@ -32,7 +34,7 @@ The following video contains a short introduction to the R Markdown format.
 </div>
 <br>
 
-## Creating a new R Markdown document {-}
+### Creating a new R Markdown document {-}
 
 In addition to the video, the following text contains a short description of the most important formatting options.  
 
@@ -63,7 +65,7 @@ Let's start to go through the steps of creating and .Rmd file and outputting the
 5. Hand in appropriate file (ending in `.html`) on learn\@WU
 ![](./rmdExplain/handin.PNG)
 
-## Text and Equations {-}
+### Text and Equations {-}
 
 R-Markdown documents are plain text files that include both text and R-code. Using RStudio they can be converted ('knitted') to HTML or PDF files that include both the text and the results of the R-code. In fact this website is written using R-Markdown and RStudio. In order for RStudio to be able to interpret the document you have to use certain characters or combinations of characters when formatting text and including R-code to be evaluated. By default the document starts with the options for the text part. You can change the title, date, author and a few more advanced options. 
 
@@ -71,7 +73,7 @@ R-Markdown documents are plain text files that include both text and R-code. Usi
 
 The default is text mode, meaning that lines in an Rmd document will be interpreted as text, unless specified otherwise.
 
-### Headings {-}
+#### Headings {-}
 
 Usually you want to include some kind of heading to structure your text. A heading is created using `#` signs. A single `#` creates a first level heading, two `##` a second level and so on. 
 
@@ -79,7 +81,7 @@ Usually you want to include some kind of heading to structure your text. A headi
 
 It is important to note here that the ```#``` symbol means something different within the code chunks as opposed to outside of them. If you continue to put a ```#``` in front of all your regular text, it will all be interpreted as a first level heading, making your text very large.
 
-### Lists {-}
+#### Lists {-}
 
 Bullet point lists are created using `*`, `+` or `-`. Sub-items are created by indenting the item using 4 spaces or 2 tabs. 
 
@@ -114,7 +116,7 @@ Ordered lists can be created using numbers and letters. If you need sub-sub-item
 2. Second item
 
 
-### Text formatting {-}
+#### Text formatting {-}
 
 Text can be formatted in *italics* (`*italics*`) or **bold** (`**bold**`). In addition, you can ad block quotes with `>`
 
@@ -123,11 +125,11 @@ Text can be formatted in *italics* (`*italics*`) or **bold** (`**bold**`). In ad
 ````
 > Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.
 
-## R-Code {-}
+### R-Code {-}
 
 R-code is contained in so called "chunks". These chunks always start with three backticks and ```r``` in curly braces (``` ```{r} ```) and end with three backticks (``` ``` ```). Optionally, parameters can be added after the ```r``` to influence how a chunk behaves. Additionally, you can also give each chunk a name. Note that these have to be **unique**, otherwise R will refuse to knit your document.
 
-### Global and chunk options {-}
+#### Global and chunk options {-}
 
 The first chunk always looks as follows
 
@@ -174,7 +176,7 @@ plot(dist~speed, cars)
 
 A good overview of all available global/chunk options can be found [here](https://yihui.name/knitr/options/#chunk_options).
 
-## LaTeX Math {-}
+### LaTeX Math {-}
 
 Writing well formatted mathematical formulas is done the same way as in [LaTeX](https://en.wikipedia.org/wiki/LaTeX). Math mode is started and ended using `$$`. 
 ````
@@ -219,7 +221,7 @@ $$
 \end{align}
 $$
 
-### Important symbols {-}
+#### Important symbols {-}
 
 ```{r, echo=FALSE, include=TRUE, results="asis", warning = FALSE}
 library(knitr)
@@ -252,6 +254,430 @@ kable(mathy.df, escape=FALSE) %>%
   kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
-### Greek letters {-}
+#### Greek letters {-}
 
 [Greek letters](https://en.wikipedia.org/wiki/Greek_alphabet#Letters) are preceded by a `\` followed by their name (`$\beta$` = $\beta$). In order to capitalize them simply capitalize the first letter of the name (`$\Gamma$` = $\Gamma$).
+
+
+## Solution assignment 2
+
+As a marketing manager at a video streaming service, you are interested in the effect of online advertising on the number of streams that a movie receives. To test the effect of online advertising on streams, you select a representative sample of 200 movies and randomly assign 100 movies to be included in an online advertising campaign. The other half of the sample serves as the control group. You run the experiment for one week and collect data regarding the number of streams for each movie from this period. Overall, the data set includes the following variables:
+
+* movieID: unique movie ID
+* streams_sd: number of streams in SD-quality
+* streams_hd: number of streams in HD-quality
+* online_advertising: indicator whether a movie was included in the online advertising campaign (0 = no, 1 = yes)
+
+Apply appropriate statistical methods to answer the following questions:
+
+1. Compute the 95% confidence interval for the mean number of streams for movies in SD and HD quality and provide an interpretation of the interval  
+2. Your historical data tells you that the movies in SD and HD quality received 2,600 and 1,700 streams in the previous week, respectively. Please test if the number of streams that the movies received (irrespective of whether they were included in the experiment or not) in the week of the experiment is significantly different from the previous week for SD and HD movies.  
+3. Is there a significant difference in streams between movies that were included in the online advertising campaign and those that were not included? (Please conduct the test for SD and HD movies and also compute the effect size Cohen's d)
+4. Is there a significant difference in streams between movies in HD and SD quality? (Please also compute the effect size Cohen's d)
+5. Assume that you plan to run an experiment with two groups to test two different advertising strategies. You randomly assign movies to the control and experimental conditions and your goal is to test if there is a significant difference between the groups regarding the number of streams that the movies receive. How many movies would you need to include in each group of your experiment if you assume the effect size to be 0.3 for a significance level of 0.05 and power of 0.8?     
+
+When answering the questions, please remember to address the following points, where appropriate:
+
+* Formulate the corresponding hypotheses and choose an appropriate statistical test
+* Provide the reason for your choice and discuss if the assumptions of the test are met 
+* Convert the variables to the appropriate type (e.g., factor variables)
+* Create appropriate graphs to explore the data (e.g., boxplot, bar chart, histogram)
+* Provide appropriate descriptive statistics for the variables
+* Report and interpret the test results accurately (including confidence intervals)  
+* Finally, don't forget to report your research conclusion in an appropriate way
+
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment2_studendID_name.html".
+
+**Load and inspect data**
+
+Let´s load the data first and inspect the contained variables:
+
+```{r }
+movie_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+head(movie_data)
+str(movie_data)
+```
+
+**Load packages**
+
+Next, we load the packages that we will be using to answer the questions:
+
+```{r warning=F, message=F, echo=T}
+library(pastecs)
+library(ggplot2)
+library(psych)
+library(pwr)
+library(lsr)
+library(reshape2)
+library(ggstatsplot)
+library(Rmisc)
+```
+
+```{r warning=F, message=F, echo=F, eval=TRUE}
+options(digits=7, scipen = 999)
+```
+
+**Question 1**
+
+To compute the confidence intervals for SD and HD streams we will need three things: 1) the mean $\bar x$, 2) the standard error ($s \over \sqrt{n}$), and 3) the critical value for a t-distribution ($t_{crit}$; we will use a t-distribution, because we are not sure of the variance in the population).
+
+```{r warning=F, message=F, echo=T, eval=T}
+#Calculate components of confidence interval formula 
+mean_sd <- mean(movie_data$streams_sd)
+mean_hd <- mean(movie_data$streams_hd)
+
+sd_sd <- sd(movie_data$streams_sd)
+sd_hd <- sd(movie_data$streams_hd)
+
+n <- nrow(movie_data)
+se_sd <- sd_sd/sqrt(n)
+se_hd <- sd_hd/sqrt(n)
+
+df <- n-1
+t_crit <- qt(0.975, df)
+
+```
+
+Now the confidence intervals for streams in SD and HD quality can be computed as:
+
+```{r warning=F, message=F, echo=T, eval=T}
+#Interval for SD movies
+ci_lower_sd <- mean_sd - t_crit * se_sd
+ci_upper_sd <- mean_sd + t_crit * se_sd
+
+#Interval for HD movies
+ci_lower_hd <- mean_hd - t_crit * se_hd
+ci_upper_hd <- mean_hd + t_crit * se_hd
+```
+
+Hence, the CI for SD movies is given by:
+
+```{r warning=F, message=F, echo=T, eval=T}
+ci_lower_sd
+ci_upper_sd
+```
+
+$CI_{SD} = [2527.97,2827.85]$
+
+Similarly, the CI for HD movies is given by
+
+```{r warning=F, message=F, echo=T, eval=T}
+ci_lower_hd
+ci_upper_hd
+```
+
+$CI_{HD} = [1728.51,1940.52]$
+
+The intervals can be interpreted as follows: If we would take 100 samples, calculate the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals. 
+
+**Question 2**
+
+To find out whether our data for SD and HD streams differs significantly from the previous week (2600 for SD; 1700 for HD), we will conduct a one sample t-test. This is appropriate, because 1) our data is on an interval scale, and 2) the sampling distribution can be considered as normally distributed due to the fairly large sample size (n=200; see central limit theorem).
+
+Our null hypothesis states that there is no difference between the quantity of SD/HD streams watched in the current week, compared to the previous week. Rejecting the null hypotheses/accepting the alternative hypothesis would mean that there indeed was a difference between the two weeks.
+
+So for our SD streams we could formulate our hypothesis as follows:
+
+$$H_0: \mu_0 = 2600 \\ H_1: \mu_0 \neq 2600 $$
+
+The same approach can be used for our HD streams:
+
+$$H_0: \mu_0 = 1700 \\ H_1: \mu_0 \neq 1700 $$
+
+We can first have a quick look at the descriptive statistics:
+
+```{r warning=F, message=F, echo=F, eval=T}
+# make sure describe comes from psych package
+describe <- get("describe", pos = "package:psych")
+```
+
+```{r eval=T, echo=T, message=F, warning=F, paged.print=FALSE}
+describe(movie_data$streams_sd)
+describe(movie_data$streams_hd)
+```
+
+```{r eval=T, echo=F, message=F, warning=F, paged.print=FALSE}
+library(Hmisc)
+```
+
+As we can see, the differences between SD/HD and the week before don´t seem to be extraordinary high. To visualize the distribution of the data, we can create histograms:
+
+```{r message=FALSE, warning=FALSE}
+ggplot(movie_data,aes(streams_sd)) + 
+  geom_histogram(col = "black", fill = "darkblue") + 
+  labs(x = "Number of SD stremas", y = "Frequency") + 
+  theme_bw()
+ggplot(movie_data,aes(streams_hd)) + 
+  geom_histogram(col = "black", fill = "darkblue") + 
+  labs(x = "Number of HD streams", y = "Frequency") + 
+  theme_bw()
+```
+
+We can now conduct a one sample t-test to test for significance.
+
+```{r warning=F, message=F, echo=T, eval=T}
+t.test(movie_data$streams_sd, mu = 2600, alternative = "two.sided")
+t.test(movie_data$streams_hd, mu = 1700, alternative = "two.sided")
+```
+
+For SD streams, we can conclude that the average number of SD streams watched in this week (2677.92) were not significantly different from the 2600 streams watched in the previous week, t(199) = 1.025, p > .05 (95% CI = [2528; 2828]). This can be seen from the fact that the p-value is larger than 0.05. This is also evidenced by the fact that the null hypothesis (2600) is included in the range of plausible values given by the confidence interval. 
+
+However for HD streams we see that the perceived mean in our sample (1834.52) is significantly higher compared to the previous week t(199) = 2.502, p <.05 (95% CI = [1729; 1941]). This can be seen from the fact that the p-value is smaller than 0.05. This is also evidenced by the fact that the null hypothesis (1700) is not included in the range of plausible values given by the confidence interval.
+
+Alternatively, you could also use the `ggstatsplot` package to conduct the tests: 
+
+```{r message=FALSE, warning=FALSE}
+gghistostats(
+  data = movie_data, 
+  x = streams_sd, 
+  title = "Distribution of SD streams", 
+  type = "parametric", 
+  conf.level = 0.95,
+  bar.measure = "mix", 
+  test.value = 2600, 
+  test.value.line = TRUE, 
+  effsize.type = "d", 
+  test.value.color = "#0072B2", 
+  centrality.para = "mean", 
+  centrality.color = "darkred", 
+  binwidth = 300,
+  messages = FALSE, 
+  bf.message = FALSE
+)
+```
+
+```{r message=FALSE, warning=FALSE}
+gghistostats(
+  data = movie_data, 
+  x = streams_hd, 
+  title = "Distribution of HD streams", 
+  type = "parametric", 
+  conf.level = 0.95,
+  bar.measure = "mix", 
+  test.value = 2600, 
+  test.value.line = TRUE, 
+  effsize.type = "d", 
+  test.value.color = "#0072B2", 
+  centrality.para = "mean", 
+  centrality.color = "darkred", 
+  binwidth = 300,
+  messages = FALSE, 
+  bf.message = FALSE
+)
+```
+
+**Question 3**
+
+First we will analyze whether the advertising campaign had an effect on SD streams. We need to formulate a hypothesis which we can test. In this case, the null hypothesis is that the campaign had no effect on the mean number of streams, i.e. that there is no difference in the mean number of streams between the two populations. The alternative hypothesis states that the campaign _did_ have an effect, meaning that there is a difference in the mean number of streams between the populations. In more formal notation this is:
+
+$$H_0: \mu_0 = \mu_1 \\ H_1: \mu_0 \neq \mu_1$$
+
+We need to transform the variable online_advertising into a factor variable for some of our analyses:
+
+```{r warning=F, message=F, echo=T, eval=T}
+# Transform into factor variable
+movie_data$online_advertising <- factor(movie_data$online_advertising, levels = c(0,1), labels = c("no", "yes"))
+```
+
+A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means (or a boxplot) would be appropriate.
+
+```{r warning = F, message = F, echo=T, eval=T}
+# Descriptive statistics for SD streams, split by online advertising
+describeBy(movie_data$streams_sd, movie_data$online_advertising)
+
+mean_data <- summarySE(movie_data, measurevar = "streams_sd", 
+    groupvars = c("online_advertising"))
+
+# Plot of means
+ggplot(mean_data, aes(x = online_advertising, y = streams_sd)) + 
+    geom_bar(position = position_dodge(0.9), colour = "black", 
+        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
+    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
+        aes(ymin = streams_sd - ci, ymax = streams_sd + ci)) + 
+    theme_bw() + labs(x = "Advertising", y = "Average number of SD streams", 
+    title = "Average number of SD streams by group") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
+    color = "#666666"))
+```
+
+As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = "yes", i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a __two sample t-test__. We use an independent-means t-test because we have different movies in each group (i.e., the movies in one condition are *independent* of the movies in the other condition). The requirements are clearly met:
+
+* Our dependent variable is on an interval scale
+* Since we have more than 30 observations per group we do not really have to concern ourselves with whether the data is normally distributed or not (see central limit theorem)
+* If a movie was included in the campaign or not was assigned randomly
+* R automatically performs Welch's t-test, which corrects for unequal variance 
+
+Thus we can perform the test in R
+
+```{r warning = F, message = F, echo=T, eval=T}
+t.test(streams_sd ~ online_advertising, data = movie_data)
+```
+
+The test is significant, since the p-value is smaller than 0.05, leading us to reject the null hypothesis that there is no difference in the mean number of streams. The p-value states the probability of finding a difference of the observed magnitude or higher, if the null hypothesis was in fact true (i.e., if there was in fact no difference between the populations). In effect, this means that the advertising campaign had an effect on the average number of times a video was streamed. Another thing we can extract from this test result is the confidence interval around the difference in means. Since 0 is not included in the interval, it is not a plausible value, confirming the conclusion to reject the null hypothesis.
+
+The standardized effect size can be computed using the ```cohensD``` function:
+
+```{r warning = F, message = F, echo=T, eval=T}
+cohensD(streams_sd ~ online_advertising, data = movie_data)
+```
+
+This magnitude of the effect size (1.12) suggests that the effect of online advertising on the number of SD streams is large.
+
+The same can be done analogously for HD streams:
+
+```{r warning = F, message = F, echo=T, eval=T}
+# Descriptive statistics for HD streams, split by online advertising
+stats <- describeBy(movie_data$streams_hd, movie_data$online_advertising)
+print(stats)
+
+mean_data <- summarySE(movie_data, measurevar = "streams_hd", 
+    groupvars = c("online_advertising"))
+
+# Plot of means
+ggplot(mean_data, aes(x = online_advertising, y = streams_hd)) + 
+    geom_bar(position = position_dodge(0.9), colour = "black", 
+        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
+    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
+        aes(ymin = streams_hd - ci, ymax = streams_hd + ci)) + 
+    theme_bw() + labs(x = "Advertising", y = "Average number of HD streams", 
+    title = "Average number of HD streams by group") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
+    color = "#666666"))
+```
+
+Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is significant (note that *two sample t-test* means the same as *independent-means t-test*).
+
+```{r warning = F, message = F, echo=T, eval=T}
+t.test(streams_hd ~ online_advertising, data = movie_data)
+```
+
+Again, the p-value is so low that any sensible significance level would lead us to reject the null hypothesis, suggesting that there is a difference in mean the number of streams between videos included in the campaign and those that aren't.
+
+Calculate the standardized effect size:
+
+```{r warning = F, message = F, echo=T, eval=T}
+cohensD(streams_hd ~ online_advertising, data = movie_data)
+```
+
+The magnitude of the effect size indicates again that this effect is large, although it is somewhat smaller than for SD streams.
+
+Alternatively, you could also use the `ggstatsplot` package to conduct the tests: 
+
+```{r message=FALSE, warning=FALSE}
+ggbetweenstats(
+  data = movie_data,
+  plot.type = "box",
+  x = online_advertising, # 2 groups
+  y = streams_sd ,
+  type = "p", # default
+  effsize.type = "d", # display effect size (Cohen's d in output)
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  title = "SD streams"
+)
+```
+
+```{r message=FALSE, warning=FALSE}
+ggbetweenstats(
+  data = movie_data,
+  plot.type = "box",
+  x = online_advertising, # 2 groups
+  y = streams_hd ,
+  type = "p", # default
+  effsize.type = "d", # display effect size (Cohen's d in output)
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  title = "HD streams"
+)
+```
+
+**Question 4**
+
+Next we want to examine whether HD and SD streams have similar numbers on average. The null hypothesis here is that there is no difference in the mean number of HD streams and the mean number of SD streams for the same movies. Because the observations come from the same population of movies, we refer to the difference in the means for the same population as $\mu_D$ when stating our hypotheses. The alternative hypothesis states that that there is a difference between the streams in HD and SD quality for the same movies. In mathematical notation this can be written as
+
+$$H_0: \mu_D = 0 \\ H_1: \mu_D \neq 0$$
+
+Again, we start with descriptive statistics to get a feel for the data.
+
+```{r warning=F, message=F, echo=F, eval=T}
+if("package:Hmisc" %in% search()) detach("package:Hmisc", unload=TRUE)
+```
+
+
+```{r warning = F, message = F, paged.print = FALSE, echo=T, eval=T}
+# Descriptive statistics for HD and SD streams
+psych::describe(movie_data$streams_sd)
+psych::describe(movie_data$streams_hd)
+
+# Plot of means
+movie_data_long <- melt(movie_data[, c("streams_sd", "streams_hd")])
+names(movie_data_long) <- c("type", "streams")
+
+mean_data <- summarySE(movie_data_long, measurevar = "streams", 
+    groupvars = c("type"))
+
+# Plot of means
+ggplot(mean_data, aes(x = type, y = streams)) + 
+    geom_bar(position = position_dodge(0.9), colour = "black", 
+        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
+    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
+        aes(ymin = streams - ci, ymax = streams + ci)) + 
+    theme_bw() + labs(x = "Type", y = "Average number of streams", 
+    title = "Average number of streams by group") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
+    color = "#666666"))
+
+```
+
+```{r warning=F, message=F, echo=F, eval=T}
+library(Hmisc)
+```
+
+
+It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same movies are observed for HD and SD streams (i.e., the same movies are available in both formats). This means that we need a __dependent means t-test__. This test is also known as the **paired samples t-test**. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding ```paired = TRUE``` to the code.   
+
+```{r warning = F, message = F, echo=T, eval=T}
+t.test(y = movie_data$streams_sd, x = movie_data$streams_hd, paired = TRUE)
+```
+
+The p-value is again lower than the chosen significance level of 5% (i.e., p < .05), which means that we reject the null hypothesis that there is no difference in the mean number of streams in HD and SD quality. Make sure you interpret the p-value correctly. It refers to the probability of observing a difference of the observed magnitude (or larger) between streams in HD and SD quality, assuming that there was in fact no difference between the formats. The confidence interval confirms the conclusion to reject the null hypothesis since $0$ is not contained in the range of plausible values.
+
+Now let's find out how strong this effect is.
+
+```{r warning = FALSE, echo=T, eval=T}
+cohensD(movie_data$streams_sd, movie_data$streams_hd, method = 'paired')
+```
+A standardized effect size of approx. 0.79 tells us that this effect is large.
+
+Alternatively, you could also use the `ggstatsplot` package to conduct the tests: 
+
+```{r message=FALSE, warning=FALSE}
+ggwithinstats(
+  data = movie_data_long,
+  x = type,
+  y = streams,
+  path.point = FALSE,
+  path.mean = TRUE,
+  sort = "descending", # ordering groups along the x-axis based on
+  sort.fun = mean, # values of `y` variable
+  title = "Number of streams for movies in SD and HD",
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  effsize.type = "d" # display effect size (Cohen's d in output)
+)
+```
+
+**Question 5**
+
+The question of how many movies we would need to include in each sample of our experiment can be answered quite comfortably with a power calculation function in R.
+
+```{r warning=F, message=F, echo=T, eval=T}
+pwr.t.test(d = 0.3, sig.level = 0.05, power = 0.8, type = c("two.sample"), alternative = c("two.sided"))
+```
+
+To achieve our desired effect size of 0.3, a significance level of 0.5 and a power of 0.8 we would need to include at least 175 movies per group in our sample.
