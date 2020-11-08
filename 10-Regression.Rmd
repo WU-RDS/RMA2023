@@ -27,6 +27,12 @@ options(digits = 8)
 
 ## Correlation
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HeIW9_ijHF4" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 Before we start with regression analysis, we will review the basic concept of correlation first. Correlation helps us to determine the degree to which the variation in one variable, X, is related to the variation in another variable, Y. 
 
 ### Correlation coefficient
@@ -240,6 +246,12 @@ As we have already seen in chapter 1, correlation coefficients give no indicatio
 
 
 ## Regression
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rtvDHLuXUEI" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
 
 Correlations measure relationships between variables (i.e., how much two variables covary). Using regression analysis we can predict the outcome of a dependent variable (Y) from one or more independent variables (X). For example, we could be interested in how many products will we will sell if we increase the advertising expenditures by 1000 Euros? In regression analysis, we fit a model to our data and use it to predict the values of the dependent variable from one predictor variable (bivariate regression) or several predictor variables (multiple regression). The following table shows a comparison of correlation and regression analysis:
 
@@ -457,6 +469,12 @@ confint(simple_regression)
 For our model, the 95% confidence interval for &beta;<sub>0</sub> is [`r round(confint(simple_regression)[1,1],2)`,`r round(confint(simple_regression)[1,2],2)`], and the 95% confidence interval for &beta;<sub>1</sub> is [`r round(confint(simple_regression)[2,1],2)`,`r round(confint(simple_regression)[2,2],2)`]. Thus, we can conclude that when we do not spend any money on advertising, sales will be somewhere between `r round(confint(simple_regression)[1,1],0)` and `r round(confint(simple_regression)[1,2],0)` units on average. In addition, for each increase in advertising expenditures by one Euro, there will be an average increase in sales of between `r round(confint(simple_regression)[2,1],2)` and `r round(confint(simple_regression)[2,2],2)`. If you revisit the graphic depiction of the regression model above, the uncertainty regarding the intercept and slope parameters can be seen in the confidence bounds (blue area) around the regression line. 
 
 #### Assessing model fit
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nG4_st29Qe8" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
 
 Once we have rejected the null hypothesis in favor of the alternative hypothesis, the next step is to investigate how well the model represents ("fits") the data. How can we assess the model fit?
 
@@ -703,13 +721,13 @@ summary(simple_regression)$coefficients[2,1]*800 # the slope * 800
 
 The predicted value of the dependent variable is 211 units, i.e., the product will (on average) sell 211 units.
 
-**The following video summarizes how to conduct simple linear regression in R**
-
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HWzvQVqGUzA" frameborder="0" allowfullscreen></iframe>
-</div>
-
 ### Multiple linear regression
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oV6_-Fb2Oss" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
 
 Multiple linear regression is a statistical technique that simultaneously tests the relationships between two or more independent variables and an interval-scaled dependent variable. The general form of the equation is given by:
 
@@ -874,13 +892,6 @@ lm.beta(multiple_regression)
 The results show that for ```adspend``` and ```airplay```, a change by one standard deviation will result in a 0.51 standard deviation change in sales, whereas for ```starpower```, a one standard deviation change will only lead to a 0.19 standard deviation change in sales. Hence, while the effects of ```adspend``` and ```airplay``` are comparable in magnitude, the effect of ```starpower``` is less strong. 
 
 <br>
-
-**The following video summarizes how to conduct multiple regression in R**
-
-<div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/BMKgcG9me4s" frameborder="0" allowfullscreen></iframe>
-</div>
-
 
 ## Potential problems
 

@@ -139,15 +139,6 @@ beta_1
 cor_y_x <- cor(regression$adspend, regression$sales)
 beta_1_a <- cor_y_x * (sd(regression$sales)/sd(regression$adspend))
 beta_1_a
-# ... standardized coefficient
-regression$adspend_sd <- scale(regression$adspend, scale = T, center = T)
-regression$sales_sd <- scale(regression$sales, scale = T, center = T)
-cov_y_x_a <- cov(regression$adspend_sd,regression$sales_sd)
-cov_y_x_a
-cor_y_x_a <- cor(regression$adspend_sd , regression$sales_sd)
-cor_y_x_a
-beta_1_b <- cor_y_x_a * (sd(regression$sales_sd)/sd(regression$adspend_sd))
-beta_1_b
 
 ## ------------------------------------------------------------------------
 beta_0 <- mean(regression$sales) - beta_1*mean(regression$adspend)
@@ -192,7 +183,7 @@ f_calc > f_crit #test if calculated test statistic is larger than critical value
 # Using the model for making predictions
 ## ------------------------------------------------------------------------
 prediction <- summary(simple_regression)$coefficients[1,1] + # the intercept
-              summary(simple_regression)$coefficients[2,1]*800 # the slope * 800
+              summary(simple_regression)$coefficients[2,1]*1800 # the slope * 800
 prediction
 
 #-------------------------------------------------------------------#
