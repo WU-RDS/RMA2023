@@ -1110,7 +1110,7 @@ Figure 7.18: Residuals vs. Leverage
 <p>In this plot, we look for cases outside of a dashed line, which represents <strong>Cook’s distance</strong>. Lines for Cook’s distance thresholds of 0.5 and 1 are included by default. In our example, this line is not even visible, since the Cook’s distance values are far away from the critical values. Generally, you would watch out for outlying values at the upper right corner or at the lower right corner of the plot. Those spots are the places where cases can be influential against a regression line. In our example, there are no influential cases.</p>
 <p>To see how influential observations can impact your regression, have a look at <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet" target="_blank">this example</a>.</p>
 <div class="infobox_orange hint">
-<p>To summarize, if you detected outliers in your data, you should test if these observations exert undue influence on your results using the Cook’s distance statistic. If you detect observations which bias your results, you should remove these observations.</p>
+<p>To summarize, if you detected outliers in your data, you should test if these observations exert undue influence on your results using the Cook’s distance statistic as described above. If you detect observations which bias your results, you should remove these observations.</p>
 </div>
 </div>
 <div id="non-linearity" class="section level3">
@@ -1129,10 +1129,10 @@ Figure 7.19: Partial plots
 <li>Constant marginal returns</li>
 <li>Elasticities increase with X</li>
 </ul>
-<p>These assumptions may not be justifiable in certain contexts. Consider, as an example, the effect of marketing expenditures on sales. The linear model assumes that if you change your advertising expenditures from, say 10€ to 11€, this will change sales by the same amount as if you would change your marketing expenditure from, say 100,000€ to 100,001€. This is what we mean by <strong>constant marginal returns</strong> - irrespective of the level of advertising, spending an additional Euro on advertising will change sales by the same amount. Or consider the effect of price on sales. A linear model assumes that changing the price from, say 10€ to 11€, will change the sales by the same amount as increasing the price from, say 20€ to 21€. An elasticity tells you the relative change in the outcome variable (e.g., sales) due to a relative change in the predictor variable. For example, if we change our advertising expenditures by 1%, sales will change by XY%. As we have seen, the linear model assumes constant marginal returns, which implies that the <strong>elasticity increases</strong> with the level of the independent variable. In our example, advertising becomes relatively more effective since as we move to higher levels of advertising expenditures, a relatively smaller change in advertising expenditure will yield the same return.</p>
+<p>These assumptions may not be justifiable in certain contexts. As an example, consider the effect of marketing expenditures on sales. The linear model assumes that if you change your advertising expenditures from, say 10€ to 11€, this will change sales by the same amount as if you would change your marketing expenditure from, say 100,000€ to 100,001€. This is what we mean by <strong>constant marginal returns</strong> - irrespective of the level of advertising, spending an additional Euro on advertising will change sales by the same amount. Or consider the effect of price on sales. A linear model assumes that changing the price from, say 10€ to 11€, will change the sales by the same amount as increasing the price from, say 20€ to 21€. An elasticity tells you the relative change in the outcome variable (e.g., sales) due to a relative change in the predictor variable. For example, if we change our advertising expenditures by 1%, sales will change by XY%. As we have seen, the linear model assumes constant marginal returns, which implies that the <strong>elasticity increases</strong> with the level of the independent variable. In our example, advertising becomes relatively more effective since as we move to higher levels of advertising expenditures, a relatively smaller change in advertising expenditure will yield the same return.</p>
 <p>In marketing applications, it is often more realistic to assume <strong>decreasing marginal returns</strong>, meaning that the return from an increase in advertising is decreasing with increasing levels of advertising (e.g., and increase in advertising expenditures from 10€ to 11€ will lead to larger changes in sales, compared to a change from, say 100,000€ to 100,001€). We will see how to implement such a model further below in the section on extensions of the non-linear model.</p>
 <div class="infobox_orange hint">
-<p>To summarize, if you find indications that the linear specification might not represent your data well, you should consider a non-linear specification, which we will cover below. One popular and easy way to implement a non-linear specification in marketing is the so-called log-log model, where you take the logarithm of the dependent variable and independent variable(s). This type of model allows for decreasing marginal returns and yields constant elasticity, which is more realistic in many marketing settings. Constant elasticity means that a 1% change in the independent variable yields the same <em>relative</em> return for different levels of the independent variable. If you are unsure which model specification represents your data better, you can also compare different model specifications, e.g., by comparing the explained variance of the models (the better fitting model explains more of the variation in your data).</p>
+<p>To summarize, if you find indications that the linear specification might not represent your data well, you should consider a non-linear specification, which we will cover below. One popular and easy way to implement a non-linear specification in marketing applications is the so-called log-log model, where you take the logarithm of the dependent variable and independent variable(s). This type of model allows for decreasing marginal returns and yields constant elasticity, which is more realistic in many marketing settings. Constant elasticity means that a 1% change in the independent variable yields the same <em>relative</em> return for different levels of the independent variable. If you are unsure which model specification represents your data better, you can also compare different model specifications, e.g., by comparing the explained variance of the models (the better fitting model explains more of the variation in your data), and then opt for the specification that fits your data best.</p>
 </div>
 </div>
 <div id="non-constant-error-variance" class="section level3">
@@ -1197,15 +1197,15 @@ Figure 7.21: Q-Q plot
 ## data:  resid(multiple_regression)
 ## W = 1, p-value = 0.7</code></pre>
 <p>As you can see, we can not reject the H<sub>0</sub> of normally distributed residuals, which means that we can assume the residuals to be approximately normally distributed in our example.</p>
-<p>When the assumption of normally distributed errors is not met, this might again be due to a misspecification of your model, in which case it might help to transform your data (e.g., using log-transformations). If transforming your data doesn’t solve the issue, you may use bootstrapping to obtain corrected results. Bootstrapping is a so-called resampling method in which we use repeated random sampling with replacement to estimate the sampling distribution based on the sample itself, rather than relying on some assumptions about the shape of the sampling distribution to determine the probability of obtaining a test statistic of a particular magnitude. In other words, the data from our sample are treated as the population from which smaller random samples (so-called bootstrap samples) are repeatedly taken with replacement. The statistic of interest, e.g., the regression coefficients in our example, is calculated in each sample, and by taking many samples, the sampling distribution can be estimated. Similar to the simulations we did in chapter 5, the standard error of the statistic can be estimated using the standard deviation of the sampling distribution. Once we have computed the standard error, we can use it to compute the confidence intervals and significance tests. You can find a description of how to implement this procedure in R e.g., <a href="https://www.statmethods.net/advstats/bootstrapping.html" target="_blank">here</a>).</p>
-<p>Essentially, we can use the <code>boot()</code> function contained in the <code>boot</code> package to obtain the bootstrap results. However, we need to pass this function a statistic to apply the bootstrapping on - in our case, this would be the coefficients from our regression model. To make this easier, we can write a function that returns the coefficients from the model for every bootstrap sample that we take. In the following code block, we specify a function called <code>bs()</code>, which does exactly this (don’t worry if you don’t understand all the details - its basically just another function we can use to automate certain steps in the analysis, only that in this case we have written the function ourselves rather than relying on functions contained in existing packages).</p>
+<p>When the assumption of normally distributed errors is not met, this might again be due to a misspecification of your model, in which case it might help to transform your data (e.g., using log-transformations). If transforming your data doesn’t solve the issue, you may use <strong>bootstrapping</strong> to obtain corrected results. Bootstrapping is a so-called resampling method in which we use repeated random sampling with replacement to estimate the sampling distribution based on the sample itself, rather than relying on some assumptions about the shape of the sampling distribution to determine the probability of obtaining a test statistic of a particular magnitude. In other words, the data from our sample are treated as the population from which smaller random samples (so-called bootstrap samples) are repeatedly taken with replacement. The statistic of interest, e.g., the regression coefficients in our example, is calculated in each sample, and by taking many samples, the sampling distribution can be estimated. Similar to the simulations we did in chapter 5, the standard error of the statistic can be estimated using the standard deviation of the sampling distribution. Once we have computed the standard error, we can use it to compute the confidence intervals and significance tests. You can find a description of how to implement this procedure in R e.g., <a href="https://www.statmethods.net/advstats/bootstrapping.html" target="_blank">here</a>).</p>
+<p>Essentially, we can use the <code>boot()</code> function contained in the <code>boot</code> package to obtain the bootstrapped results. However, we need to pass this function a statistic to apply the bootstrapping on - in our case, this would be the coefficients from our regression model. To make this easier, we can write a function that returns the coefficients from the model for every bootstrap sample that we take. In the following code block, we specify a function called <code>bs()</code>, which does exactly this (don’t worry if you don’t understand all the details - its basically just another function we can use to automate certain steps in the analysis, only that in this case we have written the function ourselves rather than relying on functions contained in existing packages).</p>
 <div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="regression.html#cb530-1"></a><span class="co"># function to obtain regression coefficients</span></span>
 <span id="cb530-2"><a href="regression.html#cb530-2"></a>bs &lt;-<span class="st"> </span><span class="cf">function</span>(formula, data, indices) {</span>
 <span id="cb530-3"><a href="regression.html#cb530-3"></a>    d &lt;-<span class="st"> </span>data[indices, ]  <span class="co"># allows boot to select sample</span></span>
 <span id="cb530-4"><a href="regression.html#cb530-4"></a>    fit &lt;-<span class="st"> </span><span class="kw">lm</span>(formula, <span class="dt">data =</span> d)</span>
 <span id="cb530-5"><a href="regression.html#cb530-5"></a>    <span class="kw">return</span>(<span class="kw">coef</span>(fit))</span>
 <span id="cb530-6"><a href="regression.html#cb530-6"></a>}</span></code></pre></div>
-<p>Now that we have specified this function, we can use it within the <code>boot</code> function to obtained the bootstrap results for the regression coefficients. To do this, we first load the <code>boot</code> package and use the <code>boot</code> function by specifying the following arguments:</p>
+<p>Now that we have specified this function, we can use it within the <code>boot</code> function to obtained the bootstrapped results for the regression coefficients. To do this, we first load the <code>boot</code> package and use the <code>boot</code> function by specifying the following arguments:</p>
 <ul>
 <li><strong>data</strong>: the data set we use (the regression data set in our example)</li>
 <li><strong>statistic</strong>: the statistic(s) we would like to bootstrap (in our example, we use the function we have specified above to obtain the regression coefficients)</li>
@@ -1278,14 +1278,15 @@ Figure 7.21: Q-Q plot
 ## adspend       0.071  0.099
 ## airplay       2.820  3.915
 ## starpower     6.279 15.894</code></pre>
-<p>As you can see, the bootstrapped confidence interval is very similar to the once obtained without bootstrapping, which is not unexpected since in our example, the tests indicated that our assumptions about the distribution of errors is actually met so that we wouldn’t have needed to apply the bootstrapping. You could also inspect the distribution of the obtained regression coefficients from the 2000 bootstrap samples using the <code>plot()</code> function and passing it the respective index. Inspecting the plots reveals that for all coefficients (with the exception of the intercept) zero is not contained in the range of plausible values.</p>
+<p>As you can see, the bootstrapped confidence interval is very similar to the once obtained without bootstrapping, which is not unexpected since in our example, the tests indicated that our assumptions about the distribution of errors is actually met so that we wouldn’t have needed to apply the bootstrapping. You could also inspect the distribution of the obtained regression coefficients from the 2000 bootstrap samples using the <code>plot()</code> function and passing it the respective index. Inspecting the plots reveals that for all coefficients (with the exception of the intercept) zero is not contained in the range of plausible values, indicating the the coefficients are significant at the 5% level.</p>
 <div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="regression.html#cb542-1"></a><span class="kw">plot</span>(boot_out, <span class="dt">index =</span> <span class="dv">1</span>)  <span class="co"># intercept</span></span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-362-1.png" width="672" /></p>
 <div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="regression.html#cb543-1"></a><span class="kw">plot</span>(boot_out, <span class="dt">index =</span> <span class="dv">2</span>)  <span class="co"># adspend</span></span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-362-2.png" width="672" /></p>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="regression.html#cb544-1"></a><span class="kw">plot</span>(boot_out, <span class="dt">index =</span> <span class="dv">3</span>)  <span class="co"># airplay</span></span>
-<span id="cb544-2"><a href="regression.html#cb544-2"></a><span class="kw">plot</span>(boot_out, <span class="dt">index =</span> <span class="dv">3</span>)  <span class="co"># starpower</span></span></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="regression.html#cb544-1"></a><span class="kw">plot</span>(boot_out, <span class="dt">index =</span> <span class="dv">3</span>)  <span class="co"># airplay</span></span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-362-3.png" width="672" /></p>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="regression.html#cb545-1"></a><span class="kw">plot</span>(boot_out, <span class="dt">index =</span> <span class="dv">4</span>)  <span class="co"># starpower</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-362-4.png" width="672" /></p>
 <div class="infobox_orange hint">
 <p>To summarize, you can inspect if the assumption of normally distributed errors is violated by visually examining the QQ-plot and using the Shapiro-Wilk test. If the results suggest a non-normal distribution of the errors, you should first try to transform your data (e.g., by using a log-transformation). If this doesn’t solve the issue, you should apply the bootstrapping procedure as shown above to obtain a robust test of the significance of the regression coefficients.</p>
 </div>
@@ -1304,9 +1305,9 @@ Figure 7.21: Q-Q plot
 <li>Uncertainty about the importance of predictors: if two predictors explain similar variance in the outcome, we cannot know which of these variables is important.</li>
 </ul>
 <p>A quick way to find obvious multicollinearity is to examine the correlation matrix of the data. Any value &gt; 0.8 - 0.9 should be cause for concern. You can, for example, create a correlation matrix using the <code>rcorr()</code> function from the <code>Hmisc</code> package.</p>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="regression.html#cb545-1"></a><span class="kw">library</span>(<span class="st">&quot;Hmisc&quot;</span>)</span>
-<span id="cb545-2"><a href="regression.html#cb545-2"></a><span class="kw">rcorr</span>(<span class="kw">as.matrix</span>(regression[, <span class="kw">c</span>(<span class="st">&quot;adspend&quot;</span>, <span class="st">&quot;airplay&quot;</span>, </span>
-<span id="cb545-3"><a href="regression.html#cb545-3"></a>    <span class="st">&quot;starpower&quot;</span>)]))</span></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="regression.html#cb546-1"></a><span class="kw">library</span>(<span class="st">&quot;Hmisc&quot;</span>)</span>
+<span id="cb546-2"><a href="regression.html#cb546-2"></a><span class="kw">rcorr</span>(<span class="kw">as.matrix</span>(regression[, <span class="kw">c</span>(<span class="st">&quot;adspend&quot;</span>, <span class="st">&quot;airplay&quot;</span>, </span>
+<span id="cb546-3"><a href="regression.html#cb546-3"></a>    <span class="st">&quot;starpower&quot;</span>)]))</span></code></pre></div>
 <pre><code>##           adspend airplay starpower
 ## adspend      1.00    0.10      0.08
 ## airplay      0.10    1.00      0.18
@@ -1321,7 +1322,7 @@ Figure 7.21: Q-Q plot
 ## airplay   0.1511          0.0099   
 ## starpower 0.2557  0.0099</code></pre>
 <p>The bivariate correlations can also be show in a plot:</p>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="regression.html#cb547-1"></a><span class="kw">plot</span>(regression[, <span class="kw">c</span>(<span class="st">&quot;adspend&quot;</span>, <span class="st">&quot;airplay&quot;</span>, <span class="st">&quot;starpower&quot;</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="regression.html#cb548-1"></a><span class="kw">plot</span>(regression[, <span class="kw">c</span>(<span class="st">&quot;adspend&quot;</span>, <span class="st">&quot;airplay&quot;</span>, <span class="st">&quot;starpower&quot;</span>)])</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-364"></span>
 <img src="_main_files/figure-html/unnamed-chunk-364-1.png" alt="Bivariate correlation plots" width="672" />
 <p class="caption">
@@ -1336,8 +1337,8 @@ Figure 7.22: Bivariate correlation plots
 \tag{7.19}
 \end{equation}\]</span></p>
 <p>VIF values of over 4 are certainly cause for concern and values over 2 should be further investigated. If the average VIF is over 1 the regression may be biased. The VIF for all variables can easily be calculated in R with the <code>vif()</code> function contained in the <code>car</code> package.</p>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="regression.html#cb548-1"></a><span class="kw">library</span>(car)</span>
-<span id="cb548-2"><a href="regression.html#cb548-2"></a><span class="kw">vif</span>(multiple_regression)</span></code></pre></div>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="regression.html#cb549-1"></a><span class="kw">library</span>(car)</span>
+<span id="cb549-2"><a href="regression.html#cb549-2"></a><span class="kw">vif</span>(multiple_regression)</span></code></pre></div>
 <pre><code>##   adspend   airplay starpower 
 ##         1         1         1</code></pre>
 <p>As you can see the values are well below the cutoff, indicating that we do not have to worry about multicollinearity in our example. If multicollinearity turns out to be an issue in your analysis, there are at least two ways to proceed. First, you could eliminate one of the predictors, e.g., by using variable selection procedures which will be covered below. Second, you could combine predictors that are highly correlated using statistical methods aiming at reducing the dimensionality of the data based on the correlation matrix, such as the Pricipal Component Analysis (PCA), which will be covered in the next chapter.</p>
@@ -1350,7 +1351,7 @@ Figure 7.22: Bivariate correlation plots
 <p>If the goal of your analysis is to explain the effect of one variable on an outcome (rather than just predicting an outcome), one main concern that you need to be aware of is related to omitted variables. This issue relates back to the choice of research design. If you are interested in causal inference and you did not obtain your data from a randomized trial, the issue of omitted variables bias is of great importance. If your goal is to make predictions, you don’t need to worry about this too much - in this case other potential problems such as overfitting (see below) should receive more attention.</p>
 <p>What do we mean by “omitted variables”? If a variable that influences the outcome is left out of the model (i.e., it is “omitted”), a bias in other variables’ coefficients might be introduced. Specifically, the other coefficients will be biased if the omitted variable influences the outcome <em>and</em> the independent variable(s) in your model. Intuitively, the variables left in the model “pick up” the effect of the omitted variable to the degree that they are related. Let’s illustrate this with an example.</p>
 <p>Consider the following data set containing information on the number of streams that a sample of artists receive on a streaming service in one month.</p>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="regression.html#cb550-1"></a><span class="kw">head</span>(streaming_data)</span></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="regression.html#cb551-1"></a><span class="kw">head</span>(streaming_data)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["popularity"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["playlists"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.88","2":"8","3":"1160"},{"1":"7.88","2":"99","3":"1538"},{"1":"4.09","2":"31","3":"1232"},{"1":"8.83","2":"58","3":"1464"},{"1":"9.40","2":"5","3":"1442"},{"1":"0.46","2":"4","3":"1159"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1363,8 +1364,8 @@ Figure 7.22: Bivariate correlation plots
 <li><strong>streams</strong>: The number of streams an artist generates during the observation month (in thousands)</li>
 </ul>
 <p>Say, as a marketing manager we are interested in estimating the effect of the number of playlists on the number of streams. If we estimate a model to explain the number of streams as a function of only the number of playlists, the results would look as follows:</p>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="regression.html#cb551-1"></a>stream_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(streams <span class="op">~</span><span class="st"> </span>playlists, <span class="dt">data =</span> streaming_data)</span>
-<span id="cb551-2"><a href="regression.html#cb551-2"></a><span class="kw">summary</span>(stream_model_<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="regression.html#cb552-1"></a>stream_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(streams <span class="op">~</span><span class="st"> </span>playlists, <span class="dt">data =</span> streaming_data)</span>
+<span id="cb552-2"><a href="regression.html#cb552-2"></a><span class="kw">summary</span>(stream_model_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = streams ~ playlists, data = streaming_data)
@@ -1383,10 +1384,10 @@ Figure 7.22: Bivariate correlation plots
 ## Residual standard error: 135 on 170 degrees of freedom
 ## Multiple R-squared:  0.581,  Adjusted R-squared:  0.578 
 ## F-statistic:  235 on 1 and 170 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<p>As you can see, the results suggest that being listed on one more playlist leads to 3,000 more streams on average. Now let’s see what happens when we add the popularity of an artist as an addtional predictor:</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="regression.html#cb553-1"></a>stream_model_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(streams <span class="op">~</span><span class="st"> </span>playlists <span class="op">+</span><span class="st"> </span>popularity, </span>
-<span id="cb553-2"><a href="regression.html#cb553-2"></a>    <span class="dt">data =</span> streaming_data)</span>
-<span id="cb553-3"><a href="regression.html#cb553-3"></a><span class="kw">summary</span>(stream_model_<span class="dv">2</span>)</span></code></pre></div>
+<p>As you can see, the results suggest that being listed on one more playlist leads to 3,032 more streams on average (recall that the dependent variable is given in thousands in this case, so we need multiply the coefficient by 1,000 to obtain the effect). Now let’s see what happens when we add the popularity of an artist as an additional predictor:</p>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="regression.html#cb554-1"></a>stream_model_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(streams <span class="op">~</span><span class="st"> </span>playlists <span class="op">+</span><span class="st"> </span>popularity, </span>
+<span id="cb554-2"><a href="regression.html#cb554-2"></a>    <span class="dt">data =</span> streaming_data)</span>
+<span id="cb554-3"><a href="regression.html#cb554-3"></a><span class="kw">summary</span>(stream_model_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = streams ~ playlists + popularity, data = streaming_data)
@@ -1406,7 +1407,7 @@ Figure 7.22: Bivariate correlation plots
 ## Residual standard error: 105 on 169 degrees of freedom
 ## Multiple R-squared:  0.749,  Adjusted R-squared:  0.746 
 ## F-statistic:  252 on 2 and 169 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<p>What happens to the coefficient of <code>playlists</code>? As you can see, the magnitude of the coefficient decreased substantially. Because the popularity of an artist influences both the number of playlists (more popular artists are listed on a larger number of playlists) <em>and</em> the number of streams (more popular artists receive more streams), the coefficient will be biased upwards. In this case, the popularity of an artists is said to be an <strong>unobserved confounder</strong> if it is not included in the model and the playlist variable is referred to as an endogenous predictor (i.e., the assumption of exogeneity is violated). As you could see, this unobserved confounder would lead us to overestimate the effect of playlists on the number of streams. It is therefore crucially important that you carefully consider what other factors could explain the dependent variable besides your main independent variable of interest. This is also the reason why it is much more difficult to estimate causal effects from observational data compared to randomized experiments, where you could, e.g., randomly assign artists with the same popularity to be included on playlists or not. But in real life, it is often not feasible to run field experiments, e.g., because we may not have control over which artists gets included on a playlists and which artists don’t.</p>
+<p>What happens to the coefficient of <code>playlists</code>? As you can see, the magnitude of the coefficient decreased substantially. Because the popularity of an artist influences both the number of playlists (more popular artists are listed on a larger number of playlists) <em>and</em> the number of streams (more popular artists receive more streams), the coefficient will be biased upwards. In this case, the popularity of an artists is said to be an <strong>unobserved confounder</strong> if it is not included in the model and the playlist variable is referred to as an endogenous predictor (i.e., the assumption of exogeneity is violated). As you could see, this unobserved confounder would lead us to overestimate the effect of playlists on the number of streams. It is therefore crucially important that you carefully consider what other factors could explain the dependent variable besides your main independent variable of interest. This is also the reason why it is much more difficult to estimate causal effects from observational data compared to randomized experiments, where you could, e.g., randomly assign artists to be included on playlists or not. But in real life, it is often not feasible to run field experiments, e.g., because we may not have control over which artists get included on a playlists and which artists don’t.</p>
 <div class="infobox_orange hint">
 <p>To summarize, if your goal is to identify a causal effect of one variable on another variable using observational (non-experimental) data, you need to carefully think about which potentially omitting variable may influence both the dependent and independent variable in your model. Unfortunately, there is no test that would tell you if you have indeed included all variables in your model so that you need to put forth arguments why you think that unobserved confounders are not a reason for concern in your analysis.</p>
 </div>
@@ -1419,31 +1420,48 @@ Figure 7.22: Bivariate correlation plots
 <li><strong>Test data set (‘hold-out set’)</strong>: predict values based training data</li>
 </ul>
 <p>By inspecting how well the model based on the training data is able to predict the observations in the test data, we can judge the predictive ability of a model on new data. This is also referred to as the out-of-sample predictive accuracy. You can easily test the out-of-sample predictive accuracy of your model by splitting the data set in two parts - the training data and the test data. In the following code, we randomly 2/3 of the observations to estimate the model and retain the remaining 1/3 of observations to test how well we can predict the outcome based on our model.</p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="regression.html#cb556-1"></a><span class="co"># randomly split into training and test data:</span></span>
+<span id="cb556-2"><a href="regression.html#cb556-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb556-3"><a href="regression.html#cb556-3"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(regression)</span>
+<span id="cb556-4"><a href="regression.html#cb556-4"></a>train &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>n, <span class="kw">round</span>(n <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span>))</span>
+<span id="cb556-5"><a href="regression.html#cb556-5"></a>test &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>n)[<span class="op">-</span>train]</span></code></pre></div>
 <p>Now we have created two data sets - the training data set and the test data set. Next, let’s estimate the model using the training data and inspect the results</p>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="regression.html#cb557-1"></a><span class="co"># estimate linear model based on training data</span></span>
+<span id="cb557-2"><a href="regression.html#cb557-2"></a>multiple_train &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span>starpower, </span>
+<span id="cb557-3"><a href="regression.html#cb557-3"></a>    <span class="dt">data =</span> regression, <span class="dt">subset =</span> train)</span>
+<span id="cb557-4"><a href="regression.html#cb557-4"></a><span class="kw">summary</span>(multiple_train)  <span class="co">#summary of results</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ adspend + airplay + starpower, data = regression, 
 ##     subset = train)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -109.89  -30.21   -0.16   28.19  146.84 
+##      Min       1Q   Median       3Q      Max 
+## -109.886  -30.214   -0.159   28.192  146.839 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept) -36.52425   20.15595   -1.81              0.0723 .  
-## adspend       0.09015    0.00868   10.38 &lt;0.0000000000000002 ***
-## airplay       3.49391    0.35649    9.80 &lt;0.0000000000000002 ***
-## starpower    11.22697    2.93189    3.83              0.0002 ***
+##               Estimate Std. Error t value            Pr(&gt;|t|)    
+## (Intercept) -36.524253  20.155946  -1.812              0.0723 .  
+## adspend       0.090152   0.008682  10.384 &lt;0.0000000000000002 ***
+## airplay       3.493912   0.356486   9.801 &lt;0.0000000000000002 ***
+## starpower    11.226968   2.931894   3.829              0.0002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 47 on 129 degrees of freedom
-## Multiple R-squared:   0.7,   Adjusted R-squared:  0.693 
-## F-statistic:  100 on 3 and 129 DF,  p-value: &lt;0.0000000000000002</code></pre>
+## Residual standard error: 46.9 on 129 degrees of freedom
+## Multiple R-squared:  0.7002, Adjusted R-squared:  0.6932 
+## F-statistic: 100.4 on 3 and 129 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <p>As you can see, the model results are similar to the results from the model from the beginning, which is not surprising since it is based on the same data with the only difference that we discarded 1/3 of the observations for validation purposes. In a next step, we can use the <code>predict()</code> function and the argument <code>newdata</code> to predict observations in the test data set based on our estimated model. To test the our-of-sample predictive accuracy of the model, we can then compute the squared correlation coefficient between the predicted and observed values, which will give us the out-of-sample model fit (i.e., the R2).</p>
-<pre><code>## [1] 0.57</code></pre>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="regression.html#cb559-1"></a><span class="co"># using coefficients to predict test data</span></span>
+<span id="cb559-2"><a href="regression.html#cb559-2"></a>pred_lm &lt;-<span class="st"> </span><span class="kw">predict</span>(multiple_train, <span class="dt">newdata =</span> regression[test, </span>
+<span id="cb559-3"><a href="regression.html#cb559-3"></a>    ])</span>
+<span id="cb559-4"><a href="regression.html#cb559-4"></a><span class="kw">cor</span>(regression[test, <span class="st">&quot;sales&quot;</span>], pred_lm)<span class="op">^</span><span class="dv">2</span>  <span class="co"># R^2 for test data</span></span></code></pre></div>
+<pre><code>## [1] 0.5739922</code></pre>
 <p>As you can see, the R2 is about 0.57, suggesting that 57% of the variation in the test data set can be explained by our model. Note that this share is somewhat lower compared to the within-sample fit that you can see in the model above (i.e., R2 = 0.7), which is not unexpected since the test data were not used to estimate the model. The value of 0.57 suggests that the model generalizes to other data sets quite well. We could also visualize the out-of-sample model fit as follows:</p>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="regression.html#cb561-1"></a><span class="co"># plot predicted vs. observed values for test data</span></span>
+<span id="cb561-2"><a href="regression.html#cb561-2"></a><span class="kw">plot</span>(regression[test, <span class="st">&quot;sales&quot;</span>], pred_lm, <span class="dt">xlab =</span> <span class="st">&quot;y measured&quot;</span>, </span>
+<span id="cb561-3"><a href="regression.html#cb561-3"></a>    <span class="dt">ylab =</span> <span class="st">&quot;y predicted&quot;</span>, <span class="dt">cex.lab =</span> <span class="fl">1.3</span>)</span>
+<span id="cb561-4"><a href="regression.html#cb561-4"></a><span class="kw">abline</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
 <div class="infobox_orange hint">
 <p>To summarize, overfitting is a concern in predictive models and it means that your model is so highly tuned to the data set you used to estimate the model that it does not generalize well to new data. To make sure that overfitting is not a reason for concern, you should test the out-of-sample predictive ability of your model using the process explained above.</p>
@@ -1451,16 +1469,31 @@ Figure 7.22: Bivariate correlation plots
 </div>
 <div id="variable-selection" class="section level3">
 <h3><span class="header-section-number">7.3.10</span> Variable selection</h3>
-<p>A <em>parsimonious</em> model is a model that accomplishes a desired level of explanation or prediction with as few predictor variables as possible. Parsimonious models are desired because smaller models are easier to interpret and redundant or unnecessary variables should be left out (also to combat overfitting). Note that this is especially true for predictive models. If our goal was to explain a relationship between two variables and the variable we formulated a hypothesis for turns out to be insignificant, this result would also be interesting and, hence, you should also report the effect eventhough it may be insignificant.</p>
+<p>A <em>parsimonious</em> model is a model that accomplishes a desired level of explanation or prediction with as few predictor variables as possible. Parsimonious models are desired because smaller models are easier to interpret and redundant or unnecessary variables should be left out (also to combat overfitting). Note that this is especially true for predictive models. If our goal was to explain a relationship between two variables and the variable we formulated a hypothesis for turns out to be insignificant, this result would also be interesting and, hence, you should also report the effect even though it may be insignificant.</p>
 <p>Let’s use an example to see how we could identify variables that do not add any explanatory power to the model and should thus be excluded from the model. First, we will add a random variable to our existing regression data set. We can use the <code>rnorm()</code> function to generate random observations from a normal distribution.</p>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="regression.html#cb562-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb562-2"><a href="regression.html#cb562-2"></a><span class="co"># Add another random variable</span></span>
+<span id="cb562-3"><a href="regression.html#cb562-3"></a>regression<span class="op">$</span>var_test &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">nrow</span>(regression), <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p>The model selection process should tell us that we should favor a model without this predictor since it does not add any explanatory power. In the following code, we specify our model by gradually adding one predictor after the other and then we will use the <code>anova()</code> function to test the differences between the models.</p>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="regression.html#cb563-1"></a><span class="co"># Model comparison with anova</span></span>
+<span id="cb563-2"><a href="regression.html#cb563-2"></a>lm0 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> regression)</span>
+<span id="cb563-3"><a href="regression.html#cb563-3"></a>lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend, <span class="dt">data =</span> regression)</span>
+<span id="cb563-4"><a href="regression.html#cb563-4"></a>lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay, <span class="dt">data =</span> regression)</span>
+<span id="cb563-5"><a href="regression.html#cb563-5"></a>lm3 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span>starpower, <span class="dt">data =</span> regression)</span>
+<span id="cb563-6"><a href="regression.html#cb563-6"></a>lm4 &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span>starpower <span class="op">+</span><span class="st"> </span>var_test, </span>
+<span id="cb563-7"><a href="regression.html#cb563-7"></a>    <span class="dt">data =</span> regression)</span>
+<span id="cb563-8"><a href="regression.html#cb563-8"></a><span class="kw">anova</span>(lm0, lm1, lm2, lm3, lm4)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["RSS"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Sum of Sq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"199","2":"1295952","3":"NA","4":"NA","5":"NA","6":"NA"},{"1":"198","2":"862264","3":"1","4":"433688","5":"195.9","6":"0.00000000000000000000000000000028"},{"1":"197","2":"480428","3":"1","4":"381836","5":"172.5","6":"0.00000000000000000000000000012130"},{"1":"196","2":"434575","3":"1","4":"45853","5":"20.7","6":"0.00000936444748619836851190323390"},{"1":"195","2":"431640","3":"1","4":"2935","5":"1.3","6":"0.25095438927991031707875890788273"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["RSS"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Sum of Sq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"199","2":"1295952.0","3":"NA","4":"NA","5":"NA","6":"NA"},{"1":"198","2":"862264.2","3":"1","4":"433687.833","5":"195.925249","6":"0.0000000000000000000000000000002840776"},{"1":"197","2":"480427.9","3":"1","4":"381836.289","5":"172.500505","6":"0.0000000000000000000000000001213018737"},{"1":"196","2":"434574.6","3":"1","4":"45853.296","5":"20.714942","6":"0.0000093644474861983685119032339017053"},{"1":"195","2":"431639.8","3":"1","4":"2934.822","5":"1.325852","6":"0.2509543892799103170787589078827295452"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>The output shows that the last model, in which we add the random variable as an additional predictor, does not significantly improve the model compared to the previous model (the results from the F-test is insignificant). Hence, we should use model “lm3” in this case.</p>
 <p>Alternatively, we could also select the variables to be included in our model using a stepwise procedure with the <code>step()</code> function. To do this, we pass the most complete model from above, i.e., ‘lm4’ to the function and inspect the results:</p>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="regression.html#cb564-1"></a><span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">8</span>)</span>
+<span id="cb564-2"><a href="regression.html#cb564-2"></a><span class="co"># Stepwise variable selection Automatic model</span></span>
+<span id="cb564-3"><a href="regression.html#cb564-3"></a><span class="co"># selection with step</span></span>
+<span id="cb564-4"><a href="regression.html#cb564-4"></a>model_lmstep &lt;-<span class="st"> </span><span class="kw">step</span>(lm4)</span></code></pre></div>
 <pre><code>## Start:  AIC=1545.41
 ## sales ~ adspend + airplay + starpower + var_test
 ## 
@@ -1479,6 +1512,7 @@ Figure 7.22: Bivariate correlation plots
 ## - starpower  1     45853 480428 1562.82
 ## - airplay    1    325860 760434 1654.67
 ## - adspend    1    333332 767907 1656.62</code></pre>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="regression.html#cb566-1"></a>model_lmstep</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ adspend + airplay + starpower, data = regression)
@@ -1514,9 +1548,9 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
       &amp;+\beta_4*international+\epsilon
 \end{align}\]</span></p>
 <p>where “international” represents the new dummy variable and <span class="math inline">\(\beta_4\)</span> is the coefficient associated with this variable. Estimating the model is straightforward - you just need to include the variable as an additional predictor variable. Note that the variable needs to be specified as a factor variable before including it in your model. If you haven’t converted it to a factor variable before, you could also use the wrapper function <code>as.factor()</code> within the equation.</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="regression.html#cb559-1"></a>multiple_regression_bin &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
-<span id="cb559-2"><a href="regression.html#cb559-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
-<span id="cb559-3"><a href="regression.html#cb559-3"></a><span class="kw">summary</span>(multiple_regression_bin)  <span class="co">#summary of results</span></span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="regression.html#cb568-1"></a>multiple_regression_bin &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
+<span id="cb568-2"><a href="regression.html#cb568-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
+<span id="cb568-3"><a href="regression.html#cb568-3"></a><span class="kw">summary</span>(multiple_regression_bin)  <span class="co">#summary of results</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ adspend + airplay + starpower + country, 
@@ -1572,9 +1606,9 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
 <p>where “Pop” and “Rock” represent our new dummy variables, and <span class="math inline">\(\beta_5\)</span> and <span class="math inline">\(\beta_6\)</span> represent the associated regression coefficients.</p>
 <p>The interpretation of the coefficients is as follows: <span class="math inline">\(\beta_5\)</span> is the difference in average sales between the genres “Rock” and “Pop”, while <span class="math inline">\(\beta_6\)</span> is the difference in average sales between the genres “Rock” and “Electro”. Note that the level for which no dummy variable is created is also referred to as the <em>baseline</em>. In our case, “Rock” would be the baseline genre. This means that there will always be one fewer dummy variable than the number of levels.</p>
 <p>You don’t have to create the dummy variables manually as R will do this automatically when you add the variable to your equation:</p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="regression.html#cb561-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
-<span id="cb561-2"><a href="regression.html#cb561-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>genre, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
-<span id="cb561-3"><a href="regression.html#cb561-3"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="regression.html#cb570-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
+<span id="cb570-2"><a href="regression.html#cb570-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>genre, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
+<span id="cb570-3"><a href="regression.html#cb570-3"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ adspend + airplay + starpower + country + 
@@ -1601,10 +1635,10 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
 ## F-statistic: 89.226 on 6 and 193 DF,  p-value: &lt; 0.000000000000000222</code></pre>
 <p>How can we interpret the coefficients? It is estimated based on our model that products from the “Pop” genre will on average sell 47.69 units more than products from the “Rock” genre, and that products from the “Electronic” genre will sell on average 27.62 units more than the products from the “Rock” genre. The p-value of both variables is smaller than 0.05, suggesting that there is statistical evidence for a real difference in sales between the genres.</p>
 <p>The level of the baseline category is arbitrary. As you have seen, R simply selects the first level as the baseline. If you would like to use a different baseline category, you can use the <code>relevel()</code> function and set the reference category using the <code>ref</code> argument. The following would estimate the same model using the second category as the baseline:</p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="regression.html#cb563-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
-<span id="cb563-2"><a href="regression.html#cb563-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span><span class="kw">relevel</span>(genre, <span class="dt">ref =</span> <span class="dv">2</span>), </span>
-<span id="cb563-3"><a href="regression.html#cb563-3"></a>    <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
-<span id="cb563-4"><a href="regression.html#cb563-4"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="regression.html#cb572-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
+<span id="cb572-2"><a href="regression.html#cb572-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span><span class="kw">relevel</span>(genre, <span class="dt">ref =</span> <span class="dv">2</span>), </span>
+<span id="cb572-3"><a href="regression.html#cb572-3"></a>    <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
+<span id="cb572-4"><a href="regression.html#cb572-4"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ adspend + airplay + starpower + country + 
@@ -1646,10 +1680,10 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
 <div id="interaction-effects" class="section level3">
 <h3><span class="header-section-number">7.5.1</span> Interaction effects</h3>
 <p>Regarding the additive assumption, it might be argued that the effect of some variables are not fully independent of the values of other variables. In our example, one could argue that the effect of advertising depends on the type of artist. For example, for local artist advertising might be more effective. We can investigate if this is the case using a grouped scatterplot:</p>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="regression.html#cb565-1"></a><span class="kw">ggplot</span>(regression, <span class="kw">aes</span>(adspend, sales, <span class="dt">colour =</span> <span class="kw">as.factor</span>(country))) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb565-2"><a href="regression.html#cb565-2"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb565-3"><a href="regression.html#cb565-3"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, </span>
-<span id="cb565-4"><a href="regression.html#cb565-4"></a>        <span class="dt">colour =</span> <span class="st">&quot;country&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="regression.html#cb574-1"></a><span class="kw">ggplot</span>(regression, <span class="kw">aes</span>(adspend, sales, <span class="dt">colour =</span> <span class="kw">as.factor</span>(country))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb574-2"><a href="regression.html#cb574-2"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb574-3"><a href="regression.html#cb574-3"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising expenditures (EUR)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Number of sales&quot;</span>, </span>
+<span id="cb574-4"><a href="regression.html#cb574-4"></a>        <span class="dt">colour =</span> <span class="st">&quot;country&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-381"></span>
 <img src="_main_files/figure-html/unnamed-chunk-381-1.png" alt="Effect of advertising by group" width="672" />
 <p class="caption">
@@ -1666,9 +1700,9 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
       &amp;+\epsilon
 \end{align}\]</span></p>
 <p>You can see that the effect of advertising now depends on the type of artist. Hence, the additive assumption is removed. Note that if you decide to include an interaction effect, you should always include the main effects of the variables that are included in the interaction (even if the associated p-values do not suggest significant effects). It is easy to include an interaction effect in you model by adding an additional variable that has the format ```var1:var2````. In our example, this could be achieved using the following specification:</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="regression.html#cb566-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
-<span id="cb566-2"><a href="regression.html#cb566-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>adspend<span class="op">:</span>country, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
-<span id="cb566-3"><a href="regression.html#cb566-3"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="regression.html#cb575-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
+<span id="cb575-2"><a href="regression.html#cb575-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>country <span class="op">+</span><span class="st"> </span>adspend<span class="op">:</span>country, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
+<span id="cb575-3"><a href="regression.html#cb575-3"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ adspend + airplay + starpower + country + 
@@ -1709,9 +1743,9 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
       &amp;+\epsilon
 \end{align}\]</span></p>
 <p>In this case, we can interpret <span class="math inline">\(\beta_4\)</span> as the increase in the effectiveness of advertising for a one unit increase in radio airplay (or vice versa). This can be translated to R using:</p>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="regression.html#cb568-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
-<span id="cb568-2"><a href="regression.html#cb568-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>adspend<span class="op">:</span>airplay, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
-<span id="cb568-3"><a href="regression.html#cb568-3"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="regression.html#cb577-1"></a>multiple_regression &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>adspend <span class="op">+</span><span class="st"> </span>airplay <span class="op">+</span><span class="st"> </span></span>
+<span id="cb577-2"><a href="regression.html#cb577-2"></a><span class="st">    </span>starpower <span class="op">+</span><span class="st"> </span>adspend<span class="op">:</span>airplay, <span class="dt">data =</span> regression)  <span class="co">#estimate linear model</span></span>
+<span id="cb577-3"><a href="regression.html#cb577-3"></a><span class="kw">summary</span>(multiple_regression)  <span class="co">#summary of results</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ adspend + airplay + starpower + adspend:airplay, 
@@ -1745,18 +1779,18 @@ Sales =\beta_0 &amp;+\beta_1*adspend\\
 </ul>
 <p>In many marketing contexts, these might not be reasonable assumptions. Consider the case of advertising. It is unlikely that the return on advertising will not depend on the level of advertising expenditures. It is rather likely that saturation occurs at some level, meaning that the return from an additional Euro spend on advertising is decreasing with the level of advertising expenditures (i.e., decreasing marginal returns). In other words, at some point the advertising campaign has achieved a certain level of penetration and an additional Euro spend on advertising won’t yield the same return as in the beginning.</p>
 <p>Let’s use an example data set, containing the advertising expenditures of a company and the sales (in thousand units).</p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="regression.html#cb570-1"></a>non_linear_reg &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/non_linear.dat&quot;</span>, </span>
-<span id="cb570-2"><a href="regression.html#cb570-2"></a>    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
-<span id="cb570-3"><a href="regression.html#cb570-3"></a><span class="kw">head</span>(non_linear_reg)</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="regression.html#cb579-1"></a>non_linear_reg &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/non_linear.dat&quot;</span>, </span>
+<span id="cb579-2"><a href="regression.html#cb579-2"></a>    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
+<span id="cb579-3"><a href="regression.html#cb579-3"></a><span class="kw">head</span>(non_linear_reg)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["sales"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"16.2","2":"13817.4"},{"1":"17.1","2":"5074.6"},{"1":"15.3","2":"3501.3"},{"1":"27.3","2":"23662.2"},{"1":"13.6","2":"9977.2"},{"1":"18.8","2":"11972.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Now we inspect if a linear specification is appropriate by looking at the scatterplot:</p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="regression.html#cb571-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> non_linear_reg, <span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
-<span id="cb571-2"><a href="regression.html#cb571-2"></a>    <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </span>
-<span id="cb571-3"><a href="regression.html#cb571-3"></a>    <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="regression.html#cb580-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> non_linear_reg, <span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
+<span id="cb580-2"><a href="regression.html#cb580-2"></a>    <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </span>
+<span id="cb580-3"><a href="regression.html#cb580-3"></a>    <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-385"></span>
 <img src="_main_files/figure-html/unnamed-chunk-385-1.png" alt="Non-linear relationship" width="672" />
 <p class="caption">
@@ -1764,8 +1798,8 @@ Figure 7.24: Non-linear relationship
 </p>
 </div>
 <p>It appears that a linear model might <strong>not</strong> represent the data well. It rather appears that the effect of an additional Euro spend on advertising is decreasing with increasing levels of advertising expenditures. Thus, we have decreasing marginal returns. We could put this to a test and estimate a linear model:</p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="regression.html#cb572-1"></a>linear_reg &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>advertising, <span class="dt">data =</span> non_linear_reg)</span>
-<span id="cb572-2"><a href="regression.html#cb572-2"></a><span class="kw">summary</span>(linear_reg)</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="regression.html#cb581-1"></a>linear_reg &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>advertising, <span class="dt">data =</span> non_linear_reg)</span>
+<span id="cb581-2"><a href="regression.html#cb581-2"></a><span class="kw">summary</span>(linear_reg)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ advertising, data = non_linear_reg)
@@ -1786,7 +1820,7 @@ Figure 7.24: Non-linear relationship
 ## F-statistic: 1035.9 on 1 and 998 DF,  p-value: &lt; 0.000000000000000222</code></pre>
 <p>Advertising appears to be positively related to sales with an additional Euro that is spent on advertising resulting in 0.0005 additional sales. The R<sup>2</sup> statistic suggests that approximately 51% of the total variation can be explained by the model</p>
 <p>To test if the linear specification is appropriate, let’s inspect some of the plots that are generated by R. We start by inspecting the residuals plot.</p>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="regression.html#cb574-1"></a><span class="kw">plot</span>(linear_reg, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="regression.html#cb583-1"></a><span class="kw">plot</span>(linear_reg, <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-387"></span>
 <img src="_main_files/figure-html/unnamed-chunk-387-1.png" alt="Residuals vs. Fitted" width="672" />
 <p class="caption">
@@ -1794,7 +1828,7 @@ Figure 7.25: Residuals vs. Fitted
 </p>
 </div>
 <p>The plot suggests that the assumption of homoscedasticity is violated (i.e., the spread of values on the y-axis is different for different levels of the fitted values). In addition, the red line deviates from the dashed grey line, suggesting that the relationship might not be linear. Finally, the Q-Q plot of the residuals suggests that the residuals are not normally distributed.</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="regression.html#cb575-1"></a><span class="kw">plot</span>(linear_reg, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="regression.html#cb584-1"></a><span class="kw">plot</span>(linear_reg, <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-388"></span>
 <img src="_main_files/figure-html/unnamed-chunk-388-1.png" alt="Q-Q plot" width="672" />
 <p class="caption">
@@ -1813,9 +1847,9 @@ log(Y) =log(\beta_0) + \beta_1*log(X_1) + \beta_2*log(X_2) + ...+ \beta_J*log(X_
 \tag{7.24}
 \end{equation}\]</span></p>
 <p>This means that taking logarithms of both sides of the equation makes linear estimation possible. Let’s test how the scatterplot would look like if we use the logarithm of our variables using the <code>log()</code> function instead of the original values.</p>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="regression.html#cb576-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> non_linear_reg, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log</span>(advertising), </span>
-<span id="cb576-2"><a href="regression.html#cb576-2"></a>    <span class="dt">y =</span> <span class="kw">log</span>(sales))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </span>
-<span id="cb576-3"><a href="regression.html#cb576-3"></a>    <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="regression.html#cb585-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> non_linear_reg, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log</span>(advertising), </span>
+<span id="cb585-2"><a href="regression.html#cb585-2"></a>    <span class="dt">y =</span> <span class="kw">log</span>(sales))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </span>
+<span id="cb585-3"><a href="regression.html#cb585-3"></a>    <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-389"></span>
 <img src="_main_files/figure-html/unnamed-chunk-389-1.png" alt="Linearized effect" width="672" />
 <p class="caption">
@@ -1828,8 +1862,8 @@ log(sales) = log(\beta_0) + \beta_1*log(advertising) + log(\epsilon)
 \tag{7.25}
 \end{equation}\]</span></p>
 <p>This can be easily implemented in R by transforming the variables using the <code>log()</code> function:</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="regression.html#cb577-1"></a>log_reg &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(sales) <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(advertising), <span class="dt">data =</span> non_linear_reg)</span>
-<span id="cb577-2"><a href="regression.html#cb577-2"></a><span class="kw">summary</span>(log_reg)</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="regression.html#cb586-1"></a>log_reg &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(sales) <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(advertising), <span class="dt">data =</span> non_linear_reg)</span>
+<span id="cb586-2"><a href="regression.html#cb586-2"></a><span class="kw">summary</span>(log_reg)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(sales) ~ log(advertising), data = non_linear_reg)
@@ -1849,14 +1883,14 @@ log(sales) = log(\beta_0) + \beta_1*log(advertising) + log(\epsilon)
 ## Multiple R-squared:  0.68144,    Adjusted R-squared:  0.68113 
 ## F-statistic: 2134.9 on 1 and 998 DF,  p-value: &lt; 0.000000000000000222</code></pre>
 <p>Note that this specification implies decreasing marginal returns (i.e., the returns of advertising are decreasing with the level of advertising), which appear to be more consistent with the data. The specification is also consistent with proportional changes in advertising being associated with proportional changes in sales (i.e., advertising does not become more effective with increasing levels). This has important implications on the interpretation of the coefficients. In our example, you would interpret the coefficient as follows: <strong>A 1% increase in advertising leads to a 0.3% increase in sales</strong>. Hence, the interpretation is in proportional terms and no longer in units. This means that the coefficients in a log-log model can be directly interpreted as elasticities, which also makes communication easier. We can generally also inspect the R<sup>2</sup> statistic to see that the model fit has increased compared to the linear specification (i.e., R<sup>2</sup> has increased to 0.681 from 0.509). However, please note that the variables are now measured on a different scale, which means that the model fit in theory is not directly comparable. Also, we could use the residuals plot to confirm that the revised specification is more appropriate:</p>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="regression.html#cb579-1"></a><span class="kw">plot</span>(log_reg, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="regression.html#cb588-1"></a><span class="kw">plot</span>(log_reg, <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-391-1"></span>
 <img src="_main_files/figure-html/unnamed-chunk-391-1.png" alt="Residuals plot" width="672" />
 <p class="caption">
 Figure 7.28: Residuals plot
 </p>
 </div>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="regression.html#cb580-1"></a><span class="kw">plot</span>(log_reg, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="regression.html#cb589-1"></a><span class="kw">plot</span>(log_reg, <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-391-2"></span>
 <img src="_main_files/figure-html/unnamed-chunk-391-2.png" alt="Q-Q plot" width="672" />
 <p class="caption">
@@ -1864,14 +1898,14 @@ Figure 7.29: Q-Q plot
 </p>
 </div>
 <p>Finally, we can plot the predicted values against the observed values to see that the results from the log-log model (red) provide a better prediction than the results from the linear model (blue).</p>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="regression.html#cb581-1"></a>non_linear_reg<span class="op">$</span>pred_lin_reg &lt;-<span class="st"> </span><span class="kw">predict</span>(linear_reg)</span>
-<span id="cb581-2"><a href="regression.html#cb581-2"></a>non_linear_reg<span class="op">$</span>pred_log_reg &lt;-<span class="st"> </span><span class="kw">predict</span>(log_reg)</span>
-<span id="cb581-3"><a href="regression.html#cb581-3"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> non_linear_reg) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
-<span id="cb581-4"><a href="regression.html#cb581-4"></a>    <span class="dt">y =</span> sales), <span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> non_linear_reg, </span>
-<span id="cb581-5"><a href="regression.html#cb581-5"></a>    <span class="kw">aes</span>(<span class="dt">x =</span> advertising, <span class="dt">y =</span> pred_lin_reg), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
-<span id="cb581-6"><a href="regression.html#cb581-6"></a>    <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> non_linear_reg, </span>
-<span id="cb581-7"><a href="regression.html#cb581-7"></a>    <span class="kw">aes</span>(<span class="dt">x =</span> advertising, <span class="dt">y =</span> <span class="kw">exp</span>(pred_log_reg)), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, </span>
-<span id="cb581-8"><a href="regression.html#cb581-8"></a>    <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="regression.html#cb590-1"></a>non_linear_reg<span class="op">$</span>pred_lin_reg &lt;-<span class="st"> </span><span class="kw">predict</span>(linear_reg)</span>
+<span id="cb590-2"><a href="regression.html#cb590-2"></a>non_linear_reg<span class="op">$</span>pred_log_reg &lt;-<span class="st"> </span><span class="kw">predict</span>(log_reg)</span>
+<span id="cb590-3"><a href="regression.html#cb590-3"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> non_linear_reg) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
+<span id="cb590-4"><a href="regression.html#cb590-4"></a>    <span class="dt">y =</span> sales), <span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> non_linear_reg, </span>
+<span id="cb590-5"><a href="regression.html#cb590-5"></a>    <span class="kw">aes</span>(<span class="dt">x =</span> advertising, <span class="dt">y =</span> pred_lin_reg), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb590-6"><a href="regression.html#cb590-6"></a>    <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> non_linear_reg, </span>
+<span id="cb590-7"><a href="regression.html#cb590-7"></a>    <span class="kw">aes</span>(<span class="dt">x =</span> advertising, <span class="dt">y =</span> <span class="kw">exp</span>(pred_log_reg)), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb590-8"><a href="regression.html#cb590-8"></a>    <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-392"></span>
 <img src="_main_files/figure-html/unnamed-chunk-392-1.png" alt="Comparison if model fit" width="672" />
 <p class="caption">
@@ -1881,33 +1915,33 @@ Figure 7.30: Comparison if model fit
 <p>Another way of modeling non-linearities is including a squared term if there are decreasing or increasing effects. In fact, we can model non-constant slopes as long as the form is a linear combination of exponentials (i.e. squared, cubed, …) of the explanatory variables. Usually we do not expect <em>many</em> inflection points so squared or third power terms suffice. Note that the degree of the polynomial has to be equal to the number of inflection points.</p>
 <p>When using squared terms we can model diminishing and eventually negative returns. Think about advertisement spending. If a brand is not well known, spending on ads will increase brand awareness and have a large effect on sales. In a regression model this translates to a steep slope for spending at the origin (i.e. for lower spending). However, as more and more people will already know the brand we expect that an additional Euro spent on advertisement will have less and less of an effect the more the company spends. We say that the returns are diminishing. Eventually, if they keep putting more and more ads out, people get annoyed and some will stop buying from the company. In that case the return might even get negative. To model such a situation we need a linear as well as a squared term in the regression.</p>
 <p><code>lm(...)</code> can take squared (or any power) terms as input by adding <code>I(X^2)</code> as explanatory variable. In the example below we see a clear quadratic relationship with an inflection point at around 70. If we try to model this using the level of the covariates without the quadratic term we do not get a very good fit.</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="regression.html#cb582-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb582-2"><a href="regression.html#cb582-2"></a>X &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">runif</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">12000</span>))</span>
-<span id="cb582-3"><a href="regression.html#cb582-3"></a>Y &lt;-<span class="st"> </span><span class="dv">80000</span> <span class="op">+</span><span class="st"> </span><span class="dv">140</span> <span class="op">*</span><span class="st"> </span>X <span class="op">-</span><span class="st"> </span><span class="fl">0.01</span> <span class="op">*</span><span class="st"> </span>(X<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, </span>
-<span id="cb582-4"><a href="regression.html#cb582-4"></a>    <span class="dv">35000</span>)</span>
-<span id="cb582-5"><a href="regression.html#cb582-5"></a>modLinear &lt;-<span class="st"> </span><span class="kw">lm</span>(Y<span class="op">/</span><span class="dv">100000</span> <span class="op">~</span><span class="st"> </span>X)</span>
-<span id="cb582-6"><a href="regression.html#cb582-6"></a>sales_quad &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sales =</span> Y<span class="op">/</span><span class="dv">100000</span>, <span class="dt">advertising =</span> X <span class="op">*</span><span class="st"> </span></span>
-<span id="cb582-7"><a href="regression.html#cb582-7"></a><span class="st">    </span><span class="fl">0.01</span>, <span class="dt">Prediction =</span> <span class="kw">fitted</span>(modLinear))</span>
-<span id="cb582-8"><a href="regression.html#cb582-8"></a><span class="kw">ggplot</span>(sales_quad) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
-<span id="cb582-9"><a href="regression.html#cb582-9"></a>    <span class="dt">y =</span> sales, <span class="dt">color =</span> <span class="st">&quot;Data&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
-<span id="cb582-10"><a href="regression.html#cb582-10"></a>    <span class="dt">y =</span> Prediction, <span class="dt">color =</span> <span class="st">&quot;Prediction&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb582-11"><a href="regression.html#cb582-11"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Linear Predictor&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="regression.html#cb591-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb591-2"><a href="regression.html#cb591-2"></a>X &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">runif</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">12000</span>))</span>
+<span id="cb591-3"><a href="regression.html#cb591-3"></a>Y &lt;-<span class="st"> </span><span class="dv">80000</span> <span class="op">+</span><span class="st"> </span><span class="dv">140</span> <span class="op">*</span><span class="st"> </span>X <span class="op">-</span><span class="st"> </span><span class="fl">0.01</span> <span class="op">*</span><span class="st"> </span>(X<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dv">0</span>, </span>
+<span id="cb591-4"><a href="regression.html#cb591-4"></a>    <span class="dv">35000</span>)</span>
+<span id="cb591-5"><a href="regression.html#cb591-5"></a>modLinear &lt;-<span class="st"> </span><span class="kw">lm</span>(Y<span class="op">/</span><span class="dv">100000</span> <span class="op">~</span><span class="st"> </span>X)</span>
+<span id="cb591-6"><a href="regression.html#cb591-6"></a>sales_quad &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sales =</span> Y<span class="op">/</span><span class="dv">100000</span>, <span class="dt">advertising =</span> X <span class="op">*</span><span class="st"> </span></span>
+<span id="cb591-7"><a href="regression.html#cb591-7"></a><span class="st">    </span><span class="fl">0.01</span>, <span class="dt">Prediction =</span> <span class="kw">fitted</span>(modLinear))</span>
+<span id="cb591-8"><a href="regression.html#cb591-8"></a><span class="kw">ggplot</span>(sales_quad) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
+<span id="cb591-9"><a href="regression.html#cb591-9"></a>    <span class="dt">y =</span> sales, <span class="dt">color =</span> <span class="st">&quot;Data&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
+<span id="cb591-10"><a href="regression.html#cb591-10"></a>    <span class="dt">y =</span> Prediction, <span class="dt">color =</span> <span class="st">&quot;Prediction&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb591-11"><a href="regression.html#cb591-11"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Linear Predictor&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-393-1.png" width="672" /></p>
 <p>The graph above clearly shows that advertising spending of between 0 and 50 increases sales. However, the marginal increase (i.e. the slope of the data curve) is decreasing. Around 70 there is an inflection point. After that point additional ad-spending actually decreases sales (e.g. people get annoyed).
 Notice that the prediction line is straight, that is, the marginal increase of sales due to additional spending on advertising is the same for any amount of spending. This shows the danger of basing business decisions on wrongly specified models. But even in the area in which the sign of the prediction is correct, we are quite far off. Lets take a look at the top 5 sales values and the corresponding predictions:</p>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="regression.html#cb583-1"></a>top5 &lt;-<span class="st"> </span><span class="kw">which</span>(sales_quad<span class="op">$</span>sales <span class="op">%in%</span><span class="st"> </span><span class="kw">head</span>(<span class="kw">sort</span>(sales_quad<span class="op">$</span>sales, </span>
-<span id="cb583-2"><a href="regression.html#cb583-2"></a>    <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), <span class="dv">5</span>))</span>
-<span id="cb583-3"><a href="regression.html#cb583-3"></a>dplyr<span class="op">::</span><span class="kw">arrange</span>(sales_quad[top5, ], <span class="kw">desc</span>(sales_quad[top5, </span>
-<span id="cb583-4"><a href="regression.html#cb583-4"></a>    <span class="dv">1</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="regression.html#cb592-1"></a>top5 &lt;-<span class="st"> </span><span class="kw">which</span>(sales_quad<span class="op">$</span>sales <span class="op">%in%</span><span class="st"> </span><span class="kw">head</span>(<span class="kw">sort</span>(sales_quad<span class="op">$</span>sales, </span>
+<span id="cb592-2"><a href="regression.html#cb592-2"></a>    <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), <span class="dv">5</span>))</span>
+<span id="cb592-3"><a href="regression.html#cb592-3"></a>dplyr<span class="op">::</span><span class="kw">arrange</span>(sales_quad[top5, ], <span class="kw">desc</span>(sales_quad[top5, </span>
+<span id="cb592-4"><a href="regression.html#cb592-4"></a>    <span class="dv">1</span>]))</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["sales"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Prediction"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"6.5310412","2":"71.83","3":"4.5906120"},{"1":"6.3341788","2":"80.98","3":"4.7559082"},{"1":"6.3257561","2":"62.82","3":"4.4278448"},{"1":"6.3222325","2":"61.73","3":"4.4081538"},{"1":"6.3102048","2":"67.95","3":"4.5205191"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>By including a quadratic term we can fit the data very well. This is still a linear model since the outcome variable is still explained by a linear combination of regressors even though one of the regressors is now just a non-linear function of the same variable (i.e. the squared value).</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="regression.html#cb584-1"></a>quad_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>advertising <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(advertising<span class="op">^</span><span class="dv">2</span>), </span>
-<span id="cb584-2"><a href="regression.html#cb584-2"></a>    <span class="dt">data =</span> sales_quad)</span>
-<span id="cb584-3"><a href="regression.html#cb584-3"></a><span class="kw">summary</span>(quad_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="regression.html#cb593-1"></a>quad_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span>advertising <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(advertising<span class="op">^</span><span class="dv">2</span>), </span>
+<span id="cb593-2"><a href="regression.html#cb593-2"></a>    <span class="dt">data =</span> sales_quad)</span>
+<span id="cb593-3"><a href="regression.html#cb593-3"></a><span class="kw">summary</span>(quad_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = sales ~ advertising + I(advertising^2), data = sales_quad)
@@ -1927,40 +1961,40 @@ Notice that the prediction line is straight, that is, the marginal increase of s
 ## Residual standard error: 0.33218 on 997 degrees of freedom
 ## Multiple R-squared:  0.93596,    Adjusted R-squared:  0.93583 
 ## F-statistic: 7285.7 on 2 and 997 DF,  p-value: &lt; 0.000000000000000222</code></pre>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="regression.html#cb586-1"></a><span class="kw">confint</span>(quad_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="regression.html#cb595-1"></a><span class="kw">confint</span>(quad_mod)</span></code></pre></div>
 <pre><code>##                          2.5 %         97.5 %
 ## (Intercept)       0.7540633367  0.87848046615
 ## advertising       0.1372888385  0.14199631240
 ## I(advertising^2) -0.0010184526 -0.00098098016</code></pre>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="regression.html#cb588-1"></a>sales_quad<span class="op">$</span>Prediction &lt;-<span class="st"> </span><span class="kw">predict</span>(quad_mod)</span>
-<span id="cb588-2"><a href="regression.html#cb588-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> sales_quad, <span class="kw">aes</span>(<span class="dt">x =</span> Prediction, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb588-3"><a href="regression.html#cb588-3"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </span>
-<span id="cb588-4"><a href="regression.html#cb588-4"></a>    <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="regression.html#cb597-1"></a>sales_quad<span class="op">$</span>Prediction &lt;-<span class="st"> </span><span class="kw">predict</span>(quad_mod)</span>
+<span id="cb597-2"><a href="regression.html#cb597-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> sales_quad, <span class="kw">aes</span>(<span class="dt">x =</span> Prediction, <span class="dt">y =</span> sales)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb597-3"><a href="regression.html#cb597-3"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </span>
+<span id="cb597-4"><a href="regression.html#cb597-4"></a>    <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-395-1.png" width="672" /></p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="regression.html#cb589-1"></a><span class="kw">plot</span>(quad_mod, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="regression.html#cb598-1"></a><span class="kw">plot</span>(quad_mod, <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-395-2.png" width="672" /></p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="regression.html#cb590-1"></a><span class="kw">plot</span>(quad_mod, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="regression.html#cb599-1"></a><span class="kw">plot</span>(quad_mod, <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-395-3.png" width="672" /></p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="regression.html#cb591-1"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(quad_mod))</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="regression.html#cb600-1"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(quad_mod))</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  resid(quad_mod)
 ## W = 0.997653, p-value = 0.16559</code></pre>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="regression.html#cb593-1"></a>sales_quad<span class="op">$</span>pred_lin_reg &lt;-<span class="st"> </span><span class="kw">predict</span>(modLinear)</span>
-<span id="cb593-2"><a href="regression.html#cb593-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> sales_quad) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
-<span id="cb593-3"><a href="regression.html#cb593-3"></a>    <span class="dt">y =</span> sales), <span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> sales_quad, </span>
-<span id="cb593-4"><a href="regression.html#cb593-4"></a>    <span class="kw">aes</span>(<span class="dt">x =</span> advertising, <span class="dt">y =</span> pred_lin_reg), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
-<span id="cb593-5"><a href="regression.html#cb593-5"></a>    <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> sales_quad, <span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
-<span id="cb593-6"><a href="regression.html#cb593-6"></a>    <span class="dt">y =</span> Prediction), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb593-7"><a href="regression.html#cb593-7"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Advertising (thsd. Euro)&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb593-8"><a href="regression.html#cb593-8"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Sales (million units)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="regression.html#cb602-1"></a>sales_quad<span class="op">$</span>pred_lin_reg &lt;-<span class="st"> </span><span class="kw">predict</span>(modLinear)</span>
+<span id="cb602-2"><a href="regression.html#cb602-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> sales_quad) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
+<span id="cb602-3"><a href="regression.html#cb602-3"></a>    <span class="dt">y =</span> sales), <span class="dt">shape =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> sales_quad, </span>
+<span id="cb602-4"><a href="regression.html#cb602-4"></a>    <span class="kw">aes</span>(<span class="dt">x =</span> advertising, <span class="dt">y =</span> pred_lin_reg), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb602-5"><a href="regression.html#cb602-5"></a>    <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">data =</span> sales_quad, <span class="kw">aes</span>(<span class="dt">x =</span> advertising, </span>
+<span id="cb602-6"><a href="regression.html#cb602-6"></a>    <span class="dt">y =</span> Prediction), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">1.05</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb602-7"><a href="regression.html#cb602-7"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Advertising (thsd. Euro)&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb602-8"><a href="regression.html#cb602-8"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Sales (million units)&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-395-4.png" width="672" /></p>
 <p>Now the prediction of the model is very close to the actual data and we could base our production decisions on that model.</p>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="regression.html#cb594-1"></a>top5 &lt;-<span class="st"> </span><span class="kw">which</span>(sales_quad<span class="op">$</span>sales <span class="op">%in%</span><span class="st"> </span><span class="kw">head</span>(<span class="kw">sort</span>(sales_quad<span class="op">$</span>sales, </span>
-<span id="cb594-2"><a href="regression.html#cb594-2"></a>    <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), <span class="dv">5</span>))</span>
-<span id="cb594-3"><a href="regression.html#cb594-3"></a>dplyr<span class="op">::</span><span class="kw">arrange</span>(sales_quad[top5, ], <span class="kw">desc</span>(sales_quad[top5, </span>
-<span id="cb594-4"><a href="regression.html#cb594-4"></a>    <span class="dv">1</span>]))</span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="regression.html#cb603-1"></a>top5 &lt;-<span class="st"> </span><span class="kw">which</span>(sales_quad<span class="op">$</span>sales <span class="op">%in%</span><span class="st"> </span><span class="kw">head</span>(<span class="kw">sort</span>(sales_quad<span class="op">$</span>sales, </span>
+<span id="cb603-2"><a href="regression.html#cb603-2"></a>    <span class="dt">decreasing =</span> <span class="ot">TRUE</span>), <span class="dv">5</span>))</span>
+<span id="cb603-3"><a href="regression.html#cb603-3"></a>dplyr<span class="op">::</span><span class="kw">arrange</span>(sales_quad[top5, ], <span class="kw">desc</span>(sales_quad[top5, </span>
+<span id="cb603-4"><a href="regression.html#cb603-4"></a>    <span class="dv">1</span>]))</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["sales"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["advertising"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Prediction"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["pred_lin_reg"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"6.5310412","2":"71.83","3":"5.6887126","4":"4.5906120"},{"1":"6.3341788","2":"80.98","3":"5.5686272","4":"4.7559082"},{"1":"6.3257561","2":"62.82","3":"5.6433854","4":"4.4278448"},{"1":"6.3222325","2":"61.73","3":"5.6268960","4":"4.4081538"},{"1":"6.3102048","2":"67.95","3":"5.6890920","4":"4.5205191"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1976,12 +2010,12 @@ Notice that the prediction line is straight, that is, the marginal increase of s
 {\delta Slope \over \delta Advertising} = 2\beta_2
 \]</span></p>
 <p>At the maximum predicted value the slope is close to <span class="math inline">\(0\)</span> (theoretically it is equal to <span class="math inline">\(0\)</span> but this would require decimals and we can only sell whole pieces). Above we only calculated the prediction for the observed data, so let’s first predict the profit for all possible values between <span class="math inline">\(1\)</span> and <span class="math inline">\(200\)</span> to get the optimal production level according to our model.</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="regression.html#cb595-1"></a>predictionAll &lt;-<span class="st"> </span><span class="kw">predict</span>(quad_mod, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">advertising =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">200</span>))</span>
-<span id="cb595-2"><a href="regression.html#cb595-2"></a>(optimalAdvertising &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">which.max</span>(predictionAll)))</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="regression.html#cb604-1"></a>predictionAll &lt;-<span class="st"> </span><span class="kw">predict</span>(quad_mod, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">advertising =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">200</span>))</span>
+<span id="cb604-2"><a href="regression.html#cb604-2"></a>(optimalAdvertising &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">which.max</span>(predictionAll)))</span></code></pre></div>
 <pre><code>## [1] 70</code></pre>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="regression.html#cb597-1"></a><span class="co"># Slope at optimum:</span></span>
-<span id="cb597-2"><a href="regression.html#cb597-2"></a><span class="kw">coef</span>(quad_mod)[[<span class="st">&quot;advertising&quot;</span>]] <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">coef</span>(quad_mod)[[<span class="st">&quot;I(advertising^2)&quot;</span>]] <span class="op">*</span><span class="st"> </span></span>
-<span id="cb597-3"><a href="regression.html#cb597-3"></a><span class="st">    </span>optimalAdvertising</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="regression.html#cb606-1"></a><span class="co"># Slope at optimum:</span></span>
+<span id="cb606-2"><a href="regression.html#cb606-2"></a><span class="kw">coef</span>(quad_mod)[[<span class="st">&quot;advertising&quot;</span>]] <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">coef</span>(quad_mod)[[<span class="st">&quot;I(advertising^2)&quot;</span>]] <span class="op">*</span><span class="st"> </span></span>
+<span id="cb606-3"><a href="regression.html#cb606-3"></a><span class="st">    </span>optimalAdvertising</span></code></pre></div>
 <pre><code>## [1] -0.00031771725</code></pre>
 <p>For all other levels of advertising we insert the pieces produced into the formula to obtain the slope at that point. In the following example you can choose the level of advertising.</p>
 <p>
@@ -2001,24 +2035,24 @@ Notice that the prediction line is straight, that is, the marginal increase of s
 <div id="motivation-and-intuition" class="section level3">
 <h3><span class="header-section-number">7.6.1</span> Motivation and intuition</h3>
 <p>In the last section we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. A more useful method is the logistic regression. In particular we are going to have a look at the logit model. In the following dataset we are trying to predict whether a song will be a top-10 hit on a popular music streaming platform. In a first step we are going to use only the danceability index as a predictor. Later we are going to add more independent variables.</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="regression.html#cb599-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb599-2"><a href="regression.html#cb599-2"></a><span class="kw">library</span>(gridExtra)</span>
-<span id="cb599-3"><a href="regression.html#cb599-3"></a></span>
-<span id="cb599-4"><a href="regression.html#cb599-4"></a>chart_data &lt;-<span class="st"> </span><span class="kw">read.delim2</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/chart_data_logistic.dat&quot;</span>, </span>
-<span id="cb599-5"><a href="regression.html#cb599-5"></a>    <span class="dt">header =</span> T, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">stringsAsFactors =</span> F, <span class="dt">dec =</span> <span class="st">&quot;.&quot;</span>)</span>
-<span id="cb599-6"><a href="regression.html#cb599-6"></a><span class="co"># Create a new dummy variable &#39;top10&#39;, which is 1</span></span>
-<span id="cb599-7"><a href="regression.html#cb599-7"></a><span class="co"># if a song made it to the top10 and 0 else:</span></span>
-<span id="cb599-8"><a href="regression.html#cb599-8"></a>chart_data<span class="op">$</span>top10 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(chart_data<span class="op">$</span>rank <span class="op">&lt;</span><span class="st"> </span><span class="dv">11</span>, <span class="dv">1</span>, </span>
-<span id="cb599-9"><a href="regression.html#cb599-9"></a>    <span class="dv">0</span>)</span>
-<span id="cb599-10"><a href="regression.html#cb599-10"></a></span>
-<span id="cb599-11"><a href="regression.html#cb599-11"></a><span class="co"># Inspect data</span></span>
-<span id="cb599-12"><a href="regression.html#cb599-12"></a><span class="kw">head</span>(chart_data)</span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="regression.html#cb608-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb608-2"><a href="regression.html#cb608-2"></a><span class="kw">library</span>(gridExtra)</span>
+<span id="cb608-3"><a href="regression.html#cb608-3"></a></span>
+<span id="cb608-4"><a href="regression.html#cb608-4"></a>chart_data &lt;-<span class="st"> </span><span class="kw">read.delim2</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/chart_data_logistic.dat&quot;</span>, </span>
+<span id="cb608-5"><a href="regression.html#cb608-5"></a>    <span class="dt">header =</span> T, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">stringsAsFactors =</span> F, <span class="dt">dec =</span> <span class="st">&quot;.&quot;</span>)</span>
+<span id="cb608-6"><a href="regression.html#cb608-6"></a><span class="co"># Create a new dummy variable &#39;top10&#39;, which is 1</span></span>
+<span id="cb608-7"><a href="regression.html#cb608-7"></a><span class="co"># if a song made it to the top10 and 0 else:</span></span>
+<span id="cb608-8"><a href="regression.html#cb608-8"></a>chart_data<span class="op">$</span>top10 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(chart_data<span class="op">$</span>rank <span class="op">&lt;</span><span class="st"> </span><span class="dv">11</span>, <span class="dv">1</span>, </span>
+<span id="cb608-9"><a href="regression.html#cb608-9"></a>    <span class="dv">0</span>)</span>
+<span id="cb608-10"><a href="regression.html#cb608-10"></a></span>
+<span id="cb608-11"><a href="regression.html#cb608-11"></a><span class="co"># Inspect data</span></span>
+<span id="cb608-12"><a href="regression.html#cb608-12"></a><span class="kw">head</span>(chart_data)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["artistName"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackID"],"name":[2],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[3],"type":["chr"],"align":["left"]},{"label":["rank"],"name":[4],"type":["int"],"align":["right"]},{"label":["streams"],"name":[5],"type":["int"],"align":["right"]},{"label":["frequency"],"name":[6],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[9],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[17],"type":["int"],"align":["right"]},{"label":["time_signature"],"name":[18],"type":["int"],"align":["right"]},{"label":["isrc"],"name":[19],"type":["chr"],"align":["left"]},{"label":["spotifyArtistID"],"name":[20],"type":["chr"],"align":["left"]},{"label":["releaseDate"],"name":[21],"type":["chr"],"align":["left"]},{"label":["daysSinceRelease"],"name":[22],"type":["int"],"align":["right"]},{"label":["spotifyFollowers"],"name":[23],"type":["int"],"align":["right"]},{"label":["mbid"],"name":[24],"type":["chr"],"align":["left"]},{"label":["artistCountry"],"name":[25],"type":["chr"],"align":["left"]},{"label":["indicator"],"name":[26],"type":["int"],"align":["right"]},{"label":["top10"],"name":[27],"type":["dbl"],"align":["right"]}],"data":[{"1":"dj mustard","2":"01gNiOqg8u7vT90uVgOVmz","3":"Whole Lotta Lovin'","4":"120","5":"917710","6":"3","7":"0.438","8":"0.399","9":"4","10":"-8.752","11":"0.0623","12":"0.1540","13":"0.00000845","14":"0.0646","15":"0.382","16":"160.159","17":"299160","18":"5","19":"QMJMT1500808","20":"0YinUQ50QDB7ZxSCLyQ40k","21":"08.01.2016","22":"450","23":"139718","24":"0612bcce-e351-40be-b3d7-2bb5e1c23479","25":"US","26":"1","27":"0"},{"1":"bing crosby","2":"01h424WG38dgY34vkI3Yd0","3":"White Christmas","4":"70","5":"1865526","6":"9","7":"0.225","8":"0.248","9":"9","10":"-15.871","11":"0.0337","12":"0.9120","13":"0.00014300","14":"0.4040","15":"0.185","16":"96.013","17":"183613","18":"4","19":"USMC14750470","20":"6ZjFtWeHP9XN7FeKSUe80S","21":"27.08.2007","22":"1000","23":"123135","24":"2437980f-513a-44fc-80f1-b90d9d7fcf8f","25":"US","26":"1","27":"0"},{"1":"post malone","2":"02opp1cycqiFNDpLd2o1J3","3":"Big Lie","4":"129","5":"1480436","6":"1","7":"0.325","8":"0.689","9":"6","10":"-4.951","11":"0.2430","12":"0.1970","13":"0.00000000","14":"0.0722","15":"0.225","16":"77.917","17":"207680","18":"4","19":"USUM71614468","20":"246dkjvS1zLTtiykXe5h60","21":"09.12.2016","22":"114","23":"629600","24":"b1e26560-60e5-4236-bbdb-9aa5a8d5ee19","25":"0","26":"1","27":"0"},{"1":"chris brown","2":"02yRHV9Cgk8CUS2fx9lKVC","3":"Anyway","4":"130","5":"894216","6":"1","7":"0.469","8":"0.664","9":"7","10":"-7.160","11":"0.1210","12":"0.0566","13":"0.00000158","14":"0.4820","15":"0.267","16":"124.746","17":"211413","18":"4","19":"USRC11502943","20":"7bXgB6jMjp9ATFy66eO08Z","21":"11.12.2015","22":"478","23":"4077185","24":"c234fa42-e6a6-443e-937e-2f4b073538a3","25":"US","26":"1","27":"0"},{"1":"5 seconds of summer","2":"0375PEO6HIwCHx5Y2sowQm","3":"Waste The Night","4":"182","5":"642784","6":"1","7":"0.286","8":"0.907","9":"8","10":"-4.741","11":"0.1130","12":"0.0144","13":"0.00000000","14":"0.2680","15":"0.271","16":"75.640","17":"266640","18":"4","19":"GBUM71505159","20":"5Rl15oVamLq7FbSb0NNBNy","21":"23.10.2015","22":"527","23":"2221348","24":"830e5c4e-6b7d-431d-86ab-00c751281dc5","25":"AU","26":"1","27":"0"},{"1":"rihanna","2":"046irIGshCqu24AjmEWZtr","3":"Same Olâ\\200\\231 Mistakes","4":"163","5":"809256","6":"2","7":"0.447","8":"0.795","9":"8","10":"-5.435","11":"0.0443","12":"0.2110","13":"0.00169000","14":"0.0725","15":"0.504","16":"151.277","17":"397093","18":"4","19":"QM5FT1600108","20":"5pKCCKE2ajJHZ9KAiaK11H","21":"29.01.2016","22":"429","23":"9687258","24":"73e5e69d-3554-40d8-8516-00cb38737a1c","25":"0","26":"1","27":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="regression.html#cb600-1"></a><span class="kw">str</span>(chart_data)</span></code></pre></div>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="regression.html#cb609-1"></a><span class="kw">str</span>(chart_data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    422 obs. of  27 variables:
 ##  $ artistName      : chr  &quot;dj mustard&quot; &quot;bing crosby&quot; &quot;post malone&quot; &quot;chris brown&quot; ...
 ##  $ trackID         : chr  &quot;01gNiOqg8u7vT90uVgOVmz&quot; &quot;01h424WG38dgY34vkI3Yd0&quot; &quot;02opp1cycqiFNDpLd2o1J3&quot; &quot;02yRHV9Cgk8CUS2fx9lKVC&quot; ...
@@ -2075,11 +2109,11 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 <div id="estimation-in-r" class="section level3">
 <h3><span class="header-section-number">7.6.3</span> Estimation in R</h3>
 <p>We are now going to show how to perform logistic regression in R. Instead of <code>lm()</code> we now use <code>glm(Y~X, family=binomial(link = 'logit'))</code> to use the logit model. We can still use the <code>summary()</code> command to inspect the output of the model.</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="regression.html#cb602-1"></a><span class="co"># Run the glm</span></span>
-<span id="cb602-2"><a href="regression.html#cb602-2"></a>logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
-<span id="cb602-3"><a href="regression.html#cb602-3"></a>    <span class="dt">data =</span> chart_data)</span>
-<span id="cb602-4"><a href="regression.html#cb602-4"></a><span class="co"># Inspect model summary</span></span>
-<span id="cb602-5"><a href="regression.html#cb602-5"></a><span class="kw">summary</span>(logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="regression.html#cb611-1"></a><span class="co"># Run the glm</span></span>
+<span id="cb611-2"><a href="regression.html#cb611-2"></a>logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
+<span id="cb611-3"><a href="regression.html#cb611-3"></a>    <span class="dt">data =</span> chart_data)</span>
+<span id="cb611-4"><a href="regression.html#cb611-4"></a><span class="co"># Inspect model summary</span></span>
+<span id="cb611-5"><a href="regression.html#cb611-5"></a><span class="kw">summary</span>(logit_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability, family = binomial(link = &quot;logit&quot;), 
@@ -2104,40 +2138,40 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
 <p>Noticeably this output does not include an <span class="math inline">\(R^2\)</span> value to asses model fit. Multiple “Pseudo <span class="math inline">\(R^2\)</span>s”, similar to the one used in OLS, have been developed. There are packages that return the <span class="math inline">\(R^2\)</span> given a logit model (see <code>rcompanion</code> or <code>pscl</code>). The calculation by hand is also fairly simple. We define the function <code>logisticPseudoR2s()</code> that takes a logit model as an input and returns three popular pseudo <span class="math inline">\(R^2\)</span> values.</p>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="regression.html#cb604-1"></a>logisticPseudoR2s &lt;-<span class="st"> </span><span class="cf">function</span>(LogModel) {</span>
-<span id="cb604-2"><a href="regression.html#cb604-2"></a>    dev &lt;-<span class="st"> </span>LogModel<span class="op">$</span>deviance</span>
-<span id="cb604-3"><a href="regression.html#cb604-3"></a>    nullDev &lt;-<span class="st"> </span>LogModel<span class="op">$</span>null.deviance</span>
-<span id="cb604-4"><a href="regression.html#cb604-4"></a>    modelN &lt;-<span class="st"> </span><span class="kw">length</span>(LogModel<span class="op">$</span>fitted.values)</span>
-<span id="cb604-5"><a href="regression.html#cb604-5"></a>    R.l &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>dev<span class="op">/</span>nullDev</span>
-<span id="cb604-6"><a href="regression.html#cb604-6"></a>    R.cs &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(nullDev <span class="op">-</span><span class="st"> </span>dev)<span class="op">/</span>modelN)</span>
-<span id="cb604-7"><a href="regression.html#cb604-7"></a>    R.n &lt;-<span class="st"> </span>R.cs<span class="op">/</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">exp</span>(<span class="op">-</span>(nullDev<span class="op">/</span>modelN))))</span>
-<span id="cb604-8"><a href="regression.html#cb604-8"></a>    <span class="kw">cat</span>(<span class="st">&quot;Pseudo R^2 for logistic regression</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb604-9"><a href="regression.html#cb604-9"></a>    <span class="kw">cat</span>(<span class="st">&quot;Hosmer and Lemeshow R^2  &quot;</span>, <span class="kw">round</span>(R.l, <span class="dv">3</span>), </span>
-<span id="cb604-10"><a href="regression.html#cb604-10"></a>        <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb604-11"><a href="regression.html#cb604-11"></a>    <span class="kw">cat</span>(<span class="st">&quot;Cox and Snell R^2        &quot;</span>, <span class="kw">round</span>(R.cs, <span class="dv">3</span>), </span>
-<span id="cb604-12"><a href="regression.html#cb604-12"></a>        <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb604-13"><a href="regression.html#cb604-13"></a>    <span class="kw">cat</span>(<span class="st">&quot;Nagelkerke R^2           &quot;</span>, <span class="kw">round</span>(R.n, <span class="dv">3</span>), </span>
-<span id="cb604-14"><a href="regression.html#cb604-14"></a>        <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb604-15"><a href="regression.html#cb604-15"></a>}</span>
-<span id="cb604-16"><a href="regression.html#cb604-16"></a><span class="co"># Inspect Pseudo R2s</span></span>
-<span id="cb604-17"><a href="regression.html#cb604-17"></a><span class="kw">logisticPseudoR2s</span>(logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="regression.html#cb613-1"></a>logisticPseudoR2s &lt;-<span class="st"> </span><span class="cf">function</span>(LogModel) {</span>
+<span id="cb613-2"><a href="regression.html#cb613-2"></a>    dev &lt;-<span class="st"> </span>LogModel<span class="op">$</span>deviance</span>
+<span id="cb613-3"><a href="regression.html#cb613-3"></a>    nullDev &lt;-<span class="st"> </span>LogModel<span class="op">$</span>null.deviance</span>
+<span id="cb613-4"><a href="regression.html#cb613-4"></a>    modelN &lt;-<span class="st"> </span><span class="kw">length</span>(LogModel<span class="op">$</span>fitted.values)</span>
+<span id="cb613-5"><a href="regression.html#cb613-5"></a>    R.l &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>dev<span class="op">/</span>nullDev</span>
+<span id="cb613-6"><a href="regression.html#cb613-6"></a>    R.cs &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(nullDev <span class="op">-</span><span class="st"> </span>dev)<span class="op">/</span>modelN)</span>
+<span id="cb613-7"><a href="regression.html#cb613-7"></a>    R.n &lt;-<span class="st"> </span>R.cs<span class="op">/</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">exp</span>(<span class="op">-</span>(nullDev<span class="op">/</span>modelN))))</span>
+<span id="cb613-8"><a href="regression.html#cb613-8"></a>    <span class="kw">cat</span>(<span class="st">&quot;Pseudo R^2 for logistic regression</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb613-9"><a href="regression.html#cb613-9"></a>    <span class="kw">cat</span>(<span class="st">&quot;Hosmer and Lemeshow R^2  &quot;</span>, <span class="kw">round</span>(R.l, <span class="dv">3</span>), </span>
+<span id="cb613-10"><a href="regression.html#cb613-10"></a>        <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb613-11"><a href="regression.html#cb613-11"></a>    <span class="kw">cat</span>(<span class="st">&quot;Cox and Snell R^2        &quot;</span>, <span class="kw">round</span>(R.cs, <span class="dv">3</span>), </span>
+<span id="cb613-12"><a href="regression.html#cb613-12"></a>        <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb613-13"><a href="regression.html#cb613-13"></a>    <span class="kw">cat</span>(<span class="st">&quot;Nagelkerke R^2           &quot;</span>, <span class="kw">round</span>(R.n, <span class="dv">3</span>), </span>
+<span id="cb613-14"><a href="regression.html#cb613-14"></a>        <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb613-15"><a href="regression.html#cb613-15"></a>}</span>
+<span id="cb613-16"><a href="regression.html#cb613-16"></a><span class="co"># Inspect Pseudo R2s</span></span>
+<span id="cb613-17"><a href="regression.html#cb613-17"></a><span class="kw">logisticPseudoR2s</span>(logit_model)</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.52 
 ## Cox and Snell R^2         0.486 
 ## Nagelkerke R^2            0.673</code></pre>
 <p>The coefficients of the model give the change in the <a href="https://en.wikipedia.org/wiki/Odds#Statistical_usage">log odds</a> of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being <span class="math inline">\(1\)</span>. In order to get the odds ratios we can simply take the exponent of the coefficients.</p>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="regression.html#cb606-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(logit_model))</span></code></pre></div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="regression.html#cb615-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(logit_model))</span></code></pre></div>
 <pre><code>##          (Intercept)         danceability 
 ##        0.00004355897 26532731.71142345294</code></pre>
 <p>Notice that the coefficient is extremely large. That is (partly) due to the fact that the danceability variable is constrained to values between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> and the coefficients are for a unit change. We can make the “unit-change” interpretation more meaningful by multiplying the danceability index by <span class="math inline">\(100\)</span>. This linear transformation does not affect the model fit or the p-values.</p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="regression.html#cb608-1"></a><span class="co"># Re-scale independet variable</span></span>
-<span id="cb608-2"><a href="regression.html#cb608-2"></a>chart_data<span class="op">$</span>danceability_<span class="dv">100</span> &lt;-<span class="st"> </span>chart_data<span class="op">$</span>danceability <span class="op">*</span><span class="st"> </span></span>
-<span id="cb608-3"><a href="regression.html#cb608-3"></a><span class="st">    </span><span class="dv">100</span></span>
-<span id="cb608-4"><a href="regression.html#cb608-4"></a><span class="co"># Run the regression model</span></span>
-<span id="cb608-5"><a href="regression.html#cb608-5"></a>logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span>, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
-<span id="cb608-6"><a href="regression.html#cb608-6"></a>    <span class="dt">data =</span> chart_data)</span>
-<span id="cb608-7"><a href="regression.html#cb608-7"></a><span class="co"># Inspect model summary</span></span>
-<span id="cb608-8"><a href="regression.html#cb608-8"></a><span class="kw">summary</span>(logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="regression.html#cb617-1"></a><span class="co"># Re-scale independet variable</span></span>
+<span id="cb617-2"><a href="regression.html#cb617-2"></a>chart_data<span class="op">$</span>danceability_<span class="dv">100</span> &lt;-<span class="st"> </span>chart_data<span class="op">$</span>danceability <span class="op">*</span><span class="st"> </span></span>
+<span id="cb617-3"><a href="regression.html#cb617-3"></a><span class="st">    </span><span class="dv">100</span></span>
+<span id="cb617-4"><a href="regression.html#cb617-4"></a><span class="co"># Run the regression model</span></span>
+<span id="cb617-5"><a href="regression.html#cb617-5"></a>logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span>, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
+<span id="cb617-6"><a href="regression.html#cb617-6"></a>    <span class="dt">data =</span> chart_data)</span>
+<span id="cb617-7"><a href="regression.html#cb617-7"></a><span class="co"># Inspect model summary</span></span>
+<span id="cb617-8"><a href="regression.html#cb617-8"></a><span class="kw">summary</span>(logit_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability_100, family = binomial(link = &quot;logit&quot;), 
@@ -2161,25 +2195,25 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## AIC: 262.49
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="regression.html#cb610-1"></a><span class="co"># Inspect Pseudo R2s</span></span>
-<span id="cb610-2"><a href="regression.html#cb610-2"></a><span class="kw">logisticPseudoR2s</span>(logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="regression.html#cb619-1"></a><span class="co"># Inspect Pseudo R2s</span></span>
+<span id="cb619-2"><a href="regression.html#cb619-2"></a><span class="kw">logisticPseudoR2s</span>(logit_model)</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.52 
 ## Cox and Snell R^2         0.486 
 ## Nagelkerke R^2            0.673</code></pre>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="regression.html#cb612-1"></a><span class="co"># Convert coefficients to odds ratios</span></span>
-<span id="cb612-2"><a href="regression.html#cb612-2"></a><span class="kw">exp</span>(<span class="kw">coef</span>(logit_model))</span></code></pre></div>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="regression.html#cb621-1"></a><span class="co"># Convert coefficients to odds ratios</span></span>
+<span id="cb621-2"><a href="regression.html#cb621-2"></a><span class="kw">exp</span>(<span class="kw">coef</span>(logit_model))</span></code></pre></div>
 <pre><code>##      (Intercept) danceability_100 
 ##    0.00004355897    1.18641825295</code></pre>
 <p>We observe that danceability positively affects the likelihood of becoming at top-10 hit. To get the confidence intervals for the coefficients we can use the same function as with OLS</p>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="regression.html#cb614-1"></a><span class="kw">confint</span>(logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="regression.html#cb623-1"></a><span class="kw">confint</span>(logit_model)</span></code></pre></div>
 <pre><code>##                        2.5 %     97.5 %
 ## (Intercept)      -11.9208213 -8.3954496
 ## danceability_100   0.1415602  0.2045529</code></pre>
 <p>In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the <code>logitmfx(...)</code> function from the <code>mfx</code> package. If we set <code>logitmfx(logit_model, data = my_data, atmean = FALSE)</code> we calculate the latter. Setting <code>atmean = TRUE</code> will calculate the former. However, in general we are most interested in the sign and significance of the coefficient.</p>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="regression.html#cb616-1"></a><span class="kw">library</span>(mfx)</span>
-<span id="cb616-2"><a href="regression.html#cb616-2"></a><span class="co"># Average partial effect</span></span>
-<span id="cb616-3"><a href="regression.html#cb616-3"></a><span class="kw">logitmfx</span>(logit_model, <span class="dt">data =</span> chart_data, <span class="dt">atmean =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="regression.html#cb625-1"></a><span class="kw">library</span>(mfx)</span>
+<span id="cb625-2"><a href="regression.html#cb625-2"></a><span class="co"># Average partial effect</span></span>
+<span id="cb625-3"><a href="regression.html#cb625-3"></a><span class="kw">logitmfx</span>(logit_model, <span class="dt">data =</span> chart_data, <span class="dt">atmean =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## Call:
 ## logitmfx(formula = logit_model, data = chart_data, atmean = FALSE)
 ## 
@@ -2190,34 +2224,34 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This now gives the average partial effects in percentage points. An additional point on the danceability scale (from <span class="math inline">\(1\)</span> to <span class="math inline">\(100\)</span>), on average, makes it <span class="math inline">\(1.57%\)</span> more likely for a song to become at top-10 hit.</p>
 <p>To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value <span class="math inline">\(+1\)</span>. For example if we are interested in how much more likely a song with 51 compared to 50 danceability is to become a hit we can simply calculate the following</p>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="regression.html#cb618-1"></a><span class="co"># Probability of a top 10 hit with a danceability</span></span>
-<span id="cb618-2"><a href="regression.html#cb618-2"></a><span class="co"># of 50</span></span>
-<span id="cb618-3"><a href="regression.html#cb618-3"></a>prob_<span class="dv">50</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">1</span>, </span>
-<span id="cb618-4"><a href="regression.html#cb618-4"></a>    <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span></span>
-<span id="cb618-5"><a href="regression.html#cb618-5"></a><span class="st">    </span><span class="dv">50</span>))</span>
-<span id="cb618-6"><a href="regression.html#cb618-6"></a>prob_<span class="dv">50</span></span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="regression.html#cb627-1"></a><span class="co"># Probability of a top 10 hit with a danceability</span></span>
+<span id="cb627-2"><a href="regression.html#cb627-2"></a><span class="co"># of 50</span></span>
+<span id="cb627-3"><a href="regression.html#cb627-3"></a>prob_<span class="dv">50</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">1</span>, </span>
+<span id="cb627-4"><a href="regression.html#cb627-4"></a>    <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span></span>
+<span id="cb627-5"><a href="regression.html#cb627-5"></a><span class="st">    </span><span class="dv">50</span>))</span>
+<span id="cb627-6"><a href="regression.html#cb627-6"></a>prob_<span class="dv">50</span></span></code></pre></div>
 <pre><code>## [1] 0.224372</code></pre>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="regression.html#cb620-1"></a><span class="co"># Probability of a top 10 hit with a danceability</span></span>
-<span id="cb620-2"><a href="regression.html#cb620-2"></a><span class="co"># of 51</span></span>
-<span id="cb620-3"><a href="regression.html#cb620-3"></a>prob_<span class="dv">51</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">1</span>, </span>
-<span id="cb620-4"><a href="regression.html#cb620-4"></a>    <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span></span>
-<span id="cb620-5"><a href="regression.html#cb620-5"></a><span class="st">    </span><span class="dv">51</span>))</span>
-<span id="cb620-6"><a href="regression.html#cb620-6"></a>prob_<span class="dv">51</span></span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="regression.html#cb629-1"></a><span class="co"># Probability of a top 10 hit with a danceability</span></span>
+<span id="cb629-2"><a href="regression.html#cb629-2"></a><span class="co"># of 51</span></span>
+<span id="cb629-3"><a href="regression.html#cb629-3"></a>prob_<span class="dv">51</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">1</span>, </span>
+<span id="cb629-4"><a href="regression.html#cb629-4"></a>    <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span></span>
+<span id="cb629-5"><a href="regression.html#cb629-5"></a><span class="st">    </span><span class="dv">51</span>))</span>
+<span id="cb629-6"><a href="regression.html#cb629-6"></a>prob_<span class="dv">51</span></span></code></pre></div>
 <pre><code>## [1] 0.266199</code></pre>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="regression.html#cb622-1"></a><span class="co"># Odds ratio</span></span>
-<span id="cb622-2"><a href="regression.html#cb622-2"></a>prob_<span class="dv">51</span><span class="op">/</span>prob_<span class="dv">50</span></span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="regression.html#cb631-1"></a><span class="co"># Odds ratio</span></span>
+<span id="cb631-2"><a href="regression.html#cb631-2"></a>prob_<span class="dv">51</span><span class="op">/</span>prob_<span class="dv">50</span></span></code></pre></div>
 <pre><code>## [1] 1.186418</code></pre>
 <p>So the odds are 20% higher at 51 than at 50.</p>
 <div id="logistic-model-with-multiple-predictors" class="section level4">
 <h4><span class="header-section-number">7.6.3.1</span> Logistic model with multiple predictors</h4>
 <p>Of course we can also use multiple predictors in logistic regression as shown in the formula above. We might want to add spotify followers (in million) and weeks since the release of the song.</p>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="regression.html#cb624-1"></a>chart_data<span class="op">$</span>spotify_followers_m &lt;-<span class="st"> </span>chart_data<span class="op">$</span>spotifyFollowers<span class="op">/</span><span class="dv">1000000</span></span>
-<span id="cb624-2"><a href="regression.html#cb624-2"></a>chart_data<span class="op">$</span>weeks_since_release &lt;-<span class="st"> </span>chart_data<span class="op">$</span>daysSinceRelease<span class="op">/</span><span class="dv">7</span></span></code></pre></div>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="regression.html#cb633-1"></a>chart_data<span class="op">$</span>spotify_followers_m &lt;-<span class="st"> </span>chart_data<span class="op">$</span>spotifyFollowers<span class="op">/</span><span class="dv">1000000</span></span>
+<span id="cb633-2"><a href="regression.html#cb633-2"></a>chart_data<span class="op">$</span>weeks_since_release &lt;-<span class="st"> </span>chart_data<span class="op">$</span>daysSinceRelease<span class="op">/</span><span class="dv">7</span></span></code></pre></div>
 <p>Again, the familiar formula interface can be used with the <code>glm()</code> function. All the model summaries shown above still work with multiple predictors.</p>
-<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="regression.html#cb625-1"></a>multiple_logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span> <span class="op">+</span><span class="st"> </span></span>
-<span id="cb625-2"><a href="regression.html#cb625-2"></a><span class="st">    </span>spotify_followers_m <span class="op">+</span><span class="st"> </span>weeks_since_release, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
-<span id="cb625-3"><a href="regression.html#cb625-3"></a>    <span class="dt">data =</span> chart_data)</span>
-<span id="cb625-4"><a href="regression.html#cb625-4"></a><span class="kw">summary</span>(multiple_logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="regression.html#cb634-1"></a>multiple_logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb634-2"><a href="regression.html#cb634-2"></a><span class="st">    </span>spotify_followers_m <span class="op">+</span><span class="st"> </span>weeks_since_release, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
+<span id="cb634-3"><a href="regression.html#cb634-3"></a>    <span class="dt">data =</span> chart_data)</span>
+<span id="cb634-4"><a href="regression.html#cb634-4"></a><span class="kw">summary</span>(multiple_logit_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability_100 + spotify_followers_m + 
@@ -2244,15 +2278,15 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## AIC: 247.15
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="regression.html#cb627-1"></a><span class="kw">logisticPseudoR2s</span>(multiple_logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="regression.html#cb636-1"></a><span class="kw">logisticPseudoR2s</span>(multiple_logit_model)</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.553 
 ## Cox and Snell R^2         0.508 
 ## Nagelkerke R^2            0.703</code></pre>
-<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="regression.html#cb629-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(multiple_logit_model))</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="regression.html#cb638-1"></a><span class="kw">exp</span>(<span class="kw">coef</span>(multiple_logit_model))</span></code></pre></div>
 <pre><code>##         (Intercept)    danceability_100 spotify_followers_m weeks_since_release 
 ##        0.0000674744        1.1808513243        1.2186174345        0.9871076460</code></pre>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="regression.html#cb631-1"></a><span class="kw">confint</span>(multiple_logit_model)</span></code></pre></div>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="regression.html#cb640-1"></a><span class="kw">confint</span>(multiple_logit_model)</span></code></pre></div>
 <pre><code>##                            2.5 %       97.5 %
 ## (Intercept)         -11.67983072 -7.782122558
 ## danceability_100      0.13625795  0.200625438
@@ -2263,11 +2297,11 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 <h4><span class="header-section-number">7.6.3.2</span> Model selection</h4>
 <p>The question remains, whether a variable <em>should</em> be added to the model. We will present two methods for model selection for logistic regression. The first is based on the <em>Akaike Information Criterium</em> (AIC). It is reported with the summary output for logit models. The value of the AIC is <strong>relative</strong>, meaning that it has no interpretation by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models.</p>
 <p>For example, consider the following model, where we exclude the <code>followers</code> covariate. Seeing as it was able to contribute significantly to the explanatory power of the model, the AIC increases, indicating that the model including <code>followers</code> is better suited to explain the data. We always want the lowest possible AIC.</p>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="regression.html#cb633-1"></a>multiple_logit_model2 &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span> <span class="op">+</span><span class="st"> </span></span>
-<span id="cb633-2"><a href="regression.html#cb633-2"></a><span class="st">    </span>weeks_since_release, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
-<span id="cb633-3"><a href="regression.html#cb633-3"></a>    <span class="dt">data =</span> chart_data)</span>
-<span id="cb633-4"><a href="regression.html#cb633-4"></a></span>
-<span id="cb633-5"><a href="regression.html#cb633-5"></a><span class="kw">summary</span>(multiple_logit_model2)</span></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="regression.html#cb642-1"></a>multiple_logit_model2 &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span> <span class="op">+</span><span class="st"> </span></span>
+<span id="cb642-2"><a href="regression.html#cb642-2"></a><span class="st">    </span>weeks_since_release, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
+<span id="cb642-3"><a href="regression.html#cb642-3"></a>    <span class="dt">data =</span> chart_data)</span>
+<span id="cb642-4"><a href="regression.html#cb642-4"></a></span>
+<span id="cb642-5"><a href="regression.html#cb642-5"></a><span class="kw">summary</span>(multiple_logit_model2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability_100 + weeks_since_release, 
@@ -2293,8 +2327,8 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## AIC: 256.12
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<p>As a second measure for variable selection, you can use the pseudo <span class="math inline">\(R^2\)</span>s as shown above. The fit is distinctly worse according to all three values presented here, when excluding the spotify followers.</p>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="regression.html#cb635-1"></a><span class="kw">logisticPseudoR2s</span>(multiple_logit_model2)</span></code></pre></div>
+<p>As a second measure for variable selection, you can use the pseudo <span class="math inline">\(R^2\)</span>s as shown above. The fit is distinctly worse according to all three values presented here, when excluding the Spotify followers.</p>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="regression.html#cb644-1"></a><span class="kw">logisticPseudoR2s</span>(multiple_logit_model2)</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.532 
 ## Cox and Snell R^2         0.495 
@@ -2303,13 +2337,13 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 <div id="predictions" class="section level4">
 <h4><span class="header-section-number">7.6.3.3</span> Predictions</h4>
 <p>We can predict the probability given an observation using the <code>predict(my_logit, newdata = ..., type = "response")</code> function. Replace <code>...</code> with the observed values for which you would like to predict the outcome variable.</p>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="regression.html#cb637-1"></a><span class="co"># Prediction for one observation</span></span>
-<span id="cb637-2"><a href="regression.html#cb637-2"></a><span class="kw">predict</span>(multiple_logit_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">danceability_100 =</span> <span class="dv">50</span>, </span>
-<span id="cb637-3"><a href="regression.html#cb637-3"></a>    <span class="dt">spotify_followers_m =</span> <span class="dv">10</span>, <span class="dt">weeks_since_release =</span> <span class="dv">1</span>), </span>
-<span id="cb637-4"><a href="regression.html#cb637-4"></a>    <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="regression.html#cb646-1"></a><span class="co"># Prediction for one observation</span></span>
+<span id="cb646-2"><a href="regression.html#cb646-2"></a><span class="kw">predict</span>(multiple_logit_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">danceability_100 =</span> <span class="dv">50</span>, </span>
+<span id="cb646-3"><a href="regression.html#cb646-3"></a>    <span class="dt">spotify_followers_m =</span> <span class="dv">10</span>, <span class="dt">weeks_since_release =</span> <span class="dv">1</span>), </span>
+<span id="cb646-4"><a href="regression.html#cb646-4"></a>    <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <pre><code>##         1 
 ## 0.6619986</code></pre>
-<p>The prediction indicates that a song with danceability of <span class="math inline">\(50\)</span> from an artist with <span class="math inline">\(10M\)</span> spotify followers has a <span class="math inline">\(66%\)</span> chance of being in the top-10, 1 week after its release.</p>
+<p>The prediction indicates that a song with danceability of <span class="math inline">\(50\)</span> from an artist with <span class="math inline">\(10M\)</span> Spotify followers has a <span class="math inline">\(66%\)</span> chance of being in the top-10, 1 week after its release.</p>
 </div>
 <div id="perfect-prediction-logit" class="section level4">
 <h4><span class="header-section-number">7.6.3.4</span> Perfect Prediction Logit</h4>
@@ -2319,12 +2353,12 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 <div id="example" class="section level5">
 <h5><span class="header-section-number">7.6.3.4.1</span> Example</h5>
 <p>In this example data <span class="math inline">\(Y = 0\)</span> if <span class="math inline">\(x_1 &lt;0\)</span> and <span class="math inline">\(Y=1\)</span> if <span class="math inline">\(x_1&gt;0\)</span> and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are <span class="math inline">\(1\)</span> despite <span class="math inline">\(x_1\)</span> being a predictor of <span class="math inline">\(Y\)</span>. Thus, we turn to the penalized-likelihood version. This model correctly indicates that <span class="math inline">\(x_1\)</span> is in fact a predictor for <span class="math inline">\(Y\)</span> as the coefficient is significant.</p>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="regression.html#cb639-1"></a>Y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb639-2"><a href="regression.html#cb639-2"></a>X &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">-3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">11</span>), <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, </span>
-<span id="cb639-3"><a href="regression.html#cb639-3"></a>    <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb639-4"><a href="regression.html#cb639-4"></a></span>
-<span id="cb639-5"><a href="regression.html#cb639-5"></a><span class="co"># Perfect prediction with regular logit</span></span>
-<span id="cb639-6"><a href="regression.html#cb639-6"></a><span class="kw">summary</span>(<span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>X, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="regression.html#cb648-1"></a>Y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb648-2"><a href="regression.html#cb648-2"></a>X &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">-3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">11</span>), <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, </span>
+<span id="cb648-3"><a href="regression.html#cb648-3"></a>    <span class="dv">-1</span>, <span class="dv">-1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb648-4"><a href="regression.html#cb648-4"></a></span>
+<span id="cb648-5"><a href="regression.html#cb648-5"></a><span class="co"># Perfect prediction with regular logit</span></span>
+<span id="cb648-6"><a href="regression.html#cb648-6"></a><span class="kw">summary</span>(<span class="kw">glm</span>(Y <span class="op">~</span><span class="st"> </span>X, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>)))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Y ~ X, family = binomial(link = &quot;logit&quot;))
@@ -2348,10 +2382,10 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## AIC: 6
 ## 
 ## Number of Fisher Scoring iterations: 24</code></pre>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="regression.html#cb641-1"></a><span class="kw">library</span>(logistf)</span>
-<span id="cb641-2"><a href="regression.html#cb641-2"></a><span class="co"># Perfect prediction with penalized-likelihood</span></span>
-<span id="cb641-3"><a href="regression.html#cb641-3"></a><span class="co"># logit</span></span>
-<span id="cb641-4"><a href="regression.html#cb641-4"></a><span class="kw">summary</span>(<span class="kw">logistf</span>(Y <span class="op">~</span><span class="st"> </span>X))</span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="regression.html#cb650-1"></a><span class="kw">library</span>(logistf)</span>
+<span id="cb650-2"><a href="regression.html#cb650-2"></a><span class="co"># Perfect prediction with penalized-likelihood</span></span>
+<span id="cb650-3"><a href="regression.html#cb650-3"></a><span class="co"># logit</span></span>
+<span id="cb650-4"><a href="regression.html#cb650-4"></a><span class="kw">summary</span>(<span class="kw">logistf</span>(Y <span class="op">~</span><span class="st"> </span>X))</span></code></pre></div>
 <pre><code>## logistf(formula = Y ~ X)
 ## 
 ## Model fitted by Penalized ML

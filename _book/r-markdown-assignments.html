@@ -469,7 +469,7 @@ summary(cars)</p>
 summary(cars)</p>
 <p>plot(dist~speed, cars)
 ```</p>
-<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="r-markdown-assignments.html#cb713-1"></a><span class="kw">summary</span>(cars)</span></code></pre></div>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="r-markdown-assignments.html#cb722-1"></a><span class="kw">summary</span>(cars)</span></code></pre></div>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
@@ -477,7 +477,7 @@ summary(cars)</p>
 ##  Mean   :15.4   Mean   : 42.98  
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="r-markdown-assignments.html#cb715-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</span></code></pre></div>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="r-markdown-assignments.html#cb724-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</span></code></pre></div>
 <p><img src="_main_files/figure-html/cars2-1.png" width="672" /></p>
 <p>A good overview of all available global/chunk options can be found <a href="https://yihui.name/knitr/options/#chunk_options">here</a>.</p>
 </div>
@@ -743,15 +743,15 @@ Code
 <p>When you are done with your analysis, click on “Knit to HTML” button above the code editor. This will create a HTML document of your results in the folder where the “assignment.Rmd” file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn@WU. The file name should be “assignment2_studendID_name.html”.</p>
 <p><strong>Load and inspect data</strong></p>
 <p>Let´s load the data first and inspect the contained variables:</p>
-<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="r-markdown-assignments.html#cb719-1"></a>movie_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat&quot;</span>, </span>
-<span id="cb719-2"><a href="r-markdown-assignments.html#cb719-2"></a>    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
-<span id="cb719-3"><a href="r-markdown-assignments.html#cb719-3"></a><span class="kw">head</span>(movie_data)</span></code></pre></div>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="r-markdown-assignments.html#cb728-1"></a>movie_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat&quot;</span>, </span>
+<span id="cb728-2"><a href="r-markdown-assignments.html#cb728-2"></a>    <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
+<span id="cb728-3"><a href="r-markdown-assignments.html#cb728-3"></a><span class="kw">head</span>(movie_data)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["movieID"],"name":[1],"type":["int"],"align":["right"]},{"label":["online_advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams_sd"],"name":[3],"type":["int"],"align":["right"]},{"label":["streams_hd"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"2365","4":"1432"},{"1":"2","2":"0","3":"1752","4":"2305"},{"1":"3","2":"0","3":"1351","4":"1197"},{"1":"4","2":"0","3":"2495","4":"1112"},{"1":"5","2":"0","3":"3883","4":"1364"},{"1":"6","2":"1","3":"3933","4":"1202"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="r-markdown-assignments.html#cb720-1"></a><span class="kw">str</span>(movie_data)</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="r-markdown-assignments.html#cb729-1"></a><span class="kw">str</span>(movie_data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    200 obs. of  4 variables:
 ##  $ movieID           : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ online_advertising: int  0 0 0 0 0 1 1 1 0 1 ...
@@ -759,48 +759,48 @@ Code
 ##  $ streams_hd        : int  1432 2305 1197 1112 1364 1202 1363 3502 2047 1104 ...</code></pre>
 <p><strong>Load packages</strong></p>
 <p>Next, we load the packages that we will be using to answer the questions:</p>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="r-markdown-assignments.html#cb722-1"></a><span class="kw">library</span>(pastecs)</span>
-<span id="cb722-2"><a href="r-markdown-assignments.html#cb722-2"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb722-3"><a href="r-markdown-assignments.html#cb722-3"></a><span class="kw">library</span>(psych)</span>
-<span id="cb722-4"><a href="r-markdown-assignments.html#cb722-4"></a><span class="kw">library</span>(pwr)</span>
-<span id="cb722-5"><a href="r-markdown-assignments.html#cb722-5"></a><span class="kw">library</span>(lsr)</span>
-<span id="cb722-6"><a href="r-markdown-assignments.html#cb722-6"></a><span class="kw">library</span>(reshape2)</span>
-<span id="cb722-7"><a href="r-markdown-assignments.html#cb722-7"></a><span class="kw">library</span>(ggstatsplot)</span>
-<span id="cb722-8"><a href="r-markdown-assignments.html#cb722-8"></a><span class="kw">library</span>(Rmisc)</span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="r-markdown-assignments.html#cb731-1"></a><span class="kw">library</span>(pastecs)</span>
+<span id="cb731-2"><a href="r-markdown-assignments.html#cb731-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb731-3"><a href="r-markdown-assignments.html#cb731-3"></a><span class="kw">library</span>(psych)</span>
+<span id="cb731-4"><a href="r-markdown-assignments.html#cb731-4"></a><span class="kw">library</span>(pwr)</span>
+<span id="cb731-5"><a href="r-markdown-assignments.html#cb731-5"></a><span class="kw">library</span>(lsr)</span>
+<span id="cb731-6"><a href="r-markdown-assignments.html#cb731-6"></a><span class="kw">library</span>(reshape2)</span>
+<span id="cb731-7"><a href="r-markdown-assignments.html#cb731-7"></a><span class="kw">library</span>(ggstatsplot)</span>
+<span id="cb731-8"><a href="r-markdown-assignments.html#cb731-8"></a><span class="kw">library</span>(Rmisc)</span></code></pre></div>
 <p><strong>Question 1</strong></p>
 <p>To compute the confidence intervals for SD and HD streams we will need three things: 1) the mean <span class="math inline">\(\bar x\)</span>, 2) the standard error (<span class="math inline">\(s \over \sqrt{n}\)</span>), and 3) the critical value for a t-distribution (<span class="math inline">\(t_{crit}\)</span>; we will use a t-distribution, because we are not sure of the variance in the population).</p>
-<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="r-markdown-assignments.html#cb723-1"></a><span class="co"># Calculate components of confidence interval</span></span>
-<span id="cb723-2"><a href="r-markdown-assignments.html#cb723-2"></a><span class="co"># formula</span></span>
-<span id="cb723-3"><a href="r-markdown-assignments.html#cb723-3"></a>mean_sd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_sd)</span>
-<span id="cb723-4"><a href="r-markdown-assignments.html#cb723-4"></a>mean_hd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_hd)</span>
-<span id="cb723-5"><a href="r-markdown-assignments.html#cb723-5"></a></span>
-<span id="cb723-6"><a href="r-markdown-assignments.html#cb723-6"></a>sd_sd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_sd)</span>
-<span id="cb723-7"><a href="r-markdown-assignments.html#cb723-7"></a>sd_hd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_hd)</span>
-<span id="cb723-8"><a href="r-markdown-assignments.html#cb723-8"></a></span>
-<span id="cb723-9"><a href="r-markdown-assignments.html#cb723-9"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(movie_data)</span>
-<span id="cb723-10"><a href="r-markdown-assignments.html#cb723-10"></a>se_sd &lt;-<span class="st"> </span>sd_sd<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb723-11"><a href="r-markdown-assignments.html#cb723-11"></a>se_hd &lt;-<span class="st"> </span>sd_hd<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
-<span id="cb723-12"><a href="r-markdown-assignments.html#cb723-12"></a></span>
-<span id="cb723-13"><a href="r-markdown-assignments.html#cb723-13"></a>df &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb723-14"><a href="r-markdown-assignments.html#cb723-14"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, df)</span></code></pre></div>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="r-markdown-assignments.html#cb732-1"></a><span class="co"># Calculate components of confidence interval</span></span>
+<span id="cb732-2"><a href="r-markdown-assignments.html#cb732-2"></a><span class="co"># formula</span></span>
+<span id="cb732-3"><a href="r-markdown-assignments.html#cb732-3"></a>mean_sd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_sd)</span>
+<span id="cb732-4"><a href="r-markdown-assignments.html#cb732-4"></a>mean_hd &lt;-<span class="st"> </span><span class="kw">mean</span>(movie_data<span class="op">$</span>streams_hd)</span>
+<span id="cb732-5"><a href="r-markdown-assignments.html#cb732-5"></a></span>
+<span id="cb732-6"><a href="r-markdown-assignments.html#cb732-6"></a>sd_sd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_sd)</span>
+<span id="cb732-7"><a href="r-markdown-assignments.html#cb732-7"></a>sd_hd &lt;-<span class="st"> </span><span class="kw">sd</span>(movie_data<span class="op">$</span>streams_hd)</span>
+<span id="cb732-8"><a href="r-markdown-assignments.html#cb732-8"></a></span>
+<span id="cb732-9"><a href="r-markdown-assignments.html#cb732-9"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(movie_data)</span>
+<span id="cb732-10"><a href="r-markdown-assignments.html#cb732-10"></a>se_sd &lt;-<span class="st"> </span>sd_sd<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb732-11"><a href="r-markdown-assignments.html#cb732-11"></a>se_hd &lt;-<span class="st"> </span>sd_hd<span class="op">/</span><span class="kw">sqrt</span>(n)</span>
+<span id="cb732-12"><a href="r-markdown-assignments.html#cb732-12"></a></span>
+<span id="cb732-13"><a href="r-markdown-assignments.html#cb732-13"></a>df &lt;-<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb732-14"><a href="r-markdown-assignments.html#cb732-14"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, df)</span></code></pre></div>
 <p>Now the confidence intervals for streams in SD and HD quality can be computed as:</p>
-<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="r-markdown-assignments.html#cb724-1"></a><span class="co"># Interval for SD movies</span></span>
-<span id="cb724-2"><a href="r-markdown-assignments.html#cb724-2"></a>ci_lower_sd &lt;-<span class="st"> </span>mean_sd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</span>
-<span id="cb724-3"><a href="r-markdown-assignments.html#cb724-3"></a>ci_upper_sd &lt;-<span class="st"> </span>mean_sd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</span>
-<span id="cb724-4"><a href="r-markdown-assignments.html#cb724-4"></a></span>
-<span id="cb724-5"><a href="r-markdown-assignments.html#cb724-5"></a><span class="co"># Interval for HD movies</span></span>
-<span id="cb724-6"><a href="r-markdown-assignments.html#cb724-6"></a>ci_lower_hd &lt;-<span class="st"> </span>mean_hd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</span>
-<span id="cb724-7"><a href="r-markdown-assignments.html#cb724-7"></a>ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</span></code></pre></div>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="r-markdown-assignments.html#cb733-1"></a><span class="co"># Interval for SD movies</span></span>
+<span id="cb733-2"><a href="r-markdown-assignments.html#cb733-2"></a>ci_lower_sd &lt;-<span class="st"> </span>mean_sd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</span>
+<span id="cb733-3"><a href="r-markdown-assignments.html#cb733-3"></a>ci_upper_sd &lt;-<span class="st"> </span>mean_sd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_sd</span>
+<span id="cb733-4"><a href="r-markdown-assignments.html#cb733-4"></a></span>
+<span id="cb733-5"><a href="r-markdown-assignments.html#cb733-5"></a><span class="co"># Interval for HD movies</span></span>
+<span id="cb733-6"><a href="r-markdown-assignments.html#cb733-6"></a>ci_lower_hd &lt;-<span class="st"> </span>mean_hd <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</span>
+<span id="cb733-7"><a href="r-markdown-assignments.html#cb733-7"></a>ci_upper_hd &lt;-<span class="st"> </span>mean_hd <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_hd</span></code></pre></div>
 <p>Hence, the CI for SD movies is given by:</p>
-<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="r-markdown-assignments.html#cb725-1"></a>ci_lower_sd</span></code></pre></div>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="r-markdown-assignments.html#cb734-1"></a>ci_lower_sd</span></code></pre></div>
 <pre><code>## [1] 2527.979</code></pre>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="r-markdown-assignments.html#cb727-1"></a>ci_upper_sd</span></code></pre></div>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="r-markdown-assignments.html#cb736-1"></a>ci_upper_sd</span></code></pre></div>
 <pre><code>## [1] 2827.851</code></pre>
 <p><span class="math inline">\(CI_{SD} = [2527.97,2827.85]\)</span></p>
 <p>Similarly, the CI for HD movies is given by</p>
-<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="r-markdown-assignments.html#cb729-1"></a>ci_lower_hd</span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="r-markdown-assignments.html#cb738-1"></a>ci_lower_hd</span></code></pre></div>
 <pre><code>## [1] 1728.51</code></pre>
-<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="r-markdown-assignments.html#cb731-1"></a>ci_upper_hd</span></code></pre></div>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="r-markdown-assignments.html#cb740-1"></a>ci_upper_hd</span></code></pre></div>
 <pre><code>## [1] 1940.52</code></pre>
 <p><span class="math inline">\(CI_{HD} = [1728.51,1940.52]\)</span></p>
 <p>The intervals can be interpreted as follows: If we would take 100 samples, calculate the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals.</p>
@@ -812,27 +812,27 @@ Code
 <p>The same approach can be used for our HD streams:</p>
 <p><span class="math display">\[H_0: \mu_0 = 1700 \\ H_1: \mu_0 \neq 1700 \]</span></p>
 <p>We can first have a quick look at the descriptive statistics:</p>
-<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="r-markdown-assignments.html#cb733-1"></a><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</span></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="r-markdown-assignments.html#cb742-1"></a><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</span></code></pre></div>
 <pre><code>##    vars   n    mean      sd median trimmed     mad min  max range skew kurtosis
 ## X1    1 200 2677.92 1075.28   2732 2653.68 1064.51 654 5709  5055  0.2    -0.41
 ##       se
 ## X1 76.03</code></pre>
-<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="r-markdown-assignments.html#cb735-1"></a><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</span></code></pre></div>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="r-markdown-assignments.html#cb744-1"></a><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</span></code></pre></div>
 <pre><code>##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
 ## X1    1 200 1834.52 760.23 1668.5  1761.9 578.21 246 4305  4059 0.85     0.42
 ##       se
 ## X1 53.76</code></pre>
 <p>As we can see, the differences between SD/HD and the week before don´t seem to be extraordinary high. To visualize the distribution of the data, we can create histograms:</p>
-<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="r-markdown-assignments.html#cb737-1"></a><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </span>
-<span id="cb737-2"><a href="r-markdown-assignments.html#cb737-2"></a>    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of SD stremas&quot;</span>, </span>
-<span id="cb737-3"><a href="r-markdown-assignments.html#cb737-3"></a>    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="r-markdown-assignments.html#cb746-1"></a><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_sd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb746-2"><a href="r-markdown-assignments.html#cb746-2"></a>    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of SD stremas&quot;</span>, </span>
+<span id="cb746-3"><a href="r-markdown-assignments.html#cb746-3"></a>    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-472-1.png" width="672" /></p>
-<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="r-markdown-assignments.html#cb738-1"></a><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </span>
-<span id="cb738-2"><a href="r-markdown-assignments.html#cb738-2"></a>    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of HD streams&quot;</span>, </span>
-<span id="cb738-3"><a href="r-markdown-assignments.html#cb738-3"></a>    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="r-markdown-assignments.html#cb747-1"></a><span class="kw">ggplot</span>(movie_data, <span class="kw">aes</span>(streams_hd)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb747-2"><a href="r-markdown-assignments.html#cb747-2"></a>    <span class="dt">fill =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Number of HD streams&quot;</span>, </span>
+<span id="cb747-3"><a href="r-markdown-assignments.html#cb747-3"></a>    <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-472-2.png" width="672" /></p>
 <p>We can now conduct a one sample t-test to test for significance.</p>
-<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="r-markdown-assignments.html#cb739-1"></a><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_sd, <span class="dt">mu =</span> <span class="dv">2600</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="r-markdown-assignments.html#cb748-1"></a><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_sd, <span class="dt">mu =</span> <span class="dv">2600</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -844,7 +844,7 @@ Code
 ## sample estimates:
 ## mean of x 
 ##  2677.915</code></pre>
-<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="r-markdown-assignments.html#cb741-1"></a><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_hd, <span class="dt">mu =</span> <span class="dv">1700</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="r-markdown-assignments.html#cb750-1"></a><span class="kw">t.test</span>(movie_data<span class="op">$</span>streams_hd, <span class="dt">mu =</span> <span class="dv">1700</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -859,31 +859,31 @@ Code
 <p>For SD streams, we can conclude that the average number of SD streams watched in this week (2677.92) were not significantly different from the 2600 streams watched in the previous week, t(199) = 1.025, p &gt; .05 (95% CI = [2528; 2828]). This can be seen from the fact that the p-value is larger than 0.05. This is also evidenced by the fact that the null hypothesis (2600) is included in the range of plausible values given by the confidence interval.</p>
 <p>However for HD streams we see that the perceived mean in our sample (1834.52) is significantly higher compared to the previous week t(199) = 2.502, p &lt;.05 (95% CI = [1729; 1941]). This can be seen from the fact that the p-value is smaller than 0.05. This is also evidenced by the fact that the null hypothesis (1700) is not included in the range of plausible values given by the confidence interval.</p>
 <p>Alternatively, you could also use the <code>ggstatsplot</code> package to conduct the tests:</p>
-<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="r-markdown-assignments.html#cb743-1"></a><span class="kw">gghistostats</span>(<span class="dt">data =</span> movie_data, <span class="dt">x =</span> streams_sd, <span class="dt">title =</span> <span class="st">&quot;Distribution of SD streams&quot;</span>, </span>
-<span id="cb743-2"><a href="r-markdown-assignments.html#cb743-2"></a>    <span class="dt">type =</span> <span class="st">&quot;parametric&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">bar.measure =</span> <span class="st">&quot;mix&quot;</span>, </span>
-<span id="cb743-3"><a href="r-markdown-assignments.html#cb743-3"></a>    <span class="dt">test.value =</span> <span class="dv">2600</span>, <span class="dt">test.value.line =</span> <span class="ot">TRUE</span>, <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, </span>
-<span id="cb743-4"><a href="r-markdown-assignments.html#cb743-4"></a>    <span class="dt">test.value.color =</span> <span class="st">&quot;#0072B2&quot;</span>, <span class="dt">centrality.para =</span> <span class="st">&quot;mean&quot;</span>, </span>
-<span id="cb743-5"><a href="r-markdown-assignments.html#cb743-5"></a>    <span class="dt">centrality.color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">300</span>, <span class="dt">messages =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb743-6"><a href="r-markdown-assignments.html#cb743-6"></a>    <span class="dt">bf.message =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="r-markdown-assignments.html#cb752-1"></a><span class="kw">gghistostats</span>(<span class="dt">data =</span> movie_data, <span class="dt">x =</span> streams_sd, <span class="dt">title =</span> <span class="st">&quot;Distribution of SD streams&quot;</span>, </span>
+<span id="cb752-2"><a href="r-markdown-assignments.html#cb752-2"></a>    <span class="dt">type =</span> <span class="st">&quot;parametric&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">bar.measure =</span> <span class="st">&quot;mix&quot;</span>, </span>
+<span id="cb752-3"><a href="r-markdown-assignments.html#cb752-3"></a>    <span class="dt">test.value =</span> <span class="dv">2600</span>, <span class="dt">test.value.line =</span> <span class="ot">TRUE</span>, <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, </span>
+<span id="cb752-4"><a href="r-markdown-assignments.html#cb752-4"></a>    <span class="dt">test.value.color =</span> <span class="st">&quot;#0072B2&quot;</span>, <span class="dt">centrality.para =</span> <span class="st">&quot;mean&quot;</span>, </span>
+<span id="cb752-5"><a href="r-markdown-assignments.html#cb752-5"></a>    <span class="dt">centrality.color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">300</span>, <span class="dt">messages =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb752-6"><a href="r-markdown-assignments.html#cb752-6"></a>    <span class="dt">bf.message =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-474-1.png" width="672" /></p>
-<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="r-markdown-assignments.html#cb744-1"></a><span class="kw">gghistostats</span>(<span class="dt">data =</span> movie_data, <span class="dt">x =</span> streams_hd, <span class="dt">title =</span> <span class="st">&quot;Distribution of HD streams&quot;</span>, </span>
-<span id="cb744-2"><a href="r-markdown-assignments.html#cb744-2"></a>    <span class="dt">type =</span> <span class="st">&quot;parametric&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">bar.measure =</span> <span class="st">&quot;mix&quot;</span>, </span>
-<span id="cb744-3"><a href="r-markdown-assignments.html#cb744-3"></a>    <span class="dt">test.value =</span> <span class="dv">2600</span>, <span class="dt">test.value.line =</span> <span class="ot">TRUE</span>, <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, </span>
-<span id="cb744-4"><a href="r-markdown-assignments.html#cb744-4"></a>    <span class="dt">test.value.color =</span> <span class="st">&quot;#0072B2&quot;</span>, <span class="dt">centrality.para =</span> <span class="st">&quot;mean&quot;</span>, </span>
-<span id="cb744-5"><a href="r-markdown-assignments.html#cb744-5"></a>    <span class="dt">centrality.color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">300</span>, <span class="dt">messages =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb744-6"><a href="r-markdown-assignments.html#cb744-6"></a>    <span class="dt">bf.message =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="r-markdown-assignments.html#cb753-1"></a><span class="kw">gghistostats</span>(<span class="dt">data =</span> movie_data, <span class="dt">x =</span> streams_hd, <span class="dt">title =</span> <span class="st">&quot;Distribution of HD streams&quot;</span>, </span>
+<span id="cb753-2"><a href="r-markdown-assignments.html#cb753-2"></a>    <span class="dt">type =</span> <span class="st">&quot;parametric&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">bar.measure =</span> <span class="st">&quot;mix&quot;</span>, </span>
+<span id="cb753-3"><a href="r-markdown-assignments.html#cb753-3"></a>    <span class="dt">test.value =</span> <span class="dv">2600</span>, <span class="dt">test.value.line =</span> <span class="ot">TRUE</span>, <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, </span>
+<span id="cb753-4"><a href="r-markdown-assignments.html#cb753-4"></a>    <span class="dt">test.value.color =</span> <span class="st">&quot;#0072B2&quot;</span>, <span class="dt">centrality.para =</span> <span class="st">&quot;mean&quot;</span>, </span>
+<span id="cb753-5"><a href="r-markdown-assignments.html#cb753-5"></a>    <span class="dt">centrality.color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">binwidth =</span> <span class="dv">300</span>, <span class="dt">messages =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb753-6"><a href="r-markdown-assignments.html#cb753-6"></a>    <span class="dt">bf.message =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-475-1.png" width="672" /></p>
 <p><strong>Question 3</strong></p>
 <p>First we will analyze whether the advertising campaign had an effect on SD streams. We need to formulate a hypothesis which we can test. In this case, the null hypothesis is that the campaign had no effect on the mean number of streams, i.e. that there is no difference in the mean number of streams between the two populations. The alternative hypothesis states that the campaign <em>did</em> have an effect, meaning that there is a difference in the mean number of streams between the populations. In more formal notation this is:</p>
 <p><span class="math display">\[H_0: \mu_0 = \mu_1 \\ H_1: \mu_0 \neq \mu_1\]</span></p>
 <p>We need to transform the variable online_advertising into a factor variable for some of our analyses:</p>
-<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="r-markdown-assignments.html#cb745-1"></a><span class="co"># Transform into factor variable</span></span>
-<span id="cb745-2"><a href="r-markdown-assignments.html#cb745-2"></a>movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </span><span class="kw">factor</span>(movie_data<span class="op">$</span>online_advertising, </span>
-<span id="cb745-3"><a href="r-markdown-assignments.html#cb745-3"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="r-markdown-assignments.html#cb754-1"></a><span class="co"># Transform into factor variable</span></span>
+<span id="cb754-2"><a href="r-markdown-assignments.html#cb754-2"></a>movie_data<span class="op">$</span>online_advertising &lt;-<span class="st"> </span><span class="kw">factor</span>(movie_data<span class="op">$</span>online_advertising, </span>
+<span id="cb754-3"><a href="r-markdown-assignments.html#cb754-3"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</span></code></pre></div>
 <p>A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means (or a boxplot) would be appropriate.</p>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="r-markdown-assignments.html#cb746-1"></a><span class="co"># Descriptive statistics for SD streams, split by</span></span>
-<span id="cb746-2"><a href="r-markdown-assignments.html#cb746-2"></a><span class="co"># online advertising</span></span>
-<span id="cb746-3"><a href="r-markdown-assignments.html#cb746-3"></a><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>online_advertising)</span></code></pre></div>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="r-markdown-assignments.html#cb755-1"></a><span class="co"># Descriptive statistics for SD streams, split by</span></span>
+<span id="cb755-2"><a href="r-markdown-assignments.html#cb755-2"></a><span class="co"># online advertising</span></span>
+<span id="cb755-3"><a href="r-markdown-assignments.html#cb755-3"></a><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>online_advertising)</span></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no
@@ -897,19 +897,19 @@ Code
 ## X1    1 100 3205.59 978.01   3147 3193.69 966.66 654 5709  5055 0.08     0.04
 ##      se
 ## X1 97.8</code></pre>
-<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="r-markdown-assignments.html#cb748-1"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(movie_data, <span class="dt">measurevar =</span> <span class="st">&quot;streams_sd&quot;</span>, </span>
-<span id="cb748-2"><a href="r-markdown-assignments.html#cb748-2"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;online_advertising&quot;</span>))</span>
-<span id="cb748-3"><a href="r-markdown-assignments.html#cb748-3"></a></span>
-<span id="cb748-4"><a href="r-markdown-assignments.html#cb748-4"></a><span class="co"># Plot of means</span></span>
-<span id="cb748-5"><a href="r-markdown-assignments.html#cb748-5"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> online_advertising, <span class="dt">y =</span> streams_sd)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb748-6"><a href="r-markdown-assignments.html#cb748-6"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </span>
-<span id="cb748-7"><a href="r-markdown-assignments.html#cb748-7"></a>        <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb748-8"><a href="r-markdown-assignments.html#cb748-8"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">width =</span> <span class="fl">0.15</span>, </span>
-<span id="cb748-9"><a href="r-markdown-assignments.html#cb748-9"></a>        <span class="kw">aes</span>(<span class="dt">ymin =</span> streams_sd <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> streams_sd <span class="op">+</span><span class="st"> </span></span>
-<span id="cb748-10"><a href="r-markdown-assignments.html#cb748-10"></a><span class="st">            </span>ci)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising&quot;</span>, </span>
-<span id="cb748-11"><a href="r-markdown-assignments.html#cb748-11"></a>    <span class="dt">y =</span> <span class="st">&quot;Average number of SD streams&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Average number of SD streams by group&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb748-12"><a href="r-markdown-assignments.html#cb748-12"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
-<span id="cb748-13"><a href="r-markdown-assignments.html#cb748-13"></a>    <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="r-markdown-assignments.html#cb757-1"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(movie_data, <span class="dt">measurevar =</span> <span class="st">&quot;streams_sd&quot;</span>, </span>
+<span id="cb757-2"><a href="r-markdown-assignments.html#cb757-2"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;online_advertising&quot;</span>))</span>
+<span id="cb757-3"><a href="r-markdown-assignments.html#cb757-3"></a></span>
+<span id="cb757-4"><a href="r-markdown-assignments.html#cb757-4"></a><span class="co"># Plot of means</span></span>
+<span id="cb757-5"><a href="r-markdown-assignments.html#cb757-5"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> online_advertising, <span class="dt">y =</span> streams_sd)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb757-6"><a href="r-markdown-assignments.html#cb757-6"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb757-7"><a href="r-markdown-assignments.html#cb757-7"></a>        <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb757-8"><a href="r-markdown-assignments.html#cb757-8"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">width =</span> <span class="fl">0.15</span>, </span>
+<span id="cb757-9"><a href="r-markdown-assignments.html#cb757-9"></a>        <span class="kw">aes</span>(<span class="dt">ymin =</span> streams_sd <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> streams_sd <span class="op">+</span><span class="st"> </span></span>
+<span id="cb757-10"><a href="r-markdown-assignments.html#cb757-10"></a><span class="st">            </span>ci)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising&quot;</span>, </span>
+<span id="cb757-11"><a href="r-markdown-assignments.html#cb757-11"></a>    <span class="dt">y =</span> <span class="st">&quot;Average number of SD streams&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Average number of SD streams by group&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb757-12"><a href="r-markdown-assignments.html#cb757-12"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
+<span id="cb757-13"><a href="r-markdown-assignments.html#cb757-13"></a>    <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-477-1.png" width="672" /></p>
 <p>As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = “yes”, i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a <strong>two sample t-test</strong>. We use an independent-means t-test because we have different movies in each group (i.e., the movies in one condition are <em>independent</em> of the movies in the other condition). The requirements are clearly met:</p>
 <ul>
@@ -919,7 +919,7 @@ Code
 <li>R automatically performs Welch’s t-test, which corrects for unequal variance</li>
 </ul>
 <p>Thus we can perform the test in R</p>
-<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="r-markdown-assignments.html#cb749-1"></a><span class="kw">t.test</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="r-markdown-assignments.html#cb758-1"></a><span class="kw">t.test</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -933,14 +933,14 @@ Code
 ##           2150.24           3205.59</code></pre>
 <p>The test is significant, since the p-value is smaller than 0.05, leading us to reject the null hypothesis that there is no difference in the mean number of streams. The p-value states the probability of finding a difference of the observed magnitude or higher, if the null hypothesis was in fact true (i.e., if there was in fact no difference between the populations). In effect, this means that the advertising campaign had an effect on the average number of times a video was streamed. Another thing we can extract from this test result is the confidence interval around the difference in means. Since 0 is not included in the interval, it is not a plausible value, confirming the conclusion to reject the null hypothesis.</p>
 <p>The standardized effect size can be computed using the <code>cohensD</code> function:</p>
-<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="r-markdown-assignments.html#cb751-1"></a><span class="kw">cohensD</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="r-markdown-assignments.html#cb760-1"></a><span class="kw">cohensD</span>(streams_sd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
 <pre><code>## [1] 1.124481</code></pre>
 <p>This magnitude of the effect size (1.12) suggests that the effect of online advertising on the number of SD streams is large.</p>
 <p>The same can be done analogously for HD streams:</p>
-<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="r-markdown-assignments.html#cb753-1"></a><span class="co"># Descriptive statistics for HD streams, split by</span></span>
-<span id="cb753-2"><a href="r-markdown-assignments.html#cb753-2"></a><span class="co"># online advertising</span></span>
-<span id="cb753-3"><a href="r-markdown-assignments.html#cb753-3"></a>stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_hd, movie_data<span class="op">$</span>online_advertising)</span>
-<span id="cb753-4"><a href="r-markdown-assignments.html#cb753-4"></a><span class="kw">print</span>(stats)</span></code></pre></div>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="r-markdown-assignments.html#cb762-1"></a><span class="co"># Descriptive statistics for HD streams, split by</span></span>
+<span id="cb762-2"><a href="r-markdown-assignments.html#cb762-2"></a><span class="co"># online advertising</span></span>
+<span id="cb762-3"><a href="r-markdown-assignments.html#cb762-3"></a>stats &lt;-<span class="st"> </span><span class="kw">describeBy</span>(movie_data<span class="op">$</span>streams_hd, movie_data<span class="op">$</span>online_advertising)</span>
+<span id="cb762-4"><a href="r-markdown-assignments.html#cb762-4"></a><span class="kw">print</span>(stats)</span></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no
@@ -954,22 +954,22 @@ Code
 ## X1    1 100 2193.48 863.34   2133  2179.2 962.95 585 4305  3720 0.21    -0.73
 ##       se
 ## X1 86.33</code></pre>
-<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="r-markdown-assignments.html#cb755-1"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(movie_data, <span class="dt">measurevar =</span> <span class="st">&quot;streams_hd&quot;</span>, </span>
-<span id="cb755-2"><a href="r-markdown-assignments.html#cb755-2"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;online_advertising&quot;</span>))</span>
-<span id="cb755-3"><a href="r-markdown-assignments.html#cb755-3"></a></span>
-<span id="cb755-4"><a href="r-markdown-assignments.html#cb755-4"></a><span class="co"># Plot of means</span></span>
-<span id="cb755-5"><a href="r-markdown-assignments.html#cb755-5"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> online_advertising, <span class="dt">y =</span> streams_hd)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb755-6"><a href="r-markdown-assignments.html#cb755-6"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </span>
-<span id="cb755-7"><a href="r-markdown-assignments.html#cb755-7"></a>        <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb755-8"><a href="r-markdown-assignments.html#cb755-8"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">width =</span> <span class="fl">0.15</span>, </span>
-<span id="cb755-9"><a href="r-markdown-assignments.html#cb755-9"></a>        <span class="kw">aes</span>(<span class="dt">ymin =</span> streams_hd <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> streams_hd <span class="op">+</span><span class="st"> </span></span>
-<span id="cb755-10"><a href="r-markdown-assignments.html#cb755-10"></a><span class="st">            </span>ci)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising&quot;</span>, </span>
-<span id="cb755-11"><a href="r-markdown-assignments.html#cb755-11"></a>    <span class="dt">y =</span> <span class="st">&quot;Average number of HD streams&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Average number of HD streams by group&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb755-12"><a href="r-markdown-assignments.html#cb755-12"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
-<span id="cb755-13"><a href="r-markdown-assignments.html#cb755-13"></a>    <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="r-markdown-assignments.html#cb764-1"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(movie_data, <span class="dt">measurevar =</span> <span class="st">&quot;streams_hd&quot;</span>, </span>
+<span id="cb764-2"><a href="r-markdown-assignments.html#cb764-2"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;online_advertising&quot;</span>))</span>
+<span id="cb764-3"><a href="r-markdown-assignments.html#cb764-3"></a></span>
+<span id="cb764-4"><a href="r-markdown-assignments.html#cb764-4"></a><span class="co"># Plot of means</span></span>
+<span id="cb764-5"><a href="r-markdown-assignments.html#cb764-5"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> online_advertising, <span class="dt">y =</span> streams_hd)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb764-6"><a href="r-markdown-assignments.html#cb764-6"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb764-7"><a href="r-markdown-assignments.html#cb764-7"></a>        <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb764-8"><a href="r-markdown-assignments.html#cb764-8"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">width =</span> <span class="fl">0.15</span>, </span>
+<span id="cb764-9"><a href="r-markdown-assignments.html#cb764-9"></a>        <span class="kw">aes</span>(<span class="dt">ymin =</span> streams_hd <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> streams_hd <span class="op">+</span><span class="st"> </span></span>
+<span id="cb764-10"><a href="r-markdown-assignments.html#cb764-10"></a><span class="st">            </span>ci)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Advertising&quot;</span>, </span>
+<span id="cb764-11"><a href="r-markdown-assignments.html#cb764-11"></a>    <span class="dt">y =</span> <span class="st">&quot;Average number of HD streams&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Average number of HD streams by group&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb764-12"><a href="r-markdown-assignments.html#cb764-12"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
+<span id="cb764-13"><a href="r-markdown-assignments.html#cb764-13"></a>    <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-480-1.png" width="672" /></p>
 <p>Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is significant (note that <em>two sample t-test</em> means the same as <em>independent-means t-test</em>).</p>
-<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="r-markdown-assignments.html#cb756-1"></a><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="r-markdown-assignments.html#cb765-1"></a><span class="kw">t.test</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -983,72 +983,72 @@ Code
 ##           1475.55           2193.48</code></pre>
 <p>Again, the p-value is so low that any sensible significance level would lead us to reject the null hypothesis, suggesting that there is a difference in mean the number of streams between videos included in the campaign and those that aren’t.</p>
 <p>Calculate the standardized effect size:</p>
-<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="r-markdown-assignments.html#cb758-1"></a><span class="kw">cohensD</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
+<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="r-markdown-assignments.html#cb767-1"></a><span class="kw">cohensD</span>(streams_hd <span class="op">~</span><span class="st"> </span>online_advertising, <span class="dt">data =</span> movie_data)</span></code></pre></div>
 <pre><code>## [1] 1.069388</code></pre>
 <p>The magnitude of the effect size indicates again that this effect is large, although it is somewhat smaller than for SD streams.</p>
 <p>Alternatively, you could also use the <code>ggstatsplot</code> package to conduct the tests:</p>
-<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="r-markdown-assignments.html#cb760-1"></a><span class="kw">ggbetweenstats</span>(</span>
-<span id="cb760-2"><a href="r-markdown-assignments.html#cb760-2"></a>  <span class="dt">data =</span> movie_data,</span>
-<span id="cb760-3"><a href="r-markdown-assignments.html#cb760-3"></a>  <span class="dt">plot.type =</span> <span class="st">&quot;box&quot;</span>,</span>
-<span id="cb760-4"><a href="r-markdown-assignments.html#cb760-4"></a>  <span class="dt">x =</span> online_advertising, <span class="co"># 2 groups</span></span>
-<span id="cb760-5"><a href="r-markdown-assignments.html#cb760-5"></a>  <span class="dt">y =</span> streams_sd ,</span>
-<span id="cb760-6"><a href="r-markdown-assignments.html#cb760-6"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="co"># default</span></span>
-<span id="cb760-7"><a href="r-markdown-assignments.html#cb760-7"></a>  <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, <span class="co"># display effect size (Cohen&#39;s d in output)</span></span>
-<span id="cb760-8"><a href="r-markdown-assignments.html#cb760-8"></a>  <span class="dt">messages =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb760-9"><a href="r-markdown-assignments.html#cb760-9"></a>  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb760-10"><a href="r-markdown-assignments.html#cb760-10"></a>  <span class="dt">mean.ci =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb760-11"><a href="r-markdown-assignments.html#cb760-11"></a>  <span class="dt">title =</span> <span class="st">&quot;SD streams&quot;</span></span>
-<span id="cb760-12"><a href="r-markdown-assignments.html#cb760-12"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="r-markdown-assignments.html#cb769-1"></a><span class="kw">ggbetweenstats</span>(</span>
+<span id="cb769-2"><a href="r-markdown-assignments.html#cb769-2"></a>  <span class="dt">data =</span> movie_data,</span>
+<span id="cb769-3"><a href="r-markdown-assignments.html#cb769-3"></a>  <span class="dt">plot.type =</span> <span class="st">&quot;box&quot;</span>,</span>
+<span id="cb769-4"><a href="r-markdown-assignments.html#cb769-4"></a>  <span class="dt">x =</span> online_advertising, <span class="co"># 2 groups</span></span>
+<span id="cb769-5"><a href="r-markdown-assignments.html#cb769-5"></a>  <span class="dt">y =</span> streams_sd ,</span>
+<span id="cb769-6"><a href="r-markdown-assignments.html#cb769-6"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="co"># default</span></span>
+<span id="cb769-7"><a href="r-markdown-assignments.html#cb769-7"></a>  <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, <span class="co"># display effect size (Cohen&#39;s d in output)</span></span>
+<span id="cb769-8"><a href="r-markdown-assignments.html#cb769-8"></a>  <span class="dt">messages =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb769-9"><a href="r-markdown-assignments.html#cb769-9"></a>  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb769-10"><a href="r-markdown-assignments.html#cb769-10"></a>  <span class="dt">mean.ci =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb769-11"><a href="r-markdown-assignments.html#cb769-11"></a>  <span class="dt">title =</span> <span class="st">&quot;SD streams&quot;</span></span>
+<span id="cb769-12"><a href="r-markdown-assignments.html#cb769-12"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-483-1.png" width="672" /></p>
-<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="r-markdown-assignments.html#cb761-1"></a><span class="kw">ggbetweenstats</span>(</span>
-<span id="cb761-2"><a href="r-markdown-assignments.html#cb761-2"></a>  <span class="dt">data =</span> movie_data,</span>
-<span id="cb761-3"><a href="r-markdown-assignments.html#cb761-3"></a>  <span class="dt">plot.type =</span> <span class="st">&quot;box&quot;</span>,</span>
-<span id="cb761-4"><a href="r-markdown-assignments.html#cb761-4"></a>  <span class="dt">x =</span> online_advertising, <span class="co"># 2 groups</span></span>
-<span id="cb761-5"><a href="r-markdown-assignments.html#cb761-5"></a>  <span class="dt">y =</span> streams_hd ,</span>
-<span id="cb761-6"><a href="r-markdown-assignments.html#cb761-6"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="co"># default</span></span>
-<span id="cb761-7"><a href="r-markdown-assignments.html#cb761-7"></a>  <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, <span class="co"># display effect size (Cohen&#39;s d in output)</span></span>
-<span id="cb761-8"><a href="r-markdown-assignments.html#cb761-8"></a>  <span class="dt">messages =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb761-9"><a href="r-markdown-assignments.html#cb761-9"></a>  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb761-10"><a href="r-markdown-assignments.html#cb761-10"></a>  <span class="dt">mean.ci =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb761-11"><a href="r-markdown-assignments.html#cb761-11"></a>  <span class="dt">title =</span> <span class="st">&quot;HD streams&quot;</span></span>
-<span id="cb761-12"><a href="r-markdown-assignments.html#cb761-12"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="r-markdown-assignments.html#cb770-1"></a><span class="kw">ggbetweenstats</span>(</span>
+<span id="cb770-2"><a href="r-markdown-assignments.html#cb770-2"></a>  <span class="dt">data =</span> movie_data,</span>
+<span id="cb770-3"><a href="r-markdown-assignments.html#cb770-3"></a>  <span class="dt">plot.type =</span> <span class="st">&quot;box&quot;</span>,</span>
+<span id="cb770-4"><a href="r-markdown-assignments.html#cb770-4"></a>  <span class="dt">x =</span> online_advertising, <span class="co"># 2 groups</span></span>
+<span id="cb770-5"><a href="r-markdown-assignments.html#cb770-5"></a>  <span class="dt">y =</span> streams_hd ,</span>
+<span id="cb770-6"><a href="r-markdown-assignments.html#cb770-6"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="co"># default</span></span>
+<span id="cb770-7"><a href="r-markdown-assignments.html#cb770-7"></a>  <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span>, <span class="co"># display effect size (Cohen&#39;s d in output)</span></span>
+<span id="cb770-8"><a href="r-markdown-assignments.html#cb770-8"></a>  <span class="dt">messages =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb770-9"><a href="r-markdown-assignments.html#cb770-9"></a>  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb770-10"><a href="r-markdown-assignments.html#cb770-10"></a>  <span class="dt">mean.ci =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb770-11"><a href="r-markdown-assignments.html#cb770-11"></a>  <span class="dt">title =</span> <span class="st">&quot;HD streams&quot;</span></span>
+<span id="cb770-12"><a href="r-markdown-assignments.html#cb770-12"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-484-1.png" width="672" /></p>
 <p><strong>Question 4</strong></p>
 <p>Next we want to examine whether HD and SD streams have similar numbers on average. The null hypothesis here is that there is no difference in the mean number of HD streams and the mean number of SD streams for the same movies. Because the observations come from the same population of movies, we refer to the difference in the means for the same population as <span class="math inline">\(\mu_D\)</span> when stating our hypotheses. The alternative hypothesis states that that there is a difference between the streams in HD and SD quality for the same movies. In mathematical notation this can be written as</p>
 <p><span class="math display">\[H_0: \mu_D = 0 \\ H_1: \mu_D \neq 0\]</span></p>
 <p>Again, we start with descriptive statistics to get a feel for the data.</p>
-<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="r-markdown-assignments.html#cb762-1"></a><span class="co"># Descriptive statistics for HD and SD streams</span></span>
-<span id="cb762-2"><a href="r-markdown-assignments.html#cb762-2"></a>psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</span></code></pre></div>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="r-markdown-assignments.html#cb771-1"></a><span class="co"># Descriptive statistics for HD and SD streams</span></span>
+<span id="cb771-2"><a href="r-markdown-assignments.html#cb771-2"></a>psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_sd)</span></code></pre></div>
 <pre><code>##    vars   n    mean      sd median trimmed     mad min  max range skew kurtosis
 ## X1    1 200 2677.92 1075.28   2732 2653.68 1064.51 654 5709  5055  0.2    -0.41
 ##       se
 ## X1 76.03</code></pre>
-<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="r-markdown-assignments.html#cb764-1"></a>psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</span></code></pre></div>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="r-markdown-assignments.html#cb773-1"></a>psych<span class="op">::</span><span class="kw">describe</span>(movie_data<span class="op">$</span>streams_hd)</span></code></pre></div>
 <pre><code>##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
 ## X1    1 200 1834.52 760.23 1668.5  1761.9 578.21 246 4305  4059 0.85     0.42
 ##       se
 ## X1 53.76</code></pre>
-<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="r-markdown-assignments.html#cb766-1"></a><span class="co"># Plot of means</span></span>
-<span id="cb766-2"><a href="r-markdown-assignments.html#cb766-2"></a>movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie_data[, <span class="kw">c</span>(<span class="st">&quot;streams_sd&quot;</span>, </span>
-<span id="cb766-3"><a href="r-markdown-assignments.html#cb766-3"></a>    <span class="st">&quot;streams_hd&quot;</span>)])</span>
-<span id="cb766-4"><a href="r-markdown-assignments.html#cb766-4"></a><span class="kw">names</span>(movie_data_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;type&quot;</span>, <span class="st">&quot;streams&quot;</span>)</span>
-<span id="cb766-5"><a href="r-markdown-assignments.html#cb766-5"></a></span>
-<span id="cb766-6"><a href="r-markdown-assignments.html#cb766-6"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(movie_data_long, <span class="dt">measurevar =</span> <span class="st">&quot;streams&quot;</span>, </span>
-<span id="cb766-7"><a href="r-markdown-assignments.html#cb766-7"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;type&quot;</span>))</span>
-<span id="cb766-8"><a href="r-markdown-assignments.html#cb766-8"></a></span>
-<span id="cb766-9"><a href="r-markdown-assignments.html#cb766-9"></a><span class="co"># Plot of means</span></span>
-<span id="cb766-10"><a href="r-markdown-assignments.html#cb766-10"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> type, <span class="dt">y =</span> streams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), </span>
-<span id="cb766-11"><a href="r-markdown-assignments.html#cb766-11"></a>    <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, </span>
-<span id="cb766-12"><a href="r-markdown-assignments.html#cb766-12"></a>    <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), </span>
-<span id="cb766-13"><a href="r-markdown-assignments.html#cb766-13"></a>    <span class="dt">width =</span> <span class="fl">0.15</span>, <span class="kw">aes</span>(<span class="dt">ymin =</span> streams <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> streams <span class="op">+</span><span class="st"> </span></span>
-<span id="cb766-14"><a href="r-markdown-assignments.html#cb766-14"></a><span class="st">        </span>ci)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Type&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>, </span>
-<span id="cb766-15"><a href="r-markdown-assignments.html#cb766-15"></a>    <span class="dt">title =</span> <span class="st">&quot;Average number of streams by group&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb766-16"><a href="r-markdown-assignments.html#cb766-16"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
-<span id="cb766-17"><a href="r-markdown-assignments.html#cb766-17"></a>    <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="r-markdown-assignments.html#cb775-1"></a><span class="co"># Plot of means</span></span>
+<span id="cb775-2"><a href="r-markdown-assignments.html#cb775-2"></a>movie_data_long &lt;-<span class="st"> </span><span class="kw">melt</span>(movie_data[, <span class="kw">c</span>(<span class="st">&quot;streams_sd&quot;</span>, </span>
+<span id="cb775-3"><a href="r-markdown-assignments.html#cb775-3"></a>    <span class="st">&quot;streams_hd&quot;</span>)])</span>
+<span id="cb775-4"><a href="r-markdown-assignments.html#cb775-4"></a><span class="kw">names</span>(movie_data_long) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;type&quot;</span>, <span class="st">&quot;streams&quot;</span>)</span>
+<span id="cb775-5"><a href="r-markdown-assignments.html#cb775-5"></a></span>
+<span id="cb775-6"><a href="r-markdown-assignments.html#cb775-6"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(movie_data_long, <span class="dt">measurevar =</span> <span class="st">&quot;streams&quot;</span>, </span>
+<span id="cb775-7"><a href="r-markdown-assignments.html#cb775-7"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;type&quot;</span>))</span>
+<span id="cb775-8"><a href="r-markdown-assignments.html#cb775-8"></a></span>
+<span id="cb775-9"><a href="r-markdown-assignments.html#cb775-9"></a><span class="co"># Plot of means</span></span>
+<span id="cb775-10"><a href="r-markdown-assignments.html#cb775-10"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> type, <span class="dt">y =</span> streams)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), </span>
+<span id="cb775-11"><a href="r-markdown-assignments.html#cb775-11"></a>    <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, </span>
+<span id="cb775-12"><a href="r-markdown-assignments.html#cb775-12"></a>    <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), </span>
+<span id="cb775-13"><a href="r-markdown-assignments.html#cb775-13"></a>    <span class="dt">width =</span> <span class="fl">0.15</span>, <span class="kw">aes</span>(<span class="dt">ymin =</span> streams <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> streams <span class="op">+</span><span class="st"> </span></span>
+<span id="cb775-14"><a href="r-markdown-assignments.html#cb775-14"></a><span class="st">        </span>ci)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Type&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average number of streams&quot;</span>, </span>
+<span id="cb775-15"><a href="r-markdown-assignments.html#cb775-15"></a>    <span class="dt">title =</span> <span class="st">&quot;Average number of streams by group&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb775-16"><a href="r-markdown-assignments.html#cb775-16"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, </span>
+<span id="cb775-17"><a href="r-markdown-assignments.html#cb775-17"></a>    <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-486-1.png" width="672" /></p>
 <p>It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same movies are observed for HD and SD streams (i.e., the same movies are available in both formats). This means that we need a <strong>dependent means t-test</strong>. This test is also known as the <strong>paired samples t-test</strong>. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding <code>paired = TRUE</code> to the code.</p>
-<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="r-markdown-assignments.html#cb767-1"></a><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, </span>
-<span id="cb767-2"><a href="r-markdown-assignments.html#cb767-2"></a>    <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="r-markdown-assignments.html#cb776-1"></a><span class="kw">t.test</span>(<span class="dt">y =</span> movie_data<span class="op">$</span>streams_sd, <span class="dt">x =</span> movie_data<span class="op">$</span>streams_hd, </span>
+<span id="cb776-2"><a href="r-markdown-assignments.html#cb776-2"></a>    <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -1062,30 +1062,30 @@ Code
 ##                  -843.4</code></pre>
 <p>The p-value is again lower than the chosen significance level of 5% (i.e., p &lt; .05), which means that we reject the null hypothesis that there is no difference in the mean number of streams in HD and SD quality. Make sure you interpret the p-value correctly. It refers to the probability of observing a difference of the observed magnitude (or larger) between streams in HD and SD quality, assuming that there was in fact no difference between the formats. The confidence interval confirms the conclusion to reject the null hypothesis since <span class="math inline">\(0\)</span> is not contained in the range of plausible values.</p>
 <p>Now let’s find out how strong this effect is.</p>
-<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="r-markdown-assignments.html#cb769-1"></a><span class="kw">cohensD</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>streams_hd, </span>
-<span id="cb769-2"><a href="r-markdown-assignments.html#cb769-2"></a>    <span class="dt">method =</span> <span class="st">&quot;paired&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="r-markdown-assignments.html#cb778-1"></a><span class="kw">cohensD</span>(movie_data<span class="op">$</span>streams_sd, movie_data<span class="op">$</span>streams_hd, </span>
+<span id="cb778-2"><a href="r-markdown-assignments.html#cb778-2"></a>    <span class="dt">method =</span> <span class="st">&quot;paired&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 0.7929318</code></pre>
 <p>A standardized effect size of approx. 0.79 tells us that this effect is large.</p>
 <p>Alternatively, you could also use the <code>ggstatsplot</code> package to conduct the tests:</p>
-<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="r-markdown-assignments.html#cb771-1"></a><span class="kw">ggwithinstats</span>(</span>
-<span id="cb771-2"><a href="r-markdown-assignments.html#cb771-2"></a>  <span class="dt">data =</span> movie_data_long,</span>
-<span id="cb771-3"><a href="r-markdown-assignments.html#cb771-3"></a>  <span class="dt">x =</span> type,</span>
-<span id="cb771-4"><a href="r-markdown-assignments.html#cb771-4"></a>  <span class="dt">y =</span> streams,</span>
-<span id="cb771-5"><a href="r-markdown-assignments.html#cb771-5"></a>  <span class="dt">path.point =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb771-6"><a href="r-markdown-assignments.html#cb771-6"></a>  <span class="dt">path.mean =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb771-7"><a href="r-markdown-assignments.html#cb771-7"></a>  <span class="dt">sort =</span> <span class="st">&quot;descending&quot;</span>, <span class="co"># ordering groups along the x-axis based on</span></span>
-<span id="cb771-8"><a href="r-markdown-assignments.html#cb771-8"></a>  <span class="dt">sort.fun =</span> mean, <span class="co"># values of `y` variable</span></span>
-<span id="cb771-9"><a href="r-markdown-assignments.html#cb771-9"></a>  <span class="dt">title =</span> <span class="st">&quot;Number of streams for movies in SD and HD&quot;</span>,</span>
-<span id="cb771-10"><a href="r-markdown-assignments.html#cb771-10"></a>  <span class="dt">messages =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb771-11"><a href="r-markdown-assignments.html#cb771-11"></a>  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb771-12"><a href="r-markdown-assignments.html#cb771-12"></a>  <span class="dt">mean.ci =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb771-13"><a href="r-markdown-assignments.html#cb771-13"></a>  <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span> <span class="co"># display effect size (Cohen&#39;s d in output)</span></span>
-<span id="cb771-14"><a href="r-markdown-assignments.html#cb771-14"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="r-markdown-assignments.html#cb780-1"></a><span class="kw">ggwithinstats</span>(</span>
+<span id="cb780-2"><a href="r-markdown-assignments.html#cb780-2"></a>  <span class="dt">data =</span> movie_data_long,</span>
+<span id="cb780-3"><a href="r-markdown-assignments.html#cb780-3"></a>  <span class="dt">x =</span> type,</span>
+<span id="cb780-4"><a href="r-markdown-assignments.html#cb780-4"></a>  <span class="dt">y =</span> streams,</span>
+<span id="cb780-5"><a href="r-markdown-assignments.html#cb780-5"></a>  <span class="dt">path.point =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb780-6"><a href="r-markdown-assignments.html#cb780-6"></a>  <span class="dt">path.mean =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb780-7"><a href="r-markdown-assignments.html#cb780-7"></a>  <span class="dt">sort =</span> <span class="st">&quot;descending&quot;</span>, <span class="co"># ordering groups along the x-axis based on</span></span>
+<span id="cb780-8"><a href="r-markdown-assignments.html#cb780-8"></a>  <span class="dt">sort.fun =</span> mean, <span class="co"># values of `y` variable</span></span>
+<span id="cb780-9"><a href="r-markdown-assignments.html#cb780-9"></a>  <span class="dt">title =</span> <span class="st">&quot;Number of streams for movies in SD and HD&quot;</span>,</span>
+<span id="cb780-10"><a href="r-markdown-assignments.html#cb780-10"></a>  <span class="dt">messages =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb780-11"><a href="r-markdown-assignments.html#cb780-11"></a>  <span class="dt">bf.message =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb780-12"><a href="r-markdown-assignments.html#cb780-12"></a>  <span class="dt">mean.ci =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb780-13"><a href="r-markdown-assignments.html#cb780-13"></a>  <span class="dt">effsize.type =</span> <span class="st">&quot;d&quot;</span> <span class="co"># display effect size (Cohen&#39;s d in output)</span></span>
+<span id="cb780-14"><a href="r-markdown-assignments.html#cb780-14"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-490-1.png" width="672" /></p>
 <p><strong>Question 5</strong></p>
 <p>The question of how many movies we would need to include in each sample of our experiment can be answered quite comfortably with a power calculation function in R.</p>
-<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="r-markdown-assignments.html#cb772-1"></a><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.3</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, </span>
-<span id="cb772-2"><a href="r-markdown-assignments.html#cb772-2"></a>    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="r-markdown-assignments.html#cb781-1"></a><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">0.3</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.8</span>, </span>
+<span id="cb781-2"><a href="r-markdown-assignments.html#cb781-2"></a>    <span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;two.sample&quot;</span>), <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>))</span></code></pre></div>
 <pre><code>## 
 ##      Two-sample t test power calculation 
 ## 
@@ -1129,16 +1129,16 @@ Code
 </ul>
 <p>When you are done with your analysis, click on “Knit to HTML” button above the code editor. This will create a HTML document of your results in the folder where the “assignment3.Rmd” file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn@WU. The file name should be “assignment3_studendID_name.html”.</p>
 <p><strong>Load data</strong></p>
-<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="r-markdown-assignments.html#cb774-1"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span>
-<span id="cb774-2"><a href="r-markdown-assignments.html#cb774-2"></a>customer_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv&quot;</span>, </span>
-<span id="cb774-3"><a href="r-markdown-assignments.html#cb774-3"></a>    <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
-<span id="cb774-4"><a href="r-markdown-assignments.html#cb774-4"></a><span class="kw">head</span>(customer_data)</span></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="r-markdown-assignments.html#cb783-1"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span>
+<span id="cb783-2"><a href="r-markdown-assignments.html#cb783-2"></a>customer_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv&quot;</span>, </span>
+<span id="cb783-3"><a href="r-markdown-assignments.html#cb783-3"></a>    <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)  <span class="co">#read in data</span></span>
+<span id="cb783-4"><a href="r-markdown-assignments.html#cb783-4"></a><span class="kw">head</span>(customer_data)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["revenue"],"name":[1],"type":["int"],"align":["right"]},{"label":["gender"],"name":[2],"type":["int"],"align":["right"]},{"label":["retargeting"],"name":[3],"type":["int"],"align":["right"]},{"label":["customerID"],"name":[4],"type":["int"],"align":["right"]},{"label":["rank"],"name":[5],"type":["int"],"align":["right"]},{"label":["conversion"],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"3866","2":"1","3":"3","4":"2","5":"1","6":"1"},{"1":"1576","2":"1","3":"1","4":"7","5":"159","6":"1"},{"1":"2667","2":"1","3":"1","4":"8","5":"37","6":"0"},{"1":"772","2":"1","3":"1","4":"12","5":"259","6":"1"},{"1":"2702","2":"1","3":"3","4":"13","5":"35","6":"1"},{"1":"1277","2":"1","3":"2","4":"14","5":"203","6":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="r-markdown-assignments.html#cb775-1"></a><span class="kw">str</span>(customer_data)</span></code></pre></div>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="r-markdown-assignments.html#cb784-1"></a><span class="kw">str</span>(customer_data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    296 obs. of  6 variables:
 ##  $ revenue    : int  3866 1576 2667 772 2702 1277 2023 2170 3103 3067 ...
 ##  $ gender     : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -1148,19 +1148,19 @@ Code
 ##  $ conversion : int  1 1 0 1 1 1 0 1 1 0 ...</code></pre>
 <p><strong>Data Preparation</strong></p>
 <p>As always, the first step is to load required packages (packages that have not been used as often in the course will be loaded as required to show which packages contain certain functions) and to load and inspect the data.</p>
-<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="r-markdown-assignments.html#cb777-1"></a><span class="kw">library</span>(plyr)</span>
-<span id="cb777-2"><a href="r-markdown-assignments.html#cb777-2"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb777-3"><a href="r-markdown-assignments.html#cb777-3"></a><span class="kw">library</span>(psych)</span>
-<span id="cb777-4"><a href="r-markdown-assignments.html#cb777-4"></a><span class="kw">library</span>(Hmisc)</span>
-<span id="cb777-5"><a href="r-markdown-assignments.html#cb777-5"></a><span class="kw">library</span>(Rmisc)</span></code></pre></div>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="r-markdown-assignments.html#cb786-1"></a><span class="kw">library</span>(plyr)</span>
+<span id="cb786-2"><a href="r-markdown-assignments.html#cb786-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb786-3"><a href="r-markdown-assignments.html#cb786-3"></a><span class="kw">library</span>(psych)</span>
+<span id="cb786-4"><a href="r-markdown-assignments.html#cb786-4"></a><span class="kw">library</span>(Hmisc)</span>
+<span id="cb786-5"><a href="r-markdown-assignments.html#cb786-5"></a><span class="kw">library</span>(Rmisc)</span></code></pre></div>
 <p>Next we are going to recode some of the variables into factors and give them more descriptive level names.</p>
-<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="r-markdown-assignments.html#cb778-1"></a>customer_data<span class="op">$</span>retargeting &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>retargeting, </span>
-<span id="cb778-2"><a href="r-markdown-assignments.html#cb778-2"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no retargeting&quot;</span>, </span>
-<span id="cb778-3"><a href="r-markdown-assignments.html#cb778-3"></a>        <span class="st">&quot;generic retargeting&quot;</span>, <span class="st">&quot;dynamic retargeting&quot;</span>))</span>
-<span id="cb778-4"><a href="r-markdown-assignments.html#cb778-4"></a>customer_data<span class="op">$</span>gender &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>gender, </span>
-<span id="cb778-5"><a href="r-markdown-assignments.html#cb778-5"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>))</span>
-<span id="cb778-6"><a href="r-markdown-assignments.html#cb778-6"></a>customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>conversion, </span>
-<span id="cb778-7"><a href="r-markdown-assignments.html#cb778-7"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;conversion&quot;</span>, <span class="st">&quot;no conversion&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="r-markdown-assignments.html#cb787-1"></a>customer_data<span class="op">$</span>retargeting &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>retargeting, </span>
+<span id="cb787-2"><a href="r-markdown-assignments.html#cb787-2"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no retargeting&quot;</span>, </span>
+<span id="cb787-3"><a href="r-markdown-assignments.html#cb787-3"></a>        <span class="st">&quot;generic retargeting&quot;</span>, <span class="st">&quot;dynamic retargeting&quot;</span>))</span>
+<span id="cb787-4"><a href="r-markdown-assignments.html#cb787-4"></a>customer_data<span class="op">$</span>gender &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>gender, </span>
+<span id="cb787-5"><a href="r-markdown-assignments.html#cb787-5"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>))</span>
+<span id="cb787-6"><a href="r-markdown-assignments.html#cb787-6"></a>customer_data<span class="op">$</span>conversion &lt;-<span class="st"> </span><span class="kw">factor</span>(customer_data<span class="op">$</span>conversion, </span>
+<span id="cb787-7"><a href="r-markdown-assignments.html#cb787-7"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;conversion&quot;</span>, <span class="st">&quot;no conversion&quot;</span>))</span></code></pre></div>
 <p><strong>Question 1</strong></p>
 <p>To answer whether the type of advertising has an effect on revenue we need to formulate a testable null hypothesis. In our case the null hypothesis is stating that the average level of sales is equal for all advertising types. In mathematical notation this implies:</p>
 <p><span class="math display">\[H_0: \mu_1 = \mu_2 = \mu_3 \]</span></p>
@@ -1170,7 +1170,7 @@ Code
 <p><span class="math display">\[H_1: \exists {i,j}: {\mu_i \ne \mu_j} \]</span></p>
 <p>The appropriate test for such a hypothesis is one-way ANOVA since we have a metric scales dependent variable and a categorical independent variable with more than two levels.</p>
 <p>Next we will calculate summary statistics for the data and produce an appropriate plot.</p>
-<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="r-markdown-assignments.html#cb779-1"></a><span class="kw">describeBy</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting)</span></code></pre></div>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="r-markdown-assignments.html#cb788-1"></a><span class="kw">describeBy</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting)</span></code></pre></div>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: no retargeting
@@ -1190,16 +1190,16 @@ Code
 ## X1    1 100 2208.28 796.85 2277.5 2218.12 735.37 145 3866  3721 -0.16    -0.51
 ##       se
 ## X1 79.68</code></pre>
-<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="r-markdown-assignments.html#cb781-1"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(customer_data, <span class="dt">measurevar =</span> <span class="st">&quot;revenue&quot;</span>, </span>
-<span id="cb781-2"><a href="r-markdown-assignments.html#cb781-2"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;retargeting&quot;</span>))</span>
-<span id="cb781-3"><a href="r-markdown-assignments.html#cb781-3"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> revenue)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb781-4"><a href="r-markdown-assignments.html#cb781-4"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dv">1</span>), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </span>
-<span id="cb781-5"><a href="r-markdown-assignments.html#cb781-5"></a>        <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb781-6"><a href="r-markdown-assignments.html#cb781-6"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">width =</span> <span class="fl">0.15</span>, </span>
-<span id="cb781-7"><a href="r-markdown-assignments.html#cb781-7"></a>        <span class="kw">aes</span>(<span class="dt">ymin =</span> revenue <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> revenue <span class="op">+</span><span class="st"> </span>ci)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb781-8"><a href="r-markdown-assignments.html#cb781-8"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average revenue&quot;</span>, </span>
-<span id="cb781-9"><a href="r-markdown-assignments.html#cb781-9"></a>    <span class="dt">title =</span> <span class="st">&quot;Average revenue by group&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb781-10"><a href="r-markdown-assignments.html#cb781-10"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="r-markdown-assignments.html#cb790-1"></a>mean_data &lt;-<span class="st"> </span><span class="kw">summarySE</span>(customer_data, <span class="dt">measurevar =</span> <span class="st">&quot;revenue&quot;</span>, </span>
+<span id="cb790-2"><a href="r-markdown-assignments.html#cb790-2"></a>    <span class="dt">groupvars =</span> <span class="kw">c</span>(<span class="st">&quot;retargeting&quot;</span>))</span>
+<span id="cb790-3"><a href="r-markdown-assignments.html#cb790-3"></a><span class="kw">ggplot</span>(mean_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> revenue)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb790-4"><a href="r-markdown-assignments.html#cb790-4"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dv">1</span>), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb790-5"><a href="r-markdown-assignments.html#cb790-5"></a>        <span class="dt">fill =</span> <span class="st">&quot;#CCCCCC&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">0.65</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb790-6"><a href="r-markdown-assignments.html#cb790-6"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="fl">0.9</span>), <span class="dt">width =</span> <span class="fl">0.15</span>, </span>
+<span id="cb790-7"><a href="r-markdown-assignments.html#cb790-7"></a>        <span class="kw">aes</span>(<span class="dt">ymin =</span> revenue <span class="op">-</span><span class="st"> </span>ci, <span class="dt">ymax =</span> revenue <span class="op">+</span><span class="st"> </span>ci)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb790-8"><a href="r-markdown-assignments.html#cb790-8"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Group&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Average revenue&quot;</span>, </span>
+<span id="cb790-9"><a href="r-markdown-assignments.html#cb790-9"></a>    <span class="dt">title =</span> <span class="st">&quot;Average revenue by group&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb790-10"><a href="r-markdown-assignments.html#cb790-10"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-495-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Both the summary statistics and the plot hint at the fact that the means may not be equal. Especially the difference between dynamic retargeting and no retargeting/ generic regtargeting seem to be quite high. Before we move to the formal test, we need to see if a series of assumptions are met, namely:</p>
 <ul>
@@ -1208,26 +1208,26 @@ Code
 <li>Independence of observations</li>
 </ul>
 <p>The last assumption is satisfied due to the fact that the observations were randomly assigned to the advertisement groups. To see if we need to worry about distributional assumptions we first take a look at the number of observations in each advertising group.</p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="r-markdown-assignments.html#cb782-1"></a><span class="co"># check number of observations by group</span></span>
-<span id="cb782-2"><a href="r-markdown-assignments.html#cb782-2"></a><span class="kw">table</span>(customer_data<span class="op">$</span>retargeting)</span></code></pre></div>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="r-markdown-assignments.html#cb791-1"></a><span class="co"># check number of observations by group</span></span>
+<span id="cb791-2"><a href="r-markdown-assignments.html#cb791-2"></a><span class="kw">table</span>(customer_data<span class="op">$</span>retargeting)</span></code></pre></div>
 <pre><code>## 
 ##      no retargeting generic retargeting dynamic retargeting 
 ##                 106                  90                 100</code></pre>
 <p>Due to the fact that there are always more than 30 observations in each group we can rely on the central limit theorem to satisfy the distributional assumptions.</p>
 <p>Homogeneity of variances can be checked with Levene’s test (implemented as <code>leveneTest()</code> from the <code>car</code> package). The null hypothesis of this test is that the variances are equal, with the alternative hypothesis being that the variances are not all equal. Note that this step could also be skipped and replaced by the use of the robust ANOVA using the <code>oneway.test()</code> function.</p>
-<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="r-markdown-assignments.html#cb784-1"></a><span class="co"># Homogeneity of variances test:</span></span>
-<span id="cb784-2"><a href="r-markdown-assignments.html#cb784-2"></a><span class="kw">library</span>(car)</span>
-<span id="cb784-3"><a href="r-markdown-assignments.html#cb784-3"></a><span class="kw">leveneTest</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data, </span>
-<span id="cb784-4"><a href="r-markdown-assignments.html#cb784-4"></a>    <span class="dt">center =</span> mean)</span></code></pre></div>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="r-markdown-assignments.html#cb793-1"></a><span class="co"># Homogeneity of variances test:</span></span>
+<span id="cb793-2"><a href="r-markdown-assignments.html#cb793-2"></a><span class="kw">library</span>(car)</span>
+<span id="cb793-3"><a href="r-markdown-assignments.html#cb793-3"></a><span class="kw">leveneTest</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data, </span>
+<span id="cb793-4"><a href="r-markdown-assignments.html#cb793-4"></a>    <span class="dt">center =</span> mean)</span></code></pre></div>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = mean)
 ##        Df F value Pr(&gt;F)
 ## group   2  1.2455 0.2893
 ##       293</code></pre>
 <p>The test result is insignificant (for a significance level of 5 %), meaning that we do not reject the null hypothesis of equal variances and can operate under the assumption that the variances are equal.</p>
 <p>Since all assumptions are fulfilled we can move on to conducting the actual ANOVA using the <code>aov()</code> function. As said above, it would also be possible to conduct the analysis using the robust ANOVA using the <code>oneway.test()</code> function:</p>
-<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="r-markdown-assignments.html#cb786-1"></a><span class="co"># Anova:</span></span>
-<span id="cb786-2"><a href="r-markdown-assignments.html#cb786-2"></a>aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</span>
-<span id="cb786-3"><a href="r-markdown-assignments.html#cb786-3"></a><span class="kw">summary</span>(aov)</span></code></pre></div>
+<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="r-markdown-assignments.html#cb795-1"></a><span class="co"># Anova:</span></span>
+<span id="cb795-2"><a href="r-markdown-assignments.html#cb795-2"></a>aov &lt;-<span class="st"> </span><span class="kw">aov</span>(revenue <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</span>
+<span id="cb795-3"><a href="r-markdown-assignments.html#cb795-3"></a><span class="kw">summary</span>(aov)</span></code></pre></div>
 <pre><code>##              Df    Sum Sq  Mean Sq F value            Pr(&gt;F)    
 ## retargeting   2  37966043 18983022   35.26 0.000000000000019 ***
 ## Residuals   293 157734112   538342                              
@@ -1235,15 +1235,15 @@ Code
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The p-value is smaller than 0.05, which we chose as our significance level, meaning that we reject the null hypothesis of the means being equal in the three advertising groups.</p>
 <p>Next we will briefly inspect the residuals of the ANOVA to see if the assumptions of the test really are justified.</p>
-<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="r-markdown-assignments.html#cb788-1"></a><span class="co"># Inspect residuals</span></span>
-<span id="cb788-2"><a href="r-markdown-assignments.html#cb788-2"></a><span class="kw">plot</span>(aov, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="r-markdown-assignments.html#cb797-1"></a><span class="co"># Inspect residuals</span></span>
+<span id="cb797-2"><a href="r-markdown-assignments.html#cb797-2"></a><span class="kw">plot</span>(aov, <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-499-1.png" width="672" /></p>
 <p>The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled.</p>
-<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="r-markdown-assignments.html#cb789-1"></a><span class="kw">plot</span>(aov, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="r-markdown-assignments.html#cb798-1"></a><span class="kw">plot</span>(aov, <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-500-1.png" width="672" /></p>
 <p>The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behavior here may indicate problems with the model specification.</p>
 <p>To further confirm that the residuals are roughly normally distributed we employ the Shapiro-Wilk test. The null hypothesis is that the distribution of the data is normal, with the alternative hypothesis positing that the data is not normally distributed.</p>
-<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="r-markdown-assignments.html#cb790-1"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</span></code></pre></div>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="r-markdown-assignments.html#cb799-1"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(aov))</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -1255,9 +1255,9 @@ Code
 2) H_0: \mu_2 = \mu_3; H_1 = \mu_2 \neq \mu_3 \\
 3) H_0: \mu_1 = \mu_3; H_1 = \mu_1 \neq \mu_3 \]</span></p>
 <p>Here we will conduct both the Bonferroni correction as well as Tukey’s HSD test, however either would be sufficient for your homework. Bonferroni’s correction conducts multiple pairwise t-tests, with the null hypothesis being that of equal means in each case and the alternative hypothesis stating that the means are unequal.</p>
-<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="r-markdown-assignments.html#cb792-1"></a><span class="co"># bonferroni</span></span>
-<span id="cb792-2"><a href="r-markdown-assignments.html#cb792-2"></a><span class="kw">pairwise.t.test</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting, </span>
-<span id="cb792-3"><a href="r-markdown-assignments.html#cb792-3"></a>    <span class="dt">data =</span> customer_data, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="r-markdown-assignments.html#cb801-1"></a><span class="co"># bonferroni</span></span>
+<span id="cb801-2"><a href="r-markdown-assignments.html#cb801-2"></a><span class="kw">pairwise.t.test</span>(customer_data<span class="op">$</span>revenue, customer_data<span class="op">$</span>retargeting, </span>
+<span id="cb801-3"><a href="r-markdown-assignments.html#cb801-3"></a>    <span class="dt">data =</span> customer_data, <span class="dt">p.adjust.method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -1274,10 +1274,10 @@ dynamic regargeting vs. no retargeting<br />
 dynamic regargeting vs. generig retargeting</p>
 <p>But there seems to be no difference in the means of generic retargeting vs. no retargeting.</p>
 <p>Alternatively, you could have also chosen to use Tukey’s HSD to conduct the post hoc test. Tukey’s HSD similarly compares pairwise means, corrected for family-wise errors (both of the post hoc tests would have been considered correct).</p>
-<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="r-markdown-assignments.html#cb794-1"></a><span class="co"># tukey correction using the mult-comp package</span></span>
-<span id="cb794-2"><a href="r-markdown-assignments.html#cb794-2"></a><span class="kw">library</span>(multcomp)</span>
-<span id="cb794-3"><a href="r-markdown-assignments.html#cb794-3"></a>tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">retargeting =</span> <span class="st">&quot;Tukey&quot;</span>))</span>
-<span id="cb794-4"><a href="r-markdown-assignments.html#cb794-4"></a><span class="kw">summary</span>(tukeys)</span></code></pre></div>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="r-markdown-assignments.html#cb803-1"></a><span class="co"># tukey correction using the mult-comp package</span></span>
+<span id="cb803-2"><a href="r-markdown-assignments.html#cb803-2"></a><span class="kw">library</span>(multcomp)</span>
+<span id="cb803-3"><a href="r-markdown-assignments.html#cb803-3"></a>tukeys &lt;-<span class="st"> </span><span class="kw">glht</span>(aov, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">retargeting =</span> <span class="st">&quot;Tukey&quot;</span>))</span>
+<span id="cb803-4"><a href="r-markdown-assignments.html#cb803-4"></a><span class="kw">summary</span>(tukeys)</span></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Tests for General Linear Hypotheses
 ## 
@@ -1300,7 +1300,7 @@ dynamic regargeting vs. generig retargeting</p>
 ## (Adjusted p values reported -- single-step method)</code></pre>
 <p>Tukey’s correction confirms the conclusion from the Bonferroni test from above. While there seems to be no difference in the means of generic retargeting vs. no retargeting, dynamic retargeting seems to differ significantly from both generic retargeting and no retargeting.</p>
 <p>Tukey’s HSD further let’s us estimate the difference in means with corresponding confidence intervals.</p>
-<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="r-markdown-assignments.html#cb796-1"></a><span class="kw">confint</span>(tukeys)</span></code></pre></div>
+<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="r-markdown-assignments.html#cb805-1"></a><span class="kw">confint</span>(tukeys)</span></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Confidence Intervals
 ## 
@@ -1318,12 +1318,12 @@ dynamic regargeting vs. generig retargeting</p>
 ## generic retargeting - no retargeting == 0        88.3220 -159.3887  336.0327
 ## dynamic retargeting - no retargeting == 0       793.9687  553.0494 1034.8880
 ## dynamic retargeting - generic retargeting == 0  705.6467  454.5468  956.7465</code></pre>
-<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="r-markdown-assignments.html#cb798-1"></a><span class="co"># The mar parameter changes the margins around</span></span>
-<span id="cb798-2"><a href="r-markdown-assignments.html#cb798-2"></a><span class="co"># created plots. This is done so the labels on the</span></span>
-<span id="cb798-3"><a href="r-markdown-assignments.html#cb798-3"></a><span class="co"># side of the Tukey plot are visible (however, this</span></span>
-<span id="cb798-4"><a href="r-markdown-assignments.html#cb798-4"></a><span class="co"># was not expected).</span></span>
-<span id="cb798-5"><a href="r-markdown-assignments.html#cb798-5"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">2</span>))</span>
-<span id="cb798-6"><a href="r-markdown-assignments.html#cb798-6"></a><span class="kw">plot</span>(tukeys)</span></code></pre></div>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="r-markdown-assignments.html#cb807-1"></a><span class="co"># The mar parameter changes the margins around</span></span>
+<span id="cb807-2"><a href="r-markdown-assignments.html#cb807-2"></a><span class="co"># created plots. This is done so the labels on the</span></span>
+<span id="cb807-3"><a href="r-markdown-assignments.html#cb807-3"></a><span class="co"># side of the Tukey plot are visible (however, this</span></span>
+<span id="cb807-4"><a href="r-markdown-assignments.html#cb807-4"></a><span class="co"># was not expected).</span></span>
+<span id="cb807-5"><a href="r-markdown-assignments.html#cb807-5"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">4</span>, <span class="dv">2</span>))</span>
+<span id="cb807-6"><a href="r-markdown-assignments.html#cb807-6"></a><span class="kw">plot</span>(tukeys)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-504-1.png" width="672" /></p>
 <p>It is clearly visible that just the CIs of generic retargetring vs. no retargeting cross the 0 bound, which further indicates that the differences in means are statistically not significantly different from 0.</p>
 <p>From a reporting standpoint we can say that revenue is higher when using dynamic retargeting vs. no retargeting or generic retargeting, but there is no significant difference between the sales for products in the dynamic retargeting vs. no retargeting conditions. Managerially, this means that only dynamic retargetting helps us to increase sales.</p>
@@ -1334,13 +1334,13 @@ dynamic regargeting vs. generig retargeting</p>
 Or, alternatively</p>
 <p><span class="math display">\[H_1: \exists {i,j}: {\bar \mu_i \ne \bar \mu_j} \]</span></p>
 <p>A good way to visualize ordinal data is through a boxplot.</p>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="r-markdown-assignments.html#cb799-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> customer_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> rank)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb799-2"><a href="r-markdown-assignments.html#cb799-2"></a><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="r-markdown-assignments.html#cb808-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> customer_data, <span class="kw">aes</span>(<span class="dt">x =</span> retargeting, <span class="dt">y =</span> rank)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb808-2"><a href="r-markdown-assignments.html#cb808-2"></a><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Rank&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-505-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The boxplot seems to indicate that the medians are unequal. At least for dynamic retargeting our customer ranks seem to be lower than the ones of no retargeting or generic retargeting.</p>
 <p>The only assumption that we require for this test is that the dependent variable is at least ordinal, which is fulfilled for customer ranks. Hence we can move on to performing the test in R.</p>
-<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="r-markdown-assignments.html#cb800-1"></a><span class="co"># ordinal data so we use a non-parametric test</span></span>
-<span id="cb800-2"><a href="r-markdown-assignments.html#cb800-2"></a><span class="kw">kruskal.test</span>(rank <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</span></code></pre></div>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="r-markdown-assignments.html#cb809-1"></a><span class="co"># ordinal data so we use a non-parametric test</span></span>
+<span id="cb809-2"><a href="r-markdown-assignments.html#cb809-2"></a><span class="kw">kruskal.test</span>(rank <span class="op">~</span><span class="st"> </span>retargeting, <span class="dt">data =</span> customer_data)</span></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
@@ -1349,9 +1349,9 @@ Or, alternatively</p>
 ## 0.000000000001732</code></pre>
 <p>The p-value is below any sensible signifcance level and thus we reject the null hypothesis of equal medians. This means that the median rank of customers is different for different types of retargeting, implying that the type of retargeting has an effect on the customer rank.</p>
 <p>To further see which of the medians are unequal we perform the Nemenyi post hoc test, which can be found in the <code>PCMCR</code> package in R. The null hypothesis is that the pairwise medians are equal, while the alternative hypothesis is that the pairwise medians are unequal.</p>
-<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="r-markdown-assignments.html#cb802-1"></a><span class="kw">library</span>(PMCMR)</span>
-<span id="cb802-2"><a href="r-markdown-assignments.html#cb802-2"></a><span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> customer_data<span class="op">$</span>rank, </span>
-<span id="cb802-3"><a href="r-markdown-assignments.html#cb802-3"></a>    <span class="dt">g =</span> customer_data<span class="op">$</span>retargeting, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="r-markdown-assignments.html#cb811-1"></a><span class="kw">library</span>(PMCMR)</span>
+<span id="cb811-2"><a href="r-markdown-assignments.html#cb811-2"></a><span class="kw">posthoc.kruskal.nemenyi.test</span>(<span class="dt">x =</span> customer_data<span class="op">$</span>rank, </span>
+<span id="cb811-3"><a href="r-markdown-assignments.html#cb811-3"></a>    <span class="dt">g =</span> customer_data<span class="op">$</span>retargeting, <span class="dt">dist =</span> <span class="st">&quot;Tukey&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using Tukey and Kramer (Nemenyi) test  
 ##                    with Tukey-Dist approximation for independent samples 
@@ -1369,30 +1369,30 @@ Or, alternatively</p>
 <p>Our null hypothesis in this case states that the proportions of conversion are equal for females and males. Our alternative hypothesis states that these proportions are unequal.</p>
 <p><span class="math display">\[H_0: \pi_1 = \pi_2 \\ H_1: \pi_1 \neq \pi_2\]</span></p>
 <p>First let´s create a summary plot to get a feeling for the data.</p>
-<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="r-markdown-assignments.html#cb804-1"></a><span class="co">#conditional relative frequencies</span></span>
-<span id="cb804-2"><a href="r-markdown-assignments.html#cb804-2"></a>rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(customer_data<span class="op">$</span>gender, customer_data<span class="op">$</span>conversion), <span class="dv">1</span>))</span>
-<span id="cb804-3"><a href="r-markdown-assignments.html#cb804-3"></a><span class="kw">names</span>(rel_freq_table) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;gender&quot;</span>, <span class="st">&quot;conversion&quot;</span>,<span class="st">&quot;freq&quot;</span>) <span class="co"># changing names of the columns</span></span>
-<span id="cb804-4"><a href="r-markdown-assignments.html#cb804-4"></a>rel_freq_table</span></code></pre></div>
+<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="r-markdown-assignments.html#cb813-1"></a><span class="co">#conditional relative frequencies</span></span>
+<span id="cb813-2"><a href="r-markdown-assignments.html#cb813-2"></a>rel_freq_table &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">prop.table</span>(<span class="kw">table</span>(customer_data<span class="op">$</span>gender, customer_data<span class="op">$</span>conversion), <span class="dv">1</span>))</span>
+<span id="cb813-3"><a href="r-markdown-assignments.html#cb813-3"></a><span class="kw">names</span>(rel_freq_table) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;gender&quot;</span>, <span class="st">&quot;conversion&quot;</span>,<span class="st">&quot;freq&quot;</span>) <span class="co"># changing names of the columns</span></span>
+<span id="cb813-4"><a href="r-markdown-assignments.html#cb813-4"></a>rel_freq_table</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["gender"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["conversion"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"female","2":"conversion","3":"0.3851351"},{"1":"male","2":"conversion","3":"0.1283784"},{"1":"female","2":"no conversion","3":"0.6148649"},{"1":"male","2":"no conversion","3":"0.8716216"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="r-markdown-assignments.html#cb805-1"></a><span class="kw">ggplot</span>(rel_freq_table, <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> freq, <span class="dt">fill =</span> conversion)) <span class="op">+</span><span class="st"> </span><span class="co">#plot data</span></span>
-<span id="cb805-2"><a href="r-markdown-assignments.html#cb805-2"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">.7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span></span>
-<span id="cb805-3"><a href="r-markdown-assignments.html#cb805-3"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span></span>
-<span id="cb805-4"><a href="r-markdown-assignments.html#cb805-4"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;gender&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span></span>
-<span id="cb805-5"><a href="r-markdown-assignments.html#cb805-5"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="r-markdown-assignments.html#cb814-1"></a><span class="kw">ggplot</span>(rel_freq_table, <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> freq, <span class="dt">fill =</span> conversion)) <span class="op">+</span><span class="st"> </span><span class="co">#plot data</span></span>
+<span id="cb814-2"><a href="r-markdown-assignments.html#cb814-2"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">.7</span>) <span class="op">+</span><span class="st"> </span><span class="co">#position</span></span>
+<span id="cb814-3"><a href="r-markdown-assignments.html#cb814-3"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq<span class="op">*</span><span class="dv">100</span>,<span class="dv">0</span>),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="co">#add percentages</span></span>
+<span id="cb814-4"><a href="r-markdown-assignments.html#cb814-4"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Proportion of conversions&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;gender&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># specify axis labels</span></span>
+<span id="cb814-5"><a href="r-markdown-assignments.html#cb814-5"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/question_3_1-1.png" width="672" /></p>
 <p>We see that our conversion seems to be better for our female customers, but let´s check whether these proportions are significantly different.</p>
-<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="r-markdown-assignments.html#cb806-1"></a>n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>))  <span class="co">#number of observations for females</span></span>
-<span id="cb806-2"><a href="r-markdown-assignments.html#cb806-2"></a>n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>))  <span class="co">#number of observations for males</span></span>
-<span id="cb806-3"><a href="r-markdown-assignments.html#cb806-3"></a>n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">&amp;</span><span class="st"> </span></span>
-<span id="cb806-4"><a href="r-markdown-assignments.html#cb806-4"></a><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for females</span></span>
-<span id="cb806-5"><a href="r-markdown-assignments.html#cb806-5"></a>n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span></span>
-<span id="cb806-6"><a href="r-markdown-assignments.html#cb806-6"></a><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for males</span></span>
-<span id="cb806-7"><a href="r-markdown-assignments.html#cb806-7"></a></span>
-<span id="cb806-8"><a href="r-markdown-assignments.html#cb806-8"></a><span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(n1_conv, n2_conv), <span class="dt">n =</span> <span class="kw">c</span>(n1, n2), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="r-markdown-assignments.html#cb815-1"></a>n1 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>))  <span class="co">#number of observations for females</span></span>
+<span id="cb815-2"><a href="r-markdown-assignments.html#cb815-2"></a>n2 &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>))  <span class="co">#number of observations for males</span></span>
+<span id="cb815-3"><a href="r-markdown-assignments.html#cb815-3"></a>n1_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span> <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb815-4"><a href="r-markdown-assignments.html#cb815-4"></a><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for females</span></span>
+<span id="cb815-5"><a href="r-markdown-assignments.html#cb815-5"></a>n2_conv &lt;-<span class="st"> </span><span class="kw">nrow</span>(<span class="kw">subset</span>(customer_data, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb815-6"><a href="r-markdown-assignments.html#cb815-6"></a><span class="st">    </span>conversion <span class="op">==</span><span class="st"> &quot;conversion&quot;</span>))  <span class="co">#number of conversions for males</span></span>
+<span id="cb815-7"><a href="r-markdown-assignments.html#cb815-7"></a></span>
+<span id="cb815-8"><a href="r-markdown-assignments.html#cb815-8"></a><span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(n1_conv, n2_conv), <span class="dt">n =</span> <span class="kw">c</span>(n1, n2), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## 
 ##  2-sample test for equality of proportions with continuity correction
 ## 

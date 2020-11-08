@@ -962,7 +962,7 @@ In this plot, we look for cases outside of a dashed line, which represents **Coo
 To see how influential observations can impact your regression, have a look at <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet" target="_blank">this example</a>.
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
-To summarize, if you detected outliers in your data, you should test if these observations exert undue influence on your results using the Cook's distance statistic. If you detect observations which bias your results, you should remove these observations.  
+To summarize, if you detected outliers in your data, you should test if these observations exert undue influence on your results using the Cook's distance statistic as described above. If you detect observations which bias your results, you should remove these observations.  
 :::
 
 ### Non-linearity
@@ -979,12 +979,12 @@ In our example, it appears that linear relationships can be reasonably assumed. 
 * Constant marginal returns
 * Elasticities increase with X 
 
-These assumptions may not be justifiable in certain contexts. Consider, as an example, the effect of marketing expenditures on sales. The linear model assumes that if you change your advertising expenditures from, say 10€ to 11€, this will change sales by the same amount as if you would change your marketing expenditure from, say 100,000€ to 100,001€. This is what we mean by **constant marginal returns** - irrespective of the level of advertising, spending an additional Euro on advertising will change sales by the same amount. Or consider the effect of price on sales. A linear model assumes that changing the price from, say 10€ to 11€, will change the sales by the same amount as increasing the price from, say 20€ to 21€. An elasticity tells you the relative change in the outcome variable (e.g., sales) due to a relative change in the predictor variable. For example, if we change our advertising expenditures by 1%, sales will change by XY%. As we have seen, the linear model assumes constant marginal returns, which implies that the **elasticity increases** with the level of the independent variable. In our example, advertising becomes relatively more effective since as we move to higher levels of advertising expenditures, a relatively smaller change in advertising expenditure will yield the same return.
+These assumptions may not be justifiable in certain contexts. As an example, consider the effect of marketing expenditures on sales. The linear model assumes that if you change your advertising expenditures from, say 10€ to 11€, this will change sales by the same amount as if you would change your marketing expenditure from, say 100,000€ to 100,001€. This is what we mean by **constant marginal returns** - irrespective of the level of advertising, spending an additional Euro on advertising will change sales by the same amount. Or consider the effect of price on sales. A linear model assumes that changing the price from, say 10€ to 11€, will change the sales by the same amount as increasing the price from, say 20€ to 21€. An elasticity tells you the relative change in the outcome variable (e.g., sales) due to a relative change in the predictor variable. For example, if we change our advertising expenditures by 1%, sales will change by XY%. As we have seen, the linear model assumes constant marginal returns, which implies that the **elasticity increases** with the level of the independent variable. In our example, advertising becomes relatively more effective since as we move to higher levels of advertising expenditures, a relatively smaller change in advertising expenditure will yield the same return.
 
 In marketing applications, it is often more realistic to assume **decreasing marginal returns**, meaning that the return from an increase in advertising is decreasing with increasing levels of advertising (e.g., and increase in advertising expenditures from 10€ to 11€ will lead to larger changes in sales, compared to a change from, say 100,000€ to 100,001€). We will see how to implement such a model further below in the section on extensions of the non-linear model.  
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
-To summarize, if you find indications that the linear specification might not represent your data well, you should consider a non-linear specification, which we will cover below. One popular and easy way to implement a non-linear specification in marketing is the so-called log-log model, where you take the logarithm of the dependent variable and independent variable(s). This type of model allows for decreasing marginal returns and yields constant elasticity, which is more realistic in many marketing settings. Constant elasticity means that a 1% change in the independent variable yields the same *relative* return for different levels of the independent variable. If you are unsure which model specification represents your data better, you can also compare different model specifications, e.g., by comparing the explained variance of the models (the better fitting model explains more of the variation in your data).    
+To summarize, if you find indications that the linear specification might not represent your data well, you should consider a non-linear specification, which we will cover below. One popular and easy way to implement a non-linear specification in marketing applications is the so-called log-log model, where you take the logarithm of the dependent variable and independent variable(s). This type of model allows for decreasing marginal returns and yields constant elasticity, which is more realistic in many marketing settings. Constant elasticity means that a 1% change in the independent variable yields the same *relative* return for different levels of the independent variable. If you are unsure which model specification represents your data better, you can also compare different model specifications, e.g., by comparing the explained variance of the models (the better fitting model explains more of the variation in your data), and then opt for the specification that fits your data best.    
 :::
 
 ### Non-constant error variance
@@ -1043,9 +1043,9 @@ shapiro.test(resid(multiple_regression))
 
 As you can see, we can not reject the H<sub>0</sub> of normally distributed residuals, which means that we can assume the residuals to be approximately normally distributed in our example.
 
-When the assumption of normally distributed errors is not met, this might again be due to a misspecification of your model, in which case it might help to transform your data (e.g., using log-transformations). If transforming your data doesn't solve the issue, you may use bootstrapping to obtain corrected results. Bootstrapping is a so-called resampling method in which we use repeated random sampling with replacement to estimate the sampling distribution based on the sample itself, rather than relying on some assumptions about the shape of the sampling distribution to determine the probability of obtaining a test statistic of a particular magnitude. In other words, the data from our sample are treated as the population from which smaller random samples (so-called bootstrap samples) are repeatedly taken with replacement. The statistic of interest, e.g., the regression coefficients in our example, is calculated in each sample, and by taking many samples, the sampling distribution can be estimated. Similar to the simulations we did in chapter 5, the standard error of the statistic can be estimated using the standard deviation of the sampling distribution. Once we have computed the standard error, we can use it to compute the confidence intervals and significance tests. You can find a description of how to implement this procedure in R e.g., <a href="https://www.statmethods.net/advstats/bootstrapping.html" target="_blank">here</a>).
+When the assumption of normally distributed errors is not met, this might again be due to a misspecification of your model, in which case it might help to transform your data (e.g., using log-transformations). If transforming your data doesn't solve the issue, you may use **bootstrapping** to obtain corrected results. Bootstrapping is a so-called resampling method in which we use repeated random sampling with replacement to estimate the sampling distribution based on the sample itself, rather than relying on some assumptions about the shape of the sampling distribution to determine the probability of obtaining a test statistic of a particular magnitude. In other words, the data from our sample are treated as the population from which smaller random samples (so-called bootstrap samples) are repeatedly taken with replacement. The statistic of interest, e.g., the regression coefficients in our example, is calculated in each sample, and by taking many samples, the sampling distribution can be estimated. Similar to the simulations we did in chapter 5, the standard error of the statistic can be estimated using the standard deviation of the sampling distribution. Once we have computed the standard error, we can use it to compute the confidence intervals and significance tests. You can find a description of how to implement this procedure in R e.g., <a href="https://www.statmethods.net/advstats/bootstrapping.html" target="_blank">here</a>).
 
-Essentially, we can use the `boot()` function contained in the `boot` package to obtain the bootstrap results. However, we need to pass this function a statistic to apply the bootstrapping on - in our case, this would be the coefficients from our regression model. To make this easier, we can write a function that returns the coefficients from the model for every bootstrap sample that we take. In the following code block, we specify a function called `bs()`, which does exactly this (don't worry if you don't understand all the details - its basically just another function we can use to automate certain steps in the analysis, only that in this case we have written the function ourselves rather than relying on functions contained in existing packages).    
+Essentially, we can use the `boot()` function contained in the `boot` package to obtain the bootstrapped results. However, we need to pass this function a statistic to apply the bootstrapping on - in our case, this would be the coefficients from our regression model. To make this easier, we can write a function that returns the coefficients from the model for every bootstrap sample that we take. In the following code block, we specify a function called `bs()`, which does exactly this (don't worry if you don't understand all the details - its basically just another function we can use to automate certain steps in the analysis, only that in this case we have written the function ourselves rather than relying on functions contained in existing packages).    
 
 ```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
 # function to obtain regression coefficients
@@ -1056,7 +1056,7 @@ bs <- function(formula, data, indices) {
 }
 ```
 
-Now that we have specified this function, we can use it within the `boot` function to obtained the bootstrap results for the regression coefficients. To do this, we first load the `boot` package and use the `boot` function by specifying the following arguments:
+Now that we have specified this function, we can use it within the `boot` function to obtained the bootstrapped results for the regression coefficients. To do this, we first load the `boot` package and use the `boot` function by specifying the following arguments:
 
 * **data**: the data set we use (the regression data set in our example)
 * **statistic**: the statistic(s) we would like to bootstrap (in our example, we use the function we have specified above to obtain the regression coefficients)
@@ -1094,13 +1094,13 @@ We could also compare the bootstrapped confidence intervals to the once we obtai
 # get 95% confidence intervals for standard model
 confint(multiple_regression)
 ```
-As you can see, the bootstrapped confidence interval is very similar to the once obtained without bootstrapping, which is not unexpected since in our example, the tests indicated that our assumptions about the distribution of errors is actually met so that we wouldn't have needed to apply the bootstrapping. You could also inspect the distribution of the obtained regression coefficients from the 2000 bootstrap samples using the `plot()` function and passing it the respective index. Inspecting the plots reveals that for all coefficients (with the exception of the intercept) zero is not contained in the range of plausible values. 
+As you can see, the bootstrapped confidence interval is very similar to the once obtained without bootstrapping, which is not unexpected since in our example, the tests indicated that our assumptions about the distribution of errors is actually met so that we wouldn't have needed to apply the bootstrapping. You could also inspect the distribution of the obtained regression coefficients from the 2000 bootstrap samples using the `plot()` function and passing it the respective index. Inspecting the plots reveals that for all coefficients (with the exception of the intercept) zero is not contained in the range of plausible values, indicating the the coefficients are significant at the 5% level. 
 
 ```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
 plot(boot_out, index=1) # intercept
 plot(boot_out, index=2) # adspend
 plot(boot_out, index=3) # airplay
-plot(boot_out, index=3) # starpower
+plot(boot_out, index=4) # starpower
 ```
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
@@ -1189,13 +1189,13 @@ Say, as a marketing manager we are interested in estimating the effect of the nu
 stream_model_1 <- lm(streams ~ playlists , data = streaming_data)
 summary(stream_model_1)
 ```
-As you can see, the results suggest that being listed on one more playlist leads to 3,000 more streams on average. Now let's see what happens when we add the popularity of an artist as an addtional predictor:
+As you can see, the results suggest that being listed on one more playlist leads to 3,032 more streams on average (recall that the dependent variable is given in thousands in this case, so we need multiply the coefficient by 1,000 to obtain the effect). Now let's see what happens when we add the popularity of an artist as an additional predictor:
 
 ```{r}
 stream_model_2 <- lm(streams ~ playlists + popularity, data = streaming_data)
 summary(stream_model_2)
 ```
-What happens to the coefficient of ```playlists```? As you can see, the magnitude of the coefficient decreased substantially. Because the popularity of an artist influences both the number of playlists (more popular artists are listed on a larger number of playlists) *and* the number of streams (more popular artists receive more streams), the coefficient will be biased upwards. In this case, the popularity of an artists is said to be an **unobserved confounder** if it is not included in the model and the playlist variable is referred to as an endogenous predictor (i.e., the assumption of exogeneity is violated). As you could see, this unobserved confounder would lead us to overestimate the effect of playlists on the number of streams. It is therefore crucially important that you carefully consider what other factors could explain the dependent variable besides your main independent variable of interest. This is also the reason why it is much more difficult to estimate causal effects from observational data compared to randomized experiments, where you could, e.g., randomly assign artists with the same popularity to be included on playlists or not. But in real life, it is often not feasible to run field experiments, e.g., because we may not have control over which artists gets included on a playlists and which artists don't.      
+What happens to the coefficient of ```playlists```? As you can see, the magnitude of the coefficient decreased substantially. Because the popularity of an artist influences both the number of playlists (more popular artists are listed on a larger number of playlists) *and* the number of streams (more popular artists receive more streams), the coefficient will be biased upwards. In this case, the popularity of an artists is said to be an **unobserved confounder** if it is not included in the model and the playlist variable is referred to as an endogenous predictor (i.e., the assumption of exogeneity is violated). As you could see, this unobserved confounder would lead us to overestimate the effect of playlists on the number of streams. It is therefore crucially important that you carefully consider what other factors could explain the dependent variable besides your main independent variable of interest. This is also the reason why it is much more difficult to estimate causal effects from observational data compared to randomized experiments, where you could, e.g., randomly assign artists to be included on playlists or not. But in real life, it is often not feasible to run field experiments, e.g., because we may not have control over which artists get included on a playlists and which artists don't.      
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
 To summarize, if your goal is to identify a causal effect of one variable on another variable using observational (non-experimental) data, you need to carefully think about which potentially omitting variable may influence both the dependent and independent variable in your model. Unfortunately, there is no test that would tell you if you have indeed included all variables in your model so that you need to put forth arguments why you think that unobserved confounders are not a reason for concern in your analysis. 
@@ -1210,7 +1210,7 @@ If the goal of your analysis is to predict an outcome, rather than explaining a 
 
 By inspecting how well the model based on the training data is able to predict the observations in the test data, we can judge the predictive ability of a model on new data. This is also referred to as the out-of-sample predictive accuracy. You can easily test the out-of-sample predictive accuracy of your model by splitting the data set in two parts - the training data and the test data. In the following code, we randomly 2/3 of the observations to estimate the model and retain the remaining 1/3 of observations to test how well we can predict the outcome based on our model. 
 
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 # randomly split into training and test data:
 set.seed(123)
 n <- nrow(regression)
@@ -1220,7 +1220,7 @@ test <- (1:n)[-train]
 
 Now we have created two data sets - the training data set and the test data set. Next, let's estimate the model using the training data and inspect the results 
 
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 # estimate linear model based on training data
 multiple_train <- lm(sales ~ adspend + airplay + starpower, data = regression, subset=train) 
 summary(multiple_train) #summary of results
@@ -1228,14 +1228,14 @@ summary(multiple_train) #summary of results
 
 As you can see, the model results are similar to the results from the model from the beginning, which is not surprising since it is based on the same data with the only difference that we discarded 1/3 of the observations for validation purposes. In a next step, we can use the `predict()` function and the argument `newdata` to predict observations in the test data set based on our estimated model. To test the our-of-sample predictive accuracy of the model, we can then compute the squared correlation coefficient between the predicted and observed values, which will give us the out-of-sample model fit (i.e., the R2).  
 
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 # using coefficients to predict test data
 pred_lm <- predict(multiple_train,newdata = regression[test,])
 cor(regression[test,"sales"],pred_lm)^2 # R^2 for test data
 ```
 As you can see, the R2 is about 0.57, suggesting that 57% of the variation in the test data set can be explained by our model. Note that this share is somewhat lower compared to the within-sample fit that you can see in the model above (i.e., R2 = 0.7), which is not unexpected since the test data were not used to estimate the model. The value of 0.57 suggests that the model generalizes to other data sets quite well. We could also visualize the out-of-sample model fit as follows: 
 
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 # plot predicted vs. observed values for test data
 plot(regression[test,"sales"],pred_lm,xlab="y measured",ylab="y predicted",cex.lab=1.3)
 abline(c(0,1))
@@ -1247,11 +1247,11 @@ To summarize, overfitting is a concern in predictive models and it means that yo
 
 ### Variable selection
 
-A *parsimonious* model is a model that accomplishes a desired level of explanation or prediction with as few predictor variables as possible. Parsimonious models are desired because smaller models are easier to interpret and redundant or unnecessary variables should be left out (also to combat overfitting). Note that this is especially true for predictive models. If our goal was to explain a relationship between two variables and the variable we formulated a hypothesis for turns out to be insignificant, this result would also be interesting and, hence, you should also report the effect eventhough it may be insignificant. 
+A *parsimonious* model is a model that accomplishes a desired level of explanation or prediction with as few predictor variables as possible. Parsimonious models are desired because smaller models are easier to interpret and redundant or unnecessary variables should be left out (also to combat overfitting). Note that this is especially true for predictive models. If our goal was to explain a relationship between two variables and the variable we formulated a hypothesis for turns out to be insignificant, this result would also be interesting and, hence, you should also report the effect even though it may be insignificant. 
 
 Let's use an example to see how we could identify variables that do not add any explanatory power to the model and should thus be excluded from the model. First, we will add a random variable to our existing regression data set. We can use the `rnorm()` function to generate random observations from a normal distribution. 
 
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 set.seed(123)
 # Add another random variable
 regression$var_test <- rnorm(nrow(regression),0,1)
@@ -1259,7 +1259,7 @@ regression$var_test <- rnorm(nrow(regression),0,1)
 
 The model selection process should tell us that we should favor a model without this predictor since it does not add any explanatory power. In the following code, we specify our model by gradually adding one predictor after the other and then we will use the `anova()` function to test the differences between the models. 
 
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 # Model comparison with anova
 lm0 <- lm(sales ~ 1, data = regression) 
 lm1 <- lm(sales ~ adspend, data = regression) 
@@ -1272,7 +1272,7 @@ The output shows that the last model, in which we add the random variable as an 
 
 Alternatively, we could also select the variables to be included in our model using a stepwise procedure with the `step()` function. To do this, we pass the most complete model from above, i.e., 'lm4' to the function and inspect the results:  
 
-```{r echo=F, eval=T}
+```{r echo=T, eval=T}
 options(digits = 8)
 # Stepwise variable selection
 # Automatic model selection with step
@@ -1409,7 +1409,7 @@ Sales =\beta_0 &+\beta_1*adspend\\
 
 You can see that the effect of advertising now depends on the type of artist. Hence, the additive assumption is removed. Note that if you decide to include an interaction effect, you should always include the main effects of the variables that are included in the interaction (even if the associated p-values do not suggest significant effects). It is easy to include an interaction effect in you model by adding an additional variable that has the format ```var1:var2````. In our example, this could be achieved using the following specification:  
 
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE,fig.align="center", fig.cap = "Effect of advertising by group"}
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 multiple_regression <- lm(sales ~ adspend + airplay + starpower + country + adspend:country, data = regression) #estimate linear model
 summary(multiple_regression) #summary of results
 ```
