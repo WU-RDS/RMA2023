@@ -15,7 +15,7 @@ opts_chunk$set(cache=T)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=F, eval=TRUE,paged.print = FALSE}
-options(digits = 6)
+options(digits = 8)
 ```
 
 # Regression 
@@ -302,7 +302,7 @@ Sales=\beta_0+\beta_1*adspend+\epsilon
 (\#eq:regequadv)
 \end{equation} 
 
-The word "adspend" represents data on advertising expenditures that we have observed and &beta;<sub>1</sub> (the "slope"") represents the unknown relationship between advertising expenditures and sales. It tells you by how much sales will increase for an additional Euro spent on advertising. &beta;<sub>0</sub> (the "intercept") is the number of sales we would expect if no money is spent on advertising. Together, &beta;<sub>0</sub> and &beta;<sub>1</sub> represent the model coefficients or parameters. The error term (&epsilon;) captures everything that we miss by using our model, including, (1) misspecifications (the true relationship might not be linear), (2) omitted variables (other variables might drive sales), and (3) measurement error (our measurement of the variables might be imperfect).      
+The word "adspend" represents data on advertising expenditures that we have observed and &beta;<sub>1</sub> (the "slope"") represents the unknown relationship between advertising expenditures and sales. It tells you by how much sales will increase for an additional Euro spent on advertising. &beta;<sub>0</sub> (the "intercept") is the number of sales we would expect if no money is spent on advertising. Together, &beta;<sub>0</sub> and &beta;<sub>1</sub> represent the model coefficients or *parameters*. The error term (&epsilon;) captures everything that we miss by using our model, including, (1) misspecifications (the true relationship might not be linear), (2) omitted variables (other variables might drive sales), and (3) measurement error (our measurement of the variables might be imperfect).
 
 Once we have used our training data to produce estimates for the model coefficients, we can predict future sales on the basis of a particular value of advertising expenditures by computing:
 
@@ -357,7 +357,7 @@ Y<sub>i</sub>: Values of the dependent variable (i = 1,2,...,N) <br>
 X<sub>ni</sub>: Values of the nth independent variables and the i*th* observation<br>
 N: Number of observations<br>
 
-This is also referred to as the <b>residual sum of squares (RSS)</b>. Now we need to choose the values for &beta;<sub>0</sub> and &beta;<sub>1</sub> that minimize RSS. So how can we derive these values for the regression coefficient? The equation for &beta;<sub>1</sub> is given by:
+This is also referred to as the <b>residual sum of squares (RSS)</b>, which you may still remember from the previous chapter on ANOVA. Now we need to choose the values for &beta;<sub>0</sub> and &beta;<sub>1</sub> that minimize RSS. So how can we derive these values for the regression coefficient? The equation for &beta;<sub>1</sub> is given by:
 
 \begin{equation} 
 \hat{\beta_1}=\frac{COV_{XY}}{s_x^2}
@@ -377,7 +377,7 @@ beta_1
 
 The interpretation of &beta;<sub>1</sub> is as follows: 
 
-For every extra Euros spent on advertising, sales can be expected to increase by `r round(beta_1,3)` units. Or, in other words, if we increase our marketing budget by 1,000 Euros, sales can be expected to increase by `r round(beta_1,3)*1000` units.
+For every extra Euro spent on advertising, sales can be expected to increase by `r round(beta_1,3)` units. Or, in other words, if we increase our marketing budget by 1,000 Euros, sales can be expected to increase by `r round(beta_1,3)*1000` units.
 
 Using the estimated coefficient for &beta;<sub>1</sub>, it is easy to compute &beta;<sub>0</sub> (the intercept) as follows:
 
@@ -411,7 +411,7 @@ You can see that the regression line intersects with the y-axis at `r round(beta
 
 #### Significance testing
 
-In a next step, we assess if the effect of advertising on sales is statistically significant. This means that we test the null hypothesis H<sub>0</sub>: "There is no relationship between advertising and sales" versus the alternative hypothesis H<sub>1</sub>: "The is some relationship between advertising and sales". Or, to state this mathematically:
+In a next step, we assess if the effect of advertising on sales is statistically significant. This means that we test the null hypothesis H<sub>0</sub>: "There is no relationship between advertising and sales" versus the alternative hypothesis H<sub>1</sub>: "The is some relationship between advertising and sales". Or, to state this formally:
 
 $$H_0:\beta_1=0$$
 $$H_1:\beta_1\ne0$$
@@ -439,7 +439,7 @@ simple_regression <- lm(sales ~ adspend, data = regression) #estimate linear mod
 summary(simple_regression) #summary of results
 ```
 
-Note that the estimated coefficients for &beta;<sub>0</sub> (`r round(summary(simple_regression)$coefficients[1],3)`) and &beta;<sub>1</sub> (`r round(summary(simple_regression)$coefficients[2],3)`) correspond to the results of our manual computation above. The associated t-values and p-values are given in the output. The t-values are larger than the critical t-values for the 95% confidence level, since the associated p-values are smaller than 0.05. In case of the coefficient for &beta;<sub>1</sub> this means that the probability of an association between the advertising and sales of the observed magnitude (or larger) is smaller than 0.05, if the value of &beta;<sub>1</sub> was, in fact, 0. This finding leads us to reject the null hypothesis of no association between advertising and sales. 
+Note that the estimated coefficients for &beta;<sub>0</sub> (`r round(summary(simple_regression)$coefficients[1],3)`) and &beta;<sub>1</sub> (`r round(summary(simple_regression)$coefficients[2],3)`) correspond to the results of our manual computation above. The associated t-values and p-values are given in the output. The t-values are larger than the critical t-values for the 95% confidence level, since the associated p-values are smaller than 0.05. In case of the coefficient for &beta;<sub>1</sub>, this means that the probability of an association between the advertising and sales of the observed magnitude (or larger) is smaller than 0.05, if the value of &beta;<sub>1</sub> was, in fact, 0. This finding leads us to reject the null hypothesis of no association between advertising and sales. 
 
 The coefficients associated with the respective variables represent <b>point estimates</b>. To obtain a better understanding of the range of values that the coefficients could take, it is helpful to compute <b>confidence intervals</b>. A 95% confidence interval is defined as a range of values such that with a 95% probability, the range will contain the true unknown value of the parameter. For example, for &beta;<sub>1</sub>, the confidence interval can be computed as.
 
@@ -458,7 +458,7 @@ For our model, the 95% confidence interval for &beta;<sub>0</sub> is [`r round(c
 
 #### Assessing model fit
 
-Once we have rejected the null hypothesis in favor of the alternative hypothesis, the next step is to investigate to what extent the model represents ("fits") the data. How can we assess the model fit?
+Once we have rejected the null hypothesis in favor of the alternative hypothesis, the next step is to investigate how well the model represents ("fits") the data. How can we assess the model fit?
 
 * First, we calculate the fit of the most basic model (i.e., the mean)
 * Then, we calculate the fit of the best model (i.e., the regression model)
@@ -961,6 +961,10 @@ In this plot, we look for cases outside of a dashed line, which represents **Coo
 
 To see how influential observations can impact your regression, have a look at <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet" target="_blank">this example</a>.
 
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, if you detected outliers in your data, you should test if these observations exert undue influence on your results using the Cook's distance statistic. If you detect observations which bias your results, you should remove these observations.  
+:::
+
 ### Non-linearity
 
 An important underlying assumption for OLS is that of linearity, meaning that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms. One quick way to assess whether a linear relationship can be assumed is to inspect the added variable plots that we already came across earlier:  
@@ -970,30 +974,56 @@ library(car)
 avPlots(multiple_regression)
 ```
 
-In our example, it appears that linear relationships can be reasonably assumed. Please note, however, that the assumption of linearity implies two things:
+In our example, it appears that linear relationships can be reasonably assumed. Please note, however, that the linear model implies two things:
 
-* Constant marginal returns (e.g., an increase in ad-spend from 10€ to 11€ yields the same increase in sales as an increase from 100,000€ to 100,001€)
-* Elasticities increase with X (e.g., advertising becomes relatively more effective; i.e., a relatively smaller change in advertising expenditure will yield the same return)
+* Constant marginal returns
+* Elasticities increase with X 
 
-These assumptions may not be justifiable in certain contexts and you might have to transform your data (e.g., using log-transformations) in these cases, as we will see below.
+These assumptions may not be justifiable in certain contexts. Consider, as an example, the effect of marketing expenditures on sales. The linear model assumes that if you change your advertising expenditures from, say 10€ to 11€, this will change sales by the same amount as if you would change your marketing expenditure from, say 100,000€ to 100,001€. This is what we mean by **constant marginal returns** - irrespective of the level of advertising, spending an additional Euro on advertising will change sales by the same amount. Or consider the effect of price on sales. A linear model assumes that changing the price from, say 10€ to 11€, will change the sales by the same amount as increasing the price from, say 20€ to 21€. An elasticity tells you the relative change in the outcome variable (e.g., sales) due to a relative change in the predictor variable. For example, if we change our advertising expenditures by 1%, sales will change by XY%. As we have seen, the linear model assumes constant marginal returns, which implies that the **elasticity increases** with the level of the independent variable. In our example, advertising becomes relatively more effective since as we move to higher levels of advertising expenditures, a relatively smaller change in advertising expenditure will yield the same return.
+
+In marketing applications, it is often more realistic to assume **decreasing marginal returns**, meaning that the return from an increase in advertising is decreasing with increasing levels of advertising (e.g., and increase in advertising expenditures from 10€ to 11€ will lead to larger changes in sales, compared to a change from, say 100,000€ to 100,001€). We will see how to implement such a model further below in the section on extensions of the non-linear model.  
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, if you find indications that the linear specification might not represent your data well, you should consider a non-linear specification, which we will cover below. One popular and easy way to implement a non-linear specification in marketing is the so-called log-log model, where you take the logarithm of the dependent variable and independent variable(s). This type of model allows for decreasing marginal returns and yields constant elasticity, which is more realistic in many marketing settings. Constant elasticity means that a 1% change in the independent variable yields the same *relative* return for different levels of the independent variable. If you are unsure which model specification represents your data better, you can also compare different model specifications, e.g., by comparing the explained variance of the models (the better fitting model explains more of the variation in your data).    
+:::
 
 ### Non-constant error variance
 
-**The following video summarizes how to identify non-constant error variance in R**
+The following video summarizes how to identify non-constant error variance in R
 
 <div align="center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bcYdQlQJZ_U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Another important assumption of the linear model is that the error terms have a constant variance (i.e., homoscedasticity). The following plot from the model output shows the residuals (the vertical distance from an observed value to the predicted values) versus the fitted values (the predicted value from the regression model). If all the points fell exactly on the dashed grey line, it would mean that we have a perfect prediction. The residual variance (i.e., the spread of the values on the y-axis) should be similar across the scale of the fitted values on the x-axis. 
+Another important assumption of the linear model is that the error terms have a constant variance (i.e., homoskedasticity). The following plot from the model output shows the residuals (the vertical distance from an observed value to the predicted values) versus the fitted values (the predicted value from the regression model). If all the points fell exactly on the dashed grey line, it would mean that we have a perfect prediction. The residual variance (i.e., the spread of the values on the y-axis) should be similar across the scale of the fitted values on the x-axis. 
 
 ```{r, warning = FALSE, message = FALSE,fig.align="center", fig.cap = "Residuals vs. fitted values"}
 plot(multiple_regression, 1)
 ```
 
-In our case, this appears to be the case. You can identify non-constant variances in the errors (i.e., heteroscedasticity) from the presence of a funnel shape in the above plot. When the assumption of constant error variances is not met, this might be due to a misspecification of your model (e.g., the relationship might not be linear). In these cases, it often helps to transform your data (e.g., using log-transformations). The red line also helps you to identify potential misspecification of your model. It is a smoothed curve that passes through the residuals and if it lies close to the gray dashed line (as in our case) it suggest a correct specification. If the line would deviate from the dashed grey line a lot (e.g., a U-shape or inverse U-shape), it would suggest that the linear model specification is not reasonable and you should try different specifications.   
+In our case, this appears to be the case. You can identify non-constant variances in the errors (i.e., heteroscedasticity) from the presence of a funnel shape in the above plot. When the assumption of constant error variances is not met, this might be due to a misspecification of your model (e.g., the relationship might not be linear). In these cases, it often helps to transform your data (e.g., using log-transformations). The red line also helps you to identify potential misspecification of your model. It is a smoothed curve that passes through the residuals and if it lies close to the gray dashed line (as in our case) it suggest a correct specification. If the line would deviate from the dashed grey line a lot (e.g., a U-shape or inverse U-shape), it would suggest that the linear model specification is not reasonable and you should try different specifications. You can also test for heterogskedasticity in you regression model by using the Breusch-Pagan test, which has the null hypothesis that the error variances are equal (i.e., homoskedasticity) versus the alternative that the error variances are not equal (i.e., heteroskedasticity). The test can be implemented using the `bptest()` function from the `lmtest` package. 
 
-If OLS is performed despite heteroscedasticity, the estimates of the coefficient will still be correct on average. However, the estimator is _inefficient_, meaning that the standard error is wrong, which will impact the significance tests (i.e., the p-values will be wrong). However, there are also robust regression methods, which you can use to estimate your model despite the presence of heteroscedasticity. 
+```{r, warning = FALSE, message = FALSE}
+library(lmtest)
+bptest(multiple_regression)
+```
+
+As the *p*-value is larger than 0.05, we cannot reject the null hypothesis of equal error variances so that the assumption of homoskedasticity is met. 
+
+If OLS is performed despite heteroscedasticity, the estimates of the coefficient will still be correct on average. However, the estimator is _inefficient_, meaning that the standard error is wrong, which will impact the significance tests (i.e., the *p*-values will be wrong). 
+
+Assume that the test would have suggested a violation of the assumption of homoskedasticity - how could you proceed in this case? In the presence of heteroskedasticity, you could rely on robust regression methods, which correct the standard errors. You could implement a robust regression model in R using the `coeftest()` function from the `sandwich` package as follows:  
+
+```{r, warning = FALSE, message = FALSE}
+library(sandwich)
+coeftest(multiple_regression, vcov = vcovHC(multiple_regression))
+```
+
+As you can see, the standard errors (and thus the t-values and p-values) are different compared to the non-robust specification above while the coefficients remain unchanged. However, the difference in this example is not too large since the Breusch-Pagan test suggested the presence of homoskedasticity and we could thus rely on the standard output. 
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, you can inspect if the assumption of homoskedasticity is met using the residual plot and the Breusch-Pagan test. If the assumption is violated, you should try to transform your data (e.g., using a log-transformation) first and see if this solves the problem. If the problem persists, you can rely on the robust standard errors as it is shown in the example above.  
+:::
 
 ### Non-normally distributed errors
 
@@ -1011,13 +1041,75 @@ Another way to check for normal distribution of the data is to employ statistica
 shapiro.test(resid(multiple_regression))
 ```
 
-As you can see, we can not reject the H<sub>0</sub> of the normally distributed residuals, which means that we can assume the residuals to be approximately normally distributed.
+As you can see, we can not reject the H<sub>0</sub> of normally distributed residuals, which means that we can assume the residuals to be approximately normally distributed in our example.
 
-When the assumption of normally distributed errors is not met, this might again be due to a misspecification of your model, in which case it might help to transform your data (e.g., using log-transformations).
+When the assumption of normally distributed errors is not met, this might again be due to a misspecification of your model, in which case it might help to transform your data (e.g., using log-transformations). If transforming your data doesn't solve the issue, you may use bootstrapping to obtain corrected results. Bootstrapping is a so-called resampling method in which we use repeated random sampling with replacement to estimate the sampling distribution based on the sample itself, rather than relying on some assumptions about the shape of the sampling distribution to determine the probability of obtaining a test statistic of a particular magnitude. In other words, the data from our sample are treated as the population from which smaller random samples (so-called bootstrap samples) are repeatedly taken with replacement. The statistic of interest, e.g., the regression coefficients in our example, is calculated in each sample, and by taking many samples, the sampling distribution can be estimated. Similar to the simulations we did in chapter 5, the standard error of the statistic can be estimated using the standard deviation of the sampling distribution. Once we have computed the standard error, we can use it to compute the confidence intervals and significance tests. You can find a description of how to implement this procedure in R e.g., <a href="https://www.statmethods.net/advstats/bootstrapping.html" target="_blank">here</a>).
+
+Essentially, we can use the `boot()` function contained in the `boot` package to obtain the bootstrap results. However, we need to pass this function a statistic to apply the bootstrapping on - in our case, this would be the coefficients from our regression model. To make this easier, we can write a function that returns the coefficients from the model for every bootstrap sample that we take. In the following code block, we specify a function called `bs()`, which does exactly this (don't worry if you don't understand all the details - its basically just another function we can use to automate certain steps in the analysis, only that in this case we have written the function ourselves rather than relying on functions contained in existing packages).    
+
+```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
+# function to obtain regression coefficients
+bs <- function(formula, data, indices) {
+  d <- data[indices,] # allows boot to select sample
+  fit <- lm(formula, data=d)
+  return(coef(fit))
+}
+```
+
+Now that we have specified this function, we can use it within the `boot` function to obtained the bootstrap results for the regression coefficients. To do this, we first load the `boot` package and use the `boot` function by specifying the following arguments:
+
+* **data**: the data set we use (the regression data set in our example)
+* **statistic**: the statistic(s) we would like to bootstrap (in our example, we use the function we have specified above to obtain the regression coefficients)
+* **R**: the number of bootstrap samples to use (we will use 2000 samples)
+* **formula**: the regression equation from which we obtain the coefficients for the bootstrapping procedure 
+
+We create an object called `boot_out`, which contains the output from the bootstrapping.
+
+```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
+# If the residuals do not follow a normal distribution, transform the data or use bootstrapping
+library(boot)
+# bootstrapping with 2000 replications
+boot_out <- boot(data=regression, statistic=bs, R=2000, formula = sales ~ adspend + airplay + starpower)
+```
+
+In a next step, let's extract the 95% confidence intervals for the regression coefficients. The intercept is the first element in the `boot_out` object and we can use the `boot.ci()` function and use argument `index=1` to obtain the bootstrapped confidence interval for the intercept. The `type` argument specifies the type of confidence interval we would like to obtain (in this case, we use bias corrected and accelerated, i.e., bca):  
+
+```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
+# get 95% confidence intervals
+boot.ci(boot_out, type="bca", index=1) # intercept
+```
+We can obtain the confidence intervals for the remaining coefficients in the same way: 
+
+```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
+# get 95% confidence intervals
+boot.ci(boot_out, type="bca", index=2) # adspend
+boot.ci(boot_out, type="bca", index=3) # airplay
+boot.ci(boot_out, type="bca", index=4) # starpower
+```
+As usual, we can judge the significance of a coefficient by inspecting whether the null hypothesis (0 in this case) is contained in the intervals. As can be seen, zero is not included in any of the intervals leading us to conclude that all of the predictor variables have a significant effect on the outcome variable. 
+
+We could also compare the bootstrapped confidence intervals to the once we obtained from the model without bootstrapping. 
+
+```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
+# get 95% confidence intervals for standard model
+confint(multiple_regression)
+```
+As you can see, the bootstrapped confidence interval is very similar to the once obtained without bootstrapping, which is not unexpected since in our example, the tests indicated that our assumptions about the distribution of errors is actually met so that we wouldn't have needed to apply the bootstrapping. You could also inspect the distribution of the obtained regression coefficients from the 2000 bootstrap samples using the `plot()` function and passing it the respective index. Inspecting the plots reveals that for all coefficients (with the exception of the intercept) zero is not contained in the range of plausible values. 
+
+```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
+plot(boot_out, index=1) # intercept
+plot(boot_out, index=2) # adspend
+plot(boot_out, index=3) # airplay
+plot(boot_out, index=3) # starpower
+```
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, you can inspect if the assumption of normally distributed errors is violated by visually examining the QQ-plot and using the Shapiro-Wilk test. If the results suggest a non-normal distribution of the errors, you should first try to transform your data (e.g., by using a log-transformation). If this doesn't solve the issue, you should apply the bootstrapping procedure as shown above to obtain a robust test of the significance of the regression coefficients.
+:::
 
 ### Correlation of errors
 
-The assumption of independent errors implies that for any two observations the residual terms should be uncorrelated. This is also known as a _lack of autocorrelation_. In theory, this could be tested with the Durbin-Watson test, which checks whether adjacent residuals are correlated. However, be aware that the test is sensitive to the order of your data. Hence, it only makes sense if there is a natural order in the data (e.g., time-series data) when the presence of dependent errors indicates autocorrelation. **Since there is no natural order in our data, we don't need to apply this test.**.
+The assumption of independent errors implies that for any two observations the residual terms should be uncorrelated. This is also known as a _lack of autocorrelation_. In theory, this could be tested with the Durbin-Watson test, which checks whether adjacent residuals are correlated. However, be aware that the test is sensitive to the order of your data. Hence, it only makes sense if there is a natural order in the data (e.g., time-series data) when the presence of dependent errors indicates autocorrelation. **Since there is no natural order in our data, we don't need to apply this test**.
 
 If you are confronted with data that has a natural order, you can performed the test using the command ```durbinWatsonTest()```, which takes the object that the ```lm()``` function generates as an argument. The test statistic varies between 0 and 4, with values close to 2 being desirable. As a rule of thumb values below 1 and above 3 are causes for concern. 
 
@@ -1051,100 +1143,153 @@ However, this only spots bivariate multicollinearity. Variance inflation factors
 (\#eq:VIF)
 \end{equation} 
 
-VIF values of over 4 are certainly cause for concern and values over 2 should be further investigated. If the average VIF is over 1 the regression may be biased. The VIF for all variables can easily be calculated in R with the ```vif()``` function. 
+VIF values of over 4 are certainly cause for concern and values over 2 should be further investigated. If the average VIF is over 1 the regression may be biased. The VIF for all variables can easily be calculated in R with the ```vif()``` function contained in the `car` package. 
 
 ```{r, eval = TRUE, echo = TRUE, warning = FALSE, message = FALSE}
 library(car)
 vif(multiple_regression)
 ```
 
-As you can see the values are well below the cutoff, indicating that we do not have to worry about multicollinearity in our example.  
+As you can see the values are well below the cutoff, indicating that we do not have to worry about multicollinearity in our example. If multicollinearity turns out to be an issue in your analysis, there are at least two ways to proceed. First, you could eliminate one of the predictors, e.g., by using variable selection procedures which will be covered below. Second, you could combine predictors that are highly correlated using statistical methods aiming at reducing the dimensionality of the data based on the correlation matrix, such as the Pricipal Component Analysis (PCA), which will be covered in the next chapter.  
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, you can inspect if the assumption of multicollinearity is violated by inspecting the variance inflation factor associated with the regression coefficients. Values over 4 are a cause for concern. In case multicollinearity turns out to be an issue, you can address it by 1) eliminating one of the regressors (e.g., using variable selection procedures) or combining variables that are highly correlated in one factor (e.g., using Principal Component Analysis).
+:::
 
 ### Omitted Variables
 
-If a variable that influences the outcome is left out of the model ("omitted"), a bias in other variables' coefficients might be introduced. Specifically, the other coefficients will be biased if the corresponding variables are correlated with the omitted variable. Intuitively, the variables left in the model "pick up" the effect of the omitted variable to the degree that they are related. Let's illustrate this with an example.
+If the goal of your analysis is to explain the effect of one variable on an outcome (rather than just predicting an outcome), one main concern that you need to be aware of is related to omitted variables. This issue relates back to the choice of research design. If you are interested in causal inference and you did not obtain your data from a randomized trial, the issue of omitted variables bias is of great importance. If your goal is to make predictions, you don't need to worry about this too much - in this case other potential problems such as overfitting (see below) should receive more attention. 
+
+What do we mean by "omitted variables"? If a variable that influences the outcome is left out of the model (i.e., it is "omitted"), a bias in other variables' coefficients might be introduced. Specifically, the other coefficients will be biased if the omitted variable influences the outcome *and* the independent variable(s) in your model. Intuitively, the variables left in the model "pick up" the effect of the omitted variable to the degree that they are related. Let's illustrate this with an example.
 
 ```{r, echo = FALSE}
 set.seed(123)
-avg_rating <- runif(100, 0, 10)
-followers <- round(runif(100, 100, 10000)) + 300*avg_rating
-
-concert_visitors <- 20.3*avg_rating + 0.2*followers + rnorm(100, 0, 20)
-concerts <- data.frame(avg_rating, followers, concert_visitors)
+popularity <- runif(200, 0, 10) 
+playlists <- round(rnorm(200,10,10)*popularity,0)
+streams <- 40*popularity + 2*playlists +1000+ rnorm(200, 100, 100)
+streaming_data <- data.frame(popularity, playlists, streams)
+streaming_data <- subset(streaming_data,playlists>=0)
 ```
 
-Consider the following data on the number of people visiting concerts of smaller bands. 
+Consider the following data set containing information on the number of streams that a sample of artists receive on a streaming service in one month.
 
 ```{r}
-head(concerts)
+head(streaming_data)
 ```
 
 The data set contains three variables:
 
- * **avg_rating**: The average rating a band has, resulting from a ten-point scale.
- * **followers**: The number of followers the band has at the time of the concert.
- * **concert_visitors**: The number of tickets sold for the concert. 
+ * **popularity**: The average popularity rating of an artist measured on a scale from 0-10
+ * **playlists**: The number of playlists the artist is listen on
+ * **streams**: The number of streams an artist generates during the observation month (in thousands) 
 
-If we estimate a model to explain the number of tickets sold as a function of the average rating and the number of followers, the results would look as follows: 
+Say, as a marketing manager we are interested in estimating the effect of the number of playlists on the number of streams. If we estimate a model to explain the number of streams as a function of only the number of playlists, the results would look as follows:
+
 ```{r }
-concert_mod <- lm(concert_visitors ~ avg_rating + followers, data = concerts)
-summary(concert_mod)
+stream_model_1 <- lm(streams ~ playlists , data = streaming_data)
+summary(stream_model_1)
 ```
-
-Now assume we don't have data on the number of followers a band has, but we still have information on the average rating and want to explain the number of tickets sold. Fitting a linear model with just the ```avg_rating``` variable included yields the following results:
+As you can see, the results suggest that being listed on one more playlist leads to 3,000 more streams on average. Now let's see what happens when we add the popularity of an artist as an addtional predictor:
 
 ```{r}
-concert_mod2 <- lm(concert_visitors ~ avg_rating, data = concerts)
-summary(concert_mod2)
+stream_model_2 <- lm(streams ~ playlists + popularity, data = streaming_data)
+summary(stream_model_2)
 ```
+What happens to the coefficient of ```playlists```? As you can see, the magnitude of the coefficient decreased substantially. Because the popularity of an artist influences both the number of playlists (more popular artists are listed on a larger number of playlists) *and* the number of streams (more popular artists receive more streams), the coefficient will be biased upwards. In this case, the popularity of an artists is said to be an **unobserved confounder** if it is not included in the model and the playlist variable is referred to as an endogenous predictor (i.e., the assumption of exogeneity is violated). As you could see, this unobserved confounder would lead us to overestimate the effect of playlists on the number of streams. It is therefore crucially important that you carefully consider what other factors could explain the dependent variable besides your main independent variable of interest. This is also the reason why it is much more difficult to estimate causal effects from observational data compared to randomized experiments, where you could, e.g., randomly assign artists with the same popularity to be included on playlists or not. But in real life, it is often not feasible to run field experiments, e.g., because we may not have control over which artists gets included on a playlists and which artists don't.      
 
-What happens to the coefficient of ```avg_rating```? Because ```avg_rating``` and ```followers```are not independent (e.g. one could argue that bands with a higher average rating probably have more followers) the coefficient will be biased. In our case we massively overestimate the effect that the average rating of a band has on ticket sales. In the original model, the effect was about `r round(coefficients(concert_mod)[2], 1)`. In the new, smaller model, the effect is approximately `r round(coefficients(concert_mod2)[2]/coefficients(concert_mod)[2], 1)` times higher.
-
-We can also work out intuitively what the bias will be. The marginal effect of ```followers``` on ```concert_visitors``` is captured by ```avg_rating``` to the degree that ```avg_rating``` is related to ```followers```. There are two coefficients of interest: 
-
-  1. What is the marginal effect of ```followers``` on ```concert_visitors```? 
-  2. How much of that effect is captured by ```avg_rating```? 
-
-The former is just the coefficient of ```followers``` in the original regression. 
-```{r}
-followers_concert_mod <- as.numeric(coef(concert_mod)["followers"]) # Marginal effect of followers on sales
-followers_concert_mod
-```
-
-The latter is the coefficient of ```avg_rating``` obtained from a regression on ```followers```, since the coefficient shows how ```avg_rating``` and ```followers``` relate to each other.
-
-```{r}
-mod_follow_rating <- lm(followers ~ avg_rating, data = concerts) 
-follow_rating <- as.numeric(coef(mod_follow_rating)["avg_rating"]) # Relation between followers and avg_rating
-follow_rating
-```
-
-Now we can calculate the bias induced by omitting ```followers```
-
-```{r}
-bias <- followers_concert_mod * follow_rating
-cat("Bias:", bias)
-```
-
-To calculate the biased coefficient, simply add the bias to the coefficient from the original model. 
-
-```{r}
-b1_bias <- coef(concert_mod)["avg_rating"] + bias
-cat("Biased Beta:", b1_bias)
-```
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, if your goal is to identify a causal effect of one variable on another variable using observational (non-experimental) data, you need to carefully think about which potentially omitting variable may influence both the dependent and independent variable in your model. Unfortunately, there is no test that would tell you if you have indeed included all variables in your model so that you need to put forth arguments why you think that unobserved confounders are not a reason for concern in your analysis. 
+:::
 
 ### Overfitting
 
---> for prediction 
+If the goal of your analysis is to predict an outcome, rather than explaining a causal effect of one variable on another variable, the issue of overfitting is a major concern. Overfitting basically means that your model is tuned so much to the specific data set that you have used to estimate the model that it won't perform well when you would like to use the model to predict observations outside of your sample. So far, we have considered ‘in-sample’ statistics (e.g., R2) to judge the model fit. However, when the model building purpose is forecasting, we should test the predictive performance of the model on new data (i.e., ‘out-of-sample’ prediction). We can easily achieve this by splitting the sample in two parts:
+
+* **Training data set**: used to estimate the model parameters
+* **Test data set (‘hold-out set’)**: predict values based training data
+
+By inspecting how well the model based on the training data is able to predict the observations in the test data, we can judge the predictive ability of a model on new data. This is also referred to as the out-of-sample predictive accuracy. You can easily test the out-of-sample predictive accuracy of your model by splitting the data set in two parts - the training data and the test data. In the following code, we randomly 2/3 of the observations to estimate the model and retain the remaining 1/3 of observations to test how well we can predict the outcome based on our model. 
+
+```{r echo=F, eval=T}
+# randomly split into training and test data:
+set.seed(123)
+n <- nrow(regression)
+train <- sample(1:n,round(n*2/3))
+test <- (1:n)[-train]
+```
+
+Now we have created two data sets - the training data set and the test data set. Next, let's estimate the model using the training data and inspect the results 
+
+```{r echo=F, eval=T}
+# estimate linear model based on training data
+multiple_train <- lm(sales ~ adspend + airplay + starpower, data = regression, subset=train) 
+summary(multiple_train) #summary of results
+```
+
+As you can see, the model results are similar to the results from the model from the beginning, which is not surprising since it is based on the same data with the only difference that we discarded 1/3 of the observations for validation purposes. In a next step, we can use the `predict()` function and the argument `newdata` to predict observations in the test data set based on our estimated model. To test the our-of-sample predictive accuracy of the model, we can then compute the squared correlation coefficient between the predicted and observed values, which will give us the out-of-sample model fit (i.e., the R2).  
+
+```{r echo=F, eval=T}
+# using coefficients to predict test data
+pred_lm <- predict(multiple_train,newdata = regression[test,])
+cor(regression[test,"sales"],pred_lm)^2 # R^2 for test data
+```
+As you can see, the R2 is about 0.57, suggesting that 57% of the variation in the test data set can be explained by our model. Note that this share is somewhat lower compared to the within-sample fit that you can see in the model above (i.e., R2 = 0.7), which is not unexpected since the test data were not used to estimate the model. The value of 0.57 suggests that the model generalizes to other data sets quite well. We could also visualize the out-of-sample model fit as follows: 
+
+```{r echo=F, eval=T}
+# plot predicted vs. observed values for test data
+plot(regression[test,"sales"],pred_lm,xlab="y measured",ylab="y predicted",cex.lab=1.3)
+abline(c(0,1))
+```
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, overfitting is a concern in predictive models and it means that your model is so highly tuned to the data set you used to estimate the model that it does not generalize well to new data. To make sure that overfitting is not a reason for concern, you should test the out-of-sample predictive ability of your model using the process explained above.  
+:::
 
 ### Variable selection
 
---> A parsimonious model is a model that accomplishes a desired level of explanation or prediction with as few predictor variables as possible.
+A *parsimonious* model is a model that accomplishes a desired level of explanation or prediction with as few predictor variables as possible. Parsimonious models are desired because smaller models are easier to interpret and redundant or unnecessary variables should be left out (also to combat overfitting). Note that this is especially true for predictive models. If our goal was to explain a relationship between two variables and the variable we formulated a hypothesis for turns out to be insignificant, this result would also be interesting and, hence, you should also report the effect eventhough it may be insignificant. 
 
+Let's use an example to see how we could identify variables that do not add any explanatory power to the model and should thus be excluded from the model. First, we will add a random variable to our existing regression data set. We can use the `rnorm()` function to generate random observations from a normal distribution. 
+
+```{r echo=F, eval=T}
+set.seed(123)
+# Add another random variable
+regression$var_test <- rnorm(nrow(regression),0,1)
+```
+
+The model selection process should tell us that we should favor a model without this predictor since it does not add any explanatory power. In the following code, we specify our model by gradually adding one predictor after the other and then we will use the `anova()` function to test the differences between the models. 
+
+```{r echo=F, eval=T}
+# Model comparison with anova
+lm0 <- lm(sales ~ 1, data = regression) 
+lm1 <- lm(sales ~ adspend, data = regression) 
+lm2 <- lm(sales ~ adspend + airplay, data = regression) 
+lm3 <- lm(sales ~ adspend + airplay + starpower, data = regression) 
+lm4 <- lm(sales ~ adspend + airplay + starpower + var_test, data = regression) 
+anova(lm0, lm1, lm2, lm3, lm4)
+```
+The output shows that the last model, in which we add the random variable as an additional predictor, does not significantly improve the model compared to the previous model (the results from the F-test is insignificant). Hence, we should use model "lm3" in this case. 
+
+Alternatively, we could also select the variables to be included in our model using a stepwise procedure with the `step()` function. To do this, we pass the most complete model from above, i.e., 'lm4' to the function and inspect the results:  
+
+```{r echo=F, eval=T}
+options(digits = 8)
+# Stepwise variable selection
+# Automatic model selection with step
+model_lmstep <- step(lm4)
+model_lmstep
+```
+In this case, the model selection is based on the information criterion *AIC*, which is defined as $AIC=-2*maxLL+2k$, where LL refers to the log-likelihood and $k$ denotes the number of parameters in the model. Maximizing the log-likelihood-function corresponds to a minimization of the residual sum of squares RSS (i.e., OLS estimator). Information criteria based on the maximized log-likelihood (e.g., AIC) provide an estimate of model parsimony, i.e., resolve the trade-off between model fit and model complexity, to achieve the best predictive ability (similar to adjusted R2). They include a penalty for model complexity and penalize overly complex models (i.e., $k$ in case of the AIC), where complexity refers to the number of parameters in the model. The model with lowest AIC value is the most parsimonious. The information criteria and LL statistics should not be interpreted in absolute terms, but rather in comparison to nested model specifications. 
+
+The output above indicates that removing the `var_test` variable  would change the AIC from 1545.41 to 1544.76 (i.e., lead to a more parsimonious model). For all the other predictor variables, the results indicate that removing these variables would actually lead to a higher AIC statistic (i.e., leading to a less parsimonious model). Similar to the conclusion for the comparison above, this model would correctly suggest to drop the `var_test` variable and retain all the other variables in the model. 
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+To summarize, to obtain a parsimonious model, you should test if any of the model variables could be left out without decreasing the fir of your model using the procedures explained above.  
+:::
 
 ## Categorical predictors
 
-```{r echo=F, eval=T}
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=TRUE}
 regression$country <- factor(regression$country, levels = c(0:1), labels = c("local", "international")) #convert grouping variable to factor
 regression$genre <- factor(regression$genre, levels = c(1:3), labels = c("rock", "pop","electronic")) #convert grouping variable to factor
 ```
@@ -1178,7 +1323,7 @@ multiple_regression_bin <- lm(sales ~ adspend + airplay + starpower + country, d
 summary(multiple_regression_bin) #summary of results
 ```
 
-You can see that we now have an additional coefficient in the regression output, which tells us the effect of the binary predictor. The dummy variable can generally be interpreted as the average difference in the dependent variable between the two groups (similar to a t-test). In this case, the coefficient tells you the difference in sales between international and local artists, and whether this difference is significant. Specifically, it means that international artists on average sell 45.67 units more than local artists, and this difference is significant (i.e., p < 0.05).  
+You can see that we now have an additional coefficient in the regression output, which tells us the effect of the binary predictor. The dummy variable can generally be interpreted as the average difference in the dependent variable between the two groups (similar to a t-test), conditional on the other variables you have included in your model. In this case, the coefficient tells you the difference in sales between international and local artists, and whether this difference is significant. Specifically, it means that international artists on average sell 45.67 units more than local artists, and this difference is significant (i.e., p < 0.05).  
 
 ### More than two categories
 
@@ -1286,7 +1431,6 @@ In this case, we can interpret $\beta_4$ as the increase in the effectiveness of
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 multiple_regression <- lm(sales ~ adspend + airplay + starpower + adspend:airplay, data = regression) #estimate linear model
 summary(multiple_regression) #summary of results
-
 ```
 
 However, since the p-value of the interaction is larger than 0.05, there is little statistical evidence for an interaction between the two variables.
@@ -1396,7 +1540,7 @@ ggplot(data = non_linear_reg) +
   geom_line(data = non_linear_reg,aes(x=advertising,y=exp(pred_log_reg)),color="red", size=1.05) + theme_bw()
 ```
 
-Another way of modelling non-linearities is including a squared term if there are decreasing or increasing effects. In fact, we can model non-constant slopes as long as the form is a linear combination of exponentials (i.e. squared, cubed, ...) of the explanatory variables. Usually we do not expect *many* inflection points so squared or third power terms suffice. Note that the degree of the polynomial has to be equal to the number of inflection points.  
+Another way of modeling non-linearities is including a squared term if there are decreasing or increasing effects. In fact, we can model non-constant slopes as long as the form is a linear combination of exponentials (i.e. squared, cubed, ...) of the explanatory variables. Usually we do not expect *many* inflection points so squared or third power terms suffice. Note that the degree of the polynomial has to be equal to the number of inflection points.  
 
 When using squared terms we can model diminishing and eventually negative returns. Think about advertisement spending. If a brand is not well known, spending on ads will increase brand awareness and have a large effect on sales. In a regression model this translates to a steep slope for spending at the origin (i.e. for lower spending). However, as more and more people will already know the brand we expect that an additional Euro spent on advertisement will have less and less of an effect the more the company spends. We say that the returns are diminishing. Eventually, if they keep putting more and more ads out, people get annoyed and some will stop buying from the company. In that case the return might even get negative. To model such a situation we need a linear as well as a squared term in the regression.
 

@@ -1,5 +1,5 @@
 # The following code is taken from the fourth chapter of the online script, which provides more detailed explanations:
-# https://imsmwu.github.io/MRDA2020/regression.html
+# https://imsmwu.github.io/MRDA2020/regression.html 
 
 #-------------------------------------------------------------------#
 #---------------------Install missing packages----------------------#
@@ -102,6 +102,26 @@ ggplot(regression, mapping = aes(adspend, sales)) +
   geom_vline(xintercept = mean(regression$adspend), linetype="dotted") + #mean of advertising
   labs(x = "Advertising expenditures (EUR)", y = "Number of sales") + 
   theme_bw()
+
+# Alternatively, using ggstatsplot
+library(ggstatsplot)
+scatterplot <- ggscatterstats(
+  data = regression,
+  x = adspend,
+  y = sales,
+  xlab = "Advertising expenditure (EUR)", # label for x axis
+  ylab = "Sales", # label for y axis
+  line.color = "black", # changing regression line color line
+  title = "Advertising expenditure and Sales", # title text for the plot
+  marginal.type = "histogram", # type of marginal distribution to be displayed
+  xfill = "steelblue", # color fill for x-axis marginal distribution
+  yfill = "darkgrey", # color fill for y-axis marginal distribution
+  xalpha = 0.6, # transparency for x-axis marginal distribution
+  yalpha = 0.6, # transparency for y-axis marginal distribution
+  bf.message = FALSE,
+  messages = FALSE # turn off messages and notes
+)
+scatterplot
 #save plot (optional)
 ## ------------------------------------------------------------------------
 ggsave("scatterplot.jpg", height = 6, width = 7.5,scatterplot)
@@ -259,7 +279,7 @@ abline(h=c(-3,3),col="red",lty=2) #add reference lines
 outliers <- subset(regression,abs(stud_resid)>3)
 outliers
 
-# Influencial observations
+# Influential observations
 ## ------------------------------------------------------------------------
 plot(multiple_regression,4)
 plot(multiple_regression,5)
@@ -283,6 +303,7 @@ coeftest(multiple_regression, vcov = vcovHC(multiple_regression))
 plot(multiple_regression,2)
 shapiro.test(resid(multiple_regression))
 # If the residuals do not follow a normal distribution, transform the data or use bootstrapping
+# To obtain confidence intervals
 library(boot)
 # function to obtain regression coefficients
 bs <- function(formula, data, indices) {
@@ -290,19 +311,18 @@ bs <- function(formula, data, indices) {
   fit <- lm(formula, data=d)
   return(coef(fit))
 }
-# bootstrapping with 1000 replications
-boot_out <- boot(data=regression, statistic=bs, R=1000, formula = sales ~ adspend + airplay + starpower)
-# view results
-summary(boot_out)
-plot(boot_out, index=1) # intercept
-plot(boot_out, index=2) # adspend
-plot(boot_out, index=3) # airplay
-plot(boot_out, index=3) # starpower
+# bootstrapping with 2000 replications
+boot_out <- boot(data=regression, statistic=bs, R=2000, formula = sales ~ adspend + airplay + starpower)
 # get 95% confidence intervals
 boot.ci(boot_out, type="bca", index=1) # intercept
 boot.ci(boot_out, type="bca", index=2) # adspend
 boot.ci(boot_out, type="bca", index=3) # airplay
 boot.ci(boot_out, type="bca", index=4) # starpower
+# view results
+plot(boot_out, index=1) # intercept
+plot(boot_out, index=2) # adspend
+plot(boot_out, index=3) # airplay
+plot(boot_out, index=3) # starpower
 
 # Multicollinearity
 ## ------------------------------------------------------------------------
@@ -321,8 +341,9 @@ ggcorrmat(
 # compute variance inflation factors
 vif(multiple_regression)
 
-# Overfitting
-## ------------------------------------------------------------------------
+#-------------------------------------------------------------------#
+#----------------------Out-of-sample prediction---------------------#
+#-------------------------------------------------------------------#
 
 # randomly split into training and test data:
 set.seed(123)
@@ -342,8 +363,9 @@ cor(regression[test,"sales"],pred_lm)^2 # R^2 for test data
 plot(regression[test,"sales"],pred_lm,xlab="y measured",ylab="y predicted",cex.lab=1.3)
 abline(c(0,1))
 
-# Variable selection
-## ------------------------------------------------------------------------
+#-------------------------------------------------------------------#
+#-------------------------Variable selection------------------------#
+#-------------------------------------------------------------------#
 
 set.seed(123)
 # Add another random variable
