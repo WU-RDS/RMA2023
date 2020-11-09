@@ -917,7 +917,7 @@ F=\frac{\frac{SS_M}{k}}{\frac{SS_R}{(n-k-1)}}=\frac{MS_M}{MS_R}
 <h3><span class="header-section-number">7.2.2</span> Multiple linear regression</h3>
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oV6_-Fb2Oss" frameborder="0" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SDB2PhHMgxg" frameborder="0" allowfullscreen>
 </iframe>
 </div>
 <p><br></p>
@@ -1062,11 +1062,12 @@ B_{k}=\beta_{k} * \frac{s_{x_k}}{s_y}
 <p>Once you have built and estimated your model it is important to run diagnostics to ensure that the results are accurate. In the following section we will discuss common problems.</p>
 <div id="outliers" class="section level3">
 <h3><span class="header-section-number">7.3.1</span> Outliers</h3>
-<p><strong>The following video summarizes how to handle outliers in R</strong></p>
+<br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/e9lcBwWVdyU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TphnIgvRUlA" frameborder="0" allowfullscreen>
 </iframe>
 </div>
+<p><br></p>
 <p>Outliers are data points that differ vastly from the trend. They can introduce bias into a model due to the fact that they alter the parameter estimates. Consider the example below. A linear regression was performed twice on the same data set, except during the second estimation the two green points were changed to be outliers by being moved to the positions indicated in red. The solid red line is the regression line based on the unaltered data set, while the dotted line was estimated using the altered data set. As you can see the second regression would lead to different conclusions than the first. Therefore it is important to identify outliers and further deal with them.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-345"></span>
 <img src="_main_files/figure-html/unnamed-chunk-345-1.png" alt="Effects of outliers" width="672" />
@@ -1129,6 +1130,12 @@ Figure 7.18: Residuals vs. Leverage
 </div>
 <div id="non-linearity" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Non-linearity</h3>
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Fsf0q_6sKKY" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<p><br></p>
 <p>An important underlying assumption for OLS is that of linearity, meaning that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms. One quick way to assess whether a linear relationship can be assumed is to inspect the added variable plots that we already came across earlier:</p>
 <div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="regression.html#cb521-1"></a><span class="kw">library</span>(car)</span>
 <span id="cb521-2"><a href="regression.html#cb521-2"></a><span class="kw">avPlots</span>(multiple_regression)</span></code></pre></div>
@@ -1153,7 +1160,7 @@ Figure 7.19: Partial plots
 <h3><span class="header-section-number">7.3.4</span> Non-constant error variance</h3>
 <p>The following video summarizes how to identify non-constant error variance in R</p>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bcYdQlQJZ_U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/orrpr8if_Xc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 </div>
 <p>Another important assumption of the linear model is that the error terms have a constant variance (i.e., homoskedasticity). The following plot from the model output shows the residuals (the vertical distance from an observed value to the predicted values) versus the fitted values (the predicted value from the regression model). If all the points fell exactly on the dashed grey line, it would mean that we have a perfect prediction. The residual variance (i.e., the spread of the values on the y-axis) should be similar across the scale of the fitted values on the x-axis.</p>
@@ -1194,6 +1201,10 @@ Figure 7.20: Residuals vs. fitted values
 </div>
 <div id="non-normally-distributed-errors" class="section level3">
 <h3><span class="header-section-number">7.3.5</span> Non-normally distributed errors</h3>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oZMET3J6v7Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
 <p>Another assumption of OLS is that the error term is normally distributed. This can be a reasonable assumption for many scenarios, but we still need a way to check if it is actually the case. As we can not directly observe the actual error term, we have to work with the next best thing - the residuals.</p>
 <p>A quick way to assess whether a given sample is approximately normally distributed is by using Q-Q plots. These plot the theoretical position of the observations (under the assumption that they are normally distributed) against the actual position. The plot below is created by the model output and shows the residuals in a Q-Q plot. As you can see, most of the points roughly follow the theoretical distribution, as given by the straight line. If most of the points are close to the line, the data is approximately normally distributed.</p>
 <div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="regression.html#cb527-1"></a><span class="kw">plot</span>(multiple_regression, <span class="dv">2</span>)</span></code></pre></div>
@@ -1312,6 +1323,10 @@ Figure 7.21: Q-Q plot
 </div>
 <div id="collinearity" class="section level3">
 <h3><span class="header-section-number">7.3.7</span> Collinearity</h3>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9TV2nqsBwMk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
 <p>Linear dependence of regressors, also known as multicollinearity, is when there is a strong linear relationship between the independent variables. Some correlation will always be present, but severe correlation can make proper estimation impossible. When present, it affects the model in several ways:</p>
 <ul>
 <li>Limits the size of R<sup>2</sup>: when two variables are highly correlated, the amount of unique explained variance is low; therefore the incremental change in R<sup>2</sup> by including an additional predictor is larger if the predictor is uncorrelated with the other predictors.</li>
@@ -1362,6 +1377,10 @@ Figure 7.22: Bivariate correlation plots
 </div>
 <div id="omitted-variables" class="section level3">
 <h3><span class="header-section-number">7.3.8</span> Omitted Variables</h3>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sVPu3f0log4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
 <p>If the goal of your analysis is to explain the effect of one variable on an outcome (rather than just predicting an outcome), one main concern that you need to be aware of is related to omitted variables. This issue relates back to the choice of research design. If you are interested in causal inference and you did not obtain your data from a randomized trial, the issue of omitted variables bias is of great importance. If your goal is to make predictions, you don’t need to worry about this too much - in this case other potential problems such as overfitting (see below) should receive more attention.</p>
 <p>What do we mean by “omitted variables”? If a variable that influences the outcome is left out of the model (i.e., it is “omitted”), a bias in other variables’ coefficients might be introduced. Specifically, the other coefficients will be biased if the omitted variable influences the outcome <em>and</em> the independent variable(s) in your model. Intuitively, the variables left in the model “pick up” the effect of the omitted variable to the degree that they are related. Let’s illustrate this with an example.</p>
 <p>Consider the following data set containing information on the number of streams that a sample of artists receive on a streaming service in one month.</p>

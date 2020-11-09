@@ -313,7 +313,7 @@ boot.ci(boot_out, type="bca", index=4) # starpower
 plot(boot_out, index=1) # intercept
 plot(boot_out, index=2) # adspend
 plot(boot_out, index=3) # airplay
-plot(boot_out, index=3) # starpower
+plot(boot_out, index=4) # starpower
 
 # Multicollinearity
 ## ------------------------------------------------------------------------
@@ -396,7 +396,7 @@ summary(multiple_regression_ext) #summary of results
 
 # visualization
 ## ------------------------------------------------------------------------
-ggcoefstats(x = multiple_regression,
+ggcoefstats(x = multiple_regression_ext,
             title = "Sales predicted by adspend, airplay, starpower, country, & genre")
 #save plot (optional)
 ## ------------------------------------------------------------------------
