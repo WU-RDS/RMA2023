@@ -16,6 +16,12 @@ output:
 
 ## Introduction
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kY4fGoFhNUQ" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 In this chapter, we will focus on exploratory factor analysis. 
 
 Generally, factor analysis is a class of procedures used for data reduction or summary. It is an **interdependence technique**, meaning that there is no distinction between dependent and independent variables and all variables are considered simultaneously. In **exploratory factor analysis**, specific hypotheses about how many factors will emerge, and what items these factors will comprise are not requires (as opposed to confirmatory factor analysis). Principal Components Analysis (PCA) is one of the most frequently used techniques. The goals are …
@@ -115,7 +121,7 @@ df <- data.frame(values1,values2)
 ggplot(df, aes(x=values2,y=values1)) +
   geom_point(size=3,color=group,shape=group) +
   geom_text(aes(x=values2, y=values1, label=label), size=4, vjust=c(1.5,-1,1.5,1.5,1.5,1.5), hjust=c(0.5,0.5,0.5,0.5,0.5,0.5)) +
-  labs(x = "Health benefits",y = "Social benefits", size=11) +
+  labs(x = "Social benefits",y = "Health benefits", size=11) +
   geom_hline(size=1,aes(yintercept=0))+
   geom_vline(size=1,aes(xintercept=0))+
   scale_y_continuous(breaks=seq(-1, 2, 0.25)) +
@@ -151,6 +157,12 @@ Social_i=& 0.25*preventCavities_{i} + 0.80*shinyTeeth_{i} + 0.13*strengthenGum_{
 where the variable names are replaced by the values that were observed for respondent *i* to compute the factor scores for respondent *i*. This means that we have reduced the number of variables from six to two. Note that this is a rather simple approach that is intended to explain the underlying logic. However, that the resulting factor scores will depend on the measurement scales of the variables. If different measurement scales would be used, the resulting factor scores for different factors could not be compared. Thus, R will compute the factor scores using more sophisticated methods as we will see below.  
 
 ## Steps in factor analysis
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pIlsdFcTV5o" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
 
 Now that we have a broad understanding of how factor analysis works, let's use another example to go through the process of deriving factors step by step. In this section, we will use the R anxiety questionnaire from the book by Andy Field et al.. The questionnaire is intended to measure the various aspects of student's anxiety towards learning R. It includes 23 items for which respondents are asked to indicate on a five-point Likert scale to what extent they agree with the respective statements. The questionnaire is shown in the following figure:     
 
@@ -250,6 +262,12 @@ KMO(raq_data)
 You can see that the statistic is calculated for the entire matrix and for each variable individually. In our example, the values for all variables as well as the overall matrix is above 0.5, suggesting that factor analysis is appropriate.  
 
 ### Deriving factors
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HfDyoNjJ6Rs" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
 
 After testing that the data can be used for PCA, we can move on to conducting PCA. Conducting PCA is fairly simple in R using the ```pricipal()``` function from the ```psych``` package. However, before the apply the function to our data, it is useful to reflect on the goals of PCA again. The goal is to explain the maximum amount of total variance in a correlation matrix by transforming the original variables into a smaller set of linear components (factors). So the first decision we have to make is how many factors we should extract. There are different methods that can be used to decide on the appropriate number of factors, including: 
 

@@ -30,7 +30,6 @@ head(raq_data)
 ## ------------------------------------------------------------------------
 raq_matrix <- cor(raq_data) #create matrix
 round(raq_matrix,3)
-eigen(raq_matrix)
 
 # Low correlations by variable
 ## ------------------------------------------------------------------------
@@ -39,7 +38,7 @@ correlations <- as.data.frame(raq_matrix)
 ## ------------------------------------------------------------------------
 library(psych)
 corPlot(correlations,numbers=TRUE,upper=FALSE,diag=FALSE,main="Correlations between variables")
-# Check number of low correlations adn mean correlaiton per variable
+# Check number of low correlations and mean correlation per variable
 ## ------------------------------------------------------------------------
 diag(correlations) <- NA #set diagonal elements to missing
 apply(abs(correlations) < 0.3, 1, sum, na.rm = TRUE) #count number of low correlations for each variable
@@ -55,10 +54,9 @@ apply(abs(correlations) > 0.8, 1, sum, na.rm = TRUE)
 det(raq_matrix)
 det(raq_matrix) > 0.00001
 
-# Compute MSA statstic (should be > 0.5)
+# Compute MSA statistic (should be > 0.5)
 ## ------------------------------------------------------------------------
 KMO(raq_data)
-summary(lm(raq_data$Q01 ~ ., data = raq_data[,2:23]))
 
 # STEP 2
 
