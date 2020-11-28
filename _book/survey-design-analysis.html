@@ -4688,9 +4688,9 @@ Location
 <p><strong>Issue:</strong> How to create a bar chart for multiple answers on multiple choice questions?</p>
 <p><strong>Solution:</strong></p>
 <p>Let’s load the packages <code>qualtRics</code> and <code>ggplot2</code> and Qualtrics survey data first:</p>
-<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb969-1"><a href="survey-design-analysis.html#cb969-1"></a>  <span class="kw">library</span>(qualtRics)</span>
-<span id="cb969-2"><a href="survey-design-analysis.html#cb969-2"></a>  <span class="kw">library</span>(ggplot2)</span>
-<span id="cb969-3"><a href="survey-design-analysis.html#cb969-3"></a>  qualtrics_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">read_survey</span>(<span class="st">&quot;data/mrda_2.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb969-1"><a href="survey-design-analysis.html#cb969-1"></a><span class="kw">library</span>(qualtRics)</span>
+<span id="cb969-2"><a href="survey-design-analysis.html#cb969-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb969-3"><a href="survey-design-analysis.html#cb969-3"></a>qualtrics_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">read_survey</span>(<span class="st">&quot;data/mrda_2.csv&quot;</span>)</span></code></pre></div>
 <p>We would like to visualize question 2 (multiple choice question with multiple answers) which has 4 categories:</p>
 <div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb970-1"><a href="survey-design-analysis.html#cb970-1"></a>qualtrics_<span class="dv">1</span>[, <span class="kw">c</span>(<span class="st">&quot;Q2_1&quot;</span>, <span class="st">&quot;Q2_2&quot;</span>, <span class="st">&quot;Q2_3&quot;</span>, <span class="st">&quot;Q2_4&quot;</span>)]</span></code></pre></div>
 <pre><code>## # A tibble: 72 x 4
@@ -4708,14 +4708,14 @@ Location
 ## 10     1    NA NA       NA
 ## # ... with 62 more rows</code></pre>
 <p>We see that we have some NA values that needs to be handeled. Therefore, we replace NA values with 0 for each category:</p>
-<div class="sourceCode" id="cb972"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb972-1"><a href="survey-design-analysis.html#cb972-1"></a>  qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">1</span>), </span>
-<span id="cb972-2"><a href="survey-design-analysis.html#cb972-2"></a>      <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">1</span>)</span>
-<span id="cb972-3"><a href="survey-design-analysis.html#cb972-3"></a>  qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">2</span>), </span>
-<span id="cb972-4"><a href="survey-design-analysis.html#cb972-4"></a>      <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">2</span>)</span>
-<span id="cb972-5"><a href="survey-design-analysis.html#cb972-5"></a>  qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">3</span>), </span>
-<span id="cb972-6"><a href="survey-design-analysis.html#cb972-6"></a>      <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">3</span>)</span>
-<span id="cb972-7"><a href="survey-design-analysis.html#cb972-7"></a>  qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">4</span>), </span>
-<span id="cb972-8"><a href="survey-design-analysis.html#cb972-8"></a>      <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb972"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb972-1"><a href="survey-design-analysis.html#cb972-1"></a>qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">1</span>), </span>
+<span id="cb972-2"><a href="survey-design-analysis.html#cb972-2"></a>    <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">1</span>)</span>
+<span id="cb972-3"><a href="survey-design-analysis.html#cb972-3"></a>qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">2</span>), </span>
+<span id="cb972-4"><a href="survey-design-analysis.html#cb972-4"></a>    <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">2</span>)</span>
+<span id="cb972-5"><a href="survey-design-analysis.html#cb972-5"></a>qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">3</span>), </span>
+<span id="cb972-6"><a href="survey-design-analysis.html#cb972-6"></a>    <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">3</span>)</span>
+<span id="cb972-7"><a href="survey-design-analysis.html#cb972-7"></a>qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">4</span>), </span>
+<span id="cb972-8"><a href="survey-design-analysis.html#cb972-8"></a>    <span class="dv">0</span>, qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">4</span>)</span></code></pre></div>
 <p>Third, we compute share for each category:</p>
 <div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb973-1"><a href="survey-design-analysis.html#cb973-1"></a>share_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sum</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">1</span>)<span class="op">/</span><span class="kw">nrow</span>(qualtrics_<span class="dv">1</span>)</span>
 <span id="cb973-2"><a href="survey-design-analysis.html#cb973-2"></a>share_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sum</span>(qualtrics_<span class="dv">1</span><span class="op">$</span>Q2_<span class="dv">2</span>)<span class="op">/</span><span class="kw">nrow</span>(qualtrics_<span class="dv">1</span>)</span>
@@ -4816,54 +4816,64 @@ Location
 <span id="cb984-3"><a href="survey-design-analysis.html#cb984-3"></a><span class="kw">colnames</span>(Importance) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Stability&quot;</span>, <span class="st">&quot;Education&quot;</span>, </span>
 <span id="cb984-4"><a href="survey-design-analysis.html#cb984-4"></a>    <span class="st">&quot;Healthcare&quot;</span>, <span class="st">&quot;Culture&quot;</span>, <span class="st">&quot;group&quot;</span>)</span></code></pre></div>
 <p>Our data frames are now prepared to be combined in one:</p>
-<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb985-1"><a href="survey-design-analysis.html#cb985-1"></a>  <span class="co"># Connecting two data frames by rows</span></span>
-<span id="cb985-2"><a href="survey-design-analysis.html#cb985-2"></a>  Radar_chart_new &lt;-<span class="st"> </span><span class="kw">rbind</span>(Ranking, Importance)</span></code></pre></div>
-<p>Now we can run <code>ggRadar()</code> to create a radar plot:</p>
-<div class="sourceCode" id="cb986"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb986-1"><a href="survey-design-analysis.html#cb986-1"></a>  <span class="co"># Radar plot</span></span>
-<span id="cb986-2"><a href="survey-design-analysis.html#cb986-2"></a>  <span class="kw">ggRadar</span>(<span class="dt">data=</span>Radar_chart_new,</span>
+<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb985-1"><a href="survey-design-analysis.html#cb985-1"></a><span class="co"># Connecting two data frames by rows</span></span>
+<span id="cb985-2"><a href="survey-design-analysis.html#cb985-2"></a>Radar_chart_new &lt;-<span class="st"> </span><span class="kw">rbind</span>(Ranking, Importance)</span></code></pre></div>
+<p>Now we can run <code>ggRadar()</code> to create a radar plot as follows:</p>
+<div class="sourceCode" id="cb986"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb986-1"><a href="survey-design-analysis.html#cb986-1"></a><span class="co"># Radar plot</span></span>
+<span id="cb986-2"><a href="survey-design-analysis.html#cb986-2"></a><span class="kw">ggRadar</span>(<span class="dt">data=</span>Radar_chart_new,</span>
 <span id="cb986-3"><a href="survey-design-analysis.html#cb986-3"></a>        <span class="kw">aes</span>(<span class="dt">color=</span>group), <span class="co"># Each category in the column &quot;Name&quot; will be assigned to different color</span></span>
 <span id="cb986-4"><a href="survey-design-analysis.html#cb986-4"></a>        <span class="dt">interactive =</span> <span class="ot">FALSE</span>, <span class="co"># When hover over the graph values appear</span></span>
 <span id="cb986-5"><a href="survey-design-analysis.html#cb986-5"></a>        <span class="dt">rescale =</span> <span class="ot">FALSE</span>, <span class="co"># If TRUE, all continuous variables in the data.frame are rescaled.</span></span>
 <span id="cb986-6"><a href="survey-design-analysis.html#cb986-6"></a>        <span class="dt">ylim =</span> <span class="dv">2</span>, <span class="co"># y coordinates ranges.</span></span>
 <span id="cb986-7"><a href="survey-design-analysis.html#cb986-7"></a>        <span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="co"># Transparency of colors in the graph</span></span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-674-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-674"></span>
+<img src="_main_files/figure-html/unnamed-chunk-674-1.png" alt="Radar chart" width="672" />
+<p class="caption">
+Figure 10.1: Radar chart
+</p>
+</div>
 </div>
 <div id="vertical-likert-line-chart" class="section level3">
 <h3><span class="header-section-number">10.4.5</span> Vertical Likert line chart</h3>
 <p>Additionally, we can calculate mean values and compare them with <code>ggPair()</code>:</p>
-<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb987-1"><a href="survey-design-analysis.html#cb987-1"></a>  Ranking_mean &lt;-<span class="st"> </span><span class="kw">apply</span>(Radar_chart_new[Radar_chart_new<span class="op">$</span>group <span class="op">==</span><span class="st"> </span></span>
-<span id="cb987-2"><a href="survey-design-analysis.html#cb987-2"></a><span class="st">      &quot;Ranking&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dv">2</span>, mean)</span>
-<span id="cb987-3"><a href="survey-design-analysis.html#cb987-3"></a>  Ranking_mean &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mean =</span> <span class="kw">t</span>(Ranking_mean), </span>
-<span id="cb987-4"><a href="survey-design-analysis.html#cb987-4"></a>      <span class="dt">group =</span> <span class="st">&quot;Ranking&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb987-1"><a href="survey-design-analysis.html#cb987-1"></a>Ranking_mean &lt;-<span class="st"> </span><span class="kw">apply</span>(Radar_chart_new[Radar_chart_new<span class="op">$</span>group <span class="op">==</span><span class="st"> </span></span>
+<span id="cb987-2"><a href="survey-design-analysis.html#cb987-2"></a><span class="st">    &quot;Ranking&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dv">2</span>, mean)</span>
+<span id="cb987-3"><a href="survey-design-analysis.html#cb987-3"></a>Ranking_mean &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mean =</span> <span class="kw">t</span>(Ranking_mean), </span>
+<span id="cb987-4"><a href="survey-design-analysis.html#cb987-4"></a>    <span class="dt">group =</span> <span class="st">&quot;Ranking&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb988"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb988-1"><a href="survey-design-analysis.html#cb988-1"></a>Importance_mean &lt;-<span class="st"> </span><span class="kw">apply</span>(Radar_chart_new[Radar_chart_new<span class="op">$</span>group <span class="op">==</span><span class="st"> </span></span>
 <span id="cb988-2"><a href="survey-design-analysis.html#cb988-2"></a><span class="st">    &quot;Importance&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dv">2</span>, mean)</span>
 <span id="cb988-3"><a href="survey-design-analysis.html#cb988-3"></a>Importance_mean &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mean =</span> <span class="kw">t</span>(Importance_mean), </span>
 <span id="cb988-4"><a href="survey-design-analysis.html#cb988-4"></a>    <span class="dt">group =</span> <span class="st">&quot;Importance&quot;</span>)</span></code></pre></div>
 <p>Before plotting we need to bind two data frames by rows:</p>
-<div class="sourceCode" id="cb989"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb989-1"><a href="survey-design-analysis.html#cb989-1"></a>  Pair_chart &lt;-<span class="st"> </span><span class="kw">rbind</span>(Ranking_mean, Importance_mean)</span>
-<span id="cb989-2"><a href="survey-design-analysis.html#cb989-2"></a>  Pair_chart<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">as.factor</span>(Pair_chart<span class="op">$</span>group)</span></code></pre></div>
-<p>Finally, we can create a pair plot:</p>
-<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb990-1"><a href="survey-design-analysis.html#cb990-1"></a>  <span class="co"># Pair plot</span></span>
-<span id="cb990-2"><a href="survey-design-analysis.html#cb990-2"></a>  <span class="kw">ggPair</span>(Pair_chart, <span class="dt">horizontal =</span> <span class="ot">TRUE</span>, <span class="dt">interactive =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb990-3"><a href="survey-design-analysis.html#cb990-3"></a>      <span class="kw">aes</span>(<span class="dt">color =</span> group))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-678-1.png" width="672" /></p>
+<div class="sourceCode" id="cb989"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb989-1"><a href="survey-design-analysis.html#cb989-1"></a>Pair_chart &lt;-<span class="st"> </span><span class="kw">rbind</span>(Ranking_mean, Importance_mean)</span>
+<span id="cb989-2"><a href="survey-design-analysis.html#cb989-2"></a>Pair_chart<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">as.factor</span>(Pair_chart<span class="op">$</span>group)</span></code></pre></div>
+<p>Finally, we can create a pair plot using the <code>ggPair()</code> function as follows:</p>
+<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb990-1"><a href="survey-design-analysis.html#cb990-1"></a><span class="kw">library</span>(ggiraph)</span>
+<span id="cb990-2"><a href="survey-design-analysis.html#cb990-2"></a><span class="kw">library</span>(ggiraphExtra)</span>
+<span id="cb990-3"><a href="survey-design-analysis.html#cb990-3"></a><span class="co"># Pair plot</span></span>
+<span id="cb990-4"><a href="survey-design-analysis.html#cb990-4"></a><span class="kw">ggPair</span>(Pair_chart, <span class="dt">horizontal =</span> <span class="ot">TRUE</span>, <span class="dt">interactive =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb990-5"><a href="survey-design-analysis.html#cb990-5"></a>    <span class="kw">aes</span>(<span class="dt">color =</span> group))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-678"></span>
+<img src="_main_files/figure-html/unnamed-chunk-678-1.png" alt="Pair chart" width="672" />
+<p class="caption">
+Figure 10.2: Pair chart
+</p>
+</div>
 </div>
 <div id="diverging-stacked-barchart" class="section level3">
 <h3><span class="header-section-number">10.4.6</span> Diverging stacked barchart</h3>
 <p>Let’s use an example data frame again, where we observe the scores on 4 variables on a 7-point Likert-scale.</p>
 <div class="sourceCode" id="cb991"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb991-1"><a href="survey-design-analysis.html#cb991-1"></a><span class="kw">head</span>(likert_chart)</span></code></pre></div>
-<pre><code>##   I_Stability I_Education I_Healthcare I_Culture
-## 1           7           7            7         7
-## 2           6           7            7         7
-## 3           7           7            7         6
-## 4           5           7            7         6
-## 5           7           7            7         5
-## 6           7           5            7         5</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["I_Stability"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["I_Education"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["I_Healthcare"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["I_Culture"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"7","2":"7","3":"7","4":"7"},{"1":"6","2":"7","3":"7","4":"7"},{"1":"7","2":"7","3":"7","4":"6"},{"1":"5","2":"7","3":"7","4":"6"},{"1":"7","2":"7","3":"7","4":"5"},{"1":"7","2":"5","3":"7","4":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>Now we can use the <code>likert()</code> function from the <code>HH</code> package to create the Diverging stacked barchart as follows:</p>
-<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb993-1"><a href="survey-design-analysis.html#cb993-1"></a><span class="kw">library</span>(HH)</span>
-<span id="cb993-2"><a href="survey-design-analysis.html#cb993-2"></a><span class="kw">likert</span>(<span class="kw">t</span>(likert_chart)[, <span class="dv">7</span><span class="op">:</span><span class="dv">1</span>], <span class="dt">horizontal =</span> <span class="ot">TRUE</span>, <span class="dt">main =</span> <span class="st">&quot;Diverging stacked barcharts&quot;</span>, </span>
-<span id="cb993-3"><a href="survey-design-analysis.html#cb993-3"></a>    <span class="dt">xlab =</span> <span class="st">&quot;Percent&quot;</span>, <span class="dt">auto.key =</span> <span class="kw">list</span>(<span class="dt">space =</span> <span class="st">&quot;right&quot;</span>, </span>
-<span id="cb993-4"><a href="survey-design-analysis.html#cb993-4"></a>        <span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">reverse =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb992"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb992-1"><a href="survey-design-analysis.html#cb992-1"></a><span class="kw">library</span>(HH)</span>
+<span id="cb992-2"><a href="survey-design-analysis.html#cb992-2"></a><span class="kw">likert</span>(<span class="kw">t</span>(likert_chart)[, <span class="dv">7</span><span class="op">:</span><span class="dv">1</span>], <span class="dt">horizontal =</span> <span class="ot">TRUE</span>, <span class="dt">main =</span> <span class="st">&quot;Diverging stacked barcharts&quot;</span>, </span>
+<span id="cb992-3"><a href="survey-design-analysis.html#cb992-3"></a>    <span class="dt">xlab =</span> <span class="st">&quot;Percent&quot;</span>, <span class="dt">auto.key =</span> <span class="kw">list</span>(<span class="dt">space =</span> <span class="st">&quot;right&quot;</span>, </span>
+<span id="cb992-4"><a href="survey-design-analysis.html#cb992-4"></a>        <span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">reverse =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-681-1.png" width="672" /></p>
 </div>
 <div id="collapserecode-categories" class="section level3">
@@ -4872,56 +4882,50 @@ Location
 <p><strong>Solution:</strong></p>
 <p>There are several ways to do it, but we will show you the most intuitive.</p>
 <p>For this purpose we will create a data frame:</p>
-<div class="sourceCode" id="cb994"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb994-1"><a href="survey-design-analysis.html#cb994-1"></a><span class="co"># generate random data</span></span>
-<span id="cb994-2"><a href="survey-design-analysis.html#cb994-2"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">country_id =</span> <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">n =</span> <span class="dv">100</span>, </span>
-<span id="cb994-3"><a href="survey-design-analysis.html#cb994-3"></a>    <span class="dt">min =</span> <span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">7</span>), <span class="dv">0</span>))</span>
-<span id="cb994-4"><a href="survey-design-analysis.html#cb994-4"></a><span class="co"># code factor variable for country</span></span>
-<span id="cb994-5"><a href="survey-design-analysis.html#cb994-5"></a>df<span class="op">$</span>country &lt;-<span class="st"> </span><span class="kw">factor</span>(df<span class="op">$</span>country_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bangladesh&quot;</span>, </span>
-<span id="cb994-6"><a href="survey-design-analysis.html#cb994-6"></a>    <span class="st">&quot;Japan&quot;</span>, <span class="st">&quot;Austria&quot;</span>, <span class="st">&quot;Germany&quot;</span>, <span class="st">&quot;Italy&quot;</span>, <span class="st">&quot;USA&quot;</span>, </span>
-<span id="cb994-7"><a href="survey-design-analysis.html#cb994-7"></a>    <span class="st">&quot;Taiwan&quot;</span>))</span>
-<span id="cb994-8"><a href="survey-design-analysis.html#cb994-8"></a><span class="kw">str</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb993-1"><a href="survey-design-analysis.html#cb993-1"></a><span class="co"># generate random data</span></span>
+<span id="cb993-2"><a href="survey-design-analysis.html#cb993-2"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">country_id =</span> <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dt">n =</span> <span class="dv">100</span>, </span>
+<span id="cb993-3"><a href="survey-design-analysis.html#cb993-3"></a>    <span class="dt">min =</span> <span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">7</span>), <span class="dv">0</span>))</span>
+<span id="cb993-4"><a href="survey-design-analysis.html#cb993-4"></a><span class="co"># code factor variable for country</span></span>
+<span id="cb993-5"><a href="survey-design-analysis.html#cb993-5"></a>df<span class="op">$</span>country &lt;-<span class="st"> </span><span class="kw">factor</span>(df<span class="op">$</span>country_id, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Bangladesh&quot;</span>, </span>
+<span id="cb993-6"><a href="survey-design-analysis.html#cb993-6"></a>    <span class="st">&quot;Japan&quot;</span>, <span class="st">&quot;Austria&quot;</span>, <span class="st">&quot;Germany&quot;</span>, <span class="st">&quot;Italy&quot;</span>, <span class="st">&quot;USA&quot;</span>, </span>
+<span id="cb993-7"><a href="survey-design-analysis.html#cb993-7"></a>    <span class="st">&quot;Taiwan&quot;</span>))</span>
+<span id="cb993-8"><a href="survey-design-analysis.html#cb993-8"></a><span class="kw">str</span>(df)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    100 obs. of  2 variables:
 ##  $ country_id: num  2 4 5 6 4 3 6 1 4 6 ...
 ##  $ country   : Factor w/ 7 levels &quot;Bangladesh&quot;,&quot;Japan&quot;,..: 2 4 5 6 4 3 6 1 4 6 ...</code></pre>
 <p>In our data frame we have two columns, “country_id” and “country”.</p>
 <p>Now we will create a third column, “region”, and assign each country to corresponding continent. For that purpose, we use <code>recode</code> function to assign region by country and create new variable for region:</p>
-<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb996-1"><a href="survey-design-analysis.html#cb996-1"></a><span class="kw">library</span>(car)</span>
-<span id="cb996-2"><a href="survey-design-analysis.html#cb996-2"></a>df<span class="op">$</span>region =<span class="st"> </span><span class="kw">recode</span>(df<span class="op">$</span>country, <span class="st">&quot;&#39;Bangladesh&#39;=&#39;Asia&#39;; &#39;Japan&#39;=&#39;Asia&#39;; &#39;Austria&#39;=&#39;Europe&#39;; &#39;Germany&#39;=&#39;Europe&#39;; &#39;Italy&#39;=&#39;Europe&#39;; &#39;Taiwan&#39;=&#39;Asia&#39;; &#39;USA&#39;=&#39;other&#39;&quot;</span>)</span>
-<span id="cb996-3"><a href="survey-design-analysis.html#cb996-3"></a><span class="kw">head</span>(df)</span></code></pre></div>
-<pre><code>##   country_id country region
-## 1          2   Japan   Asia
-## 2          4 Germany Europe
-## 3          5   Italy Europe
-## 4          6     USA  other
-## 5          4 Germany Europe
-## 6          3 Austria Europe</code></pre>
+<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb995-1"><a href="survey-design-analysis.html#cb995-1"></a><span class="kw">library</span>(car)</span>
+<span id="cb995-2"><a href="survey-design-analysis.html#cb995-2"></a>df<span class="op">$</span>region =<span class="st"> </span><span class="kw">recode</span>(df<span class="op">$</span>country, <span class="st">&quot;&#39;Bangladesh&#39;=&#39;Asia&#39;; &#39;Japan&#39;=&#39;Asia&#39;; &#39;Austria&#39;=&#39;Europe&#39;; &#39;Germany&#39;=&#39;Europe&#39;; &#39;Italy&#39;=&#39;Europe&#39;; &#39;Taiwan&#39;=&#39;Asia&#39;; &#39;USA&#39;=&#39;other&#39;&quot;</span>)</span>
+<span id="cb995-3"><a href="survey-design-analysis.html#cb995-3"></a><span class="kw">head</span>(df)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]}],"data":[{"1":"2","2":"Japan","3":"Asia"},{"1":"4","2":"Germany","3":"Europe"},{"1":"5","2":"Italy","3":"Europe"},{"1":"6","2":"USA","3":"other"},{"1":"4","2":"Germany","3":"Europe"},{"1":"3","2":"Austria","3":"Europe"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>This also works with numeric values:</p>
-<div class="sourceCode" id="cb998"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb998-1"><a href="survey-design-analysis.html#cb998-1"></a>df<span class="op">$</span>region_<span class="dv">1</span> =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">recode</span>(df<span class="op">$</span>country_id, <span class="st">&quot;1=&#39;Asia&#39;; 2=&#39;Asia&#39;; 3=&#39;Europe&#39;; 3=&#39;Europe&#39;; 4=&#39;Europe&#39;; 5=&#39;Asia&#39;; 6=&#39;other&#39;; 7 = &#39;Asia&#39;&quot;</span>))</span>
-<span id="cb998-2"><a href="survey-design-analysis.html#cb998-2"></a><span class="kw">head</span>(df)</span></code></pre></div>
-<pre><code>##   country_id country region region_1
-## 1          2   Japan   Asia     Asia
-## 2          4 Germany Europe   Europe
-## 3          5   Italy Europe     Asia
-## 4          6     USA  other    other
-## 5          4 Germany Europe   Europe
-## 6          3 Austria Europe   Europe</code></pre>
+<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb996-1"><a href="survey-design-analysis.html#cb996-1"></a>df<span class="op">$</span>region_<span class="dv">1</span> =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">recode</span>(df<span class="op">$</span>country_id, <span class="st">&quot;1=&#39;Asia&#39;; 2=&#39;Asia&#39;; 3=&#39;Europe&#39;; 3=&#39;Europe&#39;; 4=&#39;Europe&#39;; 5=&#39;Asia&#39;; 6=&#39;other&#39;; 7 = &#39;Asia&#39;&quot;</span>))</span>
+<span id="cb996-2"><a href="survey-design-analysis.html#cb996-2"></a><span class="kw">head</span>(df)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]},{"label":["region_1"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"2","2":"Japan","3":"Asia","4":"Asia"},{"1":"4","2":"Germany","3":"Europe","4":"Europe"},{"1":"5","2":"Italy","3":"Europe","4":"Asia"},{"1":"6","2":"USA","3":"other","4":"other"},{"1":"4","2":"Germany","3":"Europe","4":"Europe"},{"1":"3","2":"Austria","3":"Europe","4":"Europe"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>Alternatively, you can use <code>gsub()</code> function to replace each category individually:</p>
-<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1000-1"><a href="survey-design-analysis.html#cb1000-1"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Bangladesh&quot;</span>, <span class="st">&quot;Asia&quot;</span>, df<span class="op">$</span>country)</span>
-<span id="cb1000-2"><a href="survey-design-analysis.html#cb1000-2"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Japan&quot;</span>, <span class="st">&quot;Asia&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
-<span id="cb1000-3"><a href="survey-design-analysis.html#cb1000-3"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Austria&quot;</span>, <span class="st">&quot;Europe&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
-<span id="cb1000-4"><a href="survey-design-analysis.html#cb1000-4"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Germany&quot;</span>, <span class="st">&quot;Europe&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
-<span id="cb1000-5"><a href="survey-design-analysis.html#cb1000-5"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Italy&quot;</span>, <span class="st">&quot;Europe&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
-<span id="cb1000-6"><a href="survey-design-analysis.html#cb1000-6"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Taiwan&quot;</span>, <span class="st">&quot;Asia&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
-<span id="cb1000-7"><a href="survey-design-analysis.html#cb1000-7"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;USA&quot;</span>, <span class="st">&quot;other&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
-<span id="cb1000-8"><a href="survey-design-analysis.html#cb1000-8"></a>df<span class="op">$</span>region_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df<span class="op">$</span>region_<span class="dv">2</span>)</span>
-<span id="cb1000-9"><a href="survey-design-analysis.html#cb1000-9"></a><span class="kw">head</span>(df)</span></code></pre></div>
-<pre><code>##   country_id country region region_1 region_2
-## 1          2   Japan   Asia     Asia     Asia
-## 2          4 Germany Europe   Europe   Europe
-## 3          5   Italy Europe     Asia   Europe
-## 4          6     USA  other    other    other
-## 5          4 Germany Europe   Europe   Europe
-## 6          3 Austria Europe   Europe   Europe</code></pre>
+<div class="sourceCode" id="cb997"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb997-1"><a href="survey-design-analysis.html#cb997-1"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Bangladesh&quot;</span>, <span class="st">&quot;Asia&quot;</span>, df<span class="op">$</span>country)</span>
+<span id="cb997-2"><a href="survey-design-analysis.html#cb997-2"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Japan&quot;</span>, <span class="st">&quot;Asia&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
+<span id="cb997-3"><a href="survey-design-analysis.html#cb997-3"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Austria&quot;</span>, <span class="st">&quot;Europe&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
+<span id="cb997-4"><a href="survey-design-analysis.html#cb997-4"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Germany&quot;</span>, <span class="st">&quot;Europe&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
+<span id="cb997-5"><a href="survey-design-analysis.html#cb997-5"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Italy&quot;</span>, <span class="st">&quot;Europe&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
+<span id="cb997-6"><a href="survey-design-analysis.html#cb997-6"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;Taiwan&quot;</span>, <span class="st">&quot;Asia&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
+<span id="cb997-7"><a href="survey-design-analysis.html#cb997-7"></a>df<span class="op">$</span>region_<span class="dv">2</span> =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;USA&quot;</span>, <span class="st">&quot;other&quot;</span>, df<span class="op">$</span>region_<span class="dv">2</span>)</span>
+<span id="cb997-8"><a href="survey-design-analysis.html#cb997-8"></a>df<span class="op">$</span>region_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df<span class="op">$</span>region_<span class="dv">2</span>)</span>
+<span id="cb997-9"><a href="survey-design-analysis.html#cb997-9"></a><span class="kw">head</span>(df)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]},{"label":["region_1"],"name":[4],"type":["fct"],"align":["left"]},{"label":["region_2"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"2","2":"Japan","3":"Asia","4":"Asia","5":"Asia"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","5":"Europe"},{"1":"5","2":"Italy","3":"Europe","4":"Asia","5":"Europe"},{"1":"6","2":"USA","3":"other","4":"other","5":"other"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","5":"Europe"},{"1":"3","2":"Austria","3":"Europe","4":"Europe","5":"Europe"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 </div>
 </div>

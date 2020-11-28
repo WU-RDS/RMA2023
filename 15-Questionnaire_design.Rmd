@@ -1883,12 +1883,11 @@ knitr::include_graphics('images/recode3.png')
 
 **Issue:** How to create a bar chart for multiple answers on multiple choice questions?
 
-
 **Solution:**
 
 Let's load the packages `qualtRics` and `ggplot2` and Qualtrics survey data first:
   
-  ```{r,warning=FALSE, message=FALSE}
+```{r,warning=FALSE, message=FALSE}
 library(qualtRics)
 library(ggplot2)
 qualtrics_1 <- read_survey("data/mrda_2.csv")
@@ -1902,7 +1901,7 @@ qualtrics_1[,c("Q2_1","Q2_2","Q2_3","Q2_4")]
 
 We see that we have some NA values that needs to be handeled. Therefore, we replace NA values with 0 for each category:
   
-  ```{r}
+```{r}
 qualtrics_1$Q2_1 <- ifelse(is.na(qualtrics_1$Q2_1),0,qualtrics_1$Q2_1)
 qualtrics_1$Q2_2 <- ifelse(is.na(qualtrics_1$Q2_2),0,qualtrics_1$Q2_2)
 qualtrics_1$Q2_3 <- ifelse(is.na(qualtrics_1$Q2_3),0,qualtrics_1$Q2_3)
@@ -1957,9 +1956,9 @@ ggsave("bar_chart.jpg", height = 5, width = 8.5)
 
 **Issue:** How can I create a radar plot and compare numeric values across different categories or groups?
   
-  **Solution:**
+**Solution:**
   
-  ```{r, include=FALSE}
+```{r, include=FALSE}
 Radar_chart <- readRDS("data/radar_plot_df.RDS")
 ```
 
@@ -1971,7 +1970,7 @@ head(Radar_chart)
 
 In this data frame we merged two information from a survey:
   
-  * Ranking(R) - how participants evaluated the city of Vienna on the dimensions of stability, education, health care, and culture (the scores for each dimension are derived from multi-item scales consisting of 7-point Likert-scales).
+* Ranking(R) - how participants evaluated the city of Vienna on the dimensions of stability, education, health care, and culture (the scores for each dimension are derived from multi-item scales consisting of 7-point Likert-scales).
 * Importance(I) - how important participants judge each of the dimensions to be on a 7-point Likert-scale.
 
 We wish to create a radar plot to directly compare ranking and importance of each variable.
@@ -2011,14 +2010,14 @@ colnames(Importance) <- c("Stability","Education","Healthcare","Culture","group"
 
 Our data frames are now prepared to be combined in one:
   
-  ```{r}
+```{r}
 # Connecting two data frames by rows
 Radar_chart_new <- rbind(Ranking,Importance)
 ```
 
-Now we can run `ggRadar()` to create a radar plot:
-  
-  ```{r, fig.align='center',out.width='50%'}
+Now we can run `ggRadar()` to create a radar plot as follows:
+
+```{r, fig.align='center', fig.cap="Radar chart"}
 # Radar plot
 ggRadar(data=Radar_chart_new,
         aes(color=group), # Each category in the column "Name" will be assigned to different color
@@ -2032,7 +2031,7 @@ ggRadar(data=Radar_chart_new,
 
 Additionally, we can calculate mean values and compare them with `ggPair()`:
   
-  ```{r,warning=FALSE,message=FALSE}
+```{r,warning=FALSE,message=FALSE}
 Ranking_mean <- apply(Radar_chart_new[Radar_chart_new$group=="Ranking",1:4],2,mean)
 Ranking_mean <- data.frame(mean =t(Ranking_mean),group="Ranking")
 ```
@@ -2044,14 +2043,16 @@ Importance_mean <- data.frame(mean = t(Importance_mean),group="Importance")
 
 Before plotting we need to bind two data frames by rows:
   
-  ```{r}
+```{r}
 Pair_chart <- rbind(Ranking_mean,Importance_mean)
 Pair_chart$group <- as.factor(Pair_chart$group)
 ```
 
-Finally, we can create a pair plot:
+Finally, we can create a pair plot using the `ggPair()` function as follows:
   
-  ```{r}
+```{r, fig.align="center", fig.cap="Pair chart"}
+library(ggiraph)
+library(ggiraphExtra)
 # Pair plot
 ggPair(Pair_chart,
        horizontal=TRUE,
@@ -2100,6 +2101,7 @@ df <- data.frame(country_id = round(runif(n = 100, min = 1, max = 7),0))
 df$country <- factor(df$country_id, levels = 1:7, labels = c("Bangladesh","Japan", "Austria", "Germany","Italy", "USA", "Taiwan"))
 str(df)
 ```
+
 In our data frame we have two columns, "country_id" and "country". 
 
 Now we will create a third column, "region", and assign each country to corresponding continent. For that purpose, we use `recode` function to assign region by country and create new variable for region:
