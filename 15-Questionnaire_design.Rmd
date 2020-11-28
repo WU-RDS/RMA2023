@@ -1143,6 +1143,8 @@ Some useful tips:
 
 ## Part 2: Collecting data and analysis
 
+The following type of visualization includes statistical test as well:
+  
 ### Collecting data
 
 Your task in this part is to collect real data from real people. More specifically, 
@@ -1193,7 +1195,7 @@ new.colnames <- make.unique(new.colnames, sep="_")
 
 Finally, we can assign unique corresponding names to the columns in our survey data.
 
-```{r, echo = TRUE, results='asis', warning=FALSE ,error=FALSE}
+```{r, echo = TRUE, warning=FALSE ,error=FALSE}
 colnames(qualtrics)<- new.colnames
 head(qualtrics,3)
 ```
@@ -1213,6 +1215,7 @@ qualtrics[1:6,c("During a typical day, in what period of the day you prefer watc
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = F)
 ```
+
 
 What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes **as numeric**. In order to conduct statistical modeling and properly visualize our results, we need to convert our data to **a factor class.**
 
@@ -1293,11 +1296,11 @@ This time the p-value of the test is lower than 0.05. We have an evidence that o
 
 
 2) Chi-Square Test of Independence
-<div><ul><li> <B> Application: </B>when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li> 
-<ul><li> <B> Hypothesis: </B> Is there an association between categorical variable X and categorical variable Y? </ul></li>
-<ul><li> <B> H0: </B> There is no association between the two variables.</B></ul></li>
-<ul><li> <B> H1: </B> There is an association between the two variables.</B></ul></li>
-<ul><li> <B> Example: </B> Is there an association between gender and the preferred period of a day for watching Netflix? </ul></li></div>
+Application:when you have 1 dependent variable and  1 independent variable with 2 or more levels/factors 
+Hypothesis: Is there an association between categorical variable X and categorical variable Y?
+H0: There is no association between the two variables.
+H1: There is an association between the two variables.
+Example: Is there an association between gender and the preferred period of a day for watching Netflix? 
 
 ```{r}
 # Creation of contingency table
@@ -1394,6 +1397,8 @@ library(pmr)
 test <- rankagg(rank.data)
 test
 ```
+
+
 
 The matrix we received as an output is the summary of our ranking data. It shows that, for instance, the preference combination "2,1,3,4,5" repeats 10 times in the data frame. More specifically, it means that there are 10 respondents who prefer the item 2("Calories burned") the most, then the item 1("Measuring steps"), and so on.
 
@@ -1756,14 +1761,16 @@ Simple way to depict ranks is a chart of box plots:
 
 ```{r}
 # Rank order question - box plots
-p <-ggplot(rank.data.long, aes(x=Feature, y=Rank, fill= Feature)) +
+p <- ggplot(rank.data.long, aes(x=Feature, y=Rank, fill= Feature)) +
     geom_boxplot()  +
     theme_minimal() +
     ggtitle(label="Perceived importance of features")+
     theme(axis.text = element_blank())
 p
 ```
+
 Package `ggstatsplot()` provides a great feature, which enables creation of a plot and conducting a statistical test at the same time. 
+
 
 ```{r}
 # Rank order question - ggstatsplot
@@ -1801,8 +1808,6 @@ p<-constant.sum.long %>%
 p
 ```
 
-The following type of visualisation includes statistical test as well:
-
 ```{r}
 ggstatsplot::ggwithinstats(
   data = constant.sum.long %>% filter(Factor!="id"), # excluding "id" column from the data
@@ -1813,3 +1818,316 @@ ggstatsplot::ggwithinstats(
   pairwise.comparisons = TRUE, # show pairwise comparison test results
   title = "What factors do you consider when choosing a place to go for a dinner?")
 ```
+
+## Frequently asked questions
+
+Here we will post the most frequent issues you might face with handling Qualtrics data in R.
+
+### Multiple answers stored in one cell in CSV
+
+
+*Issue:* When exported from Qualtrics to CSV, answers on multiple choice questions with multiple answers are stored in one cell. In the picture below you can see that this issue appears in the column "Q2", where a respondent chose two answers ("1" and "2"), and these two answers are merged together in one cell.
+
+```{r,echo=F, fig.align='center',out.width='100%'}
+knitr::include_graphics('images/combined.png')
+```
+
+*Solution:*
+  
+  First, when you go to export your data from Qualtrics ("Data & Analysis" > "Export & Import" > "Export data") choose CSV, and in the bottom-right corner you will find "More options". After you click it, scroll down a bit, and there you should tick "Split multi-value fields into columns". Please make sure that you are using the correct settings in Qualtrics export as depicted below:
+  
+```{r,echo=F, fig.align='center',out.width='50%'}
+knitr::include_graphics('images/qualtrics_export.png')
+```
+
+So, make sure you tick:
+  
+  * Use numeric values
+* Remove line breaks
+* Split multi-value fields into columns
+
+This should result in your multi-value fields being divided into columns as depicted below.
+
+```{r, echo=F, fig.align='center',out.width='100%'}
+knitr::include_graphics('images/separate.png')
+```
+
+### Labels for numeric values in CSV output 
+
+**Issue**: When exported from Qualtrics to CSV, answers are coded as numeric values, and I don't know which value corresponds to which label(=answer)?
+
+**Solution:**
+
+You can check it or even change it in Qualtrics by doing the following steps:
+
+1. Navigate to the Survey tab and select the question you want to check labels for.
+
+```{r,  echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/recode1.png')
+```
+
+2. Click the gray gear to the left to access the Question Options and choose Recode Values.
+
+```{r,  echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/recode2.png')
+```
+
+There you can see how Qualtrics coded your responses and you can potentially change it.
+
+```{r, echo=F, fig.align='center'}
+knitr::include_graphics('images/recode3.png')
+```
+
+
+### Bar chart for multiple choice question with multiple answers
+
+**Issue:** How to create a bar chart for multiple answers on multiple choice questions?
+
+
+**Solution:**
+
+Let's load the packages `qualtRics` and `ggplot2` and Qualtrics survey data first:
+  
+  ```{r,warning=FALSE, message=FALSE}
+library(qualtRics)
+library(ggplot2)
+qualtrics_1 <- read_survey("data/mrda_2.csv")
+```
+
+We would like to visualize question 2 (multiple choice question with multiple answers) which has 4 categories:
+  
+```{r}
+qualtrics_1[,c("Q2_1","Q2_2","Q2_3","Q2_4")]
+```
+
+We see that we have some NA values that needs to be handeled. Therefore, we replace NA values with 0 for each category:
+  
+  ```{r}
+qualtrics_1$Q2_1 <- ifelse(is.na(qualtrics_1$Q2_1),0,qualtrics_1$Q2_1)
+qualtrics_1$Q2_2 <- ifelse(is.na(qualtrics_1$Q2_2),0,qualtrics_1$Q2_2)
+qualtrics_1$Q2_3 <- ifelse(is.na(qualtrics_1$Q2_3),0,qualtrics_1$Q2_3)
+qualtrics_1$Q2_4 <- ifelse(is.na(qualtrics_1$Q2_4),0,qualtrics_1$Q2_4)
+```
+
+Third, we compute share for each category:
+  
+```{r}
+share_1 <- sum(qualtrics_1$Q2_1)/nrow(qualtrics_1)
+share_2 <- sum(qualtrics_1$Q2_2)/nrow(qualtrics_1)
+share_3 <- sum(qualtrics_1$Q2_3)/nrow(qualtrics_1)
+share_4 <- sum(qualtrics_1$Q2_4)/nrow(qualtrics_1)
+```
+
+Finally, we add category shares to the rest of the data:
+  
+```{r}
+shares <- data.frame(share = rbind(share_1,share_2,share_3,share_4),response=c("yes, at uni", "yes, at job", "yes, other", "no"))
+head(shares)
+```
+
+::: {.infobox_red .caution data-latex="{caution}"}
+If you are not sure which numeric value refers to which label, you can find how to do it under question **"Labels for numeric values in CSV output"**.
+:::
+  
+Now we are set to produce a bar chart. Please note two important points:
+  
+* We use `reorder()` function to wrap around the variable on x-axis in aesthetics part of ggplot function. In this way our bar chart will be shown in descending order.
+* We use `coord_flip()` function to turn our bar chart from being vertical to horizontal position. 
+
+```{r}
+ggplot(shares, aes(x =reorder(response,share), y = share)) + 
+  geom_col(aes(fill = response)) + 
+  labs(x = "", y = "", title = "Share of responses") + 
+  geom_text(aes(label = sprintf("%.0f%%", share/sum(share) * 100)), hjust = -0.2, size=6) + 
+  theme_minimal() + ylim(0,0.8) + scale_fill_brewer(palette = "Blues") + 
+  theme(axis.text.x = element_text(size=16), 
+        axis.text.y = element_text(size=16), 
+        plot.title = element_text(hjust = 0.5, color = "#666666"), 
+        legend.position = "none", title = element_text(size=20)) + 
+  coord_flip()
+```
+
+In the end, to save generated plot, we can use `ggsave()` function. The plot will be saved in your working directory.
+
+```{r,eval=FALSE}
+ggsave("bar_chart.jpg", height = 5, width = 8.5)  
+```
+
+### How to create a radar plot?
+
+**Issue:** How can I create a radar plot and compare numeric values across different categories or groups?
+  
+  **Solution:**
+  
+  ```{r, include=FALSE}
+Radar_chart <- readRDS("data/radar_plot_df.RDS")
+```
+
+To explain this issue, we will use a data frame with two categories and several numeric variables. 
+
+```{r}
+head(Radar_chart)
+```
+
+In this data frame we merged two information from a survey:
+  
+  * Ranking(R) - how participants evaluated the city of Vienna on the dimensions of stability, education, health care, and culture (the scores for each dimension are derived from multi-item scales consisting of 7-point Likert-scales).
+* Importance(I) - how important participants judge each of the dimensions to be on a 7-point Likert-scale.
+
+We wish to create a radar plot to directly compare ranking and importance of each variable.
+
+First, we create to separate data frames; one for "Ranking" 
+
+```{r,message=FALSE,warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggiraph)
+library(ggiraphExtra)
+
+# Creation of Ranking table
+Ranking <- Radar_chart[,1:4]
+# Assigning the corresponding row name
+Ranking$group <- "Ranking"
+
+head(Ranking)
+```
+
+...and one for "Importance"
+
+```{r}
+# Creation of Importance table
+Importance <- Radar_chart[,5:8]
+# Assigning the corresponding row name
+Importance$group <- "Importance"
+head(Importance)
+```
+
+Now we want to bind these two data frames (Ranking and Importance), but beforehand we need to make sure that they have the same names of columns.
+
+```{r}
+colnames(Ranking) <- c("Stability","Education","Healthcare","Culture","group")  
+colnames(Importance) <- c("Stability","Education","Healthcare","Culture","group")
+```
+
+Our data frames are now prepared to be combined in one:
+  
+  ```{r}
+# Connecting two data frames by rows
+Radar_chart_new <- rbind(Ranking,Importance)
+```
+
+Now we can run `ggRadar()` to create a radar plot:
+  
+  ```{r, fig.align='center',out.width='50%'}
+# Radar plot
+ggRadar(data=Radar_chart_new,
+        aes(color=group), # Each category in the column "Name" will be assigned to different color
+        interactive = FALSE, # When hover over the graph values appear
+        rescale = FALSE, # If TRUE, all continuous variables in the data.frame are rescaled.
+        ylim = 2, # y coordinates ranges.
+        alpha = 0.35) # Transparency of colors in the graph
+```
+
+### Vertical Likert line chart
+
+Additionally, we can calculate mean values and compare them with `ggPair()`:
+  
+  ```{r,warning=FALSE,message=FALSE}
+Ranking_mean <- apply(Radar_chart_new[Radar_chart_new$group=="Ranking",1:4],2,mean)
+Ranking_mean <- data.frame(mean =t(Ranking_mean),group="Ranking")
+```
+
+```{r,warning=FALSE,message=FALSE}
+Importance_mean <- apply(Radar_chart_new[Radar_chart_new$group=="Importance",1:4],2,mean)
+Importance_mean <- data.frame(mean = t(Importance_mean),group="Importance")
+```
+
+Before plotting we need to bind two data frames by rows:
+  
+  ```{r}
+Pair_chart <- rbind(Ranking_mean,Importance_mean)
+Pair_chart$group <- as.factor(Pair_chart$group)
+```
+
+Finally, we can create a pair plot:
+  
+  ```{r}
+# Pair plot
+ggPair(Pair_chart,
+       horizontal=TRUE,
+       interactive=FALSE,
+       aes(color=group))
+```
+
+### Diverging stacked barchart
+
+```{r, include=FALSE, message=F, warning=F}
+Radar_chart <- readRDS("data/radar_plot_df.RDS")
+likert_chart <- Radar_chart[5:8]
+```
+
+Let's use an example data frame again, where we observe the scores on 4 variables on a 7-point Likert-scale.
+
+```{r, message=F, warning=F}
+head(likert_chart)
+```
+
+Now we can use the `likert()` function from the `HH` package to create the Diverging stacked barchart as follows:
+
+```{r, message=F, warning=F}
+library(HH)
+likert(t(likert_chart)[,7:1], horizontal = TRUE,
+       main = "Diverging stacked barcharts", 
+       xlab = "Percent", 
+       auto.key = list(space = "right", columns = 1,
+                     reverse = TRUE))
+```
+
+### Collapse/recode categories
+
+**Issue:** If you have certain number of categories (e.g. countries) and you would like to aggregate them by specific criteria (e.g. continents), how can you do it?
+
+**Solution:** 
+
+There are several ways to do it, but we will show you the most intuitive.
+
+For this purpose we will create a data frame:
+
+```{r}
+#generate random data
+df <- data.frame(country_id = round(runif(n = 100, min = 1, max = 7),0))
+#code factor variable for country
+df$country <- factor(df$country_id, levels = 1:7, labels = c("Bangladesh","Japan", "Austria", "Germany","Italy", "USA", "Taiwan"))
+str(df)
+```
+In our data frame we have two columns, "country_id" and "country". 
+
+Now we will create a third column, "region", and assign each country to corresponding continent. For that purpose, we use `recode` function to assign region by country and create new variable for region:
+ 
+```{r,message=FALSE,warning=FALSE}
+library(car)
+df$region = recode(df$country, "'Bangladesh'='Asia'; 'Japan'='Asia'; 'Austria'='Europe'; 'Germany'='Europe'; 'Italy'='Europe'; 'Taiwan'='Asia'; 'USA'='other'")
+head(df)
+```
+
+This also works with numeric values:
+
+```{r,message=FALSE,warning=FALSE}
+df$region_1 = as.factor(recode(df$country_id, "1='Asia'; 2='Asia'; 3='Europe'; 3='Europe'; 4='Europe'; 5='Asia'; 6='other'; 7 = 'Asia'"))
+head(df)
+```
+
+Alternatively, you can use `gsub()` function to replace each category individually:
+
+```{r}
+df$region_2 = gsub("Bangladesh","Asia",df$country)
+df$region_2 = gsub("Japan","Asia",df$region_2)
+df$region_2 = gsub("Austria","Europe",df$region_2)
+df$region_2 = gsub("Germany","Europe",df$region_2)
+df$region_2 = gsub("Italy","Europe",df$region_2)
+df$region_2 = gsub("Taiwan","Asia",df$region_2)
+df$region_2 = gsub("USA","other",df$region_2)
+df$region_2 <- as.factor(df$region_2)
+head(df)
+```
+
