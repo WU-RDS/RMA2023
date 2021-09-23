@@ -1,10 +1,12 @@
 set.seed(1)
 ## True standard deviation
 sigma <- 10
-## Number of observations
-n1 <- 1000
 ## 95 % CI
 alpha <- 0.05
+
+### CASE 1: Large sample size
+## Number of observations
+n1 <- 10000
 ## Sample
 sample1 <- rnorm(n1, 0, sd = sigma)
 
@@ -21,7 +23,7 @@ CI1
 ## Add CI to plot
 abline(v = CI1, col = "red")
 
-
+### CASE 2: Small smaple size
 ## Same calculations with lower sample size
 n2 <- 100
 sample2 <- rnorm(n2, 0, sd = sigma)

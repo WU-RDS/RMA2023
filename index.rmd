@@ -1,6 +1,6 @@
 ---
 knit: "bookdown::render_book"
-title: "Marketing Research Design & Analysis 2020"
+title: "Marketing Research Design & Analysis 2021"
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
@@ -13,14 +13,22 @@ classoption:
   - twocolumn
 ---
 
-```{r, eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+```{r inst, eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 local({r <- getOption("repos")
        r["CRAN"] <- "http://cran.r-project.org" 
        options(repos=r)
 })
-reqPackages <- c("multcomp", "lm.beta", "pastecs", "cowplot", "stringr", "gtrendsR", "gridExtra", "car", "jsonlite", "PMCMR", "plotly", "Ecdat", "knitr", "dplyr", "kableExtra","lsr", "reshape2", "haven", "readxl", "Hmisc", "pwr", "ggplot2", "grid", "psych", "lubridate", "ggExtra", "mfx", "ggthemes", "logistf", "bookdown", "ggmap", "devtools", "latex2exp", "rvest", "plyr","summarytools", "GPArotation","tidyverse","jsonlite", "qualtRics", "janitor", "ggvis", "nonpar", "pmr", "rstatix", "pls", "gbm", "robCompositions", "Ckmeans.1d.dp")
+install_packages <- FALSE
+if (install_packages){
+if(!"packrat" %in% installed.packages()) install.packages("packrat")
+suppressWarnings(reqPackages <- packrat:::dirDependencies("."))
+if(!"BiocManager" %in% installed.packages()) install.packages("BiocManager")
+if(!"EBImage" %in% installed.packages()) BiocManager::install("EBImage")
+if(!"devtools" %in% installed.packages()) install.packages("devtools")
+if(!"robCompositions" %in% installed.packages()) devtools::install_github("matthias-da/robCompositions")
 reqPackages <- reqPackages[!reqPackages %in% installed.packages()]
 lapply(reqPackages, install.packages)
+}
 ```
 
 # (PART) Course outline {-}
@@ -30,7 +38,7 @@ lapply(reqPackages, install.packages)
 
 <p style="text-align:center;">
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/logo_wu.jpg" alt="logo_wu" height="140"  />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/logo_imsm.png" alt="logo_imsm" height="140"  />
+<img src="logo_rds.png" alt="logo_rds" height="140"  />
 </p>
 <br>
 Welcome to the course **Marketing Research Design & Analysis**! Due to the limited activity on campus this semester, this course will be delivered using **distance learning**. This means that students are required to familiarize themselves with the contents by means of **self-study**. This website is intended to aid the self-study process by providing you with explanations regarding the relevant concepts and methods in text and video format along with code files and commented outputs that will show you how to implement these methods using the **statistical software R**. The self-learning process will be complemented with weekly **interactive Q&A sessions** via live video streaming (Zoom), which provide ample opportunities to ask questions and clarify points that require further discussion. 
@@ -129,7 +137,7 @@ mytable = data.frame(
                  ))
 
 #pander::pander(mytable, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable %>% kable(escape = F, format = "html") %>%
+mytable %>% kable(escape = F, format = "html", col.names = gsub("[_]", " ", names(mytable))) %>%
   kable_paper(c("hover"), full_width = F) %>%
   footnote(general = "Dates and times are indicated for groups A and B respectively.",
            general_title = "Note: ", 
@@ -195,7 +203,7 @@ mytable_sub_1 = data.frame(
     )
 
 #pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable_sub_1 %>% kable(escape = T) %>%
+mytable_sub_1 %>% kable(escape = T,  col.names = gsub("[_]", " ", names(mytable_sub_1))) %>%
   kable_paper(c("hover"), full_width = F) %>%
   footnote(general = "Dates and times are indicated for groups A and B respectively. 
            Dates indicated with '*' are optional time slots for individual coaching.
@@ -254,7 +262,7 @@ mytable_sub = data.frame(
     )
 
 #pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable_sub %>% kable(escape = T) %>%
+mytable_sub %>% kable(escape = T,  col.names = gsub("[_]", " ", names(mytable_sub))) %>%
   kable_paper(c("hover"), full_width = F) %>%
   footnote(general = "Dates and times are indicated for groups A and B respectively.
            Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",

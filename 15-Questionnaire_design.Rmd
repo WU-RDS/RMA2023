@@ -1244,10 +1244,10 @@ Fisher's exact test is used to test a hypothesis with data obtained from multipl
 
 ```{r}
 # Converting characters to factors
-qualtrics$` Selected Choice_1` <- factor(qualtrics$` Selected Choice_1`,levels = c(1:2),labels = c("Male","Female"))
-qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
+qualtrics$`What is your gender? - Selected Choice` <- factor(qualtrics$`What is your gender? - Selected Choice`,levels = c(1:2),labels = c("Male","Female"))
+qualtrics$`What is your country of origin? - Selected Choice` <- factor(qualtrics$`What is your country of origin? - Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
 # Creation of contingency table
-fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
+fisher_test_table <-table(qualtrics$`What is your country of origin? - Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 # Since we have a count less than 5, we should apply Fisher's test instead of Chi-square.
 # Fisher's test
 test <- fisher.test(fisher_test_table)
@@ -1304,7 +1304,7 @@ Example: Is there an association between gender and the preferred period of a da
 
 ```{r}
 # Creation of contingency table
-chi_square_table <-table(qualtrics$` Selected Choice_1`,qualtrics$'During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?')
+chi_square_table <-table(qualtrics$`What is your gender? - Selected Choice`,qualtrics$'During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?')
 # Chi-square independence test
 chisq.test(chi_square_table)
 ```
@@ -1325,10 +1325,10 @@ Since this type of question provides multiple possible answers, one way to analy
 
 ```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Replacing NA with 0
-qualtrics$` ja! Natürlich.`[is.na(qualtrics$` ja! Natürlich.`)]=0
-qualtrics$` Clever`[is.na(qualtrics$` Clever`)]=0
-qualtrics$` Spar Vital`[is.na(qualtrics$` Spar Vital`)]=0
-qualtrics$` ...`[is.na(qualtrics$` ...`)]=0
+qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`)]=0
+qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`)]=0
+qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`)]=0
+qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`)]=0
 # qualtrics[38] accesses ja!Natürlich column
 # qualtrics[39] accesses Clever column
 # qualtrics[40] accesses  Spar Vital column
@@ -1358,10 +1358,10 @@ In a within-subjects experiment design with three or more observations of a dich
 
 ```{r}
 library(DescTools)
-list.cochran <- list(qualtrics$` ja! Natürlich.`,
-                   qualtrics$` Clever`,
-                   qualtrics$` Spar Vital`,
-                   qualtrics$` ...`) # imaginary brand
+list.cochran <- list(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`,
+                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`,
+                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`,
+                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`) # imaginary brand
 # Replacing NAs in the list with 0 in order to be able to run the test
 list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
 # Cochran test
@@ -1384,7 +1384,7 @@ Intuitive question to ask when it comes to this type of question is the followin
 We can answer this question by calculating a mean rank for each feature. Before we do so, we will create a separate data frame and add columns of the response data.
 
 ```{r}
-rank.data <- subset(qualtrics,select = c(" Measuring steps"," Calories burned"," Measuring heartbeat"," Exercise tracking"," Measuring distance")) 
+rank.data <- subset(qualtrics, select = stringr::str_detect(names(qualtrics),"Measuring steps|Calories burned|Measuring heartbeat|Exercise tracking|Measuring distance")) 
 head(rank.data)%>%
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = F)
@@ -1454,7 +1454,8 @@ If you wish to obtain information about how much one attribute is preferred over
 
 ```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
 library(robCompositions)
-constant.sum <- subset(qualtrics, select =c(" Location"," Price"," Ambience"," Customer Service"))
+constant.sum <- subset(qualtrics, select = stringr::str_detect(names(qualtrics), paste0(c(" Location"," Price"," Ambience"," Customer Service"), collapse = "|")))
+
 constant.sum$id <- seq(1:nrow(constant.sum))
 constant.sum[1:6,] %>%
   kableExtra::kbl(align = "c") %>%
@@ -1496,9 +1497,9 @@ The p value seems to be significant, i.e., less than 0.05. As we cannot identify
 
 ```{r,error=FALSE, message=FALSE,warning=FALSE}
 # Formatting data 
-constant.sum.aov <- gather(constant.sum, key = "Factor", value = "Points", ` Location`,` Price`,` Ambience`,` Customer Service`)
+constant.sum.aov <- gather(constant.sum, key = "Factor", value = "Points",names(constant.sum)[stringr::str_detect(names(constant.sum), "Location|Price|Ambience|Customer Service")])
 # One-way repeated measures ANOVA  
-res.aov <- anova_test(data = constant.sum.aov, dv = Points,wid = id ,within = Factor)
+res.aov <- anova_test(data = constant.sum.aov, dv = Points, wid = id ,within = Factor)
 get_anova_table(res.aov)%>%
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = F)
@@ -1526,7 +1527,7 @@ A number entry question is a recommended type of question if you are interested 
 Here is a glimpse in answers on how important is each factor to our respondents when it comes to dinning outside:
 
 ```{r, echo= FALSE}
-qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")]%>%
+qualtrics[1:6,stringr::str_detect(names(qualtrics), paste0(c(" Location"," Price"," Ambience"," Customer Service"), collapse = "|"))]%>%
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = F)
 ```
@@ -1534,7 +1535,7 @@ qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")]%>%
 Additionally, we asked our respondents how much are they willing to spend on dinner on average. In order to handle data easier, we will create a new data frame where we merge all the data together:
 
 ```{r}
-dinner <- subset(qualtrics, select = c(" Location"," Price"," Ambience"," Customer Service", " Willingness-to-pay (in EUR)"))
+dinner <- subset(qualtrics, select = stringr::str_detect(names(qualtrics), paste0(c(" Location"," Price"," Ambience"," Customer Service", " Willingness-to-pay"), collapse = "|")))
 head(dinner)%>%
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = T)
@@ -1559,7 +1560,14 @@ We see that difference between mean and median does not suggest (at the first si
 Let us now do linear regression analysis:
 
 ```{r}
-mlr.dinner <- lm(` Willingness-to-pay (in EUR)` ~ ` Location` + ` Price` + ` Ambience`+` Customer Service`, data = dinner)
+dinner <- as_tibble(dinner)
+dinner <- dplyr::rename(dinner, 
+              Location = ends_with("Location", ignore.case = FALSE),
+                 Price = ends_with("Price", ignore.case = FALSE),
+                Ambience = ends_with("Ambience", ignore.case = FALSE)
+                )
+
+mlr.dinner <- lm(` Willingness-to-pay (in EUR)` ~ Location + Price + Ambience+` Customer Service`, data = dinner)
 summary(mlr.dinner)
 ```
 
