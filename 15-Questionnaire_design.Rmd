@@ -1,11 +1,11 @@
 ---
 output:
-  pdf_document:
-    toc: yes
-  html_notebook: default
   html_document: 
     toc: yes
     df_print: paged
+  html_notebook: default
+  pdf_document:
+    toc: yes
 ---
 <link rel="stylesheet" type="text/css" media="all" href="style.css" />
 
@@ -1141,7 +1141,7 @@ Some useful tips:
 :::
 
 
-## Part 2: Collecting data and analysis
+## Part 2: Data collection and analysis
 
 The following type of visualization includes statistical test as well:
   
@@ -1170,6 +1170,7 @@ After downloading your survey in CSV format, you need to install `qualtRics` and
 ```{r, echo = TRUE, message=FALSE , warning=FALSE ,error=FALSE}
 # Load in qualtRics package
 # install.packages("qualtRics")
+library(sjlabelled)
 library(qualtRics)
 ```
 
@@ -1243,15 +1244,16 @@ Fisher's exact test is used to test a hypothesis with data obtained from multipl
 
 
 ```{r}
+
 # Converting characters to factors
-qualtrics$`What is your gender? - Selected Choice` <- factor(qualtrics$`What is your gender? - Selected Choice`,levels = c(1:2),labels = c("Male","Female"))
-qualtrics$`What is your country of origin? - Selected Choice` <- factor(qualtrics$`What is your country of origin? - Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
+#qualtrics$`What is your gender? - Selected Choice` <- factor(qualtrics$`What is your gender? - Selected Choice`,levels = c(1:2),labels = c("Male","Female"))
+#qualtrics$`What is your country of origin? - Selected Choice` <- factor(qualtrics$`What is your country of origin? - Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
 # Creation of contingency table
-fisher_test_table <-table(qualtrics$`What is your country of origin? - Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
+#fisher_test_table <-table(qualtrics$`What is your country of origin? - Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 # Since we have a count less than 5, we should apply Fisher's test instead of Chi-square.
 # Fisher's test
-test <- fisher.test(fisher_test_table)
-test
+#test <- fisher.test(fisher_test_table)
+#test
 ```
 
 From the output and from `test$p.value` we see that the p-value is higher than the significance level of 5%. Like any other statistical test, if the p-value is higher than the significance level, we can not reject the null hypothesis.
@@ -1304,9 +1306,9 @@ Example: Is there an association between gender and the preferred period of a da
 
 ```{r}
 # Creation of contingency table
-chi_square_table <-table(qualtrics$`What is your gender? - Selected Choice`,qualtrics$'During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?')
+#chi_square_table <-table(qualtrics$`What is your gender? - Selected Choice`,qualtrics$'During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?')
 # Chi-square independence test
-chisq.test(chi_square_table)
+#chisq.test(chi_square_table)
 ```
 
 Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and the preferred period of a day for watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
@@ -1325,21 +1327,21 @@ Since this type of question provides multiple possible answers, one way to analy
 
 ```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Replacing NA with 0
-qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`)]=0
-qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`)]=0
-qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`)]=0
-qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`)]=0
+#qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`)]=0
+#qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`)]=0
+#qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`)]=0
+#qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`[is.na(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`)]=0
 # qualtrics[38] accesses ja!Natürlich column
 # qualtrics[39] accesses Clever column
 # qualtrics[40] accesses  Spar Vital column
 # qualtrics[41] accesses ... column
 # Calculating frequency, percentage of respondents and percentage of cases
-df.cochran <- data.frame(Frequnecy = colSums(qualtrics[38:41]),
-                         Share_of_respondents = (colSums(qualtrics[38:41])/sum(qualtrics[38:41]))*100,
-                                Share_of_cases =((colSums(qualtrics[38:41]))/nrow(qualtrics[38:41]))*100)
-df.cochran %>%
-  kableExtra::kbl(align = "c") %>%
-  kable_paper("hover", full_width = F)
+#df.cochran <- data.frame(Frequnecy = colSums(qualtrics[38:41]),
+#                         Share_of_respondents = (colSums(qualtrics[38:41])/sum(qualtrics[38:41]))*100,
+#                                Share_of_cases =((colSums(qualtrics[38:41]))/nrow(qualtrics[38:41]))*100)
+#df.cochran %>%
+#  kableExtra::kbl(align = "c") %>%
+#  kable_paper("hover", full_width = F)
 ```
 
 The share of cases column suggests that, for instance, almost 70% percent of people are familiar with the brand "ja!Naturlich". 
@@ -1358,21 +1360,21 @@ In a within-subjects experiment design with three or more observations of a dich
 
 ```{r}
 library(DescTools)
-list.cochran <- list(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`,
-                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`,
-                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`,
-                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`) # imaginary brand
+#list.cochran <- list(qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich.`,
+#                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Clever`,
+#                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - Spar Vital`,
+#                   qualtrics$`Which of the following store brands do you know? (multiple answers possible) - ...`) # imaginary brand
 # Replacing NAs in the list with 0 in order to be able to run the test
-list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
+#list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
 # Cochran test
-matrix.cochran <- do.call(cbind,list.cochran)
-DescTools::CochranQTest(matrix.cochran, alpha=0.05)
+#matrix.cochran <- do.call(cbind,list.cochran)
+#DescTools::CochranQTest(matrix.cochran, alpha=0.05)
 ```
 The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.
 
 ```{r}
 # Post hoc test (Dunn Test)
-DunnTest(list.cochran, method="bonferroni")
+#DunnTest(list.cochran, method="bonferroni")
 ```
 
 From the results of the Dunn Test, we can see that there is a big difference between 1 ("ja!Natürlich") and 4("..."), as well as between 4("...") and 3("Spar Vital"). 
@@ -1723,27 +1725,27 @@ p
 If our multiple choice question has more possible answers, we would need first to calculate share of cases when each possible answer was selected.
 
 ```{r}
-setDT(df.cochran, keep.rownames = TRUE)
-colnames(df.cochran)[1]<-"Brand"
-df.cochran %>%
-kableExtra::kbl(align = "c") %>%
-  kable_paper("hover", full_width = F)
+#setDT(df.cochran, keep.rownames = TRUE)
+#colnames(df.cochran)[1]<-"Brand"
+#df.cochran %>%
+#kableExtra::kbl(align = "c") %>%
+#  kable_paper("hover", full_width = F)
 ```
 After we make sure we have our data in the required form, we can create a nice bar chart:
 
 ```{r}
 # Multiple choice question with multiple answers - a bar chart
 library(ggplot2)
-p <- ggplot(data=df.cochran,aes(x=Brand, y=Share_of_cases, fill=Brand)) +
-  geom_bar(stat='identity') + 
-  geom_text(aes(label = paste0(round(Share_of_cases),"%")), position = position_stack(vjust = 0.5))+
-  scale_fill_brewer(palette = "Blues") +
-  labs(x = NULL, y = NULL, fill = NULL, title = "Brands repsondents are familiar with") +
-  theme_minimal() + 
-  theme(axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        plot.title = element_text(hjust = 0.5, color = "#666666"))
-p
+#p <- ggplot(data=df.cochran,aes(x=Brand, y=Share_of_cases, fill=Brand)) +
+#  geom_bar(stat='identity') + 
+#  geom_text(aes(label = paste0(round(Share_of_cases),"%")), position = position_stack(vjust = 0.5))+
+#  scale_fill_brewer(palette = "Blues") +
+#  labs(x = NULL, y = NULL, fill = NULL, title = "Brands repsondents are familiar with") +
+#  theme_minimal() + 
+#  theme(axis.line = element_blank(),
+#        axis.ticks = element_blank(),
+#        plot.title = element_text(hjust = 0.5, color = "#666666"))
+#p
 ```
 
 ##### Rank order question

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Introduction | Marketing Research Design &amp; Analysis 2021</title>
+  <title>Introduction | Marketing Analytics 2021</title>
   <meta name="description" content="An Introduction to Data Analytics Using R" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Introduction | Marketing Research Design &amp; Analysis 2021" />
+  <meta property="og:title" content="Introduction | Marketing Analytics 2021" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction | Marketing Research Design &amp; Analysis 2021" />
+  <meta name="twitter:title" content="Introduction | Marketing Analytics 2021" />
   
   <meta name="twitter:description" content="An Introduction to Data Analytics Using R" />
   
@@ -31,9 +31,7 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="index.html"/>
 <link rel="next" href="preliminaries.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,34 +47,36 @@
 
 
 
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -129,7 +129,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -148,16 +147,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="part"><span><b>I Course outline</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-motivation"><i class="fa fa-check"></i>Course motivation</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#grading"><i class="fa fa-check"></i>Grading</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#discussion-forum"><i class="fa fa-check"></i>Discussion forum</a></li>
@@ -168,11 +164,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Lecture notes</b></span></li>
-<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a>
-<ul>
+<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a><ul>
 <li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-foundations-recap"><i class="fa fa-check"></i><b>1.1</b> Marketing foundations (recap)</a></li>
-<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a>
-<ul>
+<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#research-question-and-hypothesis"><i class="fa fa-check"></i><b>1.2.1</b> Research question and hypothesis</a></li>
 <li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.2.2</b> Choosing a research design</a></li>
 <li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#collecting-data"><i class="fa fa-check"></i><b>1.2.3</b> Collecting data</a></li>
@@ -180,8 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#learning-check"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a>
-<ul>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
 <li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> How to download and install R and RStudio</a></li>
 <li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#the-r-studio-interface"><i class="fa fa-check"></i><b>2.2</b> The R Studio interface</a></li>
 <li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
@@ -189,16 +182,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#a-typical-r-session"><i class="fa fa-check"></i><b>2.5</b> A typical R session</a></li>
 <li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.6</b> Getting help</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a>
-<ul>
+<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>3.1.1</b> Creating objects</a></li>
 <li class="chapter" data-level="3.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>3.1.2</b> Data types</a></li>
 <li class="chapter" data-level="3.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>3.1.3</b> Data structures</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>3.2.1</b> Getting data for this course</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>3.2.2</b> Import data created by other software packages</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-handling.html"><a href="data-handling.html#import-data-from-qualtrics"><i class="fa fa-check"></i><b>3.2.3</b> Import data from Qualtrics</a></li>
@@ -207,15 +197,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="data-handling.html"><a href="data-handling.html#learning-check-1"><i class="fa fa-check"></i>Learning check</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a>
-<ul>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a><ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>4.1.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>4.1.2</b> Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a>
-<ul>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>4.2.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> Continuous variables</a></li>
 <li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>4.2.3</b> Saving plots</a></li>
@@ -224,10 +211,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#learning-check-2"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a>
-<ul>
+<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a><ul>
+<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="statistical-inference.html"><a href="statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>5.1.1</b> Sampling from a known population</a></li>
 <li class="chapter" data-level="5.1.2" data-path="statistical-inference.html"><a href="statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>5.1.2</b> Standard error of the mean</a></li>
 </ul></li>
@@ -237,35 +222,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#learning-check-3"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#references-2"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
-<ul>
+<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-null-hypothesis"><i class="fa fa-check"></i><b>6.1.1</b> The null hypothesis</a></li>
 <li class="chapter" data-level="6.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#statistical-inference-on-a-sample"><i class="fa fa-check"></i><b>6.1.2</b> Statistical inference on a sample</a></li>
 <li class="chapter" data-level="6.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>6.1.3</b> Choosing the right test</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.2</b> One sample t-test</a></li>
-<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a>
-<ul>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>6.3.1</b> Independent-means t-test</a></li>
 <li class="chapter" data-level="6.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Dependent-means t-test</a></li>
 <li class="chapter" data-level="6.3.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#further-considerations"><i class="fa fa-check"></i><b>6.3.3</b> Further considerations</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.4</b> Comparing several means</a>
-<ul>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.4</b> Comparing several means</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-2"><i class="fa fa-check"></i><b>6.4.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>6.4.2</b> Decomposing variance</a></li>
 <li class="chapter" data-level="6.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>6.4.3</b> One-way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.5</b> Non-parametric tests</a>
-<ul>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.5</b> Non-parametric tests</a><ul>
 <li class="chapter" data-level="6.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>6.5.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
 <li class="chapter" data-level="6.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>6.5.2</b> Wilcoxon signed-rank test</a></li>
 <li class="chapter" data-level="6.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>6.5.3</b> Kruskal-Wallis test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.6</b> Categorical data</a>
-<ul>
+<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.6</b> Categorical data</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#confidence-intervals-for-proportions"><i class="fa fa-check"></i><b>6.6.1</b> Confidence intervals for proportions</a></li>
 <li class="chapter" data-level="6.6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>6.6.2</b> Chi-square test</a></li>
 <li class="chapter" data-level="6.6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#sample-size-1"><i class="fa fa-check"></i><b>6.6.3</b> Sample size</a></li>
@@ -273,20 +252,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#learning-check-4"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#references-3"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a>
-<ul>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a><ul>
 <li class="chapter" data-level="7.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>7.1.1</b> Correlation coefficient</a></li>
 <li class="chapter" data-level="7.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>7.1.2</b> Significance testing</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a>
-<ul>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>7.2.1</b> Simple linear regression</a></li>
 <li class="chapter" data-level="7.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>7.2.2</b> Multiple linear regression</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a>
-<ul>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>7.3.1</b> Outliers</a></li>
 <li class="chapter" data-level="7.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>7.3.2</b> Influential observations</a></li>
 <li class="chapter" data-level="7.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>7.3.3</b> Non-linearity</a></li>
@@ -298,18 +273,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.9" data-path="regression.html"><a href="regression.html#overfitting"><i class="fa fa-check"></i><b>7.3.9</b> Overfitting</a></li>
 <li class="chapter" data-level="7.3.10" data-path="regression.html"><a href="regression.html#variable-selection"><i class="fa fa-check"></i><b>7.3.10</b> Variable selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a>
-<ul>
+<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
 <li class="chapter" data-level="7.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>7.4.2</b> More than two categories</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a>
-<ul>
+<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>7.5.1</b> Interaction effects</a></li>
 <li class="chapter" data-level="7.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>7.5.2</b> Non-linear relationships</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a>
-<ul>
+<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a><ul>
 <li class="chapter" data-level="7.6.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>7.6.1</b> Motivation and intuition</a></li>
 <li class="chapter" data-level="7.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>7.6.2</b> Technical details of the model</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>7.6.3</b> Estimation in R</a></li>
@@ -317,11 +289,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#references-4"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a>
-<ul>
+<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a><ul>
 <li class="chapter" data-level="8.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a>
-<ul>
+<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>8.2.1</b> Are the assumptions satisfied?</a></li>
 <li class="chapter" data-level="8.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>8.2.2</b> Deriving factors</a></li>
 <li class="chapter" data-level="8.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>8.2.3</b> Factor interpretation</a></li>
@@ -332,10 +302,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#references-5"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="part"><span><b>III Assignments</b></span></li>
-<li class="chapter" data-level="9" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>9.1</b> Introduction to R Markdown</a>
-<ul>
+<li class="chapter" data-level="9" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown</a><ul>
+<li class="chapter" data-level="9.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>9.1</b> Introduction to R Markdown</a><ul>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i>Creating a new R Markdown document</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#text-and-equations"><i class="fa fa-check"></i>Text and Equations</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#r-code"><i class="fa fa-check"></i>R-Code</a></li>
@@ -343,28 +311,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IV Group project</b></span></li>
-<li class="chapter" data-level="10" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>10</b> Survey design &amp; analysis</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>10.1</b> Your tasks</a>
-<ul>
+<li class="chapter" data-level="10" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>10</b> Survey design &amp; analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>10.1</b> Your tasks</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#topics-for-the-group-project"><i class="fa fa-check"></i><b>10.1.1</b> Topics for the group project</a></li>
 <li class="chapter" data-level="10.1.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#guidelines"><i class="fa fa-check"></i><b>10.1.2</b> Guidelines</a></li>
 <li class="chapter" data-level="10.1.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#timeline"><i class="fa fa-check"></i><b>10.1.3</b> Timeline</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>10.2</b> Part 1: Before collecting data</a>
-<ul>
+<li class="chapter" data-level="10.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>10.2</b> Part 1: Before collecting data</a><ul>
 <li class="chapter" data-level="10.2.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#research-design"><i class="fa fa-check"></i><b>10.2.1</b> Research design</a></li>
 <li class="chapter" data-level="10.2.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#survey-method"><i class="fa fa-check"></i><b>10.2.2</b> Survey method</a></li>
 <li class="chapter" data-level="10.2.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#questionnaire"><i class="fa fa-check"></i><b>10.2.3</b> Questionnaire</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-collecting-data-and-analysis"><i class="fa fa-check"></i><b>10.3</b> Part 2: Collecting data and analysis</a>
-<ul>
+<li class="chapter" data-level="10.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-data-collection-and-analysis"><i class="fa fa-check"></i><b>10.3</b> Part 2: Data collection and analysis</a><ul>
 <li class="chapter" data-level="10.3.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#collecting-data-1"><i class="fa fa-check"></i><b>10.3.1</b> Collecting data</a></li>
 <li class="chapter" data-level="10.3.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-analysis"><i class="fa fa-check"></i><b>10.3.2</b> Data analysis</a></li>
 <li class="chapter" data-level="10.3.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#reporting"><i class="fa fa-check"></i><b>10.3.3</b> Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>10.4</b> Frequently asked questions</a>
-<ul>
+<li class="chapter" data-level="10.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>10.4</b> Frequently asked questions</a><ul>
 <li class="chapter" data-level="10.4.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#multiple-answers-stored-in-one-cell-in-csv"><i class="fa fa-check"></i><b>10.4.1</b> Multiple answers stored in one cell in CSV</a></li>
 <li class="chapter" data-level="10.4.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#labels-for-numeric-values-in-csv-output"><i class="fa fa-check"></i><b>10.4.2</b> Labels for numeric values in CSV output</a></li>
 <li class="chapter" data-level="10.4.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#bar-chart-for-multiple-choice-question-with-multiple-answers"><i class="fa fa-check"></i><b>10.4.3</b> Bar chart for multiple choice question with multiple answers</a></li>
@@ -383,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2021</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Analytics 2021</a>
           </h1>
         </div>
 
@@ -403,13 +366,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="course-structure" class="section level2 unnumbered">
 <h2>Course structure</h2>
-<p>Due to the limited contact on campus this semester, this course combines asynchronous teaching elements (e.g., texts and pre-recorded videos on this website) with synchronous elements (e.g., live video streaming, chats). The syllabus consists of three main parts, as reflected by the structure of this website:</p>
+<p>This course combines asynchronous teaching elements (e.g., texts and pre-recorded videos on this website) with synchronous elements (e.g., weekly in-person interactive sessions in the PC-lab). The syllabus consists of three main parts, as reflected by the structure of this website:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Lecture notes</strong>: the lecture part will explain the theory behind the concepts and methods and provide you with example applications using the statistical software R</li>
-<li><strong>Individual assignments</strong>: in the individual assignments you are asked to apply the acquired knowledge to new data sets</li>
-<li><strong>Group project</strong>: in a group you will design and conduct your own market research project and transfer the knowledge to a real business setting</li>
+<li><strong>Lecture notes</strong>: the lecture part will explain the theory behind the concepts and methods and provide you with example applications using the statistical software R.</li>
+<li><strong>Individual assignments</strong>: in the individual assignments you are asked to apply the acquired knowledge to new data sets.</li>
+<li><strong>Group project</strong>: in the group you will design and conduct your own market research project and transfer the knowledge to a real business setting.</li>
 </ol>
-<p>The general approach is that students will first familiarize themselves with the contents by going through the materials on their own. This self-study process is complemented with weekly <strong>interactive Q&amp;A and group coaching sessions</strong> via live video streaming (Zoom), which provide ample opportunities to ask questions and clarify points that require further discussion. The schedule for each of the three parts will be explained below.</p>
+<p>The general approach is that students will first familiarize themselves with the contents by going through the materials on their own. This <strong>self-study</strong> process is complemented with in-person <strong>weekly interactive sessions</strong> in the PC-lab, which provide ample opportunities to ask questions and clarify points that require further discussion. The schedule for each of the three parts will be explained below.</p>
 <p>The following video summarizes the information regarding the structure of this course.</p>
 <div align="center">
 <iframe width="500" height="310" src="https://www.youtube.com/embed/ujRNrqYTSMg" frameborder="0" allowfullscreen>
@@ -417,24 +380,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="schedule" class="section level3 unnumbered">
 <h3>Schedule</h3>
-<div id="lecture-notes-qa" class="section level4 unnumbered">
-<h4>Lecture notes Q&amp;A</h4>
-<p>The contents on this website are divided into weekly readings. To be able to follow the curriculum and complete the weekly assignments, you need to read the materials assigned for the respective week. The relevant chapters are indicated in the table below. The weekly readings will be complemented with interactive Q&amp;A session, which provide you with an opportunity to ask questions about the assigned readings. Please note that you need to go through the materials on your own in the week following the respective session. For example, chapter 1 will be discussed in the second session. The dates and times for the 90 minute live video sessions are indicated in the table below. It is highly recommended to come with questions or comments about the materials to these sessions that you think might be interesting and helpful to the class. The live sessions will also feature short interactive quizzes that allow you to self-assess your progress and identify knowledge gaps regarding the materials that were assigned for the previous week.</p>
+<div id="in-person-lecture" class="section level4 unnumbered">
+<h4>In-person lecture</h4>
+<p>The contents on this website are divided into weekly readings. To be able to follow the curriculum and complete the weekly assignments, you need to read the materials assigned for the respective week. The relevant chapters are indicated in the table below. The weekly readings will be complemented with the weekly interactive session in the PC-lab, which provide you with an opportunity to ask questions about the assigned readings. <strong>Please note that you need to go through the materials on your own in the week before the respective session.</strong> For example, chapters 2,3,4 will be discussed in the second session. The dates and times for the classroom sessions are indicated in the table below for each group separately. It is highly recommended to come with questions or comments about the materials to these sessions that you think might be interesting and helpful to the class. The sessions will also feature short interactive quizzes that allow you to self-assess your progress and identify knowledge gaps regarding the materials that were assigned for the previous week. Some of the questions for these quizzes can be found at the end of the respective chapters on this website (see section “Learning check” at the end of each chapter).</p>
+<br>
+<strong>Lecture dates - Group A</strong>
 <br>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <thead>
 <tr>
 <th style="text-align:left;">
-Date A
+Date
 </th>
 <th style="text-align:left;">
-Time A
+Day
 </th>
 <th style="text-align:left;">
-Date B
+Time
 </th>
 <th style="text-align:left;">
-Time B
+Room
 </th>
 <th style="text-align:left;">
 Topics
@@ -447,16 +412,16 @@ Chapters
 <tbody>
 <tr>
 <td style="text-align:left;">
-Oct. 6
+Oct. 11
 </td>
 <td style="text-align:left;">
-02:00PM - 03:30PM
+Monday
 </td>
 <td style="text-align:left;">
-Oct. 7
+08:00AM - 12:00PM
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
@@ -468,16 +433,16 @@ Oct. 7
 </tr>
 <tr>
 <td style="text-align:left;">
-Oct. 12
+Oct. 18
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+Monday
 </td>
 <td style="text-align:left;">
-Oct. 14
+08:00AM - 12:00PM
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
@@ -489,16 +454,16 @@ Oct. 14
 </tr>
 <tr>
 <td style="text-align:left;">
-Oct. 19
+Oct. 25
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+Monday
 </td>
 <td style="text-align:left;">
-Oct. 21
+08:00AM - 12:00PM
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
@@ -510,16 +475,16 @@ Oct. 21
 </tr>
 <tr>
 <td style="text-align:left;">
-Oct. 29
+Nov. 8
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+Monday
 </td>
 <td style="text-align:left;">
-Oct. 28
+08:00AM - 12:00PM
 </td>
 <td style="text-align:left;">
-01:30PM - 03:00PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
@@ -531,107 +496,96 @@ Oct. 28
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 2
+Nov. 15
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+Monday
 </td>
 <td style="text-align:left;">
-Nov. 4
+08:00AM - 12:00PM
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
-<li>Regression
+<li>Regression I
 </td>
 <td style="text-align:left;">
-7
+7.1,7.2,7.3
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 9
+Nov. 22
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+Monday
 </td>
 <td style="text-align:left;">
-Nov. 11
+08:00AM - 12:00PM
 </td>
 <td style="text-align:left;">
-01:00PM - 02:30PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
-<li>Exploratory factor analysis
+<li>Regression II
 </td>
 <td style="text-align:left;">
-8
+7.4,7.5,7.6
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Dec. 15
+Nov. 29
 </td>
 <td style="text-align:left;">
-08:30AM - 10:30AM
+Monday
 </td>
 <td style="text-align:left;">
-Dec. 15
+08:00AM - 12:00PM
 </td>
 <td style="text-align:left;">
-08:30AM - 10:30AM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
-<li>Final exam (online)
+<li>Factor analysis <br>Cluster analysis
 </td>
 <td style="text-align:left;">
+8,9
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for groups A and B respectively.
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A.
 </td>
 </tr>
 </tfoot>
 </table>
-<br></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
-<div class="infobox_red caution">
-<p>We understand that the distance learning format poses challenges to the learning process because we cannot troubleshoot in person during the sessions. Remember that it is unlikely that you are the only student encountering a particular error, so please make use of the forum on Learn@WU to interact with your peers or ask us questions so everyone else will benefit from the answer (there are no stupid questions). In case you cannot get answers to address a specific problem, we are available 90 min. after each Q&amp;A sessions for short individual coaching sessions (please register by sending me a short email if you require assistance - <a href="mailto:nils.wloemert@wu.ac.at">nils.wloemert@wu.ac.at</a>).</p>
-</div>
-</div>
-<div id="individual-assignments" class="section level4 unnumbered">
-<h4>Individual assignments</h4>
-<p>There will be 4 individual assignments and each assignment is complemented with live video coaching sessions. Note that the assignments need to be submitted in the <a href="https://rmarkdown.rstudio.com/">R Markdown format</a> and there will be a live video coaching sessions dedicated to this reporting format. The submission dates and the dates and times for the coaching sessions are summarized in the following table:</p>
+<br>
+<strong>Lecture dates - Group B</strong>
+<br>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <thead>
 <tr>
 <th style="text-align:left;">
-Date A
+Date
 </th>
 <th style="text-align:left;">
-Time A
+Day
 </th>
 <th style="text-align:left;">
-Date B
+Time
 </th>
 <th style="text-align:left;">
-Time B
+Room
 </th>
 <th style="text-align:left;">
-Task
+Topics
 </th>
 <th style="text-align:left;">
 Chapters
@@ -641,150 +595,156 @@ Chapters
 <tbody>
 <tr>
 <td style="text-align:left;">
+Oct. 11
+</td>
+<td style="text-align:left;">
+Monday
+</td>
+<td style="text-align:left;">
+02:00PM - 06:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Introduction to the course <br>Basic concepts
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Oct. 18
 </td>
 <td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-Oct. 20
-</td>
-<td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Submit assignment 1: DataCamp
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oct. 20
-</td>
-<td style="text-align:left;">
-02:00PM - 05:00PM
-</td>
-<td style="text-align:left;">
-Oct. 23
-</td>
-<td style="text-align:left;">
-02:00PM - 05:00PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Coaching assignment 2 &amp; R Markdown tutorial (live video coaching)
-</td>
-<td style="text-align:left;">
-9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oct. 28
-</td>
-<td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-Oct. 27
-</td>
-<td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Submit assignment 2: Hypothesis testing I
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Nov. 2*
+Monday
 </td>
 <td style="text-align:left;">
 02:00PM - 06:00PM
 </td>
 <td style="text-align:left;">
-Nov. 2*
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Introduction to R <br>Introduction to inferential statistics
+</td>
+<td style="text-align:left;">
+2,3,4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oct. 25
+</td>
+<td style="text-align:left;">
+Monday
 </td>
 <td style="text-align:left;">
 02:00PM - 06:00PM
 </td>
 <td style="text-align:left;">
-<ul>
-<li>Coaching assignment 3 (live video coaching)
+TC.-1.61
 </td>
 <td style="text-align:left;">
+<ul>
+<li>Hypothesis testing I
+</td>
+<td style="text-align:left;">
+5,6.1,6.2,6.3
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 5
+Nov. 8
 </td>
 <td style="text-align:left;">
-11:59PM
+Monday
 </td>
 <td style="text-align:left;">
-Nov. 5
+02:00PM - 06:00PM
 </td>
 <td style="text-align:left;">
-11:59PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
-<li>Submit assignment 3: Hypothesis testing II
+<li>Hypothesis testing II
 </td>
 <td style="text-align:left;">
+6.4,6.5,6.6
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 11
+Nov. 15
 </td>
 <td style="text-align:left;">
-03:00PM - 06:00PM
+Monday
 </td>
 <td style="text-align:left;">
-Nov. 11
+02:00PM - 06:00PM
 </td>
 <td style="text-align:left;">
-03:00PM - 06:00PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
-<li>Coaching assignment 4 (live video coaching)
+<li>Regression I
 </td>
 <td style="text-align:left;">
+7.1,7.2,7.3
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 16
+Nov. 22
 </td>
 <td style="text-align:left;">
-11:59PM
+Monday
 </td>
 <td style="text-align:left;">
-Nov. 18
+02:00PM - 06:00PM
 </td>
 <td style="text-align:left;">
-11:59PM
+TC.-1.61
 </td>
 <td style="text-align:left;">
 <ul>
-<li>Submit assignment 4: Regression
+<li>Regression II
 </td>
 <td style="text-align:left;">
+7.4,7.5,7.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nov. 29
+</td>
+<td style="text-align:left;">
+Monday
+</td>
+<td style="text-align:left;">
+02:00PM - 06:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Factor analysis <br>Cluster analysis
+</td>
+<td style="text-align:left;">
+8,9
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for groups A and B respectively. <br> Dates indicated with ’*’ are optional time slots for individual coaching.<br> If you would like to schedule a meeting, please contact Mirza (<a href="mailto:mirza.mujanovic@wu.ac.at" class="email">mirza.mujanovic@wu.ac.at</a>)
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group B.
 </td>
 </tr>
 </tfoot>
@@ -793,6 +753,445 @@ Nov. 18
 </ul></li>
 </ul></li>
 </ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<br>
+<strong>Lecture dates - Group C</strong>
+<br>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Day
+</th>
+<th style="text-align:left;">
+Time
+</th>
+<th style="text-align:left;">
+Room
+</th>
+<th style="text-align:left;">
+Topics
+</th>
+<th style="text-align:left;">
+Chapters
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Oct. 13
+</td>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+12:00PM - 04:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Introduction to the course <br>Basic concepts
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oct. 20
+</td>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+02:00PM - 06:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Introduction to R <br>Introduction to inferential statistics
+</td>
+<td style="text-align:left;">
+2,3,4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oct. 27
+</td>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+02:00PM - 06:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Hypothesis testing I
+</td>
+<td style="text-align:left;">
+5,6.1,6.2,6.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nov. 10
+</td>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+02:00PM - 06:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Hypothesis testing II
+</td>
+<td style="text-align:left;">
+6.4,6.5,6.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nov. 17
+</td>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+12:00PM - 04:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Regression I
+</td>
+<td style="text-align:left;">
+7.1,7.2,7.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nov. 24
+</td>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+12:00PM - 04:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Regression II
+</td>
+<td style="text-align:left;">
+7.4,7.5,7.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dec. 1
+</td>
+<td style="text-align:left;">
+Wednesday
+</td>
+<td style="text-align:left;">
+12:00PM - 04:00PM
+</td>
+<td style="text-align:left;">
+TC.-1.61
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Factor analysis <br>Cluster analysis
+</td>
+<td style="text-align:left;">
+8,9
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group C.
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p><br>
+::: {.infobox_red .caution data-latex=“{caution}”}
+We understand that the self-study format might pose challenges to the learning process because we cannot troubleshoot in person outside of the classroom sessions. Remember that it is very unlikely that you are the only student encountering a particular problem. So please make use of the forum on Learn@WU (see below) to interact with your peers or ask us questions so that everyone else will benefit from the answer (there are no stupid questions). In case you cannot get answers to address a specific problem, we will be available during the in-person classroom sessions for coaching.
+:::</p>
+</div>
+<div id="individual-assignments" class="section level4 unnumbered">
+<h4>Individual assignments</h4>
+<p>There will be 3 individual assignments and each assignment is complemented with a coaching session. Note that the assignments need to be submitted in the <a href="https://rmarkdown.rstudio.com/">R Markdown format</a> (see chapter 10) and there will be a coaching sessions dedicated to this reporting format. The submission dates and the dates and times for the coaching sessions are summarized in the following table:</p>
+<br>
+<strong>Assignment schedule - Group A</strong>
+<br>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Assignment
+</th>
+<th style="text-align:left;">
+Assigned
+</th>
+<th style="text-align:left;">
+Coaching
+</th>
+<th style="text-align:left;">
+Submission
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Assignment 1: DataCamp
+</td>
+<td style="text-align:left;">
+Oct. 18
+</td>
+<td style="text-align:left;">
+<ul>
+<li>no coaching
+</td>
+<td style="text-align:left;">
+Oct. 24, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Assignment 2: Hypothesis testing
+</td>
+<td style="text-align:left;">
+Oct. 25
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Oct. 27, 08:00AM-11:00AM (compulsory) <br>Nov. 10, 04:00PM-07:00PM* <br>Nov. 12, 04:00PM-08:00PM*
+</td>
+<td style="text-align:left;">
+Nov. 14, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Assignment 3: Regression
+</td>
+<td style="text-align:left;">
+Nov. 15
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Nov. 23, 04:00PM-07:00PM* <br>Nov. 26, 04:00PM-08:00PM*
+</td>
+<td style="text-align:left;">
+Nov. 28, 11:59PM
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A. <br> Dates indicated with ’*’ are optional time slots for individual online video coaching sessions with Virginia.<br> If you would like to schedule a meeting during the indicated times, please contact Virginia before (<a href="mailto:virginia.darazs@wu.ac.at" class="email">virginia.darazs@wu.ac.at</a>).
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ul></li>
+</ul></li>
+</ul>
+<br>
+<strong>Assignment schedule - Group B</strong>
+<br>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Assignment
+</th>
+<th style="text-align:left;">
+Assigned
+</th>
+<th style="text-align:left;">
+Coaching
+</th>
+<th style="text-align:left;">
+Submission
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Assignment 1: DataCamp
+</td>
+<td style="text-align:left;">
+Oct. 18
+</td>
+<td style="text-align:left;">
+<ul>
+<li>no coaching
+</td>
+<td style="text-align:left;">
+Oct. 24, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Assignment 2: Hypothesis testing
+</td>
+<td style="text-align:left;">
+Oct. 25
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Oct. 27, 08:00AM-11:00AM (compulsory) <br>Nov. 10, 04:00PM-07:00PM* <br>Nov. 12, 04:00PM-08:00PM*
+</td>
+<td style="text-align:left;">
+Nov. 14, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Assignment 3: Regression
+</td>
+<td style="text-align:left;">
+Nov. 15
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Nov. 23, 04:00PM-07:00PM* <br>Nov. 26, 04:00PM-08:00PM*
+</td>
+<td style="text-align:left;">
+Nov. 28, 11:59PM
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group B. <br> Dates indicated with ’*’ are optional time slots for individual online video coaching sessions with Virginia.<br> If you would like to schedule a meeting during the indicated times, please contact Virginia before (<a href="mailto:virginia.darazs@wu.ac.at" class="email">virginia.darazs@wu.ac.at</a>).
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ul></li>
+</ul></li>
+</ul>
+<br>
+<strong>Assignment schedule - Group C</strong>
+<br>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Assignment
+</th>
+<th style="text-align:left;">
+Assigned
+</th>
+<th style="text-align:left;">
+Coaching
+</th>
+<th style="text-align:left;">
+Submission
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Assignment 1: DataCamp
+</td>
+<td style="text-align:left;">
+Oct. 20
+</td>
+<td style="text-align:left;">
+<ul>
+<li>no coaching
+</td>
+<td style="text-align:left;">
+Oct. 26, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Assignment 2: Hypothesis testing
+</td>
+<td style="text-align:left;">
+Oct. 27
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Oct. 29, 08:00AM-11:00PM (compulsory) <br>Nov. 12, 04:00PM-08:00PM* <br>Nov. 15, 04:00PM-07:00PM*
+</td>
+<td style="text-align:left;">
+Nov. 16, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Assignment 3: Regression
+</td>
+<td style="text-align:left;">
+Nov. 17
+</td>
+<td style="text-align:left;">
+<ul>
+<li>Nov. 22, 04:00PM-07:00PM* <br>Nov. 26, 04:00PM-08:00PM*
+</td>
+<td style="text-align:left;">
+Nov. 30, 11:59PM
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group C. <br> Dates indicated with ’*’ are optional time slots for individual online video coaching sessions with Virginia.<br> If you would like to schedule a meeting during the indicated times, please contact Virginia before (<a href="mailto:virginia.darazs@wu.ac.at" class="email">virginia.darazs@wu.ac.at</a>).
+</td>
+</tr>
+</tfoot>
+</table></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -807,170 +1206,203 @@ Nov. 18
 <li>data analysis</li>
 <li>presentation of the results</li>
 </ul>
-<p>We will offer coaching sessions via live video streaming (Zoom) throughout the process, providing feedback and allowing you to ask questions.</p>
-<p>The submission dates and the dates and times for the coaching sessions are summarized in the following table:</p>
+<p>We will offer coaching sessions throughout the process, providing feedback and allowing you to ask questions. The submission dates and the dates and times for the coaching sessions are summarized in the table below.</p>
+<p>Your main point of contact for the group project will be Daniel Winkler (<a href="mailto:daniel.winkler@wu.ac.at">daniel.winkler@wu.ac.at</a>). You may contact Daniel to schedule individual coaching sessions for your groups (in-person or online) during the following times:
+* XXX
+* XXX</p>
+<p>Please make sure that you have exhausted all other sources of help, such as the online tutorial, the forum on Learn@wu and web-searches before you schedule a coaching session. Since students tend to have similar questions, the goal should be to make the responses available to other students in the course (e.g., by posting in the forum).</p>
+<br>
+<strong>Group project schedule - Group A</strong>
+<br>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <thead>
 <tr>
 <th style="text-align:left;">
-Date A
+Component
 </th>
 <th style="text-align:left;">
-Time A
-</th>
-<th style="text-align:left;">
-Date B
-</th>
-<th style="text-align:left;">
-Time B
-</th>
-<th style="text-align:left;">
-Task
-</th>
-<th style="text-align:left;">
-Chapters
+Date
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Oct. 21
+Submit questionnaire draft
 </td>
 <td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-Oct. 25
-</td>
-<td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Submit questionnaire draft
-</td>
-<td style="text-align:left;">
-10
+Oct. 30, 11:59PM
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Oct. 23*
+Coaching: Questionnaire design*
 </td>
 <td style="text-align:left;">
-09:00AM - 02:30PM
-</td>
-<td style="text-align:left;">
-Oct. 27*
-</td>
-<td style="text-align:left;">
-02:00PM - 08:00PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Coaching: Questionnaire design (live video coaching)
-</td>
-<td style="text-align:left;">
-10
+Nov. 2, 08:00AM - 12:00PM
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 1
+Submit revised questionnaire
 </td>
 <td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-Nov. 4
-</td>
-<td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Submit revised questionnaire
-</td>
-<td style="text-align:left;">
-10
+Nov. 7, 11:59PM
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 16*
+Coaching: Data analysis*
 </td>
 <td style="text-align:left;">
-01:30PM - 04:30PM
-</td>
-<td style="text-align:left;">
-Nov. 18*
-</td>
-<td style="text-align:left;">
-02:00PM - 05:00PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Coaching: Data handling (live video coaching)
-</td>
-<td style="text-align:left;">
+Dec. 6, 08:00AM - 12:00PM
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nov. 23*
+Submit video recording of presentation (pre-recorded)
 </td>
 <td style="text-align:left;">
-01:30PM - 06:30PM
-</td>
-<td style="text-align:left;">
-Nov. 25*
-</td>
-<td style="text-align:left;">
-03:00PM - 08:00PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Coaching: Data analysis (live video coaching)
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Dec. 7
-</td>
-<td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-Dec. 9
-</td>
-<td style="text-align:left;">
-11:59PM
-</td>
-<td style="text-align:left;">
-<ul>
-<li>Submit video recording of presentation (pre-recorded)
-</td>
-<td style="text-align:left;">
+Dec. 15, 11:59PM
 </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for groups A and B respectively.<br> Sessions indicated with ’*’ are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A.<br> Sessions indicated with ’*’ are group coaching sessions. Slots of 40 min. are assigned to each group within the indicated times.
 </td>
 </tr>
 </tfoot>
-</table></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+</table>
+<br>
+<strong>Group project schedule - Group B</strong>
+<br>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Component
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Submit questionnaire draft
+</td>
+<td style="text-align:left;">
+Oct. 30, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Coaching: Questionnaire design*
+</td>
+<td style="text-align:left;">
+Nov. 2, 02:00PM - 06:00PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Submit revised questionnaire
+</td>
+<td style="text-align:left;">
+Nov. 7, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Coaching: Data analysis*
+</td>
+<td style="text-align:left;">
+Dec. 6, 02:00PM - 06:00PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Submit video recording of presentation (pre-recorded)
+</td>
+<td style="text-align:left;">
+Dec. 15, 11:59PM
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group B.<br> Sessions indicated with ’*’ are group coaching sessions. Slots of 40 min. are assigned to each group within the indicated times.
+</td>
+</tr>
+</tfoot>
+</table>
+<br>
+<strong>Group project schedule - Group C</strong>
+<br>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<thead>
+<tr>
+<th style="text-align:left;">
+Component
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Submit questionnaire draft
+</td>
+<td style="text-align:left;">
+Nov. 1, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Coaching: Questionnaire design*
+</td>
+<td style="text-align:left;">
+Nov. 3, 12:00AM - 04:00PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Submit revised questionnaire
+</td>
+<td style="text-align:left;">
+Nov. 9, 11:59PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Coaching: Data analysis*
+</td>
+<td style="text-align:left;">
+Dec. 7, 02:00PM - 06:00PM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Submit video recording of presentation (pre-recorded)
+</td>
+<td style="text-align:left;">
+Dec. 15, 11:59PM
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group C.<br> Sessions indicated with ’*’ are group coaching sessions. Slots of 40 min. are assigned to each group within the indicated times.
+</td>
+</tr>
+</tfoot>
+</table>
 </div>
 </div>
 <div id="grading" class="section level3 unnumbered">
@@ -978,8 +1410,8 @@ Dec. 9
 <p>Grading is based on the following components:</p>
 <ul>
 <li><strong>Market research group project</strong> (questionnaire design, data collection &amp; analysis, reporting &amp; presentations) [weight: 30%]</li>
-<li><strong>Individual take-home computer exercises</strong> (statistical analysis of data sets; 4 assignments à 5%) [weight: 20%]</li>
-<li><strong>Final online exam</strong> (concepts &amp; methods) [weight: 40%]</li>
+<li><strong>Individual take-home computer exercises</strong> (statistical analysis of data sets; 3 assignments accounting for 5% (A1), 10% (A2), and 10% (A3)) [weight: 25%]</li>
+<li><strong>Final online exam</strong> (concepts &amp; methods) [weight: 35%]</li>
 <li><strong>Class participation</strong> (quantity &amp; quality of contributions during the weekly Q&amp;A sessions, contributions in the online forum, etc.) [weight: 10%]</li>
 </ul>
 <p>These grading components will be weighted with the respective weights to arrive at the final grade percentage.</p>
@@ -991,7 +1423,7 @@ Dec. 9
 <h2>Course materials</h2>
 <div id="main-reference" class="section level3 unnumbered">
 <h3>Main reference</h3>
-<p>The main reference for this course is this website along with the corresponding slides and the pre-recorded video lectures. The relevant materials for each week are indicated in the tables above. The aim of the materials is to condense the contents and direct your attention to the most relevant aspects. This should enable students to study the materials on their own and we can focus our attention during the live video sessions on clarifying points that require further discussion.</p>
+<p>The main reference for this course is this website along with the corresponding slides and the pre-recorded video lectures. The relevant materials for each week are indicated in the tables above. The aim of the materials is to condense the contents and direct your attention to the most relevant aspects. This should enable students to study the materials on their own and we can focus our attention during the classroom sessions on clarifying points that require further discussion.</p>
 <p>At the end of each chapter, you will find a section with references. It is highly recommended that you consult these references for further clarification in case you require additional information on a topic.</p>
 </div>
 <div id="further-readings" class="section level3 unnumbered">
@@ -1006,7 +1438,8 @@ Dec. 9
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/URfIE.png" alt="Rpacks cover" height="120"/>
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/rgraph.jpg" alt="Rgraph cover" height="120"/>
 </p>
-<p>In addition to these lecture notes, there are many excellent books available (many of them for free) that focus on different aspects of R. In case you would like to learn more about the capabilities of R, I can recommend the following books:</p>
+<p>In addition to these lecture notes, there are many excellent books available (many of them for free) that focus on different aspects of R. In fact, there are so many free resources available by now that a team of R programmers has set up a website that provides an overview over the available resources by topic. You can find this overview here: <a href="https://www.bigbookofr.com/">Big Book of R</a>.</p>
+<p>In case you would like to learn more about the capabilities of R related to the contents of this course, I can particularly recommend the following books:</p>
 <ul>
 <li><p><strong>“<a href="http://r4ds.had.co.nz/">R for Data Science</a>”</strong> An excellent book by Hadley Wickham, which introduces you to R as a tool for doing data science, focusing on a consistent set of packages known as the tidyverse. [FREE online version]</p></li>
 <li><p><strong>“<a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning</a>”</strong> This book provides an introduction to statistical learning methods and covers basic methods (e.g., linear regression) as well as more advanced methods (e.g., Support Vector Machines). [FREE online version]</p></li>
@@ -1016,7 +1449,7 @@ Dec. 9
 <li><p><strong>“<a href="http://adv-r.had.co.nz/">Advanced R</a>”</strong> Another great book written by Hadley Wickham. Explains more advanced R concepts. [FREE online version]</p></li>
 <li><p><strong>“<a href="https://bradleyboehmke.github.io/HOML/">Hands-On Machine Learning with R</a>”</strong> A great reference to learn about machine learning methods in R. The book favors a hands-on approach, growing an intuitive understanding of machine learning through concrete examples and little bit of theory.[FREE online version]</p></li>
 <li><p><strong>“<a href="https://github.com/PacktPublishing/Hands-On-Data-Science-for-Marketing">Hands-On Data Science for Marketing</a>”</strong> Another good reference regarding Data Science for Marketing. [FREE Code exercises]</p></li>
-<li><p><strong>“<a href="https://bookdown.org/yihui/rmarkdown/">R Markdown</a>”</strong> A great book about the reporting format ‘R Markdown,’ which we will also use for the assignments in this course. [FREE Code exercises]</p></li>
+<li><p><strong>“<a href="https://bookdown.org/yihui/rmarkdown/">R Markdown</a>”</strong> A great book about the reporting format ‘R Markdown’, which we will also use for the assignments in this course. [FREE Code exercises]</p></li>
 <li><p><strong>“<a href="http://r-pkgs.had.co.nz/">R Packages</a>”</strong> A book which teaches you how to make the most of R’s fantastic package system. [FREE online version]</p></li>
 <li><p><strong>“<a href="https://r-graphics.org/">R Graphics Cookbook</a>”</strong> A practical guide that provides more than 150 recipes to help you generate high-quality graphs quickly. [FREE online version]</p></li>
 <li><p><strong>“<a href="http://www.urfie.net/read/index.html">Using R For Introductory Econometrics</a>”</strong> This book covers a nice introduction to R with a focus on the implementation of standard tools and methods used in econometrics. [FREE online version]</p></li>
@@ -1027,7 +1460,7 @@ Dec. 9
 </div>
 <div id="discussion-forum" class="section level3 unnumbered">
 <h3>Discussion forum</h3>
-<p>Because there will be limited contact on campus this semester, we would like to facilitate the interaction among students. Thus, we created a discussion forum, which you can access via the course page on the WU learning platform. The purpose of the forum is to allow you to discuss questions related to the contents with your class mates. Please make use of this forum as much as possible and ask questions if something remained unclear. Remember that there are no stupid questions. And if you know the answer to a question that is asked in the forum, it is also a good exercise to explain the concepts to your class mates.</p>
+<p>We strongly encourage you to ask your questions via the online forum on the course page on the WU learning platform. The purpose of the forum is to allow you to discuss questions related to the contents with your class mates. Please make use of this forum as much as possible and ask questions if something remained unclear. Remember that there are no stupid questions. And if you know the answer to a question that is asked in the forum, it is also a good exercise to explain the concepts to your class mates.</p>
 </div>
 <div id="datacamp" class="section level3 unnumbered">
 <h3>DataCamp</h3>
@@ -1051,11 +1484,11 @@ Dec. 9
 </div>
 <div id="contact" class="section level3 unnumbered">
 <h3>Contact</h3>
-<p>I am happy to answer your questions, so feel free to send me a short email (<a href="mailto:nils.wloemert@wu.ac.at">nils.wloemert@wu.ac.at</a>). Mirza Mujanovic will be the tutor for this course (<a href="mailto:mirza.mujanovic@wu.ac.at">mirza.mujanovic@wu.ac.at</a>). We will be available during the weekly Q&amp;A sessions to clarify your questions. Mirza will be your point of contact for questions regarding the group project and the individual assignments. However, please note that before you contact us, you should try to solve problems on your own first (e.g., by using the online tutorial, doing research online, or asking class mates).</p>
+<p>I am happy to answer your questions, so feel free to send me a short email (<a href="mailto:nils.wloemert@wu.ac.at">nils.wloemert@wu.ac.at</a>). Daniel Winkler will co-teach the course with me this semester (<a href="mailto:daniel.winkler@wu.ac.at">daniel.winkler@wu.ac.at</a>) and Virginia Darazs will be the tutor for the course (<a href="mailto:virginia.darazs@wu.ac.at">virginia.darazs@wu.ac.at</a>). We will be available during the weekly sessions to clarify your questions. Daniel will be your point of contact for questions regarding the group project and Virginia will be your point of contact for the individual assignments. However, please note that before you contact us, you should try to solve problems on your own first (e.g., by using the online tutorial, doing research online, or asking class mates).</p>
 </div>
 <div id="acknowledgements" class="section level3 unnumbered">
 <h3>Acknowledgements</h3>
-<p>This tutorial is supported through Digital Learning Project Funding by WU Vienna. None of the materials covered in this tutorial are new. We intend to provide a summary of existing methods from a marketing research perspective and cite the corresponding sources. If you should have any comments or suggestions, please <a href="https://github.com/IMSMWU/MRDA_issues">contact us through the github page of this course</a>.</p>
+<p>This tutorial is supported through Digital Learning Project Funding by WU Vienna. None of the materials covered in this tutorial are new. We intend to provide a summary of existing methods from a marketing research perspective and cite the corresponding sources. If you should have any comments or suggestions, please <a href="https://github.com/WU-RDS">contact us through the github page of this course</a>.</p>
 
 </div>
 </div>
@@ -1073,6 +1506,7 @@ Dec. 9
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1091,7 +1525,6 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1112,10 +1545,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "section"
 }

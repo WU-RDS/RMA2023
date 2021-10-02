@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 R Markdown | Marketing Research Design &amp; Analysis 2021</title>
+  <title>9 R Markdown | Marketing Analytics 2021</title>
   <meta name="description" content="An Introduction to Data Analytics Using R" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 R Markdown | Marketing Research Design &amp; Analysis 2021" />
+  <meta property="og:title" content="9 R Markdown | Marketing Analytics 2021" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 R Markdown | Marketing Research Design &amp; Analysis 2021" />
+  <meta name="twitter:title" content="9 R Markdown | Marketing Analytics 2021" />
   
   <meta name="twitter:description" content="An Introduction to Data Analytics Using R" />
   
@@ -31,9 +31,7 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="exploratory-factor-analysis.html"/>
 <link rel="next" href="survey-design-analysis.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,34 +47,36 @@
 
 
 
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -129,7 +129,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -148,16 +147,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="part"><span><b>I Course outline</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-motivation"><i class="fa fa-check"></i>Course motivation</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#grading"><i class="fa fa-check"></i>Grading</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#discussion-forum"><i class="fa fa-check"></i>Discussion forum</a></li>
@@ -168,11 +164,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Lecture notes</b></span></li>
-<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a>
-<ul>
+<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a><ul>
 <li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-foundations-recap"><i class="fa fa-check"></i><b>1.1</b> Marketing foundations (recap)</a></li>
-<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a>
-<ul>
+<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#research-question-and-hypothesis"><i class="fa fa-check"></i><b>1.2.1</b> Research question and hypothesis</a></li>
 <li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.2.2</b> Choosing a research design</a></li>
 <li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#collecting-data"><i class="fa fa-check"></i><b>1.2.3</b> Collecting data</a></li>
@@ -180,8 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#learning-check"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a>
-<ul>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
 <li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> How to download and install R and RStudio</a></li>
 <li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#the-r-studio-interface"><i class="fa fa-check"></i><b>2.2</b> The R Studio interface</a></li>
 <li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
@@ -189,16 +182,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#a-typical-r-session"><i class="fa fa-check"></i><b>2.5</b> A typical R session</a></li>
 <li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.6</b> Getting help</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a>
-<ul>
+<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>3.1.1</b> Creating objects</a></li>
 <li class="chapter" data-level="3.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>3.1.2</b> Data types</a></li>
 <li class="chapter" data-level="3.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>3.1.3</b> Data structures</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>3.2.1</b> Getting data for this course</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>3.2.2</b> Import data created by other software packages</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-handling.html"><a href="data-handling.html#import-data-from-qualtrics"><i class="fa fa-check"></i><b>3.2.3</b> Import data from Qualtrics</a></li>
@@ -207,15 +197,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="data-handling.html"><a href="data-handling.html#learning-check-1"><i class="fa fa-check"></i>Learning check</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a>
-<ul>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a><ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>4.1.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>4.1.2</b> Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a>
-<ul>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>4.2.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> Continuous variables</a></li>
 <li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>4.2.3</b> Saving plots</a></li>
@@ -224,10 +211,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#learning-check-2"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a>
-<ul>
+<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a><ul>
+<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="statistical-inference.html"><a href="statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>5.1.1</b> Sampling from a known population</a></li>
 <li class="chapter" data-level="5.1.2" data-path="statistical-inference.html"><a href="statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>5.1.2</b> Standard error of the mean</a></li>
 </ul></li>
@@ -237,35 +222,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#learning-check-3"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#references-2"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
-<ul>
+<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-null-hypothesis"><i class="fa fa-check"></i><b>6.1.1</b> The null hypothesis</a></li>
 <li class="chapter" data-level="6.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#statistical-inference-on-a-sample"><i class="fa fa-check"></i><b>6.1.2</b> Statistical inference on a sample</a></li>
 <li class="chapter" data-level="6.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>6.1.3</b> Choosing the right test</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.2</b> One sample t-test</a></li>
-<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a>
-<ul>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>6.3.1</b> Independent-means t-test</a></li>
 <li class="chapter" data-level="6.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Dependent-means t-test</a></li>
 <li class="chapter" data-level="6.3.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#further-considerations"><i class="fa fa-check"></i><b>6.3.3</b> Further considerations</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.4</b> Comparing several means</a>
-<ul>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.4</b> Comparing several means</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-2"><i class="fa fa-check"></i><b>6.4.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>6.4.2</b> Decomposing variance</a></li>
 <li class="chapter" data-level="6.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>6.4.3</b> One-way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.5</b> Non-parametric tests</a>
-<ul>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.5</b> Non-parametric tests</a><ul>
 <li class="chapter" data-level="6.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>6.5.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
 <li class="chapter" data-level="6.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>6.5.2</b> Wilcoxon signed-rank test</a></li>
 <li class="chapter" data-level="6.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>6.5.3</b> Kruskal-Wallis test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.6</b> Categorical data</a>
-<ul>
+<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.6</b> Categorical data</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#confidence-intervals-for-proportions"><i class="fa fa-check"></i><b>6.6.1</b> Confidence intervals for proportions</a></li>
 <li class="chapter" data-level="6.6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>6.6.2</b> Chi-square test</a></li>
 <li class="chapter" data-level="6.6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#sample-size-1"><i class="fa fa-check"></i><b>6.6.3</b> Sample size</a></li>
@@ -273,20 +252,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#learning-check-4"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#references-3"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a>
-<ul>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a><ul>
 <li class="chapter" data-level="7.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>7.1.1</b> Correlation coefficient</a></li>
 <li class="chapter" data-level="7.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>7.1.2</b> Significance testing</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a>
-<ul>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>7.2.1</b> Simple linear regression</a></li>
 <li class="chapter" data-level="7.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>7.2.2</b> Multiple linear regression</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a>
-<ul>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>7.3.1</b> Outliers</a></li>
 <li class="chapter" data-level="7.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>7.3.2</b> Influential observations</a></li>
 <li class="chapter" data-level="7.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>7.3.3</b> Non-linearity</a></li>
@@ -298,18 +273,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.9" data-path="regression.html"><a href="regression.html#overfitting"><i class="fa fa-check"></i><b>7.3.9</b> Overfitting</a></li>
 <li class="chapter" data-level="7.3.10" data-path="regression.html"><a href="regression.html#variable-selection"><i class="fa fa-check"></i><b>7.3.10</b> Variable selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a>
-<ul>
+<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
 <li class="chapter" data-level="7.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>7.4.2</b> More than two categories</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a>
-<ul>
+<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>7.5.1</b> Interaction effects</a></li>
 <li class="chapter" data-level="7.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>7.5.2</b> Non-linear relationships</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a>
-<ul>
+<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a><ul>
 <li class="chapter" data-level="7.6.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>7.6.1</b> Motivation and intuition</a></li>
 <li class="chapter" data-level="7.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>7.6.2</b> Technical details of the model</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>7.6.3</b> Estimation in R</a></li>
@@ -317,11 +289,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#references-4"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a>
-<ul>
+<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a><ul>
 <li class="chapter" data-level="8.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a>
-<ul>
+<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>8.2.1</b> Are the assumptions satisfied?</a></li>
 <li class="chapter" data-level="8.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>8.2.2</b> Deriving factors</a></li>
 <li class="chapter" data-level="8.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>8.2.3</b> Factor interpretation</a></li>
@@ -332,10 +302,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#references-5"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="part"><span><b>III Assignments</b></span></li>
-<li class="chapter" data-level="9" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>9.1</b> Introduction to R Markdown</a>
-<ul>
+<li class="chapter" data-level="9" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>9</b> R Markdown</a><ul>
+<li class="chapter" data-level="9.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>9.1</b> Introduction to R Markdown</a><ul>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i>Creating a new R Markdown document</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#text-and-equations"><i class="fa fa-check"></i>Text and Equations</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#r-code"><i class="fa fa-check"></i>R-Code</a></li>
@@ -343,28 +311,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IV Group project</b></span></li>
-<li class="chapter" data-level="10" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>10</b> Survey design &amp; analysis</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>10.1</b> Your tasks</a>
-<ul>
+<li class="chapter" data-level="10" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>10</b> Survey design &amp; analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>10.1</b> Your tasks</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#topics-for-the-group-project"><i class="fa fa-check"></i><b>10.1.1</b> Topics for the group project</a></li>
 <li class="chapter" data-level="10.1.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#guidelines"><i class="fa fa-check"></i><b>10.1.2</b> Guidelines</a></li>
 <li class="chapter" data-level="10.1.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#timeline"><i class="fa fa-check"></i><b>10.1.3</b> Timeline</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>10.2</b> Part 1: Before collecting data</a>
-<ul>
+<li class="chapter" data-level="10.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>10.2</b> Part 1: Before collecting data</a><ul>
 <li class="chapter" data-level="10.2.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#research-design"><i class="fa fa-check"></i><b>10.2.1</b> Research design</a></li>
 <li class="chapter" data-level="10.2.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#survey-method"><i class="fa fa-check"></i><b>10.2.2</b> Survey method</a></li>
 <li class="chapter" data-level="10.2.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#questionnaire"><i class="fa fa-check"></i><b>10.2.3</b> Questionnaire</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-collecting-data-and-analysis"><i class="fa fa-check"></i><b>10.3</b> Part 2: Collecting data and analysis</a>
-<ul>
+<li class="chapter" data-level="10.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-data-collection-and-analysis"><i class="fa fa-check"></i><b>10.3</b> Part 2: Data collection and analysis</a><ul>
 <li class="chapter" data-level="10.3.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#collecting-data-1"><i class="fa fa-check"></i><b>10.3.1</b> Collecting data</a></li>
 <li class="chapter" data-level="10.3.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-analysis"><i class="fa fa-check"></i><b>10.3.2</b> Data analysis</a></li>
 <li class="chapter" data-level="10.3.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#reporting"><i class="fa fa-check"></i><b>10.3.3</b> Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>10.4</b> Frequently asked questions</a>
-<ul>
+<li class="chapter" data-level="10.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>10.4</b> Frequently asked questions</a><ul>
 <li class="chapter" data-level="10.4.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#multiple-answers-stored-in-one-cell-in-csv"><i class="fa fa-check"></i><b>10.4.1</b> Multiple answers stored in one cell in CSV</a></li>
 <li class="chapter" data-level="10.4.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#labels-for-numeric-values-in-csv-output"><i class="fa fa-check"></i><b>10.4.2</b> Labels for numeric values in CSV output</a></li>
 <li class="chapter" data-level="10.4.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#bar-chart-for-multiple-choice-question-with-multiple-answers"><i class="fa fa-check"></i><b>10.4.3</b> Bar chart for multiple choice question with multiple answers</a></li>
@@ -383,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Research Design &amp; Analysis 2021</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Marketing Analytics 2021</a>
           </h1>
         </div>
 
@@ -391,9 +354,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-markdown" class="section level1" number="9">
+<div id="r-markdown" class="section level1">
 <h1><span class="header-section-number">9</span> R Markdown</h1>
-<div id="introduction-to-r-markdown" class="section level2" number="9.1">
+<div id="introduction-to-r-markdown" class="section level2">
 <h2><span class="header-section-number">9.1</span> Introduction to R Markdown</h2>
 <div class="infobox download">
 <p><a href="./Code/example_markdown.Rmd">You can download the example markdown file here</a></p>
@@ -493,20 +456,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="r-code" class="section level3 unnumbered">
 <h3>R-Code</h3>
-<p>R-code is contained in so called “chunks.” These chunks always start with three backticks and <code>r</code> in curly braces (<code></code>{r} <code>) and end with three backticks (</code> <code></code>). Optionally, parameters can be added after the <code>r</code> to influence how a chunk behaves. Additionally, you can also give each chunk a name. Note that these have to be <strong>unique</strong>, otherwise R will refuse to knit your document.</p>
+<p>R-code is contained in so called “chunks”. These chunks always start with three backticks and <code>r</code> in curly braces (<code></code>{r} <code>) and end with three backticks (</code> <code></code>). Optionally, parameters can be added after the <code>r</code> to influence how a chunk behaves. Additionally, you can also give each chunk a name. Note that these have to be <strong>unique</strong>, otherwise R will refuse to knit your document.</p>
 <div id="global-and-chunk-options" class="section level4 unnumbered">
 <h4>Global and chunk options</h4>
 <p>The first chunk always looks as follows</p>
-<pre><code>```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```</code></pre>
+<p><code>{r setup, include = FALSE}     knitr::opts_chunk$set(echo = TRUE)</code></p>
 <p>It is added to the document automatically and sets options for all the following chunks. These options can be overwritten on a per-chunk basis.</p>
 <p>Keep <code>knitr::opts_chunk$set(echo = TRUE)</code> to print your code to the document you will hand in. Changing it to <code>knitr::opts_chunk$set(echo = FALSE)</code> will not print your code by default. This can be changed on a per-chunk basis.</p>
-<pre><code>```{r cars, echo = FALSE}
-summary(cars)
-
-plot(dist~speed, cars)
-```</code></pre>
+<p>```{r cars, echo = FALSE}
+summary(cars)</p>
+<p>plot(dist~speed, cars)
+```</p>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
@@ -515,12 +475,11 @@ plot(dist~speed, cars)
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
 <p><img src="_main_files/figure-html/cars-1.png" width="672" /></p>
-<pre><code>```{r cars2, echo = TRUE}
-summary(cars)
-
-plot(dist~speed, cars)
-```</code></pre>
-<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="r-markdown.html#cb725-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code></pre></div>
+<p>```{r cars2, echo = TRUE}
+summary(cars)</p>
+<p>plot(dist~speed, cars)
+```</p>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="r-markdown.html#cb722-1"></a><span class="kw">summary</span>(cars)</span></code></pre></div>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
@@ -528,7 +487,7 @@ plot(dist~speed, cars)
 ##  Mean   :15.4   Mean   : 42.98  
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="r-markdown.html#cb727-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, cars)</span></code></pre></div>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="r-markdown.html#cb724-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, cars)</span></code></pre></div>
 <p><img src="_main_files/figure-html/cars2-1.png" width="672" /></p>
 <p>A good overview of all available global/chunk options can be found <a href="https://yihui.name/knitr/options/#chunk_options">here</a>.</p>
 </div>
@@ -794,7 +753,7 @@ Let´s load the data first and inspect the contained variables:
 
 
 ```r
-movie_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat",
+movie_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat", 
     sep = "\t", header = TRUE)  #read in data
 head(movie_data)
 ```
@@ -961,20 +920,20 @@ As we can see, the differences between SD/HD and the week before don´t seem to 
 
 
 ```r
-ggplot(movie_data, aes(streams_sd)) + geom_histogram(col = "black",
-    fill = "darkblue") + labs(x = "Number of SD stremas",
+ggplot(movie_data, aes(streams_sd)) + geom_histogram(col = "black", 
+    fill = "darkblue") + labs(x = "Number of SD stremas", 
     y = "Frequency") + theme_bw()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-462-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-468-1.png" width="672" />
 
 ```r
-ggplot(movie_data, aes(streams_hd)) + geom_histogram(col = "black",
-    fill = "darkblue") + labs(x = "Number of HD streams",
+ggplot(movie_data, aes(streams_hd)) + geom_histogram(col = "black", 
+    fill = "darkblue") + labs(x = "Number of HD streams", 
     y = "Frequency") + theme_bw()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-462-2.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-468-2.png" width="672" />
 
 We can now conduct a one sample t-test to test for significance.
 
@@ -1023,27 +982,27 @@ Alternatively, you could also use the `ggstatsplot` package to conduct the tests
 
 
 ```r
-gghistostats(data = movie_data, x = streams_sd, title = "Distribution of SD streams",
-    type = "parametric", conf.level = 0.95, bar.measure = "mix",
-    test.value = 2600, test.value.line = TRUE, effsize.type = "d",
-    test.value.color = "#0072B2", centrality.para = "mean",
-    centrality.color = "darkred", binwidth = 300, messages = FALSE,
+gghistostats(data = movie_data, x = streams_sd, title = "Distribution of SD streams", 
+    type = "parametric", conf.level = 0.95, bar.measure = "mix", 
+    test.value = 2600, test.value.line = TRUE, effsize.type = "d", 
+    test.value.color = "#0072B2", centrality.para = "mean", 
+    centrality.color = "darkred", binwidth = 300, messages = FALSE, 
     bf.message = FALSE)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-464-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-470-1.png" width="672" />
 
 
 ```r
-gghistostats(data = movie_data, x = streams_hd, title = "Distribution of HD streams",
-    type = "parametric", conf.level = 0.95, bar.measure = "mix",
-    test.value = 2600, test.value.line = TRUE, effsize.type = "d",
-    test.value.color = "#0072B2", centrality.para = "mean",
-    centrality.color = "darkred", binwidth = 300, messages = FALSE,
+gghistostats(data = movie_data, x = streams_hd, title = "Distribution of HD streams", 
+    type = "parametric", conf.level = 0.95, bar.measure = "mix", 
+    test.value = 2600, test.value.line = TRUE, effsize.type = "d", 
+    test.value.color = "#0072B2", centrality.para = "mean", 
+    centrality.color = "darkred", binwidth = 300, messages = FALSE, 
     bf.message = FALSE)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-465-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-471-1.png" width="672" />
 
 **Question 3**
 
@@ -1056,7 +1015,7 @@ We need to transform the variable online_advertising into a factor variable for 
 
 ```r
 # Transform into factor variable
-movie_data$online_advertising <- factor(movie_data$online_advertising,
+movie_data$online_advertising <- factor(movie_data$online_advertising, 
     levels = c(0, 1), labels = c("no", "yes"))
 ```
 
@@ -1086,22 +1045,22 @@ describeBy(movie_data$streams_sd, movie_data$online_advertising)
 ```
 
 ```r
-mean_data <- summarySE(movie_data, measurevar = "streams_sd",
+mean_data <- summarySE(movie_data, measurevar = "streams_sd", 
     groupvars = c("online_advertising"))
 
 # Plot of means
-ggplot(mean_data, aes(x = online_advertising, y = streams_sd)) +
-    geom_bar(position = position_dodge(0.9), colour = "black",
-        fill = "#CCCCCC", stat = "identity", width = 0.65) +
-    geom_errorbar(position = position_dodge(0.9), width = 0.15,
-        aes(ymin = streams_sd - ci, ymax = streams_sd +
-            ci)) + theme_bw() + labs(x = "Advertising",
-    y = "Average number of SD streams", title = "Average number of SD streams by group") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(mean_data, aes(x = online_advertising, y = streams_sd)) + 
+    geom_bar(position = position_dodge(0.9), colour = "black", 
+        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
+    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
+        aes(ymin = streams_sd - ci, ymax = streams_sd + 
+            ci)) + theme_bw() + labs(x = "Advertising", 
+    y = "Average number of SD streams", title = "Average number of SD streams by group") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-467-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-473-1.png" width="672" />
 
 As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = "yes", i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a __two sample t-test__. We use an independent-means t-test because we have different movies in each group (i.e., the movies in one condition are *independent* of the movies in the other condition). The requirements are clearly met:
 
@@ -1123,7 +1082,7 @@ t.test(streams_sd ~ online_advertising, data = movie_data)
 ## 
 ## data:  streams_sd by online_advertising
 ## t = -7.9513, df = 196.55, p-value = 0.0000000000001418
-## alternative hypothesis: true difference in means between group no and group yes is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -1317.1019  -793.5981
 ## sample estimates:
@@ -1173,22 +1132,22 @@ print(stats)
 ```
 
 ```r
-mean_data <- summarySE(movie_data, measurevar = "streams_hd",
+mean_data <- summarySE(movie_data, measurevar = "streams_hd", 
     groupvars = c("online_advertising"))
 
 # Plot of means
-ggplot(mean_data, aes(x = online_advertising, y = streams_hd)) +
-    geom_bar(position = position_dodge(0.9), colour = "black",
-        fill = "#CCCCCC", stat = "identity", width = 0.65) +
-    geom_errorbar(position = position_dodge(0.9), width = 0.15,
-        aes(ymin = streams_hd - ci, ymax = streams_hd +
-            ci)) + theme_bw() + labs(x = "Advertising",
-    y = "Average number of HD streams", title = "Average number of HD streams by group") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(mean_data, aes(x = online_advertising, y = streams_hd)) + 
+    geom_bar(position = position_dodge(0.9), colour = "black", 
+        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
+    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
+        aes(ymin = streams_hd - ci, ymax = streams_hd + 
+            ci)) + theme_bw() + labs(x = "Advertising", 
+    y = "Average number of HD streams", title = "Average number of HD streams by group") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-470-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-476-1.png" width="672" />
 
 Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is significant (note that *two sample t-test* means the same as *independent-means t-test*).
 
@@ -1203,7 +1162,7 @@ t.test(streams_hd ~ online_advertising, data = movie_data)
 ## 
 ## data:  streams_hd by online_advertising
 ## t = -7.5617, df = 138.71, p-value = 0.00000000000494
-## alternative hypothesis: true difference in means between group no and group yes is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -905.6522 -530.2078
 ## sample estimates:
@@ -1244,7 +1203,7 @@ ggbetweenstats(
 )
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-473-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-479-1.png" width="672" />
 
 
 ```r
@@ -1262,7 +1221,7 @@ ggbetweenstats(
 )
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-474-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-480-1.png" width="672" />
 
 **Question 4**
 
@@ -1301,25 +1260,25 @@ psych::describe(movie_data$streams_hd)
 
 ```r
 # Plot of means
-movie_data_long <- melt(movie_data[, c("streams_sd",
+movie_data_long <- melt(movie_data[, c("streams_sd", 
     "streams_hd")])
 names(movie_data_long) <- c("type", "streams")
 
-mean_data <- summarySE(movie_data_long, measurevar = "streams",
+mean_data <- summarySE(movie_data_long, measurevar = "streams", 
     groupvars = c("type"))
 
 # Plot of means
-ggplot(mean_data, aes(x = type, y = streams)) + geom_bar(position = position_dodge(0.9),
-    colour = "black", fill = "#CCCCCC", stat = "identity",
-    width = 0.65) + geom_errorbar(position = position_dodge(0.9),
-    width = 0.15, aes(ymin = streams - ci, ymax = streams +
-        ci)) + theme_bw() + labs(x = "Type", y = "Average number of streams",
-    title = "Average number of streams by group") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(mean_data, aes(x = type, y = streams)) + geom_bar(position = position_dodge(0.9), 
+    colour = "black", fill = "#CCCCCC", stat = "identity", 
+    width = 0.65) + geom_errorbar(position = position_dodge(0.9), 
+    width = 0.15, aes(ymin = streams - ci, ymax = streams + 
+        ci)) + theme_bw() + labs(x = "Type", y = "Average number of streams", 
+    title = "Average number of streams by group") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-476-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-482-1.png" width="672" />
 
 
 
@@ -1328,7 +1287,7 @@ It appears that there is a difference in the means. To test whether it is signif
 
 
 ```r
-t.test(y = movie_data$streams_sd, x = movie_data$streams_hd,
+t.test(y = movie_data$streams_sd, x = movie_data$streams_hd, 
     paired = TRUE)
 ```
 
@@ -1352,7 +1311,7 @@ Now let's find out how strong this effect is.
 
 
 ```r
-cohensD(movie_data$streams_sd, movie_data$streams_hd,
+cohensD(movie_data$streams_sd, movie_data$streams_hd, 
     method = "paired")
 ```
 
@@ -1381,7 +1340,7 @@ ggwithinstats(
 )
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-480-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-486-1.png" width="672" />
 
 **Question 5**
 
@@ -1389,7 +1348,7 @@ The question of how many movies we would need to include in each sample of our e
 
 
 ```r
-pwr.t.test(d = 0.3, sig.level = 0.05, power = 0.8,
+pwr.t.test(d = 0.3, sig.level = 0.05, power = 0.8, 
     type = c("two.sample"), alternative = c("two.sided"))
 ```
 
@@ -1445,7 +1404,7 @@ When you are done with your analysis, click on "Knit to HTML" button above the c
 
 ```r
 rm(list = ls())
-customer_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv",
+customer_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv", 
     sep = ";", header = TRUE)  #read in data
 head(customer_data)
 ```
@@ -1487,12 +1446,12 @@ Next we are going to recode some of the variables into factors and give them mor
 
 
 ```r
-customer_data$retargeting <- factor(customer_data$retargeting,
-    levels = c(1, 2, 3), labels = c("no retargeting",
+customer_data$retargeting <- factor(customer_data$retargeting, 
+    levels = c(1, 2, 3), labels = c("no retargeting", 
         "generic retargeting", "dynamic retargeting"))
-customer_data$gender <- factor(customer_data$gender,
+customer_data$gender <- factor(customer_data$gender, 
     levels = c(1, 0), labels = c("female", "male"))
-customer_data$conversion <- factor(customer_data$conversion,
+customer_data$conversion <- factor(customer_data$conversion, 
     levels = c(1, 0), labels = c("conversion", "no conversion"))
 ```
 
@@ -1543,19 +1502,19 @@ describeBy(customer_data$revenue, customer_data$retargeting)
 ```
 
 ```r
-mean_data <- summarySE(customer_data, measurevar = "revenue",
+mean_data <- summarySE(customer_data, measurevar = "revenue", 
     groupvars = c("retargeting"))
-ggplot(mean_data, aes(x = retargeting, y = revenue)) +
-    geom_bar(position = position_dodge(1), colour = "black",
-        fill = "#CCCCCC", stat = "identity", width = 0.65) +
-    geom_errorbar(position = position_dodge(0.9), width = 0.15,
-        aes(ymin = revenue - ci, ymax = revenue + ci)) +
-    theme_bw() + labs(x = "Group", y = "Average revenue",
-    title = "Average revenue by group") + theme_bw() +
+ggplot(mean_data, aes(x = retargeting, y = revenue)) + 
+    geom_bar(position = position_dodge(1), colour = "black", 
+        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
+    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
+        aes(ymin = revenue - ci, ymax = revenue + ci)) + 
+    theme_bw() + labs(x = "Group", y = "Average revenue", 
+    title = "Average revenue by group") + theme_bw() + 
     theme(plot.title = element_text(hjust = 0.5, color = "#666666"))
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-485-1.png" width="672" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-491-1.png" width="672" style="display: block; margin: auto;" />
 
 Both the summary statistics and the plot hint at the fact that the means may not be equal. Especially the difference between dynamic retargeting and no retargeting/ generic regtargeting seem to be quite high. Before we move to the formal test, we need to see if a series of assumptions are met, namely:
 
@@ -1585,7 +1544,7 @@ Homogeneity of variances can be checked with Levene's test (implemented as ```le
 ```r
 # Homogeneity of variances test:
 library(car)
-leveneTest(revenue ~ retargeting, data = customer_data,
+leveneTest(revenue ~ retargeting, data = customer_data, 
     center = mean)
 ```
 
@@ -1625,7 +1584,7 @@ Next we will briefly inspect the residuals of the ANOVA to see if the assumption
 plot(aov, 1)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-489-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-495-1.png" width="672" />
 
 The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled. 
 
@@ -1635,7 +1594,7 @@ The first plot gives us a feel for the distribution of the residuals of the thre
 plot(aov, 2)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-490-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-496-1.png" width="672" />
 
 The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behavior here may indicate problems with the model specification. 
 
@@ -1667,7 +1626,7 @@ Here we will conduct both the Bonferroni correction as well as Tukey's HSD test,
 
 ```r
 # bonferroni
-pairwise.t.test(customer_data$revenue, customer_data$retargeting,
+pairwise.t.test(customer_data$revenue, customer_data$retargeting, 
     data = customer_data, p.adjust.method = "bonferroni")
 ```
 
@@ -1743,27 +1702,27 @@ confint(tukeys)
 ## 
 ## Fit: aov(formula = revenue ~ retargeting, data = customer_data)
 ## 
-## Quantile = 2.3553
+## Quantile = 2.3554
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate  lwr       upr      
-## generic retargeting - no retargeting == 0        88.3220 -159.3840  336.0280
-## dynamic retargeting - no retargeting == 0       793.9687  553.0539 1034.8834
-## dynamic retargeting - generic retargeting == 0  705.6467  454.5516  956.7418
+## generic retargeting - no retargeting == 0        88.3220 -159.3887  336.0327
+## dynamic retargeting - no retargeting == 0       793.9687  553.0494 1034.8880
+## dynamic retargeting - generic retargeting == 0  705.6467  454.5468  956.7465
 ```
 
 ```r
 # The mar parameter changes the margins around
-# created plots. This is done so the labels on
-# the side of the Tukey plot are visible
-# (however, this was not expected).
+# created plots. This is done so the labels on the
+# side of the Tukey plot are visible (however, this
+# was not expected).
 par(mar = c(5, 20, 4, 2))
 plot(tukeys)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-494-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-500-1.png" width="672" />
 
 It is clearly visible that just the CIs of generic retargetring vs. no retargeting cross the 0 bound, which further indicates that the differences in means are statistically not significantly different from 0.
 
@@ -1784,11 +1743,11 @@ A good way to visualize ordinal data is through a boxplot.
 
 
 ```r
-ggplot(data = customer_data, aes(x = retargeting, y = rank)) +
+ggplot(data = customer_data, aes(x = retargeting, y = rank)) + 
     geom_boxplot() + theme_bw() + labs(x = "", y = "Rank")
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-495-1.png" width="672" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-501-1.png" width="672" style="display: block; margin: auto;" />
 
 The boxplot seems to indicate that the medians are unequal. At least for dynamic retargeting our customer ranks seem to be lower than the ones of no retargeting or generic retargeting.
 
@@ -1816,7 +1775,7 @@ To further see which of the medians are unequal we perform the Nemenyi post hoc 
 
 ```r
 library(PMCMR)
-posthoc.kruskal.nemenyi.test(x = customer_data$rank,
+posthoc.kruskal.nemenyi.test(x = customer_data$rank, 
     g = customer_data$retargeting, dist = "Tukey")
 ```
 
@@ -1877,9 +1836,9 @@ We see that our conversion seems to be better for our female customers, but let�
 ```r
 n1 <- nrow(subset(customer_data, gender == "female"))  #number of observations for females
 n2 <- nrow(subset(customer_data, gender == "male"))  #number of observations for males
-n1_conv <- nrow(subset(customer_data, gender == "female" &
+n1_conv <- nrow(subset(customer_data, gender == "female" & 
     conversion == "conversion"))  #number of conversions for females
-n2_conv <- nrow(subset(customer_data, gender == "male" &
+n2_conv <- nrow(subset(customer_data, gender == "male" & 
     conversion == "conversion"))  #number of conversions for males
 
 prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)
@@ -1930,7 +1889,7 @@ When you are done with your analysis, click on "Knit to HTML" button above the c
 
 
 ```r
-sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat",
+sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat", 
     sep = "\t", header = TRUE)  #read in data
 sales_data$market_id <- 1:nrow(sales_data)
 head(sales_data)
@@ -1991,28 +1950,28 @@ Since we have continuous variables, we use scatterplots to investigate the relat
 
 ```r
 library(ggplot2)
-ggplot(sales_data, aes(x = tv_adspend, y = sales)) +
-    geom_point() + geom_smooth(method = "lm", fill = "blue",
+ggplot(sales_data, aes(x = tv_adspend, y = sales)) + 
+    geom_point() + geom_smooth(method = "lm", fill = "blue", 
     alpha = 0.1) + theme_bw()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-501-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-507-1.png" width="672" />
 
 ```r
-ggplot(sales_data, aes(x = online_adspend, y = sales)) +
-    geom_point() + geom_smooth(method = "lm", fill = "blue",
+ggplot(sales_data, aes(x = online_adspend, y = sales)) + 
+    geom_point() + geom_smooth(method = "lm", fill = "blue", 
     alpha = 0.1) + theme_bw()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-501-2.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-507-2.png" width="672" />
 
 ```r
-ggplot(sales_data, aes(x = radio_adspend, y = sales)) +
-    geom_smooth(method = "lm", fill = "blue", alpha = 0.1) +
+ggplot(sales_data, aes(x = radio_adspend, y = sales)) + 
+    geom_smooth(method = "lm", fill = "blue", alpha = 0.1) + 
     geom_point() + theme_bw()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-501-3.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-507-3.png" width="672" />
 
 The plots including the fitted lines from a simple linear model already suggest that there might be a positive linear relationship between sales and TV- and online-advertising. However, there does not appear to be a strong relationship between sales and radio advertising. 
 
@@ -2022,7 +1981,7 @@ The estimate the model, we will use the ```lm()``` function:
   
 
 ```r
-linear_model <- lm(sales ~ tv_adspend + online_adspend +
+linear_model <- lm(sales ~ tv_adspend + online_adspend + 
     radio_adspend, data = sales_data)
 ```
 
@@ -2035,12 +1994,12 @@ The check for outliers, we extract the studentized residuals from our model and 
 
 ```r
 sales_data$stud_resid <- rstudent(linear_model)
-plot(1:nrow(sales_data), sales_data$stud_resid, ylim = c(-3.3,
+plot(1:nrow(sales_data), sales_data$stud_resid, ylim = c(-3.3, 
     3.3))  #create scatterplot 
 abline(h = c(-3, 3), col = "red", lty = 2)  #add reference lines
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-503-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-509-1.png" width="672" />
 
 Since there are no residuals with absolute values larger than 3, we conclude that there are no severe outliers. 
 
@@ -2053,13 +2012,13 @@ To test for influential observations, we use Cook's Distance. You may use the fo
 plot(linear_model, 4)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-504-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-510-1.png" width="672" />
 
 ```r
 plot(linear_model, 5)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-504-2.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-510-2.png" width="672" />
 
 Since all values are well below the cutoff, we conclude that influential observations are not a problem in our model. 
 
@@ -2073,7 +2032,7 @@ library(car)
 avPlots(linear_model)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-505-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-511-1.png" width="672" />
 
 The plots suggest that the linear specification is appropriate. In addition, you could also use the residuals plot to see if the linear specification is appropriate. The red line is a smoothed curve through the residuals plot and if it deviates from the dashed grey horizontal line a lot, this would suggest that a linear specification is not appropriate. 
 
@@ -2082,7 +2041,7 @@ The plots suggest that the linear specification is appropriate. In addition, you
 plot(linear_model, 1)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-506-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-512-1.png" width="672" />
 
 In this example, the red line is close to the dashed grey line, so the linear specification appears reasonable. 
 
@@ -2095,7 +2054,7 @@ Next, we test if the residual variance is approximately the same at all levels o
 plot(linear_model, 1)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-507-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-513-1.png" width="672" />
 
 The spread of residuals at different levels of the predicted outcome does not appear to be very different. Thus, we can conclude that heteroscedasticity is unlikely to be a problem. We can also confirm this conclusion by using the Breusch-Pagan test, which shows an insignificant results, meaning that we cannot reject the Null Hypothesis of equal variances. 
 
@@ -2122,7 +2081,7 @@ Next, we test if the residuals are approximately normally distributed using the 
 plot(linear_model, 2)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-509-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-515-1.png" width="672" />
 
 The Q-Q plot does not suggest a severe deviation from a normal distribution. This could also be validated using the Shapiro test:
 
@@ -2150,7 +2109,7 @@ To test for linear dependence of the regressors, we first test the bivariate cor
 
 ```r
 library("Hmisc")
-rcorr(as.matrix(sales_data[, c("tv_adspend", "online_adspend",
+rcorr(as.matrix(sales_data[, c("tv_adspend", "online_adspend", 
     "radio_adspend")]))
 ```
 
@@ -2174,11 +2133,11 @@ The results show that the bivariate correlations are rather low. This can also b
 
 
 ```r
-plot(sales_data[, c("tv_adspend", "online_adspend",
+plot(sales_data[, c("tv_adspend", "online_adspend", 
     "radio_adspend")])
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-512-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-518-1.png" width="672" />
 
 In a next step, we compute the variance inflation factor for each predictor variable. The values should be close to 1 and values larger than 4 indicate potential problems with the linear dependence of regressors.  
 
@@ -2302,7 +2261,7 @@ ggplot(sales_data,aes(yhat,sales)) +
   theme_bw()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-517-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-523-1.png" width="672" />
 
 Of course, you could have also used the functions included in the ggstatsplot package to report the results from your regression model. 
 
@@ -2310,12 +2269,12 @@ Of course, you could have also used the functions included in the ggstatsplot pa
 ```r
 library(ggstatsplot)
 options(scipen = 0)
-# specify_decimal_p(0.00000000004, k = 3L,
-# p.value = TRUE)
+# specify_decimal_p(0.00000000004, k = 3L, p.value
+# = TRUE)
 ggcoefstats(x = linear_model, k = 15, title = "Sales predicted by adspend, airplay, & starpower")
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-518-1.png" width="672" />
+<img src="_main_files/figure-html/unnamed-chunk-524-1.png" width="672" />
 
 
 **Question 5**
@@ -2328,9 +2287,9 @@ $$\hat{sales}= 0.045*150 + 0.192*26 + 0.007*15 = 14.623$$
   
 
 ```r
-summary(linear_model)$coefficients[1, 1] + summary(linear_model)$coefficients[2,
-    1] * 150 + summary(linear_model)$coefficients[3,
-    1] * 26 + summary(linear_model)$coefficients[4,
+summary(linear_model)$coefficients[1, 1] + summary(linear_model)$coefficients[2, 
+    1] * 150 + summary(linear_model)$coefficients[3, 
+    1] * 26 + summary(linear_model)$coefficients[4, 
     1] * 15
 ```
 
@@ -2360,6 +2319,7 @@ This means that given the planned marketing mix, we would expect to sell around 
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -2378,7 +2338,6 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -2399,10 +2358,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "section"
 }
