@@ -1,0 +1,476 @@
+---
+title: "Untitled"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## Package related issues
+
+ There are multiple ways to install a package
+    
+a) Enter `install.packages("PACKAGENAME")` in the console
+b) Go to the "Packages" pane in RStudio (lower right by default) -> click on "Install" -> enter the package name
+
+
+### I cannot install libraries due to "Error in contrib.url(repos, "source")" or "Warning message: package ‘PACKAGENAME’ is not available for this version of R"
+
+1. Do not install packages as part of the `knit`ting process. Install the packages first and then `knit` the document.
+
+2. Try adding the repo argument to the `install.packages` command as in the following example
+
+```R
+install.packages("PACKAGENAME", repo="https://cloud.r-project.org/")
+```
+
+3. You can also try to install a package from github directly using the `remotes` package.
+
+For example to get the `remotes` package and install the `ggstatsplot` package from github user `IndrajeetPatil` run the following:
+
+```R
+install.packages("remotes")
+remotes::install_github(
+  repo = "IndrajeetPatil/ggstatsplot", # package path on GitHub ("username/packagename")
+  dependencies = TRUE, # installs packages which ggstatsplot depends on
+  upgrade_dependencies = TRUE # updates any out of date dependencies
+)
+```
+
+### I cannot install some libraries on MacOS
+
+1. When asked whether R should try to install a package from sources a package which needs compilation, enter "no".
+2.  If that is still not possible try installing the free XCode package from the Apple Appstore, open a Terminal and enter "xcode-select --install". After that try to install the package again (answering "yes" to the question above). 
+
+
+### Some libraries with graphical output (e.g., summarytools, magick)  fail to install/load properly on MacOS
+
+Some libraries require the [XQuartz](https://www.xquartz.org) window system for MacOS. After installing [XQuartz](https://www.xquartz.org) please restart your computer.
+If you get an error message including a message about the `magick` package try `install.packages("magick")` and if that fails `remotes::install_github("ropensci/magick", dependencies = TRUE)`
+
+## Common error messages
+
+### A note on the persistence of changes
+
+We usually load data into a `data.frame` in our R Session (e.g. from a CSV file using `data <- read.csv("file.csv")`). This `data.frame` is a copy of the file that is stored on the hard drive. This means that any changes we make to the `data.frame` are **not** persistent and are **not** writen to the original file unless it is overwritten explicitly (e.g. using `write.csv(data, "file.csv")`). Therefore, it is important to write all commands in an R / Rmd file such that we can re-run the analysis the next time we open R. It also means that it is completely safe to restart R or delete variables from the Global Environment. We just have to re-run our code to get them back. Your analyses should always be fully reproducable using only the R/Rmd and data files (and not, for example, on commands you ran in the console). In addition your R/Rmd files should run linearly from the first to the last line and should not depend on "jumping" back and forth. 
+
+
+### Any error message
+
+1. Clear your environment of all variables either in RStudio or by running
+   
+   `rm(list = ls())`
+
+    1.1. if your error is related to a package also restart your R Session (Session -> Restart R or `Ctrl-Shift-F10` in RStudio)
+
+2. Go back to the beginning of your code file and run it line by line (`Ctrl-Enter` in RStudio)
+3. If your error persists check the line for typos/differences in spelling. 
+4. If the error occurs in a function make sure you are passing the arguments correctly (see help file for the function using `?FUNCTION`)
+5. Look at all the variables in your Global Environment and make sure they are in the format you expect them to be. 
+6. See the list of common error messages for more explanations 
+7. Nothing helped: Ask in the forum. If possible with a [minimal reproducible example](https://community.rstudio.com/t/faq-how-to-do-a-minimal-reproducible-example-reprex-for-beginners/23061). 
+
+In the following capitalized words are stand-ins for specific calls/symbols/functions.
+
+### Error in file(file, "rt"): cannot open the connection
+
+Also sometimes has an additional warning:
+
+```
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'FILE': No such file or directory
+```
+
+This error occurs either when a file name is not spelled correctly or R is looking in the wrong directory. You can check the directory R is looking at with `getwd()`. To set a new directory use `setwd(DIRECTORY)`. Note that you **cannot** just paste a path from Windows Explorer to `setwd` since the directory has to be in the format:
+
+`setwd("C:/Users/USERNAME/Documents")` 
+
+but Windows Explorer uses
+
+`C:\Users\USERNAME\Documents` (i.e., change `\` to `/` in R)
+
+Alternatively you can set the directory in RStudio under Session -> Set Working Directory. Here "To Source File Location" will set the directory to wherever the currently open R file is stored. You can also use `Ctrl-Shift-H` to open a directory picker (like "Choose Directory...").  
+
+### Error: unexpected 'SYMBOL' in "CALL"
+
+Usually the `unexpectes SYMBOL` message is due to parantheses not being matched but it could also be any other symbol that R cannot interpret in the given context. Please check the line in which the error occured for typos (especially too many/ too few symbols). Examples are:
+
+```{r, error = TRUE}
+print("hello"))
+```
+```{r, error = TRUE}
+1 +/ 2 # Too many symbols
+```
+```{r, error = TRUE}
+1 2 # Missing symbol
+```
+```{r, error = TRUE}
+x <- 3
+2x # Missing symbol
+```
+
+```{r include=FALSE}
+x <- 3
+```
+```{r}
+2*x
+```
+
+
+### Error in CALL : object of type 'closure' is not subsettable
+
+This error occurs usually when one tries to subset a function (either with `fun$element` or `fun[1]` where `fun` is a function). Check your variable (especially `data.frames`) names for typos! This happens when you run the following code for example since `mean` is a function:
+
+```{r,  error = TRUE}
+# Does not work:
+means <- data.frame(value = c(1,2,3))
+mean$value
+```
+
+instead of
+
+```{r}
+# Works:
+means <- data.frame(value = c(1,2,3))
+means$value
+```
+
+or we give variables the same name as a function but have not created that variable yet:
+
+```{r error=TRUE}
+summary(aov)[[1]]
+```
+
+Make sure all the relevant code is run first:
+
+```{r}
+dat <- data.frame(value = c(1,2,3), group = c("a", "b", "b"))
+aov <- aov(value~group, dat)
+summary(aov)[[1]]
+```
+
+### Error in CALL_WITH_$: $ operator is invalid for atomic vectors
+
+This error occurs when we try to subset a vector using the `$` operator. Usually this occurs when we think an object is a `data.frame` with the variable in it but it is really a vector.
+
+```{r, echo = TRUE, error = TRUE}
+x <- c(1,2,3)
+x$a
+```
+
+```{r include = FALSE}
+x <- 1:3
+```
+```{r}
+xdf <- data.frame(a = x)
+xdf$a
+```
+
+Note that this error can also occur as part of function calls when some variables are `NA`:
+
+```{r error =TRUE}
+library(psych)
+xdf$group <- NA
+describeBy(xdf$a, xdf$group)
+```
+
+When you get this error make sure your data is in the format you expect it to be (e.g., using the `str` function).
+
+```{r}
+str(xdf)
+```
+### Error in CALL: object 'NAME' not found
+
+This error occurs whenever you pass a variable name that is not assigned to some function. The error is for example:
+
+`Error in plot(x): object 'x' not found`
+
+If you just enter a variable name that is not assigned it looks like this:
+
+`Error: object 'NAME' not found`
+
+Check your code for typos and make sure you have run all the relevant lines of code before the one in which the error occurs!
+
+### Error in CALL: could not find function "FUNCTION"
+
+This error occurs if a functionname is either misspelled or some packages have not been loaded into the current session (`library(LIBRARYNAME)`). You have to re-load all packages every time you restart R. For example if you **did not** load the `ggplot2` library but try to use the `ggplot` function:
+
+```{r error = TRUE}
+ggplot(data)
+```
+
+If you are not sure which package provides a given function try running:
+
+`??FUNCTION`
+
+with two `??` this will search the help files of all installed packages for `FUNCTION` (e.g., `??ggplot`).
+
+### Error in CALL: incorrect number of dimension
+
+This error occurs when subsetting an object with the wrong number of dimension. For example if we have a vector `x` and try to get an element in the second dimension:
+
+```{r error = TRUE}
+x <- c(1,2,3)
+x[1,1]
+```
+```{r include=FALSE}
+x <- c(1,2,3)
+```
+```{r}
+x[1]
+```
+
+Note that `data.frame`s have two dimensions (each variable is a column, each observation a row) even if there is only one variable:
+
+```{r}
+x <- c(1,2,3)
+data.frame(x)[1, 1]
+```
+
+For multidimensional objects you can always check the size of each dimension using the `dim` function:
+
+```{r}
+dim(data.frame(x))
+```
+
+For vectors `dim` will return `NULL`.
+
+### When using logistic regression: Error in eval(family$initialize) : y values must be 0 <= y <= 1
+
+When using logistic regression make sure all the values in the dependent variable (left hand side) are between $0$ and $1$
+
+```{r, error=TRUE}
+dat <- data.frame(y = c(2,0,1), x = c(1,2,3))
+glm(y ~ x , data = dat, family=binomial())
+```
+
+### When using logistic regression: Error in weights * y : non-numeric argument to binary operator
+
+This error occurs if a variable that is supposed to be numeric is a character
+
+```{r, error=TRUE}
+dat$char_y <- c("1", "0", "1")
+glm(char_y ~ x , data = dat, family=binomial())
+```
+
+## Data visualization/output issues
+
+### How can the `geom` colors in a `ggplot` be changed?
+
+In general there are two types of colors that can be changed. The `color` argument changes the line or border color (e.g., in a bar chart). The `fill` argument changes the filling color of a plot that has a rectangle-like area (e.g., barplot, histogram,  boxplot) that can be filled but does nothing for e.g., line plots. 
+Colors can be specified either as an argument to the `ggplot` or `geom*` call directly as in `ggplot(data, aes(x = Genre, y = Freq), color = c("red", "green",...))` or as part of the aesthetics (`aes`). In the latter colors will automatically be assigned and a legend added if a categorical variable is provided as in `ggplot(table_plot_rel, aes(x = Genre,y = Freq, fill = Genre)) + geom_col()`. 
+
+This is not to be confused with setting background/text colors as part of a theme. Themes can either be provided by a package (e.g., `library(ggthemes)`) or created by hand.
+
+See [ggplotcolors.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/c3d8eb74b8ccd971318fb30f6ad5e7a4b04a7f93/QAscripts/ggplotcolors.R) for a sample script.
+
+### Why are some histograms displayed differently?
+
+When plotting a histogram there is an important parameter called `binwidth` which controls the range over which the number of observations are counted in each bin. If it is set too low each bin will only have very few observations and we get many bins. If it is set too high we lump many observations together and the get fewer bins (in the extreme case only one). 
+
+See [histogrambins.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/histogrambins.R) for some examples.
+
+### Some labels in plots are cut off. How can I extend the plot margins?
+
+If axis labels (e.g. names) are too long they are cut off by the default margins of R plots. You can set margins manually using the `par(mar=c(bottom, left, top, right))` function and the rerunning the plotting code. For example to extend the left margin one would run:
+
+```R
+par(mar=c(5,7,4,2))
+plot(...)
+```
+
+See [plotmargins.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/plotmargins.R) for a full example. The relevant help section (`?par`) states:
+
+> **mar**
+A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot. The default is c(5, 4, 4, 2) + 0.1.
+
+For plots from third party packages see the documentation of the package. 
+
+e.g., for `ggplot2` the margin is part of the `theme`. Note that for `ggplot2` the order of the margins is top, right, bottom, left.
+
+```{r eval = FALSE}
+my_ggplot + 
+  theme(plot.margin = margin(2, 2, 2, 2, "cm"))
+```
+
+In addition you can try to change the height and width when saving a ggplot (this usually works better)
+
+```{r, eval = FALSE}
+ggsave("myggplot.png", width = 10, height = 10, units = "cm")
+```
+
+Within an Rmd document you can set the with and height as part of the code chunk options using e.g., `fig.width=10, fig.height=10` [(see also here)](#rchunk)
+
+### Numbers are formatted weirdly
+
+By default R uses [scientific notation](https://en.wikipedia.org/wiki/Scientific_notation) for very large and very small numbers. We can control this behavior using `options(scipen=...)` where larger positive numbers will result in a wider range of values being printed in fixed notation (i.e., all digits) and negative numbers will result in more numbers being printed in scientific notation.
+
+From `?options`:
+
+> **scipen:**
+integer. A penalty to be applied when deciding to print numeric values in fixed or exponential notation. Positive values bias towards fixed and negative towards scientific notation: fixed notation will be preferred unless it is more than scipen digits wider.
+
+Scientific notation follows the following rule: $VeD \Rightarrow V \times 10^D$ e.g.,
+
+
+```{r}
+1e2 == 1 * 10^2
+4e-3 == 4 * 10^-3
+```
+See [scientificnotation.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/scientificnotation.R) for some examples.
+
+
+## Issues with functions and function arguments
+
+Always start with `?FUNCTION` (e.g., `?mean`) and read the help file.
+
+
+### Problems with `factor` and `as.factor`
+
+**1. Common mistake: some groups are not named in `levels` and `labels` $\Rightarrow$ results in `NA` for omitted group**
+
+
+**2. Common mistake: the code creating the factor is run twice overwriting the original variable $\Rightarrow$ results in `NA` for all values**
+
+This is usually a result of "jumping" back and forth in the code. Run your script from the top and make sure you do not create the factor twice. The second time the original levels do not exist anymore and thus all resulting values are missing without warning or error.
+
+**Possible remedy**: use `as.factor` which converts safely but cannot set labels. You can change the labels using the `fct_recode` function from the `forcats` package. Running this function twice will result in a warning and the original data is preserved.
+
+**3. common mistake: converting from `factor` to `integer`/`numeric` directly**
+
+Internally factors are stored in increasing integers starting at $1$ each attached with a `label`. If we create a factor from an integer variable and then convert it back this behavior might be surprising.
+
+**Possible remedy**: convert to `character` first since this will use the `label`s as values
+
+See [factors.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/factors.R) for examples of each of the mistakes and remedies.
+
+### How can I find an explanation of the output of a function?
+
+See the **Value** section of the help file for the function. You can get the help file by calling
+
+`?FUNCTION`
+
+e.g.,
+
+`?lm` or `?mean`
+
+If the function is provided by a package you have to load the package first using the `library(...)` function. 
+e.g.,
+
+```{r message=FALSE, warning=FALSE}
+library(Hmisc)
+?rcorr 
+```
+
+### What does the `MARGIN` argument do?
+
+Some functions such as `apply` and `prop.table` take a `MARGIN` argument. This argument specifies over which dimension (e.g., rows = 1, columns = 2) a function should be applied. This is especially useful for multidimensional arrays such as matrices.
+
+```{r}
+m <- matrix(1:9, nrow=3)
+m
+```
+
+ e.g. we could get the `max` of each *row* with
+
+```{r}
+apply(m, 1, max)
+```
+
+and the `max` of each *column* with
+
+```{r}
+apply(m, 2, max)
+```
+
+See [margins.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/margins.R) for more examples.
+
+
+## Issues with statistics and data
+
+### Why does a multi-item scale lead to increased reliability?
+
+"When combining several items into a scale, random error that is inherent in every item is averaged out, which leads to increased levels of reliability". There could, for example, be individual-level differences in the interpretation of certain items. When you have multiple items measuring the same underlying contruct, these differences will average out. 
+
+See [Diamantopoulos, Sarstedt, Fuchs, et al. (2012)](https://link.springer.com/article/10.1007/s11747-011-0300-3)
+
+### Why can demeaning/standardization lead to missing values?
+
+Calculating statistics (e.g., mean, sd) using variables that include `NA`s will return an `NA` by default. There are a couple of options to mitigate this problem. The missing values can be deleted from a variable using the `na.omit` function. Alternatively many functions offer the `na.rm` argument which will calculate the statistic disregarding `NA`s. 
+Note that the `scale` function automatically omits missing values when calculating the mean and standard deviation to standardize a variable.
+
+See [missings.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/missings.R) for a sample script.
+
+### The confidence interval (CI) of the mean seems very small compared to the dispersion of my sample. Can this be correct?
+
+The confidence interval of the mean depends on both the variance of the variable and the the sample size:
+
+$$
+\sigma_{\bar x} = \frac{\sigma}{\sqrt{n}}
+$$
+
+Therefore even if the standard deviation of the data ($\sigma$) is large we can get a narrow CI if we have a relatively large sample size.
+
+See [confidenceinterval.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/confidenceinterval.R) for a simulation study.
+
+
+## Issues with R Markdown
+
+### I get an error when `knit`ting to PDF but it works for HTML
+
+Try installing the `tinytex` library as follows before `knit`ing your document:
+
+```{r echo = TRUE, eval = FALSE}
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+### I am not sure where R-code, LaTeX math, and text go
+
+In an Rmd document there are 3 different environments, <a name="rchunk"></a>
+
+
+**1. R-code** is enclosed in three ticks followed by \{r, [chunk-options](https://rmarkdown.rstudio.com/lesson-3.html#chunk-options)\} where the chunk options can include configuration for printing code and output as well as figures e.g.
+
+> \```{r, echo = TRUE, warnings = FALSE}
+> 
+> print("Hello R!)
+> 
+> ```
+
+```{r}
+print("Hello R!")
+```
+
+
+**2. LaTeX math** can either be enclosed in single dollar signs \$x^2\$ $\Rightarrow x^2$ for in-line math or
+in double dollar signs to put the math output on its own line
+```  
+$$ 
+x^2
+$$
+``` 
+
+$$
+x^2
+$$
+
+For aligned multi-line equations we can add `\begin{aligned}` and `\end{aligend}`. The equations will be aligend at the `&` and a line is ended with `\\`.
+
+    $$
+    \begin{aligned}
+    x &= 1 \\
+    y &= 2 \\
+    z = &3
+    \end{aligned}
+    $$
+
+$$
+\begin{aligned}
+x &= 1 \\
+y &= 2 \\
+z = &3
+\end{aligned}
+$$
+
+**3. Regular text** goes anywhere between those environments
