@@ -1,6 +1,6 @@
 ---
 knit: "bookdown::render_book"
-title: "Marketing Research Design & Analysis 2021"
+title: "Marketing Analytics 2021"
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
@@ -41,14 +41,16 @@ lapply(reqPackages, install.packages)
 <img src="logo_rds.png" alt="logo_rds" height="140"  />
 </p>
 <br>
-Welcome to the course **Marketing Research Design & Analysis**! Due to the limited activity on campus this semester, this course will be delivered using **distance learning**. This means that students are required to familiarize themselves with the contents by means of **self-study**. This website is intended to aid the self-study process by providing you with explanations regarding the relevant concepts and methods in text and video format along with code files and commented outputs that will show you how to implement these methods using the **statistical software R**. The self-learning process will be complemented with weekly **interactive Q&A sessions** via live video streaming (Zoom), which provide ample opportunities to ask questions and clarify points that require further discussion. 
+Welcome to the course **Marketing Analytics**! This course covers the conceptual foundations of data analysis techniques for marketing managers and applications of these methods to different data sets. The course will be delivered in parts using the **flipped classroom** teaching method. This means that students are required to familiarize themselves with the contents by means of **self-study** before each session (i.e., by going through the materials on their own). This website is intended to aid the self-study process by providing you with explanations regarding the relevant concepts and methods in text and video format along with code files and commented outputs that will show you how to implement these methods using the **statistical software R**. 
+<br><br>
+The self-learning process will be complemented with compulsory in-person **weekly interactive sessions** in the PC-lab, which provide ample opportunities to train the acquired knowledge and clarify points that require further discussion. 
 <br><br>
 The following pages outline the course schedule and explain how to use this tutorial in detail. If you have any questions, feel free to send me a short email.
 <br>
 <br>
 Nils Wlömert
 <br>
-[(nils.wloemert@wu.ac.at)](mailto:nils.wloemert@wu.ac.at)
+[nils.wloemert@wu.ac.at](mailto:nils.wloemert@wu.ac.at)
 
 
 # Introduction {-}
@@ -63,13 +65,13 @@ The following video contains some introductory slides with a motivation for this
 
 ## Course structure {-}
 
-Due to the limited contact on campus this semester, this course combines asynchronous teaching elements (e.g., texts and pre-recorded videos on this website) with synchronous elements (e.g., live video streaming, chats). The syllabus consists of three main parts, as reflected by the structure of this website: 
+This course combines asynchronous teaching elements (e.g., texts and pre-recorded videos on this website) with synchronous elements (e.g., weekly in-person interactive sessions in the PC-lab). The syllabus consists of three main parts, as reflected by the structure of this website: 
 
-1. **Lecture notes**: the lecture part will explain the theory behind the concepts and methods and provide you with example applications using the statistical software R
-2. **Individual assignments**: in the individual assignments you are asked to apply the acquired knowledge to new data sets
-3. **Group project**: in a group you will design and conduct your own market research project and transfer the knowledge to a real business setting
+1. **Lecture notes**: the lecture part will explain the theory behind the concepts and methods and provide you with example applications using the statistical software R.
+2. **Individual assignments**: in the individual assignments you are asked to apply the acquired knowledge to new data sets.
+3. **Group project**: in the group you will design and conduct your own market research project and transfer the knowledge to a real business setting.
 
-The general approach is that students will first familiarize themselves with the contents by going through the materials on their own. This self-study process is complemented with weekly **interactive Q&A and group coaching sessions** via live video streaming (Zoom), which provide ample opportunities to ask questions and clarify points that require further discussion. The schedule for each of the three parts will be explained below. 
+The general approach is that students will first familiarize themselves with the contents by going through the materials on their own. This **self-study** process is complemented with in-person **weekly interactive sessions** in the PC-lab, which provide ample opportunities to ask questions and clarify points that require further discussion. The schedule for each of the three parts will be explained below. 
 
 The following video summarizes the information regarding the structure of this course.  
 
@@ -79,67 +81,199 @@ The following video summarizes the information regarding the structure of this c
 
 ### Schedule {-}
 
-#### Lecture notes Q&A {-}
+#### In-person lecture {-}
 
-The contents on this website are divided into weekly readings. To be able to follow the curriculum and complete the weekly assignments, you need to read the materials assigned for the respective week. The relevant chapters are indicated in the table below. The weekly readings will be complemented with interactive Q&A session, which provide you with an opportunity to ask questions about the assigned readings. Please note that you need to go through the materials on your own in the week following the respective session. For example, chapter 1 will be discussed in the second session. The dates and times for the 90 minute live video sessions are indicated in the table below. It is highly recommended to come with questions or comments about the materials to these sessions that you think might be interesting and helpful to the class. The live sessions will also feature short interactive quizzes that allow you to self-assess your progress and identify knowledge gaps regarding the materials that were assigned for the previous week.     
+The contents on this website are divided into weekly readings. To be able to follow the curriculum and complete the weekly assignments, you need to read the materials assigned for the respective week. The relevant chapters are indicated in the table below. The weekly readings will be complemented with the weekly interactive session in the PC-lab, which provide you with an opportunity to ask questions about the assigned readings. **Please note that you need to go through the materials on your own in the week before the respective session.** For example, chapters 2,3,4 will be discussed in the second session. The dates and times for the classroom sessions are indicated in the table below for each group separately. It is highly recommended to come with questions or comments about the materials to these sessions that you think might be interesting and helpful to the class. The sessions will also feature short interactive quizzes that allow you to self-assess your progress and identify knowledge gaps regarding the materials that were assigned for the previous week. Some of the questions for these quizzes can be found at the end of the respective chapters on this website (see section "Learning check" at the end of each chapter).       
 
+<br>
+**Lecture dates - Group A**
 <br>
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 library(dplyr)
 library(kableExtra)
 mytable = data.frame(
-    Date_A = c("Oct. 6", 
-             "Oct. 12", 
-             "Oct. 19",
-             "Oct. 29",
-             "Nov. 2",
-             "Nov. 9",
-             "Dec. 15"
+    Date = c("Oct. 11", 
+             "Oct. 18", 
+             "Oct. 25",
+             "Nov. 8",
+             "Nov. 15",
+             "Nov. 22",
+             "Nov. 29"
              ),
-    Time_A = c("02:00PM - 03:30PM",
-             "01:00PM - 02:30PM", 
-             "01:00PM - 02:30PM", 
-             "01:00PM - 02:30PM",
-             "01:00PM - 02:30PM",
-             "01:00PM - 02:30PM",
-             "08:30AM - 10:30AM"
+    Day = c("Monday", 
+             "Monday", 
+             "Monday",
+             "Monday",
+             "Monday",
+             "Monday",
+             "Monday"
              ),
-    Date_B = c("Oct. 7", 
-             "Oct. 14", 
-             "Oct. 21",
-             "Oct. 28",
-             "Nov. 4",
-             "Nov. 11",
-             "Dec. 15"
+    Time = c("08:00AM - 12:00PM",
+             "08:00AM - 12:00PM", 
+             "08:00AM - 12:00PM", 
+             "08:00AM - 12:00PM",
+             "08:00AM - 12:00PM",
+             "08:00AM - 12:00PM",
+             "08:00AM - 12:00PM"
              ),
-        Time_B = c("01:00PM - 02:30PM",
-             "01:00PM - 02:30PM", 
-             "01:00PM - 02:30PM", 
-             "01:30PM - 03:00PM",
-             "01:00PM - 02:30PM",
-             "01:00PM - 02:30PM",
-             "08:30AM - 10:30AM"
+    Room = c("TC.-1.61", 
+             "TC.-1.61", 
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61"
              ),
     Topics = c("* Introduction to the course <br>Basic concepts", 
                "* Introduction to R <br>Introduction to inferential statistics", 
                "* Hypothesis testing I",
                "* Hypothesis testing II",
-               "* Regression",
-               "* Exploratory factor analysis",
-               "* Final exam (online)"
+               "* Regression I",
+               "* Regression II",
+               "* Factor analysis <br>Cluster analysis"
                ),
     Chapters = c("1",
                  "2,3,4", 
                  "5,6.1,6.2,6.3", 
                  "6.4,6.5,6.6",
-                 "7",
-                 "8",""
+                 "7.1,7.2,7.3",
+                 "7.4,7.5,7.6",
+                 "8,9"
                  ))
 
 #pander::pander(mytable, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
 mytable %>% kable(escape = F, format = "html", col.names = gsub("[_]", " ", names(mytable))) %>%
   kable_paper(c("hover"), full_width = F) %>%
-  footnote(general = "Dates and times are indicated for groups A and B respectively.",
+  footnote(general = "Dates and times are indicated for group A.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+```
+<br>
+**Lecture dates - Group B**
+<br>
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable = data.frame(
+    Date = c("Oct. 11", 
+             "Oct. 18", 
+             "Oct. 25",
+             "Nov. 8",
+             "Nov. 15",
+             "Nov. 22",
+             "Nov. 29"
+             ),
+    Day = c("Monday", 
+             "Monday", 
+             "Monday",
+             "Monday",
+             "Monday",
+             "Monday",
+             "Monday"
+             ),
+    Time = c("02:00PM - 06:00PM",
+             "02:00PM - 06:00PM", 
+             "02:00PM - 06:00PM", 
+             "02:00PM - 06:00PM",
+             "02:00PM - 06:00PM",
+             "02:00PM - 06:00PM",
+             "02:00PM - 06:00PM"
+             ),
+    Room = c("TC.-1.61", 
+             "TC.-1.61", 
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61"
+             ),
+    Topics = c("* Introduction to the course <br>Basic concepts", 
+               "* Introduction to R <br>Introduction to inferential statistics", 
+               "* Hypothesis testing I",
+               "* Hypothesis testing II",
+               "* Regression I",
+               "* Regression II",
+               "* Factor analysis <br>Cluster analysis"
+               ),
+    Chapters = c("1",
+                 "2,3,4", 
+                 "5,6.1,6.2,6.3", 
+                 "6.4,6.5,6.6",
+                 "7.1,7.2,7.3",
+                 "7.4,7.5,7.6",
+                 "8,9"
+                 ))
+
+#pander::pander(mytable, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable %>% kable(escape = F, format = "html", col.names = gsub("[_]", " ", names(mytable))) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for group B.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+```
+
+<br>
+**Lecture dates - Group C**
+<br>
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable = data.frame(
+    Date = c("Oct. 13", 
+             "Oct. 20", 
+             "Oct. 27",
+             "Nov. 10",
+             "Nov. 17",
+             "Nov. 24",
+             "Dec. 1"
+             ),
+    Day = c("Wednesday", 
+             "Wednesday", 
+             "Wednesday",
+             "Wednesday",
+             "Wednesday",
+             "Wednesday",
+             "Wednesday"
+             ),
+    Time = c("12:00PM - 04:00PM",
+             "02:00PM - 06:00PM", 
+             "02:00PM - 06:00PM", 
+             "02:00PM - 06:00PM",
+             "12:00PM - 04:00PM",
+             "12:00PM - 04:00PM",
+             "12:00PM - 04:00PM"
+             ),
+    Room = c("TC.-1.61", 
+             "TC.-1.61", 
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61",
+             "TC.-1.61"
+             ),
+    Topics = c("* Introduction to the course <br>Basic concepts", 
+               "* Introduction to R <br>Introduction to inferential statistics", 
+               "* Hypothesis testing I",
+               "* Hypothesis testing II",
+               "* Regression I",
+               "* Regression II",
+               "* Factor analysis <br>Cluster analysis"
+               ),
+    Chapters = c("1",
+                 "2,3,4", 
+                 "5,6.1,6.2,6.3", 
+                 "6.4,6.5,6.6",
+                 "7.1,7.2,7.3",
+                 "7.4,7.5,7.6",
+                 "8,9"
+                 ))
+
+#pander::pander(mytable, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable %>% kable(escape = F, format = "html", col.names = gsub("[_]", " ", names(mytable))) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for group C.",
            general_title = "Note: ", 
            footnote_as_chunk = T, title_format = c("italic")
            ) 
@@ -147,67 +281,126 @@ mytable %>% kable(escape = F, format = "html", col.names = gsub("[_]", " ", name
 <br>
 
 ::: {.infobox_red .caution data-latex="{caution}"}
-We understand that the distance learning format poses challenges to the learning process because we cannot troubleshoot in person during the sessions. Remember that it is unlikely that you are the only student encountering a particular error, so please make use of the forum on Learn\@WU to interact with your peers or ask us questions so everyone else will benefit from the answer (there are no stupid questions). In case you cannot get answers to address a specific problem, we are available 90 min. after each Q&A sessions for short individual coaching sessions (please register by sending me a short email if you require assistance - [nils.wloemert@wu.ac.at](mailto:nils.wloemert@wu.ac.at)).
+We understand that the self-study format might pose challenges to the learning process because we cannot troubleshoot in person outside of the classroom sessions. Remember that it is very unlikely that you are the only student encountering a particular problem. So please make use of the forum on Learn\@WU (see below) to interact with your peers or ask us questions so that everyone else will benefit from the answer (there are no stupid questions). In case you cannot get answers to address a specific problem, we will be available during the in-person classroom sessions for coaching.
 :::
 
 #### Individual assignments {-}
 
-There will be 4 individual assignments and each assignment is complemented with live video coaching sessions. Note that the assignments need to be submitted in the [R Markdown format](https://rmarkdown.rstudio.com/) and there will be a live video coaching sessions dedicated to this reporting format. The submission dates and the dates and times for the coaching sessions are summarized in the following table: 
+There will be 3 individual assignments and most assignments are complemented with a coaching session. Note that the assignments need to be submitted in the [R Markdown format](https://rmarkdown.rstudio.com/) (see chapter 10) via Learn\@wu. There will be a coaching sessions dedicated to the R Markdown reporting format after the second assignment has been assigned. 
 
+Your main point of contact for the individual assignments will be Virginia Darazs ([virginia.darazs@wu.ac.at](mailto:virginia.darazs@wu.ac.at)). You may contact Virginia to schedule individual online coaching sessions during the times indicated in the table below. However, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Learn\@wu, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Learn\@wu.
+
+<br>
+**Assignment schedule - Group A**
+<br>
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 library(dplyr)
 library(kableExtra)
 mytable_sub_1 = data.frame(
-    Date_A = c("Oct. 18", 
-             "Oct. 20",
-             "Oct. 28",
-             "Nov. 2*",
-             "Nov. 5",
-             "Nov. 11",
-             "Nov. 16"
+    Assignment = c("Assignment 1: DataCamp", 
+             "Assignment 2: Hypothesis testing",
+             "Assignment 3: Regression"
              ),
-    Time_A = c(
-      "11:59PM",
-      "02:00PM - 05:00PM",
-      "11:59PM",
-      "02:00PM - 06:00PM",
-      "11:59PM",
-      "03:00PM - 06:00PM",
-      "11:59PM"
-    ),Date_B = c("Oct. 20", 
-             "Oct. 23",
-             "Oct. 27",
-             "Nov. 2*",
-             "Nov. 5",
-             "Nov. 11",
-             "Nov. 18"
-             ),
-    Time_B = c(
-      "11:59PM",
-      "02:00PM - 05:00PM",
-      "11:59PM",
-      "02:00PM - 06:00PM",
-      "11:59PM",
-      "03:00PM - 06:00PM",
-      "11:59PM"
+    Assigned = c(
+      "Oct. 18",
+      "Oct. 25",
+      "Nov. 15"
     ),
-    Task = c(  "* Submit assignment 1: DataCamp",
-               "* Coaching assignment 2 & R Markdown tutorial (live video coaching)",
-               "* Submit assignment 2: Hypothesis testing I",
-               "* Coaching assignment 3 (live video coaching)",
-               "* Submit assignment 3: Hypothesis testing II",
-               "* Coaching assignment 4 (live video coaching)",
-               "* Submit assignment 4: Regression"
-               ),
-    Chapters = c("","9","","","","","")
+    Coaching = c("* no coaching", 
+             "* Oct. 27, 08:00AM-11:00AM (room D5.0.001) <br>Nov. 10, 04:00PM-07:00PM (online)* <br>Nov. 12, 04:00PM-08:00PM (online)*",
+             "* Nov. 23, 04:00PM-07:00PM (online)* <br>Nov. 26, 04:00PM-08:00PM (online)*"
+             ),
+    Submission = c(
+      "Oct. 24, 11:59PM",
+      "Nov. 14, 11:59PM",
+      "Nov. 28, 11:59PM"
+    )
     )
 
 #pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable_sub_1 %>% kable(escape = T,  col.names = gsub("[_]", " ", names(mytable_sub_1))) %>%
+mytable_sub_1 %>% kable(escape = F,  col.names = gsub("[_]", " ", names(mytable_sub_1))) %>%
   kable_paper(c("hover"), full_width = F) %>%
-  footnote(general = "Dates and times are indicated for groups A and B respectively. 
-           Dates indicated with '*' are optional time slots for individual coaching.
-           If you would like to schedule a meeting, please contact Mirza (mirza.mujanovic@wu.ac.at)",
+  footnote(general = "Dates and times are indicated for group A. 
+           Dates indicated with '*' are optional time slots for individual online video coaching sessions with Virginia.
+           If you would like to schedule a meeting during the indicated times, please contact Virginia before (virginia.darazs@wu.ac.at).",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+<br>
+**Assignment schedule - Group B**
+<br>
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub_1 = data.frame(
+    Assignment = c("Assignment 1: DataCamp", 
+             "Assignment 2: Hypothesis testing",
+             "Assignment 3: Regression"
+             ),
+    Assigned = c(
+      "Oct. 18",
+      "Oct. 25",
+      "Nov. 15"
+    ),
+    Coaching = c("* no coaching", 
+             "* Oct. 27, 08:00AM-11:00AM (room D5.0.001) <br>Nov. 10, 04:00PM-07:00PM (online)* <br>Nov. 12, 04:00PM-08:00PM (online)*",
+             "* Nov. 23, 04:00PM-07:00PM (online)* <br>Nov. 26, 04:00PM-08:00PM (online)*"
+             ),
+    Submission = c(
+      "Oct. 24, 11:59PM",
+      "Nov. 14, 11:59PM",
+      "Nov. 28, 11:59PM"
+    )
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub_1 %>% kable(escape = F,  col.names = gsub("[_]", " ", names(mytable_sub_1))) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for group B. 
+           Dates indicated with '*' are optional time slots for individual online video coaching sessions with Virginia.
+           If you would like to schedule a meeting during the indicated times, please contact Virginia before (virginia.darazs@wu.ac.at).",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+<br>
+**Assignment schedule - Group C**
+<br>
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub_1 = data.frame(
+    Assignment = c("Assignment 1: DataCamp", 
+             "Assignment 2: Hypothesis testing",
+             "Assignment 3: Regression"
+             ),
+    Assigned = c(
+      "Oct. 20",
+      "Oct. 27",
+      "Nov. 17"
+    ),
+    Coaching = c("* no coaching", 
+             "* Oct. 29, 08:00AM-11:00PM (room TC.-1.61) <br>Nov. 12, 04:00PM-08:00PM (online)* <br>Nov. 15, 04:00PM-07:00PM (online)*",
+             "* Nov. 22, 04:00PM-07:00PM (online)* <br>Nov. 26, 04:00PM-08:00PM (online)*"
+             ),
+    Submission = c(
+      "Oct. 26, 11:59PM",
+      "Nov. 16, 11:59PM",
+      "Nov. 30, 11:59PM"
+    )
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub_1 %>% kable(escape = F,  col.names = gsub("[_]", " ", names(mytable_sub_1))) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for group C. 
+           Dates indicated with '*' are optional time slots for individual online video coaching sessions with Virginia.
+           If you would like to schedule a meeting during the indicated times, please contact Virginia before (virginia.darazs@wu.ac.at).",
            general_title = "Note: ", 
            footnote_as_chunk = T, title_format = c("italic")
            ) 
@@ -224,66 +417,154 @@ The marketing research group project consists of multiple consecutive steps:
 * data analysis
 * presentation of the results 
 
-We will offer coaching sessions via live video streaming (Zoom) throughout the process, providing feedback and allowing you to ask questions. 
+We will offer coaching sessions throughout the process, providing feedback and allowing you to ask questions. The submission dates and the dates and times for the coaching sessions are summarized in the table below. 
 
-The submission dates and the dates and times for the coaching sessions are summarized in the following table: 
+Your main point of contact for the group project will be Daniel Winkler ([daniel.winkler@wu.ac.at](mailto:daniel.winkler@wu.ac.at)). You may contact Daniel to schedule individual coaching sessions for your groups (in-person or online) during the following times:
 
+* XXX
+* XXX
+
+Again, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Learn\@wu, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Learn\@wu.
+
+<br>
+**Group project schedule - Group A**
+<br>
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 library(dplyr)
 library(kableExtra)
 mytable_sub = data.frame(
-    Date_A = c("Oct. 21", 
-             "Oct. 23*", 
-             "Nov. 1",
-             "Nov. 16*",
-             "Nov. 23*",
-             "Dec. 7"
+    Component = c(
+             "Submit questionnaire draft", 
+             "Coaching: Questionnaire design*", 
+             "Submit revised questionnaire",
+             "Coaching: Data analysis*",
+             "Submit video recording of presentation (pre-recorded)"
              ),
-    Time_A = c(
-      "11:59PM","09:00AM - 02:30PM","11:59PM","01:30PM - 04:30PM","01:30PM - 06:30PM","11:59PM"
-    ),Date_B = c("Oct. 25", 
-             "Oct. 27*", 
-             "Nov. 4",
-             "Nov. 18*",
-             "Nov. 25*",
-             "Dec. 9"
-             ),
-    Time_B = c(
-      "11:59PM","02:00PM - 08:00PM","11:59PM","02:00PM - 05:00PM","03:00PM - 08:00PM","11:59PM"
+    Date = c(
+      "Oct. 30, 11:59PM",
+      "Nov. 2, 08:00AM - 12:00PM",
+      "Nov. 7, 11:59PM",
+      "Dec. 6, 08:00AM - 12:00PM",
+      "Dec. 15, 11:59PM"
     ),
-    Task = c(  "* Submit questionnaire draft", 
-               "* Coaching: Questionnaire design (live video coaching)", 
-               "* Submit revised questionnaire",
-               "* Coaching: Data handling (live video coaching)",
-               "* Coaching: Data analysis (live video coaching)",
-               "* Submit video recording of presentation (pre-recorded)"
-               ),
-    Chapters = c("10","10","10","","","")
+    Room = c(
+      "---",
+      "TC.-1.61",
+      "---",
+      "TC.-1.61",
+      "---"
+    )
     )
 
 #pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
 mytable_sub %>% kable(escape = T,  col.names = gsub("[_]", " ", names(mytable_sub))) %>%
   kable_paper(c("hover"), full_width = F) %>%
-  footnote(general = "Dates and times are indicated for groups A and B respectively.
-           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
+  footnote(general = "Dates and times are indicated for group A.
+           Sessions indicated with '*' are group coaching sessions. Slots of 40 min. are assigned to each group within the indicated times.",
            general_title = "Note: ", 
            footnote_as_chunk = T, title_format = c("italic")
            ) 
 #%>%   row_spec(c(1,3,6), background = "#E0E0E0")
 ```
 
+
+<br>
+**Group project schedule - Group B**
+<br>
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Component = c(
+             "Submit questionnaire draft", 
+             "Coaching: Questionnaire design*", 
+             "Submit revised questionnaire",
+             "Coaching: Data analysis*",
+             "Submit video recording of presentation (pre-recorded)"
+             ),
+    Date = c(
+      "Oct. 30, 11:59PM",
+      "Nov. 2, 02:00PM - 06:00PM",
+      "Nov. 7, 11:59PM",
+      "Dec. 6, 02:00PM - 06:00PM",
+      "Dec. 15, 11:59PM"
+    ),
+    Room = c(
+      "---",
+      "TC.-1.61",
+      "---",
+      "TC.-1.61",
+      "---"
+    )
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub %>% kable(escape = T,  col.names = gsub("[_]", " ", names(mytable_sub))) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for group B.
+           Sessions indicated with '*' are group coaching sessions. Slots of 40 min. are assigned to each group within the indicated times.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+<br>
+**Group project schedule - Group C**
+<br>
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Component = c(
+             "Submit questionnaire draft", 
+             "Coaching: Questionnaire design*", 
+             "Submit revised questionnaire",
+             "Coaching: Data analysis*",
+             "Submit video recording of presentation (pre-recorded)"
+             ),
+    Date = c(
+      "Nov. 1, 11:59PM",
+      "Nov. 3, 12:00AM - 04:00PM",
+      "Nov. 9, 11:59PM",
+      "Dec. 7, 02:00PM - 06:00PM",
+      "Dec. 15, 11:59PM"
+    ),
+    Room = c(
+      "---",
+      "TC.-1.61",
+      "---",
+      "TC.-1.61",
+      "---"
+    )
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub %>% kable(escape = T,  col.names = gsub("[_]", " ", names(mytable_sub))) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for group C.
+           Sessions indicated with '*' are group coaching sessions. Slots of 40 min. are assigned to each group within the indicated times.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+
 ### Grading {-}
 
 Grading is based on the following components:
 
 * **Market research group project** (questionnaire design, data collection & analysis, reporting & presentations) [weight: 30%]
-* **Individual take-home computer exercises** (statistical analysis of data sets; 4 assignments à 5%) [weight: 20%]
-* **Final online exam** (concepts & methods) [weight: 40%]
+* **Individual take-home computer exercises** (statistical analysis of data sets; 3 assignments accounting for 5% (A1), 10% (A2), and 10% (A3)) [weight: 25%]
+* **Final online exam** (concepts & methods) [weight: 35%]
 * **Class participation** (quantity & quality of contributions during the weekly Q&A sessions, contributions in the online forum, etc.) [weight: 10%]
 
 These grading components will be weighted with the respective weights to arrive at the final grade percentage.
 
-Please note that to ensure an equal contribution of group members for the group assignment, a **peer assessment** will be conducted among group members, which enters into the computation of the individual grades for the project. This means that the members of a group are required to assess other students regarding their relative contribution. 
+The **final exam** will take place on December 22, 2021 in room TC.0.10 (Audimax). The exam covers questions about the concepts and methods (no coding) and we will provide example exams from the previous years to give you an idea about what type of questions you can expect.   
+
+To ensure an equal contribution of group members for the group assignment, a **peer assessment** will be conducted among group members, which enters into the computation of the individual grades for the project. This means that the members of a group are required to assess other students regarding their relative contribution. 
 
 **To successfully pass this course, your weighted final grade needs to exceed 60%.**
 
@@ -291,7 +572,7 @@ Please note that to ensure an equal contribution of group members for the group 
 
 ### Main reference {-}
 
-The main reference for this course is this website along with the corresponding slides and the pre-recorded video lectures. The relevant materials for each week are indicated in the tables above. The aim of the materials is to condense the contents and direct your attention to the most relevant aspects. This should enable students to study the materials on their own and we can focus our attention during the live video sessions on clarifying points that require further discussion. 
+The main reference for this course is this website along with the corresponding slides and the pre-recorded video lectures. The relevant materials for each week are indicated in the tables above. The aim of the materials is to condense the contents and direct your attention to the most relevant aspects. This should enable students to study the materials on their own and we can focus our attention during the classroom sessions on clarifying points that require further discussion. 
 
 At the end of each chapter, you will find a section with references. It is highly recommended that you consult these references for further clarification in case you require additional information on a topic.  
 
@@ -308,7 +589,9 @@ At the end of each chapter, you will find a section with references. It is highl
 <img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/rgraph.jpg" alt="Rgraph cover" height="120"/>
 </p>
 
-In addition to these lecture notes, there are many excellent books available (many of them for free) that focus on different aspects of R. In case you would like to learn more about the capabilities of R, I can recommend the following books:
+In addition to these lecture notes, there are many excellent books available (many of them for free) that focus on different aspects of R. In fact, there are so many free resources available by now that a team of R programmers has set up a website that provides an overview over the available resources by topic. You can find this overview here: [Big Book of R](https://www.bigbookofr.com/).
+
+In case you would like to learn more about the capabilities of R related to the contents of this course, I can particularly recommend the following books:
 
 * __"[R for Data Science](http://r4ds.had.co.nz/)"__ An excellent book by Hadley Wickham, which introduces you to R as a tool for doing data science, focusing on a consistent set of packages known as the tidyverse. [FREE online version]
 
@@ -342,7 +625,7 @@ In addition to these lecture notes, there are many excellent books available (ma
 
 ### Discussion forum {-}
 
-Because there will be limited contact on campus this semester, we would like to facilitate the interaction among students. Thus, we created a discussion forum, which you can access via the course page on the WU learning platform. The purpose of the forum is to allow you to discuss questions related to the contents with your class mates. Please make use of this forum as much as possible and ask questions if something remained unclear. Remember that there are no stupid questions. And if you know the answer to a question that is asked in the forum, it is also a good exercise to explain the concepts to your class mates. 
+We strongly encourage you to ask your questions via the online forum on the course page on the WU learning platform. The purpose of the forum is to allow you to discuss questions related to the contents with your class mates. Please make use of this forum as much as possible and ask questions if something remained unclear. Remember that there are no stupid questions. And if you know the answer to a question that is asked in the forum, it is also a good exercise to explain the concepts to your class mates. 
 
 ### DataCamp {-}
 
@@ -372,8 +655,8 @@ Please also make use of the abundance of web resources. For students who would l
 
 ### Contact {-}
 
-I am happy to answer your questions, so feel free to send me a short email ([nils.wloemert@wu.ac.at](mailto:nils.wloemert@wu.ac.at)). Mirza Mujanovic will be the tutor for this course ([mirza.mujanovic\@wu.ac.at](mailto:mirza.mujanovic\@wu.ac.at)). We will be available during the weekly Q&A sessions to clarify your questions. Mirza will be your point of contact for questions regarding the group project and the individual assignments. However, please note that before you contact us, you should try to solve problems on your own first (e.g., by using the online tutorial, doing research online, or asking class mates). 
+I am happy to answer your questions, so feel free to send me a short email ([nils.wloemert@wu.ac.at](mailto:nils.wloemert@wu.ac.at)). Daniel Winkler will co-teach the course with me this semester ([daniel.winkler\@wu.ac.at](mailto:daniel.winkler\@wu.ac.at)) and Virginia Darazs will be the tutor for the course ([virginia.darazs@wu.ac.at](mailto:virginia.darazs@wu.ac.at)). We will be available during the weekly sessions to clarify your questions. Daniel will be your point of contact for questions regarding the group project and Virginia will be your point of contact for the individual assignments. **However, please note that before you contact us, you should try to solve problems on your own first (e.g., by using the online tutorial, doing research online, or asking class mates).** 
 
 ### Acknowledgements {-}
 
-This tutorial is supported through Digital Learning Project Funding by WU Vienna. None of the materials covered in this tutorial are new. We intend to provide a summary of existing methods from a marketing research perspective and cite the corresponding sources. If you should have any comments or suggestions, please [contact us through the github page of this course](https://github.com/IMSMWU/MRDA_issues). 
+This tutorial is supported through Digital Learning Project Funding by WU Vienna. None of the materials covered in this tutorial are new. We intend to provide a summary of existing methods from a marketing research perspective and cite the corresponding sources. If you should have any comments or suggestions, please [contact us through the github page of this course](https://github.com/WU-RDS). 
