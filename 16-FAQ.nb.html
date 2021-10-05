@@ -1805,8 +1805,636 @@ summary {
 <div id="faq" class="section level1 unnumbered">
 <h1>FAQ</h1>
 <p>In this section, we provide answers to questions that students of previous cohorts encountered. We grouped the answers by topic and hope that you will find the answers useful.</p>
-<div id="r-packages" class="section level2 unnumbered">
-<h2>R packages</h2>
+<div id="common-error-messages" class="section level2 unnumbered">
+<h2>Common error messages</h2>
+<div id="a-general-note-on-error-messages" class="section level3 unnumbered">
+<h3>A general note on error messages</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>We usually load data into a <code>data.frame</code> in our R Session (e.g., from a CSV file using <code>data &lt;- read.csv(&quot;file.csv&quot;)</code>). It is important to note that this <code>data.frame</code> is not the original data file, but just a copy of the file that is stored on the hard drive. This means that any changes we make to the <code>data.frame</code> are <strong>not</strong> persistent/permanent and are <strong>not</strong> written to the original file (unless it is overwritten explicitly by using e.g., <code>write.csv(data, &quot;file.csv&quot;)</code>, which we usually don’t do). Therefore, it is important to write all commands in an R/Rmd file such that we can re-run the analysis the next time we open R and reproduce the results. This also means that if you cannot solve an issue using the suggested solutions to specific error messages mentioned on this page, it is completely safe to restart R or delete variables from the Global Environment. You just have to re-run our code to get the variables and results back. Therefore, your code files should always be fully reproducible using only the R/Rmd and data files. In addition your R/Rmd files should run linearly from the first to the last line and should not depend on “jumping” back and forth. The files that you obtain from us from this course are examples of reproducible files and in case you a stuck with a problem at a certain point, you can just save the code file and run it again up until the point where you were before the error occurred.</p>
+<p>This means that a general procedure for dealing with errors that cannot be solved in any other way would be as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Save your code file and restart your R Session (Session -&gt; Restart R in RStudio)</li>
+<li>Go back to the beginning of your code file and run it line by line (<code>Ctrl-Enter</code> in RStudio)</li>
+<li>If your error persists check the affected line for typos/differences in spelling.</li>
+<li>If the error occurs in a function make sure you are passing the arguments correctly (see help file for the function using <code>?FUNCTIONNAME</code>)</li>
+<li>Look at all the variables in your Global Environment and make sure they are in the format you expect them to be (e.g., if a file you expect to be a data frame is really a specified as a data frame).</li>
+<li>See the list of common error messages for more explanations below</li>
+<li>Nothing helped: Ask in the forum. If possible with a screenshot that explains your issue, or - better yet - a <a href="https://community.rstudio.com/t/faq-how-to-do-a-minimal-reproducible-example-reprex-for-beginners/23061">minimal reproducible example</a>.</li>
+</ol>
+<p>In the following capitalized words are stand-ins for specific calls/symbols/functions.</p>
+</div>
+<div id="error-in-filefile-rt-cannot-open-the-connection" class="section level3 unnumbered">
+<h3>Error in file(file, “rt”): cannot open the connection</h3>
+<p>This error message sometimes has an additional warning:</p>
+<pre><code>In addition: Warning message:
+In file(file, &quot;rt&quot;) :
+  cannot open file &#39;FILE&#39;: No such file or directory</code></pre>
+<p>This error occurs either when a file name is not spelled correctly or the file is not in the directory where R is looking for it. You can check the directory R is looking at by executing the function <code>getwd()</code>. To set a new directory use <code>setwd(DIRECTORY)</code>. Note that you <strong>cannot</strong> just paste a path from Windows Explorer to <code>setwd</code> since the directory has to be in the format:</p>
+<p><code>setwd(&quot;C:/Users/USERNAME/Documents&quot;)</code></p>
+<p>but Windows Explorer uses</p>
+<p><code>C:\Users\USERNAME\Documents</code> (i.e., change <code>\</code> to <code>/</code> in R when specifying the path)</p>
+<p>Alternatively, you can set the directory in RStudio under Session -&gt; Set Working Directory. Here “To Source File Location” will set the directory to wherever the currently open R file is stored.</p>
+</div>
+<div id="error-unexpected-symbol-in-call" class="section level3 unnumbered">
+<h3>Error: unexpected ‘SYMBOL’ in “CALL”</h3>
+<p>Usually the <code>unexpectes SYMBOL</code> message is due to parentheses not being matched but it could also be any other symbol that R cannot interpret in the given context. Please check the line in which the error occurred for typos (especially too many/ too few symbols). Some common examples are:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoXCJoZWxsb1wiKSlcbmBgYCJ9 -->
+<pre class="r"><code>print(&quot;hello&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IHVuZXhwZWN0ZWQgJyknIGluIFwicHJpbnQoXCJoZWxsb1wiKSlcIlxuIn0= -->
+<pre><code>Error: unexpected &#39;)&#39; in &quot;print(&quot;hello&quot;))&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>There is one too many closing parenthesis here.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuMSArLyAyICMgVG9vIG1hbnkgc3ltYm9sc1xuYGBgIn0= -->
+<pre class="r"><code>1 +/ 2 # Too many symbols</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IHVuZXhwZWN0ZWQgJy8nIGluIFwiMSArL1wiXG4ifQ== -->
+<pre><code>Error: unexpected &#39;/&#39; in &quot;1 +/&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The “/” symbol may not follow the “+” symbol without any additional objects.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuMSAyICMgTWlzc2luZyBzeW1ib2xcbmBgYCJ9 -->
+<pre class="r"><code>1 2 # Missing symbol</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IHVuZXhwZWN0ZWQgbnVtZXJpYyBjb25zdGFudCBpbiBcIjEgMlwiXG4ifQ== -->
+<pre><code>Error: unexpected numeric constant in &quot;1 2&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The sequence with a space between numbers is not recognized by R.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAzXG4yeCAjIE1pc3Npbmcgc3ltYm9sXG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- 3
+2x # Missing symbol</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>If you wanted to multiply x by 2 you would need to a the &quot;*&quot; symbol, as the following example shows.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuMip4XG5gYGAifQ== -->
+<pre class="r"><code>2*x</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="error-in-call-object-of-type-closure-is-not-subsettable" class="section level3 unnumbered">
+<h3>Error in CALL : object of type ‘closure’ is not subsettable</h3>
+<p>This error occurs usually when one tries to subset a function (either with <code>fun$element</code> or <code>fun[1]</code> where <code>fun</code> is a function). Check your variable (especially <code>data.frames</code>) names for typos! This happens when you run the following code, for example, since <code>mean</code> is a function:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBEb2VzIG5vdCB3b3JrOlxubWVhbnMgPC0gZGF0YS5mcmFtZSh2YWx1ZSA9IGMoMSwyLDMpKVxubWVhbiR2YWx1ZVxuYGBgIn0= -->
+<pre class="r"><code># Does not work:
+means &lt;- data.frame(value = c(1,2,3))
+mean$value</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>instead of (i.e., correcting for the missing “s” to identify the data frame by its name)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBXb3Jrczpcbm1lYW5zIDwtIGRhdGEuZnJhbWUodmFsdWUgPSBjKDEsMiwzKSlcbm1lYW5zJHZhbHVlXG5gYGAifQ== -->
+<pre class="r"><code># Works:
+means &lt;- data.frame(value = c(1,2,3))
+means$value</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>or we give variables the same name as a function (which should generally be avoided) but have not created that variable yet:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShhb3YpW1sxXV1cbmBgYCJ9 -->
+<pre class="r"><code>summary(aov)[[1]]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Make sure all the relevant code is run first:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0IDwtIGRhdGEuZnJhbWUodmFsdWUgPSBjKDEsMiwzKSwgZ3JvdXAgPSBjKFwiYVwiLCBcImJcIiwgXCJiXCIpKVxuYW92IDwtIGFvdih2YWx1ZX5ncm91cCwgZGF0KVxuc3VtbWFyeShhb3YpW1sxXV1cbmBgYCJ9 -->
+<pre class="r"><code>dat &lt;- data.frame(value = c(1,2,3), group = c(&quot;a&quot;, &quot;b&quot;, &quot;b&quot;))
+aov &lt;- aov(value~group, dat)
+summary(aov)[[1]]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="error-in-call_with_-operator-is-invalid-for-atomic-vectors" class="section level3 unnumbered">
+<h3>Error in CALL_WITH_$: $ operator is invalid for atomic vectors</h3>
+<p>This error occurs when we try to subset a vector using the <code>$</code> operator. Usually this occurs when we think an object is a <code>data.frame</code> with the variable in it but it is really a vector.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDEsMiwzKVxueCRhXG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- c(1,2,3)
+x$a</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueGRmIDwtIGRhdGEuZnJhbWUoYSA9IHgpXG54ZGYkYVxuYGBgIn0= -->
+<pre class="r"><code>xdf &lt;- data.frame(a = x)
+xdf$a</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Note that this error can also occur as part of function calls when some variables are <code>NA</code>:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwc3ljaClcbnhkZiRncm91cCA8LSBOQVxubWVhbih4ZGYkYSwgeGRmJGdyb3VwKVxuYGBgIn0= -->
+<pre class="r"><code>library(psych)
+xdf$group &lt;- NA
+mean(xdf$a, xdf$group)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>When you get this error make sure your data is in the format you expect it to be (e.g., using the <code>str</code> function). And that missing values (i.e., NA) are handles appropriately.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKHhkZilcbmBgYCJ9 -->
+<pre class="r"><code>str(xdf)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="error-in-call-object-name-not-found" class="section level3 unnumbered">
+<h3>Error in CALL: object ‘NAME’ not found</h3>
+<p>This error occurs whenever you pass a variable name that is not assigned to some function. The error is for example:</p>
+<p><code>Error in plot(x): object &#39;x&#39; not found</code></p>
+<p>If you just enter a variable name that is not assigned it looks like this:</p>
+<p><code>Error: object &#39;NAME&#39; not found</code></p>
+<p>Check your code for typos and make sure you have run all the relevant lines of code before the one in which the error occurs!</p>
+</div>
+<div id="error-in-call-could-not-find-function-function" class="section level3 unnumbered">
+<h3>Error in CALL: could not find function “FUNCTION”</h3>
+<p>This error occurs if a function name is either misspelled or some packages have not been loaded into the current session (<code>library(PACKAGENAME)</code>). You have to re-load all packages every time you restart R. For example if you <strong>did not</strong> load the <code>ggplot2</code> library but try to use the <code>ggplot</code> function:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGRhdGEpXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>If you are not sure which package provides a given function, try running:</p>
+<p><code>??FUNCTION</code></p>
+<p>with two <code>??</code> this will search the help files of all installed packages for <code>FUNCTION</code> (e.g., <code>??ggplot</code>).</p>
+</div>
+<div id="error-in-call-incorrect-number-of-dimension" class="section level3 unnumbered">
+<h3>Error in CALL: incorrect number of dimension</h3>
+<p>This error occurs when subsetting an object with the wrong number of dimension. For example if we have a vector <code>x</code> and try to get an element in the second dimension:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDEsMiwzKVxueFsxLDFdXG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- c(1,2,3)
+x[1,1]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueFsxXVxuYGBgIn0= -->
+<pre class="r"><code>x[1]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Note that <code>data.frame</code>s have two dimensions (each variable is a column, each observation a row) even if there is only one variable:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDEsMiwzKVxuZGF0YS5mcmFtZSh4KVsxLCAxXVxuYGBgIn0= -->
+<pre class="r"><code>x &lt;- c(1,2,3)
+data.frame(x)[1, 1]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDFcbiJ9 -->
+<pre><code>[1] 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>For multidimensional objects you can always check the size of each dimension using the <code>dim</code> function:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKGRhdGEuZnJhbWUoeCkpXG5gYGAifQ== -->
+<pre class="r"><code>dim(data.frame(x))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMgMVxuIn0= -->
+<pre><code>[1] 3 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>For vectors <code>dim</code> will return <code>NULL</code>.</p>
+</div>
+</div>
+<div id="installation-of-r-packages" class="section level2 unnumbered">
+<h2>Installation of R packages</h2>
+<div id="what-are-the-different-ways-to-install-r-packages" class="section level3 unnumbered">
+<h3>What are the different ways to install R packages?</h3>
+<p>There are multiple ways to install a package:</p>
+<ul>
+<li>Enter <code>install.packages(&quot;PACKAGENAME&quot;)</code> in the console (attention: the name of the package needs to be in quotation marks)</li>
+<li>Go to the “Packages” pane in RStudio (lower right by default), then click on “Install”, then enter the package name</li>
+<li>Using the two methods above would load the package from the official R server, the so-called Comprehensive R Archive Network (CRAN). There may be instances when you would like to install packages from other sources. This could be the case, for example, when a package is not available for the version of R that you are using. Sometimes an new version of R is released and some packages may require updating to be compatible with this new version. The updating process on the official server may take some time and usually the most recent version of a package are available from other sources, such as GitHub. Using the <code>devtools</code> package, you can install packages from GitHub directly: <code>devtools::install_github(repo = &quot;USERNAME/PACKAGENAME&quot;)</code>. Of course, this requires the <code>devtools</code> package to be installed already; i.e., you need to run <code>install.packages(&quot;devtools&quot;)</code> first, if the <code>devtools</code> package is not installed yet.</li>
+</ul>
+</div>
+<div id="i-cannot-install-packages-due-to-error-in-contrib.urlrepossource-or-warning-message-package-packagename-is-not-available-for-this-version-of-r" class="section level3 unnumbered">
+<h3>I cannot install packages due to “Error in contrib.url(repos,”source“)” or “Warning message: package ‘PACKAGENAME’ is not available for this version of R”</h3>
+<ol style="list-style-type: decimal">
+<li>Try adding the <code>repo</code> argument to the <code>install.packages</code> command as in the following example:</li>
+</ol>
+<pre class="r"><code>install.packages(&quot;PACKAGENAME&quot;, repo=&quot;https://cloud.r-project.org/&quot;)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Try to install the package from GitHub directly using the <code>devtools</code> package.</li>
+</ol>
+<p>For example to get the <code>devtools</code> package and install the <code>ggstatsplot</code> package from the GitHub-user <code>IndrajeetPatil</code> run the following code:</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;)
+devtools::install_github(
+  repo = &quot;IndrajeetPatil/ggstatsplot&quot;, # package path on GitHub (&quot;username/packagename&quot;)
+  dependencies = TRUE, # installs packages which ggstatsplot depends on
+  upgrade_dependencies = TRUE # updates any out of date dependencies
+)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>In case you are using <code>knit</code>ting process of a R Markdown file, you should not install any packages from within the markdown file. Instead, install the packages first using a plain R script file and then load the package within the markdown file before clicking <code>knit</code> to compile the document.</li>
+</ol>
+</div>
+<div id="some-libraries-with-graphical-output-e.g.-summarytools-magick-fail-to-installload-properly-on-macos" class="section level3 unnumbered">
+<h3>Some libraries with graphical output (e.g., summarytools, magick) fail to install/load properly on MacOS</h3>
+<p>Some libraries require the <a href="https://www.xquartz.org">XQuartz</a> window system for MacOS. After installing <a href="https://www.xquartz.org">XQuartz</a> please restart your computer. If you get an error message including a message about the <code>magick</code> package try <code>install.packages(&quot;magick&quot;)</code> and if that fails <code>devtools::install_github(&quot;ropensci/magick&quot;, dependencies = TRUE)</code> might help.</p>
+</div>
+<div id="i-cannot-install-some-packages-on-macos" class="section level3 unnumbered">
+<h3>I cannot install some packages on MacOS</h3>
+<ol style="list-style-type: decimal">
+<li>When asked whether R should try to install a package from sources a package which needs compilation, enter “no” or “n”.</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li>If this doesn’t solve the issue, try installing the free XCode package from the Apple Appstore, open a Terminal and enter “xcode-select –install”. After that try to install the package again (answering “yes” to the question above).</li>
+</ol>
+</div>
+</div>
+<div id="issues-with-statistics-and-data" class="section level2 unnumbered">
+<h2>Issues with statistics and data</h2>
+<div id="why-does-a-multi-item-scale-lead-to-increased-reliability" class="section level3 unnumbered">
+<h3>Why does a multi-item scale lead to increased reliability?</h3>
+<p>“When combining several items into a scale, random error that is inherent in every item is averaged out, which leads to increased levels of reliability”. There could, for example, be individual-level differences in the interpretation of certain items. When you have multiple items measuring the same underlying construct, these differences will average out.</p>
+<p>See <a href="https://link.springer.com/article/10.1007/s11747-011-0300-3">Diamantopoulos, Sarstedt, Fuchs, et al. (2012)</a></p>
+</div>
+<div id="why-can-demeaningstandardization-lead-to-missing-values" class="section level3 unnumbered">
+<h3>Why can demeaning/standardization lead to missing values?</h3>
+<p>Calculating statistics (e.g., mean, sd) using variables that include <code>NA</code>s will return an <code>NA</code> by default. There are a couple of options to address this problem. The missing values can be deleted from a variable using the <code>na.omit</code> function. Alternatively many functions offer the <code>na.rm</code> argument which will calculate the statistic disregarding <code>NA</code>s. For example, the following will result in NA:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDEsMiwzLCA1LCBOQSlcbm1lYW4oeClcbmBgYCJ9 -->
+<pre class="r"><code>x &lt;- c(1,2,3, 5, NA)
+mean(x)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIE5BXG4ifQ== -->
+<pre><code>[1] NA</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>While the following disregards the NA values when computing the mean of the numeric vector:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDEsMiwzLCA1LCBOQSlcbm1lYW4oeCwgbmEucm0gPSBUUlVFKVxuYGBgIn0= -->
+<pre class="r"><code>x &lt;- c(1,2,3, 5, NA)
+mean(x, na.rm = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIuNzVcbiJ9 -->
+<pre><code>[1] 2.75</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Note that the <code>scale</code> function automatically omits missing values when calculating the mean and standard deviation to standardize a variable.</p>
+<p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/missings.R">missings.R</a> for a sample script.</p>
+</div>
+<div id="the-confidence-interval-ci-of-the-mean-seems-very-small-compared-to-the-dispersion-of-my-sample.-can-this-be-correct" class="section level3 unnumbered">
+<h3>The confidence interval (CI) of the mean seems very small compared to the dispersion of my sample. Can this be correct?</h3>
+<p>The confidence interval of the mean depends on both the variance of the variable and the the sample size:</p>
+<p><span class="math display">\[
+\sigma_{\bar x} = \frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p>Therefore even if the standard deviation of the data (<span class="math inline">\(\sigma\)</span>) is large, we can get a narrow CI if we have a relatively large sample size.</p>
+<p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/confidenceinterval.R">confidenceinterval.R</a> for a simulation study.</p>
+</div>
+</div>
+<div id="errors-related-to-specific-methods" class="section level2 unnumbered">
+<h2>Errors related to specific methods</h2>
+<div id="logistic-regression" class="section level3 unnumbered">
+<h3>Logistic regression</h3>
+<div id="when-using-logistic-regression-error-in-evalfamilyinitialize-y-values-must-be-0-y-1" class="section level4 unnumbered">
+<h4>When using logistic regression: Error in eval(family$initialize) : y values must be 0 &lt;= y &lt;= 1</h4>
+<p>When using logistic regression make sure all the values in the dependent variable (left hand side) are between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0IDwtIGRhdGEuZnJhbWUoeSA9IGMoMiwwLDEpLCB4ID0gYygxLDIsMykpXG5nbG0oeSB+IHggLCBkYXRhID0gZGF0LCBmYW1pbHk9Ymlub21pYWwoKSlcbmBgYCJ9 -->
+<pre class="r"><code>dat &lt;- data.frame(y = c(2,0,1), x = c(1,2,3))
+glm(y ~ x , data = dat, family=binomial())</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gZXZhbChmYW1pbHkkaW5pdGlhbGl6ZSkgOiB5IHZhbHVlcyBtdXN0IGJlIDAgPD0geSA8PSAxXG4ifQ== -->
+<pre><code>Error in eval(family$initialize) : y values must be 0 &lt;= y &lt;= 1</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="when-using-logistic-regression-error-in-weights-y-non-numeric-argument-to-binary-operator" class="section level3 unnumbered">
+<h3>When using logistic regression: Error in weights * y : non-numeric argument to binary operator</h3>
+<p>This error occurs if a variable that is supposed to be numeric is a character</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0JGNoYXJfeSA8LSBjKFwiMVwiLCBcIjBcIiwgXCIxXCIpXG5nbG0oY2hhcl95IH4geCAsIGRhdGEgPSBkYXQsIGZhbWlseT1iaW5vbWlhbCgpKVxuYGBgIn0= -->
+<pre class="r"><code>dat$char_y &lt;- c(&quot;1&quot;, &quot;0&quot;, &quot;1&quot;)
+glm(char_y ~ x , data = dat, family=binomial())</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gd2VpZ2h0cyAqIHkgOiBub24tbnVtZXJpYyBhcmd1bWVudCB0byBiaW5hcnkgb3BlcmF0b3JcbiJ9 -->
+<pre><code>Error in weights * y : non-numeric argument to binary operator</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="general-settings-and-options" class="section level2 unnumbered">
+<h2>General settings and options</h2>
+<div id="numbers-are-formatted-weirdly" class="section level3 unnumbered">
+<h3>Numbers are formatted weirdly</h3>
+<p>By default R uses <a href="https://en.wikipedia.org/wiki/Scientific_notation">scientific notation</a> for very large and very small numbers. We can control this behavior using <code>options(scipen=...)</code> where larger positive numbers will result in a wider range of values being printed in fixed notation (i.e., all digits) and negative numbers will result in more numbers being printed in scientific notation.</p>
+<p>From <code>?options</code> we get:</p>
+<blockquote>
+<p><strong>scipen:</strong> integer. A penalty to be applied when deciding to print numeric values in fixed or exponential notation. Positive values bias towards fixed and negative towards scientific notation: fixed notation will be preferred unless it is more than scipen digits wider.</p>
+</blockquote>
+<p>Scientific notation follows the following rule: <span class="math inline">\(VeD \Rightarrow V \times 10^D\)</span>.</p>
+<p>Therefore, <code>options(scipen=-10)</code> would result in:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub3B0aW9ucyhzY2lwZW49LTEwMClcbjI5LjM3NDk1OTIzODRcbmBgYCJ9 -->
+<pre class="r"><code>options(scipen=-100)
+29.3749592384</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIuOTM3NDk2ZSswMVxuIn0= -->
+<pre><code>[1] 2.937496e+01</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>And <code>options(scipen=10)</code> would result in:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub3B0aW9ucyhzY2lwZW49MTUpXG4yOS4zNzQ5NTkyMzg0XG5gYGAifQ== -->
+<pre class="r"><code>options(scipen=15)
+29.3749592384</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDI5LjM3NDk2XG4ifQ== -->
+<pre><code>[1] 29.37496</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>See also <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/scientificnotation.R">scientificnotation.R</a> for some examples.</p>
+<p>Note that <code>options(digits=...)</code> also allows you to control the number of digits to be displayed for numeric values:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShhb3YpW1sxXV1cbmBgYCJ9 -->
+<pre class="r"><code>summary(aov)[[1]]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRmVobGVyIGluIG9iamVjdFtbaV1dIDogT2JqZWt0IGRlcyBUeXBzICdjbG9zdXJlJyBpc3QgbmljaHQgaW5kaXppZXJiYXJcbiJ9 -->
+<pre><code>Fehler in object[[i]] : Objekt des Typs &#39;closure&#39; ist nicht indizierbar</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="data-visualizationoutput-issues" class="section level2 unnumbered">
+<h2>Data visualization/output issues</h2>
+<div id="how-can-the-geom-colors-in-a-ggplot-be-changed" class="section level3 unnumbered">
+<h3>How can the <code>geom</code> colors in a <code>ggplot</code> be changed?</h3>
+<p>In general, there are two types of colors that can be changed. The <code>color</code> argument changes the line or border color (e.g., in a bar chart). The <code>fill</code> argument changes the filling color of a plot that has a rectangle-like area (e.g., barplot, histogram, boxplot) that can be filled but does nothing for e.g., line plots.</p>
+<p>Colors can be specified either as an argument to the <code>ggplot</code> or <code>geom*</code> call directly as in <code>ggplot(data, aes(x = Genre, y = Freq), color = c(&quot;red&quot;, &quot;green&quot;,...))</code> or as part of the aesthetics (<code>aes</code>). In the latter case, colors will automatically be assigned and a legend added if a categorical variable is provided as in <code>ggplot(table_plot_rel, aes(x = Genre,y = Freq, fill = Genre)) + geom_col()</code>.</p>
+<p>This is not to be confused with setting background/text colors as part of a theme. Themes can either be provided by a package (e.g., <code>library(ggthemes)</code>) or created by hand.</p>
+<p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/c3d8eb74b8ccd971318fb30f6ad5e7a4b04a7f93/QAscripts/ggplotcolors.R">ggplotcolors.R</a> for a sample script.</p>
+</div>
+<div id="why-are-some-histograms-displayed-differently" class="section level3 unnumbered">
+<h3>Why are some histograms displayed differently?</h3>
+<p>When plotting a histogram, there is an important parameter called <code>binwidth</code> which controls the range over which the number of observations are counted in each bin. If it is set to a too low value, each bin will only have very few observations and we get a large number of bins. If it is set to a value that is too high, we lump many observations together and get very few bins (in the extreme case only one). You may have to play around with different values to find the appropriate binwidth for your plot.</p>
+<p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/histogrambins.R">histogrambins.R</a> for some examples.</p>
+</div>
+<div id="some-labels-in-plots-are-cut-off.-how-can-i-extend-the-plot-margins" class="section level3 unnumbered">
+<h3>Some labels in plots are cut off. How can I extend the plot margins?</h3>
+<p>If axis labels (e.g. names) are too long, they are cut off by the default margins of R plots. You can set margins manually in <code>ggplot2</code> as part of the <code>theme</code> settings in the following order: top, right, bottom, left. For example, to add 2cm margin to each side, we can use:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbIm15X2dncGxvdCArICIsIiAgdGhlbWUocGxvdC5tYXJnaW4gPSBtYXJnaW4oMiwgMiwgMiwgMiwgXCJjbVwiKSkiXX0= -->
+<pre class="r"><code>my_ggplot + 
+  theme(plot.margin = margin(2, 2, 2, 2, &quot;cm&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In addition you can try to change the height and width when saving a ggplot (this usually works better):</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiZ2dzYXZlKFwibXlnZ3Bsb3QucG5nXCIsIHdpZHRoID0gMTAsIGhlaWdodCA9IDEwLCB1bml0cyA9IFwiY21cIikifQ== -->
+<pre class="r"><code>ggsave(&quot;myggplot.png&quot;, width = 10, height = 10, units = &quot;cm&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Within an Rmd document you can set the with and height as part of the code chunk options using e.g., <code>fig.width=10, fig.height=10</code> <a href="#rchunk">(see also here)</a></p>
+</div>
+</div>
+<div id="issues-with-functions-and-function-arguments" class="section level2 unnumbered">
+<h2>Issues with functions and function arguments</h2>
+<p>Generally, if you face an issue relating to a particular function, it is a good idea to check the details of a function, by typing <code>?FUNCTION</code> (e.g., <code>?mean</code>) and read the help file.</p>
+<div id="problems-with-factor-and-as.factor" class="section level3 unnumbered">
+<h3>Problems with <code>factor</code> and <code>as.factor</code></h3>
+<p><strong>1. Common mistake:</strong> some groups are not named in <code>levels</code> and <code>labels</code> <span class="math inline">\(\Rightarrow\)</span> results in <code>NA</code> for omitted group like in the following example:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDAsMCwwLDEsMCwyLDAsMSlcbnggPC0gZmFjdG9yKHgsIGxldmVscyA9IGMoMCwxKSwgbGFiZWxzID0gYyhcIm5vXCIsXCJ5ZXNcIikpXG54XG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- c(0,0,0,1,0,2,0,1)
+x &lt;- factor(x, levels = c(0,1), labels = c(&quot;no&quot;,&quot;yes&quot;))
+x</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIG5vICAgbm8gICBubyAgIHllcyAgbm8gICA8TkE+IG5vICAgeWVzIFxuTGV2ZWxzOiBubyB5ZXNcbiJ9 -->
+<pre><code>[1] no   no   no   yes  no   &lt;NA&gt; no   yes 
+Levels: no yes</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In this example, you need to also consider “2” as a factor level to avoid setting the value of this observation to NA:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDAsMCwwLDEsMCwyLDAsMSlcbnggPC0gZmFjdG9yKHgsIGxldmVscyA9IGMoMCwxLDIpLCBsYWJlbHMgPSBjKFwibm9cIixcInllc1wiLFwibWF5YmVcIikpXG54XG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- c(0,0,0,1,0,2,0,1)
+x &lt;- factor(x, levels = c(0,1,2), labels = c(&quot;no&quot;,&quot;yes&quot;,&quot;maybe&quot;))
+x</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIG5vICAgIG5vICAgIG5vICAgIHllcyAgIG5vICAgIG1heWJlIG5vICAgIHllcyAgXG5MZXZlbHM6IG5vIHllcyBtYXliZVxuIn0= -->
+<pre><code>[1] no    no    no    yes   no    maybe no    yes  
+Levels: no yes maybe</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p><strong>2. Common mistake:</strong> the code creating the factor is run twice overwriting the original variable <span class="math inline">\(\Rightarrow\)</span> results in <code>NA</code> for all values like in the following example:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDAsMCwwLDEsMCwyLDAsMSlcbnggPC0gZmFjdG9yKHgsIGxldmVscyA9IGMoMCwxLDIpLCBsYWJlbHMgPSBjKFwibm9cIixcInllc1wiLFwibWF5YmVcIikpXG54IDwtIGZhY3Rvcih4LCBsZXZlbHMgPSBjKDAsMSwyKSwgbGFiZWxzID0gYyhcIm5vXCIsXCJ5ZXNcIixcIm1heWJlXCIpKVxueFxuYGBgIn0= -->
+<pre class="r"><code>x &lt;- c(0,0,0,1,0,2,0,1)
+x &lt;- factor(x, levels = c(0,1,2), labels = c(&quot;no&quot;,&quot;yes&quot;,&quot;maybe&quot;))
+x &lt;- factor(x, levels = c(0,1,2), labels = c(&quot;no&quot;,&quot;yes&quot;,&quot;maybe&quot;))
+x</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDxOQT4gPE5BPiA8TkE+IDxOQT4gPE5BPiA8TkE+IDxOQT4gPE5BPlxuTGV2ZWxzOiBubyB5ZXMgbWF5YmVcbiJ9 -->
+<pre><code>[1] &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+Levels: no yes maybe</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>As can be seen, by running the line of code specifying the factor variable twice, we first specify the factor variable correctly and then incorrectly overwrite this variable again. The second time we run the code, the values are set to NA because R looks from levels of 0,1, and 2 again, but these had already been replaced by the labels when the code was run for the first time. Hence, since there are no elements with the values of 0,1,2 anymore, these values are replaced by missing values.</p>
+<p>Note that this is usually a result of “jumping” back and forth in the code. Run your script from the top and make sure you do not create the factor twice. The second time the original levels do not exist anymore and thus all resulting values are missing without warning or error.</p>
+<p><strong>Possible remedy</strong>: name the factor variable you create differently from the source variable, e.g.,</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSBjKDAsMCwwLDEsMCwyLDAsMSlcbnkgPC0gZmFjdG9yKHgsIGxldmVscyA9IGMoMCwxLDIpLCBsYWJlbHMgPSBjKFwibm9cIixcInllc1wiLFwibWF5YmVcIikpXG55XG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- c(0,0,0,1,0,2,0,1)
+y &lt;- factor(x, levels = c(0,1,2), labels = c(&quot;no&quot;,&quot;yes&quot;,&quot;maybe&quot;))
+y</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIG5vICAgIG5vICAgIG5vICAgIHllcyAgIG5vICAgIG1heWJlIG5vICAgIHllcyAgXG5MZXZlbHM6IG5vIHllcyBtYXliZVxuIn0= -->
+<pre><code>[1] no    no    no    yes   no    maybe no    yes  
+Levels: no yes maybe</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In this case, you can always go back and re-run the code creating the factor variable from its original source if you have overwritten it accidentally. Otherwise you would need to re-run the entire code to get the original formating of the variable back.</p>
+<p><strong>3. Common mistake:</strong> converting from <code>factor</code> to <code>integer</code>/<code>numeric</code> directly:</p>
+<p>Internally factors are stored in increasing integers starting at <span class="math inline">\(1\)</span> each attached with a <code>label</code>. If we create a factor from an integer variable and then convert it back, this behavior might be surprising.</p>
+<p><strong>Possible remedy</strong>: convert to <code>character</code> first since this will use the <code>label</code>s as values</p>
+<p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/factors.R">factors.R</a> for examples of each of the mistakes and remedies.</p>
+</div>
+<div id="how-can-i-find-an-explanation-of-the-output-of-a-function" class="section level3 unnumbered">
+<h3>How can I find an explanation of the output of a function?</h3>
+<p>See the <strong>Value</strong> section of the help file for the function. You can get the help file by calling:</p>
+<p><code>?FUNCTION</code></p>
+<p>e.g.,</p>
+<p><code>?lm</code> or <code>?mean</code></p>
+<p>If the function is provided by a package you have to load the package first using the <code>library(...)</code> function. e.g.,</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShIbWlzYylcbj9yY29yciBcbmBgYCJ9 -->
+<pre class="r"><code>library(Hmisc)
+?rcorr </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="what-does-the-margin-argument-do" class="section level3 unnumbered">
+<h3>What does the <code>MARGIN</code> argument do?</h3>
+<p>Some functions such as <code>apply</code> and <code>prop.table</code> take a <code>MARGIN</code> argument. This argument specifies over which dimension (e.g., rows = 1, columns = 2) a function should be applied. This is especially useful for multidimensional arrays such as matrices.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSA8LSBtYXRyaXgoMTo5LCBucm93PTMpXG5tXG5gYGAifQ== -->
+<pre class="r"><code>m &lt;- matrix(1:9, nrow=3)
+m</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICBbLDFdIFssMl0gWywzXVxuWzEsXSAgICAxICAgIDQgICAgN1xuWzIsXSAgICAyICAgIDUgICAgOFxuWzMsXSAgICAzICAgIDYgICAgOVxuIn0= -->
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>e.g. we could get the <code>max</code> of each <em>row</em> with</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXBwbHkobSwgMSwgbWF4KVxuYGBgIn0= -->
+<pre class="r"><code>apply(m, 1, max)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDcgOCA5XG4ifQ== -->
+<pre><code>[1] 7 8 9</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>and the <code>max</code> of each <em>column</em> with</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXBwbHkobSwgMiwgbWF4KVxuYGBgIn0= -->
+<pre class="r"><code>apply(m, 2, max)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMgNiA5XG4ifQ== -->
+<pre><code>[1] 3 6 9</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/margins.R">margins.R</a> for more examples.</p>
+</div>
+</div>
+<div id="issues-with-r-markdown" class="section level2 unnumbered">
+<h2>Issues with R Markdown</h2>
+<div id="i-get-an-error-when-knitting-to-pdf-but-it-works-for-html" class="section level3 unnumbered">
+<h3>I get an error when <code>knit</code>ting to PDF but it works for HTML</h3>
+<p>Try installing the <code>tinytex</code> library as follows before <code>knit</code>ing your document:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImluc3RhbGwucGFja2FnZXMoJ3Rpbnl0ZXgnKSIsInRpbnl0ZXg6Omluc3RhbGxfdGlueXRleCgpIl19 -->
+<pre class="r"><code>install.packages(&#39;tinytex&#39;)
+tinytex::install_tinytex()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="i-am-not-sure-where-r-code-latex-math-and-text-go" class="section level3 unnumbered">
+<h3>I am not sure where R-code, LaTeX math, and text go</h3>
+<p>In an Rmd document, there are 3 different environments, <a name="rchunk"></a></p>
+<p><strong>1. R-code</strong> is enclosed in three ticks followed by {r, <a href="https://rmarkdown.rstudio.com/lesson-3.html#chunk-options">chunk-options</a>} where the chunk options can include configuration for printing code and output as well as figures e.g.</p>
+<blockquote>
+<p>```{r, echo = TRUE, warnings = FALSE}</p>
+<p>print(&quot;Hello R!)</p>
+<p>```</p>
+</blockquote>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoXCJIZWxsbyBSIVwiKVxuYGBgIn0= -->
+<pre class="r"><code>print(&quot;Hello R!&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p><strong>2. LaTeX math</strong> can either be enclosed in single dollar signs $x^2$ <span class="math inline">\(\Rightarrow x^2\)</span> for in-line math or in double dollar signs to put the math output on its own line</p>
+<pre><code>$$ 
+x^2
+$$</code></pre>
+<p><span class="math display">\[
+x^2
+\]</span></p>
+<p>For aligned multi-line equations we can add <code>\begin{aligned}</code> and <code>\end{aligend}</code>. The equations will be aligend at the <code>&amp;</code> and a line is ended with <code>\\</code>.</p>
+<pre><code>$$
+\begin{aligned}
+x &amp;= 1 \\
+y &amp;= 2 \\
+z = &amp;3
+\end{aligned}
+$$</code></pre>
+<p><span class="math display">\[
+\begin{aligned}
+x &amp;= 1 \\
+y &amp;= 2 \\
+z = &amp;3
+\end{aligned}
+\]</span></p>
+<p><strong>3. Regular text</strong> goes anywhere between those environments</p>
+</div>
 </div>
 <div id="new-questions" class="section level2 unnumbered">
 <h2>New questions</h2>
@@ -1815,7 +2443,7 @@ summary {
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQpvdXRwdXQ6DQogIGh0bWxfZG9jdW1lbnQ6IA0KICAgIHRvYzogeWVzDQogICAgZGZfcHJpbnQ6IHBhZ2VkDQogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQNCiAgcGRmX2RvY3VtZW50Og0KICAgIHRvYzogeWVzDQotLS0NCjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgdHlwZT0idGV4dC9jc3MiIG1lZGlhPSJhbGwiIGhyZWY9InN0eWxlLmNzcyIgLz4NCg0KYGBge3IsIGluY2x1ZGU9RkFMU0UsIGZpZy5jYXA9IkEgc3RydWN0dXJlIG9mIHRoZSBncm91cCBwcm9qZWN0In0NCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwgZXJyb3IgPSBGQUxTRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UpDQpgYGANCg0KIyAoUEFSVCkgRkFRIHstfQ0KDQojIEZBUSB7LX0NCg0KSW4gdGhpcyBzZWN0aW9uLCB3ZSBwcm92aWRlIGFuc3dlcnMgdG8gcXVlc3Rpb25zIHRoYXQgc3R1ZGVudHMgb2YgcHJldmlvdXMgY29ob3J0cyBlbmNvdW50ZXJlZC4gV2UgZ3JvdXBlZCB0aGUgYW5zd2VycyBieSB0b3BpYyBhbmQgaG9wZSB0aGF0IHlvdSB3aWxsIGZpbmQgdGhlIGFuc3dlcnMgdXNlZnVsLiAgDQoNCiMjIFIgcGFja2FnZXMgey19DQoNCg0KDQojIyBOZXcgcXVlc3Rpb25zIHstfQ0KDQpDb3VsZG4ndCBmaW5kIGFuIGFuc3dlciB0byB5b3VyIHF1ZXN0aW9uPyBJbiB0aGlzIGNhc2UsIHlvdSBtYXkgdXNlIHRoZSBmb3J1bSBvbiBMZWFyblxAd3UgdG8gYXNrIHlvdXIgcXVlc3Rpb24uIFdlIHJlZ3VsYXJseSB1cGRhdGUgdGhpcyBzZWN0aW9uIG9mIHRoZSB3ZWJzaXRlIGFuZCB3aWxsICAgDQo=</div>
+<div id="rmd-source-code">LS0tDQpvdXRwdXQ6DQogIGh0bWxfZG9jdW1lbnQ6IA0KICAgIHRvYzogeWVzDQogICAgZGZfcHJpbnQ6IHBhZ2VkDQogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQNCiAgcGRmX2RvY3VtZW50Og0KICAgIHRvYzogeWVzDQotLS0NCjxsaW5rIHJlbD0ic3R5bGVzaGVldCIgdHlwZT0idGV4dC9jc3MiIG1lZGlhPSJhbGwiIGhyZWY9InN0eWxlLmNzcyIgLz4NCg0KYGBge3IsIGluY2x1ZGU9RkFMU0V9DQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUsIGVycm9yID0gVFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UpDQpgYGANCg0KIyAoUEFSVCkgRkFRIHstfQ0KDQojIEZBUSB7LX0NCg0KSW4gdGhpcyBzZWN0aW9uLCB3ZSBwcm92aWRlIGFuc3dlcnMgdG8gcXVlc3Rpb25zIHRoYXQgc3R1ZGVudHMgb2YgcHJldmlvdXMgY29ob3J0cyBlbmNvdW50ZXJlZC4gV2UgZ3JvdXBlZCB0aGUgYW5zd2VycyBieSB0b3BpYyBhbmQgaG9wZSB0aGF0IHlvdSB3aWxsIGZpbmQgdGhlIGFuc3dlcnMgdXNlZnVsLiAgDQoNCg0KIyMgQ29tbW9uIGVycm9yIG1lc3NhZ2VzIHstfQ0KDQojIyMgQSBnZW5lcmFsIG5vdGUgb24gZXJyb3IgbWVzc2FnZXMgey19DQoNCmBgYHtyICxlY2hvPUZBTFNFLG91dC53aWR0aCA9ICc0MCUnLGZpZy5hbGlnbj0nY2VudGVyJyxmaWcuY2FwID0gIiJ9DQprbml0cjo6aW5jbHVkZV9ncmFwaGljcygiLi9pbWFnZXMvb2ZmX29uLmpwZyIpDQpgYGANCg0KV2UgdXN1YWxseSBsb2FkIGRhdGEgaW50byBhIGBkYXRhLmZyYW1lYCBpbiBvdXIgUiBTZXNzaW9uIChlLmcuLCBmcm9tIGEgQ1NWIGZpbGUgdXNpbmcgYGRhdGEgPC0gcmVhZC5jc3YoImZpbGUuY3N2IilgKS4gSXQgaXMgaW1wb3J0YW50IHRvIG5vdGUgdGhhdCB0aGlzIGBkYXRhLmZyYW1lYCBpcyBub3QgdGhlIG9yaWdpbmFsIGRhdGEgZmlsZSwgYnV0IGp1c3QgYSBjb3B5IG9mIHRoZSBmaWxlIHRoYXQgaXMgc3RvcmVkIG9uIHRoZSBoYXJkIGRyaXZlLiBUaGlzIG1lYW5zIHRoYXQgYW55IGNoYW5nZXMgd2UgbWFrZSB0byB0aGUgYGRhdGEuZnJhbWVgIGFyZSAqKm5vdCoqIHBlcnNpc3RlbnQvcGVybWFuZW50IGFuZCBhcmUgKipub3QqKiB3cml0dGVuIHRvIHRoZSBvcmlnaW5hbCBmaWxlICh1bmxlc3MgaXQgaXMgb3ZlcndyaXR0ZW4gZXhwbGljaXRseSBieSB1c2luZyBlLmcuLCBgd3JpdGUuY3N2KGRhdGEsICJmaWxlLmNzdiIpYCwgd2hpY2ggd2UgdXN1YWxseSBkb24ndCBkbykuIFRoZXJlZm9yZSwgaXQgaXMgaW1wb3J0YW50IHRvIHdyaXRlIGFsbCBjb21tYW5kcyBpbiBhbiBSL1JtZCBmaWxlIHN1Y2ggdGhhdCB3ZSBjYW4gcmUtcnVuIHRoZSBhbmFseXNpcyB0aGUgbmV4dCB0aW1lIHdlIG9wZW4gUiBhbmQgcmVwcm9kdWNlIHRoZSByZXN1bHRzLiBUaGlzIGFsc28gbWVhbnMgdGhhdCBpZiB5b3UgY2Fubm90IHNvbHZlIGFuIGlzc3VlIHVzaW5nIHRoZSBzdWdnZXN0ZWQgc29sdXRpb25zIHRvIHNwZWNpZmljIGVycm9yIG1lc3NhZ2VzIG1lbnRpb25lZCBvbiB0aGlzIHBhZ2UsIGl0IGlzIGNvbXBsZXRlbHkgc2FmZSB0byByZXN0YXJ0IFIgb3IgZGVsZXRlIHZhcmlhYmxlcyBmcm9tIHRoZSBHbG9iYWwgRW52aXJvbm1lbnQuIFlvdSBqdXN0IGhhdmUgdG8gcmUtcnVuIG91ciBjb2RlIHRvIGdldCB0aGUgdmFyaWFibGVzIGFuZCByZXN1bHRzIGJhY2suIFRoZXJlZm9yZSwgeW91ciBjb2RlIGZpbGVzIHNob3VsZCBhbHdheXMgYmUgZnVsbHkgcmVwcm9kdWNpYmxlIHVzaW5nIG9ubHkgdGhlIFIvUm1kIGFuZCBkYXRhIGZpbGVzLiBJbiBhZGRpdGlvbiB5b3VyIFIvUm1kIGZpbGVzIHNob3VsZCBydW4gbGluZWFybHkgZnJvbSB0aGUgZmlyc3QgdG8gdGhlIGxhc3QgbGluZSBhbmQgc2hvdWxkIG5vdCBkZXBlbmQgb24gImp1bXBpbmciIGJhY2sgYW5kIGZvcnRoLiBUaGUgZmlsZXMgdGhhdCB5b3Ugb2J0YWluIGZyb20gdXMgZnJvbSB0aGlzIGNvdXJzZSBhcmUgZXhhbXBsZXMgb2YgcmVwcm9kdWNpYmxlIGZpbGVzIGFuZCBpbiBjYXNlIHlvdSBhIHN0dWNrIHdpdGggYSBwcm9ibGVtIGF0IGEgY2VydGFpbiBwb2ludCwgeW91IGNhbiBqdXN0IHNhdmUgdGhlIGNvZGUgZmlsZSBhbmQgcnVuIGl0IGFnYWluIHVwIHVudGlsIHRoZSBwb2ludCB3aGVyZSB5b3Ugd2VyZSBiZWZvcmUgdGhlIGVycm9yIG9jY3VycmVkLiAgIA0KDQpUaGlzIG1lYW5zIHRoYXQgYSBnZW5lcmFsIHByb2NlZHVyZSBmb3IgZGVhbGluZyB3aXRoIGVycm9ycyB0aGF0IGNhbm5vdCBiZSBzb2x2ZWQgaW4gYW55IG90aGVyIHdheSB3b3VsZCBiZSBhcyBmb2xsb3dzOg0KDQoxLiBTYXZlIHlvdXIgY29kZSBmaWxlIGFuZCByZXN0YXJ0IHlvdXIgUiBTZXNzaW9uIChTZXNzaW9uIC0+IFJlc3RhcnQgUiBpbiBSU3R1ZGlvKQ0KMi4gR28gYmFjayB0byB0aGUgYmVnaW5uaW5nIG9mIHlvdXIgY29kZSBmaWxlIGFuZCBydW4gaXQgbGluZSBieSBsaW5lIChgQ3RybC1FbnRlcmAgaW4gUlN0dWRpbykNCjMuIElmIHlvdXIgZXJyb3IgcGVyc2lzdHMgY2hlY2sgdGhlIGFmZmVjdGVkIGxpbmUgZm9yIHR5cG9zL2RpZmZlcmVuY2VzIGluIHNwZWxsaW5nLiANCjQuIElmIHRoZSBlcnJvciBvY2N1cnMgaW4gYSBmdW5jdGlvbiBtYWtlIHN1cmUgeW91IGFyZSBwYXNzaW5nIHRoZSBhcmd1bWVudHMgY29ycmVjdGx5IChzZWUgaGVscCBmaWxlIGZvciB0aGUgZnVuY3Rpb24gdXNpbmcgYD9GVU5DVElPTk5BTUVgKQ0KNS4gTG9vayBhdCBhbGwgdGhlIHZhcmlhYmxlcyBpbiB5b3VyIEdsb2JhbCBFbnZpcm9ubWVudCBhbmQgbWFrZSBzdXJlIHRoZXkgYXJlIGluIHRoZSBmb3JtYXQgeW91IGV4cGVjdCB0aGVtIHRvIGJlIChlLmcuLCBpZiBhIGZpbGUgeW91IGV4cGVjdCB0byBiZSBhIGRhdGEgZnJhbWUgaXMgcmVhbGx5IGEgc3BlY2lmaWVkIGFzIGEgZGF0YSBmcmFtZSkuIA0KNi4gU2VlIHRoZSBsaXN0IG9mIGNvbW1vbiBlcnJvciBtZXNzYWdlcyBmb3IgbW9yZSBleHBsYW5hdGlvbnMgYmVsb3cgDQo3LiBOb3RoaW5nIGhlbHBlZDogQXNrIGluIHRoZSBmb3J1bS4gSWYgcG9zc2libGUgd2l0aCBhIHNjcmVlbnNob3QgdGhhdCBleHBsYWlucyB5b3VyIGlzc3VlLCBvciAtIGJldHRlciB5ZXQgLSBhIFttaW5pbWFsIHJlcHJvZHVjaWJsZSBleGFtcGxlXShodHRwczovL2NvbW11bml0eS5yc3R1ZGlvLmNvbS90L2ZhcS1ob3ctdG8tZG8tYS1taW5pbWFsLXJlcHJvZHVjaWJsZS1leGFtcGxlLXJlcHJleC1mb3ItYmVnaW5uZXJzLzIzMDYxKS4gDQoNCkluIHRoZSBmb2xsb3dpbmcgY2FwaXRhbGl6ZWQgd29yZHMgYXJlIHN0YW5kLWlucyBmb3Igc3BlY2lmaWMgY2FsbHMvc3ltYm9scy9mdW5jdGlvbnMuDQoNCiMjIyBFcnJvciBpbiBmaWxlKGZpbGUsICJydCIpOiBjYW5ub3Qgb3BlbiB0aGUgY29ubmVjdGlvbiB7LX0NCg0KVGhpcyBlcnJvciBtZXNzYWdlIHNvbWV0aW1lcyBoYXMgYW4gYWRkaXRpb25hbCB3YXJuaW5nOg0KDQpgYGANCkluIGFkZGl0aW9uOiBXYXJuaW5nIG1lc3NhZ2U6DQpJbiBmaWxlKGZpbGUsICJydCIpIDoNCiAgY2Fubm90IG9wZW4gZmlsZSAnRklMRSc6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnkNCmBgYA0KDQpUaGlzIGVycm9yIG9jY3VycyBlaXRoZXIgd2hlbiBhIGZpbGUgbmFtZSBpcyBub3Qgc3BlbGxlZCBjb3JyZWN0bHkgb3IgdGhlIGZpbGUgaXMgbm90IGluIHRoZSBkaXJlY3Rvcnkgd2hlcmUgUiBpcyBsb29raW5nIGZvciBpdC4gWW91IGNhbiBjaGVjayB0aGUgZGlyZWN0b3J5IFIgaXMgbG9va2luZyBhdCBieSBleGVjdXRpbmcgdGhlIGZ1bmN0aW9uIGBnZXR3ZCgpYC4gVG8gc2V0IGEgbmV3IGRpcmVjdG9yeSB1c2UgYHNldHdkKERJUkVDVE9SWSlgLiBOb3RlIHRoYXQgeW91ICoqY2Fubm90KioganVzdCBwYXN0ZSBhIHBhdGggZnJvbSBXaW5kb3dzIEV4cGxvcmVyIHRvIGBzZXR3ZGAgc2luY2UgdGhlIGRpcmVjdG9yeSBoYXMgdG8gYmUgaW4gdGhlIGZvcm1hdDoNCg0KYHNldHdkKCJDOi9Vc2Vycy9VU0VSTkFNRS9Eb2N1bWVudHMiKWAgDQoNCmJ1dCBXaW5kb3dzIEV4cGxvcmVyIHVzZXMNCg0KYEM6XFVzZXJzXFVTRVJOQU1FXERvY3VtZW50c2AgKGkuZS4sIGNoYW5nZSBgXGAgdG8gYC9gIGluIFIgd2hlbiBzcGVjaWZ5aW5nIHRoZSBwYXRoKQ0KDQpBbHRlcm5hdGl2ZWx5LCB5b3UgY2FuIHNldCB0aGUgZGlyZWN0b3J5IGluIFJTdHVkaW8gdW5kZXIgU2Vzc2lvbiAtPiBTZXQgV29ya2luZyBEaXJlY3RvcnkuIEhlcmUgIlRvIFNvdXJjZSBGaWxlIExvY2F0aW9uIiB3aWxsIHNldCB0aGUgZGlyZWN0b3J5IHRvIHdoZXJldmVyIHRoZSBjdXJyZW50bHkgb3BlbiBSIGZpbGUgaXMgc3RvcmVkLiAgIA0KDQojIyMgRXJyb3I6IHVuZXhwZWN0ZWQgJ1NZTUJPTCcgaW4gIkNBTEwiIHstfQ0KDQpVc3VhbGx5IHRoZSBgdW5leHBlY3RlcyBTWU1CT0xgIG1lc3NhZ2UgaXMgZHVlIHRvIHBhcmVudGhlc2VzIG5vdCBiZWluZyBtYXRjaGVkIGJ1dCBpdCBjb3VsZCBhbHNvIGJlIGFueSBvdGhlciBzeW1ib2wgdGhhdCBSIGNhbm5vdCBpbnRlcnByZXQgaW4gdGhlIGdpdmVuIGNvbnRleHQuIFBsZWFzZSBjaGVjayB0aGUgbGluZSBpbiB3aGljaCB0aGUgZXJyb3Igb2NjdXJyZWQgZm9yIHR5cG9zIChlc3BlY2lhbGx5IHRvbyBtYW55LyB0b28gZmV3IHN5bWJvbHMpLiBTb21lIGNvbW1vbiBleGFtcGxlcyBhcmU6DQoNCmBgYHtyLCBlcnJvciA9IFRSVUV9DQpwcmludCgiaGVsbG8iKSkNCmBgYA0KVGhlcmUgaXMgb25lIHRvbyBtYW55IGNsb3NpbmcgcGFyZW50aGVzaXMgaGVyZS4gDQoNCmBgYHtyLCBlcnJvciA9IFRSVUV9DQoxICsvIDIgIyBUb28gbWFueSBzeW1ib2xzDQpgYGANClRoZSAiLyIgc3ltYm9sIG1heSBub3QgZm9sbG93IHRoZSAiKyIgc3ltYm9sIHdpdGhvdXQgYW55IGFkZGl0aW9uYWwgb2JqZWN0cy4NCg0KYGBge3IsIGVycm9yID0gVFJVRX0NCjEgMiAjIE1pc3Npbmcgc3ltYm9sDQpgYGANClRoZSBzZXF1ZW5jZSB3aXRoIGEgc3BhY2UgYmV0d2VlbiBudW1iZXJzIGlzIG5vdCByZWNvZ25pemVkIGJ5IFIuIA0KDQpgYGB7ciwgZXJyb3IgPSBUUlVFfQ0KeCA8LSAzDQoyeCAjIE1pc3Npbmcgc3ltYm9sDQpgYGANCklmIHlvdSB3YW50ZWQgdG8gbXVsdGlwbHkgeCBieSAyIHlvdSB3b3VsZCBuZWVkIHRvIGEgdGhlICIqIiBzeW1ib2wsIGFzIHRoZSBmb2xsb3dpbmcgZXhhbXBsZSBzaG93cy4gDQoNCmBgYHtyIGluY2x1ZGU9RkFMU0V9DQp4IDwtIDMNCmBgYA0KYGBge3J9DQoyKngNCmBgYA0KDQojIyMgRXJyb3IgaW4gQ0FMTCA6IG9iamVjdCBvZiB0eXBlICdjbG9zdXJlJyBpcyBub3Qgc3Vic2V0dGFibGUgey19DQoNClRoaXMgZXJyb3Igb2NjdXJzIHVzdWFsbHkgd2hlbiBvbmUgdHJpZXMgdG8gc3Vic2V0IGEgZnVuY3Rpb24gKGVpdGhlciB3aXRoIGBmdW4kZWxlbWVudGAgb3IgYGZ1blsxXWAgd2hlcmUgYGZ1bmAgaXMgYSBmdW5jdGlvbikuIENoZWNrIHlvdXIgdmFyaWFibGUgKGVzcGVjaWFsbHkgYGRhdGEuZnJhbWVzYCkgbmFtZXMgZm9yIHR5cG9zISBUaGlzIGhhcHBlbnMgd2hlbiB5b3UgcnVuIHRoZSBmb2xsb3dpbmcgY29kZSwgZm9yIGV4YW1wbGUsIHNpbmNlIGBtZWFuYCBpcyBhIGZ1bmN0aW9uOg0KDQpgYGB7ciwgIGVycm9yID0gVFJVRX0NCiMgRG9lcyBub3Qgd29yazoNCm1lYW5zIDwtIGRhdGEuZnJhbWUodmFsdWUgPSBjKDEsMiwzKSkNCm1lYW4kdmFsdWUNCmBgYA0KDQppbnN0ZWFkIG9mIChpLmUuLCBjb3JyZWN0aW5nIGZvciB0aGUgbWlzc2luZyAicyIgdG8gaWRlbnRpZnkgdGhlIGRhdGEgZnJhbWUgYnkgaXRzIG5hbWUpDQoNCmBgYHtyfQ0KIyBXb3JrczoNCm1lYW5zIDwtIGRhdGEuZnJhbWUodmFsdWUgPSBjKDEsMiwzKSkNCm1lYW5zJHZhbHVlDQpgYGANCg0Kb3Igd2UgZ2l2ZSB2YXJpYWJsZXMgdGhlIHNhbWUgbmFtZSBhcyBhIGZ1bmN0aW9uICh3aGljaCBzaG91bGQgZ2VuZXJhbGx5IGJlIGF2b2lkZWQpIGJ1dCBoYXZlIG5vdCBjcmVhdGVkIHRoYXQgdmFyaWFibGUgeWV0Og0KDQpgYGB7ciBlcnJvcj1UUlVFfQ0Kc3VtbWFyeShhb3YpW1sxXV0NCmBgYA0KDQpNYWtlIHN1cmUgYWxsIHRoZSByZWxldmFudCBjb2RlIGlzIHJ1biBmaXJzdDoNCg0KYGBge3J9DQpkYXQgPC0gZGF0YS5mcmFtZSh2YWx1ZSA9IGMoMSwyLDMpLCBncm91cCA9IGMoImEiLCAiYiIsICJiIikpDQphb3YgPC0gYW92KHZhbHVlfmdyb3VwLCBkYXQpDQpzdW1tYXJ5KGFvdilbWzFdXQ0KYGBgDQoNCiMjIyBFcnJvciBpbiBDQUxMX1dJVEhfJDogJCBvcGVyYXRvciBpcyBpbnZhbGlkIGZvciBhdG9taWMgdmVjdG9ycyB7LX0NCg0KVGhpcyBlcnJvciBvY2N1cnMgd2hlbiB3ZSB0cnkgdG8gc3Vic2V0IGEgdmVjdG9yIHVzaW5nIHRoZSBgJGAgb3BlcmF0b3IuIFVzdWFsbHkgdGhpcyBvY2N1cnMgd2hlbiB3ZSB0aGluayBhbiBvYmplY3QgaXMgYSBgZGF0YS5mcmFtZWAgd2l0aCB0aGUgdmFyaWFibGUgaW4gaXQgYnV0IGl0IGlzIHJlYWxseSBhIHZlY3Rvci4NCg0KYGBge3IsIGVjaG8gPSBUUlVFLCBlcnJvciA9IFRSVUV9DQp4IDwtIGMoMSwyLDMpDQp4JGENCmBgYA0KDQpgYGB7ciBpbmNsdWRlID0gRkFMU0V9DQp4IDwtIDE6Mw0KYGBgDQpgYGB7cn0NCnhkZiA8LSBkYXRhLmZyYW1lKGEgPSB4KQ0KeGRmJGENCmBgYA0KDQpOb3RlIHRoYXQgdGhpcyBlcnJvciBjYW4gYWxzbyBvY2N1ciBhcyBwYXJ0IG9mIGZ1bmN0aW9uIGNhbGxzIHdoZW4gc29tZSB2YXJpYWJsZXMgYXJlIGBOQWA6DQoNCmBgYHtyIGVycm9yID1UUlVFfQ0KbGlicmFyeShwc3ljaCkNCnhkZiRncm91cCA8LSBOQQ0KbWVhbih4ZGYkYSwgeGRmJGdyb3VwKQ0KYGBgDQoNCldoZW4geW91IGdldCB0aGlzIGVycm9yIG1ha2Ugc3VyZSB5b3VyIGRhdGEgaXMgaW4gdGhlIGZvcm1hdCB5b3UgZXhwZWN0IGl0IHRvIGJlIChlLmcuLCB1c2luZyB0aGUgYHN0cmAgZnVuY3Rpb24pLiBBbmQgdGhhdCBtaXNzaW5nIHZhbHVlcyAoaS5lLiwgTkEpIGFyZSBoYW5kbGVzIGFwcHJvcHJpYXRlbHkuIA0KDQpgYGB7cn0NCnN0cih4ZGYpDQpgYGANCiMjIyBFcnJvciBpbiBDQUxMOiBvYmplY3QgJ05BTUUnIG5vdCBmb3VuZCB7LX0NCg0KVGhpcyBlcnJvciBvY2N1cnMgd2hlbmV2ZXIgeW91IHBhc3MgYSB2YXJpYWJsZSBuYW1lIHRoYXQgaXMgbm90IGFzc2lnbmVkIHRvIHNvbWUgZnVuY3Rpb24uIFRoZSBlcnJvciBpcyBmb3IgZXhhbXBsZToNCg0KYEVycm9yIGluIHBsb3QoeCk6IG9iamVjdCAneCcgbm90IGZvdW5kYA0KDQpJZiB5b3UganVzdCBlbnRlciBhIHZhcmlhYmxlIG5hbWUgdGhhdCBpcyBub3QgYXNzaWduZWQgaXQgbG9va3MgbGlrZSB0aGlzOg0KDQpgRXJyb3I6IG9iamVjdCAnTkFNRScgbm90IGZvdW5kYA0KDQpDaGVjayB5b3VyIGNvZGUgZm9yIHR5cG9zIGFuZCBtYWtlIHN1cmUgeW91IGhhdmUgcnVuIGFsbCB0aGUgcmVsZXZhbnQgbGluZXMgb2YgY29kZSBiZWZvcmUgdGhlIG9uZSBpbiB3aGljaCB0aGUgZXJyb3Igb2NjdXJzIQ0KDQojIyMgRXJyb3IgaW4gQ0FMTDogY291bGQgbm90IGZpbmQgZnVuY3Rpb24gIkZVTkNUSU9OIiB7LX0NCg0KVGhpcyBlcnJvciBvY2N1cnMgaWYgYSBmdW5jdGlvbiBuYW1lIGlzIGVpdGhlciBtaXNzcGVsbGVkIG9yIHNvbWUgcGFja2FnZXMgaGF2ZSBub3QgYmVlbiBsb2FkZWQgaW50byB0aGUgY3VycmVudCBzZXNzaW9uIChgbGlicmFyeShQQUNLQUdFTkFNRSlgKS4gWW91IGhhdmUgdG8gcmUtbG9hZCBhbGwgcGFja2FnZXMgZXZlcnkgdGltZSB5b3UgcmVzdGFydCBSLiBGb3IgZXhhbXBsZSBpZiB5b3UgKipkaWQgbm90KiogbG9hZCB0aGUgYGdncGxvdDJgIGxpYnJhcnkgYnV0IHRyeSB0byB1c2UgdGhlIGBnZ3Bsb3RgIGZ1bmN0aW9uOg0KDQpgYGB7ciBlY2hvPUZBTFNFLCBlcnJvciA9IFRSVUV9DQpkZXRhY2gocGFja2FnZTpnZ3Bsb3QyKQ0KYGBgDQoNCmBgYHtyIGVycm9yID0gVFJVRX0NCmdncGxvdChkYXRhKQ0KYGBgDQoNCklmIHlvdSBhcmUgbm90IHN1cmUgd2hpY2ggcGFja2FnZSBwcm92aWRlcyBhIGdpdmVuIGZ1bmN0aW9uLCB0cnkgcnVubmluZzoNCg0KYD8/RlVOQ1RJT05gDQoNCndpdGggdHdvIGA/P2AgdGhpcyB3aWxsIHNlYXJjaCB0aGUgaGVscCBmaWxlcyBvZiBhbGwgaW5zdGFsbGVkIHBhY2thZ2VzIGZvciBgRlVOQ1RJT05gIChlLmcuLCBgPz9nZ3Bsb3RgKS4NCg0KIyMjIEVycm9yIGluIENBTEw6IGluY29ycmVjdCBudW1iZXIgb2YgZGltZW5zaW9uIHstfQ0KDQpUaGlzIGVycm9yIG9jY3VycyB3aGVuIHN1YnNldHRpbmcgYW4gb2JqZWN0IHdpdGggdGhlIHdyb25nIG51bWJlciBvZiBkaW1lbnNpb24uIEZvciBleGFtcGxlIGlmIHdlIGhhdmUgYSB2ZWN0b3IgYHhgIGFuZCB0cnkgdG8gZ2V0IGFuIGVsZW1lbnQgaW4gdGhlIHNlY29uZCBkaW1lbnNpb246DQoNCmBgYHtyIGVycm9yID0gVFJVRX0NCnggPC0gYygxLDIsMykNCnhbMSwxXQ0KYGBgDQpgYGB7ciBpbmNsdWRlPUZBTFNFfQ0KeCA8LSBjKDEsMiwzKQ0KYGBgDQpgYGB7cn0NCnhbMV0NCmBgYA0KDQpOb3RlIHRoYXQgYGRhdGEuZnJhbWVgcyBoYXZlIHR3byBkaW1lbnNpb25zIChlYWNoIHZhcmlhYmxlIGlzIGEgY29sdW1uLCBlYWNoIG9ic2VydmF0aW9uIGEgcm93KSBldmVuIGlmIHRoZXJlIGlzIG9ubHkgb25lIHZhcmlhYmxlOg0KDQpgYGB7cn0NCnggPC0gYygxLDIsMykNCmRhdGEuZnJhbWUoeClbMSwgMV0NCmBgYA0KDQpGb3IgbXVsdGlkaW1lbnNpb25hbCBvYmplY3RzIHlvdSBjYW4gYWx3YXlzIGNoZWNrIHRoZSBzaXplIG9mIGVhY2ggZGltZW5zaW9uIHVzaW5nIHRoZSBgZGltYCBmdW5jdGlvbjoNCg0KYGBge3J9DQpkaW0oZGF0YS5mcmFtZSh4KSkNCmBgYA0KDQpGb3IgdmVjdG9ycyBgZGltYCB3aWxsIHJldHVybiBgTlVMTGAuDQoNCg0KIyMgSW5zdGFsbGF0aW9uIG9mIFIgcGFja2FnZXMgey19DQoNCiMjIyBXaGF0IGFyZSB0aGUgZGlmZmVyZW50IHdheXMgdG8gaW5zdGFsbCBSIHBhY2thZ2VzPyB7LX0NCg0KVGhlcmUgYXJlIG11bHRpcGxlIHdheXMgdG8gaW5zdGFsbCBhIHBhY2thZ2U6DQoNCiogRW50ZXIgYGluc3RhbGwucGFja2FnZXMoIlBBQ0tBR0VOQU1FIilgIGluIHRoZSBjb25zb2xlIChhdHRlbnRpb246IHRoZSBuYW1lIG9mIHRoZSBwYWNrYWdlIG5lZWRzIHRvIGJlIGluIHF1b3RhdGlvbiBtYXJrcykNCiogR28gdG8gdGhlICJQYWNrYWdlcyIgcGFuZSBpbiBSU3R1ZGlvIChsb3dlciByaWdodCBieSBkZWZhdWx0KSwgdGhlbiBjbGljayBvbiAiSW5zdGFsbCIsIHRoZW4gZW50ZXIgdGhlIHBhY2thZ2UgbmFtZQ0KKiBVc2luZyB0aGUgdHdvIG1ldGhvZHMgYWJvdmUgd291bGQgbG9hZCB0aGUgcGFja2FnZSBmcm9tIHRoZSBvZmZpY2lhbCBSIHNlcnZlciwgdGhlIHNvLWNhbGxlZCBDb21wcmVoZW5zaXZlIFIgQXJjaGl2ZSBOZXR3b3JrIChDUkFOKS4gVGhlcmUgbWF5IGJlIGluc3RhbmNlcyB3aGVuIHlvdSB3b3VsZCBsaWtlIHRvIGluc3RhbGwgcGFja2FnZXMgZnJvbSBvdGhlciBzb3VyY2VzLiBUaGlzIGNvdWxkIGJlIHRoZSBjYXNlLCBmb3IgZXhhbXBsZSwgd2hlbiBhIHBhY2thZ2UgaXMgbm90IGF2YWlsYWJsZSBmb3IgdGhlIHZlcnNpb24gb2YgUiB0aGF0IHlvdSBhcmUgdXNpbmcuIFNvbWV0aW1lcyBhbiBuZXcgdmVyc2lvbiBvZiBSIGlzIHJlbGVhc2VkIGFuZCBzb21lIHBhY2thZ2VzIG1heSByZXF1aXJlIHVwZGF0aW5nIHRvIGJlIGNvbXBhdGlibGUgd2l0aCB0aGlzIG5ldyB2ZXJzaW9uLiBUaGUgdXBkYXRpbmcgcHJvY2VzcyBvbiB0aGUgb2ZmaWNpYWwgc2VydmVyIG1heSB0YWtlIHNvbWUgdGltZSBhbmQgdXN1YWxseSB0aGUgbW9zdCByZWNlbnQgdmVyc2lvbiBvZiBhIHBhY2thZ2UgYXJlIGF2YWlsYWJsZSBmcm9tIG90aGVyIHNvdXJjZXMsIHN1Y2ggYXMgR2l0SHViLiBVc2luZyB0aGUgYGRldnRvb2xzYCBwYWNrYWdlLCB5b3UgY2FuIGluc3RhbGwgcGFja2FnZXMgZnJvbSBHaXRIdWIgZGlyZWN0bHk6IGBkZXZ0b29sczo6aW5zdGFsbF9naXRodWIocmVwbyA9ICJVU0VSTkFNRS9QQUNLQUdFTkFNRSIpYC4gT2YgY291cnNlLCB0aGlzIHJlcXVpcmVzIHRoZSBgZGV2dG9vbHNgIHBhY2thZ2UgdG8gYmUgaW5zdGFsbGVkIGFscmVhZHk7IGkuZS4sIHlvdSBuZWVkIHRvIHJ1biBgaW5zdGFsbC5wYWNrYWdlcygiZGV2dG9vbHMiKWAgZmlyc3QsIGlmIHRoZSBgZGV2dG9vbHNgIHBhY2thZ2UgaXMgbm90IGluc3RhbGxlZCB5ZXQuIA0KDQojIyMgSSBjYW5ub3QgaW5zdGFsbCBwYWNrYWdlcyBkdWUgdG8gIkVycm9yIGluIGNvbnRyaWIudXJsKHJlcG9zLCAic291cmNlIikiIG9yICJXYXJuaW5nIG1lc3NhZ2U6IHBhY2thZ2Ug4oCYUEFDS0FHRU5BTUXigJkgaXMgbm90IGF2YWlsYWJsZSBmb3IgdGhpcyB2ZXJzaW9uIG9mIFIiIHstfQ0KDQoxLiBUcnkgYWRkaW5nIHRoZSBgcmVwb2AgYXJndW1lbnQgdG8gdGhlIGBpbnN0YWxsLnBhY2thZ2VzYCBjb21tYW5kIGFzIGluIHRoZSBmb2xsb3dpbmcgZXhhbXBsZToNCg0KYGBgUg0KaW5zdGFsbC5wYWNrYWdlcygiUEFDS0FHRU5BTUUiLCByZXBvPSJodHRwczovL2Nsb3VkLnItcHJvamVjdC5vcmcvIikNCmBgYA0KDQoyLiBUcnkgdG8gaW5zdGFsbCB0aGUgcGFja2FnZSBmcm9tIEdpdEh1YiBkaXJlY3RseSB1c2luZyB0aGUgYGRldnRvb2xzYCBwYWNrYWdlLg0KDQpGb3IgZXhhbXBsZSB0byBnZXQgdGhlIGBkZXZ0b29sc2AgcGFja2FnZSBhbmQgaW5zdGFsbCB0aGUgYGdnc3RhdHNwbG90YCBwYWNrYWdlIGZyb20gdGhlIEdpdEh1Yi11c2VyIGBJbmRyYWplZXRQYXRpbGAgcnVuIHRoZSBmb2xsb3dpbmcgY29kZToNCg0KYGBgUg0KaW5zdGFsbC5wYWNrYWdlcygiZGV2dG9vbHMiKQ0KZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKA0KICByZXBvID0gIkluZHJhamVldFBhdGlsL2dnc3RhdHNwbG90IiwgIyBwYWNrYWdlIHBhdGggb24gR2l0SHViICgidXNlcm5hbWUvcGFja2FnZW5hbWUiKQ0KICBkZXBlbmRlbmNpZXMgPSBUUlVFLCAjIGluc3RhbGxzIHBhY2thZ2VzIHdoaWNoIGdnc3RhdHNwbG90IGRlcGVuZHMgb24NCiAgdXBncmFkZV9kZXBlbmRlbmNpZXMgPSBUUlVFICMgdXBkYXRlcyBhbnkgb3V0IG9mIGRhdGUgZGVwZW5kZW5jaWVzDQopDQpgYGANCg0KMy4gSW4gY2FzZSB5b3UgYXJlIHVzaW5nIGBrbml0YHRpbmcgcHJvY2VzcyBvZiBhIFIgTWFya2Rvd24gZmlsZSwgeW91IHNob3VsZCBub3QgaW5zdGFsbCBhbnkgcGFja2FnZXMgZnJvbSB3aXRoaW4gdGhlIG1hcmtkb3duIGZpbGUuIEluc3RlYWQsIGluc3RhbGwgdGhlIHBhY2thZ2VzIGZpcnN0IHVzaW5nIGEgcGxhaW4gUiBzY3JpcHQgZmlsZSBhbmQgdGhlbiBsb2FkIHRoZSBwYWNrYWdlIHdpdGhpbiB0aGUgbWFya2Rvd24gZmlsZSBiZWZvcmUgY2xpY2tpbmcgYGtuaXRgIHRvIGNvbXBpbGUgdGhlIGRvY3VtZW50Lg0KDQojIyMgU29tZSBsaWJyYXJpZXMgd2l0aCBncmFwaGljYWwgb3V0cHV0IChlLmcuLCBzdW1tYXJ5dG9vbHMsIG1hZ2ljaykgZmFpbCB0byBpbnN0YWxsL2xvYWQgcHJvcGVybHkgb24gTWFjT1Mgey19DQoNClNvbWUgbGlicmFyaWVzIHJlcXVpcmUgdGhlIFtYUXVhcnR6XShodHRwczovL3d3dy54cXVhcnR6Lm9yZykgd2luZG93IHN5c3RlbSBmb3IgTWFjT1MuIEFmdGVyIGluc3RhbGxpbmcgW1hRdWFydHpdKGh0dHBzOi8vd3d3LnhxdWFydHoub3JnKSBwbGVhc2UgcmVzdGFydCB5b3VyIGNvbXB1dGVyLiBJZiB5b3UgZ2V0IGFuIGVycm9yIG1lc3NhZ2UgaW5jbHVkaW5nIGEgbWVzc2FnZSBhYm91dCB0aGUgYG1hZ2lja2AgcGFja2FnZSB0cnkgYGluc3RhbGwucGFja2FnZXMoIm1hZ2ljayIpYCBhbmQgaWYgdGhhdCBmYWlscyBgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJyb3BlbnNjaS9tYWdpY2siLCBkZXBlbmRlbmNpZXMgPSBUUlVFKWAgbWlnaHQgaGVscC4NCg0KIyMjIEkgY2Fubm90IGluc3RhbGwgc29tZSBwYWNrYWdlcyBvbiBNYWNPUyB7LX0NCg0KMS4gV2hlbiBhc2tlZCB3aGV0aGVyIFIgc2hvdWxkIHRyeSB0byBpbnN0YWxsIGEgcGFja2FnZSBmcm9tIHNvdXJjZXMgYSBwYWNrYWdlIHdoaWNoIG5lZWRzIGNvbXBpbGF0aW9uLCBlbnRlciAibm8iIG9yICJuIi4NCg0KDQpgYGB7ciAsZWNobz1GQUxTRSxvdXQud2lkdGggPSAnNzAlJyxmaWcuYWxpZ249J2NlbnRlcicsZmlnLmNhcCA9ICIifQ0Ka25pdHI6OmluY2x1ZGVfZ3JhcGhpY3MoIi4vaW1hZ2VzL2Vycm9yLnBuZyIpDQpgYGANCg0KMi4gIElmIHRoaXMgZG9lc24ndCBzb2x2ZSB0aGUgaXNzdWUsIHRyeSBpbnN0YWxsaW5nIHRoZSBmcmVlIFhDb2RlIHBhY2thZ2UgZnJvbSB0aGUgQXBwbGUgQXBwc3RvcmUsIG9wZW4gYSBUZXJtaW5hbCBhbmQgZW50ZXIgInhjb2RlLXNlbGVjdCAtLWluc3RhbGwiLiBBZnRlciB0aGF0IHRyeSB0byBpbnN0YWxsIHRoZSBwYWNrYWdlIGFnYWluIChhbnN3ZXJpbmcgInllcyIgdG8gdGhlIHF1ZXN0aW9uIGFib3ZlKS4gDQoNCiMjIElzc3VlcyB3aXRoIHN0YXRpc3RpY3MgYW5kIGRhdGEgey19DQoNCiMjIyBXaHkgZG9lcyBhIG11bHRpLWl0ZW0gc2NhbGUgbGVhZCB0byBpbmNyZWFzZWQgcmVsaWFiaWxpdHk/IHstfQ0KDQoiV2hlbiBjb21iaW5pbmcgc2V2ZXJhbCBpdGVtcyBpbnRvIGEgc2NhbGUsIHJhbmRvbSBlcnJvciB0aGF0IGlzIGluaGVyZW50IGluIGV2ZXJ5IGl0ZW0gaXMgYXZlcmFnZWQgb3V0LCB3aGljaCBsZWFkcyB0byBpbmNyZWFzZWQgbGV2ZWxzIG9mIHJlbGlhYmlsaXR5Ii4gVGhlcmUgY291bGQsIGZvciBleGFtcGxlLCBiZSBpbmRpdmlkdWFsLWxldmVsIGRpZmZlcmVuY2VzIGluIHRoZSBpbnRlcnByZXRhdGlvbiBvZiBjZXJ0YWluIGl0ZW1zLiBXaGVuIHlvdSBoYXZlIG11bHRpcGxlIGl0ZW1zIG1lYXN1cmluZyB0aGUgc2FtZSB1bmRlcmx5aW5nIGNvbnN0cnVjdCwgdGhlc2UgZGlmZmVyZW5jZXMgd2lsbCBhdmVyYWdlIG91dC4gDQoNClNlZSBbRGlhbWFudG9wb3Vsb3MsIFNhcnN0ZWR0LCBGdWNocywgZXQgYWwuICgyMDEyKV0oaHR0cHM6Ly9saW5rLnNwcmluZ2VyLmNvbS9hcnRpY2xlLzEwLjEwMDcvczExNzQ3LTAxMS0wMzAwLTMpDQoNCiMjIyBXaHkgY2FuIGRlbWVhbmluZy9zdGFuZGFyZGl6YXRpb24gbGVhZCB0byBtaXNzaW5nIHZhbHVlcz8gey19DQoNCkNhbGN1bGF0aW5nIHN0YXRpc3RpY3MgKGUuZy4sIG1lYW4sIHNkKSB1c2luZyB2YXJpYWJsZXMgdGhhdCBpbmNsdWRlIGBOQWBzIHdpbGwgcmV0dXJuIGFuIGBOQWAgYnkgZGVmYXVsdC4gVGhlcmUgYXJlIGEgY291cGxlIG9mIG9wdGlvbnMgdG8gYWRkcmVzcyB0aGlzIHByb2JsZW0uIFRoZSBtaXNzaW5nIHZhbHVlcyBjYW4gYmUgZGVsZXRlZCBmcm9tIGEgdmFyaWFibGUgdXNpbmcgdGhlIGBuYS5vbWl0YCBmdW5jdGlvbi4gQWx0ZXJuYXRpdmVseSBtYW55IGZ1bmN0aW9ucyBvZmZlciB0aGUgYG5hLnJtYCBhcmd1bWVudCB3aGljaCB3aWxsIGNhbGN1bGF0ZSB0aGUgc3RhdGlzdGljIGRpc3JlZ2FyZGluZyBgTkFgcy4gRm9yIGV4YW1wbGUsIHRoZSBmb2xsb3dpbmcgd2lsbCByZXN1bHQgaW4gTkE6IA0KDQpgYGB7cixlcnJvcj1UUlVFfQ0KeCA8LSBjKDEsMiwzLCA1LCBOQSkNCm1lYW4oeCkNCmBgYA0KV2hpbGUgdGhlIGZvbGxvd2luZyBkaXNyZWdhcmRzIHRoZSBOQSB2YWx1ZXMgd2hlbiBjb21wdXRpbmcgdGhlIG1lYW4gb2YgdGhlIG51bWVyaWMgdmVjdG9yOiANCg0KYGBge3J9DQp4IDwtIGMoMSwyLDMsIDUsIE5BKQ0KbWVhbih4LCBuYS5ybSA9IFRSVUUpDQpgYGANCg0KTm90ZSB0aGF0IHRoZSBgc2NhbGVgIGZ1bmN0aW9uIGF1dG9tYXRpY2FsbHkgb21pdHMgbWlzc2luZyB2YWx1ZXMgd2hlbiBjYWxjdWxhdGluZyB0aGUgbWVhbiBhbmQgc3RhbmRhcmQgZGV2aWF0aW9uIHRvIHN0YW5kYXJkaXplIGEgdmFyaWFibGUuDQoNClNlZSBbbWlzc2luZ3MuUl0oaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1dVLVJEUy9NUkRBMjAyMS9tYWluL1FBc2NyaXB0cy9taXNzaW5ncy5SKSBmb3IgYSBzYW1wbGUgc2NyaXB0Lg0KDQojIyMgVGhlIGNvbmZpZGVuY2UgaW50ZXJ2YWwgKENJKSBvZiB0aGUgbWVhbiBzZWVtcyB2ZXJ5IHNtYWxsIGNvbXBhcmVkIHRvIHRoZSBkaXNwZXJzaW9uIG9mIG15IHNhbXBsZS4gQ2FuIHRoaXMgYmUgY29ycmVjdD8gIHstfQ0KDQpUaGUgY29uZmlkZW5jZSBpbnRlcnZhbCBvZiB0aGUgbWVhbiBkZXBlbmRzIG9uIGJvdGggdGhlIHZhcmlhbmNlIG9mIHRoZSB2YXJpYWJsZSBhbmQgdGhlIHRoZSBzYW1wbGUgc2l6ZToNCg0KJCQNClxzaWdtYV97XGJhciB4fSA9IFxmcmFje1xzaWdtYX17XHNxcnR7bn19DQokJA0KDQpUaGVyZWZvcmUgZXZlbiBpZiB0aGUgc3RhbmRhcmQgZGV2aWF0aW9uIG9mIHRoZSBkYXRhICgkXHNpZ21hJCkgaXMgbGFyZ2UsIHdlIGNhbiBnZXQgYSBuYXJyb3cgQ0kgaWYgd2UgaGF2ZSBhIHJlbGF0aXZlbHkgbGFyZ2Ugc2FtcGxlIHNpemUuDQoNClNlZSBbY29uZmlkZW5jZWludGVydmFsLlJdKGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9XVS1SRFMvTVJEQTIwMjEvbWFpbi9RQXNjcmlwdHMvY29uZmlkZW5jZWludGVydmFsLlIpIGZvciBhIHNpbXVsYXRpb24gc3R1ZHkuDQoNCiMjIEVycm9ycyByZWxhdGVkIHRvIHNwZWNpZmljIG1ldGhvZHMgey19DQoNCiMjIyBMb2dpc3RpYyByZWdyZXNzaW9uIHstfQ0KDQojIyMjIFdoZW4gdXNpbmcgbG9naXN0aWMgcmVncmVzc2lvbjogRXJyb3IgaW4gZXZhbChmYW1pbHkkaW5pdGlhbGl6ZSkgOiB5IHZhbHVlcyBtdXN0IGJlIDAgPD0geSA8PSAxIHstfQ0KDQpXaGVuIHVzaW5nIGxvZ2lzdGljIHJlZ3Jlc3Npb24gbWFrZSBzdXJlIGFsbCB0aGUgdmFsdWVzIGluIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUgKGxlZnQgaGFuZCBzaWRlKSBhcmUgYmV0d2VlbiAkMCQgYW5kICQxJA0KDQpgYGB7ciwgZXJyb3I9VFJVRX0NCmRhdCA8LSBkYXRhLmZyYW1lKHkgPSBjKDIsMCwxKSwgeCA9IGMoMSwyLDMpKQ0KZ2xtKHkgfiB4ICwgZGF0YSA9IGRhdCwgZmFtaWx5PWJpbm9taWFsKCkpDQpgYGANCg0KIyMjIFdoZW4gdXNpbmcgbG9naXN0aWMgcmVncmVzc2lvbjogRXJyb3IgaW4gd2VpZ2h0cyAqIHkgOiBub24tbnVtZXJpYyBhcmd1bWVudCB0byBiaW5hcnkgb3BlcmF0b3Igey19DQoNClRoaXMgZXJyb3Igb2NjdXJzIGlmIGEgdmFyaWFibGUgdGhhdCBpcyBzdXBwb3NlZCB0byBiZSBudW1lcmljIGlzIGEgY2hhcmFjdGVyDQoNCmBgYHtyLCBlcnJvcj1UUlVFfQ0KZGF0JGNoYXJfeSA8LSBjKCIxIiwgIjAiLCAiMSIpDQpnbG0oY2hhcl95IH4geCAsIGRhdGEgPSBkYXQsIGZhbWlseT1iaW5vbWlhbCgpKQ0KYGBgDQoNCiMjIEdlbmVyYWwgc2V0dGluZ3MgYW5kIG9wdGlvbnMgey19DQoNCiMjIyBOdW1iZXJzIGFyZSBmb3JtYXR0ZWQgd2VpcmRseSB7LX0NCg0KQnkgZGVmYXVsdCBSIHVzZXMgW3NjaWVudGlmaWMgbm90YXRpb25dKGh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93aWtpL1NjaWVudGlmaWNfbm90YXRpb24pIGZvciB2ZXJ5IGxhcmdlIGFuZCB2ZXJ5IHNtYWxsIG51bWJlcnMuIFdlIGNhbiBjb250cm9sIHRoaXMgYmVoYXZpb3IgdXNpbmcgYG9wdGlvbnMoc2NpcGVuPS4uLilgIHdoZXJlIGxhcmdlciBwb3NpdGl2ZSBudW1iZXJzIHdpbGwgcmVzdWx0IGluIGEgd2lkZXIgcmFuZ2Ugb2YgdmFsdWVzIGJlaW5nIHByaW50ZWQgaW4gZml4ZWQgbm90YXRpb24gKGkuZS4sIGFsbCBkaWdpdHMpIGFuZCBuZWdhdGl2ZSBudW1iZXJzIHdpbGwgcmVzdWx0IGluIG1vcmUgbnVtYmVycyBiZWluZyBwcmludGVkIGluIHNjaWVudGlmaWMgbm90YXRpb24uDQoNCkZyb20gYD9vcHRpb25zYCB3ZSBnZXQ6DQoNCj4gKipzY2lwZW46KioNCmludGVnZXIuIEEgcGVuYWx0eSB0byBiZSBhcHBsaWVkIHdoZW4gZGVjaWRpbmcgdG8gcHJpbnQgbnVtZXJpYyB2YWx1ZXMgaW4gZml4ZWQgb3IgZXhwb25lbnRpYWwgbm90YXRpb24uIFBvc2l0aXZlIHZhbHVlcyBiaWFzIHRvd2FyZHMgZml4ZWQgYW5kIG5lZ2F0aXZlIHRvd2FyZHMgc2NpZW50aWZpYyBub3RhdGlvbjogZml4ZWQgbm90YXRpb24gd2lsbCBiZSBwcmVmZXJyZWQgdW5sZXNzIGl0IGlzIG1vcmUgdGhhbiBzY2lwZW4gZGlnaXRzIHdpZGVyLg0KDQpTY2llbnRpZmljIG5vdGF0aW9uIGZvbGxvd3MgdGhlIGZvbGxvd2luZyBydWxlOiAkVmVEIFxSaWdodGFycm93IFYgXHRpbWVzIDEwXkQkLiANCg0KVGhlcmVmb3JlLCBgb3B0aW9ucyhzY2lwZW49LTEwKWAgd291bGQgcmVzdWx0IGluOg0KDQpgYGB7cn0NCm9wdGlvbnMoc2NpcGVuPS0xMCkNCjI5LjM3NDk1OTIzODQNCmBgYA0KDQpBbmQgYG9wdGlvbnMoc2NpcGVuPTEwKWAgd291bGQgcmVzdWx0IGluOg0KDQpgYGB7cn0NCm9wdGlvbnMoc2NpcGVuPTEwKQ0KMjkuMzc0OTU5MjM4NA0KYGBgDQoNClNlZSBhbHNvIFtzY2llbnRpZmljbm90YXRpb24uUl0oaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1dVLVJEUy9NUkRBMjAyMS9tYWluL1FBc2NyaXB0cy9zY2llbnRpZmljbm90YXRpb24uUikgZm9yIHNvbWUgZXhhbXBsZXMuDQoNCk5vdGUgdGhhdCBgb3B0aW9ucyhkaWdpdHM9Li4uKWAgYWxzbyBhbGxvd3MgeW91IHRvIGNvbnRyb2wgdGhlIG51bWJlciBvZiBkaWdpdHMgdG8gYmUgZGlzcGxheWVkIGZvciBudW1lcmljIHZhbHVlczoNCg0KYGBge3J9DQpvcHRpb25zKGRpZ2l0cyA9IDEyKQ0KMjkuMzc0OTU5MjM4NA0KYGBgDQoNCiMjIERhdGEgdmlzdWFsaXphdGlvbi9vdXRwdXQgaXNzdWVzIHstfQ0KDQojIyMgSG93IGNhbiB0aGUgYGdlb21gIGNvbG9ycyBpbiBhIGBnZ3Bsb3RgIGJlIGNoYW5nZWQ/IHstfQ0KDQpJbiBnZW5lcmFsLCB0aGVyZSBhcmUgdHdvIHR5cGVzIG9mIGNvbG9ycyB0aGF0IGNhbiBiZSBjaGFuZ2VkLiBUaGUgYGNvbG9yYCBhcmd1bWVudCBjaGFuZ2VzIHRoZSBsaW5lIG9yIGJvcmRlciBjb2xvciAoZS5nLiwgaW4gYSBiYXIgY2hhcnQpLiBUaGUgYGZpbGxgIGFyZ3VtZW50IGNoYW5nZXMgdGhlIGZpbGxpbmcgY29sb3Igb2YgYSBwbG90IHRoYXQgaGFzIGEgcmVjdGFuZ2xlLWxpa2UgYXJlYSAoZS5nLiwgYmFycGxvdCwgaGlzdG9ncmFtLCAgYm94cGxvdCkgdGhhdCBjYW4gYmUgZmlsbGVkIGJ1dCBkb2VzIG5vdGhpbmcgZm9yIGUuZy4sIGxpbmUgcGxvdHMuIA0KDQpDb2xvcnMgY2FuIGJlIHNwZWNpZmllZCBlaXRoZXIgYXMgYW4gYXJndW1lbnQgdG8gdGhlIGBnZ3Bsb3RgIG9yIGBnZW9tKmAgY2FsbCBkaXJlY3RseSBhcyBpbiBgZ2dwbG90KGRhdGEsIGFlcyh4ID0gR2VucmUsIHkgPSBGcmVxKSwgY29sb3IgPSBjKCJyZWQiLCAiZ3JlZW4iLC4uLikpYCBvciBhcyBwYXJ0IG9mIHRoZSBhZXN0aGV0aWNzIChgYWVzYCkuIEluIHRoZSBsYXR0ZXIgY2FzZSwgY29sb3JzIHdpbGwgYXV0b21hdGljYWxseSBiZSBhc3NpZ25lZCBhbmQgYSBsZWdlbmQgYWRkZWQgaWYgYSBjYXRlZ29yaWNhbCB2YXJpYWJsZSBpcyBwcm92aWRlZCBhcyBpbiBgZ2dwbG90KHRhYmxlX3Bsb3RfcmVsLCBhZXMoeCA9IEdlbnJlLHkgPSBGcmVxLCBmaWxsID0gR2VucmUpKSArIGdlb21fY29sKClgLiANCg0KVGhpcyBpcyBub3QgdG8gYmUgY29uZnVzZWQgd2l0aCBzZXR0aW5nIGJhY2tncm91bmQvdGV4dCBjb2xvcnMgYXMgcGFydCBvZiBhIHRoZW1lLiBUaGVtZXMgY2FuIGVpdGhlciBiZSBwcm92aWRlZCBieSBhIHBhY2thZ2UgKGUuZy4sIGBsaWJyYXJ5KGdndGhlbWVzKWApIG9yIGNyZWF0ZWQgYnkgaGFuZC4NCg0KU2VlIFtnZ3Bsb3Rjb2xvcnMuUl0oaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1dVLVJEUy9NUkRBMjAyMS9jM2Q4ZWI3NGI4Y2NkOTcxMzE4ZmIzMGY2YWQ1ZTdhNGIwNGE3ZjkzL1FBc2NyaXB0cy9nZ3Bsb3Rjb2xvcnMuUikgZm9yIGEgc2FtcGxlIHNjcmlwdC4NCg0KIyMjIFdoeSBhcmUgc29tZSBoaXN0b2dyYW1zIGRpc3BsYXllZCBkaWZmZXJlbnRseT8gey19DQoNCldoZW4gcGxvdHRpbmcgYSBoaXN0b2dyYW0sIHRoZXJlIGlzIGFuIGltcG9ydGFudCBwYXJhbWV0ZXIgY2FsbGVkIGBiaW53aWR0aGAgd2hpY2ggY29udHJvbHMgdGhlIHJhbmdlIG92ZXIgd2hpY2ggdGhlIG51bWJlciBvZiBvYnNlcnZhdGlvbnMgYXJlIGNvdW50ZWQgaW4gZWFjaCBiaW4uIElmIGl0IGlzIHNldCB0byBhIHRvbyBsb3cgdmFsdWUsIGVhY2ggYmluIHdpbGwgb25seSBoYXZlIHZlcnkgZmV3IG9ic2VydmF0aW9ucyBhbmQgd2UgZ2V0IGEgbGFyZ2UgbnVtYmVyIG9mIGJpbnMuIElmIGl0IGlzIHNldCB0byBhIHZhbHVlIHRoYXQgaXMgdG9vIGhpZ2gsIHdlIGx1bXAgbWFueSBvYnNlcnZhdGlvbnMgdG9nZXRoZXIgYW5kIGdldCB2ZXJ5IGZldyBiaW5zIChpbiB0aGUgZXh0cmVtZSBjYXNlIG9ubHkgb25lKS4gWW91IG1heSBoYXZlIHRvIHBsYXkgYXJvdW5kIHdpdGggZGlmZmVyZW50IHZhbHVlcyB0byBmaW5kIHRoZSBhcHByb3ByaWF0ZSBiaW53aWR0aCBmb3IgeW91ciBwbG90LiAgDQoNClNlZSBbaGlzdG9ncmFtYmlucy5SXShodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vV1UtUkRTL01SREEyMDIxL21haW4vUUFzY3JpcHRzL2hpc3RvZ3JhbWJpbnMuUikgZm9yIHNvbWUgZXhhbXBsZXMuDQoNCiMjIyBTb21lIGxhYmVscyBpbiBwbG90cyBhcmUgY3V0IG9mZi4gSG93IGNhbiBJIGV4dGVuZCB0aGUgcGxvdCBtYXJnaW5zPyB7LX0NCg0KSWYgYXhpcyBsYWJlbHMgKGUuZy4gbmFtZXMpIGFyZSB0b28gbG9uZywgdGhleSBhcmUgY3V0IG9mZiBieSB0aGUgZGVmYXVsdCBtYXJnaW5zIG9mIFIgcGxvdHMuIFlvdSBjYW4gc2V0IG1hcmdpbnMgbWFudWFsbHkgaW4gYGdncGxvdDJgIGFzIHBhcnQgb2YgdGhlIGB0aGVtZWAgc2V0dGluZ3MgaW4gdGhlIGZvbGxvd2luZyBvcmRlcjogdG9wLCByaWdodCwgYm90dG9tLCBsZWZ0LiBGb3IgZXhhbXBsZSwgdG8gYWRkIDJjbSBtYXJnaW4gdG8gZWFjaCBzaWRlLCB3ZSBjYW4gdXNlOiANCg0KYGBge3IgZXZhbCA9IEZBTFNFfQ0KbXlfZ2dwbG90ICsgDQogIHRoZW1lKHBsb3QubWFyZ2luID0gbWFyZ2luKDIsIDIsIDIsIDIsICJjbSIpKQ0KYGBgDQoNCkluIGFkZGl0aW9uIHlvdSBjYW4gdHJ5IHRvIGNoYW5nZSB0aGUgaGVpZ2h0IGFuZCB3aWR0aCB3aGVuIHNhdmluZyBhIGdncGxvdCAodGhpcyB1c3VhbGx5IHdvcmtzIGJldHRlcik6DQoNCmBgYHtyLCBldmFsID0gRkFMU0V9DQpnZ3NhdmUoIm15Z2dwbG90LnBuZyIsIHdpZHRoID0gMTAsIGhlaWdodCA9IDEwLCB1bml0cyA9ICJjbSIpDQpgYGANCg0KV2l0aGluIGFuIFJtZCBkb2N1bWVudCB5b3UgY2FuIHNldCB0aGUgd2l0aCBhbmQgaGVpZ2h0IGFzIHBhcnQgb2YgdGhlIGNvZGUgY2h1bmsgb3B0aW9ucyB1c2luZyBlLmcuLCBgZmlnLndpZHRoPTEwLCBmaWcuaGVpZ2h0PTEwYCBbKHNlZSBhbHNvIGhlcmUpXSgjcmNodW5rKQ0KDQoNCiMjIElzc3VlcyB3aXRoIGZ1bmN0aW9ucyBhbmQgZnVuY3Rpb24gYXJndW1lbnRzIHstfQ0KDQpHZW5lcmFsbHksIGlmIHlvdSBmYWNlIGFuIGlzc3VlIHJlbGF0aW5nIHRvIGEgcGFydGljdWxhciBmdW5jdGlvbiwgaXQgaXMgYSBnb29kIGlkZWEgdG8gY2hlY2sgdGhlIGRldGFpbHMgb2YgYSBmdW5jdGlvbiwgYnkgdHlwaW5nIGA/RlVOQ1RJT05gIChlLmcuLCBgP21lYW5gKSBhbmQgcmVhZCB0aGUgaGVscCBmaWxlLg0KDQojIyMgUHJvYmxlbXMgd2l0aCBgZmFjdG9yYCBhbmQgYGFzLmZhY3RvcmAgey19DQoNCioqMS4gQ29tbW9uIG1pc3Rha2U6Kiogc29tZSBncm91cHMgYXJlIG5vdCBuYW1lZCBpbiBgbGV2ZWxzYCBhbmQgYGxhYmVsc2AgJFxSaWdodGFycm93JCByZXN1bHRzIGluIGBOQWAgZm9yIG9taXR0ZWQgZ3JvdXAgbGlrZSBpbiB0aGUgZm9sbG93aW5nIGV4YW1wbGU6IA0KDQpgYGB7ciBlcnJvciA9IFRSVUV9DQp4IDwtIGMoMCwwLDAsMSwwLDIsMCwxKQ0KeCA8LSBmYWN0b3IoeCwgbGV2ZWxzID0gYygwLDEpLCBsYWJlbHMgPSBjKCJubyIsInllcyIpKQ0KeA0KYGBgDQoNCkluIHRoaXMgZXhhbXBsZSwgeW91IG5lZWQgdG8gYWxzbyBjb25zaWRlciAiMiIgYXMgYSBmYWN0b3IgbGV2ZWwgdG8gYXZvaWQgc2V0dGluZyB0aGUgdmFsdWUgb2YgdGhpcyBvYnNlcnZhdGlvbiB0byBOQToNCg0KYGBge3IgZXJyb3IgPSBUUlVFfQ0KeCA8LSBjKDAsMCwwLDEsMCwyLDAsMSkNCnggPC0gZmFjdG9yKHgsIGxldmVscyA9IGMoMCwxLDIpLCBsYWJlbHMgPSBjKCJubyIsInllcyIsIm1heWJlIikpDQp4DQpgYGANCg0KKioyLiBDb21tb24gbWlzdGFrZToqKiB0aGUgY29kZSBjcmVhdGluZyB0aGUgZmFjdG9yIGlzIHJ1biB0d2ljZSBvdmVyd3JpdGluZyB0aGUgb3JpZ2luYWwgdmFyaWFibGUgJFxSaWdodGFycm93JCByZXN1bHRzIGluIGBOQWAgZm9yIGFsbCB2YWx1ZXMgbGlrZSBpbiB0aGUgZm9sbG93aW5nIGV4YW1wbGU6DQoNCmBgYHtyIGVycm9yID0gVFJVRX0NCnggPC0gYygwLDAsMCwxLDAsMiwwLDEpDQp4IDwtIGZhY3Rvcih4LCBsZXZlbHMgPSBjKDAsMSwyKSwgbGFiZWxzID0gYygibm8iLCJ5ZXMiLCJtYXliZSIpKQ0KeCA8LSBmYWN0b3IoeCwgbGV2ZWxzID0gYygwLDEsMiksIGxhYmVscyA9IGMoIm5vIiwieWVzIiwibWF5YmUiKSkNCngNCmBgYA0KQXMgY2FuIGJlIHNlZW4sIGJ5IHJ1bm5pbmcgdGhlIGxpbmUgb2YgY29kZSBzcGVjaWZ5aW5nIHRoZSBmYWN0b3IgdmFyaWFibGUgdHdpY2UsIHdlIGZpcnN0IHNwZWNpZnkgdGhlIGZhY3RvciB2YXJpYWJsZSBjb3JyZWN0bHkgYW5kIHRoZW4gaW5jb3JyZWN0bHkgb3ZlcndyaXRlIHRoaXMgdmFyaWFibGUgYWdhaW4uIFRoZSBzZWNvbmQgdGltZSB3ZSBydW4gdGhlIGNvZGUsIHRoZSB2YWx1ZXMgYXJlIHNldCB0byBOQSBiZWNhdXNlIFIgbG9va3MgZnJvbSBsZXZlbHMgb2YgMCwxLCBhbmQgMiBhZ2FpbiwgYnV0IHRoZXNlIGhhZCBhbHJlYWR5IGJlZW4gcmVwbGFjZWQgYnkgdGhlIGxhYmVscyB3aGVuIHRoZSBjb2RlIHdhcyBydW4gZm9yIHRoZSBmaXJzdCB0aW1lLiBIZW5jZSwgc2luY2UgdGhlcmUgYXJlIG5vIGVsZW1lbnRzIHdpdGggdGhlIHZhbHVlcyBvZiAwLDEsMiBhbnltb3JlLCB0aGVzZSB2YWx1ZXMgYXJlIHJlcGxhY2VkIGJ5IG1pc3NpbmcgdmFsdWVzLiAgIA0KDQpOb3RlIHRoYXQgdGhpcyBpcyB1c3VhbGx5IGEgcmVzdWx0IG9mICJqdW1waW5nIiBiYWNrIGFuZCBmb3J0aCBpbiB0aGUgY29kZS4gUnVuIHlvdXIgc2NyaXB0IGZyb20gdGhlIHRvcCBhbmQgbWFrZSBzdXJlIHlvdSBkbyBub3QgY3JlYXRlIHRoZSBmYWN0b3IgdHdpY2UuIFRoZSBzZWNvbmQgdGltZSB0aGUgb3JpZ2luYWwgbGV2ZWxzIGRvIG5vdCBleGlzdCBhbnltb3JlIGFuZCB0aHVzIGFsbCByZXN1bHRpbmcgdmFsdWVzIGFyZSBtaXNzaW5nIHdpdGhvdXQgd2FybmluZyBvciBlcnJvci4NCg0KKipQb3NzaWJsZSByZW1lZHkqKjogbmFtZSB0aGUgZmFjdG9yIHZhcmlhYmxlIHlvdSBjcmVhdGUgZGlmZmVyZW50bHkgZnJvbSB0aGUgc291cmNlIHZhcmlhYmxlLCBlLmcuLCANCg0KYGBge3IgZXJyb3IgPSBUUlVFfQ0KeCA8LSBjKDAsMCwwLDEsMCwyLDAsMSkNCnkgPC0gZmFjdG9yKHgsIGxldmVscyA9IGMoMCwxLDIpLCBsYWJlbHMgPSBjKCJubyIsInllcyIsIm1heWJlIikpDQp5DQpgYGANCg0KSW4gdGhpcyBjYXNlLCB5b3UgY2FuIGFsd2F5cyBnbyBiYWNrIGFuZCByZS1ydW4gdGhlIGNvZGUgY3JlYXRpbmcgdGhlIGZhY3RvciB2YXJpYWJsZSBmcm9tIGl0cyBvcmlnaW5hbCBzb3VyY2UgaWYgeW91IGhhdmUgb3ZlcndyaXR0ZW4gaXQgYWNjaWRlbnRhbGx5LiBPdGhlcndpc2UgeW91IHdvdWxkIG5lZWQgdG8gcmUtcnVuIHRoZSBlbnRpcmUgY29kZSB0byBnZXQgdGhlIG9yaWdpbmFsIGZvcm1hdGluZyBvZiB0aGUgdmFyaWFibGUgYmFjay4gDQoNCioqMy4gQ29tbW9uIG1pc3Rha2U6KiogY29udmVydGluZyBmcm9tIGBmYWN0b3JgIHRvIGBpbnRlZ2VyYC9gbnVtZXJpY2AgZGlyZWN0bHk6DQoNCkludGVybmFsbHkgZmFjdG9ycyBhcmUgc3RvcmVkIGluIGluY3JlYXNpbmcgaW50ZWdlcnMgc3RhcnRpbmcgYXQgJDEkIGVhY2ggYXR0YWNoZWQgd2l0aCBhIGBsYWJlbGAuIElmIHdlIGNyZWF0ZSBhIGZhY3RvciBmcm9tIGFuIGludGVnZXIgdmFyaWFibGUgYW5kIHRoZW4gY29udmVydCBpdCBiYWNrLCB0aGlzIGJlaGF2aW9yIG1pZ2h0IGJlIHN1cnByaXNpbmcuIA0KDQoqKlBvc3NpYmxlIHJlbWVkeSoqOiBjb252ZXJ0IHRvIGBjaGFyYWN0ZXJgIGZpcnN0IHNpbmNlIHRoaXMgd2lsbCB1c2UgdGhlIGBsYWJlbGBzIGFzIHZhbHVlcw0KDQpTZWUgW2ZhY3RvcnMuUl0oaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1dVLVJEUy9NUkRBMjAyMS9tYWluL1FBc2NyaXB0cy9mYWN0b3JzLlIpIGZvciBleGFtcGxlcyBvZiBlYWNoIG9mIHRoZSBtaXN0YWtlcyBhbmQgcmVtZWRpZXMuDQoNCiMjIyBIb3cgY2FuIEkgZmluZCBhbiBleHBsYW5hdGlvbiBvZiB0aGUgb3V0cHV0IG9mIGEgZnVuY3Rpb24/IHstfQ0KDQpTZWUgdGhlICoqVmFsdWUqKiBzZWN0aW9uIG9mIHRoZSBoZWxwIGZpbGUgZm9yIHRoZSBmdW5jdGlvbi4gWW91IGNhbiBnZXQgdGhlIGhlbHAgZmlsZSBieSBjYWxsaW5nOg0KDQpgP0ZVTkNUSU9OYA0KDQplLmcuLA0KDQpgP2xtYCBvciBgP21lYW5gDQoNCklmIHRoZSBmdW5jdGlvbiBpcyBwcm92aWRlZCBieSBhIHBhY2thZ2UgeW91IGhhdmUgdG8gbG9hZCB0aGUgcGFja2FnZSBmaXJzdCB1c2luZyB0aGUgYGxpYnJhcnkoLi4uKWAgZnVuY3Rpb24uIA0KZS5nLiwNCg0KYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmxpYnJhcnkoSG1pc2MpDQo/cmNvcnIgDQpgYGANCg0KIyMjIFdoYXQgZG9lcyB0aGUgYE1BUkdJTmAgYXJndW1lbnQgZG8/IHstfQ0KDQpTb21lIGZ1bmN0aW9ucyBzdWNoIGFzIGBhcHBseWAgYW5kIGBwcm9wLnRhYmxlYCB0YWtlIGEgYE1BUkdJTmAgYXJndW1lbnQuIFRoaXMgYXJndW1lbnQgc3BlY2lmaWVzIG92ZXIgd2hpY2ggZGltZW5zaW9uIChlLmcuLCByb3dzID0gMSwgY29sdW1ucyA9IDIpIGEgZnVuY3Rpb24gc2hvdWxkIGJlIGFwcGxpZWQuIFRoaXMgaXMgZXNwZWNpYWxseSB1c2VmdWwgZm9yIG11bHRpZGltZW5zaW9uYWwgYXJyYXlzIHN1Y2ggYXMgbWF0cmljZXMuDQoNCmBgYHtyfQ0KbSA8LSBtYXRyaXgoMTo5LCBucm93PTMpDQptDQpgYGANCg0KIGUuZy4gd2UgY291bGQgZ2V0IHRoZSBgbWF4YCBvZiBlYWNoICpyb3cqIHdpdGgNCg0KYGBge3J9DQphcHBseShtLCAxLCBtYXgpDQpgYGANCg0KYW5kIHRoZSBgbWF4YCBvZiBlYWNoICpjb2x1bW4qIHdpdGgNCg0KYGBge3J9DQphcHBseShtLCAyLCBtYXgpDQpgYGANCg0KU2VlIFttYXJnaW5zLlJdKGh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9XVS1SRFMvTVJEQTIwMjEvbWFpbi9RQXNjcmlwdHMvbWFyZ2lucy5SKSBmb3IgbW9yZSBleGFtcGxlcy4NCg0KIyMgSXNzdWVzIHdpdGggUiBNYXJrZG93biB7LX0NCg0KIyMjIEkgZ2V0IGFuIGVycm9yIHdoZW4gYGtuaXRgdGluZyB0byBQREYgYnV0IGl0IHdvcmtzIGZvciBIVE1MICB7LX0NCg0KVHJ5IGluc3RhbGxpbmcgdGhlIGB0aW55dGV4YCBsaWJyYXJ5IGFzIGZvbGxvd3MgYmVmb3JlIGBrbml0YGluZyB5b3VyIGRvY3VtZW50Og0KDQpgYGB7ciBlY2hvID0gVFJVRSwgZXZhbCA9IEZBTFNFfQ0KaW5zdGFsbC5wYWNrYWdlcygndGlueXRleCcpDQp0aW55dGV4OjppbnN0YWxsX3Rpbnl0ZXgoKQ0KYGBgDQoNCiMjIyBJIGFtIG5vdCBzdXJlIHdoZXJlIFItY29kZSwgTGFUZVggbWF0aCwgYW5kIHRleHQgZ28gIHstfQ0KDQpJbiBhbiBSbWQgZG9jdW1lbnQsIHRoZXJlIGFyZSAzIGRpZmZlcmVudCBlbnZpcm9ubWVudHMsIDxhIG5hbWU9InJjaHVuayI+PC9hPg0KDQoqKjEuIFItY29kZSoqIGlzIGVuY2xvc2VkIGluIHRocmVlIHRpY2tzIGZvbGxvd2VkIGJ5IFx7ciwgW2NodW5rLW9wdGlvbnNdKGh0dHBzOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tL2xlc3Nvbi0zLmh0bWwjY2h1bmstb3B0aW9ucylcfSB3aGVyZSB0aGUgY2h1bmsgb3B0aW9ucyBjYW4gaW5jbHVkZSBjb25maWd1cmF0aW9uIGZvciBwcmludGluZyBjb2RlIGFuZCBvdXRwdXQgYXMgd2VsbCBhcyBmaWd1cmVzIGUuZy4NCg0KPiBcYGBge3IsIGVjaG8gPSBUUlVFLCB3YXJuaW5ncyA9IEZBTFNFfQ0KPiANCj4gcHJpbnQoIkhlbGxvIFIhKQ0KPiANCj4gYGBgDQoNCmBgYHtyfQ0KcHJpbnQoIkhlbGxvIFIhIikNCmBgYA0KDQoqKjIuIExhVGVYIG1hdGgqKiBjYW4gZWl0aGVyIGJlIGVuY2xvc2VkIGluIHNpbmdsZSBkb2xsYXIgc2lnbnMgXCR4XjJcJCAkXFJpZ2h0YXJyb3cgeF4yJCBmb3IgaW4tbGluZSBtYXRoIG9yDQppbiBkb3VibGUgZG9sbGFyIHNpZ25zIHRvIHB1dCB0aGUgbWF0aCBvdXRwdXQgb24gaXRzIG93biBsaW5lDQoNCmBgYCAgDQokJCANCnheMg0KJCQNCmBgYCANCg0KJCQNCnheMg0KJCQNCg0KRm9yIGFsaWduZWQgbXVsdGktbGluZSBlcXVhdGlvbnMgd2UgY2FuIGFkZCBgXGJlZ2lue2FsaWduZWR9YCBhbmQgYFxlbmR7YWxpZ2VuZH1gLiBUaGUgZXF1YXRpb25zIHdpbGwgYmUgYWxpZ2VuZCBhdCB0aGUgYCZgIGFuZCBhIGxpbmUgaXMgZW5kZWQgd2l0aCBgXFxgLg0KDQogICAgJCQNCiAgICBcYmVnaW57YWxpZ25lZH0NCiAgICB4ICY9IDEgXFwNCiAgICB5ICY9IDIgXFwNCiAgICB6ID0gJjMNCiAgICBcZW5ke2FsaWduZWR9DQogICAgJCQNCg0KJCQNClxiZWdpbnthbGlnbmVkfQ0KeCAmPSAxIFxcDQp5ICY9IDIgXFwNCnogPSAmMw0KXGVuZHthbGlnbmVkfQ0KJCQNCg0KKiozLiBSZWd1bGFyIHRleHQqKiBnb2VzIGFueXdoZXJlIGJldHdlZW4gdGhvc2UgZW52aXJvbm1lbnRzDQoNCiMjIE5ldyBxdWVzdGlvbnMgey19DQoNCkNvdWxkbid0IGZpbmQgYW4gYW5zd2VyIHRvIHlvdXIgcXVlc3Rpb24/IEluIHRoaXMgY2FzZSwgeW91IG1heSB1c2UgdGhlIGZvcnVtIG9uIExlYXJuXEB3dSB0byBhc2sgeW91ciBxdWVzdGlvbi4gV2UgcmVndWxhcmx5IHVwZGF0ZSB0aGlzIHNlY3Rpb24gb2YgdGhlIHdlYnNpdGUgYW5kIHdpbGwgICANCg==</div>
 
 
 
