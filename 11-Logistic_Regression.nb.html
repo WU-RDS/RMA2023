@@ -1817,8 +1817,9 @@ summary {
 <p>In the last section we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. A more useful method is the logistic regression. In particular we are going to have a look at the logit model. In the following dataset we are trying to predict whether a song will be a top-10 hit on a popular music streaming platform. In a first step we are going to use only the danceability index as a predictor. Later we are going to add more independent variables.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShncmlkRXh0cmEpXG5jaGFydF9kYXRhIDwtIHJlYWQuZGVsaW0yKFxcaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0lNU01XVS9NUkRBMjAxOC9tYXN0ZXIvZGF0YS9jaGFydF9kYXRhX2xvZ2lzdGljLmRhdFxcLGhlYWRlcj1ULCBzZXAgPSBcXFxcdFxcLHN0cmluZ3NBc0ZhY3RvcnMgPSBGLCBkZWMgPSBcXC5cXClcbiNDcmVhdGUgYSBuZXcgZHVtbXkgdmFyaWFibGUgXFx0b3AxMFxcLCB3aGljaCBpcyAxIGlmIGEgc29uZyBtYWRlIGl0IHRvIHRoZSB0b3AxMCBhbmQgMCBlbHNlOlxuY2hhcnRfZGF0YSR0b3AxMCA8LSBpZmVsc2UoY2hhcnRfZGF0YSRyYW5rPDExLDEsMClcbiMgSW5zcGVjdCBkYXRhXG5oZWFkKGNoYXJ0X2RhdGEpXG5gYGBcbmBgYHJcbnN0cihjaGFydF9kYXRhKVxuYGBgXG5gYGBcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxuYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShncmlkRXh0cmEpXG5jaGFydF9kYXRhIDwtIHJlYWQuZGVsaW0yKFxcaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0lNU01XVS9NUkRBMjAxOC9tYXN0ZXIvZGF0YS9jaGFydF9kYXRhX2xvZ2lzdGljLmRhdFxcLGhlYWRlcj1ULCBzZXAgPSBcXFxcdFxcLHN0cmluZ3NBc0ZhY3RvcnMgPSBGLCBkZWMgPSBcXC5cXClcbiNDcmVhdGUgYSBuZXcgZHVtbXkgdmFyaWFibGUgXFx0b3AxMFxcLCB3aGljaCBpcyAxIGlmIGEgc29uZyBtYWRlIGl0IHRvIHRoZSB0b3AxMCBhbmQgMCBlbHNlOlxuY2hhcnRfZGF0YSR0b3AxMCA8LSBpZmVsc2UoY2hhcnRfZGF0YSRyYW5rPDExLDEsMClcbiMgSW5zcGVjdCBkYXRhXG5oZWFkKGNoYXJ0X2RhdGEpXG5gYGBcbmBgYHJcbnN0cihjaGFydF9kYXRhKVxuYGBgXG5gYGBcbmBgYFxuYGBgIn0= -->
 <pre class="r"><code>```r
+```r
 ```r
 library(ggplot2)
 library(gridExtra)
@@ -1829,81 +1830,170 @@ chart_data$top10 &lt;- ifelse(chart_data$rank&lt;11,1,0)
 head(chart_data)</code></pre>
 <pre class="r"><code>str(chart_data)</code></pre>
 <pre><code></code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a <strong>logistic regression model</strong>. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. Notice that songs with a higher danceability index (on the right of the x-axis) seem to cluster more at <span class="math inline">\(1\)</span> and those with a lower more at <span class="math inline">\(0\)</span> so we expect a positive influence of danceability on the probability of a song to become a top-10 hit.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>A key insight at this point is that the connection between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(Y\)</span> is <strong>non-linear</strong> in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by danceability around values of <span class="math inline">\(0.5\)</span>, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.</p>
-</div>
-<div id="technical-details-of-the-model" class="section level3">
-<h3>Technical details of the model</h3>
-<p>As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:</p>
-<p><span class="math display">\[
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a __logistic regression model__. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. Notice that songs with a higher danceability index (on the right of the x-axis) seem to cluster more at $1$ and those with a lower more at $0$ so we expect a positive influence of danceability on the probability of a song to become a top-10 hit. 
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+A key insight at this point is that the connection between $\mathbf{X}$ and $Y$ is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by danceability around values of $0.5$, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.  
+
+### Technical details of the model
+
+As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:
+
+$$
 f(\mathbf{X}) = \frac{1}{1 + e^{-\mathbf{X}}}
-\]</span> This function transforms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>The logistic function on its own is not very useful yet, as we want to be able to determine how predictors influence the probability of a value to be equal to 1. To this end we replace the <span class="math inline">\(\mathbf{X}\)</span> in the function above with our familiar linear specification, i.e.</p>
-<p><span class="math display">\[
+$$
+This function transforms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. 
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+
+The logistic function on its own is not very useful yet, as we want to be able to determine how predictors influence the probability of a value to be equal to 1. To this end we replace the $\mathbf{X}$ in the function above with our familiar linear specification, i.e.
+
+$$
 \mathbf{X} = \beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i}\\
 f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
-\]</span></p>
-<p>In our case we only have <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the coefficient associated with danceability.</p>
-<p>In general we now have a mathematical relationship between our predictor variables <span class="math inline">\((x_1, ..., x_m)\)</span> and the probability of <span class="math inline">\(y_i\)</span> being equal to one. The last step is to estimate the parameters of this model <span class="math inline">\((\beta_0, \beta_1, ..., \beta_m)\)</span> to determine the magnitude of the effects.</p>
-</div>
-<div id="estimation-in-r" class="section level3">
-<h3>Estimation in R</h3>
-<p>We are now going to show how to perform logistic regression in R. Instead of <code>lm()</code> we now use <code>glm(Y~X, family=binomial(link = &#39;logit&#39;))</code> to use the logit model. We can still use the <code>summary()</code> command to inspect the output of the model.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1J1biB0aGUgZ2xtXG5sb2dpdF9tb2RlbCA8LSBnbG0odG9wMTAgfiBkYW5jZWFiaWxpdHksZmFtaWx5PWJpbm9taWFsKGxpbms9J2xvZ2l0JyksZGF0YT1jaGFydF9kYXRhKVxuI0luc3BlY3QgbW9kZWwgc3VtbWFyeVxuc3VtbWFyeShsb2dpdF9tb2RlbCApXG5gYGAifQ== -->
-<pre class="r"><code>#Run the glm
+$$
+
+In our case we only have $\beta_0$ and $\beta_1$, the coefficient associated with danceability. 
+
+In general we now have a mathematical relationship between our predictor variables $(x_1, ..., x_m)$ and the probability of $y_i$ being equal to one. The last step is to estimate the parameters of this model $(\beta_0, \beta_1, ..., \beta_m)$ to determine the magnitude of the effects.  
+
+### Estimation in R
+
+We are now going to show how to perform logistic regression in R. Instead of ```lm()``` we now use ```glm(Y~X, family=binomial(link = &#39;logit&#39;))``` to use the logit model. We can still use the ```summary()``` command to inspect the output of the model. 
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI1J1biB0aGUgZ2xtXG5sb2dpdF9tb2RlbCA8LSBnbG0odG9wMTAgfiBkYW5jZWFiaWxpdHksZmFtaWx5PWJpbm9taWFsKGxpbms9J2xvZ2l0JyksZGF0YT1jaGFydF9kYXRhKVxuI0luc3BlY3QgbW9kZWwgc3VtbWFyeVxuc3VtbWFyeShsb2dpdF9tb2RlbCApXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+#Run the glm
 logit_model &lt;- glm(top10 ~ danceability,family=binomial(link=&#39;logit&#39;),data=chart_data)
 #Inspect model summary
 summary(logit_model )</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Noticeably this output does not include an <span class="math inline">\(R^2\)</span> value to asses model fit. Multiple “Pseudo <span class="math inline">\(R^2\)</span>s”, similar to the one used in OLS, have been developed. There are packages that return the <span class="math inline">\(R^2\)</span> given a logit model (see <code>rcompanion</code> or <code>pscl</code>). The calculation by hand is also fairly simple. We define the function <code>logisticPseudoR2s()</code> that takes a logit model as an input and returns three popular pseudo <span class="math inline">\(R^2\)</span> values.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9naXN0aWNQc2V1ZG9SMnMgPC0gZnVuY3Rpb24oTG9nTW9kZWwpIHtcbiAgZGV2IDwtIExvZ01vZGVsJGRldmlhbmNlIFxuICBudWxsRGV2IDwtIExvZ01vZGVsJG51bGwuZGV2aWFuY2UgXG4gIG1vZGVsTiA8LSBsZW5ndGgoTG9nTW9kZWwkZml0dGVkLnZhbHVlcylcbiAgUi5sIDwtICAxIC0gIGRldiAvIG51bGxEZXZcbiAgUi5jcyA8LSAxLSBleHAgKCAtKG51bGxEZXYgLSBkZXYpIC8gbW9kZWxOKVxuICBSLm4gPC0gUi5jcyAvICggMSAtICggZXhwICgtKG51bGxEZXYgLyBtb2RlbE4pKSkpXG4gIGNhdChcIlBzZXVkbyBSXjIgZm9yIGxvZ2lzdGljIHJlZ3Jlc3Npb25cXG5cIilcbiAgY2F0KFwiSG9zbWVyIGFuZCBMZW1lc2hvdyBSXjIgIFwiLCByb3VuZChSLmwsIDMpLCBcIlxcblwiKVxuICBjYXQoXCJDb3ggYW5kIFNuZWxsIFJeMiAgICAgICAgXCIsIHJvdW5kKFIuY3MsIDMpLCBcIlxcblwiKVxuICBjYXQoXCJOYWdlbGtlcmtlIFJeMiAgICAgICAgICAgXCIsIHJvdW5kKFIubiwgMyksICAgIFwiXFxuXCIpXG59XG4jSW5zcGVjdCBQc2V1ZG8gUjJzXG5sb2dpc3RpY1BzZXVkb1Iycyhsb2dpdF9tb2RlbCApXG5gYGAifQ== -->
-<pre class="r"><code>logisticPseudoR2s &lt;- function(LogModel) {
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Noticeably this output does not include an $R^2$ value to asses model fit. Multiple &quot;Pseudo $R^2$s&quot;, similar to the one used in OLS, have been developed. There are packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. We define the function ```logisticPseudoR2s()``` that takes a logit model as an input and returns three popular pseudo $R^2$ values.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubG9naXN0aWNQc2V1ZG9SMnMgPC0gZnVuY3Rpb24oTG9nTW9kZWwpIHtcbiAgZGV2IDwtIExvZ01vZGVsJGRldmlhbmNlIFxuICBudWxsRGV2IDwtIExvZ01vZGVsJG51bGwuZGV2aWFuY2UgXG4gIG1vZGVsTiA8LSBsZW5ndGgoTG9nTW9kZWwkZml0dGVkLnZhbHVlcylcbiAgUi5sIDwtICAxIC0gIGRldiAvIG51bGxEZXZcbiAgUi5jcyA8LSAxLSBleHAgKCAtKG51bGxEZXYgLSBkZXYpIC8gbW9kZWxOKVxuICBSLm4gPC0gUi5jcyAvICggMSAtICggZXhwICgtKG51bGxEZXYgLyBtb2RlbE4pKSkpXG4gIGNhdChcXFBzZXVkbyBSXjIgZm9yIGxvZ2lzdGljIHJlZ3Jlc3Npb25cXG5cXClcbiAgY2F0KFxcSG9zbWVyIGFuZCBMZW1lc2hvdyBSXjIgIFxcLCByb3VuZChSLmwsIDMpLCBcXFxcblxcKVxuICBjYXQoXFxDb3ggYW5kIFNuZWxsIFJeMiAgICAgICAgXFwsIHJvdW5kKFIuY3MsIDMpLCBcXFxcblxcKVxuICBjYXQoXFxOYWdlbGtlcmtlIFJeMiAgICAgICAgICAgXFwsIHJvdW5kKFIubiwgMyksICAgIFxcXFxuXFwpXG59XG4jSW5zcGVjdCBQc2V1ZG8gUjJzXG5sb2dpc3RpY1BzZXVkb1Iycyhsb2dpdF9tb2RlbCApXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+logisticPseudoR2s &lt;- function(LogModel) {
   dev &lt;- LogModel$deviance 
   nullDev &lt;- LogModel$null.deviance 
   modelN &lt;- length(LogModel$fitted.values)
   R.l &lt;-  1 -  dev / nullDev
   R.cs &lt;- 1- exp ( -(nullDev - dev) / modelN)
   R.n &lt;- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
-  cat(&quot;Pseudo R^2 for logistic regression\n&quot;)
-  cat(&quot;Hosmer and Lemeshow R^2  &quot;, round(R.l, 3), &quot;\n&quot;)
-  cat(&quot;Cox and Snell R^2        &quot;, round(R.cs, 3), &quot;\n&quot;)
-  cat(&quot;Nagelkerke R^2           &quot;, round(R.n, 3),    &quot;\n&quot;)
+  cat(\Pseudo R^2 for logistic regression\n\)
+  cat(\Hosmer and Lemeshow R^2  \, round(R.l, 3), \\n\)
+  cat(\Cox and Snell R^2        \, round(R.cs, 3), \\n\)
+  cat(\Nagelkerke R^2           \, round(R.n, 3),    \\n\)
 }
 #Inspect Pseudo R2s
 logisticPseudoR2s(logit_model )</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>The coefficients of the model give the change in the <a href="https://en.wikipedia.org/wiki/Odds#Statistical_usage">log odds</a> of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being <span class="math inline">\(1\)</span>. In order to get the odds ratios we can simply take the exponent of the coefficients.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXhwKGNvZWYobG9naXRfbW9kZWwgKSlcbmBgYCJ9 -->
-<pre class="r"><code>exp(coef(logit_model ))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Notice that the coefficient is extremely large. That is (partly) due to the fact that the danceability variable is constrained to values between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> and the coefficients are for a unit change. We can make the “unit-change” interpretation more meaningful by multiplying the danceability index by <span class="math inline">\(100\)</span>. This linear transformation does not affect the model fit or the p-values.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1JlLXNjYWxlIGluZGVwZW5kZXQgdmFyaWFibGVcbmNoYXJ0X2RhdGEkZGFuY2VhYmlsaXR5XzEwMCA8LSBjaGFydF9kYXRhJGRhbmNlYWJpbGl0eSoxMDAgXG4jUnVuIHRoZSByZWdyZXNzaW9uIG1vZGVsXG5sb2dpdF9tb2RlbCA8LSBnbG0odG9wMTAgfiBkYW5jZWFiaWxpdHlfMTAwLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSlcbiNJbnNwZWN0IG1vZGVsIHN1bW1hcnlcbnN1bW1hcnkobG9naXRfbW9kZWwgKVxuI0luc3BlY3QgUHNldWRvIFIyc1xubG9naXN0aWNQc2V1ZG9SMnMobG9naXRfbW9kZWwgKVxuI0NvbnZlcnQgY29lZmZpY2llbnRzIHRvIG9kZHMgcmF0aW9zXG5leHAoY29lZihsb2dpdF9tb2RlbCApKVxuYGBgIn0= -->
-<pre class="r"><code>#Re-scale independet variable
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+The coefficients of the model give the change in the [log odds](https://en.wikipedia.org/wiki/Odds#Statistical_usage) of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being $1$. In order to get the odds ratios we can simply take the exponent of the coefficients. 
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZXhwKGNvZWYobG9naXRfbW9kZWwgKSlcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+exp(coef(logit_model ))</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Notice that the coefficient is extremely large. That is (partly) due to the fact that the danceability variable is constrained to values between $0$ and $1$ and the coefficients are for a unit change. We can make the &quot;unit-change&quot; interpretation more meaningful by multiplying the danceability index by $100$. This linear transformation does not affect the model fit or the p-values.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI1JlLXNjYWxlIGluZGVwZW5kZXQgdmFyaWFibGVcbmNoYXJ0X2RhdGEkZGFuY2VhYmlsaXR5XzEwMCA8LSBjaGFydF9kYXRhJGRhbmNlYWJpbGl0eSoxMDAgXG4jUnVuIHRoZSByZWdyZXNzaW9uIG1vZGVsXG5sb2dpdF9tb2RlbCA8LSBnbG0odG9wMTAgfiBkYW5jZWFiaWxpdHlfMTAwLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSlcbiNJbnNwZWN0IG1vZGVsIHN1bW1hcnlcbnN1bW1hcnkobG9naXRfbW9kZWwgKVxuI0luc3BlY3QgUHNldWRvIFIyc1xubG9naXN0aWNQc2V1ZG9SMnMobG9naXRfbW9kZWwgKVxuI0NvbnZlcnQgY29lZmZpY2llbnRzIHRvIG9kZHMgcmF0aW9zXG5leHAoY29lZihsb2dpdF9tb2RlbCApKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+#Re-scale independet variable
 chart_data$danceability_100 &lt;- chart_data$danceability*100 
 #Run the regression model
 logit_model &lt;- glm(top10 ~ danceability_100,family=binomial(link=&#39;logit&#39;),data=chart_data)
@@ -1913,33 +2003,79 @@ summary(logit_model )
 logisticPseudoR2s(logit_model )
 #Convert coefficients to odds ratios
 exp(coef(logit_model ))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>We observe that danceability positively affects the likelihood of becoming at top-10 hit. To get the confidence intervals for the coefficients we can use the same function as with OLS</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29uZmludChsb2dpdF9tb2RlbClcbmBgYCJ9 -->
-<pre class="r"><code>confint(logit_model)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the <code>logitmfx(...)</code> function from the <code>mfx</code> package. If we set <code>logitmfx(logit_model, data = my_data, atmean = FALSE)</code> we calculate the latter. Setting <code>atmean = TRUE</code> will calculate the former. However, in general we are most interested in the sign and significance of the coefficient.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtZngpXG4jIEF2ZXJhZ2UgcGFydGlhbCBlZmZlY3RcbmxvZ2l0bWZ4KGxvZ2l0X21vZGVsLCBkYXRhID0gY2hhcnRfZGF0YSwgYXRtZWFuID0gRkFMU0UpXG5gYGAifQ== -->
-<pre class="r"><code>library(mfx)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+We observe that danceability positively affects the likelihood of becoming at top-10 hit. To get the confidence intervals for the coefficients we can use the same function as with OLS
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuY29uZmludChsb2dpdF9tb2RlbClcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+confint(logit_model)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the ```logitmfx(...)``` function from the ```mfx``` package. If we set ```logitmfx(logit_model, data = my_data, atmean = FALSE)``` we calculate the latter. Setting ```atmean = TRUE``` will calculate the former. However, in general we are most interested in the sign and significance of the coefficient.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeShtZngpXG4jIEF2ZXJhZ2UgcGFydGlhbCBlZmZlY3RcbmxvZ2l0bWZ4KGxvZ2l0X21vZGVsLCBkYXRhID0gY2hhcnRfZGF0YSwgYXRtZWFuID0gRkFMU0UpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+library(mfx)
 # Average partial effect
 logitmfx(logit_model, data = chart_data, atmean = FALSE)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>This now gives the average partial effects in percentage points. An additional point on the danceability scale (from <span class="math inline">\(1\)</span> to <span class="math inline">\(100\)</span>), on average, makes it <span class="math inline">\(1.57%\)</span> more likely for a song to become at top-10 hit.</p>
-<p>To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value <span class="math inline">\(+1\)</span>. For example if we are interested in how much more likely a song with 51 compared to 50 danceability is to become a hit we can simply calculate the following</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1Byb2JhYmlsaXR5IG9mIGEgdG9wIDEwIGhpdCB3aXRoIGEgZGFuY2VhYmlsaXR5IG9mIDUwXG5wcm9iXzUwIDwtIGV4cCgtKC1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMSwxXS1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMiwxXSo1MCApKVxucHJvYl81MFxuXG4jUHJvYmFiaWxpdHkgb2YgYSB0b3AgMTAgaGl0IHdpdGggYSBkYW5jZWFiaWxpdHkgb2YgNTFcbnByb2JfNTEgPC0gZXhwKC0oLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1sxLDFdLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1syLDFdKjUxICkpXG5wcm9iXzUxXG5cbiNPZGRzIHJhdGlvXG5wcm9iXzUxL3Byb2JfNTBcbmBgYCJ9 -->
-<pre class="r"><code>#Probability of a top 10 hit with a danceability of 50
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+This now gives the average partial effects in percentage points. An additional point on the danceability scale (from $1$ to $100$), on average, makes it $1.57%$ more likely for a song to become at top-10 hit.
+
+To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value $+1$. For example if we are interested in how much more likely a song with 51 compared to 50 danceability is to become a hit we can simply calculate the following
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI1Byb2JhYmlsaXR5IG9mIGEgdG9wIDEwIGhpdCB3aXRoIGEgZGFuY2VhYmlsaXR5IG9mIDUwXG5wcm9iXzUwIDwtIGV4cCgtKC1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMSwxXS1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMiwxXSo1MCApKVxucHJvYl81MFxuXG4jUHJvYmFiaWxpdHkgb2YgYSB0b3AgMTAgaGl0IHdpdGggYSBkYW5jZWFiaWxpdHkgb2YgNTFcbnByb2JfNTEgPC0gZXhwKC0oLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1sxLDFdLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1syLDFdKjUxICkpXG5wcm9iXzUxXG5cbiNPZGRzIHJhdGlvXG5wcm9iXzUxL3Byb2JfNTBcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+#Probability of a top 10 hit with a danceability of 50
 prob_50 &lt;- exp(-(-summary(logit_model)$coefficients[1,1]-summary(logit_model)$coefficients[2,1]*50 ))
 prob_50
 
@@ -1949,95 +2085,189 @@ prob_51
 
 #Odds ratio
 prob_51/prob_50</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>So the odds are 20% higher at 51 than at 50.</p>
-<div id="logistic-model-with-multiple-predictors" class="section level4">
-<h4>Logistic model with multiple predictors</h4>
-<p>Of course we can also use multiple predictors in logistic regression as shown in the formula above. We might want to add spotify followers (in million) and weeks since the release of the song.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2hhcnRfZGF0YSRzcG90aWZ5X2ZvbGxvd2Vyc19tIDwtIGNoYXJ0X2RhdGEkc3BvdGlmeUZvbGxvd2Vycy8xMDAwMDAwXG5jaGFydF9kYXRhJHdlZWtzX3NpbmNlX3JlbGVhc2UgPC0gY2hhcnRfZGF0YSRkYXlzU2luY2VSZWxlYXNlLzdcbmBgYCJ9 -->
-<pre class="r"><code>chart_data$spotify_followers_m &lt;- chart_data$spotifyFollowers/1000000
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+So the odds are 20% higher at 51 than at 50. 
+
+#### Logistic model with multiple predictors
+
+Of course we can also use multiple predictors in logistic regression as shown in the formula above. We might want to add spotify followers (in million) and weeks since the release of the song.
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuY2hhcnRfZGF0YSRzcG90aWZ5X2ZvbGxvd2Vyc19tIDwtIGNoYXJ0X2RhdGEkc3BvdGlmeUZvbGxvd2Vycy8xMDAwMDAwXG5jaGFydF9kYXRhJHdlZWtzX3NpbmNlX3JlbGVhc2UgPC0gY2hhcnRfZGF0YSRkYXlzU2luY2VSZWxlYXNlLzdcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+chart_data$spotify_followers_m &lt;- chart_data$spotifyFollowers/1000000
 chart_data$weeks_since_release &lt;- chart_data$daysSinceRelease/7</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Again, the familiar formula interface can be used with the <code>glm()</code> function. All the model summaries shown above still work with multiple predictors.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXVsdGlwbGVfbG9naXRfbW9kZWwgPC0gZ2xtKHRvcDEwIH4gZGFuY2VhYmlsaXR5XzEwMCArIHNwb3RpZnlfZm9sbG93ZXJzX20gKyB3ZWVrc19zaW5jZV9yZWxlYXNlLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSlcbnN1bW1hcnkobXVsdGlwbGVfbG9naXRfbW9kZWwpXG5sb2dpc3RpY1BzZXVkb1IycyhtdWx0aXBsZV9sb2dpdF9tb2RlbClcbmV4cChjb2VmKG11bHRpcGxlX2xvZ2l0X21vZGVsKSlcbmNvbmZpbnQobXVsdGlwbGVfbG9naXRfbW9kZWwpXG5gYGAifQ== -->
-<pre class="r"><code>multiple_logit_model &lt;- glm(top10 ~ danceability_100 + spotify_followers_m + weeks_since_release,family=binomial(link=&#39;logit&#39;),data=chart_data)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Again, the familiar formula interface can be used with the ```glm()``` function. All the model summaries shown above still work with multiple predictors.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubXVsdGlwbGVfbG9naXRfbW9kZWwgPC0gZ2xtKHRvcDEwIH4gZGFuY2VhYmlsaXR5XzEwMCArIHNwb3RpZnlfZm9sbG93ZXJzX20gKyB3ZWVrc19zaW5jZV9yZWxlYXNlLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSlcbnN1bW1hcnkobXVsdGlwbGVfbG9naXRfbW9kZWwpXG5sb2dpc3RpY1BzZXVkb1IycyhtdWx0aXBsZV9sb2dpdF9tb2RlbClcbmV4cChjb2VmKG11bHRpcGxlX2xvZ2l0X21vZGVsKSlcbmNvbmZpbnQobXVsdGlwbGVfbG9naXRfbW9kZWwpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+multiple_logit_model &lt;- glm(top10 ~ danceability_100 + spotify_followers_m + weeks_since_release,family=binomial(link=&#39;logit&#39;),data=chart_data)
 summary(multiple_logit_model)
 logisticPseudoR2s(multiple_logit_model)
 exp(coef(multiple_logit_model))
 confint(multiple_logit_model)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="model-selection" class="section level4">
-<h4>Model selection</h4>
-<p>The question remains, whether a variable <em>should</em> be added to the model. We will present two methods for model selection for logistic regression. The first is based on the <em>Akaike Information Criterium</em> (AIC). It is reported with the summary output for logit models. The value of the AIC is <strong>relative</strong>, meaning that it has no interpretation by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models.</p>
-<p>For example, consider the following model, where we exclude the <code>followers</code> covariate. Seeing as it was able to contribute significantly to the explanatory power of the model, the AIC increases, indicating that the model including <code>followers</code> is better suited to explain the data. We always want the lowest possible AIC.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXVsdGlwbGVfbG9naXRfbW9kZWwyIDwtIGdsbSh0b3AxMCB+IGRhbmNlYWJpbGl0eV8xMDAgKyB3ZWVrc19zaW5jZV9yZWxlYXNlLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSlcblxuc3VtbWFyeShtdWx0aXBsZV9sb2dpdF9tb2RlbDIpXG5cbmBgYCJ9 -->
-<pre class="r"><code>multiple_logit_model2 &lt;- glm(top10 ~ danceability_100 + weeks_since_release,family=binomial(link=&#39;logit&#39;),data=chart_data)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+#### Model selection
+
+The question remains, whether a variable *should* be added to the model. We will present two methods for model selection for logistic regression. The first is based on the _Akaike Information Criterium_ (AIC). It is reported with the summary output for logit models. The value of the AIC is __relative__, meaning that it has no interpretation by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models. 
+
+For example, consider the following model, where we exclude the ```followers``` covariate. Seeing as it was able to contribute significantly to the explanatory power of the model, the AIC increases, indicating that the model including ```followers``` is better suited to explain the data. We always want the lowest possible AIC. 
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubXVsdGlwbGVfbG9naXRfbW9kZWwyIDwtIGdsbSh0b3AxMCB+IGRhbmNlYWJpbGl0eV8xMDAgKyB3ZWVrc19zaW5jZV9yZWxlYXNlLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSlcblxuc3VtbWFyeShtdWx0aXBsZV9sb2dpdF9tb2RlbDIpXG5cbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+multiple_logit_model2 &lt;- glm(top10 ~ danceability_100 + weeks_since_release,family=binomial(link=&#39;logit&#39;),data=chart_data)
 
 summary(multiple_logit_model2)
 </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>As a second measure for variable selection, you can use the pseudo <span class="math inline">\(R^2\)</span>s as shown above. The fit is distinctly worse according to all three values presented here, when excluding the Spotify followers.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9naXN0aWNQc2V1ZG9SMnMobXVsdGlwbGVfbG9naXRfbW9kZWwyKVxuYGBgIn0= -->
-<pre class="r"><code>logisticPseudoR2s(multiple_logit_model2)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="predictions" class="section level4">
-<h4>Predictions</h4>
-<p>We can predict the probability given an observation using the <code>predict(my_logit, newdata = ..., type = &quot;response&quot;)</code> function. Replace <code>...</code> with the observed values for which you would like to predict the outcome variable.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQcmVkaWN0aW9uIGZvciBvbmUgb2JzZXJ2YXRpb25cbnByZWRpY3QobXVsdGlwbGVfbG9naXRfbW9kZWwsIG5ld2RhdGEgPSBkYXRhLmZyYW1lKGRhbmNlYWJpbGl0eV8xMDA9NTAsIHNwb3RpZnlfZm9sbG93ZXJzX209MTAsIHdlZWtzX3NpbmNlX3JlbGVhc2U9MSksIHR5cGUgPSBcInJlc3BvbnNlXCIpXG5gYGAifQ== -->
-<pre class="r"><code># Prediction for one observation
-predict(multiple_logit_model, newdata = data.frame(danceability_100=50, spotify_followers_m=10, weeks_since_release=1), type = &quot;response&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>The prediction indicates that a song with danceability of <span class="math inline">\(50\)</span> from an artist with <span class="math inline">\(10M\)</span> Spotify followers has a <span class="math inline">\(66%\)</span> chance of being in the top-10, 1 week after its release.</p>
-</div>
-<div id="perfect-prediction-logit" class="section level4">
-<h4>Perfect Prediction Logit</h4>
-<p>Perfect prediction occurs whenever a linear function of <span class="math inline">\(X\)</span> can perfectly separate the <span class="math inline">\(1\)</span>s from the <span class="math inline">\(0\)</span>s in the dependent variable. This is problematic when estimating a logit model as it will result in biased estimators (also check to p-values in the example!). R will return the following message if this occurs:</p>
-<p><code>glm.fit: fitted probabilities numerically 0 or 1 occurred</code></p>
-<p>Given this error, one should not use the output of the <code>glm(...)</code> function for the analysis. There are <a href="https://stats.stackexchange.com/a/68917">various ways</a> to deal with this problem, one of which is to use Firth’s bias-reduced penalized-likelihood logistic regression with the <code>logistf(Y~X)</code> function in the <code>logistf</code> package.</p>
-<div id="example" class="section level5">
-<h5>Example</h5>
-<p>In this example data <span class="math inline">\(Y = 0\)</span> if <span class="math inline">\(x_1 &lt;0\)</span> and <span class="math inline">\(Y=1\)</span> if <span class="math inline">\(x_1&gt;0\)</span> and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are <span class="math inline">\(1\)</span> despite <span class="math inline">\(x_1\)</span> being a predictor of <span class="math inline">\(Y\)</span>. Thus, we turn to the penalized-likelihood version. This model correctly indicates that <span class="math inline">\(x_1\)</span> is in fact a predictor for <span class="math inline">\(Y\)</span> as the coefficient is significant.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuWSA8LSBjKDAsMCwwLDAsMSwxLDEsMSlcblggPC0gY2JpbmQoYygtMSwtMiwtMywtMyw1LDYsMTAsMTEpLGMoMywyLC0xLC0xLDIsNCwxLDApKVxuXG4jIFBlcmZlY3QgcHJlZGljdGlvbiB3aXRoIHJlZ3VsYXIgbG9naXRcbnN1bW1hcnkoZ2xtKFl+WCwgZmFtaWx5PWJpbm9taWFsKGxpbms9XCJsb2dpdFwiKSkpXG5cbmxpYnJhcnkobG9naXN0ZilcbiMgUGVyZmVjdCBwcmVkaWN0aW9uIHdpdGggcGVuYWxpemVkLWxpa2VsaWhvb2QgbG9naXRcbnN1bW1hcnkobG9naXN0ZihZflgpKVxuYGBgIn0= -->
-<pre class="r"><code>Y &lt;- c(0,0,0,0,1,1,1,1)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+As a second measure for variable selection, you can use the pseudo $R^2$s as shown above. The fit is distinctly worse according to all three values presented here, when excluding the Spotify followers. 
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubG9naXN0aWNQc2V1ZG9SMnMobXVsdGlwbGVfbG9naXRfbW9kZWwyKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+logisticPseudoR2s(multiple_logit_model2)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+#### Predictions
+
+We can predict the probability given an observation using the ```predict(my_logit, newdata = ..., type = &quot;response&quot;)``` function. Replace ```...``` with the observed values for which you would like to predict the outcome variable.
+
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBQcmVkaWN0aW9uIGZvciBvbmUgb2JzZXJ2YXRpb25cbnByZWRpY3QobXVsdGlwbGVfbG9naXRfbW9kZWwsIG5ld2RhdGEgPSBkYXRhLmZyYW1lKGRhbmNlYWJpbGl0eV8xMDA9NTAsIHNwb3RpZnlfZm9sbG93ZXJzX209MTAsIHdlZWtzX3NpbmNlX3JlbGVhc2U9MSksIHR5cGUgPSBcXHJlc3BvbnNlXFwpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+# Prediction for one observation
+predict(multiple_logit_model, newdata = data.frame(danceability_100=50, spotify_followers_m=10, weeks_since_release=1), type = \response\)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+The prediction indicates that a song with danceability of $50$ from an artist with $10M$ Spotify followers has a $66%$ chance of being in the top-10, 1 week after its release. 
+
+#### Perfect Prediction Logit
+
+Perfect prediction occurs whenever a linear function of $X$ can perfectly separate the $1$s from the $0$s in the dependent variable. This is problematic when estimating a logit model as it will result in biased estimators (also check to p-values in the example!). R will return the following message if this occurs:
+
+```glm.fit: fitted probabilities numerically 0 or 1 occurred```
+
+Given this error, one should not use the output of the ```glm(...)``` function for the analysis. There are [various ways](https://stats.stackexchange.com/a/68917) to deal with this problem, one of which is to use Firth&#39;s bias-reduced penalized-likelihood logistic regression with the ```logistf(Y~X)``` function in the ```logistf``` package.  
+
+##### Example
+
+In this example data $Y = 0$ if $x_1 &lt;0$ and $Y=1$ if $x_1&gt;0$ and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are $1$ despite $x_1$ being a predictor of $Y$. Thus, we turn to the penalized-likelihood version. This model correctly indicates that $x_1$ is in fact a predictor for $Y$ as the coefficient is significant.  
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuWSA8LSBjKDAsMCwwLDAsMSwxLDEsMSlcblggPC0gY2JpbmQoYygtMSwtMiwtMywtMyw1LDYsMTAsMTEpLGMoMywyLC0xLC0xLDIsNCwxLDApKVxuXG4jIFBlcmZlY3QgcHJlZGljdGlvbiB3aXRoIHJlZ3VsYXIgbG9naXRcbnN1bW1hcnkoZ2xtKFl+WCwgZmFtaWx5PWJpbm9taWFsKGxpbms9XFxsb2dpdFxcKSkpXG5cbmxpYnJhcnkobG9naXN0ZilcbiMgUGVyZmVjdCBwcmVkaWN0aW9uIHdpdGggcGVuYWxpemVkLWxpa2VsaWhvb2QgbG9naXRcbnN1bW1hcnkobG9naXN0ZihZflgpKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+Y &lt;- c(0,0,0,0,1,1,1,1)
 X &lt;- cbind(c(-1,-2,-3,-3,5,6,10,11),c(3,2,-1,-1,2,4,1,0))
 
 # Perfect prediction with regular logit
-summary(glm(Y~X, family=binomial(link=&quot;logit&quot;)))
+summary(glm(Y~X, family=binomial(link=\logit\)))
 
 library(logistf)
 # Perfect prediction with penalized-likelihood logit
 summary(logistf(Y~X))</code></pre>
+<p>```</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
-</div>
 </div>
 </div>
 <div id="learning-check" class="section level2 unnumbered">
@@ -2048,9 +2278,9 @@ summary(logistf(Y~X))</code></pre>
 It describes the difference in means of two variables</li>
 <li><input type="checkbox" disabled></input>
 It describes the causal relation between two variables</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 It is the standardized covariance</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 It describes the degree to which the variation in one variable is related to the variation in another variable</li>
 <li><input type="checkbox" disabled></input>
 None of the above</li>
@@ -2059,9 +2289,9 @@ None of the above</li>
 <ul>
 <li><input type="checkbox" disabled></input>
 The line associated with the steepest slope parameter</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 The line that minimizes the sum of the squared residuals</li>
 <li><input type="checkbox" disabled></input>
 The line that maximizes the sum of the squared residuals</li>
@@ -2072,7 +2302,7 @@ None of the above</li>
 <ul>
 <li><input type="checkbox" disabled></input>
 An increase in advertising by 1€ leads to an increase in sales by 0.5 units</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 A 1% increase in advertising leads to a 0.05% increase in sales</li>
 <li><input type="checkbox" disabled></input>
 A 1% increase in advertising leads to a 5% decrease in sales</li>
@@ -2087,9 +2317,9 @@ None of the above</li>
 It is always larger than the regular <span class="math inline">\(R^{2}\)</span></li>
 <li><input type="checkbox" disabled></input>
 It increases with every additional variable</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 It increases only with additional variables that add more explanatory power than pure chance</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 It contains a “penalty” for including unnecessary variables</li>
 <li><input type="checkbox" disabled></input>
 None of the above</li>
@@ -2100,7 +2330,7 @@ None of the above</li>
 A regression model that has too many predictor variables</li>
 <li><input type="checkbox" disabled></input>
 A regression model that fits to a specific data set so poorly, that it will not generalize to other samples</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 A regression model that fits to a specific data set so well, that it will only predict well within the sample but not generalize to other samples</li>
 <li><input type="checkbox" disabled></input>
 A regression model that fits to a specific data set so well, that it will generalize to other samples particularly well</li>
@@ -2111,7 +2341,7 @@ None of the above</li>
 <ul>
 <li><input type="checkbox" disabled></input>
 Endogeneity</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 Independent errors</li>
 <li><input type="checkbox" disabled></input>
 Heteroscedasticity</li>
@@ -2122,7 +2352,7 @@ None of the above</li>
 </ul>
 <p><strong>(LC7.7) What does the problem of heteroscedasticity in a regression model refer to?</strong></p>
 <ul>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 The variance of the error term is not constant</li>
 <li><input type="checkbox" disabled></input>
 A strong linear relationship between the independent variables</li>
@@ -2137,9 +2367,9 @@ None of the above</li>
 <ul>
 <li><input type="checkbox" disabled></input>
 Constant marginal returns</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 Decreasing marginal returns</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 Constant elasticity</li>
 <li><input type="checkbox" disabled></input>
 Increasing marginal returns</li>
@@ -2152,14 +2382,14 @@ None of the above</li>
 When the dependent variable is continuous</li>
 <li><input type="checkbox" disabled></input>
 When the independent and dependent variables are binary</li>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 When the dependent variable is binary</li>
 <li><input type="checkbox" disabled></input>
 None of the above</li>
 </ul>
 <p><strong>(LC7.10) What is the correct way to implement a linear regression model in R? (x = independent variable, y = dependent variable)?</strong></p>
 <ul>
-<li><input type="checkbox" disabled checked></input>
+<li><input type="checkbox" disabled></input>
 <code>lm(y~x, data=data)</code></li>
 <li><input type="checkbox" disabled></input>
 <code>lm(x~y + error, data=data)</code></li>
@@ -2180,7 +2410,7 @@ None of the above</li>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQpvdXRwdXQ6DQogIGh0bWxfZG9jdW1lbnQ6DQogICAgdG9jOiB5ZXMNCiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdA0KICBwZGZfZG9jdW1lbnQ6DQogICAgdG9jOiB5ZXMNCi0tLQ0KDQpgYGB7ciBldmFsPVRSVUUsIGVjaG89RiwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmxpYnJhcnkoa25pdHIpDQpvcHRpb25zKGRpZ2l0cyA9IDcsIHNjaXBlbiA9IDk5OSkNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj03NSksdGlkeT1GQUxTRSwgcm93bmFtZXMucHJpbnQgPSBGQUxTRSwgcm93cy5wcmludCA9IDEwLCBlY2hvID0gVFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UpDQpgYGANCg0KYGBge3IgZXZhbD1UUlVFLCBlY2hvPUYsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQp1bmxvYWROYW1lc3BhY2UoImxhdGV4MmV4cCIpICMgdW5sb2FkcyBsYXRleDJleHAgdG8gZml4IHRoZSBzcGVjaWZpYyBlcnJvciwgdGhhdCB0aGUgY2hhcnQgaW4gNi42LjIgZGlkbid0IGRpc3BsYXkgVGVYIG91dHB1dCBwcm9wZXJseQ0KYGBgDQoNCiMjIExvZ2lzdGljIHJlZ3Jlc3Npb24NCg0KPGJyPg0KPGRpdiBhbGlnbj0iY2VudGVyIj4NCjxpZnJhbWUgd2lkdGg9IjU2MCIgaGVpZ2h0PSIzMTUiIHNyYz0iaHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvSjdUN191bHlRMEkiIGZyYW1lYm9yZGVyPSIwIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+DQo8L2Rpdj4NCjxicj4NCg0KIyMjIE1vdGl2YXRpb24gYW5kIGludHVpdGlvbg0KDQpJbiB0aGUgbGFzdCBzZWN0aW9uIHdlIHNhdyBob3cgdG8gcHJlZGljdCBjb250aW51b3VzIG91dGNvbWVzIChzYWxlcywgaGVpZ2h0LCBldGMuKSB2aWEgbGluZWFyIHJlZ3Jlc3Npb24gbW9kZWxzLiBBbm90aGVyIGludGVyZXN0aW5nIGNhc2UgaXMgdGhhdCBvZiBiaW5hcnkgb3V0Y29tZXMsIGkuZS4gd2hlbiB0aGUgdmFyaWFibGUgd2Ugd2FudCB0byBtb2RlbCBjYW4gb25seSB0YWtlIHR3byB2YWx1ZXMgKHllcyBvciBubywgZ3JvdXAgMSBvciBncm91cCAyLCBkZWFkIG9yIGFsaXZlLCBldGMuKS4gVG8gdGhpcyBlbmQgd2Ugd291bGQgbGlrZSB0byBlc3RpbWF0ZSBob3cgb3VyIHByZWRpY3RvciB2YXJpYWJsZXMgY2hhbmdlIHRoZSBwcm9iYWJpbGl0eSBvZiBhIHZhbHVlIGJlaW5nIDAgb3IgMS4gSW4gdGhpcyBjYXNlIHdlIGNhbiB0ZWNobmljYWxseSBzdGlsbCB1c2UgYSBsaW5lYXIgbW9kZWwgKGUuZy4gT0xTKS4gSG93ZXZlciwgaXRzIHByZWRpY3Rpb25zIHdpbGwgbW9zdCBsaWtlbHkgbm90IGJlIHBhcnRpY3VsYXJseSB1c2VmdWwuIEEgbW9yZSB1c2VmdWwgbWV0aG9kIGlzIHRoZSBsb2dpc3RpYyByZWdyZXNzaW9uLiBJbiBwYXJ0aWN1bGFyIHdlIGFyZSBnb2luZyB0byBoYXZlIGEgbG9vayBhdCB0aGUgbG9naXQgbW9kZWwuIEluIHRoZSBmb2xsb3dpbmcgZGF0YXNldCB3ZSBhcmUgdHJ5aW5nIHRvIHByZWRpY3Qgd2hldGhlciBhIHNvbmcgd2lsbCBiZSBhIHRvcC0xMCBoaXQgb24gYSBwb3B1bGFyIG11c2ljIHN0cmVhbWluZyBwbGF0Zm9ybS4gSW4gYSBmaXJzdCBzdGVwIHdlIGFyZSBnb2luZyB0byB1c2Ugb25seSB0aGUgZGFuY2VhYmlsaXR5IGluZGV4IGFzIGEgcHJlZGljdG9yLiBMYXRlciB3ZSBhcmUgZ29pbmcgdG8gYWRkIG1vcmUgaW5kZXBlbmRlbnQgdmFyaWFibGVzLiANCg0KYGBge3IsIGVjaG89VFJVRSwgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgZmlnLmFsaWduPSdjZW50ZXInLCBmaWcuY2FwPSJTaW11bGF0ZWQgYmluYXJ5IG91dGNvbWUgZGF0YSJ9DQpsaWJyYXJ5KGdncGxvdDIpDQpsaWJyYXJ5KGdyaWRFeHRyYSkNCg0KY2hhcnRfZGF0YSA8LSByZWFkLmRlbGltMigiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0lNU01XVS9NUkRBMjAxOC9tYXN0ZXIvZGF0YS9jaGFydF9kYXRhX2xvZ2lzdGljLmRhdCIsaGVhZGVyPVQsIHNlcCA9ICJcdCIsc3RyaW5nc0FzRmFjdG9ycyA9IEYsIGRlYyA9ICIuIikNCiNDcmVhdGUgYSBuZXcgZHVtbXkgdmFyaWFibGUgInRvcDEwIiwgd2hpY2ggaXMgMSBpZiBhIHNvbmcgbWFkZSBpdCB0byB0aGUgdG9wMTAgYW5kIDAgZWxzZToNCmNoYXJ0X2RhdGEkdG9wMTAgPC0gaWZlbHNlKGNoYXJ0X2RhdGEkcmFuazwxMSwxLDApDQoNCiMgSW5zcGVjdCBkYXRhDQpoZWFkKGNoYXJ0X2RhdGEpDQpzdHIoY2hhcnRfZGF0YSkNCmBgYA0KDQpCZWxvdyBhcmUgdHdvIGF0dGVtcHRzIHRvIG1vZGVsIHRoZSBkYXRhLiBUaGUgbGVmdCBhc3N1bWVzIGEgbGluZWFyIHByb2JhYmlsaXR5IG1vZGVsIChjYWxjdWxhdGVkIHdpdGggdGhlIHNhbWUgbWV0aG9kcyB0aGF0IHdlIHVzZWQgaW4gdGhlIGxhc3QgY2hhcHRlciksIHdoaWxlIHRoZSByaWdodCBtb2RlbCBpcyBhIF9fbG9naXN0aWMgcmVncmVzc2lvbiBtb2RlbF9fLiBBcyB5b3UgY2FuIHNlZSwgdGhlIGxpbmVhciBwcm9iYWJpbGl0eSBtb2RlbCBwcm9kdWNlcyBwcm9iYWJpbGl0aWVzIHRoYXQgYXJlIGFib3ZlIDEgYW5kIGJlbG93IDAsIHdoaWNoIGFyZSBub3QgdmFsaWQgcHJvYmFiaWxpdGllcywgd2hpbGUgdGhlIGxvZ2lzdGljIG1vZGVsIHN0YXlzIGJldHdlZW4gMCBhbmQgMS4gTm90aWNlIHRoYXQgc29uZ3Mgd2l0aCBhIGhpZ2hlciBkYW5jZWFiaWxpdHkgaW5kZXggKG9uIHRoZSByaWdodCBvZiB0aGUgeC1heGlzKSBzZWVtIHRvIGNsdXN0ZXIgbW9yZSBhdCAkMSQgYW5kIHRob3NlIHdpdGggYSBsb3dlciBtb3JlIGF0ICQwJCBzbyB3ZSBleHBlY3QgYSBwb3NpdGl2ZSBpbmZsdWVuY2Ugb2YgZGFuY2VhYmlsaXR5IG9uIHRoZSBwcm9iYWJpbGl0eSBvZiBhIHNvbmcgdG8gYmVjb21lIGEgdG9wLTEwIGhpdC4gDQoNCmBgYHtyLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPUZBTFNFLCBmaWcuYWxpZ249J2NlbnRlcicsIGZpZy5jYXA9IlRoZSBzYW1lIGJpbmFyeSBkYXRhIGV4cGxhaW5lZCBieSB0d28gbW9kZWxzOyBBIGxpbmVhciBwcm9iYWJpbGl0eSBtb2RlbCAob24gdGhlIGxlZnQpIGFuZCBhIGxvZ2lzdGljIHJlZ3Jlc3Npb24gbW9kZWwgKG9uIHRoZSByaWdodCkifQ0KI1NjYXR0ZXJwbG90IHNob3dpbmcgdGhlIGFzc29jaWF0aW9uIGJldHdlZW4gdHdvIHZhcmlhYmxlcyB1c2luZyBhIGxpbmVhciBtb2RlbA0KcGx0LmxpbiA8LSBnZ3Bsb3QoY2hhcnRfZGF0YSxhZXMoZGFuY2VhYmlsaXR5LHRvcDEwKSkgKyAgDQogIGdlb21fcG9pbnQoc2hhcGU9MSkgKw0KICBnZW9tX3Ntb290aChtZXRob2QgPSAibG0iKSArDQogIHRoZW1lX2J3KCkNCg0KI1NjYXR0ZXJwbG90IHNob3dpbmcgdGhlIGFzc29jaWF0aW9uIGJldHdlZW4gdHdvIHZhcmlhYmxlcyB1c2luZyBhIGdsbQ0KcGx0LmxvZ2l0IDwtIGdncGxvdChjaGFydF9kYXRhLGFlcyhkYW5jZWFiaWxpdHksdG9wMTApKSArICANCiAgZ2VvbV9wb2ludChzaGFwZT0xKSArDQogIGdlb21fc21vb3RoKG1ldGhvZCA9ICJnbG0iLCANCiAgICAgICAgICAgICAgbWV0aG9kLmFyZ3MgPSBsaXN0KGZhbWlseSA9ICJiaW5vbWlhbCIpLCANCiAgICAgICAgICAgICAgc2UgPSBGQUxTRSkgKw0KICB0aGVtZV9idygpDQpncmlkLmFycmFuZ2UocGx0LmxpbiwgcGx0LmxvZ2l0LCBuY29sID0gMikNCmBgYA0KDQpBIGtleSBpbnNpZ2h0IGF0IHRoaXMgcG9pbnQgaXMgdGhhdCB0aGUgY29ubmVjdGlvbiBiZXR3ZWVuICRcbWF0aGJme1h9JCBhbmQgJFkkIGlzIF9fbm9uLWxpbmVhcl9fIGluIHRoZSBsb2dpc3RpYyByZWdyZXNzaW9uIG1vZGVsLiBBcyB3ZSBjYW4gc2VlIGluIHRoZSBwbG90LCB0aGUgcHJvYmFiaWxpdHkgb2Ygc3VjY2VzcyBpcyBtb3N0IHN0cm9uZ2x5IGFmZmVjdGVkIGJ5IGRhbmNlYWJpbGl0eSBhcm91bmQgdmFsdWVzIG9mICQwLjUkLCB3aGlsZSBoaWdoZXIgYW5kIGxvd2VyIHZhbHVlcyBoYXZlIGEgc21hbGxlciBtYXJnaW5hbCBlZmZlY3QuIFRoaXMgb2J2aW91c2x5IGFsc28gaGFzIGNvbnNlcXVlbmNlcyBmb3IgdGhlIGludGVycHJldGF0aW9uIG9mIHRoZSBjb2VmZmljaWVudHMgbGF0ZXIgb24uICANCg0KIyMjIFRlY2huaWNhbCBkZXRhaWxzIG9mIHRoZSBtb2RlbA0KDQpBcyB0aGUgbmFtZSBzdWdnZXN0cywgdGhlIGxvZ2lzdGljIGZ1bmN0aW9uIGlzIGFuIGltcG9ydGFudCBjb21wb25lbnQgb2YgdGhlIGxvZ2lzdGljIHJlZ3Jlc3Npb24gbW9kZWwuIEl0IGhhcyB0aGUgZm9sbG93aW5nIGZvcm06DQoNCiQkDQpmKFxtYXRoYmZ7WH0pID0gXGZyYWN7MX17MSArIGVeey1cbWF0aGJme1h9fX0NCiQkDQpUaGlzIGZ1bmN0aW9uIHRyYW5zZm9ybXMgYWxsIHJlYWwgbnVtYmVycyBpbnRvIHRoZSByYW5nZSBiZXR3ZWVuIDAgYW5kIDEuIFdlIG5lZWQgdGhpcyB0byBtb2RlbCBwcm9iYWJpbGl0aWVzLCBhcyBwcm9iYWJpbGl0aWVzIGNhbiBvbmx5IGJlIGJldHdlZW4gMCBhbmQgMS4gDQoNCmBgYHtyLCBlY2hvID0gRkFMU0V9DQpsaWJyYXJ5KGxhdGV4MmV4cCkNCnggPC0gc2VxKC0xMCwgMTAsIGxlbmd0aC5vdXQgPSAxMDAwKQ0KZnggPC0gMS8oMStleHAoLXgpKQ0KZGYgPC0gZGF0YS5mcmFtZSh4ID0geCwgZnggPSBmeCkNCmdncGxvdChkZiwgYWVzKHggPSB4LCB5ID0gZngpKSArIA0KICBnZW9tX2xpbmUoKSsNCiAgbGFicyh5ID0gVGVYKCIkXFxmcmFjezF9ezErZV57LVxcbWF0aGJme1h9fX0kIiksIHggPSBUZVgoIiRcXG1hdGhiZntYfSQiKSkrDQogIHRoZW1lKGF4aXMudGl0bGUueSA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDAsIHZqdXN0ID0gMC41KSkgKyANCiAgdGhlbWVfYncoKQ0KYGBgDQoNCg0KDQpUaGUgbG9naXN0aWMgZnVuY3Rpb24gb24gaXRzIG93biBpcyBub3QgdmVyeSB1c2VmdWwgeWV0LCBhcyB3ZSB3YW50IHRvIGJlIGFibGUgdG8gZGV0ZXJtaW5lIGhvdyBwcmVkaWN0b3JzIGluZmx1ZW5jZSB0aGUgcHJvYmFiaWxpdHkgb2YgYSB2YWx1ZSB0byBiZSBlcXVhbCB0byAxLiBUbyB0aGlzIGVuZCB3ZSByZXBsYWNlIHRoZSAkXG1hdGhiZntYfSQgaW4gdGhlIGZ1bmN0aW9uIGFib3ZlIHdpdGggb3VyIGZhbWlsaWFyIGxpbmVhciBzcGVjaWZpY2F0aW9uLCBpLmUuDQoNCiQkDQpcbWF0aGJme1h9ID0gXGJldGFfMCArIFxiZXRhXzEgKiB4X3sxLGl9ICsgXGJldGFfMiAqIHhfezIsaX0gKyAuLi4gK1xiZXRhX20gKiB4X3ttLGl9XFwNCmYoXG1hdGhiZntYfSkgPSBQKHlfaSA9IDEpID0gXGZyYWN7MX17MSArIGVeey0oXGJldGFfMCArIFxiZXRhXzEgKiB4X3sxLGl9ICsgXGJldGFfMiAqIHhfezIsaX0gKyAuLi4gK1xiZXRhX20gKiB4X3ttLGl9KX19DQokJA0KDQpJbiBvdXIgY2FzZSB3ZSBvbmx5IGhhdmUgJFxiZXRhXzAkIGFuZCAkXGJldGFfMSQsIHRoZSBjb2VmZmljaWVudCBhc3NvY2lhdGVkIHdpdGggZGFuY2VhYmlsaXR5LiANCg0KSW4gZ2VuZXJhbCB3ZSBub3cgaGF2ZSBhIG1hdGhlbWF0aWNhbCByZWxhdGlvbnNoaXAgYmV0d2VlbiBvdXIgcHJlZGljdG9yIHZhcmlhYmxlcyAkKHhfMSwgLi4uLCB4X20pJCBhbmQgdGhlIHByb2JhYmlsaXR5IG9mICR5X2kkIGJlaW5nIGVxdWFsIHRvIG9uZS4gVGhlIGxhc3Qgc3RlcCBpcyB0byBlc3RpbWF0ZSB0aGUgcGFyYW1ldGVycyBvZiB0aGlzIG1vZGVsICQoXGJldGFfMCwgXGJldGFfMSwgLi4uLCBcYmV0YV9tKSQgdG8gZGV0ZXJtaW5lIHRoZSBtYWduaXR1ZGUgb2YgdGhlIGVmZmVjdHMuICANCg0KIyMjIEVzdGltYXRpb24gaW4gUg0KDQpXZSBhcmUgbm93IGdvaW5nIHRvIHNob3cgaG93IHRvIHBlcmZvcm0gbG9naXN0aWMgcmVncmVzc2lvbiBpbiBSLiBJbnN0ZWFkIG9mIGBgYGxtKClgYGAgd2Ugbm93IHVzZSBgYGBnbG0oWX5YLCBmYW1pbHk9Ymlub21pYWwobGluayA9ICdsb2dpdCcpKWBgYCB0byB1c2UgdGhlIGxvZ2l0IG1vZGVsLiBXZSBjYW4gc3RpbGwgdXNlIHRoZSBgYGBzdW1tYXJ5KClgYGAgY29tbWFuZCB0byBpbnNwZWN0IHRoZSBvdXRwdXQgb2YgdGhlIG1vZGVsLiANCg0KYGBge3J9DQojUnVuIHRoZSBnbG0NCmxvZ2l0X21vZGVsIDwtIGdsbSh0b3AxMCB+IGRhbmNlYWJpbGl0eSxmYW1pbHk9Ymlub21pYWwobGluaz0nbG9naXQnKSxkYXRhPWNoYXJ0X2RhdGEpDQojSW5zcGVjdCBtb2RlbCBzdW1tYXJ5DQpzdW1tYXJ5KGxvZ2l0X21vZGVsICkNCmBgYA0KDQpOb3RpY2VhYmx5IHRoaXMgb3V0cHV0IGRvZXMgbm90IGluY2x1ZGUgYW4gJFJeMiQgdmFsdWUgdG8gYXNzZXMgbW9kZWwgZml0LiBNdWx0aXBsZSAiUHNldWRvICRSXjIkcyIsIHNpbWlsYXIgdG8gdGhlIG9uZSB1c2VkIGluIE9MUywgaGF2ZSBiZWVuIGRldmVsb3BlZC4gVGhlcmUgYXJlIHBhY2thZ2VzIHRoYXQgcmV0dXJuIHRoZSAkUl4yJCBnaXZlbiBhIGxvZ2l0IG1vZGVsIChzZWUgYGBgcmNvbXBhbmlvbmBgYCBvciBgYGBwc2NsYGBgKS4gVGhlIGNhbGN1bGF0aW9uIGJ5IGhhbmQgaXMgYWxzbyBmYWlybHkgc2ltcGxlLiBXZSBkZWZpbmUgdGhlIGZ1bmN0aW9uIGBgYGxvZ2lzdGljUHNldWRvUjJzKClgYGAgdGhhdCB0YWtlcyBhIGxvZ2l0IG1vZGVsIGFzIGFuIGlucHV0IGFuZCByZXR1cm5zIHRocmVlIHBvcHVsYXIgcHNldWRvICRSXjIkIHZhbHVlcy4NCg0KYGBge3J9DQpsb2dpc3RpY1BzZXVkb1IycyA8LSBmdW5jdGlvbihMb2dNb2RlbCkgew0KICBkZXYgPC0gTG9nTW9kZWwkZGV2aWFuY2UgDQogIG51bGxEZXYgPC0gTG9nTW9kZWwkbnVsbC5kZXZpYW5jZSANCiAgbW9kZWxOIDwtIGxlbmd0aChMb2dNb2RlbCRmaXR0ZWQudmFsdWVzKQ0KICBSLmwgPC0gIDEgLSAgZGV2IC8gbnVsbERldg0KICBSLmNzIDwtIDEtIGV4cCAoIC0obnVsbERldiAtIGRldikgLyBtb2RlbE4pDQogIFIubiA8LSBSLmNzIC8gKCAxIC0gKCBleHAgKC0obnVsbERldiAvIG1vZGVsTikpKSkNCiAgY2F0KCJQc2V1ZG8gUl4yIGZvciBsb2dpc3RpYyByZWdyZXNzaW9uXG4iKQ0KICBjYXQoIkhvc21lciBhbmQgTGVtZXNob3cgUl4yICAiLCByb3VuZChSLmwsIDMpLCAiXG4iKQ0KICBjYXQoIkNveCBhbmQgU25lbGwgUl4yICAgICAgICAiLCByb3VuZChSLmNzLCAzKSwgIlxuIikNCiAgY2F0KCJOYWdlbGtlcmtlIFJeMiAgICAgICAgICAgIiwgcm91bmQoUi5uLCAzKSwgICAgIlxuIikNCn0NCiNJbnNwZWN0IFBzZXVkbyBSMnMNCmxvZ2lzdGljUHNldWRvUjJzKGxvZ2l0X21vZGVsICkNCmBgYA0KDQpUaGUgY29lZmZpY2llbnRzIG9mIHRoZSBtb2RlbCBnaXZlIHRoZSBjaGFuZ2UgaW4gdGhlIFtsb2cgb2Rkc10oaHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvT2RkcyNTdGF0aXN0aWNhbF91c2FnZSkgb2YgdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBkdWUgdG8gYSB1bml0IGNoYW5nZSBpbiB0aGUgcmVncmVzc29yLiBUaGlzIG1ha2VzIHRoZSBleGFjdCBpbnRlcnByZXRhdGlvbiBvZiB0aGUgY29lZmZpY2llbnRzIGRpZmZpY3VsdCwgYnV0IHdlIGNhbiBzdGlsbCBpbnRlcnByZXQgdGhlIHNpZ25zIGFuZCB0aGUgcC12YWx1ZXMgd2hpY2ggd2lsbCB0ZWxsIHVzIGlmIGEgdmFyaWFibGUgaGFzIGEgc2lnbmlmaWNhbnQgcG9zaXRpdmUgb3IgbmVnYXRpdmUgaW1wYWN0IG9uIHRoZSBwcm9iYWJpbGl0eSBvZiB0aGUgZGVwZW5kZW50IHZhcmlhYmxlIGJlaW5nICQxJC4gSW4gb3JkZXIgdG8gZ2V0IHRoZSBvZGRzIHJhdGlvcyB3ZSBjYW4gc2ltcGx5IHRha2UgdGhlIGV4cG9uZW50IG9mIHRoZSBjb2VmZmljaWVudHMuIA0KDQpgYGB7cn0NCmV4cChjb2VmKGxvZ2l0X21vZGVsICkpDQpgYGANCg0KTm90aWNlIHRoYXQgdGhlIGNvZWZmaWNpZW50IGlzIGV4dHJlbWVseSBsYXJnZS4gVGhhdCBpcyAocGFydGx5KSBkdWUgdG8gdGhlIGZhY3QgdGhhdCB0aGUgZGFuY2VhYmlsaXR5IHZhcmlhYmxlIGlzIGNvbnN0cmFpbmVkIHRvIHZhbHVlcyBiZXR3ZWVuICQwJCBhbmQgJDEkIGFuZCB0aGUgY29lZmZpY2llbnRzIGFyZSBmb3IgYSB1bml0IGNoYW5nZS4gV2UgY2FuIG1ha2UgdGhlICJ1bml0LWNoYW5nZSIgaW50ZXJwcmV0YXRpb24gbW9yZSBtZWFuaW5nZnVsIGJ5IG11bHRpcGx5aW5nIHRoZSBkYW5jZWFiaWxpdHkgaW5kZXggYnkgJDEwMCQuIFRoaXMgbGluZWFyIHRyYW5zZm9ybWF0aW9uIGRvZXMgbm90IGFmZmVjdCB0aGUgbW9kZWwgZml0IG9yIHRoZSBwLXZhbHVlcy4NCg0KYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCiNSZS1zY2FsZSBpbmRlcGVuZGV0IHZhcmlhYmxlDQpjaGFydF9kYXRhJGRhbmNlYWJpbGl0eV8xMDAgPC0gY2hhcnRfZGF0YSRkYW5jZWFiaWxpdHkqMTAwIA0KI1J1biB0aGUgcmVncmVzc2lvbiBtb2RlbA0KbG9naXRfbW9kZWwgPC0gZ2xtKHRvcDEwIH4gZGFuY2VhYmlsaXR5XzEwMCxmYW1pbHk9Ymlub21pYWwobGluaz0nbG9naXQnKSxkYXRhPWNoYXJ0X2RhdGEpDQojSW5zcGVjdCBtb2RlbCBzdW1tYXJ5DQpzdW1tYXJ5KGxvZ2l0X21vZGVsICkNCiNJbnNwZWN0IFBzZXVkbyBSMnMNCmxvZ2lzdGljUHNldWRvUjJzKGxvZ2l0X21vZGVsICkNCiNDb252ZXJ0IGNvZWZmaWNpZW50cyB0byBvZGRzIHJhdGlvcw0KZXhwKGNvZWYobG9naXRfbW9kZWwgKSkNCmBgYA0KDQpXZSBvYnNlcnZlIHRoYXQgZGFuY2VhYmlsaXR5IHBvc2l0aXZlbHkgYWZmZWN0cyB0aGUgbGlrZWxpaG9vZCBvZiBiZWNvbWluZyBhdCB0b3AtMTAgaGl0LiBUbyBnZXQgdGhlIGNvbmZpZGVuY2UgaW50ZXJ2YWxzIGZvciB0aGUgY29lZmZpY2llbnRzIHdlIGNhbiB1c2UgdGhlIHNhbWUgZnVuY3Rpb24gYXMgd2l0aCBPTFMNCg0KYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmNvbmZpbnQobG9naXRfbW9kZWwpDQpgYGANCg0KSW4gb3JkZXIgdG8gZ2V0IGEgcm91Z2ggaWRlYSBhYm91dCB0aGUgbWFnbml0dWRlIG9mIHRoZSBlZmZlY3RzIHdlIGNhbiBjYWxjdWxhdGUgdGhlIHBhcnRpYWwgZWZmZWN0cyBhdCB0aGUgbWVhbiBvZiB0aGUgZGF0YSAodGhhdCBpcyB0aGUgZWZmZWN0IGZvciB0aGUgYXZlcmFnZSBvYnNlcnZhdGlvbikuIEFsdGVybmF0aXZlbHksIHdlIGNhbiBjYWxjdWxhdGUgdGhlIG1lYW4gb2YgdGhlIGVmZmVjdHMgKHRoYXQgaXMgdGhlIGF2ZXJhZ2Ugb2YgdGhlIGluZGl2aWR1YWwgZWZmZWN0cykuIEJvdGggY2FuIGJlIGRvbmUgd2l0aCB0aGUgYGBgbG9naXRtZngoLi4uKWBgYCBmdW5jdGlvbiBmcm9tIHRoZSBgYGBtZnhgYGAgcGFja2FnZS4gSWYgd2Ugc2V0IGBgYGxvZ2l0bWZ4KGxvZ2l0X21vZGVsLCBkYXRhID0gbXlfZGF0YSwgYXRtZWFuID0gRkFMU0UpYGBgIHdlIGNhbGN1bGF0ZSB0aGUgbGF0dGVyLiBTZXR0aW5nIGBgYGF0bWVhbiA9IFRSVUVgYGAgd2lsbCBjYWxjdWxhdGUgdGhlIGZvcm1lci4gSG93ZXZlciwgaW4gZ2VuZXJhbCB3ZSBhcmUgbW9zdCBpbnRlcmVzdGVkIGluIHRoZSBzaWduIGFuZCBzaWduaWZpY2FuY2Ugb2YgdGhlIGNvZWZmaWNpZW50Lg0KDQpgYGB7ciwgbWVzc2FnZSA9IEZBTFNFLCB3YXJuaW5nID0gRkFMU0V9DQpsaWJyYXJ5KG1meCkNCiMgQXZlcmFnZSBwYXJ0aWFsIGVmZmVjdA0KbG9naXRtZngobG9naXRfbW9kZWwsIGRhdGEgPSBjaGFydF9kYXRhLCBhdG1lYW4gPSBGQUxTRSkNCmBgYA0KDQpUaGlzIG5vdyBnaXZlcyB0aGUgYXZlcmFnZSBwYXJ0aWFsIGVmZmVjdHMgaW4gcGVyY2VudGFnZSBwb2ludHMuIEFuIGFkZGl0aW9uYWwgcG9pbnQgb24gdGhlIGRhbmNlYWJpbGl0eSBzY2FsZSAoZnJvbSAkMSQgdG8gJDEwMCQpLCBvbiBhdmVyYWdlLCBtYWtlcyBpdCAkMS41NyUkIG1vcmUgbGlrZWx5IGZvciBhIHNvbmcgdG8gYmVjb21lIGF0IHRvcC0xMCBoaXQuDQoNClRvIGdldCB0aGUgZWZmZWN0IG9mIGFuIGFkZGl0aW9uYWwgcG9pbnQgYXQgYSBzcGVjaWZpYyB2YWx1ZSwgd2UgY2FuIGNhbGN1bGF0ZSB0aGUgb2RkcyByYXRpbyBieSBwcmVkaWN0aW5nIHRoZSBwcm9iYWJpbGl0eSBhdCBhIHZhbHVlIGFuZCBhdCB0aGUgdmFsdWUgJCsxJC4gRm9yIGV4YW1wbGUgaWYgd2UgYXJlIGludGVyZXN0ZWQgaW4gaG93IG11Y2ggbW9yZSBsaWtlbHkgYSBzb25nIHdpdGggNTEgY29tcGFyZWQgdG8gNTAgZGFuY2VhYmlsaXR5IGlzIHRvIGJlY29tZSBhIGhpdCB3ZSBjYW4gc2ltcGx5IGNhbGN1bGF0ZSB0aGUgZm9sbG93aW5nDQoNCmBgYHtyfQ0KI1Byb2JhYmlsaXR5IG9mIGEgdG9wIDEwIGhpdCB3aXRoIGEgZGFuY2VhYmlsaXR5IG9mIDUwDQpwcm9iXzUwIDwtIGV4cCgtKC1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMSwxXS1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMiwxXSo1MCApKQ0KcHJvYl81MA0KDQojUHJvYmFiaWxpdHkgb2YgYSB0b3AgMTAgaGl0IHdpdGggYSBkYW5jZWFiaWxpdHkgb2YgNTENCnByb2JfNTEgPC0gZXhwKC0oLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1sxLDFdLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1syLDFdKjUxICkpDQpwcm9iXzUxDQoNCiNPZGRzIHJhdGlvDQpwcm9iXzUxL3Byb2JfNTANCmBgYA0KDQpTbyB0aGUgb2RkcyBhcmUgMjAlIGhpZ2hlciBhdCA1MSB0aGFuIGF0IDUwLiANCg0KIyMjIyBMb2dpc3RpYyBtb2RlbCB3aXRoIG11bHRpcGxlIHByZWRpY3RvcnMNCg0KT2YgY291cnNlIHdlIGNhbiBhbHNvIHVzZSBtdWx0aXBsZSBwcmVkaWN0b3JzIGluIGxvZ2lzdGljIHJlZ3Jlc3Npb24gYXMgc2hvd24gaW4gdGhlIGZvcm11bGEgYWJvdmUuIFdlIG1pZ2h0IHdhbnQgdG8gYWRkIHNwb3RpZnkgZm9sbG93ZXJzIChpbiBtaWxsaW9uKSBhbmQgd2Vla3Mgc2luY2UgdGhlIHJlbGVhc2Ugb2YgdGhlIHNvbmcuDQpgYGB7cn0NCmNoYXJ0X2RhdGEkc3BvdGlmeV9mb2xsb3dlcnNfbSA8LSBjaGFydF9kYXRhJHNwb3RpZnlGb2xsb3dlcnMvMTAwMDAwMA0KY2hhcnRfZGF0YSR3ZWVrc19zaW5jZV9yZWxlYXNlIDwtIGNoYXJ0X2RhdGEkZGF5c1NpbmNlUmVsZWFzZS83DQpgYGANCg0KQWdhaW4sIHRoZSBmYW1pbGlhciBmb3JtdWxhIGludGVyZmFjZSBjYW4gYmUgdXNlZCB3aXRoIHRoZSBgYGBnbG0oKWBgYCBmdW5jdGlvbi4gQWxsIHRoZSBtb2RlbCBzdW1tYXJpZXMgc2hvd24gYWJvdmUgc3RpbGwgd29yayB3aXRoIG11bHRpcGxlIHByZWRpY3RvcnMuDQoNCmBgYHtyfQ0KbXVsdGlwbGVfbG9naXRfbW9kZWwgPC0gZ2xtKHRvcDEwIH4gZGFuY2VhYmlsaXR5XzEwMCArIHNwb3RpZnlfZm9sbG93ZXJzX20gKyB3ZWVrc19zaW5jZV9yZWxlYXNlLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSkNCnN1bW1hcnkobXVsdGlwbGVfbG9naXRfbW9kZWwpDQpsb2dpc3RpY1BzZXVkb1IycyhtdWx0aXBsZV9sb2dpdF9tb2RlbCkNCmV4cChjb2VmKG11bHRpcGxlX2xvZ2l0X21vZGVsKSkNCmNvbmZpbnQobXVsdGlwbGVfbG9naXRfbW9kZWwpDQpgYGANCg0KDQojIyMjIE1vZGVsIHNlbGVjdGlvbg0KDQpUaGUgcXVlc3Rpb24gcmVtYWlucywgd2hldGhlciBhIHZhcmlhYmxlICpzaG91bGQqIGJlIGFkZGVkIHRvIHRoZSBtb2RlbC4gV2Ugd2lsbCBwcmVzZW50IHR3byBtZXRob2RzIGZvciBtb2RlbCBzZWxlY3Rpb24gZm9yIGxvZ2lzdGljIHJlZ3Jlc3Npb24uIFRoZSBmaXJzdCBpcyBiYXNlZCBvbiB0aGUgX0FrYWlrZSBJbmZvcm1hdGlvbiBDcml0ZXJpdW1fIChBSUMpLiBJdCBpcyByZXBvcnRlZCB3aXRoIHRoZSBzdW1tYXJ5IG91dHB1dCBmb3IgbG9naXQgbW9kZWxzLiBUaGUgdmFsdWUgb2YgdGhlIEFJQyBpcyBfX3JlbGF0aXZlX18sIG1lYW5pbmcgdGhhdCBpdCBoYXMgbm8gaW50ZXJwcmV0YXRpb24gYnkgaXRzZWxmLiBIb3dldmVyLCBpdCBjYW4gYmUgdXNlZCB0byBjb21wYXJlIGFuZCBzZWxlY3QgbW9kZWxzLiBUaGUgbW9kZWwgd2l0aCB0aGUgbG93ZXN0IEFJQyB2YWx1ZSBpcyB0aGUgb25lIHRoYXQgc2hvdWxkIGJlIGNob3Nlbi4gTm90ZSB0aGF0IHRoZSBBSUMgZG9lcyBub3QgaW5kaWNhdGUgaG93IHdlbGwgdGhlIG1vZGVsIGZpdHMgdGhlIGRhdGEsIGJ1dCBpcyBtZXJlbHkgdXNlZCB0byBjb21wYXJlIG1vZGVscy4gDQoNCkZvciBleGFtcGxlLCBjb25zaWRlciB0aGUgZm9sbG93aW5nIG1vZGVsLCB3aGVyZSB3ZSBleGNsdWRlIHRoZSBgYGBmb2xsb3dlcnNgYGAgY292YXJpYXRlLiBTZWVpbmcgYXMgaXQgd2FzIGFibGUgdG8gY29udHJpYnV0ZSBzaWduaWZpY2FudGx5IHRvIHRoZSBleHBsYW5hdG9yeSBwb3dlciBvZiB0aGUgbW9kZWwsIHRoZSBBSUMgaW5jcmVhc2VzLCBpbmRpY2F0aW5nIHRoYXQgdGhlIG1vZGVsIGluY2x1ZGluZyBgYGBmb2xsb3dlcnNgYGAgaXMgYmV0dGVyIHN1aXRlZCB0byBleHBsYWluIHRoZSBkYXRhLiBXZSBhbHdheXMgd2FudCB0aGUgbG93ZXN0IHBvc3NpYmxlIEFJQy4gDQoNCmBgYHtyLCBtZXNzYWdlID0gRkFMU0UsIHdhcm5pbmcgPSBGQUxTRX0NCm11bHRpcGxlX2xvZ2l0X21vZGVsMiA8LSBnbG0odG9wMTAgfiBkYW5jZWFiaWxpdHlfMTAwICsgd2Vla3Nfc2luY2VfcmVsZWFzZSxmYW1pbHk9Ymlub21pYWwobGluaz0nbG9naXQnKSxkYXRhPWNoYXJ0X2RhdGEpDQoNCnN1bW1hcnkobXVsdGlwbGVfbG9naXRfbW9kZWwyKQ0KDQpgYGANCg0KQXMgYSBzZWNvbmQgbWVhc3VyZSBmb3IgdmFyaWFibGUgc2VsZWN0aW9uLCB5b3UgY2FuIHVzZSB0aGUgcHNldWRvICRSXjIkcyBhcyBzaG93biBhYm92ZS4gVGhlIGZpdCBpcyBkaXN0aW5jdGx5IHdvcnNlIGFjY29yZGluZyB0byBhbGwgdGhyZWUgdmFsdWVzIHByZXNlbnRlZCBoZXJlLCB3aGVuIGV4Y2x1ZGluZyB0aGUgU3BvdGlmeSBmb2xsb3dlcnMuIA0KDQpgYGB7cn0NCmxvZ2lzdGljUHNldWRvUjJzKG11bHRpcGxlX2xvZ2l0X21vZGVsMikNCmBgYA0KDQoNCiMjIyMgUHJlZGljdGlvbnMNCg0KV2UgY2FuIHByZWRpY3QgdGhlIHByb2JhYmlsaXR5IGdpdmVuIGFuIG9ic2VydmF0aW9uIHVzaW5nIHRoZSBgYGBwcmVkaWN0KG15X2xvZ2l0LCBuZXdkYXRhID0gLi4uLCB0eXBlID0gInJlc3BvbnNlIilgYGAgZnVuY3Rpb24uIFJlcGxhY2UgYGBgLi4uYGBgIHdpdGggdGhlIG9ic2VydmVkIHZhbHVlcyBmb3Igd2hpY2ggeW91IHdvdWxkIGxpa2UgdG8gcHJlZGljdCB0aGUgb3V0Y29tZSB2YXJpYWJsZS4NCg0KDQpgYGB7ciwgbWVzc2FnZSA9IEZBTFNFLCB3YXJuaW5nID0gRkFMU0V9DQojIFByZWRpY3Rpb24gZm9yIG9uZSBvYnNlcnZhdGlvbg0KcHJlZGljdChtdWx0aXBsZV9sb2dpdF9tb2RlbCwgbmV3ZGF0YSA9IGRhdGEuZnJhbWUoZGFuY2VhYmlsaXR5XzEwMD01MCwgc3BvdGlmeV9mb2xsb3dlcnNfbT0xMCwgd2Vla3Nfc2luY2VfcmVsZWFzZT0xKSwgdHlwZSA9ICJyZXNwb25zZSIpDQpgYGANCg0KVGhlIHByZWRpY3Rpb24gaW5kaWNhdGVzIHRoYXQgYSBzb25nIHdpdGggZGFuY2VhYmlsaXR5IG9mICQ1MCQgZnJvbSBhbiBhcnRpc3Qgd2l0aCAkMTBNJCBTcG90aWZ5IGZvbGxvd2VycyBoYXMgYSAkNjYlJCBjaGFuY2Ugb2YgYmVpbmcgaW4gdGhlIHRvcC0xMCwgMSB3ZWVrIGFmdGVyIGl0cyByZWxlYXNlLiANCg0KIyMjIyBQZXJmZWN0IFByZWRpY3Rpb24gTG9naXQNCg0KUGVyZmVjdCBwcmVkaWN0aW9uIG9jY3VycyB3aGVuZXZlciBhIGxpbmVhciBmdW5jdGlvbiBvZiAkWCQgY2FuIHBlcmZlY3RseSBzZXBhcmF0ZSB0aGUgJDEkcyBmcm9tIHRoZSAkMCRzIGluIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUuIFRoaXMgaXMgcHJvYmxlbWF0aWMgd2hlbiBlc3RpbWF0aW5nIGEgbG9naXQgbW9kZWwgYXMgaXQgd2lsbCByZXN1bHQgaW4gYmlhc2VkIGVzdGltYXRvcnMgKGFsc28gY2hlY2sgdG8gcC12YWx1ZXMgaW4gdGhlIGV4YW1wbGUhKS4gUiB3aWxsIHJldHVybiB0aGUgZm9sbG93aW5nIG1lc3NhZ2UgaWYgdGhpcyBvY2N1cnM6DQoNCmBgYGdsbS5maXQ6IGZpdHRlZCBwcm9iYWJpbGl0aWVzIG51bWVyaWNhbGx5IDAgb3IgMSBvY2N1cnJlZGBgYA0KDQpHaXZlbiB0aGlzIGVycm9yLCBvbmUgc2hvdWxkIG5vdCB1c2UgdGhlIG91dHB1dCBvZiB0aGUgYGBgZ2xtKC4uLilgYGAgZnVuY3Rpb24gZm9yIHRoZSBhbmFseXNpcy4gVGhlcmUgYXJlIFt2YXJpb3VzIHdheXNdKGh0dHBzOi8vc3RhdHMuc3RhY2tleGNoYW5nZS5jb20vYS82ODkxNykgdG8gZGVhbCB3aXRoIHRoaXMgcHJvYmxlbSwgb25lIG9mIHdoaWNoIGlzIHRvIHVzZSBGaXJ0aCdzIGJpYXMtcmVkdWNlZCBwZW5hbGl6ZWQtbGlrZWxpaG9vZCBsb2dpc3RpYyByZWdyZXNzaW9uIHdpdGggdGhlIGBgYGxvZ2lzdGYoWX5YKWBgYCBmdW5jdGlvbiBpbiB0aGUgYGBgbG9naXN0ZmBgYCBwYWNrYWdlLiAgDQoNCiMjIyMjIEV4YW1wbGUNCg0KSW4gdGhpcyBleGFtcGxlIGRhdGEgJFkgPSAwJCBpZiAkeF8xIDwwJCBhbmQgJFk9MSQgaWYgJHhfMT4wJCBhbmQgd2UgdGh1cyBoYXZlIHBlcmZlY3QgcHJlZGljdGlvbi4gQXMgd2UgY2FuIHNlZSB0aGUgb3V0cHV0IG9mIHRoZSByZWd1bGFyIGxvZ2l0IG1vZGVsIGlzIG5vdCBpbnRlcnByZXRhYmxlLiBUaGUgc3RhbmRhcmQgZXJyb3JzIGFyZSBodWdlIGNvbXBhcmVkIHRvIHRoZSBjb2VmZmljaWVudHMgYW5kIHRodXMgdGhlIHAtdmFsdWVzIGFyZSAkMSQgZGVzcGl0ZSAkeF8xJCBiZWluZyBhIHByZWRpY3RvciBvZiAkWSQuIFRodXMsIHdlIHR1cm4gdG8gdGhlIHBlbmFsaXplZC1saWtlbGlob29kIHZlcnNpb24uIFRoaXMgbW9kZWwgY29ycmVjdGx5IGluZGljYXRlcyB0aGF0ICR4XzEkIGlzIGluIGZhY3QgYSBwcmVkaWN0b3IgZm9yICRZJCBhcyB0aGUgY29lZmZpY2llbnQgaXMgc2lnbmlmaWNhbnQuICANCg0KYGBge3IsIG1lc3NhZ2UgPSBGQUxTRSwgd2FybmluZyA9IEZBTFNFfQ0KWSA8LSBjKDAsMCwwLDAsMSwxLDEsMSkNClggPC0gY2JpbmQoYygtMSwtMiwtMywtMyw1LDYsMTAsMTEpLGMoMywyLC0xLC0xLDIsNCwxLDApKQ0KDQojIFBlcmZlY3QgcHJlZGljdGlvbiB3aXRoIHJlZ3VsYXIgbG9naXQNCnN1bW1hcnkoZ2xtKFl+WCwgZmFtaWx5PWJpbm9taWFsKGxpbms9ImxvZ2l0IikpKQ0KDQpsaWJyYXJ5KGxvZ2lzdGYpDQojIFBlcmZlY3QgcHJlZGljdGlvbiB3aXRoIHBlbmFsaXplZC1saWtlbGlob29kIGxvZ2l0DQpzdW1tYXJ5KGxvZ2lzdGYoWX5YKSkNCmBgYA0KDQoNCiMjIExlYXJuaW5nIGNoZWNrIHstfQ0KDQoqKihMQzcuMSkgV2hhdCBpcyBhIGNvcnJlbGF0aW9uIGNvZWZmaWNpZW50PyoqDQoNCi0gWyBdIEl0IGRlc2NyaWJlcyB0aGUgZGlmZmVyZW5jZSBpbiBtZWFucyBvZiB0d28gdmFyaWFibGVzDQotIFsgXSBJdCBkZXNjcmliZXMgdGhlIGNhdXNhbCByZWxhdGlvbiBiZXR3ZWVuIHR3byB2YXJpYWJsZXMNCi0gW3hdIEl0IGlzIHRoZSBzdGFuZGFyZGl6ZWQgY292YXJpYW5jZQ0KLSBbeF0gSXQgZGVzY3JpYmVzIHRoZSBkZWdyZWUgdG8gd2hpY2ggdGhlIHZhcmlhdGlvbiBpbiBvbmUgdmFyaWFibGUgaXMgcmVsYXRlZCB0byB0aGUgdmFyaWF0aW9uIGluIGFub3RoZXIgdmFyaWFibGUNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuMikgV2hpY2ggbGluZSB0aHJvdWdoIGEgc2NhdHRlcnBsb3QgcHJvZHVjZXMgdGhlIGJlc3QgZml0IGluIGEgbGluZWFyIHJlZ3Jlc3Npb24gbW9kZWw/KioNCg0KLSBbIF0gVGhlIGxpbmUgYXNzb2NpYXRlZCB3aXRoIHRoZSBzdGVlcGVzdCBzbG9wZSBwYXJhbWV0ZXINCi0gW3hdIFRoZSBsaW5lIHRoYXQgbWluaW1pemVzIHRoZSBzdW0gb2YgdGhlIHNxdWFyZWQgZGV2aWF0aW9ucyBvZiB0aGUgcHJlZGljdGVkIHZhbHVlcyAocmVncmVzc2lvbiBsaW5lKSBmcm9tIHRoZSBvYnNlcnZlZCB2YWx1ZXMNCi0gW3hdIFRoZSBsaW5lIHRoYXQgbWluaW1pemVzIHRoZSBzdW0gb2YgdGhlIHNxdWFyZWQgcmVzaWR1YWxzDQotIFsgXSBUaGUgbGluZSB0aGF0IG1heGltaXplcyB0aGUgc3VtIG9mIHRoZSBzcXVhcmVkIHJlc2lkdWFscw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUgDQoNCioqKExDNy4zKSBXaGF0IGlzIHRoZSBpbnRlcnByZXRhdGlvbiBvZiB0aGUgcmVncmVzc2lvbiBjb2VmZmljaWVudCAoJFxiZXRhXzEkPTAuMDUpIGluIGEgcmVncmVzc2lvbiBtb2RlbCB3aGVyZSBsb2coc2FsZXMpIChpLmUuLCBsb2ctdHJhbnNmb3JtZWQgdW5pdHMpIGlzIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUgYW5kIGxvZyhhZHZlcnRpc2luZykgKGkuZS4sIHRoZSBsb2ctdHJhbnNmb3JtZWQgYWR2ZXJ0aXNpbmcgZXhwZW5kaXR1cmVzIGluIEV1cm8pIGlzIHRoZSBpbmRlcGVuZGVudCB2YXJpYWJsZSAoaS5lLiwgJGxvZyhzYWxlcyk9MTMuNCswLjA14oiXbG9nKGFkdmVydGlzaW5nKSQpPyoqDQoNCi0gWyBdIEFuIGluY3JlYXNlIGluIGFkdmVydGlzaW5nIGJ5IDHigqwgbGVhZHMgdG8gYW4gaW5jcmVhc2UgaW4gc2FsZXMgYnkgMC41IHVuaXRzDQotIFt4XSBBIDElIGluY3JlYXNlIGluIGFkdmVydGlzaW5nIGxlYWRzIHRvIGEgMC4wNSUgaW5jcmVhc2UgaW4gc2FsZXMNCi0gWyBdIEEgMSUgaW5jcmVhc2UgaW4gYWR2ZXJ0aXNpbmcgbGVhZHMgdG8gYSA1JSBkZWNyZWFzZSBpbiBzYWxlcw0KLSBbIF0gQW4gaW5jcmVhc2UgaW4gYWR2ZXJ0aXNpbmcgYnkgMeKCrCBsZWFkcyB0byBhbiBpbmNyZWFzZSBpbiBzYWxlcyBieSAwLjAwNSB1bml0cw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUNCg0KKiooTEM3LjQpIFdoaWNoIG9mIHRoZSBmb2xsb3dpbmcgc3RhdGVtZW50cyBhYm91dCB0aGUgYWRqdXN0ZWQgUi1zcXVhcmVkIGlzIFRSVUU/KioNCg0KLSBbIF0gSXQgaXMgYWx3YXlzIGxhcmdlciB0aGFuIHRoZSByZWd1bGFyICRSXnsyfSQNCi0gWyBdIEl0IGluY3JlYXNlcyB3aXRoIGV2ZXJ5IGFkZGl0aW9uYWwgdmFyaWFibGUNCi0gW3hdIEl0IGluY3JlYXNlcyBvbmx5IHdpdGggYWRkaXRpb25hbCB2YXJpYWJsZXMgdGhhdCBhZGQgbW9yZSBleHBsYW5hdG9yeSBwb3dlciB0aGFuIHB1cmUgY2hhbmNlDQotIFt4XSBJdCBjb250YWlucyBhIOKAnHBlbmFsdHnigJ0gZm9yIGluY2x1ZGluZyB1bm5lY2Vzc2FyeSB2YXJpYWJsZXMNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuNSkgV2hhdCBkb2VzIHRoZSB0ZXJtIG92ZXJmaXR0aW5nIHJlZmVyIHRvPyoqDQoNCi0gWyBdIEEgcmVncmVzc2lvbiBtb2RlbCB0aGF0IGhhcyB0b28gbWFueSBwcmVkaWN0b3IgdmFyaWFibGVzDQotIFsgXSBBIHJlZ3Jlc3Npb24gbW9kZWwgdGhhdCBmaXRzIHRvIGEgc3BlY2lmaWMgZGF0YSBzZXQgc28gcG9vcmx5LCB0aGF0IGl0IHdpbGwgbm90IGdlbmVyYWxpemUgdG8gb3RoZXIgc2FtcGxlcw0KLSBbeF0gQSByZWdyZXNzaW9uIG1vZGVsIHRoYXQgZml0cyB0byBhIHNwZWNpZmljIGRhdGEgc2V0IHNvIHdlbGwsIHRoYXQgaXQgd2lsbCBvbmx5IHByZWRpY3Qgd2VsbCB3aXRoaW4gdGhlIHNhbXBsZSBidXQgbm90IGdlbmVyYWxpemUgdG8gb3RoZXIgc2FtcGxlcw0KLSBbIF0gQSByZWdyZXNzaW9uIG1vZGVsIHRoYXQgZml0cyB0byBhIHNwZWNpZmljIGRhdGEgc2V0IHNvIHdlbGwsIHRoYXQgaXQgd2lsbCBnZW5lcmFsaXplIHRvIG90aGVyIHNhbXBsZXMgcGFydGljdWxhcmx5IHdlbGwNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuNikgV2hhdCBhcmUgYXNzdW1wdGlvbnMgb2YgdGhlIGxpbmVhciByZWdyZXNzaW9uIG1vZGVsPyoqDQoNCi0gWyBdIEVuZG9nZW5laXR5DQotIFt4XSBJbmRlcGVuZGVudCBlcnJvcnMNCi0gWyBdIEhldGVyb3NjZWRhc3RpY2l0eQ0KLSBbIF0gTGluZWFyIGRlcGVuZGVuY2Ugb2YgcmVncmVzc29ycw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUgDQoNCioqKExDNy43KSBXaGF0IGRvZXMgdGhlIHByb2JsZW0gb2YgaGV0ZXJvc2NlZGFzdGljaXR5IGluIGEgcmVncmVzc2lvbiBtb2RlbCByZWZlciB0bz8qKg0KDQotIFt4XSBUaGUgdmFyaWFuY2Ugb2YgdGhlIGVycm9yIHRlcm0gaXMgbm90IGNvbnN0YW50DQotIFsgXSBBIHN0cm9uZyBsaW5lYXIgcmVsYXRpb25zaGlwIGJldHdlZW4gdGhlIGluZGVwZW5kZW50IHZhcmlhYmxlcw0KLSBbIF0gVGhlIHZhcmlhbmNlIG9mIHRoZSBlcnJvciB0ZXJtIGlzIGNvbnN0YW50DQotIFsgXSBBIGNvcnJlbGF0aW9uIGJldHdlZW4gdGhlIGVycm9yIHRlcm0gYW5kIHRoZSBpbmRlcGVuZGVudCB2YXJpYWJsZXMNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuOCkgV2hhdCBhcmUgcHJvcGVydGllcyBvZiB0aGUgbXVsdGlwbGljYXRpdmUgcmVncmVzc2lvbiBtb2RlbCAoaS5lLiwgbG9nLWxvZyBzcGVjaWZpY2F0aW9uKT8qKg0KDQotIFsgXSBDb25zdGFudCBtYXJnaW5hbCByZXR1cm5zDQotIFt4XSBEZWNyZWFzaW5nIG1hcmdpbmFsIHJldHVybnMNCi0gW3hdIENvbnN0YW50IGVsYXN0aWNpdHkNCi0gWyBdIEluY3JlYXNpbmcgbWFyZ2luYWwgcmV0dXJucw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUgDQoNCioqKExDNy45KSBXaGVuIGRvIHlvdSB1c2UgYSBsb2dpc3RpYyByZWdyZXNzaW9uIG1vZGVsPyoqDQoNCi0gWyBdIFdoZW4gdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBpcyBjb250aW51b3VzDQotIFsgXSBXaGVuIHRoZSBpbmRlcGVuZGVudCBhbmQgZGVwZW5kZW50IHZhcmlhYmxlcyBhcmUgYmluYXJ5DQotIFt4XSBXaGVuIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUgaXMgYmluYXJ5DQotIFsgXSBOb25lIG9mIHRoZSBhYm92ZSANCg0KKiooTEM3LjEwKSBXaGF0IGlzIHRoZSBjb3JyZWN0IHdheSB0byBpbXBsZW1lbnQgYSBsaW5lYXIgcmVncmVzc2lvbiBtb2RlbCBpbiBSPyAoeCA9IGluZGVwZW5kZW50IHZhcmlhYmxlLCB5ID0gZGVwZW5kZW50IHZhcmlhYmxlKT8qKg0KDQotIFt4XSBgbG0oeX54LCBkYXRhPWRhdGEpYA0KLSBbIF0gYGxtKHh+eSArIGVycm9yLCBkYXRhPWRhdGEpYA0KLSBbIF0gYGxtKHh+eSwgZGF0YT1kYXRhKWANCi0gWyBdIGBsbSh5fnggKyBlcnJvciwgZGF0YT1kYXRhKWANCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQojIyBSZWZlcmVuY2VzIHstfQ0KDQoqIEZpZWxkLCBBLiwgTWlsZXMgSi4sICYgRmllbGQsIFouICgyMDEyKTogRGlzY292ZXJpbmcgU3RhdGlzdGljcyBVc2luZyBSLiBTYWdlIFB1YmxpY2F0aW9ucyAoKipjaGFwdGVycyA2LCA3LCA4KiopLg0KKiBKYW1lcywgRy4sIFdpdHRlbiwgRC4sIEhhc3RpZSwgVC4sICYgVGlic2hpcmFuaSwgUi4gKDIwMTMpOiBBbiBJbnRyb2R1Y3Rpb24gdG8gU3RhdGlzdGljYWwgTGVhcm5pbmcgd2l0aCBBcHBsaWNhdGlvbnMgaW4gUiwgU3ByaW5nZXIgKCoqY2hhcHRlciAzKiop</div>
+<div id="rmd-source-code">LS0tDQpvdXRwdXQ6DQogIGh0bWxfZG9jdW1lbnQ6DQogICAgdG9jOiB5ZXMNCiAgaHRtbF9ub3RlYm9vazogZGVmYXVsdA0KICBwZGZfZG9jdW1lbnQ6DQogICAgdG9jOiB5ZXMNCi0tLQ0KDQpgYGB7ciBldmFsPVRSVUUsIGVjaG89RiwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmxpYnJhcnkoa25pdHIpDQpvcHRpb25zKGRpZ2l0cyA9IDcsIHNjaXBlbiA9IDk5OSkNCm9wdHNfY2h1bmskc2V0KHRpZHkub3B0cz1saXN0KHdpZHRoLmN1dG9mZj03NSksdGlkeT1GQUxTRSwgcm93bmFtZXMucHJpbnQgPSBGQUxTRSwgcm93cy5wcmludCA9IDEwLCBlY2hvID0gVFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UpDQpgYGANCg0KYGBge3IgZXZhbD1UUlVFLCBlY2hvPUYsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQp1bmxvYWROYW1lc3BhY2UoImxhdGV4MmV4cCIpICMgdW5sb2FkcyBsYXRleDJleHAgdG8gZml4IHRoZSBzcGVjaWZpYyBlcnJvciwgdGhhdCB0aGUgY2hhcnQgaW4gNi42LjIgZGlkbid0IGRpc3BsYXkgVGVYIG91dHB1dCBwcm9wZXJseQ0KYGBgDQoNCiMjIExvZ2lzdGljIHJlZ3Jlc3Npb24NCg0KPGJyPg0KPGRpdiBhbGlnbj0iY2VudGVyIj4NCjxpZnJhbWUgd2lkdGg9IjU2MCIgaGVpZ2h0PSIzMTUiIHNyYz0iaHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvSjdUN191bHlRMEkiIGZyYW1lYm9yZGVyPSIwIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+DQo8L2Rpdj4NCjxicj4NCg0KIyMjIE1vdGl2YXRpb24gYW5kIGludHVpdGlvbg0KDQpJbiB0aGUgbGFzdCBzZWN0aW9uIHdlIHNhdyBob3cgdG8gcHJlZGljdCBjb250aW51b3VzIG91dGNvbWVzIChzYWxlcywgaGVpZ2h0LCBldGMuKSB2aWEgbGluZWFyIHJlZ3Jlc3Npb24gbW9kZWxzLiBBbm90aGVyIGludGVyZXN0aW5nIGNhc2UgaXMgdGhhdCBvZiBiaW5hcnkgb3V0Y29tZXMsIGkuZS4gd2hlbiB0aGUgdmFyaWFibGUgd2Ugd2FudCB0byBtb2RlbCBjYW4gb25seSB0YWtlIHR3byB2YWx1ZXMgKHllcyBvciBubywgZ3JvdXAgMSBvciBncm91cCAyLCBkZWFkIG9yIGFsaXZlLCBldGMuKS4gVG8gdGhpcyBlbmQgd2Ugd291bGQgbGlrZSB0byBlc3RpbWF0ZSBob3cgb3VyIHByZWRpY3RvciB2YXJpYWJsZXMgY2hhbmdlIHRoZSBwcm9iYWJpbGl0eSBvZiBhIHZhbHVlIGJlaW5nIDAgb3IgMS4gSW4gdGhpcyBjYXNlIHdlIGNhbiB0ZWNobmljYWxseSBzdGlsbCB1c2UgYSBsaW5lYXIgbW9kZWwgKGUuZy4gT0xTKS4gSG93ZXZlciwgaXRzIHByZWRpY3Rpb25zIHdpbGwgbW9zdCBsaWtlbHkgbm90IGJlIHBhcnRpY3VsYXJseSB1c2VmdWwuIEEgbW9yZSB1c2VmdWwgbWV0aG9kIGlzIHRoZSBsb2dpc3RpYyByZWdyZXNzaW9uLiBJbiBwYXJ0aWN1bGFyIHdlIGFyZSBnb2luZyB0byBoYXZlIGEgbG9vayBhdCB0aGUgbG9naXQgbW9kZWwuIEluIHRoZSBmb2xsb3dpbmcgZGF0YXNldCB3ZSBhcmUgdHJ5aW5nIHRvIHByZWRpY3Qgd2hldGhlciBhIHNvbmcgd2lsbCBiZSBhIHRvcC0xMCBoaXQgb24gYSBwb3B1bGFyIG11c2ljIHN0cmVhbWluZyBwbGF0Zm9ybS4gSW4gYSBmaXJzdCBzdGVwIHdlIGFyZSBnb2luZyB0byB1c2Ugb25seSB0aGUgZGFuY2VhYmlsaXR5IGluZGV4IGFzIGEgcHJlZGljdG9yLiBMYXRlciB3ZSBhcmUgZ29pbmcgdG8gYWRkIG1vcmUgaW5kZXBlbmRlbnQgdmFyaWFibGVzLiANCg0KYGBge3IsIGVjaG89VFJVRSwgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgZmlnLmFsaWduPSdjZW50ZXInLCBmaWcuY2FwPSJTaW11bGF0ZWQgYmluYXJ5IG91dGNvbWUgZGF0YSJ9DQpsaWJyYXJ5KGdncGxvdDIpDQpsaWJyYXJ5KGdyaWRFeHRyYSkNCg0KY2hhcnRfZGF0YSA8LSByZWFkLmRlbGltMigiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0lNU01XVS9NUkRBMjAxOC9tYXN0ZXIvZGF0YS9jaGFydF9kYXRhX2xvZ2lzdGljLmRhdCIsaGVhZGVyPVQsIHNlcCA9ICJcdCIsc3RyaW5nc0FzRmFjdG9ycyA9IEYsIGRlYyA9ICIuIikNCiNDcmVhdGUgYSBuZXcgZHVtbXkgdmFyaWFibGUgInRvcDEwIiwgd2hpY2ggaXMgMSBpZiBhIHNvbmcgbWFkZSBpdCB0byB0aGUgdG9wMTAgYW5kIDAgZWxzZToNCmNoYXJ0X2RhdGEkdG9wMTAgPC0gaWZlbHNlKGNoYXJ0X2RhdGEkcmFuazwxMSwxLDApDQoNCiMgSW5zcGVjdCBkYXRhDQpoZWFkKGNoYXJ0X2RhdGEpDQpzdHIoY2hhcnRfZGF0YSkNCmBgYA0KDQpCZWxvdyBhcmUgdHdvIGF0dGVtcHRzIHRvIG1vZGVsIHRoZSBkYXRhLiBUaGUgbGVmdCBhc3N1bWVzIGEgbGluZWFyIHByb2JhYmlsaXR5IG1vZGVsIChjYWxjdWxhdGVkIHdpdGggdGhlIHNhbWUgbWV0aG9kcyB0aGF0IHdlIHVzZWQgaW4gdGhlIGxhc3QgY2hhcHRlciksIHdoaWxlIHRoZSByaWdodCBtb2RlbCBpcyBhIF9fbG9naXN0aWMgcmVncmVzc2lvbiBtb2RlbF9fLiBBcyB5b3UgY2FuIHNlZSwgdGhlIGxpbmVhciBwcm9iYWJpbGl0eSBtb2RlbCBwcm9kdWNlcyBwcm9iYWJpbGl0aWVzIHRoYXQgYXJlIGFib3ZlIDEgYW5kIGJlbG93IDAsIHdoaWNoIGFyZSBub3QgdmFsaWQgcHJvYmFiaWxpdGllcywgd2hpbGUgdGhlIGxvZ2lzdGljIG1vZGVsIHN0YXlzIGJldHdlZW4gMCBhbmQgMS4gTm90aWNlIHRoYXQgc29uZ3Mgd2l0aCBhIGhpZ2hlciBkYW5jZWFiaWxpdHkgaW5kZXggKG9uIHRoZSByaWdodCBvZiB0aGUgeC1heGlzKSBzZWVtIHRvIGNsdXN0ZXIgbW9yZSBhdCAkMSQgYW5kIHRob3NlIHdpdGggYSBsb3dlciBtb3JlIGF0ICQwJCBzbyB3ZSBleHBlY3QgYSBwb3NpdGl2ZSBpbmZsdWVuY2Ugb2YgZGFuY2VhYmlsaXR5IG9uIHRoZSBwcm9iYWJpbGl0eSBvZiBhIHNvbmcgdG8gYmVjb21lIGEgdG9wLTEwIGhpdC4gDQoNCmBgYHtyLCBlY2hvPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPUZBTFNFLCBmaWcuYWxpZ249J2NlbnRlcicsIGZpZy5jYXA9IlRoZSBzYW1lIGJpbmFyeSBkYXRhIGV4cGxhaW5lZCBieSB0d28gbW9kZWxzOyBBIGxpbmVhciBwcm9iYWJpbGl0eSBtb2RlbCAob24gdGhlIGxlZnQpIGFuZCBhIGxvZ2lzdGljIHJlZ3Jlc3Npb24gbW9kZWwgKG9uIHRoZSByaWdodCkifQ0KI1NjYXR0ZXJwbG90IHNob3dpbmcgdGhlIGFzc29jaWF0aW9uIGJldHdlZW4gdHdvIHZhcmlhYmxlcyB1c2luZyBhIGxpbmVhciBtb2RlbA0KcGx0LmxpbiA8LSBnZ3Bsb3QoY2hhcnRfZGF0YSxhZXMoZGFuY2VhYmlsaXR5LHRvcDEwKSkgKyAgDQogIGdlb21fcG9pbnQoc2hhcGU9MSkgKw0KICBnZW9tX3Ntb290aChtZXRob2QgPSAibG0iKSArDQogIHRoZW1lX2J3KCkNCg0KI1NjYXR0ZXJwbG90IHNob3dpbmcgdGhlIGFzc29jaWF0aW9uIGJldHdlZW4gdHdvIHZhcmlhYmxlcyB1c2luZyBhIGdsbQ0KcGx0LmxvZ2l0IDwtIGdncGxvdChjaGFydF9kYXRhLGFlcyhkYW5jZWFiaWxpdHksdG9wMTApKSArICANCiAgZ2VvbV9wb2ludChzaGFwZT0xKSArDQogIGdlb21fc21vb3RoKG1ldGhvZCA9ICJnbG0iLCANCiAgICAgICAgICAgICAgbWV0aG9kLmFyZ3MgPSBsaXN0KGZhbWlseSA9ICJiaW5vbWlhbCIpLCANCiAgICAgICAgICAgICAgc2UgPSBGQUxTRSkgKw0KICB0aGVtZV9idygpDQpncmlkLmFycmFuZ2UocGx0LmxpbiwgcGx0LmxvZ2l0LCBuY29sID0gMikNCmBgYA0KDQpBIGtleSBpbnNpZ2h0IGF0IHRoaXMgcG9pbnQgaXMgdGhhdCB0aGUgY29ubmVjdGlvbiBiZXR3ZWVuICRcbWF0aGJme1h9JCBhbmQgJFkkIGlzIF9fbm9uLWxpbmVhcl9fIGluIHRoZSBsb2dpc3RpYyByZWdyZXNzaW9uIG1vZGVsLiBBcyB3ZSBjYW4gc2VlIGluIHRoZSBwbG90LCB0aGUgcHJvYmFiaWxpdHkgb2Ygc3VjY2VzcyBpcyBtb3N0IHN0cm9uZ2x5IGFmZmVjdGVkIGJ5IGRhbmNlYWJpbGl0eSBhcm91bmQgdmFsdWVzIG9mICQwLjUkLCB3aGlsZSBoaWdoZXIgYW5kIGxvd2VyIHZhbHVlcyBoYXZlIGEgc21hbGxlciBtYXJnaW5hbCBlZmZlY3QuIFRoaXMgb2J2aW91c2x5IGFsc28gaGFzIGNvbnNlcXVlbmNlcyBmb3IgdGhlIGludGVycHJldGF0aW9uIG9mIHRoZSBjb2VmZmljaWVudHMgbGF0ZXIgb24uICANCg0KIyMjIFRlY2huaWNhbCBkZXRhaWxzIG9mIHRoZSBtb2RlbA0KDQpBcyB0aGUgbmFtZSBzdWdnZXN0cywgdGhlIGxvZ2lzdGljIGZ1bmN0aW9uIGlzIGFuIGltcG9ydGFudCBjb21wb25lbnQgb2YgdGhlIGxvZ2lzdGljIHJlZ3Jlc3Npb24gbW9kZWwuIEl0IGhhcyB0aGUgZm9sbG93aW5nIGZvcm06DQoNCiQkDQpmKFxtYXRoYmZ7WH0pID0gXGZyYWN7MX17MSArIGVeey1cbWF0aGJme1h9fX0NCiQkDQpUaGlzIGZ1bmN0aW9uIHRyYW5zZm9ybXMgYWxsIHJlYWwgbnVtYmVycyBpbnRvIHRoZSByYW5nZSBiZXR3ZWVuIDAgYW5kIDEuIFdlIG5lZWQgdGhpcyB0byBtb2RlbCBwcm9iYWJpbGl0aWVzLCBhcyBwcm9iYWJpbGl0aWVzIGNhbiBvbmx5IGJlIGJldHdlZW4gMCBhbmQgMS4gDQoNCmBgYHtyLCBlY2hvID0gRkFMU0V9DQpsaWJyYXJ5KGxhdGV4MmV4cCkNCnggPC0gc2VxKC0xMCwgMTAsIGxlbmd0aC5vdXQgPSAxMDAwKQ0KZnggPC0gMS8oMStleHAoLXgpKQ0KZGYgPC0gZGF0YS5mcmFtZSh4ID0geCwgZnggPSBmeCkNCmdncGxvdChkZiwgYWVzKHggPSB4LCB5ID0gZngpKSArIA0KICBnZW9tX2xpbmUoKSsNCiAgbGFicyh5ID0gVGVYKCIkXFxmcmFjezF9ezErZV57LVxcbWF0aGJme1h9fX0kIiksIHggPSBUZVgoIiRcXG1hdGhiZntYfSQiKSkrDQogIHRoZW1lKGF4aXMudGl0bGUueSA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDAsIHZqdXN0ID0gMC41KSkgKyANCiAgdGhlbWVfYncoKQ0KYGBgDQoNCg0KDQpUaGUgbG9naXN0aWMgZnVuY3Rpb24gb24gaXRzIG93biBpcyBub3QgdmVyeSB1c2VmdWwgeWV0LCBhcyB3ZSB3YW50IHRvIGJlIGFibGUgdG8gZGV0ZXJtaW5lIGhvdyBwcmVkaWN0b3JzIGluZmx1ZW5jZSB0aGUgcHJvYmFiaWxpdHkgb2YgYSB2YWx1ZSB0byBiZSBlcXVhbCB0byAxLiBUbyB0aGlzIGVuZCB3ZSByZXBsYWNlIHRoZSAkXG1hdGhiZntYfSQgaW4gdGhlIGZ1bmN0aW9uIGFib3ZlIHdpdGggb3VyIGZhbWlsaWFyIGxpbmVhciBzcGVjaWZpY2F0aW9uLCBpLmUuDQoNCiQkDQpcbWF0aGJme1h9ID0gXGJldGFfMCArIFxiZXRhXzEgKiB4X3sxLGl9ICsgXGJldGFfMiAqIHhfezIsaX0gKyAuLi4gK1xiZXRhX20gKiB4X3ttLGl9XFwNCmYoXG1hdGhiZntYfSkgPSBQKHlfaSA9IDEpID0gXGZyYWN7MX17MSArIGVeey0oXGJldGFfMCArIFxiZXRhXzEgKiB4X3sxLGl9ICsgXGJldGFfMiAqIHhfezIsaX0gKyAuLi4gK1xiZXRhX20gKiB4X3ttLGl9KX19DQokJA0KDQpJbiBvdXIgY2FzZSB3ZSBvbmx5IGhhdmUgJFxiZXRhXzAkIGFuZCAkXGJldGFfMSQsIHRoZSBjb2VmZmljaWVudCBhc3NvY2lhdGVkIHdpdGggZGFuY2VhYmlsaXR5LiANCg0KSW4gZ2VuZXJhbCB3ZSBub3cgaGF2ZSBhIG1hdGhlbWF0aWNhbCByZWxhdGlvbnNoaXAgYmV0d2VlbiBvdXIgcHJlZGljdG9yIHZhcmlhYmxlcyAkKHhfMSwgLi4uLCB4X20pJCBhbmQgdGhlIHByb2JhYmlsaXR5IG9mICR5X2kkIGJlaW5nIGVxdWFsIHRvIG9uZS4gVGhlIGxhc3Qgc3RlcCBpcyB0byBlc3RpbWF0ZSB0aGUgcGFyYW1ldGVycyBvZiB0aGlzIG1vZGVsICQoXGJldGFfMCwgXGJldGFfMSwgLi4uLCBcYmV0YV9tKSQgdG8gZGV0ZXJtaW5lIHRoZSBtYWduaXR1ZGUgb2YgdGhlIGVmZmVjdHMuICANCg0KIyMjIEVzdGltYXRpb24gaW4gUg0KDQpXZSBhcmUgbm93IGdvaW5nIHRvIHNob3cgaG93IHRvIHBlcmZvcm0gbG9naXN0aWMgcmVncmVzc2lvbiBpbiBSLiBJbnN0ZWFkIG9mIGBgYGxtKClgYGAgd2Ugbm93IHVzZSBgYGBnbG0oWX5YLCBmYW1pbHk9Ymlub21pYWwobGluayA9ICdsb2dpdCcpKWBgYCB0byB1c2UgdGhlIGxvZ2l0IG1vZGVsLiBXZSBjYW4gc3RpbGwgdXNlIHRoZSBgYGBzdW1tYXJ5KClgYGAgY29tbWFuZCB0byBpbnNwZWN0IHRoZSBvdXRwdXQgb2YgdGhlIG1vZGVsLiANCg0KYGBge3J9DQojUnVuIHRoZSBnbG0NCmxvZ2l0X21vZGVsIDwtIGdsbSh0b3AxMCB+IGRhbmNlYWJpbGl0eSxmYW1pbHk9Ymlub21pYWwobGluaz0nbG9naXQnKSxkYXRhPWNoYXJ0X2RhdGEpDQojSW5zcGVjdCBtb2RlbCBzdW1tYXJ5DQpzdW1tYXJ5KGxvZ2l0X21vZGVsICkNCmBgYA0KDQpOb3RpY2VhYmx5IHRoaXMgb3V0cHV0IGRvZXMgbm90IGluY2x1ZGUgYW4gJFJeMiQgdmFsdWUgdG8gYXNzZXMgbW9kZWwgZml0LiBNdWx0aXBsZSAiUHNldWRvICRSXjIkcyIsIHNpbWlsYXIgdG8gdGhlIG9uZSB1c2VkIGluIE9MUywgaGF2ZSBiZWVuIGRldmVsb3BlZC4gVGhlcmUgYXJlIHBhY2thZ2VzIHRoYXQgcmV0dXJuIHRoZSAkUl4yJCBnaXZlbiBhIGxvZ2l0IG1vZGVsIChzZWUgYGBgcmNvbXBhbmlvbmBgYCBvciBgYGBwc2NsYGBgKS4gVGhlIGNhbGN1bGF0aW9uIGJ5IGhhbmQgaXMgYWxzbyBmYWlybHkgc2ltcGxlLiBXZSBkZWZpbmUgdGhlIGZ1bmN0aW9uIGBgYGxvZ2lzdGljUHNldWRvUjJzKClgYGAgdGhhdCB0YWtlcyBhIGxvZ2l0IG1vZGVsIGFzIGFuIGlucHV0IGFuZCByZXR1cm5zIHRocmVlIHBvcHVsYXIgcHNldWRvICRSXjIkIHZhbHVlcy4NCg0KYGBge3J9DQpsb2dpc3RpY1BzZXVkb1IycyA8LSBmdW5jdGlvbihMb2dNb2RlbCkgew0KICBkZXYgPC0gTG9nTW9kZWwkZGV2aWFuY2UgDQogIG51bGxEZXYgPC0gTG9nTW9kZWwkbnVsbC5kZXZpYW5jZSANCiAgbW9kZWxOIDwtIGxlbmd0aChMb2dNb2RlbCRmaXR0ZWQudmFsdWVzKQ0KICBSLmwgPC0gIDEgLSAgZGV2IC8gbnVsbERldg0KICBSLmNzIDwtIDEtIGV4cCAoIC0obnVsbERldiAtIGRldikgLyBtb2RlbE4pDQogIFIubiA8LSBSLmNzIC8gKCAxIC0gKCBleHAgKC0obnVsbERldiAvIG1vZGVsTikpKSkNCiAgY2F0KCJQc2V1ZG8gUl4yIGZvciBsb2dpc3RpYyByZWdyZXNzaW9uXG4iKQ0KICBjYXQoIkhvc21lciBhbmQgTGVtZXNob3cgUl4yICAiLCByb3VuZChSLmwsIDMpLCAiXG4iKQ0KICBjYXQoIkNveCBhbmQgU25lbGwgUl4yICAgICAgICAiLCByb3VuZChSLmNzLCAzKSwgIlxuIikNCiAgY2F0KCJOYWdlbGtlcmtlIFJeMiAgICAgICAgICAgIiwgcm91bmQoUi5uLCAzKSwgICAgIlxuIikNCn0NCiNJbnNwZWN0IFBzZXVkbyBSMnMNCmxvZ2lzdGljUHNldWRvUjJzKGxvZ2l0X21vZGVsICkNCmBgYA0KDQpUaGUgY29lZmZpY2llbnRzIG9mIHRoZSBtb2RlbCBnaXZlIHRoZSBjaGFuZ2UgaW4gdGhlIFtsb2cgb2Rkc10oaHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvT2RkcyNTdGF0aXN0aWNhbF91c2FnZSkgb2YgdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBkdWUgdG8gYSB1bml0IGNoYW5nZSBpbiB0aGUgcmVncmVzc29yLiBUaGlzIG1ha2VzIHRoZSBleGFjdCBpbnRlcnByZXRhdGlvbiBvZiB0aGUgY29lZmZpY2llbnRzIGRpZmZpY3VsdCwgYnV0IHdlIGNhbiBzdGlsbCBpbnRlcnByZXQgdGhlIHNpZ25zIGFuZCB0aGUgcC12YWx1ZXMgd2hpY2ggd2lsbCB0ZWxsIHVzIGlmIGEgdmFyaWFibGUgaGFzIGEgc2lnbmlmaWNhbnQgcG9zaXRpdmUgb3IgbmVnYXRpdmUgaW1wYWN0IG9uIHRoZSBwcm9iYWJpbGl0eSBvZiB0aGUgZGVwZW5kZW50IHZhcmlhYmxlIGJlaW5nICQxJC4gSW4gb3JkZXIgdG8gZ2V0IHRoZSBvZGRzIHJhdGlvcyB3ZSBjYW4gc2ltcGx5IHRha2UgdGhlIGV4cG9uZW50IG9mIHRoZSBjb2VmZmljaWVudHMuIA0KDQpgYGB7cn0NCmV4cChjb2VmKGxvZ2l0X21vZGVsICkpDQpgYGANCg0KTm90aWNlIHRoYXQgdGhlIGNvZWZmaWNpZW50IGlzIGV4dHJlbWVseSBsYXJnZS4gVGhhdCBpcyAocGFydGx5KSBkdWUgdG8gdGhlIGZhY3QgdGhhdCB0aGUgZGFuY2VhYmlsaXR5IHZhcmlhYmxlIGlzIGNvbnN0cmFpbmVkIHRvIHZhbHVlcyBiZXR3ZWVuICQwJCBhbmQgJDEkIGFuZCB0aGUgY29lZmZpY2llbnRzIGFyZSBmb3IgYSB1bml0IGNoYW5nZS4gV2UgY2FuIG1ha2UgdGhlICJ1bml0LWNoYW5nZSIgaW50ZXJwcmV0YXRpb24gbW9yZSBtZWFuaW5nZnVsIGJ5IG11bHRpcGx5aW5nIHRoZSBkYW5jZWFiaWxpdHkgaW5kZXggYnkgJDEwMCQuIFRoaXMgbGluZWFyIHRyYW5zZm9ybWF0aW9uIGRvZXMgbm90IGFmZmVjdCB0aGUgbW9kZWwgZml0IG9yIHRoZSBwLXZhbHVlcy4NCg0KYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCiNSZS1zY2FsZSBpbmRlcGVuZGV0IHZhcmlhYmxlDQpjaGFydF9kYXRhJGRhbmNlYWJpbGl0eV8xMDAgPC0gY2hhcnRfZGF0YSRkYW5jZWFiaWxpdHkqMTAwIA0KI1J1biB0aGUgcmVncmVzc2lvbiBtb2RlbA0KbG9naXRfbW9kZWwgPC0gZ2xtKHRvcDEwIH4gZGFuY2VhYmlsaXR5XzEwMCxmYW1pbHk9Ymlub21pYWwobGluaz0nbG9naXQnKSxkYXRhPWNoYXJ0X2RhdGEpDQojSW5zcGVjdCBtb2RlbCBzdW1tYXJ5DQpzdW1tYXJ5KGxvZ2l0X21vZGVsICkNCiNJbnNwZWN0IFBzZXVkbyBSMnMNCmxvZ2lzdGljUHNldWRvUjJzKGxvZ2l0X21vZGVsICkNCiNDb252ZXJ0IGNvZWZmaWNpZW50cyB0byBvZGRzIHJhdGlvcw0KZXhwKGNvZWYobG9naXRfbW9kZWwgKSkNCmBgYA0KDQpXZSBvYnNlcnZlIHRoYXQgZGFuY2VhYmlsaXR5IHBvc2l0aXZlbHkgYWZmZWN0cyB0aGUgbGlrZWxpaG9vZCBvZiBiZWNvbWluZyBhdCB0b3AtMTAgaGl0LiBUbyBnZXQgdGhlIGNvbmZpZGVuY2UgaW50ZXJ2YWxzIGZvciB0aGUgY29lZmZpY2llbnRzIHdlIGNhbiB1c2UgdGhlIHNhbWUgZnVuY3Rpb24gYXMgd2l0aCBPTFMNCg0KYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmNvbmZpbnQobG9naXRfbW9kZWwpDQpgYGANCg0KSW4gb3JkZXIgdG8gZ2V0IGEgcm91Z2ggaWRlYSBhYm91dCB0aGUgbWFnbml0dWRlIG9mIHRoZSBlZmZlY3RzIHdlIGNhbiBjYWxjdWxhdGUgdGhlIHBhcnRpYWwgZWZmZWN0cyBhdCB0aGUgbWVhbiBvZiB0aGUgZGF0YSAodGhhdCBpcyB0aGUgZWZmZWN0IGZvciB0aGUgYXZlcmFnZSBvYnNlcnZhdGlvbikuIEFsdGVybmF0aXZlbHksIHdlIGNhbiBjYWxjdWxhdGUgdGhlIG1lYW4gb2YgdGhlIGVmZmVjdHMgKHRoYXQgaXMgdGhlIGF2ZXJhZ2Ugb2YgdGhlIGluZGl2aWR1YWwgZWZmZWN0cykuIEJvdGggY2FuIGJlIGRvbmUgd2l0aCB0aGUgYGBgbG9naXRtZngoLi4uKWBgYCBmdW5jdGlvbiBmcm9tIHRoZSBgYGBtZnhgYGAgcGFja2FnZS4gSWYgd2Ugc2V0IGBgYGxvZ2l0bWZ4KGxvZ2l0X21vZGVsLCBkYXRhID0gbXlfZGF0YSwgYXRtZWFuID0gRkFMU0UpYGBgIHdlIGNhbGN1bGF0ZSB0aGUgbGF0dGVyLiBTZXR0aW5nIGBgYGF0bWVhbiA9IFRSVUVgYGAgd2lsbCBjYWxjdWxhdGUgdGhlIGZvcm1lci4gSG93ZXZlciwgaW4gZ2VuZXJhbCB3ZSBhcmUgbW9zdCBpbnRlcmVzdGVkIGluIHRoZSBzaWduIGFuZCBzaWduaWZpY2FuY2Ugb2YgdGhlIGNvZWZmaWNpZW50Lg0KDQpgYGB7ciwgbWVzc2FnZSA9IEZBTFNFLCB3YXJuaW5nID0gRkFMU0V9DQpsaWJyYXJ5KG1meCkNCiMgQXZlcmFnZSBwYXJ0aWFsIGVmZmVjdA0KbG9naXRtZngobG9naXRfbW9kZWwsIGRhdGEgPSBjaGFydF9kYXRhLCBhdG1lYW4gPSBGQUxTRSkNCmBgYA0KDQpUaGlzIG5vdyBnaXZlcyB0aGUgYXZlcmFnZSBwYXJ0aWFsIGVmZmVjdHMgaW4gcGVyY2VudGFnZSBwb2ludHMuIEFuIGFkZGl0aW9uYWwgcG9pbnQgb24gdGhlIGRhbmNlYWJpbGl0eSBzY2FsZSAoZnJvbSAkMSQgdG8gJDEwMCQpLCBvbiBhdmVyYWdlLCBtYWtlcyBpdCAkMS41NyUkIG1vcmUgbGlrZWx5IGZvciBhIHNvbmcgdG8gYmVjb21lIGF0IHRvcC0xMCBoaXQuDQoNClRvIGdldCB0aGUgZWZmZWN0IG9mIGFuIGFkZGl0aW9uYWwgcG9pbnQgYXQgYSBzcGVjaWZpYyB2YWx1ZSwgd2UgY2FuIGNhbGN1bGF0ZSB0aGUgb2RkcyByYXRpbyBieSBwcmVkaWN0aW5nIHRoZSBwcm9iYWJpbGl0eSBhdCBhIHZhbHVlIGFuZCBhdCB0aGUgdmFsdWUgJCsxJC4gRm9yIGV4YW1wbGUgaWYgd2UgYXJlIGludGVyZXN0ZWQgaW4gaG93IG11Y2ggbW9yZSBsaWtlbHkgYSBzb25nIHdpdGggNTEgY29tcGFyZWQgdG8gNTAgZGFuY2VhYmlsaXR5IGlzIHRvIGJlY29tZSBhIGhpdCB3ZSBjYW4gc2ltcGx5IGNhbGN1bGF0ZSB0aGUgZm9sbG93aW5nDQoNCmBgYHtyfQ0KI1Byb2JhYmlsaXR5IG9mIGEgdG9wIDEwIGhpdCB3aXRoIGEgZGFuY2VhYmlsaXR5IG9mIDUwDQpwcm9iXzUwIDwtIGV4cCgtKC1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMSwxXS1zdW1tYXJ5KGxvZ2l0X21vZGVsKSRjb2VmZmljaWVudHNbMiwxXSo1MCApKQ0KcHJvYl81MA0KDQojUHJvYmFiaWxpdHkgb2YgYSB0b3AgMTAgaGl0IHdpdGggYSBkYW5jZWFiaWxpdHkgb2YgNTENCnByb2JfNTEgPC0gZXhwKC0oLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1sxLDFdLXN1bW1hcnkobG9naXRfbW9kZWwpJGNvZWZmaWNpZW50c1syLDFdKjUxICkpDQpwcm9iXzUxDQoNCiNPZGRzIHJhdGlvDQpwcm9iXzUxL3Byb2JfNTANCmBgYA0KDQpTbyB0aGUgb2RkcyBhcmUgMjAlIGhpZ2hlciBhdCA1MSB0aGFuIGF0IDUwLiANCg0KIyMjIyBMb2dpc3RpYyBtb2RlbCB3aXRoIG11bHRpcGxlIHByZWRpY3RvcnMNCg0KT2YgY291cnNlIHdlIGNhbiBhbHNvIHVzZSBtdWx0aXBsZSBwcmVkaWN0b3JzIGluIGxvZ2lzdGljIHJlZ3Jlc3Npb24gYXMgc2hvd24gaW4gdGhlIGZvcm11bGEgYWJvdmUuIFdlIG1pZ2h0IHdhbnQgdG8gYWRkIHNwb3RpZnkgZm9sbG93ZXJzIChpbiBtaWxsaW9uKSBhbmQgd2Vla3Mgc2luY2UgdGhlIHJlbGVhc2Ugb2YgdGhlIHNvbmcuDQpgYGB7cn0NCmNoYXJ0X2RhdGEkc3BvdGlmeV9mb2xsb3dlcnNfbSA8LSBjaGFydF9kYXRhJHNwb3RpZnlGb2xsb3dlcnMvMTAwMDAwMA0KY2hhcnRfZGF0YSR3ZWVrc19zaW5jZV9yZWxlYXNlIDwtIGNoYXJ0X2RhdGEkZGF5c1NpbmNlUmVsZWFzZS83DQpgYGANCg0KQWdhaW4sIHRoZSBmYW1pbGlhciBmb3JtdWxhIGludGVyZmFjZSBjYW4gYmUgdXNlZCB3aXRoIHRoZSBgYGBnbG0oKWBgYCBmdW5jdGlvbi4gQWxsIHRoZSBtb2RlbCBzdW1tYXJpZXMgc2hvd24gYWJvdmUgc3RpbGwgd29yayB3aXRoIG11bHRpcGxlIHByZWRpY3RvcnMuDQoNCmBgYHtyfQ0KbXVsdGlwbGVfbG9naXRfbW9kZWwgPC0gZ2xtKHRvcDEwIH4gZGFuY2VhYmlsaXR5XzEwMCArIHNwb3RpZnlfZm9sbG93ZXJzX20gKyB3ZWVrc19zaW5jZV9yZWxlYXNlLGZhbWlseT1iaW5vbWlhbChsaW5rPSdsb2dpdCcpLGRhdGE9Y2hhcnRfZGF0YSkNCnN1bW1hcnkobXVsdGlwbGVfbG9naXRfbW9kZWwpDQpsb2dpc3RpY1BzZXVkb1IycyhtdWx0aXBsZV9sb2dpdF9tb2RlbCkNCmV4cChjb2VmKG11bHRpcGxlX2xvZ2l0X21vZGVsKSkNCmNvbmZpbnQobXVsdGlwbGVfbG9naXRfbW9kZWwpDQpgYGANCg0KDQojIyMjIE1vZGVsIHNlbGVjdGlvbg0KDQpUaGUgcXVlc3Rpb24gcmVtYWlucywgd2hldGhlciBhIHZhcmlhYmxlICpzaG91bGQqIGJlIGFkZGVkIHRvIHRoZSBtb2RlbC4gV2Ugd2lsbCBwcmVzZW50IHR3byBtZXRob2RzIGZvciBtb2RlbCBzZWxlY3Rpb24gZm9yIGxvZ2lzdGljIHJlZ3Jlc3Npb24uIFRoZSBmaXJzdCBpcyBiYXNlZCBvbiB0aGUgX0FrYWlrZSBJbmZvcm1hdGlvbiBDcml0ZXJpdW1fIChBSUMpLiBJdCBpcyByZXBvcnRlZCB3aXRoIHRoZSBzdW1tYXJ5IG91dHB1dCBmb3IgbG9naXQgbW9kZWxzLiBUaGUgdmFsdWUgb2YgdGhlIEFJQyBpcyBfX3JlbGF0aXZlX18sIG1lYW5pbmcgdGhhdCBpdCBoYXMgbm8gaW50ZXJwcmV0YXRpb24gYnkgaXRzZWxmLiBIb3dldmVyLCBpdCBjYW4gYmUgdXNlZCB0byBjb21wYXJlIGFuZCBzZWxlY3QgbW9kZWxzLiBUaGUgbW9kZWwgd2l0aCB0aGUgbG93ZXN0IEFJQyB2YWx1ZSBpcyB0aGUgb25lIHRoYXQgc2hvdWxkIGJlIGNob3Nlbi4gTm90ZSB0aGF0IHRoZSBBSUMgZG9lcyBub3QgaW5kaWNhdGUgaG93IHdlbGwgdGhlIG1vZGVsIGZpdHMgdGhlIGRhdGEsIGJ1dCBpcyBtZXJlbHkgdXNlZCB0byBjb21wYXJlIG1vZGVscy4gDQoNCkZvciBleGFtcGxlLCBjb25zaWRlciB0aGUgZm9sbG93aW5nIG1vZGVsLCB3aGVyZSB3ZSBleGNsdWRlIHRoZSBgYGBmb2xsb3dlcnNgYGAgY292YXJpYXRlLiBTZWVpbmcgYXMgaXQgd2FzIGFibGUgdG8gY29udHJpYnV0ZSBzaWduaWZpY2FudGx5IHRvIHRoZSBleHBsYW5hdG9yeSBwb3dlciBvZiB0aGUgbW9kZWwsIHRoZSBBSUMgaW5jcmVhc2VzLCBpbmRpY2F0aW5nIHRoYXQgdGhlIG1vZGVsIGluY2x1ZGluZyBgYGBmb2xsb3dlcnNgYGAgaXMgYmV0dGVyIHN1aXRlZCB0byBleHBsYWluIHRoZSBkYXRhLiBXZSBhbHdheXMgd2FudCB0aGUgbG93ZXN0IHBvc3NpYmxlIEFJQy4gDQoNCmBgYHtyLCBtZXNzYWdlID0gRkFMU0UsIHdhcm5pbmcgPSBGQUxTRX0NCm11bHRpcGxlX2xvZ2l0X21vZGVsMiA8LSBnbG0odG9wMTAgfiBkYW5jZWFiaWxpdHlfMTAwICsgd2Vla3Nfc2luY2VfcmVsZWFzZSxmYW1pbHk9Ymlub21pYWwobGluaz0nbG9naXQnKSxkYXRhPWNoYXJ0X2RhdGEpDQoNCnN1bW1hcnkobXVsdGlwbGVfbG9naXRfbW9kZWwyKQ0KDQpgYGANCg0KQXMgYSBzZWNvbmQgbWVhc3VyZSBmb3IgdmFyaWFibGUgc2VsZWN0aW9uLCB5b3UgY2FuIHVzZSB0aGUgcHNldWRvICRSXjIkcyBhcyBzaG93biBhYm92ZS4gVGhlIGZpdCBpcyBkaXN0aW5jdGx5IHdvcnNlIGFjY29yZGluZyB0byBhbGwgdGhyZWUgdmFsdWVzIHByZXNlbnRlZCBoZXJlLCB3aGVuIGV4Y2x1ZGluZyB0aGUgU3BvdGlmeSBmb2xsb3dlcnMuIA0KDQpgYGB7cn0NCmxvZ2lzdGljUHNldWRvUjJzKG11bHRpcGxlX2xvZ2l0X21vZGVsMikNCmBgYA0KDQoNCiMjIyMgUHJlZGljdGlvbnMNCg0KV2UgY2FuIHByZWRpY3QgdGhlIHByb2JhYmlsaXR5IGdpdmVuIGFuIG9ic2VydmF0aW9uIHVzaW5nIHRoZSBgYGBwcmVkaWN0KG15X2xvZ2l0LCBuZXdkYXRhID0gLi4uLCB0eXBlID0gInJlc3BvbnNlIilgYGAgZnVuY3Rpb24uIFJlcGxhY2UgYGBgLi4uYGBgIHdpdGggdGhlIG9ic2VydmVkIHZhbHVlcyBmb3Igd2hpY2ggeW91IHdvdWxkIGxpa2UgdG8gcHJlZGljdCB0aGUgb3V0Y29tZSB2YXJpYWJsZS4NCg0KDQpgYGB7ciwgbWVzc2FnZSA9IEZBTFNFLCB3YXJuaW5nID0gRkFMU0V9DQojIFByZWRpY3Rpb24gZm9yIG9uZSBvYnNlcnZhdGlvbg0KcHJlZGljdChtdWx0aXBsZV9sb2dpdF9tb2RlbCwgbmV3ZGF0YSA9IGRhdGEuZnJhbWUoZGFuY2VhYmlsaXR5XzEwMD01MCwgc3BvdGlmeV9mb2xsb3dlcnNfbT0xMCwgd2Vla3Nfc2luY2VfcmVsZWFzZT0xKSwgdHlwZSA9ICJyZXNwb25zZSIpDQpgYGANCg0KVGhlIHByZWRpY3Rpb24gaW5kaWNhdGVzIHRoYXQgYSBzb25nIHdpdGggZGFuY2VhYmlsaXR5IG9mICQ1MCQgZnJvbSBhbiBhcnRpc3Qgd2l0aCAkMTBNJCBTcG90aWZ5IGZvbGxvd2VycyBoYXMgYSAkNjYlJCBjaGFuY2Ugb2YgYmVpbmcgaW4gdGhlIHRvcC0xMCwgMSB3ZWVrIGFmdGVyIGl0cyByZWxlYXNlLiANCg0KIyMjIyBQZXJmZWN0IFByZWRpY3Rpb24gTG9naXQNCg0KUGVyZmVjdCBwcmVkaWN0aW9uIG9jY3VycyB3aGVuZXZlciBhIGxpbmVhciBmdW5jdGlvbiBvZiAkWCQgY2FuIHBlcmZlY3RseSBzZXBhcmF0ZSB0aGUgJDEkcyBmcm9tIHRoZSAkMCRzIGluIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUuIFRoaXMgaXMgcHJvYmxlbWF0aWMgd2hlbiBlc3RpbWF0aW5nIGEgbG9naXQgbW9kZWwgYXMgaXQgd2lsbCByZXN1bHQgaW4gYmlhc2VkIGVzdGltYXRvcnMgKGFsc28gY2hlY2sgdG8gcC12YWx1ZXMgaW4gdGhlIGV4YW1wbGUhKS4gUiB3aWxsIHJldHVybiB0aGUgZm9sbG93aW5nIG1lc3NhZ2UgaWYgdGhpcyBvY2N1cnM6DQoNCmBgYGdsbS5maXQ6IGZpdHRlZCBwcm9iYWJpbGl0aWVzIG51bWVyaWNhbGx5IDAgb3IgMSBvY2N1cnJlZGBgYA0KDQpHaXZlbiB0aGlzIGVycm9yLCBvbmUgc2hvdWxkIG5vdCB1c2UgdGhlIG91dHB1dCBvZiB0aGUgYGBgZ2xtKC4uLilgYGAgZnVuY3Rpb24gZm9yIHRoZSBhbmFseXNpcy4gVGhlcmUgYXJlIFt2YXJpb3VzIHdheXNdKGh0dHBzOi8vc3RhdHMuc3RhY2tleGNoYW5nZS5jb20vYS82ODkxNykgdG8gZGVhbCB3aXRoIHRoaXMgcHJvYmxlbSwgb25lIG9mIHdoaWNoIGlzIHRvIHVzZSBGaXJ0aCdzIGJpYXMtcmVkdWNlZCBwZW5hbGl6ZWQtbGlrZWxpaG9vZCBsb2dpc3RpYyByZWdyZXNzaW9uIHdpdGggdGhlIGBgYGxvZ2lzdGYoWX5YKWBgYCBmdW5jdGlvbiBpbiB0aGUgYGBgbG9naXN0ZmBgYCBwYWNrYWdlLiAgDQoNCiMjIyMjIEV4YW1wbGUNCg0KSW4gdGhpcyBleGFtcGxlIGRhdGEgJFkgPSAwJCBpZiAkeF8xIDwwJCBhbmQgJFk9MSQgaWYgJHhfMT4wJCBhbmQgd2UgdGh1cyBoYXZlIHBlcmZlY3QgcHJlZGljdGlvbi4gQXMgd2UgY2FuIHNlZSB0aGUgb3V0cHV0IG9mIHRoZSByZWd1bGFyIGxvZ2l0IG1vZGVsIGlzIG5vdCBpbnRlcnByZXRhYmxlLiBUaGUgc3RhbmRhcmQgZXJyb3JzIGFyZSBodWdlIGNvbXBhcmVkIHRvIHRoZSBjb2VmZmljaWVudHMgYW5kIHRodXMgdGhlIHAtdmFsdWVzIGFyZSAkMSQgZGVzcGl0ZSAkeF8xJCBiZWluZyBhIHByZWRpY3RvciBvZiAkWSQuIFRodXMsIHdlIHR1cm4gdG8gdGhlIHBlbmFsaXplZC1saWtlbGlob29kIHZlcnNpb24uIFRoaXMgbW9kZWwgY29ycmVjdGx5IGluZGljYXRlcyB0aGF0ICR4XzEkIGlzIGluIGZhY3QgYSBwcmVkaWN0b3IgZm9yICRZJCBhcyB0aGUgY29lZmZpY2llbnQgaXMgc2lnbmlmaWNhbnQuICANCg0KYGBge3IsIG1lc3NhZ2UgPSBGQUxTRSwgd2FybmluZyA9IEZBTFNFfQ0KWSA8LSBjKDAsMCwwLDAsMSwxLDEsMSkNClggPC0gY2JpbmQoYygtMSwtMiwtMywtMyw1LDYsMTAsMTEpLGMoMywyLC0xLC0xLDIsNCwxLDApKQ0KDQojIFBlcmZlY3QgcHJlZGljdGlvbiB3aXRoIHJlZ3VsYXIgbG9naXQNCnN1bW1hcnkoZ2xtKFl+WCwgZmFtaWx5PWJpbm9taWFsKGxpbms9ImxvZ2l0IikpKQ0KDQpsaWJyYXJ5KGxvZ2lzdGYpDQojIFBlcmZlY3QgcHJlZGljdGlvbiB3aXRoIHBlbmFsaXplZC1saWtlbGlob29kIGxvZ2l0DQpzdW1tYXJ5KGxvZ2lzdGYoWX5YKSkNCmBgYA0KDQoNCiMjIExlYXJuaW5nIGNoZWNrIHstfQ0KDQoqKihMQzcuMSkgV2hhdCBpcyBhIGNvcnJlbGF0aW9uIGNvZWZmaWNpZW50PyoqDQoNCi0gWyBdIEl0IGRlc2NyaWJlcyB0aGUgZGlmZmVyZW5jZSBpbiBtZWFucyBvZiB0d28gdmFyaWFibGVzDQotIFsgXSBJdCBkZXNjcmliZXMgdGhlIGNhdXNhbCByZWxhdGlvbiBiZXR3ZWVuIHR3byB2YXJpYWJsZXMNCi0gWyBdIEl0IGlzIHRoZSBzdGFuZGFyZGl6ZWQgY292YXJpYW5jZQ0KLSBbIF0gSXQgZGVzY3JpYmVzIHRoZSBkZWdyZWUgdG8gd2hpY2ggdGhlIHZhcmlhdGlvbiBpbiBvbmUgdmFyaWFibGUgaXMgcmVsYXRlZCB0byB0aGUgdmFyaWF0aW9uIGluIGFub3RoZXIgdmFyaWFibGUNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuMikgV2hpY2ggbGluZSB0aHJvdWdoIGEgc2NhdHRlcnBsb3QgcHJvZHVjZXMgdGhlIGJlc3QgZml0IGluIGEgbGluZWFyIHJlZ3Jlc3Npb24gbW9kZWw/KioNCg0KLSBbIF0gVGhlIGxpbmUgYXNzb2NpYXRlZCB3aXRoIHRoZSBzdGVlcGVzdCBzbG9wZSBwYXJhbWV0ZXINCi0gWyBdIFRoZSBsaW5lIHRoYXQgbWluaW1pemVzIHRoZSBzdW0gb2YgdGhlIHNxdWFyZWQgZGV2aWF0aW9ucyBvZiB0aGUgcHJlZGljdGVkIHZhbHVlcyAocmVncmVzc2lvbiBsaW5lKSBmcm9tIHRoZSBvYnNlcnZlZCB2YWx1ZXMNCi0gWyBdIFRoZSBsaW5lIHRoYXQgbWluaW1pemVzIHRoZSBzdW0gb2YgdGhlIHNxdWFyZWQgcmVzaWR1YWxzDQotIFsgXSBUaGUgbGluZSB0aGF0IG1heGltaXplcyB0aGUgc3VtIG9mIHRoZSBzcXVhcmVkIHJlc2lkdWFscw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUgDQoNCioqKExDNy4zKSBXaGF0IGlzIHRoZSBpbnRlcnByZXRhdGlvbiBvZiB0aGUgcmVncmVzc2lvbiBjb2VmZmljaWVudCAoJFxiZXRhXzEkPTAuMDUpIGluIGEgcmVncmVzc2lvbiBtb2RlbCB3aGVyZSBsb2coc2FsZXMpIChpLmUuLCBsb2ctdHJhbnNmb3JtZWQgdW5pdHMpIGlzIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUgYW5kIGxvZyhhZHZlcnRpc2luZykgKGkuZS4sIHRoZSBsb2ctdHJhbnNmb3JtZWQgYWR2ZXJ0aXNpbmcgZXhwZW5kaXR1cmVzIGluIEV1cm8pIGlzIHRoZSBpbmRlcGVuZGVudCB2YXJpYWJsZSAoaS5lLiwgJGxvZyhzYWxlcyk9MTMuNCswLjA14oiXbG9nKGFkdmVydGlzaW5nKSQpPyoqDQoNCi0gWyBdIEFuIGluY3JlYXNlIGluIGFkdmVydGlzaW5nIGJ5IDHigqwgbGVhZHMgdG8gYW4gaW5jcmVhc2UgaW4gc2FsZXMgYnkgMC41IHVuaXRzDQotIFsgXSBBIDElIGluY3JlYXNlIGluIGFkdmVydGlzaW5nIGxlYWRzIHRvIGEgMC4wNSUgaW5jcmVhc2UgaW4gc2FsZXMNCi0gWyBdIEEgMSUgaW5jcmVhc2UgaW4gYWR2ZXJ0aXNpbmcgbGVhZHMgdG8gYSA1JSBkZWNyZWFzZSBpbiBzYWxlcw0KLSBbIF0gQW4gaW5jcmVhc2UgaW4gYWR2ZXJ0aXNpbmcgYnkgMeKCrCBsZWFkcyB0byBhbiBpbmNyZWFzZSBpbiBzYWxlcyBieSAwLjAwNSB1bml0cw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUNCg0KKiooTEM3LjQpIFdoaWNoIG9mIHRoZSBmb2xsb3dpbmcgc3RhdGVtZW50cyBhYm91dCB0aGUgYWRqdXN0ZWQgUi1zcXVhcmVkIGlzIFRSVUU/KioNCg0KLSBbIF0gSXQgaXMgYWx3YXlzIGxhcmdlciB0aGFuIHRoZSByZWd1bGFyICRSXnsyfSQNCi0gWyBdIEl0IGluY3JlYXNlcyB3aXRoIGV2ZXJ5IGFkZGl0aW9uYWwgdmFyaWFibGUNCi0gWyBdIEl0IGluY3JlYXNlcyBvbmx5IHdpdGggYWRkaXRpb25hbCB2YXJpYWJsZXMgdGhhdCBhZGQgbW9yZSBleHBsYW5hdG9yeSBwb3dlciB0aGFuIHB1cmUgY2hhbmNlDQotIFsgXSBJdCBjb250YWlucyBhIOKAnHBlbmFsdHnigJ0gZm9yIGluY2x1ZGluZyB1bm5lY2Vzc2FyeSB2YXJpYWJsZXMNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuNSkgV2hhdCBkb2VzIHRoZSB0ZXJtIG92ZXJmaXR0aW5nIHJlZmVyIHRvPyoqDQoNCi0gWyBdIEEgcmVncmVzc2lvbiBtb2RlbCB0aGF0IGhhcyB0b28gbWFueSBwcmVkaWN0b3IgdmFyaWFibGVzDQotIFsgXSBBIHJlZ3Jlc3Npb24gbW9kZWwgdGhhdCBmaXRzIHRvIGEgc3BlY2lmaWMgZGF0YSBzZXQgc28gcG9vcmx5LCB0aGF0IGl0IHdpbGwgbm90IGdlbmVyYWxpemUgdG8gb3RoZXIgc2FtcGxlcw0KLSBbIF0gQSByZWdyZXNzaW9uIG1vZGVsIHRoYXQgZml0cyB0byBhIHNwZWNpZmljIGRhdGEgc2V0IHNvIHdlbGwsIHRoYXQgaXQgd2lsbCBvbmx5IHByZWRpY3Qgd2VsbCB3aXRoaW4gdGhlIHNhbXBsZSBidXQgbm90IGdlbmVyYWxpemUgdG8gb3RoZXIgc2FtcGxlcw0KLSBbIF0gQSByZWdyZXNzaW9uIG1vZGVsIHRoYXQgZml0cyB0byBhIHNwZWNpZmljIGRhdGEgc2V0IHNvIHdlbGwsIHRoYXQgaXQgd2lsbCBnZW5lcmFsaXplIHRvIG90aGVyIHNhbXBsZXMgcGFydGljdWxhcmx5IHdlbGwNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuNikgV2hhdCBhcmUgYXNzdW1wdGlvbnMgb2YgdGhlIGxpbmVhciByZWdyZXNzaW9uIG1vZGVsPyoqDQoNCi0gWyBdIEVuZG9nZW5laXR5DQotIFsgXSBJbmRlcGVuZGVudCBlcnJvcnMNCi0gWyBdIEhldGVyb3NjZWRhc3RpY2l0eQ0KLSBbIF0gTGluZWFyIGRlcGVuZGVuY2Ugb2YgcmVncmVzc29ycw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUgDQoNCioqKExDNy43KSBXaGF0IGRvZXMgdGhlIHByb2JsZW0gb2YgaGV0ZXJvc2NlZGFzdGljaXR5IGluIGEgcmVncmVzc2lvbiBtb2RlbCByZWZlciB0bz8qKg0KDQotIFsgXSBUaGUgdmFyaWFuY2Ugb2YgdGhlIGVycm9yIHRlcm0gaXMgbm90IGNvbnN0YW50DQotIFsgXSBBIHN0cm9uZyBsaW5lYXIgcmVsYXRpb25zaGlwIGJldHdlZW4gdGhlIGluZGVwZW5kZW50IHZhcmlhYmxlcw0KLSBbIF0gVGhlIHZhcmlhbmNlIG9mIHRoZSBlcnJvciB0ZXJtIGlzIGNvbnN0YW50DQotIFsgXSBBIGNvcnJlbGF0aW9uIGJldHdlZW4gdGhlIGVycm9yIHRlcm0gYW5kIHRoZSBpbmRlcGVuZGVudCB2YXJpYWJsZXMNCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQoqKihMQzcuOCkgV2hhdCBhcmUgcHJvcGVydGllcyBvZiB0aGUgbXVsdGlwbGljYXRpdmUgcmVncmVzc2lvbiBtb2RlbCAoaS5lLiwgbG9nLWxvZyBzcGVjaWZpY2F0aW9uKT8qKg0KDQotIFsgXSBDb25zdGFudCBtYXJnaW5hbCByZXR1cm5zDQotIFsgXSBEZWNyZWFzaW5nIG1hcmdpbmFsIHJldHVybnMNCi0gWyBdIENvbnN0YW50IGVsYXN0aWNpdHkNCi0gWyBdIEluY3JlYXNpbmcgbWFyZ2luYWwgcmV0dXJucw0KLSBbIF0gTm9uZSBvZiB0aGUgYWJvdmUgDQoNCioqKExDNy45KSBXaGVuIGRvIHlvdSB1c2UgYSBsb2dpc3RpYyByZWdyZXNzaW9uIG1vZGVsPyoqDQoNCi0gWyBdIFdoZW4gdGhlIGRlcGVuZGVudCB2YXJpYWJsZSBpcyBjb250aW51b3VzDQotIFsgXSBXaGVuIHRoZSBpbmRlcGVuZGVudCBhbmQgZGVwZW5kZW50IHZhcmlhYmxlcyBhcmUgYmluYXJ5DQotIFsgXSBXaGVuIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUgaXMgYmluYXJ5DQotIFsgXSBOb25lIG9mIHRoZSBhYm92ZSANCg0KKiooTEM3LjEwKSBXaGF0IGlzIHRoZSBjb3JyZWN0IHdheSB0byBpbXBsZW1lbnQgYSBsaW5lYXIgcmVncmVzc2lvbiBtb2RlbCBpbiBSPyAoeCA9IGluZGVwZW5kZW50IHZhcmlhYmxlLCB5ID0gZGVwZW5kZW50IHZhcmlhYmxlKT8qKg0KDQotIFsgXSBgbG0oeX54LCBkYXRhPWRhdGEpYA0KLSBbIF0gYGxtKHh+eSArIGVycm9yLCBkYXRhPWRhdGEpYA0KLSBbIF0gYGxtKHh+eSwgZGF0YT1kYXRhKWANCi0gWyBdIGBsbSh5fnggKyBlcnJvciwgZGF0YT1kYXRhKWANCi0gWyBdIE5vbmUgb2YgdGhlIGFib3ZlIA0KDQojIyBSZWZlcmVuY2VzIHstfQ0KDQoqIEZpZWxkLCBBLiwgTWlsZXMgSi4sICYgRmllbGQsIFouICgyMDEyKTogRGlzY292ZXJpbmcgU3RhdGlzdGljcyBVc2luZyBSLiBTYWdlIFB1YmxpY2F0aW9ucyAoKipjaGFwdGVycyA2LCA3LCA4KiopLg0KKiBKYW1lcywgRy4sIFdpdHRlbiwgRC4sIEhhc3RpZSwgVC4sICYgVGlic2hpcmFuaSwgUi4gKDIwMTMpOiBBbiBJbnRyb2R1Y3Rpb24gdG8gU3RhdGlzdGljYWwgTGVhcm5pbmcgd2l0aCBBcHBsaWNhdGlvbnMgaW4gUiwgU3ByaW5nZXIgKCoqY2hhcHRlciAzKiop</div>
 
 
 

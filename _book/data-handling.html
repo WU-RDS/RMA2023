@@ -148,7 +148,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>I Course outline</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-motivation"><i class="fa fa-check"></i>Course motivation</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#grading"><i class="fa fa-check"></i>Grading</a></li>
@@ -337,6 +336,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.6" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#diverging-stacked-barchart"><i class="fa fa-check"></i><b>11.4.6</b> Diverging stacked barchart</a></li>
 <li class="chapter" data-level="11.4.7" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#collapserecode-categories"><i class="fa fa-check"></i><b>11.4.7</b> Collapse/recode categories</a></li>
 </ul></li>
+</ul></li>
+<li class="part"><span><b>V FAQ</b></span></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i>FAQ</a><ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#r-packages"><i class="fa fa-check"></i>R packages</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#new-questions"><i class="fa fa-check"></i>New questions</a></li>
 </ul></li>
 </ul>
 
@@ -901,9 +905,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Learning check</h2>
 <p><strong>(LC3.1) Which of the following are data types are recognized by R?</strong></p>
 <ul>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 Factor</li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 Date</li>
 <li><input type="checkbox" disabled="" />
 Decimal</li>
@@ -918,7 +922,7 @@ None of the above</li>
 <code>type()</code></li>
 <li><input type="checkbox" disabled="" />
 <code>str()</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>class()</code></li>
 <li><input type="checkbox" disabled="" />
 <code>object.type()</code></li>
@@ -935,7 +939,7 @@ None of the above</li>
 Error because a data frame can not have different data types</li>
 <li><input type="checkbox" disabled="" />
 Error because you should use <code>as.data.frame()</code> instead of <code>data.frame()</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 Error because all vectors need to have the same length</li>
 <li><input type="checkbox" disabled="" />
 Error because the column names are not specified</li>
@@ -950,24 +954,24 @@ This code should not report an error</li>
 </div>
 <p><strong>(LC3.4) How can you obtain Christina’s grade from the data frame?</strong></p>
 <ul>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df[4,2]</code></li>
 <li><input type="checkbox" disabled="" />
 <code>df[2,4]</code></li>
 <li><input type="checkbox" disabled="" />
 <code>df[student="Christina","grade"]</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df[student=="Christina","grade"]</code></li>
 <li><input type="checkbox" disabled="" />
 None of the above</li>
 </ul>
 <p><strong>(LC3.5) How can you add a new variable ‘student_id’ to the data frame that assigns numbers to students in an ascending order?</strong></p>
 <ul>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df$student_id &lt;- 1:nrow(df)</code></li>
 <li><input type="checkbox" disabled="" />
 <code>df&amp;student_id &lt;- 1:nrow(df)</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df[,"student_id"] &lt;- 1:nrow(df)</code></li>
 <li><input type="checkbox" disabled="" />
 <code>df$student_id &lt;- 1:length(df)</code></li>
@@ -976,13 +980,13 @@ None of the above</li>
 </ul>
 <p><strong>(LC3.6) How could you obtain all rows with students who obtained a 1?</strong></p>
 <ul>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df[df$grade==1,]</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df[grade == min(df$grade),]</code></li>
 <li><input type="checkbox" disabled="" />
 <code>df[,df$grade==1]</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df[grade==1,]</code></li>
 <li><input type="checkbox" disabled="" />
 None of the above</li>
@@ -993,7 +997,7 @@ None of the above</li>
 <code>df_subset &lt;- df[grade!=NA,]</code></li>
 <li><input type="checkbox" disabled="" />
 <code>df_subset &lt;- df[isnot.na(grade),]</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>df_subset &lt;- df[!is.na(grade),]</code></li>
 <li><input type="checkbox" disabled="" />
 <code>df_subset &lt;- df[,grade!=NA]</code></li>
@@ -1006,7 +1010,7 @@ None of the above</li>
 <code>df[grade&lt;3,]/nrow(df)</code></li>
 <li><input type="checkbox" disabled="" />
 <code>nrow(df[grade&lt;3,])/length(df)</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>nrow(df[grade&lt;3,])/nrow(df)</code></li>
 <li><input type="checkbox" disabled="" />
 <code>nrow(df[,grade&lt;3])/nrow(df)</code></li>
@@ -1015,7 +1019,7 @@ None of the above</li>
 </ul>
 <p><strong>(LC3.9) You would like to load a .csv file from your working directory. What function would you use do it?</strong></p>
 <ul>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>read.table(file_name.csv)</code></li>
 <li><input type="checkbox" disabled="" />
 <code>load.csv("file.csv")</code></li>
@@ -1034,7 +1038,7 @@ None of the above</li>
 <code>nrow(df)</code></li>
 <li><input type="checkbox" disabled="" />
 <code>dim(df)</code></li>
-<li><input type="checkbox" disabled="" checked="" />
+<li><input type="checkbox" disabled="" />
 <code>str(df)</code></li>
 <li><input type="checkbox" disabled="" />
 None of the above</li>

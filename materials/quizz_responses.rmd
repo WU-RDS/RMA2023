@@ -1,0 +1,513 @@
+---
+title: "quizz_responses"
+author: "Nils Wlömert"
+date: "5 10 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**(LC4.1) For which data types is it meaningful to compute the mean?**
+
+- [ ] Nominal
+- [ ] Ordinal
+- [x] Interval
+- [x] Ratio
+
+**(LC4.2) How can you compute the standardized variate of a variable X?**
+
+- [x] $Z=\frac{X_i-\bar{X}}{s}$
+- [ ] $Z=\frac{\bar{X}+X_i}{s}$
+- [ ] $Z=\frac{s}{\bar{X}+X_i}$
+- [ ] $Z=s*({\bar{X}+X_i)}$
+- [ ] None of the above 	
+
+**You wish to analyze the following data frame 'df' containing information about cars**
+
+```{r,echo=FALSE}
+head(mtcars,6)
+```
+
+**(LC4.3) How could you add a new variable containing the z-scores of the variable 'mpg' in R?**
+
+- [ ] `df$mpg_std <- zscore(df$mpg)`
+- [ ] `df$mpg_std <- stdv(df$mpg)`
+- [ ] `df$mpg_std <- std.scale(df$mpg)`
+- [x] `df$mpg_std <- scale(df$mpg)`
+- [ ] None of the above 	
+
+**(LC4.4) How could you produce the below output?**
+
+```{r,echo=FALSE,message=FALSE, warning=FALSE, error=FALSE}
+library(psych)
+as.data.frame(psych::describe(mtcars[,c("hp","mpg","qsec")]))
+```
+
+- [x] `describe(mtcars[,c("hp","mpg","qsec")])`
+- [ ] `summary(mtcars[,c("hp","mpg","qsec")])`
+- [ ] `table(mtcars[,c("hp","mpg","qsec")])`
+- [ ] `str(mtcars[,c("hp","mpg","qsec")])`
+- [ ] None of the above 	
+
+**(LC4.5) The last column "carb" indicates the number of carburetors each model has. By using a function we got to know the number of car models that have a certain number carburetors. Which function helped us to obtain this information?** 
+
+```{r,echo=FALSE}
+table(mtcars$carb)
+```
+
+- [ ] `describe(mtcars$carb)`
+- [x] `table(mtcars$carb)`
+- [ ] `str(mtcars$carb)`
+- [ ] `prop.table(mtcars$carb)`
+- [ ] None of the above 	
+
+**(LC4.6) What type of data can be meaningfully depicted in a scatter plot?**
+
+- [ ] Two categorical variables
+- [ ] One categorical and one continuous variable
+- [x] Two continuous variables
+- [ ] One continuous variable
+- [ ] None of the above 	
+
+**(LC4.7) Which statement about the graph below is true?** 
+
+```{r,echo=FALSE}
+hist(mtcars$mpg,xlab="miles per gallon", main="miles per gallon")
+```
+
+- [ ] This is a bar chart
+- [x] This is a histogram
+- [x] It shows the frequency distribution of a continuous variable
+- [ ] It shows the frequency distribution of a categorical variable
+- [ ] None of the above 	
+
+**(LC4.8) Which statement about the graph below is true?** 
+
+```{r, echo=FALSE,strip.white=TRUE, out.width="50%"}
+boxplot(mtcars$mpg, outline = T, notch = F)
+```
+
+- [ ] This is a bar chart
+- [x] 50% of observations are contained in the gray area
+- [ ] The horizontal black line indicates the mean
+- [x] This is a boxplot
+- [ ] None of the above 	
+
+**(LC4.9) Which function can help you to save a graph made with `ggplot()`?** 
+
+- [x] `ggsave()`
+- [ ] `write.plot()`
+- [ ] `save.plot()`
+- [ ] `export.plot()`
+
+**(LC4.10) For a variable that follows a normal distribution, within how many standard deviations of the mean are 95% of values?**
+
+- [ ] 1.645
+- [x] 1.960
+- [ ] 2.580
+- [ ] 3.210
+- [ ] None of the above 	
+
+## References {-}
+
+* Field, A., Miles J., & Field, Z. (2012). Discovering Statistics Using R. Sage Publications.
+* Chang, W. (2020). R Graphics Cookbook, 2nd edition (https://r-graphics.org/)
+* Grolemund, G. & Wickham, H. (2020). R for Data Science (https://r4ds.had.co.nz/)
+
+
+
+
+## Learning check {-}
+
+**(LC5.1) What is the correct interpretation of a confidence interval for a significance level of $\alpha$=0.05?**
+
+- [x] If we take 100 samples and calculate mean and confidence interval for each one of them, then the true population mean would be included in 95% of these intervals.
+- [ ] If we take 100 samples and calculate mean and confidence interval for each one of them, then the true population mean would be included in 5% of these intervals.
+- [ ] If we take 100 samples and calculate mean and confidence interval for each one of them, then the true population mean would be included in 100% of these intervals.
+- [ ] For a given sample, there is a 95% chance that the true population mean lies within the confidence interval.
+
+**(LC5.2) Which statements regarding standard error are TRUE?**
+
+- [ ] There is no connection between the standard deviation and the standard error.
+- [x] The standard error is a function of the sample size and the standard deviation.
+- [x] The standard error of the mean decreases as the sample size increases.
+- [x] The standard error of the mean increases as the standard deviation increases.
+- [ ] None of the above 	
+
+**(LC5.3) What is the correct definition for the standard error ($SE_{\bar x}$)?**
+
+- [x] ${s \over \sqrt{n}}$
+- [ ] ${s * \sqrt{n}}$
+- [x] ${\sqrt{s^2} \over \sqrt{n}}$
+- [ ] ${\sqrt{s} \over n}$
+- [ ] None of the above 	
+
+**(LC5.4) Which of the following do you need to compute a confidence interval around a sample mean?**
+
+- [x] The critical value of the test statistic given a certain level of confidence 
+- [x] A continuous variable (i.e., at least measured at the interval level) 
+- [x] The sample the mean
+- [x] The standard error
+- [ ] None of the above 	
+
+**(LC5.5) What is the correct definition for the confidence interval?**
+
+- [ ] $CI=\bar{x} \pm \frac{z_{1-\frac{a}{n}}}{\sigma_{\bar{x}}}$
+- [ ] $CI=\bar{x} * z_{1-\frac{a}{n}}*\sigma_{\bar{x}}$
+- [ ] $CI= z_{1-\frac{a}{n}}*\sigma_{\bar{x}}-\bar{x}$
+- [x] $CI=\bar{x} \pm z_{1-\frac{a}{n}}*\sigma_{\bar{x}}$
+- [ ] None of the above 	
+
+*As a marketing manager at Spotify you wish to find the average listening time of your users. Based on a random sample of 180 users you found that the mean listening time for the sample is 7.34 hours per week and the standard deviation is 6.87 hours.* 
+
+**(LC5.6) What is the 95% confidence interval for the mean listening time (the corresponding z-value for the 95% CI is 1.96)?**
+
+- [x] [6.34;8.34]
+- [ ] [7.15;7.55]
+- [ ] [6.25;8.15]
+- [ ] [6.54;8.54]
+- [ ] None of the above 
+
+## References {-}
+
+* Field, A., Miles J., & Field, Z. (2012). Discovering Statistics Using R. Sage Publications.
+* Malhotra, N. K.(2010). Marketing Research: An Applied Orientation (6th. ed.). Prentice Hall.
+* Vasishth, S. (2014). An introduction to statistical data analysis (lecture notes)
+
+
+
+## Learning check {-}
+
+**(LC6.1) The Null Hypothesis ($H_0$) is a statement of:**
+
+- [x] The status-quo/no effect
+- [ ] The desired status
+- [ ] The expected status
+- [ ] None of the above 
+
+**(LC6.2) Which statements about the Null Hypothesis ($H_0$) are TRUE?**
+
+- [ ] In scientific research, the goal is usually to confirm it
+- [x] In scientific research, the goal is usually to reject it
+- [ ] It can be confirmed with one test
+- [ ] None of the above 
+
+**(LC6.3) The t-distribution:**
+
+- [x] Has more probability mass in its tails compared to the normal distribution and therefore corrects for small samples
+- [x] Approaches the normal distribution as n increases
+- [x] Is the distribution of the t-statistic
+- [ ] Has less probability mass in its tails compared to the normal distribution and therefore corrects for small samples
+- [ ] None of the above 
+
+**(LC6.4) Type I vs. Type II Errors: Which of the following statements is TRUE?**
+
+- [x] Type II Error: We believe there is no effect, when in fact there is
+- [x] Type I Error: We believe there is an effect, when in fact there isn’t
+- [ ] Type I Error: We believe there is no effect, when in fact there is
+- [ ] Type II Error: We believe there is an effect, when in fact there isn’t
+- [ ] None of the above 
+
+**(LC6.5) When planning an experiment, which of the following information would you need to compute the required sample size?**
+
+- [ ] The p-value (p)
+- [x] The significance level (alpha)
+- [x] The effect size (d)
+- [ ] The critical value of the test statistic (t)
+- [ ] None of the above 
+
+**(LC6.6) In which setting would you reject the null hypothesis when conducting a statistical test?**
+
+- [x] When the absolute value of the calculated test-statistic (e.g., t-value) exceeds the critical value of the test statistic at your specified significance level (e.g., 0.05)
+- [x] When the p-value is smaller than your specified significance level (e.g., 0.05)
+- [x] When the confidence interval associated with the test does not contain zero
+- [ ] When the test-statistic (e.g., t-value) is lower than the critical value of the test statistic at your specified significance level (e.g., 0.05)
+- [ ] None of the above 
+
+**(LC6.7) After conducting a statistical test, what is the relationship between the test statistic (e.g., t-value) and the p-value?**
+
+- [ ] The lower the absolute value of the test statistic, the lower the p-value
+- [ ] The higher the absolute value of the test statistic, the higher the p-value
+- [ ] There is no connection between the test statistic and the p-value
+- [x] None of the above 
+
+**(LC6.8) What does a significant test result tell you?**
+
+- [ ] The importance of an effect
+- [ ] That the null hypothesis is false
+- [ ] That the null hypothesis is true
+- [x] None of the above 
+
+**(LC6.9) In an experiment in which you compare the means between two groups, you should collect data until your test shows a significant results. True or false?**
+
+- [ ] True
+- [x] False
+
+**(LC6.10) If you have data from an within-subjects experimental design, you should use the independent-means t-test. True or false?**
+
+- [ ] True
+- [x] False
+ 
+-------------------------------------------------------
+**Questions for chapters 6.4 and following from here**
+-------------------------------------------------------
+
+**(LC6.11) When should you use an ANOVA rather than a t-test?**   
+
+- [x] To compare the means for more than populations
+- [ ] To compare the means of two groups
+- [ ] To adjust the variance of different sets
+- [ ] To test for causality
+- [ ] None of the above 
+
+**(LC6.12) What is the correct representation of the null hypothesis for an ANOVA??**   
+
+- [ ] H0:μ1≠μ2≠μ3
+- [ ] H1:μ1=μ2=μ3
+- [x] H0:μ1=μ2=μ3
+- [ ] H0:μ1≠μ2=μ3
+- [ ] None of the above 
+
+**(LC6.13) Using an experimental design with three groups, why can't we just compare the means between the groups using multiple t-test?**   
+
+- [ ] Because the parametric assumptions of the t-test are not met
+- [ ] Because of deflated Type III Error rates
+- [ ] Due to the family-wise error rate the Type II Error is inflated
+- [x] Because the Type I Error rate (alpha) wouldn't be 0.05
+- [ ] None of the above 
+
+**(LC6.14) Which assumptions have to be satisfied to be able to use ANOVA on data from a between-subject design with three groups?**   
+
+- [ ] Same mean for all groups
+- [x] Normal distribution of data
+- [x] Homogeneity of variances
+- [x] Independence of observation
+- [ ] None of the above 
+
+**(LC6.15) What procedures are designed to correct of family-wise error rate in ANOVA?**   
+
+- [x] Bonferroni correction
+- [x] Tukey’s HSD
+- [ ] t-test
+- [x] Post-hoc tests
+- [ ] None of the above 
+
+**(LC6.16) Which of the following are examples for non-parametric tests?**   
+
+- [x] Chi-Squared test
+- [ ] ANOVA
+- [ ] Kruskal-Wilcoxon test
+- [ ] T-test
+- [ ] None of the above 
+
+**(LC6.17) When should you use non-parametric tests?**   
+
+- [x] When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
+- [x] You have a very small sample size
+- [x] When your dependent variable is measured on an ordinal scale
+- [x] When your data is better represented by the median
+- [ ] None of the above 
+
+**(LC6.18) When should you use a Wilcoxon Rank Sum Test (= Mann-Whitney U Test)?**   
+
+- [x] When the assumptions of the t-test have been violated
+- [ ] The variances are not significantly different between groups
+- [x] As a non-parametric alternative to the independent-means t-test
+- [ ] When the assumptions of the ANOVA have been violated
+- [ ] None of the above 
+
+**(LC6.19) What does a Chi squared test do?**   
+
+- [x] Tests the statistical significance of the observed association in a cross-tabulation
+- [ ] Tests whether group A affects group B
+- [x] Produces a test statistic that is Chi Squared distributed
+- [x] Tests for the association between two or more categorical variables
+- [ ] None of the above 
+
+**(LC6.20) Which R-function would be suitable if you wanted to perform a test with ranked (ordinal) data in a two-group between-subject design?**   
+
+- [ ] `kruskal.test(x, ...)`
+- [x] `wilcox.test(x, ...)`
+- [ ] `aov(formula, data = ,...)`
+- [ ] `t.test(x, ...)`
+- [ ] None of the above 
+
+
+## References {-}
+
+* Field, A., Miles J., & Field, Z. (2012): Discovering Statistics Using R. Sage Publications, **chapters 5, 9, 10, 12, 15, 18**.
+* McCullough, B.D. & Feit, E. (2020). Business Experiments with R.
+
+
+
+## Learning check {-}
+
+**(LC7.1) What is a correlation coefficient?**
+
+- [ ] It describes the difference in means of two variables
+- [ ] It describes the causal relation between two variables
+- [x] It is the standardized covariance
+- [x] It describes the degree to which the variation in one variable is related to the variation in another variable
+- [ ] None of the above 
+
+**(LC7.2) Which line through a scatterplot produces the best fit in a linear regression model?**
+
+- [ ] The line associated with the steepest slope parameter
+- [x] The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values
+- [x] The line that minimizes the sum of the squared residuals
+- [ ] The line that maximizes the sum of the squared residuals
+- [ ] None of the above 
+
+**(LC7.3) What is the interpretation of the regression coefficient ($\beta_1$=0.05) in a regression model where log(sales) (i.e., log-transformed units) is the dependent variable and log(advertising) (i.e., the log-transformed advertising expenditures in Euro) is the independent variable (i.e., $log(sales)=13.4+0.05∗log(advertising)$)?**
+
+- [ ] An increase in advertising by 1€ leads to an increase in sales by 0.5 units
+- [x] A 1% increase in advertising leads to a 0.05% increase in sales
+- [ ] A 1% increase in advertising leads to a 5% decrease in sales
+- [ ] An increase in advertising by 1€ leads to an increase in sales by 0.005 units
+- [ ] None of the above
+
+**(LC7.4) Which of the following statements about the adjusted R-squared is TRUE?**
+
+- [ ] It is always larger than the regular $R^{2}$
+- [ ] It increases with every additional variable
+- [x] It increases only with additional variables that add more explanatory power than pure chance
+- [x] It contains a “penalty” for including unnecessary variables
+- [ ] None of the above 
+
+**(LC7.5) What does the term overfitting refer to?**
+
+- [ ] A regression model that has too many predictor variables
+- [ ] A regression model that fits to a specific data set so poorly, that it will not generalize to other samples
+- [x] A regression model that fits to a specific data set so well, that it will only predict well within the sample but not generalize to other samples
+- [ ] A regression model that fits to a specific data set so well, that it will generalize to other samples particularly well
+- [ ] None of the above 
+
+**(LC7.6) What are assumptions of the linear regression model?**
+
+- [ ] Endogeneity
+- [x] Independent errors
+- [ ] Heteroscedasticity
+- [ ] Linear dependence of regressors
+- [ ] None of the above 
+
+**(LC7.7) What does the problem of heteroscedasticity in a regression model refer to?**
+
+- [x] The variance of the error term is not constant
+- [ ] A strong linear relationship between the independent variables
+- [ ] The variance of the error term is constant
+- [ ] A correlation between the error term and the independent variables
+- [ ] None of the above 
+
+**(LC7.8) What are properties of the multiplicative regression model (i.e., log-log specification)?**
+
+- [ ] Constant marginal returns
+- [x] Decreasing marginal returns
+- [x] Constant elasticity
+- [ ] Increasing marginal returns
+- [ ] None of the above 
+
+**(LC7.9) When do you use a logistic regression model?**
+
+- [ ] When the dependent variable is continuous
+- [ ] When the independent and dependent variables are binary
+- [x] When the dependent variable is binary
+- [ ] None of the above 
+
+**(LC7.10) What is the correct way to implement a linear regression model in R? (x = independent variable, y = dependent variable)?**
+
+- [x] `lm(y~x, data=data)`
+- [ ] `lm(x~y + error, data=data)`
+- [ ] `lm(x~y, data=data)`
+- [ ] `lm(y~x + error, data=data)`
+- [ ] None of the above 
+
+
+
+## Learning check {-}
+
+**(LC8.1) The goals of factor analysis are...**
+
+- [x] ...to identify underlying dimensions that explain correlations among variables.
+- [ ] ...to identify multiplicative effects in a linear regression.
+- [x] ...to identify a smaller set of uncorrelated variables.
+- [ ] ...to identify interaction terms in a linear regression.
+- [ ] None of the above 
+
+**(LC8.2) What are typical hypotheses in exploratory factor analysis (EFA) concerning how many factors will emerge?**
+
+- [ ] A reduction greater than 50% of the input variables
+- [ ] Between a third and a fourth of the input variables
+- [ ] A reduction smaller than 50% of the input variables
+- [x] None of the above 
+
+**(LC8.3) What assumptions have to be fulfilled for using factor analysis?**
+
+- [x] Variables must be in interval or ratio scale
+- [x] Existence of some underlying factor structure
+- [x] The correlation matrix must have sufficient number of correlations
+- [ ] Variables must be measured using ordinal scales
+- [ ] None of the above
+
+**(LC8.4) What is the correct interpretation of the b-values in the following mathematical representation concerning exploratory factor analysis (EFA)?** $Factor_i=b_1*Variable_1 + b_2*Variable_2+…+b_nVariable_n$
+
+- [ ] Regression coefficients
+- [ ] Correlations between the variables
+- [x] Weights of a variable on a factor
+- [x] Factor loadings
+- [ ] None of the above 
+
+**(LC8.5) What is the null hypothesis of the Bartlett’s test of sphericity?**
+
+- [ ] All variables are correlated in the population
+- [ ] The correlation matrix is singular
+- [x] All variables are uncorrelated in the population
+- [x] The correlation matrix is an identity matrix
+- [ ] None of the above 
+
+**(LC8.6) Before conducting PCA, how can you test the sampling adequacy of your data (i.e., how suited your data is for Factor Analysis)?**
+
+- [ ] Kaiser-Meyer-Olkin (KMO) test with scores <0.5
+- [x] Kaiser-Meyer-Olkin (KMO) test with scores >0.5
+- [ ] By inspecting the scree plot
+- [ ] Cronbach's alpha test with scores >0.7
+- [ ] None of the above 
+
+**(LC8.7) What is communality?**
+
+- [x] Proportion of common variance in a variable
+- [ ] Variance that is unique to a particular variable
+- [ ] Proportion of unique variance in a variable
+- [ ] Covariance between two factors
+- [ ] None of the above 
+
+**(LC8.8) Orthogonal factor rotation assumes:**
+
+- [ ] Inter-correlated factors
+- [x] Uncorrelated factors
+- [ ] Outer-correlated factors
+- [ ] None of the above 
+
+**(LC8.9) Imagine you want to conduct a PCA on 10 variables without factor rotation and in a first step, you wish to find out how many components you should extract. How would the corresponding R Code look?**
+
+- [x] `principal(data, nfactors = 10, rotate = "none")`
+- [ ] `principal(data, nfactors = “varimax”, rotate = 10)`
+- [ ] `principal(data, nfactors = 10, rotate = "oblimin")`
+- [ ] `principal(data, nfactors = 10, rotate = "varimax")`
+- [ ] None of the above 
+
+**(LC8.10) Which of the following statements concerning reliability and validity are TRUE?**
+
+- [ ] Validity (i.e. “consistency”) requires the absence of random errors
+- [ ] Reliability (i.e. “truthfulness") requires the absence of measurement errors
+- [ ] Validity describes the extent to which a scale produces consistent results in repeated measurements
+- [x] None of the above 
+
+
+## References {-}
+
+* Field, A., Miles J., & Field, Z. (2012): Discovering Statistics Using R. Sage Publications, **chapter 17**
+* Malhotra, N. K.(2010). Marketing Research: An Applied	Orientation (6th. ed.). Prentice Hall. **chapter 19**
+
+
