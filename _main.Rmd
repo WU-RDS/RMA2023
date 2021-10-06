@@ -2449,7 +2449,13 @@ register_google(key = "AIzaSyDMxadfjNH489ueRgo9S62PuZU6PbwAyiM")
 [You can download the corresponding R-Code here](./Code/04-visualization.R)
 :::
 
-This section discusses the important topic of data visualization and how to produce appropriate graphics to describe your data visually. You should always visualize your data first. The plots we created in the previous chapters used R's in-built functions. In this section, we will be using the `ggplot2` package by Hadley Wickham. It has the advantage of being fairly straightforward to learn and being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham as well as <a href="https://r-graphics.org/" target="_blank">"R Graphics Cookbook"</a> by Winston Chang.
+This section discusses the important topic of data visualization and how to produce appropriate graphics to describe your data visually. You should always visualize your data first. 
+
+```{r,echo=FALSE,out.width = '25%',fig.align='center',fig.cap = "source: https://twitter.com/heyblake/status/1432070055949258752?s=20"}
+knitr::include_graphics("./images/story_telling.PNG")
+```
+
+The plots we created in the previous chapters used R's in-built functions. In this section, we will be using the `ggplot2` package by Hadley Wickham. It has the advantage of being fairly straightforward to learn and being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham as well as <a href="https://r-graphics.org/" target="_blank">"R Graphics Cookbook"</a> by Winston Chang.
 
 ggplot2 is built around the idea of constructing plots by stacking layers on top of one another. Every plot starts with the ```ggplot(data)``` function, after which layers can be added with the "+" symbol. The following figures show the layered structure of creating plots with ggplot. 
 
@@ -9109,11 +9115,34 @@ head(test_data)
 
 <!--chapter:end:12-factor_analysis.Rmd-->
 
+---
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+  html_notebook: default
+---
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+options(scipen = 999)
+#This code automatically tidies code so that it does not reach over the page
+opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE, rownames.print = FALSE, rows.print = 10)
+opts_chunk$set(cache=T)
+```
+
+```{r message=FALSE, warning=FALSE, echo=F, eval=TRUE,paged.print = FALSE}
+options(digits = 8)
+```
+
 
 # Cluster analysis
 
 In progress
 
+```{r,echo=FALSE,out.width = '25%',fig.align='center',fig.cap = ""}
+knitr::include_graphics("./images/cluster.PNG")
+```
 
 <!--chapter:end:13-cluster_analysis.Rmd-->
 
