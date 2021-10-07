@@ -1806,13 +1806,120 @@ summary {
 <!-- rnb-text-begin -->
 <div id="cluster-analysis" class="section level1">
 <h1>Cluster analysis</h1>
-<p>In progress</p>
+<p><strong>In progress</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In the previous chapter on factor analysis we tried to reduce the number of variables or columns by identifying underlying dimensions. In order to do so we exploited the fact that some items are highly correlated and therefore might represent the same underlying concept (e.g., health benefits or social benefits). Similarly, in cluster analysis we again do not distinguish between dependent and independent variables. However, in the case of cluster analysis we do not try to reduce the number of variables but the number of observations by grouping similar ones into “clusters”. What exactly defines “similarity” depends on the use case. In the case of music audio features of songs might be used to identify clusters of similar songs (similar to the genre classification) which can be used for recommendation systems. Other use cases are customer segmentation and anomaly (e.g., fraud) detection.</p>
+<p>Let’s try to create a recommendation system using track features. In our data we have the ISRC, name of the track, name of the artist and audio features of the track. We are going to use the audio features to cluster tracks together such that given one track we can easily identify similar tracks by looking at which cluster it belongs to.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9hZCh1cmwoXCJodHRwczovL2dpdGh1Yi5jb20vV1UtUkRTL01SREEyMDIxL3Jhdy9tYWluL3RyYWNrZmVhdHVyZXMuUkRhdGFcIikpXG4jIHJlbW92ZSBkdXBsaWNhdGVzXG50cmFja3MgPC0gbmEub21pdCh0cmFja3NbIWR1cGxpY2F0ZWQodHJhY2tzJGlzcmMpLCBdKVxuYGBgIn0= -->
+<pre class="r"><code>load(url(&quot;https://github.com/WU-RDS/MRDA2021/raw/main/trackfeatures.RData&quot;))
+# remove duplicates
+tracks &lt;- na.omit(tracks[!duplicated(tracks$isrc), ])</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>To get an idea of how clustering might work let’s first take a look at just with two variables, energy and acousticness, and two artists, Robin Schulz and Adele. We immediately see that Adele’s songs are more to the top left (high acousticness, low energy) whereas Robin Schulz’s songs are mostly on the bottom right (low acousticness, high energy).</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShzdHJpbmdyKVxucm9iaW5fc2NodWx6IDwtIHRyYWNrc1tzdHJfZGV0ZWN0KHRyYWNrcyRhcnRpc3ROYW1lLCBcIlJvYmluIFNjaHVselwiKSwgXVxucm9iaW5fc2NodWx6JGFydGlzdCA8LSBcIlJvYmluIFNjaHVselwiXG5hZGVsZSA8LSB0cmFja3Nbc3RyX2RldGVjdCh0cmFja3MkYXJ0aXN0TmFtZSwgXCJBZGVsZVwiKSwgXVxuYWRlbGUkYXJ0aXN0IDwtIFwiQWRlbGVcIlxuXG5leGFtcGxlX3RyYWNrcyA8LSByYmluZChyb2Jpbl9zY2h1bHosIGFkZWxlKVxuZ2dwbG90KGV4YW1wbGVfdHJhY2tzLCBhZXMoeCA9IGVuZXJneSwgeSA9IGFjb3VzdGljbmVzcywgY29sb3IgPSBhcnRpc3QpKSArXG4gIGdlb21fcG9pbnQoKSBcbmBgYCJ9 -->
+<pre class="r"><code>library(ggplot2)
+library(stringr)
+robin_schulz &lt;- tracks[str_detect(tracks$artistName, &quot;Robin Schulz&quot;), ]
+robin_schulz$artist &lt;- &quot;Robin Schulz&quot;
+adele &lt;- tracks[str_detect(tracks$artistName, &quot;Adele&quot;), ]
+adele$artist &lt;- &quot;Adele&quot;
+
+example_tracks &lt;- rbind(robin_schulz, adele)
+ggplot(example_tracks, aes(x = energy, y = acousticness, color = artist)) +
+  geom_point() </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="k-means" class="section level2">
+<h2>K-Means</h2>
+<p>One of the most popular algorithms for clustering is the <strong>K-means</strong> algorithm. The “K” stands for the number of clusters that are specified as a hyperparameter (more on how to set that parameter later). The algorithm then tries to separate the observations into K clusters such that the variance of the features (e.g., our audio features) is minimized. Therefore, it is important to <code>scale</code> all variables before performing clustering such that they all contribute equally to the distance between the observations. Intuitively the algorithm groups observations by iteratively calculating the mean or center of each cluster, assigning each observation to the cluster with the closest mean and re-calculating the mean… The algorithm has “converged” (i.e., is done) when the assignments no longer change. Let’s try it out with our two artists. In order to perform clustering we first have to remove all missing values from the used variables as for those we cannot calculate distances. Because we know that there are two artists in the sample we will start with two clusters.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShjbHVzdGVyKVxuXG50cmFja3Nfc2NhbGUgPC0gZGF0YS5mcmFtZShhcnRpc3QgPSBleGFtcGxlX3RyYWNrcyRhcnRpc3QsIGVuZXJneSA9IHNjYWxlKGV4YW1wbGVfdHJhY2tzJGVuZXJneSksIGFjb3VzdGljbmVzcyA9IHNjYWxlKGV4YW1wbGVfdHJhY2tzJGFjb3VzdGljbmVzcykpXG50cmFja3Nfc2NhbGUgPC0gbmEub21pdCh0cmFja3Nfc2NhbGUpXG5rbWVhbnNfY2x1c3RlcnMgPC0ga21lYW5zKHRyYWNrc19zY2FsZVstMV0sIDIpXG5rbWVhbnNfY2x1c3RlcnMkY2VudGVyc1xuYGBgIn0= -->
+<pre class="r"><code>library(cluster)
+
+tracks_scale &lt;- data.frame(artist = example_tracks$artist, energy = scale(example_tracks$energy), acousticness = scale(example_tracks$acousticness))
+tracks_scale &lt;- na.omit(tracks_scale)
+kmeans_clusters &lt;- kmeans(tracks_scale[-1], 2)
+kmeans_clusters$centers</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The <code>kmeans</code> function returns, among other statistics, the centers of each cluster and a cluster identifier for each observation which we can add to our original data. In our case one cluster’s center is rather low in energy and high acousticness and the second one has higher energy and lower acousticness.</p>
+<p>In our plot we can add a color for each cluster and a different marker shape for each artist. We observe that cluster 1 corresponds mostly to Robin Schulz songs and cluster 2 mostly to Adele. Alternatively we can also look at the counts in each cluster per artist using the <code>table</code> function.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhY2tzX3NjYWxlJGNsdXN0ZXIgPC0gYXMuZmFjdG9yKGttZWFuc19jbHVzdGVycyRjbHVzdGVyKVxuZ2dwbG90KHRyYWNrc19zY2FsZSwgYWVzKHggPSBlbmVyZ3ksIHkgPSBhY291c3RpY25lc3MsIGNvbG9yID0gY2x1c3Rlciwgc2hhcGUgPSBhcnRpc3QpKSArXG4gIGdlb21fcG9pbnQoc2l6ZSA9IDMpXG50YWJsZSh0cmFja3Nfc2NhbGUkYXJ0aXN0LCB0cmFja3Nfc2NhbGUkY2x1c3RlcilcbmBgYCJ9 -->
+<pre class="r"><code>tracks_scale$cluster &lt;- as.factor(kmeans_clusters$cluster)
+ggplot(tracks_scale, aes(x = energy, y = acousticness, color = cluster, shape = artist)) +
+  geom_point(size = 3)
+table(tracks_scale$artist, tracks_scale$cluster)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>In the previous example it was easy to set the number of clusters. However, if we use all artists in our data the best value for “K” is not immediately obvious. Surely some artists should be in the same cluster. We can user the <code>NbClust</code> package to determine the best number of clusters according to various indices (see <code>?NbClust</code>). First we scale all our variables and then we use the scaled versions to determine “K”. To make computations faster we will use songs by 6 famous artists. Then we count how many indices would choose a certain number of clusters. The two best candidates are 2 clusters, chosen by 8 indices and 8 clusters, chosen by 5 indices.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShOYkNsdXN0KVxuZmFtb3VzX2FydGlzdHMgPC0gYyhcblx0J0VkIFNoZWVyYW4nLFxuXHQnRW1pbmVtJyxcblx0J1JpaGFubmEnLFx0XG5cdCdUYXlsb3IgU3dpZnQnLFxuXHQnQlRTJyxcblx0J1F1ZWVuJ1xuXHQpXG5mYW1vdXNfdHJhY2tzIDwtIHRyYWNrc1t0cmFja3MkYXJ0aXN0TmFtZSAlaW4lIGZhbW91c19hcnRpc3RzLCBdXG5mYW1vdXNfdHJhY2tzX3NjYWxlIDwtIHNjYWxlKGZhbW91c190cmFja3NbNDpuY29sKGZhbW91c190cmFja3MpXSlcbnNldC5zZWVkKDEyMylcbm9wdF9LIDwtIE5iQ2x1c3QoZmFtb3VzX3RyYWNrc19zY2FsZSwgbWV0aG9kID0gXCJrbWVhbnNcIiwgbWF4Lm5jID0gMTApXG50YWJsZShvcHRfSyRCZXN0Lm5jW1wiTnVtYmVyX2NsdXN0ZXJzXCIsXSlcbmBgYCJ9 -->
+<pre class="r"><code>library(NbClust)
+famous_artists &lt;- c(
+    &#39;Ed Sheeran&#39;,
+    &#39;Eminem&#39;,
+    &#39;Rihanna&#39;,  
+    &#39;Taylor Swift&#39;,
+    &#39;BTS&#39;,
+    &#39;Queen&#39;
+    )
+famous_tracks &lt;- tracks[tracks$artistName %in% famous_artists, ]
+famous_tracks_scale &lt;- scale(famous_tracks[4:ncol(famous_tracks)])
+set.seed(123)
+opt_K &lt;- NbClust(famous_tracks_scale, method = &quot;kmeans&quot;, max.nc = 10)
+table(opt_K$Best.nc[&quot;Number_clusters&quot;,])</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>A great library for visualizing many statistical analysis results in <code>ggfortify</code>. We can use it to plot the results of <code>kmeans</code>. In order to get the artists as labels we set them to be the <code>rownames</code> of our scaled data matrix.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm93bmFtZXMoZmFtb3VzX3RyYWNrc19zY2FsZSkgPC0gZmFtb3VzX3RyYWNrcyRhcnRpc3ROYW1lXG5rbWVhbnNfdHJhY2tzIDwtIGttZWFucyhmYW1vdXNfdHJhY2tzX3NjYWxlLCA4KVxuYGBgIn0= -->
+<pre class="r"><code>rownames(famous_tracks_scale) &lt;- famous_tracks$artistName
+kmeans_tracks &lt;- kmeans(famous_tracks_scale, 8)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFtb3VzX3RyYWNrcyRjbHVzdGVyIDwtIGFzLmZhY3RvcihrbWVhbnNfdHJhY2tzJGNsdXN0ZXIpXG5nZ3Bsb3QoZmFtb3VzX3RyYWNrcywgYWVzKHkgPSBjbHVzdGVyLCBmaWxsID0gYXJ0aXN0TmFtZSkpICtcbiAgZ2VvbV9iYXIoKVxudGFibGUoZmFtb3VzX3RyYWNrcyRhcnRpc3ROYW1lLCBmYW1vdXNfdHJhY2tzJGNsdXN0ZXIpXG5gYGAifQ== -->
+<pre class="r"><code>famous_tracks$cluster &lt;- as.factor(kmeans_tracks$cluster)
+ggplot(famous_tracks, aes(y = cluster, fill = artistName)) +
+  geom_bar()
+table(famous_tracks$artistName, famous_tracks$cluster)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZWQgPC0gZmFtb3VzX3RyYWNrc1tmYW1vdXNfdHJhY2tzJGNsdXN0ZXIgJWluJSBjKDEsIDQpICYgZmFtb3VzX3RyYWNrcyRhcnRpc3ROYW1lID09IFwiRWQgU2hlZXJhblwiLF1cbmdncGxvdChlZCwgYWVzKHggPSB2YWxlbmNlLCB5ID0gbG91ZG5lc3MsIGNvbG9yID0gY2x1c3RlcikpICsgXG4gIGdlb21fcG9pbnQoKVxuYGBgIn0= -->
+<pre class="r"><code>ed &lt;- famous_tracks[famous_tracks$cluster %in% c(1, 4) &amp; famous_tracks$artistName == &quot;Ed Sheeran&quot;,]
+ggplot(ed, aes(x = valence, y = loudness, color = cluster)) + 
+  geom_point()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
 </div>
 
-<div id="rmd-source-code">LS0tDQpvdXRwdXQ6DQogIGh0bWxfZG9jdW1lbnQ6DQogICAgdG9jOiB5ZXMNCiAgcGRmX2RvY3VtZW50Og0KICAgIHRvYzogeWVzDQogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQNCi0tLQ0KYGBge3IgZWNobz1GQUxTRSwgZXZhbD1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KbGlicmFyeShrbml0cikNCm9wdGlvbnMoc2NpcGVuID0gOTk5KQ0KI1RoaXMgY29kZSBhdXRvbWF0aWNhbGx5IHRpZGllcyBjb2RlIHNvIHRoYXQgaXQgZG9lcyBub3QgcmVhY2ggb3ZlciB0aGUgcGFnZQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTUwKSx0aWR5PVRSVUUsIHJvd25hbWVzLnByaW50ID0gRkFMU0UsIHJvd3MucHJpbnQgPSAxMCkNCm9wdHNfY2h1bmskc2V0KGNhY2hlPVQpDQpgYGANCg0KYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSwgZWNobz1GLCBldmFsPVRSVUUscGFnZWQucHJpbnQgPSBGQUxTRX0NCm9wdGlvbnMoZGlnaXRzID0gOCkNCmBgYA0KDQoNCiMgQ2x1c3RlciBhbmFseXNpcw0KDQpJbiBwcm9ncmVzcw0KDQpgYGB7cixlY2hvPUZBTFNFLG91dC53aWR0aCA9ICcyNSUnLGZpZy5hbGlnbj0nY2VudGVyJyxmaWcuY2FwID0gIiJ9DQprbml0cjo6aW5jbHVkZV9ncmFwaGljcygiLi9pbWFnZXMvY2x1c3Rlci5QTkciKQ0KYGBg</div>
+<div id="rmd-source-code">LS0tDQpvdXRwdXQ6DQogIGh0bWxfZG9jdW1lbnQ6DQogICAgdG9jOiB5ZXMNCiAgcGRmX2RvY3VtZW50Og0KICAgIHRvYzogeWVzDQogIGh0bWxfbm90ZWJvb2s6IGRlZmF1bHQNCi0tLQ0KYGBge3IgZWNobz1GQUxTRSwgZXZhbD1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KbGlicmFyeShrbml0cikNCm9wdGlvbnMoc2NpcGVuID0gOTk5KQ0KI1RoaXMgY29kZSBhdXRvbWF0aWNhbGx5IHRpZGllcyBjb2RlIHNvIHRoYXQgaXQgZG9lcyBub3QgcmVhY2ggb3ZlciB0aGUgcGFnZQ0Kb3B0c19jaHVuayRzZXQodGlkeS5vcHRzPWxpc3Qod2lkdGguY3V0b2ZmPTUwKSx0aWR5PVRSVUUsIHJvd25hbWVzLnByaW50ID0gRkFMU0UsIHJvd3MucHJpbnQgPSAxMCkNCm9wdHNfY2h1bmskc2V0KGNhY2hlPVQpDQpzZXQuc2VlZCgxKQ0KYGBgDQoNCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0UsIGVjaG89RiwgZXZhbD1UUlVFLHBhZ2VkLnByaW50ID0gRkFMU0V9DQpvcHRpb25zKGRpZ2l0cyA9IDgpDQpgYGANCg0KDQojIENsdXN0ZXIgYW5hbHlzaXMNCg0KKipJbiBwcm9ncmVzcyoqDQoNCmBgYHtyLGVjaG89RkFMU0Usb3V0LndpZHRoID0gJzI1JScsZmlnLmFsaWduPSdjZW50ZXInLGZpZy5jYXAgPSAiIn0NCmtuaXRyOjppbmNsdWRlX2dyYXBoaWNzKCIuL2ltYWdlcy9jbHVzdGVyLlBORyIpDQpgYGANCg0KSW4gdGhlIHByZXZpb3VzIGNoYXB0ZXIgb24gZmFjdG9yIGFuYWx5c2lzIHdlIHRyaWVkIHRvIHJlZHVjZSB0aGUgbnVtYmVyIG9mIHZhcmlhYmxlcyBvciBjb2x1bW5zIGJ5IGlkZW50aWZ5aW5nIHVuZGVybHlpbmcgZGltZW5zaW9ucy4gSW4gb3JkZXIgdG8gZG8gc28gd2UgZXhwbG9pdGVkIHRoZSBmYWN0IHRoYXQgc29tZSBpdGVtcyBhcmUgaGlnaGx5IGNvcnJlbGF0ZWQgYW5kIHRoZXJlZm9yZSBtaWdodCByZXByZXNlbnQgdGhlIHNhbWUgdW5kZXJseWluZyBjb25jZXB0IChlLmcuLCBoZWFsdGggYmVuZWZpdHMgb3Igc29jaWFsIGJlbmVmaXRzKS4gU2ltaWxhcmx5LCBpbiBjbHVzdGVyIGFuYWx5c2lzIHdlIGFnYWluIGRvIG5vdCBkaXN0aW5ndWlzaCBiZXR3ZWVuIGRlcGVuZGVudCBhbmQgaW5kZXBlbmRlbnQgdmFyaWFibGVzLiBIb3dldmVyLCBpbiB0aGUgY2FzZSBvZiBjbHVzdGVyIGFuYWx5c2lzIHdlIGRvIG5vdCB0cnkgdG8gcmVkdWNlIHRoZSBudW1iZXIgb2YgdmFyaWFibGVzIGJ1dCB0aGUgbnVtYmVyIG9mIG9ic2VydmF0aW9ucyBieSBncm91cGluZyBzaW1pbGFyIG9uZXMgaW50byAiY2x1c3RlcnMiLiBXaGF0IGV4YWN0bHkgZGVmaW5lcyAic2ltaWxhcml0eSIgZGVwZW5kcyBvbiB0aGUgdXNlIGNhc2UuIEluIHRoZSBjYXNlIG9mIG11c2ljIGF1ZGlvIGZlYXR1cmVzIG9mIHNvbmdzIG1pZ2h0IGJlIHVzZWQgdG8gaWRlbnRpZnkgY2x1c3RlcnMgb2Ygc2ltaWxhciBzb25ncyAoc2ltaWxhciB0byB0aGUgZ2VucmUgY2xhc3NpZmljYXRpb24pIHdoaWNoIGNhbiBiZSB1c2VkIGZvciByZWNvbW1lbmRhdGlvbiBzeXN0ZW1zLiBPdGhlciB1c2UgY2FzZXMgYXJlIGN1c3RvbWVyIHNlZ21lbnRhdGlvbiBhbmQgYW5vbWFseSAoZS5nLiwgZnJhdWQpIGRldGVjdGlvbi4NCg0KTGV0J3MgdHJ5IHRvIGNyZWF0ZSBhIHJlY29tbWVuZGF0aW9uIHN5c3RlbSB1c2luZyB0cmFjayBmZWF0dXJlcy4gSW4gb3VyIGRhdGEgd2UgaGF2ZSB0aGUgSVNSQywgbmFtZSBvZiB0aGUgdHJhY2ssIG5hbWUgb2YgdGhlIGFydGlzdCBhbmQgYXVkaW8gZmVhdHVyZXMgb2YgdGhlIHRyYWNrLiBXZSBhcmUgZ29pbmcgdG8gdXNlIHRoZSBhdWRpbyBmZWF0dXJlcyB0byBjbHVzdGVyIHRyYWNrcyB0b2dldGhlciBzdWNoIHRoYXQgZ2l2ZW4gb25lIHRyYWNrIHdlIGNhbiBlYXNpbHkgaWRlbnRpZnkgc2ltaWxhciB0cmFja3MgYnkgbG9va2luZyBhdCB3aGljaCBjbHVzdGVyIGl0IGJlbG9uZ3MgdG8uDQoNCmBgYHtyfQ0KbG9hZCh1cmwoImh0dHBzOi8vZ2l0aHViLmNvbS9XVS1SRFMvTVJEQTIwMjEvcmF3L21haW4vdHJhY2tmZWF0dXJlcy5SRGF0YSIpKQ0KIyByZW1vdmUgZHVwbGljYXRlcw0KdHJhY2tzIDwtIG5hLm9taXQodHJhY2tzWyFkdXBsaWNhdGVkKHRyYWNrcyRpc3JjKSwgXSkNCmBgYA0KDQpUbyBnZXQgYW4gaWRlYSBvZiBob3cgY2x1c3RlcmluZyBtaWdodCB3b3JrIGxldCdzIGZpcnN0IHRha2UgYSBsb29rIGF0IGp1c3QgIHdpdGggdHdvIHZhcmlhYmxlcywgZW5lcmd5IGFuZCBhY291c3RpY25lc3MsIGFuZCB0d28gYXJ0aXN0cywgUm9iaW4gU2NodWx6IGFuZCBBZGVsZS4gV2UgaW1tZWRpYXRlbHkgc2VlIHRoYXQgQWRlbGUncyBzb25ncyBhcmUgbW9yZSB0byB0aGUgdG9wIGxlZnQgKGhpZ2ggYWNvdXN0aWNuZXNzLCBsb3cgZW5lcmd5KSB3aGVyZWFzIFJvYmluIFNjaHVseidzIHNvbmdzIGFyZSBtb3N0bHkgb24gdGhlIGJvdHRvbSByaWdodCAobG93IGFjb3VzdGljbmVzcywgaGlnaCBlbmVyZ3kpLg0KDQpgYGB7cn0NCmxpYnJhcnkoZ2dwbG90MikNCmxpYnJhcnkoc3RyaW5ncikNCnJvYmluX3NjaHVseiA8LSB0cmFja3Nbc3RyX2RldGVjdCh0cmFja3MkYXJ0aXN0TmFtZSwgIlJvYmluIFNjaHVseiIpLCBdDQpyb2Jpbl9zY2h1bHokYXJ0aXN0IDwtICJSb2JpbiBTY2h1bHoiDQphZGVsZSA8LSB0cmFja3Nbc3RyX2RldGVjdCh0cmFja3MkYXJ0aXN0TmFtZSwgIkFkZWxlIiksIF0NCmFkZWxlJGFydGlzdCA8LSAiQWRlbGUiDQoNCmV4YW1wbGVfdHJhY2tzIDwtIHJiaW5kKHJvYmluX3NjaHVseiwgYWRlbGUpDQpnZ3Bsb3QoZXhhbXBsZV90cmFja3MsIGFlcyh4ID0gZW5lcmd5LCB5ID0gYWNvdXN0aWNuZXNzLCBjb2xvciA9IGFydGlzdCkpICsNCiAgZ2VvbV9wb2ludCgpIA0KYGBgDQoNCiMjIEstTWVhbnMNCg0KT25lIG9mIHRoZSBtb3N0IHBvcHVsYXIgYWxnb3JpdGhtcyBmb3IgY2x1c3RlcmluZyBpcyB0aGUgKipLLW1lYW5zKiogYWxnb3JpdGhtLiBUaGUgIksiIHN0YW5kcyBmb3IgdGhlIG51bWJlciBvZiBjbHVzdGVycyB0aGF0IGFyZSBzcGVjaWZpZWQgYXMgYSBoeXBlcnBhcmFtZXRlciAobW9yZSBvbiBob3cgdG8gc2V0IHRoYXQgcGFyYW1ldGVyIGxhdGVyKS4gVGhlIGFsZ29yaXRobSB0aGVuIHRyaWVzIHRvIHNlcGFyYXRlIHRoZSBvYnNlcnZhdGlvbnMgaW50byBLIGNsdXN0ZXJzIHN1Y2ggdGhhdCB0aGUgdmFyaWFuY2Ugb2YgdGhlIGZlYXR1cmVzIChlLmcuLCBvdXIgYXVkaW8gZmVhdHVyZXMpIGlzIG1pbmltaXplZC4gVGhlcmVmb3JlLCBpdCBpcyBpbXBvcnRhbnQgdG8gYHNjYWxlYCBhbGwgdmFyaWFibGVzIGJlZm9yZSBwZXJmb3JtaW5nIGNsdXN0ZXJpbmcgc3VjaCB0aGF0IHRoZXkgYWxsIGNvbnRyaWJ1dGUgZXF1YWxseSB0byB0aGUgIGRpc3RhbmNlIGJldHdlZW4gdGhlIG9ic2VydmF0aW9ucy4gSW50dWl0aXZlbHkgdGhlIGFsZ29yaXRobSBncm91cHMgb2JzZXJ2YXRpb25zIGJ5IGl0ZXJhdGl2ZWx5IGNhbGN1bGF0aW5nIHRoZSBtZWFuIG9yIGNlbnRlciBvZiBlYWNoIGNsdXN0ZXIsIGFzc2lnbmluZyBlYWNoIG9ic2VydmF0aW9uIHRvIHRoZSBjbHVzdGVyIHdpdGggdGhlIGNsb3Nlc3QgbWVhbiBhbmQgcmUtY2FsY3VsYXRpbmcgdGhlIG1lYW4uLi4gVGhlIGFsZ29yaXRobSBoYXMgImNvbnZlcmdlZCIgKGkuZS4sIGlzIGRvbmUpIHdoZW4gdGhlIGFzc2lnbm1lbnRzIG5vIGxvbmdlciBjaGFuZ2UuIA0KTGV0J3MgdHJ5IGl0IG91dCB3aXRoIG91ciB0d28gYXJ0aXN0cy4gSW4gb3JkZXIgdG8gcGVyZm9ybSBjbHVzdGVyaW5nIHdlIGZpcnN0IGhhdmUgdG8gcmVtb3ZlIGFsbCBtaXNzaW5nIHZhbHVlcyBmcm9tIHRoZSB1c2VkIHZhcmlhYmxlcyBhcyBmb3IgdGhvc2Ugd2UgY2Fubm90IGNhbGN1bGF0ZSBkaXN0YW5jZXMuIEJlY2F1c2Ugd2Uga25vdyB0aGF0IHRoZXJlIGFyZSB0d28gYXJ0aXN0cyBpbiB0aGUgc2FtcGxlIHdlIHdpbGwgc3RhcnQgd2l0aCB0d28gY2x1c3RlcnMuDQoNCmBgYHtyfQ0KbGlicmFyeShjbHVzdGVyKQ0KDQp0cmFja3Nfc2NhbGUgPC0gZGF0YS5mcmFtZShhcnRpc3QgPSBleGFtcGxlX3RyYWNrcyRhcnRpc3QsIGVuZXJneSA9IHNjYWxlKGV4YW1wbGVfdHJhY2tzJGVuZXJneSksIGFjb3VzdGljbmVzcyA9IHNjYWxlKGV4YW1wbGVfdHJhY2tzJGFjb3VzdGljbmVzcykpDQp0cmFja3Nfc2NhbGUgPC0gbmEub21pdCh0cmFja3Nfc2NhbGUpDQprbWVhbnNfY2x1c3RlcnMgPC0ga21lYW5zKHRyYWNrc19zY2FsZVstMV0sIDIpDQprbWVhbnNfY2x1c3RlcnMkY2VudGVycw0KYGBgDQoNClRoZSBga21lYW5zYCBmdW5jdGlvbiByZXR1cm5zLCBhbW9uZyBvdGhlciBzdGF0aXN0aWNzLCB0aGUgY2VudGVycyBvZiBlYWNoIGNsdXN0ZXIgYW5kIGEgY2x1c3RlciBpZGVudGlmaWVyIGZvciBlYWNoIG9ic2VydmF0aW9uIHdoaWNoIHdlIGNhbiBhZGQgdG8gb3VyIG9yaWdpbmFsIGRhdGEuIEluIG91ciBjYXNlIG9uZSBjbHVzdGVyJ3MgY2VudGVyIGlzIHJhdGhlciBsb3cgaW4gZW5lcmd5IGFuZCBoaWdoIGFjb3VzdGljbmVzcyBhbmQgdGhlIHNlY29uZCBvbmUgaGFzIGhpZ2hlciBlbmVyZ3kgYW5kIGxvd2VyIGFjb3VzdGljbmVzcy4gDQoNCkluIG91ciBwbG90IHdlIGNhbiBhZGQgYSBjb2xvciBmb3IgZWFjaCBjbHVzdGVyIGFuZCBhIGRpZmZlcmVudCBtYXJrZXIgc2hhcGUgZm9yIGVhY2ggYXJ0aXN0LiBXZSBvYnNlcnZlIHRoYXQgY2x1c3RlciAxIGNvcnJlc3BvbmRzIG1vc3RseSB0byBSb2JpbiBTY2h1bHogc29uZ3MgYW5kIGNsdXN0ZXIgMiBtb3N0bHkgdG8gQWRlbGUuIEFsdGVybmF0aXZlbHkgd2UgY2FuIGFsc28gbG9vayBhdCB0aGUgY291bnRzIGluIGVhY2ggY2x1c3RlciBwZXIgYXJ0aXN0IHVzaW5nIHRoZSBgdGFibGVgIGZ1bmN0aW9uLg0KDQpgYGB7cn0NCnRyYWNrc19zY2FsZSRjbHVzdGVyIDwtIGFzLmZhY3RvcihrbWVhbnNfY2x1c3RlcnMkY2x1c3RlcikNCmdncGxvdCh0cmFja3Nfc2NhbGUsIGFlcyh4ID0gZW5lcmd5LCB5ID0gYWNvdXN0aWNuZXNzLCBjb2xvciA9IGNsdXN0ZXIsIHNoYXBlID0gYXJ0aXN0KSkgKw0KICBnZW9tX3BvaW50KHNpemUgPSAzKQ0KdGFibGUodHJhY2tzX3NjYWxlJGFydGlzdCwgdHJhY2tzX3NjYWxlJGNsdXN0ZXIpDQpgYGANCg0KSW4gdGhlIHByZXZpb3VzIGV4YW1wbGUgaXQgd2FzIGVhc3kgdG8gc2V0IHRoZSBudW1iZXIgb2YgY2x1c3RlcnMuIEhvd2V2ZXIsIGlmIHdlIHVzZSBhbGwgYXJ0aXN0cyBpbiBvdXIgZGF0YSB0aGUgYmVzdCB2YWx1ZSBmb3IgIksiIGlzIG5vdCBpbW1lZGlhdGVseSBvYnZpb3VzLiBTdXJlbHkgc29tZSBhcnRpc3RzIHNob3VsZCBiZSBpbiB0aGUgc2FtZSBjbHVzdGVyLiBXZSBjYW4gdXNlciB0aGUgYE5iQ2x1c3RgIHBhY2thZ2UgdG8gZGV0ZXJtaW5lIHRoZSBiZXN0IG51bWJlciBvZiBjbHVzdGVycyBhY2NvcmRpbmcgdG8gdmFyaW91cyBpbmRpY2VzIChzZWUgYD9OYkNsdXN0YCkuIEZpcnN0IHdlIHNjYWxlIGFsbCBvdXIgdmFyaWFibGVzIGFuZCB0aGVuIHdlIHVzZSB0aGUgc2NhbGVkIHZlcnNpb25zIHRvIGRldGVybWluZSAiSyIuIFRvIG1ha2UgY29tcHV0YXRpb25zIGZhc3RlciB3ZSB3aWxsIHVzZSBzb25ncyBieSA2IGZhbW91cyBhcnRpc3RzLiBUaGVuIHdlIGNvdW50IGhvdyBtYW55IGluZGljZXMgd291bGQgY2hvb3NlIGEgY2VydGFpbiBudW1iZXIgb2YgY2x1c3RlcnMuIFRoZSB0d28gYmVzdCBjYW5kaWRhdGVzIGFyZSAyIGNsdXN0ZXJzLCBjaG9zZW4gYnkgOCBpbmRpY2VzIGFuZCA4IGNsdXN0ZXJzLCBjaG9zZW4gYnkgNSBpbmRpY2VzLg0KDQpgYGB7ciwgY2FjaGUgPSBUUlVFfQ0KbGlicmFyeShOYkNsdXN0KQ0KZmFtb3VzX2FydGlzdHMgPC0gYygNCgknRWQgU2hlZXJhbicsDQoJJ0VtaW5lbScsDQoJJ1JpaGFubmEnLAkNCgknVGF5bG9yIFN3aWZ0JywNCgknQlRTJywNCgknUXVlZW4nDQoJKQ0KZmFtb3VzX3RyYWNrcyA8LSB0cmFja3NbdHJhY2tzJGFydGlzdE5hbWUgJWluJSBmYW1vdXNfYXJ0aXN0cywgXQ0KZmFtb3VzX3RyYWNrc19zY2FsZSA8LSBzY2FsZShmYW1vdXNfdHJhY2tzWzQ6bmNvbChmYW1vdXNfdHJhY2tzKV0pDQpzZXQuc2VlZCgxMjMpDQpvcHRfSyA8LSBOYkNsdXN0KGZhbW91c190cmFja3Nfc2NhbGUsIG1ldGhvZCA9ICJrbWVhbnMiLCBtYXgubmMgPSAxMCkNCnRhYmxlKG9wdF9LJEJlc3QubmNbIk51bWJlcl9jbHVzdGVycyIsXSkNCmBgYA0KDQpBIGdyZWF0IGxpYnJhcnkgZm9yIHZpc3VhbGl6aW5nIG1hbnkgc3RhdGlzdGljYWwgYW5hbHlzaXMgcmVzdWx0cyBpbiBgZ2dmb3J0aWZ5YC4gV2UgY2FuIHVzZSBpdCB0byBwbG90IHRoZSByZXN1bHRzIG9mIGBrbWVhbnNgLiBJbiBvcmRlciB0byBnZXQgdGhlIGFydGlzdHMgYXMgbGFiZWxzIHdlIHNldCB0aGVtIHRvIGJlIHRoZSBgcm93bmFtZXNgIG9mIG91ciBzY2FsZWQgZGF0YSBtYXRyaXguDQoNCg0KDQpgYGB7cn0NCnJvd25hbWVzKGZhbW91c190cmFja3Nfc2NhbGUpIDwtIGZhbW91c190cmFja3MkYXJ0aXN0TmFtZQ0Ka21lYW5zX3RyYWNrcyA8LSBrbWVhbnMoZmFtb3VzX3RyYWNrc19zY2FsZSwgOCkNCmBgYA0KDQoNCmBgYHtyfQ0KZmFtb3VzX3RyYWNrcyRjbHVzdGVyIDwtIGFzLmZhY3RvcihrbWVhbnNfdHJhY2tzJGNsdXN0ZXIpDQpnZ3Bsb3QoZmFtb3VzX3RyYWNrcywgYWVzKHkgPSBjbHVzdGVyLCBmaWxsID0gYXJ0aXN0TmFtZSkpICsNCiAgZ2VvbV9iYXIoKQ0KdGFibGUoZmFtb3VzX3RyYWNrcyRhcnRpc3ROYW1lLCBmYW1vdXNfdHJhY2tzJGNsdXN0ZXIpDQpgYGANCg0KYGBge3J9DQplZCA8LSBmYW1vdXNfdHJhY2tzW2ZhbW91c190cmFja3MkY2x1c3RlciAlaW4lIGMoMSwgNCkgJiBmYW1vdXNfdHJhY2tzJGFydGlzdE5hbWUgPT0gIkVkIFNoZWVyYW4iLF0NCmdncGxvdChlZCwgYWVzKHggPSB2YWxlbmNlLCB5ID0gbG91ZG5lc3MsIGNvbG9yID0gY2x1c3RlcikpICsgDQogIGdlb21fcG9pbnQoKQ0KYGBgDQoNCg==</div>
 
 
 

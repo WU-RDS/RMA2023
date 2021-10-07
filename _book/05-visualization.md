@@ -17,7 +17,14 @@ output:
 [You can download the corresponding R-Code here](./Code/04-visualization.R)
 :::
 
-This section discusses the important topic of data visualization and how to produce appropriate graphics to describe your data visually. You should always visualize your data first. The plots we created in the previous chapters used R's in-built functions. In this section, we will be using the `ggplot2` package by Hadley Wickham. It has the advantage of being fairly straightforward to learn and being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham as well as <a href="https://r-graphics.org/" target="_blank">"R Graphics Cookbook"</a> by Winston Chang.
+This section discusses the important topic of data visualization and how to produce appropriate graphics to describe your data visually. You should always visualize your data first. 
+
+<div class="figure" style="text-align: center">
+<img src="./images/story_telling.PNG" alt="source: https://twitter.com/heyblake/status/1432070055949258752?s=20" width="25%" />
+<p class="caption">(\#fig:unnamed-chunk-3)source: https://twitter.com/heyblake/status/1432070055949258752?s=20</p>
+</div>
+
+The plots we created in the previous chapters used R's in-built functions. In this section, we will be using the `ggplot2` package by Hadley Wickham. It has the advantage of being fairly straightforward to learn and being very flexible when it comes to building more complex plots. For a more in depth discussion you can refer to chapter 4 of the book "Discovering Statistics Using R" by Andy Field et al. or read the following chapter from the book <a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank">"R for Data science"</a> by Hadley Wickham as well as <a href="https://r-graphics.org/" target="_blank">"R Graphics Cookbook"</a> by Winston Chang.
 
 ggplot2 is built around the idea of constructing plots by stacking layers on top of one another. Every plot starts with the ```ggplot(data)``` function, after which layers can be added with the "+" symbol. The following figures show the layered structure of creating plots with ggplot. 
 
@@ -40,10 +47,10 @@ To give you an example of how the graphics are composed, let's go back to the fr
 
 
 ```r
-music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv",
+music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv", 
     sep = ",", header = TRUE)
 music_data$release_date <- as.Date(music_data$release_date)  #convert to date
-music_data$explicit <- factor(music_data$explicit,
+music_data$explicit <- factor(music_data$explicit, 
     levels = 0:1, labels = c("not explicit", "explicit"))  #convert to factor
 music_data$label <- as.factor(music_data$label)  #convert to factor
 music_data$rep_ctry <- as.factor(music_data$rep_ctry)  #convert to factor
@@ -60,14 +67,14 @@ prop.table(table(music_data[, c("genre")]))  #relative frequencies
 ```
 
 ```r
-music_data <- music_data[!is.na(music_data$valence) &
+music_data <- music_data[!is.na(music_data$valence) & 
     !is.na(music_data$duration_ms), ]  # exclude cases with missing values
 ```
 How can we plot this kind of data? Since we have a categorical variable, we will use a bar plot. However, to be able to use the table for your plot, you first need to assign it to an object as a data frame using the ```as.data.frame()```-function.
 
 
 ```r
-table_plot_rel <- as.data.frame(prop.table(table(music_data[,
+table_plot_rel <- as.data.frame(prop.table(table(music_data[, 
     c("genre")])))  #relative frequencies #relative frequencies
 head(table_plot_rel)
 ```
@@ -98,14 +105,14 @@ Once we have our data set we can begin constructing the plot. As mentioned previ
 
 ```r
 library(ggplot2)
-bar_chart <- ggplot(table_plot_rel, aes(x = Genre,
+bar_chart <- ggplot(table_plot_rel, aes(x = Genre, 
     y = Freq))
 bar_chart
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-6-1.png" alt="Bar chart (step 1)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-6)Bar chart (step 1)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-7-1.png" alt="Bar chart (step 1)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)Bar chart (step 1)</p>
 </div>
 
 You can see that the coordinate system is empty. This is because so far, we have told R only which variables we would like to plot but we haven't specified which geometric figures (points, bars, lines, etc.) we would like to use. This is done using the ```geom_xxx()``` function. ggplot includes many different geoms, for a wide range of plots (e.g., geom_line, geom_histogram, geom_boxplot, etc.). A good overview of the various geom functions can be found <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">here</a>. In our case, we would like to use a bar chart for which ```geom_col``` is appropriate.
@@ -116,127 +123,127 @@ bar_chart + geom_col()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-7-1.png" alt="Bar chart (step 2)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-7)Bar chart (step 2)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-8-1.png" alt="Bar chart (step 2)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-8)Bar chart (step 2)</p>
 </div>
 
 Now we have specified the data, the scales and the shape. Specifying this information is essential for plotting data using ggplot. Everything that follows now just serves the purpose of making the plot look nicer by modifying the appearance of the plot. How about some more meaningful axis labels? We can specify the axis labels using the ```ylab()``` and ```xlab()``` functions:
 
 
 ```r
-bar_chart + geom_col() + ylab("Relative frequency") +
+bar_chart + geom_col() + ylab("Relative frequency") + 
     xlab("Genre")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-8-1.png" alt="Bar chart (step 3)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-8)Bar chart (step 3)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-9-1.png" alt="Bar chart (step 3)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-9)Bar chart (step 3)</p>
 </div>
 
 How about adding some value labels to the bars? This can be done using ```geom_text()```. Note that the ```sprintf()``` function is not mandatory and is only added to format the numeric labels here. The function takes two arguments: the first specifies the format wrapped in two ```%``` signs. Thus, ```%.0f``` means to format the value as a fixed point value with no digits after the decimal point, and ```%%``` is a literal that prints a "%" sign. The second argument is simply the numeric value to be used. In this case, the relative frequencies multiplied by 100 to obtain the percentage values. Using the ```vjust = ``` argument, we can adjust the vertical alignment of the label. In this case, we would like to display the label slightly above the bars.  
 
 
 ```r
-bar_chart + geom_col() + ylab("Relative frequency") +
-    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%",
+bar_chart + geom_col() + ylab("Relative frequency") + 
+    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%", 
     Freq/sum(Freq) * 100)), vjust = -0.2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-9-1.png" alt="Bar chart (step 4)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-9)Bar chart (step 4)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-10-1.png" alt="Bar chart (step 4)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10)Bar chart (step 4)</p>
 </div>
 
 We could go ahead and specify the appearance of every single element of the plot now. However, there are also pre-specified themes that include various formatting steps in one singe function. For example ```theme_bw()``` would make the plot appear like this: 
 
 
 ```r
-bar_chart + geom_col() + ylab("Relative frequency") +
-    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%",
+bar_chart + geom_col() + ylab("Relative frequency") + 
+    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%", 
     Freq/sum(Freq) * 100)), vjust = -0.2) + theme_bw()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-10-1.png" alt="Bar chart (step 5)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-10)Bar chart (step 5)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-11-1.png" alt="Bar chart (step 5)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-11)Bar chart (step 5)</p>
 </div>
 
 and ```theme_minimal()``` looks like this:
 
 
 ```r
-bar_chart + geom_col() + ylab("Relative frequency") +
-    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%",
+bar_chart + geom_col() + ylab("Relative frequency") + 
+    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%", 
     Freq/sum(Freq) * 100)), vjust = -0.2) + theme_minimal()
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-11-1.png" alt="Bar chart (options 1)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-11)Bar chart (options 1)</p>
-</div>
-In a next step, let's prevent the axis labels from overlapping by rotating the labels.
-
-
-```r
-bar_chart + geom_col() + ylab("Relative frequency") +
-    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%",
-    Freq/sum(Freq) * 100)), vjust = -0.2) + theme_minimal() +
-    theme(axis.text.x = element_text(angle = 45, vjust = 0.75))
 ```
 
 <div class="figure" style="text-align: center">
 <img src="05-visualization_files/figure-html/unnamed-chunk-12-1.png" alt="Bar chart (options 1)" width="672" />
 <p class="caption">(\#fig:unnamed-chunk-12)Bar chart (options 1)</p>
 </div>
-
-We could also add a title and combine all labels using the `labs` function.  
+In a next step, let's prevent the axis labels from overlapping by rotating the labels.
 
 
 ```r
-bar_chart + geom_col() + labs(x = "Genre", y = "Relative frequency",
-    title = "Chart songs by genre") + geom_text(aes(label = sprintf("%.0f%%",
-    Freq/sum(Freq) * 100)), vjust = -0.2) + theme_minimal() +
-    theme(axis.text.x = element_text(angle = 45, vjust = 0.75),
-        plot.title = element_text(hjust = 0.5, color = "#666666"))
+bar_chart + geom_col() + ylab("Relative frequency") + 
+    xlab("Genre") + geom_text(aes(label = sprintf("%.0f%%", 
+    Freq/sum(Freq) * 100)), vjust = -0.2) + theme_minimal() + 
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.75))
 ```
 
 <div class="figure" style="text-align: center">
 <img src="05-visualization_files/figure-html/unnamed-chunk-13-1.png" alt="Bar chart (options 1)" width="672" />
 <p class="caption">(\#fig:unnamed-chunk-13)Bar chart (options 1)</p>
 </div>
-We could also add some color to the bars using `scale_fill_brewer`, which comes with a range of <a href="http://applied-r.com/rcolorbrewer-palettes/" target="_blank">color palettes</a>. 
+
+We could also add a title and combine all labels using the `labs` function.  
 
 
 ```r
-bar_chart + geom_col(aes(fill = Genre)) + labs(x = "Genre",
-    y = "Relative frequency", title = "Chart share by genre") +
-    geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) *
-        100)), vjust = -0.2) + theme_minimal() + ylim(0,
-    0.5) + scale_fill_brewer(palette = "Blues") + theme(axis.text.x = element_text(angle = 45,
-    vjust = 0.75), plot.title = element_text(hjust = 0.5,
-    color = "#666666"), legend.title = element_blank())
+bar_chart + geom_col() + labs(x = "Genre", y = "Relative frequency", 
+    title = "Chart songs by genre") + geom_text(aes(label = sprintf("%.0f%%", 
+    Freq/sum(Freq) * 100)), vjust = -0.2) + theme_minimal() + 
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.75), 
+        plot.title = element_text(hjust = 0.5, color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
 <img src="05-visualization_files/figure-html/unnamed-chunk-14-1.png" alt="Bar chart (options 1)" width="672" />
 <p class="caption">(\#fig:unnamed-chunk-14)Bar chart (options 1)</p>
 </div>
+We could also add some color to the bars using `scale_fill_brewer`, which comes with a range of <a href="http://applied-r.com/rcolorbrewer-palettes/" target="_blank">color palettes</a>. 
+
+
+```r
+bar_chart + geom_col(aes(fill = Genre)) + labs(x = "Genre", 
+    y = "Relative frequency", title = "Chart share by genre") + 
+    geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 
+        100)), vjust = -0.2) + theme_minimal() + ylim(0, 
+    0.5) + scale_fill_brewer(palette = "Blues") + theme(axis.text.x = element_text(angle = 45, 
+    vjust = 0.75), plot.title = element_text(hjust = 0.5, 
+    color = "#666666"), legend.title = element_blank())
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-visualization_files/figure-html/unnamed-chunk-15-1.png" alt="Bar chart (options 1)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15)Bar chart (options 1)</p>
+</div>
 These were examples of built-in formatting options of ```ggolot()```, where the default is ```theme_classic()```. For even more options, check out the ```ggthemes``` package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example ```theme_economist()``` uses the formatting of the journal "The Economist":
 
 
 ```r
 library(ggthemes)
-bar_chart + geom_col() + labs(x = "Genre", y = "Relative frequency",
-    title = "Chart songs by genre") + geom_text(aes(label = sprintf("%.0f%%",
-    Freq/sum(Freq) * 100)), vjust = -0.2) + theme_economist() +
-    ylim(0, 0.5) + theme(axis.text.x = element_text(angle = 45,
-    vjust = 0.55), plot.title = element_text(hjust = 0.5,
+bar_chart + geom_col() + labs(x = "Genre", y = "Relative frequency", 
+    title = "Chart songs by genre") + geom_text(aes(label = sprintf("%.0f%%", 
+    Freq/sum(Freq) * 100)), vjust = -0.2) + theme_economist() + 
+    ylim(0, 0.5) + theme(axis.text.x = element_text(angle = 45, 
+    vjust = 0.55), plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-15-1.png" alt="Bar chart (options 2)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-15)Bar chart (options 2)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-16-1.png" alt="Bar chart (options 2)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16)Bar chart (options 2)</p>
 </div>
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
@@ -247,7 +254,7 @@ In a next step, we might want to investigate whether the relative frequencies di
 
 
 ```r
-table_plot_cond_rel <- as.data.frame(prop.table(table(music_data[,
+table_plot_cond_rel <- as.data.frame(prop.table(table(music_data[, 
     c("genre", "explicit")]), 2))  #conditional relative frequencies
 table_plot_cond_rel
 ```
@@ -261,19 +268,19 @@ We can now take these tables to construct plots grouped by explicitness. To achi
 
 
 ```r
-ggplot(table_plot_cond_rel, aes(x = genre, y = Freq)) +
-    geom_col(aes(fill = genre)) + facet_wrap(~explicit) +
-    labs(x = "", y = "Relative frequency", title = "Distribution of genres for explicit and non-explicit songs") +
-    geom_text(aes(label = sprintf("%.0f%%", Freq *
-        100)), vjust = -0.2) + theme_minimal() + ylim(0,
-    1) + scale_fill_brewer(palette = "Blues") + theme(axis.text.x = element_text(angle = 45,
-    vjust = 1.1, hjust = 1), plot.title = element_text(hjust = 0.5,
+ggplot(table_plot_cond_rel, aes(x = genre, y = Freq)) + 
+    geom_col(aes(fill = genre)) + facet_wrap(~explicit) + 
+    labs(x = "", y = "Relative frequency", title = "Distribution of genres for explicit and non-explicit songs") + 
+    geom_text(aes(label = sprintf("%.0f%%", Freq * 
+        100)), vjust = -0.2) + theme_minimal() + ylim(0, 
+    1) + scale_fill_brewer(palette = "Blues") + theme(axis.text.x = element_text(angle = 45, 
+    vjust = 1.1, hjust = 1), plot.title = element_text(hjust = 0.5, 
     color = "#666666"), legend.position = "none")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-17-1.png" alt="Grouped bar chart (facet_wrap)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-17)Grouped bar chart (facet_wrap)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-18-1.png" alt="Grouped bar chart (facet_wrap)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-18)Grouped bar chart (facet_wrap)</p>
 </div>
 
 Alternatively, we might be interested to investigate the relative frequencies of explicit and non-explicit lyrics for each genre. To achieve this, we can also use the fill argument, which tells ggplot to fill the bars by a specified variable (in our case “explicit”). The position = "dodge" argument causes the bars to be displayed next to each other (as opposed to stacked on top of one another).
@@ -294,8 +301,8 @@ ggplot(table_plot_cond_rel_1, aes(x = genre, y = Freq, fill = explicit)) + #use 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-18-1.png" alt="Grouped bar chart (fill)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-18)Grouped bar chart (fill)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-19-1.png" alt="Grouped bar chart (fill)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-19)Grouped bar chart (fill)</p>
 </div>
 
 
@@ -318,7 +325,7 @@ ggplot(subset(table_plot_rel,Freq > 0), aes(x="", y=Freq, fill=Genre)) + # Creat
         plot.title = element_text(hjust = 0.5, color = "#666666"))   
 ```
 
-<img src="05-visualization_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="05-visualization_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 #### Covariation plots
 
@@ -327,15 +334,15 @@ To visualize the co-variation between categorical variables, you’ll need to co
 
 ```r
 library(gtools)
-music_data$streams_cat <- as.numeric(quantcut(music_data$streams,
+music_data$streams_cat <- as.numeric(quantcut(music_data$streams, 
     5, na.rm = TRUE))
-music_data$speech_cat <- as.numeric(quantcut(music_data$speechiness,
+music_data$speech_cat <- as.numeric(quantcut(music_data$speechiness, 
     3, na.rm = TRUE))
 
-music_data$streams_cat <- factor(music_data$streams_cat,
-    levels = 1:5, labels = c("low", "low-med", "medium",
+music_data$streams_cat <- factor(music_data$streams_cat, 
+    levels = 1:5, labels = c("low", "low-med", "medium", 
         "med-high", "high"))  #convert to factor
-music_data$speech_cat <- factor(music_data$speech_cat,
+music_data$speech_cat <- factor(music_data$speech_cat, 
     levels = 1:3, labels = c("low", "medium", "high"))  #convert to factor
 ```
 
@@ -343,15 +350,15 @@ Now we have multiple ways to visualize a relationship between the two variables 
 
 
 ```r
-ggplot(data = music_data) + geom_count(aes(x = speech_cat,
-    y = streams_cat, size = stat(prop), group = speech_cat)) +
-    ylab("Popularity") + xlab("Speechiness") + labs(size = "Proportion") +
+ggplot(data = music_data) + geom_count(aes(x = speech_cat, 
+    y = streams_cat, size = stat(prop), group = speech_cat)) + 
+    ylab("Popularity") + xlab("Speechiness") + labs(size = "Proportion") + 
     theme_bw()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-21-1.png" alt="Covariation between categorical data (1)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-21)Covariation between categorical data (1)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-22-1.png" alt="Covariation between categorical data (1)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-22)Covariation between categorical data (1)</p>
 </div>
 The plot shows that there appears to be a positive association between the popularity of a song and its level of speechiness. 
 
@@ -359,18 +366,18 @@ Another option would be to use a tile plot that changes the color of the tile ba
 
 
 ```r
-table_plot_rel <- prop.table(table(music_data[, c("speech_cat",
+table_plot_rel <- prop.table(table(music_data[, c("speech_cat", 
     "streams_cat")]), 1)
 table_plot_rel <- as.data.frame(table_plot_rel)
 
-ggplot(table_plot_rel, aes(x = speech_cat, y = streams_cat)) +
-    geom_tile(aes(fill = Freq)) + ylab("Populartiy") +
+ggplot(table_plot_rel, aes(x = speech_cat, y = streams_cat)) + 
+    geom_tile(aes(fill = Freq)) + ylab("Populartiy") + 
     xlab("Speechiness") + theme_bw()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-22-1.png" alt="Covariation between categorical data (2)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-22)Covariation between categorical data (2)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-23-1.png" alt="Covariation between categorical data (2)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-23)Covariation between categorical data (2)</p>
 </div>
 
 ### Continuous variables
@@ -400,33 +407,33 @@ Now we can create the histogram using ```geom_histogram()```. The argument ```bi
 
 
 ```r
-ggplot(music_data, aes(streams)) + geom_histogram(binwidth = 4000,
-    col = "black", fill = "darkblue") + labs(x = "Number of streams",
-    y = "Frequency", title = "Distribution of streams") +
+ggplot(music_data, aes(streams)) + geom_histogram(binwidth = 4000, 
+    col = "black", fill = "darkblue") + labs(x = "Number of streams", 
+    y = "Frequency", title = "Distribution of streams") + 
     theme_bw()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-24-1.png" alt="Histogram" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-24)Histogram</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-25-1.png" alt="Histogram" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-25)Histogram</p>
 </div>
 
 If you would like to highlight certain points of the distribution, you can use the `geom_vline` (short for vertical line) function to do this. For example, we may want to highlight the mean and the median of the distribution.
 
 
 ```r
-ggplot(music_data, aes(streams)) + geom_histogram(binwidth = 4000,
-    col = "black", fill = "darkblue") + labs(x = "Number of streams",
-    y = "Frequency", title = "Distribution of streams",
-    subtitle = "Red vertical line = mean, green vertical line = median") +
-    geom_vline(xintercept = mean(music_data$streams),
-        color = "red", size = 1) + geom_vline(xintercept = median(music_data$streams),
+ggplot(music_data, aes(streams)) + geom_histogram(binwidth = 4000, 
+    col = "black", fill = "darkblue") + labs(x = "Number of streams", 
+    y = "Frequency", title = "Distribution of streams", 
+    subtitle = "Red vertical line = mean, green vertical line = median") + 
+    geom_vline(xintercept = mean(music_data$streams), 
+        color = "red", size = 1) + geom_vline(xintercept = median(music_data$streams), 
     color = "green", size = 1) + theme_bw()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-25-1.png" alt="Histogram 2" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25)Histogram 2</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-26-1.png" alt="Histogram 2" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-26)Histogram 2</p>
 </div>
 In this case, you should indicate what the lines refer to. In the plot above, the 'subtitle' argument was used to add this information to the plot. 
 
@@ -447,17 +454,17 @@ Now, let's create a boxplot based on these variables and plot the log-transforme
 
 
 ```r
-ggplot(music_data, aes(x = genre, y = log_streams,
-    fill = genre)) + geom_boxplot(coef = 3) + labs(x = "Genre",
-    y = "Number of streams (log-scale)") + theme_minimal() +
-    scale_fill_brewer(palette = "Blues") + theme(axis.text.x = element_text(angle = 45,
-    vjust = 1.1, hjust = 1), plot.title = element_text(hjust = 0.5,
+ggplot(music_data, aes(x = genre, y = log_streams, 
+    fill = genre)) + geom_boxplot(coef = 3) + labs(x = "Genre", 
+    y = "Number of streams (log-scale)") + theme_minimal() + 
+    scale_fill_brewer(palette = "Blues") + theme(axis.text.x = element_text(angle = 45, 
+    vjust = 1.1, hjust = 1), plot.title = element_text(hjust = 0.5, 
     color = "#666666"), legend.position = "none")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-27-1.png" alt="Boxplot by group" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-27)Boxplot by group</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-28-1.png" alt="Boxplot by group" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-28)Boxplot by group</p>
 </div>
 The following graphic shows you how to interpret the boxplot:
 
@@ -467,26 +474,11 @@ Note that you could also flip the boxplot. To do this, you only need to exchange
 
 
 ```r
-ggplot(music_data, aes(x = log_streams, y = genre,
-    fill = genre)) + geom_boxplot(coef = 3) + labs(x = "Number of streams (log-scale)",
-    y = "Genre") + theme_minimal() + scale_fill_brewer(palette = "Blues") +
-    theme(plot.title = element_text(hjust = 0.5, color = "#666666"),
+ggplot(music_data, aes(x = log_streams, y = genre, 
+    fill = genre)) + geom_boxplot(coef = 3) + labs(x = "Number of streams (log-scale)", 
+    y = "Genre") + theme_minimal() + scale_fill_brewer(palette = "Blues") + 
+    theme(plot.title = element_text(hjust = 0.5, color = "#666666"), 
         legend.position = "none")
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-28-1.png" alt="Boxplot by group" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-28)Boxplot by group</p>
-</div>
-
-It is often meaningful to augment the boxplot with the data points using ```geom_jitter()```. This way, differences in the distribution of the variable between the genres become even more apparent. 
-
-
-```r
-ggplot(music_data, aes(x = log_streams, y = genre)) +
-    geom_boxplot(coef = 3) + labs(x = "Number of streams (log-scale)",
-    y = "Genre") + theme_minimal() + geom_jitter(colour = "red",
-    alpha = 0.1)
 ```
 
 <div class="figure" style="text-align: center">
@@ -494,18 +486,33 @@ ggplot(music_data, aes(x = log_streams, y = genre)) +
 <p class="caption">(\#fig:unnamed-chunk-29)Boxplot by group</p>
 </div>
 
+It is often meaningful to augment the boxplot with the data points using ```geom_jitter()```. This way, differences in the distribution of the variable between the genres become even more apparent. 
+
+
+```r
+ggplot(music_data, aes(x = log_streams, y = genre)) + 
+    geom_boxplot(coef = 3) + labs(x = "Number of streams (log-scale)", 
+    y = "Genre") + theme_minimal() + geom_jitter(colour = "red", 
+    alpha = 0.1)
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-visualization_files/figure-html/unnamed-chunk-30-1.png" alt="Boxplot by group" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-30)Boxplot by group</p>
+</div>
+
 In case you would like to create the boxplot on the total data (i.e., not by group), just leave the ```x = ``` argument within the ```aes()``` function empty: 
 
 
 ```r
-ggplot(music_data, aes(x = log_streams, y = "")) +
-    geom_boxplot(coef = 3, width = 0.3) + labs(x = "Number of streams (log-scale)",
+ggplot(music_data, aes(x = log_streams, y = "")) + 
+    geom_boxplot(coef = 3, width = 0.3) + labs(x = "Number of streams (log-scale)", 
     y = "")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-30-1.png" alt="Single Boxplot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-30)Single Boxplot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-31-1.png" alt="Single Boxplot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-31)Single Boxplot</p>
 </div>
 
 
@@ -515,7 +522,7 @@ Another way to get an overview of the difference between two groups is to plot t
 
 
 ```r
-music_data$genre_dummy <- as.factor(ifelse(music_data$genre ==
+music_data$genre_dummy <- as.factor(ifelse(music_data$genre == 
     "HipHop & Rap", "HipHop & Rap", "other"))
 ```
 
@@ -524,7 +531,7 @@ To make plotting the desired comparison easier, we can compute all relevant stat
 
 ```r
 library(Rmisc)
-mean_data <- summarySE(music_data, measurevar = "streams",
+mean_data <- summarySE(music_data, measurevar = "streams", 
     groupvars = c("genre_dummy"))
 mean_data
 ```
@@ -539,20 +546,20 @@ The output tells you how many observations there are per group, the mean number 
 
 
 ```r
-ggplot(mean_data, aes(x = genre_dummy, y = streams)) +
-    geom_bar(position = position_dodge(0.9), colour = "black",
-        fill = "#CCCCCC", stat = "identity", width = 0.65) +
-    geom_errorbar(position = position_dodge(0.9), width = 0.15,
-        aes(ymin = streams - ci, ymax = streams + ci)) +
-    theme_bw() + labs(x = "Genre", y = "Average number of streams",
-    title = "Average number of streams by genre") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(mean_data, aes(x = genre_dummy, y = streams)) + 
+    geom_bar(position = position_dodge(0.9), colour = "black", 
+        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
+    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
+        aes(ymin = streams - ci, ymax = streams + ci)) + 
+    theme_bw() + labs(x = "Genre", y = "Average number of streams", 
+    title = "Average number of streams by genre") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-33-1.png" alt="Plot of means" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-33)Plot of means</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-34-1.png" alt="Plot of means" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-34)Plot of means</p>
 </div>
 
 As can be seen, there is a large difference between the genres with respect to the average number of streams. 
@@ -563,7 +570,7 @@ We might also be interested to investigate a second factor. Say, we would like t
 
 
 ```r
-mean_data2 <- summarySE(music_data, measurevar = "streams",
+mean_data2 <- summarySE(music_data, measurevar = "streams", 
     groupvars = c("genre_dummy", "explicit"))
 mean_data2
 ```
@@ -577,20 +584,20 @@ Now we obtained the results for four different groups (2 genres x 2 lyric types)
 
 
 ```r
-ggplot(mean_data2, aes(x = genre_dummy, y = streams,
-    fill = explicit)) + geom_bar(position = position_dodge(0.9),
-    colour = "black", stat = "identity") + geom_errorbar(position = position_dodge(0.9),
-    width = 0.2, aes(ymin = streams - ci, ymax = streams +
-        ci)) + scale_fill_manual(values = c("#CCCCCC",
-    "#FFFFFF")) + theme_bw() + labs(x = "Genre", y = "Average number of streams",
-    title = "Average number of streams by genre and lyric type") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(mean_data2, aes(x = genre_dummy, y = streams, 
+    fill = explicit)) + geom_bar(position = position_dodge(0.9), 
+    colour = "black", stat = "identity") + geom_errorbar(position = position_dodge(0.9), 
+    width = 0.2, aes(ymin = streams - ci, ymax = streams + 
+        ci)) + scale_fill_manual(values = c("#CCCCCC", 
+    "#FFFFFF")) + theme_bw() + labs(x = "Genre", y = "Average number of streams", 
+    title = "Average number of streams by genre and lyric type") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-35-1.png" alt="Grouped plot of means" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-35)Grouped plot of means</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-36-1.png" alt="Grouped plot of means" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-36)Grouped plot of means</p>
 </div>
 The results of the analysis show that also in the HipHop & Rap genre, songs with non-explicit lyrics obtain more streams on average, contrary to our expectations. 
 
@@ -600,18 +607,18 @@ The most common way to show the relationship between two continuous variables is
 
 
 ```r
-ggplot(music_data, aes(speechiness, log_streams)) +
-    geom_point(shape = 1) + labs(x = "Genre", y = "Relative frequency") +
-    geom_smooth(method = "lm", fill = "blue", alpha = 0.1) +
-    labs(x = "Speechiness", y = "Number of streams (log-scale)",
-        title = "Scatterplot of streams and speechiness") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(music_data, aes(speechiness, log_streams)) + 
+    geom_point(shape = 1) + labs(x = "Genre", y = "Relative frequency") + 
+    geom_smooth(method = "lm", fill = "blue", alpha = 0.1) + 
+    labs(x = "Speechiness", y = "Number of streams (log-scale)", 
+        title = "Scatterplot of streams and speechiness") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-36-1.png" alt="Scatter plot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-36)Scatter plot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-37-1.png" alt="Scatter plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-37)Scatter plot</p>
 </div>
 As you can see, there appears to be a positive relationship between advertising and sales.
 
@@ -621,18 +628,18 @@ It could be that customers from different store respond differently to advertisi
 
 
 ```r
-ggplot(music_data, aes(speechiness, log_streams, colour = explicit)) +
-    geom_point(shape = 1) + geom_smooth(method = "lm",
-    alpha = 0.1) + labs(x = "Speechiness", y = "Number of streams (log-scale)",
-    title = "Scatterplot of streams and speechiness by lyric type",
-    colour = "Explicit") + scale_color_manual(values = c("lightblue",
-    "darkblue")) + theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(music_data, aes(speechiness, log_streams, colour = explicit)) + 
+    geom_point(shape = 1) + geom_smooth(method = "lm", 
+    alpha = 0.1) + labs(x = "Speechiness", y = "Number of streams (log-scale)", 
+    title = "Scatterplot of streams and speechiness by lyric type", 
+    colour = "Explicit") + scale_color_manual(values = c("lightblue", 
+    "darkblue")) + theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-37-1.png" alt="Grouped scatter plot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-37)Grouped scatter plot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-38-1.png" alt="Grouped scatter plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-38)Grouped scatter plot</p>
 </div>
 
 It appears from the plot that the association between speechiness and the number of streams is stronger for songs without explicit lyrics. 
@@ -643,7 +650,7 @@ Another important type of plot is the line plot used if, for example, you have a
 
 
 ```r
-music_data_ctry <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/streaming_charts_ctry.csv",
+music_data_ctry <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/streaming_charts_ctry.csv", 
     sep = ",", header = TRUE)
 music_data_ctry$week <- as.Date(music_data_ctry$week)
 music_data_ctry$region <- as.factor(music_data_ctry$region)
@@ -660,7 +667,7 @@ In a first step, let's investigate the development for Austria, by subsetting th
 
 
 ```r
-music_data_at <- subset(music_data_ctry, region ==
+music_data_at <- subset(music_data_ctry, region == 
     "at")
 ```
 
@@ -668,22 +675,22 @@ Given the correct ```aes()``` and geom specification ggplot constructs the corre
 
 
 ```r
-ggplot(music_data_at, aes(x = week, y = streams)) +
-    geom_line() + labs(x = "Week", y = "Total streams in Austria",
-    title = "Weekly number of streams in Austria") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(music_data_at, aes(x = week, y = streams)) + 
+    geom_line() + labs(x = "Week", y = "Total streams in Austria", 
+    title = "Weekly number of streams in Austria") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-40-1.png" alt="Line plot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-40)Line plot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-41-1.png" alt="Line plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-41)Line plot</p>
 </div>
 There appears to be a positive trend in the market. Now let's compare Austria to other countries. Note that the ```%in%``` operator checks for us if any of the region names specified in the vector are included in the region column. 
 
 
 ```r
-music_data_at_compare <- subset(music_data_ctry, region %in%
+music_data_at_compare <- subset(music_data_ctry, region %in% 
     c("at", "de", "ch", "se", "dk", "nl"))
 ```
 
@@ -691,32 +698,32 @@ We can now include the other specified countries in the plot by using the 'color
 
 
 ```r
-ggplot(music_data_at_compare, aes(x = week, y = streams,
-    color = region)) + geom_line() + labs(x = "Week",
-    y = "Total streams", title = "Weekly number of streams by country") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(music_data_at_compare, aes(x = week, y = streams, 
+    color = region)) + geom_line() + labs(x = "Week", 
+    y = "Total streams", title = "Weekly number of streams by country") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-42-1.png" alt="Line plot (by region)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-42)Line plot (by region)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-43-1.png" alt="Line plot (by region)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-43)Line plot (by region)</p>
 </div>
 One issue in plot like this can be that the scales between countries is very different (i.e., in Germany there are many more streams because Germany is larger than the other countries). You could also use the ```facet_wrap()``` function to create one individual plot by region and specify 'scales = "free_y"' so that each individual plot has its own scale on the y-axis. We should also indicate the number of streams in millions by dividing the number of streams. 
 
 
 ```r
-ggplot(music_data_at_compare, aes(x = week, y = streams/1000000)) +
-    geom_line() + facet_wrap(~region, scales = "free_y") +
-    labs(x = "Week", y = "Total streams (in million)",
-        title = "Weekly number of streams by country") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(music_data_at_compare, aes(x = week, y = streams/1000000)) + 
+    geom_line() + facet_wrap(~region, scales = "free_y") + 
+    labs(x = "Week", y = "Total streams (in million)", 
+        title = "Weekly number of streams by country") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-43-1.png" alt="Line plot (facet wrap)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-43)Line plot (facet wrap)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-44-1.png" alt="Line plot (facet wrap)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-44)Line plot (facet wrap)</p>
 </div>
 Now it's easier to see that the trends are different between countries. While Sweden and Denmark appear to be saturated, the other market show strong growth. 
 
@@ -726,29 +733,12 @@ A slightly different why to plot this data is through area plot using the ```geo
 
 
 ```r
-ggplot(music_data_at_compare, aes(x = week, y = streams/1000000)) +
-    geom_area(fill = "steelblue", color = "steelblue",
-        alpha = 0.5) + facet_wrap(~region, scales = "free_y") +
-    labs(x = "Week", y = "Total streams (in million)",
-        title = "Weekly number of streams by country") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
-    color = "#666666"))
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-44-1.png" alt="Line plot (facet wrap)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-44)Line plot (facet wrap)</p>
-</div>
-
-If the relative share of the overall streaming volume is of interest, you could use a stacked area plot to visualize this. 
-
-
-```r
-ggplot(music_data_at_compare, aes(x = week, y = streams/1000000,
-    group = region, fill = region, color = region)) +
-    geom_area(position = "stack", alpha = 0.65) + labs(x = "Week",
-    y = "Total streams (in million)", title = "Weekly number of streams by country") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+ggplot(music_data_at_compare, aes(x = week, y = streams/1000000)) + 
+    geom_area(fill = "steelblue", color = "steelblue", 
+        alpha = 0.5) + facet_wrap(~region, scales = "free_y") + 
+    labs(x = "Week", y = "Total streams (in million)", 
+        title = "Weekly number of streams by country") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ```
 
@@ -757,13 +747,30 @@ ggplot(music_data_at_compare, aes(x = week, y = streams/1000000,
 <p class="caption">(\#fig:unnamed-chunk-45)Line plot (facet wrap)</p>
 </div>
 
+If the relative share of the overall streaming volume is of interest, you could use a stacked area plot to visualize this. 
+
+
+```r
+ggplot(music_data_at_compare, aes(x = week, y = streams/1000000, 
+    group = region, fill = region, color = region)) + 
+    geom_area(position = "stack", alpha = 0.65) + labs(x = "Week", 
+    y = "Total streams (in million)", title = "Weekly number of streams by country") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
+    color = "#666666"))
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-visualization_files/figure-html/unnamed-chunk-46-1.png" alt="Line plot (facet wrap)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-46)Line plot (facet wrap)</p>
+</div>
+
 In this type of plot it is easy to spot the relative size of the regions. 
 
 In some cases it could also make sense to add a secondary y-axis, for example, if you would like to compare two regions with very different scales in one plot. Let's assume, we would like to compare Austria and Sweden and take the corresponding subset. 
 
 
 ```r
-music_data_at_se_compare <- subset(music_data_ctry,
+music_data_at_se_compare <- subset(music_data_ctry, 
     region %in% c("at", "se"))
 ```
 
@@ -772,7 +779,7 @@ In order to add the secondary y-axis, we need the data in a slightly different f
 
 ```r
 library(tidyr)
-data_wide <- spread(music_data_at_se_compare, region,
+data_wide <- spread(music_data_at_se_compare, region, 
     streams)
 data_wide
 ```
@@ -794,23 +801,23 @@ Now we can create the plot with the secondary y-axis as follows:
 
 
 ```r
-ggplot(data_wide) + geom_area(aes(x = week, y = at/1000000,
-    colour = "Austria", fill = "Austria"), alpha = 0.5) +
-    geom_area(aes(x = week, y = (se/1000000) * ratio,
-        colour = "Sweden", fill = "Sweden"), alpha = 0.5) +
-    scale_y_continuous(sec.axis = sec_axis(~./ratio,
-        name = "Total streams SE (in million)")) +
-    scale_fill_manual(values = c("#999999", "#E69F00")) +
-    scale_colour_manual(values = c("#999999", "#E69F00"),
-        guide = FALSE) + theme_minimal() + labs(x = "Week",
-    y = "Total streams AT (in million)", title = "Weekly number of streams by country") +
-    theme(plot.title = element_text(hjust = 0.5, color = "#666666"),
+ggplot(data_wide) + geom_area(aes(x = week, y = at/1000000, 
+    colour = "Austria", fill = "Austria"), alpha = 0.5) + 
+    geom_area(aes(x = week, y = (se/1000000) * ratio, 
+        colour = "Sweden", fill = "Sweden"), alpha = 0.5) + 
+    scale_y_continuous(sec.axis = sec_axis(~./ratio, 
+        name = "Total streams SE (in million)")) + 
+    scale_fill_manual(values = c("#999999", "#E69F00")) + 
+    scale_colour_manual(values = c("#999999", "#E69F00"), 
+        guide = FALSE) + theme_minimal() + labs(x = "Week", 
+    y = "Total streams AT (in million)", title = "Weekly number of streams by country") + 
+    theme(plot.title = element_text(hjust = 0.5, color = "#666666"), 
         legend.title = element_blank(), legend.position = "bottom")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-49-1.png" alt="Secondary y-axis" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-49)Secondary y-axis</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-50-1.png" alt="Secondary y-axis" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-50)Secondary y-axis</p>
 </div>
 
 In this plot it is easy to see the difference in trends between the countries.  
@@ -841,16 +848,15 @@ You may use the <a href="https://indrajeetpatil.github.io/ggstatsplot/index.html
 
 ```r
 library(ggstatsplot)
-# music_data_subs <- subset(music_data, genre
-# %in% c('HipHop & Rap',
-# 'Soundtrack','Pop','Rock')) ggbetweenstats(
-# data = music_data_subs, title = 'Number of
-# streams by genre', # title for the plot
-# plot.type = 'box', x = genre, # 2 groups y =
+# music_data_subs <- subset(music_data, genre %in%
+# c('HipHop & Rap', 'Soundtrack','Pop','Rock'))
+# ggbetweenstats( data = music_data_subs, title =
+# 'Number of streams by genre', # title for the
+# plot plot.type = 'box', x = genre, # 2 groups y =
 # log_streams, type = 'p', # default messages =
-# FALSE, bf.message = FALSE, pairwise.comparisons
-# = TRUE # display results from pairwise
-# comparisons )
+# FALSE, bf.message = FALSE, pairwise.comparisons =
+# TRUE # display results from pairwise comparisons
+# )
 ```
 
 ##### Combination of plots (ggExtra)
@@ -860,17 +866,17 @@ Using the ```ggExtra()``` package, you may combine two type of plots. For exampl
 
 ```r
 library(ggExtra)
-p <- ggplot(music_data, aes(x = speechiness, y = log_streams)) +
-    geom_point() + labs(x = "Speechiness", y = "Number of streams (log-scale)",
-    title = "Scatterplot & histograms of streams and speechiness") +
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
+p <- ggplot(music_data, aes(x = speechiness, y = log_streams)) + 
+    geom_point() + labs(x = "Speechiness", y = "Number of streams (log-scale)", 
+    title = "Scatterplot & histograms of streams and speechiness") + 
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
     color = "#666666"))
 ggExtra::ggMarginal(p, type = "histogram")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-52-1.png" alt="Scatter plot with histogram" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-52)Scatter plot with histogram</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-53-1.png" alt="Scatter plot with histogram" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-53)Scatter plot with histogram</p>
 </div>
 
 In this case, the ```type = "histogram"``` argument specifies that we would like to plot a histogram. However, you could also opt for ```type = "boxplot"``` or ```type = "density"``` to use a boxplot or density plot instead.
@@ -883,7 +889,7 @@ Now that we have covered the most important plots, we can look at what other typ
 ```r
 library(ggmap)
 library(dplyr)
-geo_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat",
+geo_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/geo_data.dat", 
     sep = "\t", header = TRUE)
 head(geo_data)
 ```
@@ -987,7 +993,7 @@ ggmap(de_map_g_str, extent = "device") + geom_density2d(data = geo_data,
 
 **(LC4.7) Which statement about the graph below is true?** 
 
-<img src="05-visualization_files/figure-html/unnamed-chunk-57-1.png" width="672" />
+<img src="05-visualization_files/figure-html/unnamed-chunk-58-1.png" width="672" />
 
 - [ ] This is a bar chart
 - [ ] This is a histogram
@@ -997,7 +1003,7 @@ ggmap(de_map_g_str, extent = "device") + geom_density2d(data = geo_data,
 
 **(LC4.8) Which statement about the graph below is true?** 
 
-<img src="05-visualization_files/figure-html/unnamed-chunk-58-1.png" width="50%" />
+<img src="05-visualization_files/figure-html/unnamed-chunk-59-1.png" width="50%" />
 
 - [ ] This is a bar chart
 - [ ] 50% of observations are contained in the gray area
