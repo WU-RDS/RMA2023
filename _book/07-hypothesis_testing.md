@@ -34,11 +34,11 @@ library(ggplot2)
 library(latex2exp)
 set.seed(321)
 hours <- rgamma(n = 25000, shape = 2, scale = 10)
-ggplot(data.frame(hours)) + geom_histogram(aes(x = hours), 
-    bins = 30, fill = "white", color = "black") + geom_vline(xintercept = mean(hours), 
-    size = 1) + theme_bw() + labs(title = "Histogram of listening times", 
-    subtitle = TeX(sprintf("Population mean ($\\mu$) = %.2f; population standard deviation ($\\sigma$) = %.2f", 
-        round(mean(hours), 2), round(sd(hours), 2))), 
+ggplot(data.frame(hours)) + geom_histogram(aes(x = hours),
+    bins = 30, fill = "white", color = "black") + geom_vline(xintercept = mean(hours),
+    size = 1) + theme_bw() + labs(title = "Histogram of listening times",
+    subtitle = TeX(sprintf("Population mean ($\\mu$) = %.2f; population standard deviation ($\\sigma$) = %.2f",
+        round(mean(hours), 2), round(sd(hours), 2))),
     y = "Number of students", x = "Hours")
 ```
 
@@ -94,11 +94,11 @@ H_0 <- 10
 student_sample <- sample(1:25000, size = 50, replace = FALSE)
 music_listening_sample <- data.frame(hours = hours[student_sample])
 mean_sample <- mean(music_listening_sample$hours)
-ggplot(music_listening_sample) + geom_histogram(aes(x = hours), 
-    fill = "white", color = "black", bins = 20) + theme_bw() + 
-    geom_vline(xintercept = mean_sample, color = "black", 
-        size = 1) + labs(title = TeX(sprintf("Distribution of values in the sample ($n =$ %.0f, $\\bar{x] = $ %.2f, s = %.2f)", 
-    n, mean_sample, sd(music_listening_sample$hours))), 
+ggplot(music_listening_sample) + geom_histogram(aes(x = hours),
+    fill = "white", color = "black", bins = 20) + theme_bw() +
+    geom_vline(xintercept = mean_sample, color = "black",
+        size = 1) + labs(title = TeX(sprintf("Distribution of values in the sample ($n =$ %.0f, $\\bar{x] = $ %.2f, s = %.2f)",
+    n, mean_sample, sd(music_listening_sample$hours))),
     x = "Hours", y = "Frequency")
 ```
 
@@ -354,7 +354,7 @@ Provide descriptive statistics using the ```describe()``` function:
 
 ```r
 library(psych)
-psych::describe(student_sample)
+describe(student_sample)
 ```
 
 <div data-pagedtable="false">
@@ -367,9 +367,9 @@ From this, we can already see that the mean is different from the hypothesized v
 
 
 ```r
-ggplot(music_listening_sample) + geom_histogram(aes(x = hours), 
-    fill = "white", color = "black", bins = 20) + theme_bw() + 
-    labs(title = "Distribution of values in the sample", 
+ggplot(music_listening_sample) + geom_histogram(aes(x = hours),
+    fill = "white", color = "black", bins = 20) + theme_bw() +
+    labs(title = "Distribution of values in the sample",
         x = "Hours", y = "Frequency")
 ```
 
@@ -463,7 +463,7 @@ As an example, imagine that a music streaming service would like to introduce a 
 
 
 ```r
-hours_a_b <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/hours_a_b.csv", 
+hours_a_b <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/hours_a_b.csv",
     sep = ",", header = TRUE)
 head(hours_a_b)
 ```
@@ -541,14 +541,14 @@ samples <- 20000
 mean_delta <- matrix(NA, nrow = samples)
 for (i in 1:samples) {
     student_sample <- sample(1:25000, size = 100, replace = FALSE)
-    mean_delta[i, ] <- mean(hours_population_1[student_sample]) - 
+    mean_delta[i, ] <- mean(hours_population_1[student_sample]) -
         mean(hours_population_2[student_sample])
 }
 
-ggplot(data.frame(mean_delta)) + geom_histogram(aes(x = mean_delta), 
-    bins = 30, fill = "white", color = "black") + theme_bw() + 
-    theme(legend.title = element_blank()) + geom_vline(aes(xintercept = mean(mean_delta)), 
-    size = 1) + xlab("d") + ggtitle(TeX(sprintf("%d samples; $d_{\\bar{x}}$ = %.2f", 
+ggplot(data.frame(mean_delta)) + geom_histogram(aes(x = mean_delta),
+    bins = 30, fill = "white", color = "black") + theme_bw() +
+    theme(legend.title = element_blank()) + geom_vline(aes(xintercept = mean(mean_delta)),
+    size = 1) + xlab("d") + ggtitle(TeX(sprintf("%d samples; $d_{\\bar{x}}$ = %.2f",
     samples, round(mean(mean_delta), 2))))
 ```
 
@@ -703,18 +703,18 @@ This already shows us that the mean between groups A and B are different. We can
 
 
 ```r
-ggplot(hours_a_b, aes(x = group, y = hours)) + geom_boxplot() + 
-    geom_jitter(alpha = 0.2, color = "red") + labs(x = "Group", 
-    y = "Listening time (hours)") + ggtitle("Boxplot of listening times") + 
+ggplot(hours_a_b, aes(x = group, y = hours)) + geom_boxplot() +
+    geom_jitter(alpha = 0.2, color = "red") + labs(x = "Group",
+    y = "Listening time (hours)") + ggtitle("Boxplot of listening times") +
     theme_bw()
 ```
 
 <img src="07-hypothesis_testing_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 ```r
-ggplot(hours_a_b, aes(hours)) + geom_histogram(col = "black", 
-    fill = "darkblue") + labs(x = "Listening time (hours)", 
-    y = "Frequency") + ggtitle("Histogram of listening times") + 
+ggplot(hours_a_b, aes(hours)) + geom_histogram(col = "black",
+    fill = "darkblue") + labs(x = "Listening time (hours)",
+    y = "Frequency") + ggtitle("Histogram of listening times") +
     facet_wrap(~group) + theme_bw()
 ```
 
@@ -726,7 +726,7 @@ To conduct the independent means t-test, we can use the ```t.test()``` function:
 
 
 ```r
-t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided", 
+t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided",
     conf.level = 0.95, var.equal = FALSE)
 ```
 
@@ -736,7 +736,7 @@ t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided",
 ## 
 ## data:  hours by group
 ## t = -4.9646, df = 195.73, p-value = 0.000001494
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group A and group B is not equal to 0
 ## 95 percent confidence interval:
 ##  -14.514246  -6.261264
 ## sample estimates:
@@ -790,7 +790,7 @@ Imagine, for example, a slightly different experimental setup for the above expe
 
 
 ```r
-hours_a_b_paired <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/hours_a_b_paired.csv", 
+hours_a_b_paired <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/hours_a_b_paired.csv",
     sep = ",", header = TRUE)
 head(hours_a_b_paired)
 ```
@@ -932,7 +932,7 @@ To plot the data, we need to do some restructuring first, since the variables ar
 
 ```r
 library(reshape2)
-hours_a_b_paired_long <- melt(hours_a_b_paired[, c("hours_a", 
+hours_a_b_paired_long <- melt(hours_a_b_paired[, c("hours_a",
     "hours_b")])
 names(hours_a_b_paired_long) <- c("group", "hours")
 head(hours_a_b_paired_long)
@@ -948,18 +948,18 @@ Now we are ready to plot the data:
 
 
 ```r
-ggplot(hours_a_b_paired_long, aes(x = group, y = hours)) + 
-    geom_boxplot() + geom_jitter(alpha = 0.2, color = "red") + 
-    labs(x = "Group", y = "Listening time (hours)") + 
+ggplot(hours_a_b_paired_long, aes(x = group, y = hours)) +
+    geom_boxplot() + geom_jitter(alpha = 0.2, color = "red") +
+    labs(x = "Group", y = "Listening time (hours)") +
     ggtitle("Boxplot of listening times") + theme_bw()
 ```
 
 <img src="07-hypothesis_testing_files/figure-html/unnamed-chunk-40-1.png" width="672" />
 
 ```r
-ggplot(hours_a_b_paired_long, aes(hours)) + geom_histogram(col = "black", 
-    fill = "darkblue") + labs(x = "Listening time (hours)", 
-    y = "Frequency") + ggtitle("Histogram of listening times") + 
+ggplot(hours_a_b_paired_long, aes(hours)) + geom_histogram(col = "black",
+    fill = "darkblue") + labs(x = "Listening time (hours)",
+    y = "Frequency") + ggtitle("Histogram of listening times") +
     facet_wrap(~group) + theme_bw()
 ```
 
@@ -971,8 +971,8 @@ To conduct the independent means t-test, we can use the ```t.test()``` function 
 
 
 ```r
-t.test(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b, 
-    mu = 0, alternative = "two.sided", conf.level = 0.95, 
+t.test(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b,
+    mu = 0, alternative = "two.sided", conf.level = 0.95,
     paired = TRUE)
 ```
 
@@ -1079,7 +1079,7 @@ For the dependent-means t-test, we would use:
 
 
 ```r
-cohensD(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b, 
+cohensD(hours_a_b_paired$hours_a, hours_a_b_paired$hours_b,
     method = "paired")
 ```
 
@@ -1096,7 +1096,7 @@ For example, what sample size do we need (per group) to identify an effect with 
 
 ```r
 library(pwr)
-pwr.t.test(d = 0.6, sig.level = 0.05, power = 0.8, 
+pwr.t.test(d = 0.6, sig.level = 0.05, power = 0.8,
     type = c("two.sample"), alternative = c("two.sided"))
 ```
 
@@ -1117,7 +1117,7 @@ Or we could ask, what is the power of our test with 51 observations in each grou
 
 
 ```r
-pwr.t.test(n = 51, d = 0.6, sig.level = 0.05, type = c("two.sample"), 
+pwr.t.test(n = 51, d = 0.6, sig.level = 0.05, type = c("two.sample"),
     alternative = c("two.sided"))
 ```
 

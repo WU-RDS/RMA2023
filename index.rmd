@@ -1,5 +1,6 @@
 ---
 knit: "bookdown::render_book"
+new_session: TRUE
 title: "Marketing Analytics 2021"
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike

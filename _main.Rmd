@@ -1,5 +1,6 @@
 ---
 knit: "bookdown::render_book"
+new_session: TRUE
 title: "Marketing Analytics 2021"
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
@@ -12582,19 +12583,22 @@ Alternatively, you can set the directory in RStudio under Session -> Set Working
 
 Usually the `unexpectes SYMBOL` message is due to parentheses not being matched but it could also be any other symbol that R cannot interpret in the given context. Please check the line in which the error occurred for typos (especially too many/ too few symbols). Some common examples are:
 
-```{r, error = TRUE}
+```{r err1, error = 0}
 print("hello"))
 ```
+
 There is one too many closing parenthesis here. 
 
 ```{r, error = TRUE}
 1 +/ 2 # Too many symbols
 ```
+
 The "/" symbol may not follow the "+" symbol without any additional objects.
 
 ```{r, error = TRUE}
 1 2 # Missing symbol
 ```
+
 The sequence with a space between numbers is not recognized by R. 
 
 ```{r, error = TRUE}
