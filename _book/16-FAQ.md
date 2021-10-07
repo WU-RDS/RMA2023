@@ -11,18 +11,18 @@ output:
 
 
 
-# (PART) FAQ {-}
+# (PART) FAQ 
 
-# FAQ {-}
+# FAQ
 
 In this section, we provide answers to questions that students of previous cohorts encountered. We grouped the answers by topic and hope that you will find the answers useful.  
 
 
-## Common error messages {-}
-
-### A general note on error messages {-}
+## Common error messages
 
 <img src="./images/off_on.jpg" width="40%" style="display: block; margin: auto;" />
+
+### A general note on error messages {-}
 
 We usually load data into a `data.frame` in our R Session (e.g., from a CSV file using `data <- read.csv("file.csv")`). It is important to note that this `data.frame` is not the original data file, but just a copy of the file that is stored on the hard drive. This means that any changes we make to the `data.frame` are **not** persistent/permanent and are **not** written to the original file (unless it is overwritten explicitly by using e.g., `write.csv(data, "file.csv")`, which we usually don't do). Therefore, it is important to write all commands in an R/Rmd file such that we can re-run the analysis the next time we open R and reproduce the results. This also means that if you cannot solve an issue using the suggested solutions to specific error messages mentioned on this page, it is completely safe to restart R or delete variables from the Global Environment. You just have to re-run our code to get the variables and results back. Therefore, your code files should always be fully reproducible using only the R/Rmd and data files. In addition your R/Rmd files should run linearly from the first to the last line and should not depend on "jumping" back and forth. The files that you obtain from us from this course are examples of reproducible files and in case you a stuck with a problem at a certain point, you can just save the code file and run it again up until the point where you were before the error occurred.   
 
@@ -311,7 +311,7 @@ dim(data.frame(x))
 For vectors `dim` will return `NULL`.
 
 
-## Installation of R packages {-}
+## Installation of R packages
 
 ### What are the different ways to install R packages? {-}
 
@@ -357,7 +357,7 @@ Some libraries require the [XQuartz](https://www.xquartz.org) window system for 
 
 2.  If this doesn't solve the issue, try installing the free XCode package from the Apple Appstore, open a Terminal and enter "xcode-select --install". After that try to install the package again (answering "yes" to the question above). 
 
-## Issues with statistics and data {-}
+## Issues with statistics and data
 
 ### Why does a multi-item scale lead to increased reliability? {-}
 
@@ -406,7 +406,7 @@ Therefore even if the standard deviation of the data ($\sigma$) is large, we can
 
 See [confidenceinterval.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/confidenceinterval.R) for a simulation study.
 
-## Errors related to specific methods {-}
+## Errors related to specific methods
 
 ### Logistic regression {-}
 
@@ -438,7 +438,7 @@ glm(char_y ~ x , data = dat, family=binomial())
 ## Error in weights * y: nicht-numerisches Argument für binären Operator
 ```
 
-## General settings and options {-}
+## General settings and options
 
 ### Numbers are formatted weirdly {-}
 
@@ -489,7 +489,7 @@ options(digits = 12)
 ## [1] 29.3749592384
 ```
 
-## Data visualization/output issues {-}
+## Data visualization/output issues
 
 ### How can the `geom` colors in a `ggplot` be changed? {-}
 
@@ -527,7 +527,7 @@ ggsave("myggplot.png", width = 10, height = 10, units = "cm")
 Within an Rmd document you can set the with and height as part of the code chunk options using e.g., `fig.width=10, fig.height=10` [(see also here)](#rchunk)
 
 
-## Issues with functions and function arguments {-}
+## Issues with functions and function arguments
 
 Generally, if you face an issue relating to a particular function, it is a good idea to check the details of a function, by typing `?FUNCTION` (e.g., `?mean`) and read the help file.
 
@@ -663,7 +663,7 @@ apply(m, 2, max)
 
 See [margins.R](https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/margins.R) for more examples.
 
-## Issues with R Markdown {-}
+## Issues with R Markdown
 
 ### I get an error when `knit`ting to PDF but it works for HTML  {-}
 
@@ -729,6 +729,6 @@ $$
 
 **3. Regular text** goes anywhere between those environments
 
-## New questions {-}
+## New questions
 
 Couldn't find an answer to your question? In this case, you may use the forum on Learn\@wu to ask your question. We regularly update this section of the website and will   

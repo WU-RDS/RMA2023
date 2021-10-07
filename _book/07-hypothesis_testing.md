@@ -1017,7 +1017,7 @@ ggwithinstats(
 On average, the same users used the service more when it included the new feature (M = 29.58, SE = 1.84) compared to the service without the feature (M = 17.93, SE = 1.21). This difference was significant t(99) = 5.41, p < .05 (95% CI = [7.38, 15.91]).
 
 
-### Further considerations
+## NHST considerations 
 
 <br>
 <div align="center">
@@ -1025,7 +1025,7 @@ On average, the same users used the service more when it included the new featur
 </div>
 <br>
 
-#### Type I and Type II Errors
+### Type I and Type II Errors
 
 When choosing the level of significance ($\alpha$). It is important to note that the choice of the significance level affects the type 1 and type 2 error:
 
@@ -1039,7 +1039,7 @@ This following table shows the possible outcomes of a test (retain vs. reject $H
 <b>H<sub>0</sub> is true</b>  | Correct decision:<br>1-&alpha; (probability of correct retention); | Type 1 error:<br> &alpha; (level of significance)
 <b>H<sub>0</sub> is false</b>  | Type 2 error:<br>&beta; (type 2 error rate) | Correct decision:<br>1-&beta; (power of the test)
 
-#### Significance level, sample size, power, and effect size
+### Significance level, sample size, power, and effect size
 
 When you plan to conduct an experiment, there are some factors that are under direct control of the researcher:
 
@@ -1134,7 +1134,7 @@ pwr.t.test(n = 51, d = 0.6, sig.level = 0.05, type = c("two.sample"),
 ## NOTE: n is number in *each* group
 ```
 
-#### P-values, stopping rules and p-hacking
+### P-values, stopping rules and p-hacking
 
 From my experience, students tend to place a lot of weight on p-values when interpreting their research findings. It is therefore important to note some points that hopefully help to put the meaning of a "significant" vs. "insignificant" test result into perspective. So what does a significant test result actually tell us? 
 
