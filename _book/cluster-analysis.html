@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Cluster analysis | Marketing Analytics 2021</title>
   <meta name="description" content="An Introduction to Data Analytics Using R" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Cluster analysis | Marketing Analytics 2021" />
   <meta property="og:type" content="book" />
@@ -31,9 +31,7 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="exploratory-factor-analysis.html"/>
 <link rel="next" href="r-markdown.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,34 +47,36 @@
 
 
 
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -129,7 +129,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -143,20 +142,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><strong><a href="./">MRDA 2021</a></strong></li>
+<li><strong><a href="./">MA 2021</a></strong></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>I Course outline</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
-<ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#grading"><i class="fa fa-check"></i>Grading</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a>
-<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#discussion-forum"><i class="fa fa-check"></i>Discussion forum</a></li>
@@ -167,11 +163,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Lecture notes</b></span></li>
-<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a>
-<ul>
+<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a><ul>
 <li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-foundations-recap"><i class="fa fa-check"></i><b>1.1</b> Marketing foundations (recap)</a></li>
-<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a>
-<ul>
+<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#research-question-and-hypothesis"><i class="fa fa-check"></i><b>1.2.1</b> Research question and hypothesis</a></li>
 <li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.2.2</b> Choosing a research design</a></li>
 <li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#collecting-data"><i class="fa fa-check"></i><b>1.2.3</b> Collecting data</a></li>
@@ -179,8 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#learning-check"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a>
-<ul>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
 <li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> How to download and install R and RStudio</a></li>
 <li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#the-r-studio-interface"><i class="fa fa-check"></i><b>2.2</b> The R Studio interface</a></li>
 <li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
@@ -188,16 +181,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#a-typical-r-session"><i class="fa fa-check"></i><b>2.5</b> A typical R session</a></li>
 <li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.6</b> Getting help</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a>
-<ul>
+<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>3.1.1</b> Creating objects</a></li>
 <li class="chapter" data-level="3.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>3.1.2</b> Data types</a></li>
 <li class="chapter" data-level="3.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>3.1.3</b> Data structures</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>3.2.1</b> Getting data for this course</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>3.2.2</b> Import data created by other software packages</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-handling.html"><a href="data-handling.html#import-data-from-qualtrics"><i class="fa fa-check"></i><b>3.2.3</b> Import data from Qualtrics</a></li>
@@ -206,15 +196,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="data-handling.html"><a href="data-handling.html#learning-check-1"><i class="fa fa-check"></i>Learning check</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a>
-<ul>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a><ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>4.1.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>4.1.2</b> Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a>
-<ul>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>4.2.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> Continuous variables</a></li>
 <li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>4.2.3</b> Saving plots</a></li>
@@ -223,10 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#learning-check-2"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a>
-<ul>
+<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a><ul>
+<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="statistical-inference.html"><a href="statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>5.1.1</b> Sampling from a known population</a></li>
 <li class="chapter" data-level="5.1.2" data-path="statistical-inference.html"><a href="statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>5.1.2</b> Standard error of the mean</a></li>
 </ul></li>
@@ -236,40 +221,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#learning-check-3"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#references-2"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
-<ul>
+<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
 <li class="chapter" data-level="6.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-null-hypothesis"><i class="fa fa-check"></i><b>6.1.1</b> The null hypothesis</a></li>
 <li class="chapter" data-level="6.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#statistical-inference-on-a-sample"><i class="fa fa-check"></i><b>6.1.2</b> Statistical inference on a sample</a></li>
 <li class="chapter" data-level="6.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>6.1.3</b> Choosing the right test</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.2</b> One sample t-test</a></li>
-<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a>
-<ul>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>6.3.1</b> Independent-means t-test</a></li>
 <li class="chapter" data-level="6.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Dependent-means t-test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#nhst-considerations"><i class="fa fa-check"></i><b>6.4</b> NHST considerations</a>
-<ul>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#nhst-considerations"><i class="fa fa-check"></i><b>6.4</b> NHST considerations</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>6.4.1</b> Type I and Type II Errors</a></li>
 <li class="chapter" data-level="6.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#significance-level-sample-size-power-and-effect-size"><i class="fa fa-check"></i><b>6.4.2</b> Significance level, sample size, power, and effect size</a></li>
 <li class="chapter" data-level="6.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#p-values-stopping-rules-and-p-hacking"><i class="fa fa-check"></i><b>6.4.3</b> P-values, stopping rules and p-hacking</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.5</b> Comparing several means</a>
-<ul>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.5</b> Comparing several means</a><ul>
 <li class="chapter" data-level="6.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-2"><i class="fa fa-check"></i><b>6.5.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>6.5.2</b> Decomposing variance</a></li>
 <li class="chapter" data-level="6.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>6.5.3</b> One-way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.6</b> Non-parametric tests</a>
-<ul>
+<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.6</b> Non-parametric tests</a><ul>
 <li class="chapter" data-level="6.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>6.6.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
 <li class="chapter" data-level="6.6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>6.6.2</b> Wilcoxon signed-rank test</a></li>
 <li class="chapter" data-level="6.6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>6.6.3</b> Kruskal-Wallis test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.7</b> Categorical data</a>
-<ul>
+<li class="chapter" data-level="6.7" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.7</b> Categorical data</a><ul>
 <li class="chapter" data-level="6.7.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#confidence-intervals-for-proportions"><i class="fa fa-check"></i><b>6.7.1</b> Confidence intervals for proportions</a></li>
 <li class="chapter" data-level="6.7.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>6.7.2</b> Chi-square test</a></li>
 <li class="chapter" data-level="6.7.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#sample-size-1"><i class="fa fa-check"></i><b>6.7.3</b> Sample size</a></li>
@@ -277,20 +255,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#learning-check-4"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#references-3"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a>
-<ul>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a><ul>
 <li class="chapter" data-level="7.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>7.1.1</b> Correlation coefficient</a></li>
 <li class="chapter" data-level="7.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>7.1.2</b> Significance testing</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a>
-<ul>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>7.2.1</b> Simple linear regression</a></li>
 <li class="chapter" data-level="7.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>7.2.2</b> Multiple linear regression</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a>
-<ul>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>7.3.1</b> Outliers</a></li>
 <li class="chapter" data-level="7.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>7.3.2</b> Influential observations</a></li>
 <li class="chapter" data-level="7.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>7.3.3</b> Non-linearity</a></li>
@@ -302,18 +276,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.9" data-path="regression.html"><a href="regression.html#overfitting"><i class="fa fa-check"></i><b>7.3.9</b> Overfitting</a></li>
 <li class="chapter" data-level="7.3.10" data-path="regression.html"><a href="regression.html#variable-selection"><i class="fa fa-check"></i><b>7.3.10</b> Variable selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a>
-<ul>
+<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
 <li class="chapter" data-level="7.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>7.4.2</b> More than two categories</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a>
-<ul>
+<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>7.5.1</b> Interaction effects</a></li>
 <li class="chapter" data-level="7.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>7.5.2</b> Non-linear relationships</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a>
-<ul>
+<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a><ul>
 <li class="chapter" data-level="7.6.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>7.6.1</b> Motivation and intuition</a></li>
 <li class="chapter" data-level="7.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>7.6.2</b> Technical details of the model</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>7.6.3</b> Estimation in R</a></li>
@@ -321,11 +292,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#references-4"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a>
-<ul>
+<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a><ul>
 <li class="chapter" data-level="8.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a>
-<ul>
+<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>8.2.1</b> Are the assumptions satisfied?</a></li>
 <li class="chapter" data-level="8.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>8.2.2</b> Deriving factors</a></li>
 <li class="chapter" data-level="8.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>8.2.3</b> Factor interpretation</a></li>
@@ -335,15 +304,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#learning-check-6"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#references-5"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>9</b> Cluster analysis</a>
-<ul>
+<li class="chapter" data-level="9" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>9</b> Cluster analysis</a><ul>
 <li class="chapter" data-level="9.1" data-path="cluster-analysis.html"><a href="cluster-analysis.html#k-means"><i class="fa fa-check"></i><b>9.1</b> K-Means</a></li>
 </ul></li>
 <li class="part"><span><b>III Assignments</b></span></li>
-<li class="chapter" data-level="10" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>10</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>10.1</b> Introduction to R Markdown</a>
-<ul>
+<li class="chapter" data-level="10" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>10</b> R Markdown</a><ul>
+<li class="chapter" data-level="10.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>10.1</b> Introduction to R Markdown</a><ul>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i>Creating a new R Markdown document</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#text-and-equations"><i class="fa fa-check"></i>Text and Equations</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#r-code"><i class="fa fa-check"></i>R-Code</a></li>
@@ -351,28 +317,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IV Group project</b></span></li>
-<li class="chapter" data-level="11" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>11</b> Survey design &amp; analysis</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>11.1</b> Your tasks</a>
-<ul>
+<li class="chapter" data-level="11" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>11</b> Survey design &amp; analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>11.1</b> Your tasks</a><ul>
 <li class="chapter" data-level="11.1.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#topics-for-the-group-project"><i class="fa fa-check"></i><b>11.1.1</b> Topics for the group project</a></li>
 <li class="chapter" data-level="11.1.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#guidelines"><i class="fa fa-check"></i><b>11.1.2</b> Guidelines</a></li>
 <li class="chapter" data-level="11.1.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#timeline"><i class="fa fa-check"></i><b>11.1.3</b> Timeline</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>11.2</b> Part 1: Before collecting data</a>
-<ul>
+<li class="chapter" data-level="11.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>11.2</b> Part 1: Before collecting data</a><ul>
 <li class="chapter" data-level="11.2.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#research-design"><i class="fa fa-check"></i><b>11.2.1</b> Research design</a></li>
 <li class="chapter" data-level="11.2.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#survey-method"><i class="fa fa-check"></i><b>11.2.2</b> Survey method</a></li>
 <li class="chapter" data-level="11.2.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#questionnaire"><i class="fa fa-check"></i><b>11.2.3</b> Questionnaire</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-data-collection-and-analysis"><i class="fa fa-check"></i><b>11.3</b> Part 2: Data collection and analysis</a>
-<ul>
+<li class="chapter" data-level="11.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-data-collection-and-analysis"><i class="fa fa-check"></i><b>11.3</b> Part 2: Data collection and analysis</a><ul>
 <li class="chapter" data-level="11.3.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#collecting-data-1"><i class="fa fa-check"></i><b>11.3.1</b> Collecting data</a></li>
 <li class="chapter" data-level="11.3.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-analysis"><i class="fa fa-check"></i><b>11.3.2</b> Data analysis</a></li>
 <li class="chapter" data-level="11.3.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#reporting"><i class="fa fa-check"></i><b>11.3.3</b> Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>11.4</b> Frequently asked questions</a>
-<ul>
+<li class="chapter" data-level="11.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>11.4</b> Frequently asked questions</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#multiple-answers-stored-in-one-cell-in-csv"><i class="fa fa-check"></i><b>11.4.1</b> Multiple answers stored in one cell in CSV</a></li>
 <li class="chapter" data-level="11.4.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#labels-for-numeric-values-in-csv-output"><i class="fa fa-check"></i><b>11.4.2</b> Labels for numeric values in CSV output</a></li>
 <li class="chapter" data-level="11.4.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#bar-chart-for-multiple-choice-question-with-multiple-answers"><i class="fa fa-check"></i><b>11.4.3</b> Bar chart for multiple choice question with multiple answers</a></li>
@@ -383,10 +344,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>V FAQ</b></span></li>
-<li class="chapter" data-level="12" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>12</b> FAQ</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="faq.html"><a href="faq.html#common-error-messages"><i class="fa fa-check"></i><b>12.1</b> Common error messages</a>
-<ul>
+<li class="chapter" data-level="12" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>12</b> FAQ</a><ul>
+<li class="chapter" data-level="12.1" data-path="faq.html"><a href="faq.html#common-error-messages"><i class="fa fa-check"></i><b>12.1</b> Common error messages</a><ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#a-general-note-on-error-messages"><i class="fa fa-check"></i>A general note on error messages</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-filefile-rt-cannot-open-the-connection"><i class="fa fa-check"></i>Error in file(file, “rt”): cannot open the connection</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-unexpected-symbol-in-call"><i class="fa fa-check"></i>Error: unexpected ‘SYMBOL’ in “CALL”</a></li>
@@ -396,42 +355,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-could-not-find-function-function"><i class="fa fa-check"></i>Error in CALL: could not find function “FUNCTION”</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-incorrect-number-of-dimension"><i class="fa fa-check"></i>Error in CALL: incorrect number of dimension</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="faq.html"><a href="faq.html#installation-of-r-packages"><i class="fa fa-check"></i><b>12.2</b> Installation of R packages</a>
-<ul>
+<li class="chapter" data-level="12.2" data-path="faq.html"><a href="faq.html#installation-of-r-packages"><i class="fa fa-check"></i><b>12.2</b> Installation of R packages</a><ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#what-are-the-different-ways-to-install-r-packages"><i class="fa fa-check"></i>What are the different ways to install R packages?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-cannot-install-packages-due-to-error-in-contrib.urlrepossource-or-warning-message-package-packagename-is-not-available-for-this-version-of-r"><i class="fa fa-check"></i>I cannot install packages due to “Error in contrib.url(repos,”source“)” or “Warning message: package ‘PACKAGENAME’ is not available for this version of R”</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#some-libraries-with-graphical-output-e.g.-summarytools-magick-fail-to-installload-properly-on-macos"><i class="fa fa-check"></i>Some libraries with graphical output (e.g., summarytools, magick) fail to install/load properly on MacOS</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-cannot-install-some-packages-on-macos"><i class="fa fa-check"></i>I cannot install some packages on MacOS</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="faq.html"><a href="faq.html#issues-with-statistics-and-data"><i class="fa fa-check"></i><b>12.3</b> Issues with statistics and data</a>
-<ul>
+<li class="chapter" data-level="12.3" data-path="faq.html"><a href="faq.html#issues-with-statistics-and-data"><i class="fa fa-check"></i><b>12.3</b> Issues with statistics and data</a><ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-does-a-multi-item-scale-lead-to-increased-reliability"><i class="fa fa-check"></i>Why does a multi-item scale lead to increased reliability?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-can-demeaningstandardization-lead-to-missing-values"><i class="fa fa-check"></i>Why can demeaning/standardization lead to missing values?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#the-confidence-interval-ci-of-the-mean-seems-very-small-compared-to-the-dispersion-of-my-sample.-can-this-be-correct"><i class="fa fa-check"></i>The confidence interval (CI) of the mean seems very small compared to the dispersion of my sample. Can this be correct?</a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="faq.html"><a href="faq.html#errors-related-to-specific-methods"><i class="fa fa-check"></i><b>12.4</b> Errors related to specific methods</a>
-<ul>
+<li class="chapter" data-level="12.4" data-path="faq.html"><a href="faq.html#errors-related-to-specific-methods"><i class="fa fa-check"></i><b>12.4</b> Errors related to specific methods</a><ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#logistic-regression-1"><i class="fa fa-check"></i>Logistic regression</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#when-using-logistic-regression-error-in-weights-y-non-numeric-argument-to-binary-operator"><i class="fa fa-check"></i>When using logistic regression: Error in weights * y : non-numeric argument to binary operator</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="faq.html"><a href="faq.html#general-settings-and-options"><i class="fa fa-check"></i><b>12.5</b> General settings and options</a>
-<ul>
+<li class="chapter" data-level="12.5" data-path="faq.html"><a href="faq.html#general-settings-and-options"><i class="fa fa-check"></i><b>12.5</b> General settings and options</a><ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#numbers-are-formatted-weirdly"><i class="fa fa-check"></i>Numbers are formatted weirdly</a></li>
 </ul></li>
-<li class="chapter" data-level="12.6" data-path="faq.html"><a href="faq.html#data-visualizationoutput-issues"><i class="fa fa-check"></i><b>12.6</b> Data visualization/output issues</a>
-<ul>
+<li class="chapter" data-level="12.6" data-path="faq.html"><a href="faq.html#data-visualizationoutput-issues"><i class="fa fa-check"></i><b>12.6</b> Data visualization/output issues</a><ul>
 <li><a href="faq.html#how-can-the-geom-colors-in-a-ggplot-be-changed">How can the <code>geom</code> colors in a <code>ggplot</code> be changed?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-are-some-histograms-displayed-differently"><i class="fa fa-check"></i>Why are some histograms displayed differently?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#some-labels-in-plots-are-cut-off.-how-can-i-extend-the-plot-margins"><i class="fa fa-check"></i>Some labels in plots are cut off. How can I extend the plot margins?</a></li>
 </ul></li>
-<li class="chapter" data-level="12.7" data-path="faq.html"><a href="faq.html#issues-with-functions-and-function-arguments"><i class="fa fa-check"></i><b>12.7</b> Issues with functions and function arguments</a>
-<ul>
+<li class="chapter" data-level="12.7" data-path="faq.html"><a href="faq.html#issues-with-functions-and-function-arguments"><i class="fa fa-check"></i><b>12.7</b> Issues with functions and function arguments</a><ul>
 <li><a href="faq.html#problems-with-factor-and-as.factor">Problems with <code>factor</code> and <code>as.factor</code></a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#how-can-i-find-an-explanation-of-the-output-of-a-function"><i class="fa fa-check"></i>How can I find an explanation of the output of a function?</a></li>
 <li><a href="faq.html#what-does-the-margin-argument-do">What does the <code>MARGIN</code> argument do?</a></li>
 </ul></li>
-<li class="chapter" data-level="12.8" data-path="faq.html"><a href="faq.html#issues-with-r-markdown"><i class="fa fa-check"></i><b>12.8</b> Issues with R Markdown</a>
-<ul>
+<li class="chapter" data-level="12.8" data-path="faq.html"><a href="faq.html#issues-with-r-markdown"><i class="fa fa-check"></i><b>12.8</b> Issues with R Markdown</a><ul>
 <li><a href="faq.html#i-get-an-error-when-knitting-to-pdf-but-it-works-for-html">I get an error when <code>knit</code>ting to PDF but it works for HTML</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-am-not-sure-where-r-code-latex-math-and-text-go"><i class="fa fa-check"></i>I am not sure where R-code, LaTeX math, and text go</a></li>
 </ul></li>
@@ -454,73 +406,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cluster-analysis" class="section level1" number="9">
+<div id="cluster-analysis" class="section level1">
 <h1><span class="header-section-number">9</span> Cluster analysis</h1>
 <p><strong>In progress</strong></p>
 <p><img src="images/cluster.PNG" width="25%" style="display: block; margin: auto;" /></p>
-<p>In the previous chapter on factor analysis we tried to reduce the number of variables or columns by identifying underlying dimensions. In order to do so we exploited the fact that some items are highly correlated and therefore might represent the same underlying concept (e.g., health benefits or social benefits). Similarly, in cluster analysis we again do not distinguish between dependent and independent variables. However, in the case of cluster analysis we do not try to reduce the number of variables but the number of observations by grouping similar ones into “clusters.” What exactly defines “similarity” depends on the use case. In the case of music audio features of songs might be used to identify clusters of similar songs (similar to the genre classification) which can be used for recommendation systems. Other use cases are customer segmentation and anomaly (e.g., fraud) detection.</p>
+<p>In the previous chapter on factor analysis we tried to reduce the number of variables or columns by identifying underlying dimensions. In order to do so we exploited the fact that some items are highly correlated and therefore might represent the same underlying concept (e.g., health benefits or social benefits). Similarly, in cluster analysis we again do not distinguish between dependent and independent variables. However, in the case of cluster analysis we do not try to reduce the number of variables but the number of observations by grouping similar ones into “clusters”. What exactly defines “similarity” depends on the use case. In the case of music audio features of songs might be used to identify clusters of similar songs (similar to the genre classification) which can be used for recommendation systems. Other use cases are customer segmentation and anomaly (e.g., fraud) detection.</p>
 <p>Let’s try to create a recommendation system using track features. In our data we have the ISRC, name of the track, name of the artist and audio features of the track. We are going to use the audio features to cluster tracks together such that given one track we can easily identify similar tracks by looking at which cluster it belongs to.</p>
-<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="cluster-analysis.html#cb729-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">&quot;https://github.com/WU-RDS/MRDA2021/raw/main/trackfeatures.RData&quot;</span>))</span>
-<span id="cb729-2"><a href="cluster-analysis.html#cb729-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remove duplicates</span></span>
-<span id="cb729-3"><a href="cluster-analysis.html#cb729-3" aria-hidden="true" tabindex="-1"></a>tracks <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(tracks[<span class="sc">!</span><span class="fu">duplicated</span>(tracks<span class="sc">$</span>isrc),</span>
-<span id="cb729-4"><a href="cluster-analysis.html#cb729-4" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="cluster-analysis.html#cb729-1"></a><span class="kw">load</span>(<span class="kw">url</span>(<span class="st">&quot;https://github.com/WU-RDS/MRDA2021/raw/main/trackfeatures.RData&quot;</span>))</span>
+<span id="cb729-2"><a href="cluster-analysis.html#cb729-2"></a><span class="co"># remove duplicates</span></span>
+<span id="cb729-3"><a href="cluster-analysis.html#cb729-3"></a>tracks &lt;-<span class="st"> </span><span class="kw">na.omit</span>(tracks[<span class="op">!</span><span class="kw">duplicated</span>(tracks<span class="op">$</span>isrc), </span>
+<span id="cb729-4"><a href="cluster-analysis.html#cb729-4"></a>    ])</span></code></pre></div>
 <p>To get an idea of how clustering might work let’s first take a look at just with two variables, energy and acousticness, and two artists, Robin Schulz and Adele. We immediately see that Adele’s songs are more to the top left (high acousticness, low energy) whereas Robin Schulz’s songs are mostly on the bottom right (low acousticness, high energy).</p>
-<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="cluster-analysis.html#cb730-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb730-2"><a href="cluster-analysis.html#cb730-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb730-3"><a href="cluster-analysis.html#cb730-3" aria-hidden="true" tabindex="-1"></a>robin_schulz <span class="ot">&lt;-</span> tracks[<span class="fu">str_detect</span>(tracks<span class="sc">$</span>artistName,</span>
-<span id="cb730-4"><a href="cluster-analysis.html#cb730-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Robin Schulz&quot;</span>), ]</span>
-<span id="cb730-5"><a href="cluster-analysis.html#cb730-5" aria-hidden="true" tabindex="-1"></a>robin_schulz<span class="sc">$</span>artist <span class="ot">&lt;-</span> <span class="st">&quot;Robin Schulz&quot;</span></span>
-<span id="cb730-6"><a href="cluster-analysis.html#cb730-6" aria-hidden="true" tabindex="-1"></a>adele <span class="ot">&lt;-</span> tracks[<span class="fu">str_detect</span>(tracks<span class="sc">$</span>artistName, <span class="st">&quot;Adele&quot;</span>),</span>
-<span id="cb730-7"><a href="cluster-analysis.html#cb730-7" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb730-8"><a href="cluster-analysis.html#cb730-8" aria-hidden="true" tabindex="-1"></a>adele<span class="sc">$</span>artist <span class="ot">&lt;-</span> <span class="st">&quot;Adele&quot;</span></span>
-<span id="cb730-9"><a href="cluster-analysis.html#cb730-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb730-10"><a href="cluster-analysis.html#cb730-10" aria-hidden="true" tabindex="-1"></a>example_tracks <span class="ot">&lt;-</span> <span class="fu">rbind</span>(robin_schulz, adele)</span>
-<span id="cb730-11"><a href="cluster-analysis.html#cb730-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(example_tracks, <span class="fu">aes</span>(<span class="at">x =</span> energy, <span class="at">y =</span> acousticness,</span>
-<span id="cb730-12"><a href="cluster-analysis.html#cb730-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> artist)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="cluster-analysis.html#cb730-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb730-2"><a href="cluster-analysis.html#cb730-2"></a><span class="kw">library</span>(stringr)</span>
+<span id="cb730-3"><a href="cluster-analysis.html#cb730-3"></a>robin_schulz &lt;-<span class="st"> </span>tracks[<span class="kw">str_detect</span>(tracks<span class="op">$</span>artistName, </span>
+<span id="cb730-4"><a href="cluster-analysis.html#cb730-4"></a>    <span class="st">&quot;Robin Schulz&quot;</span>), ]</span>
+<span id="cb730-5"><a href="cluster-analysis.html#cb730-5"></a>robin_schulz<span class="op">$</span>artist &lt;-<span class="st"> &quot;Robin Schulz&quot;</span></span>
+<span id="cb730-6"><a href="cluster-analysis.html#cb730-6"></a>adele &lt;-<span class="st"> </span>tracks[<span class="kw">str_detect</span>(tracks<span class="op">$</span>artistName, <span class="st">&quot;Adele&quot;</span>), </span>
+<span id="cb730-7"><a href="cluster-analysis.html#cb730-7"></a>    ]</span>
+<span id="cb730-8"><a href="cluster-analysis.html#cb730-8"></a>adele<span class="op">$</span>artist &lt;-<span class="st"> &quot;Adele&quot;</span></span>
+<span id="cb730-9"><a href="cluster-analysis.html#cb730-9"></a></span>
+<span id="cb730-10"><a href="cluster-analysis.html#cb730-10"></a>example_tracks &lt;-<span class="st"> </span><span class="kw">rbind</span>(robin_schulz, adele)</span>
+<span id="cb730-11"><a href="cluster-analysis.html#cb730-11"></a><span class="kw">ggplot</span>(example_tracks, <span class="kw">aes</span>(<span class="dt">x =</span> energy, <span class="dt">y =</span> acousticness, </span>
+<span id="cb730-12"><a href="cluster-analysis.html#cb730-12"></a>    <span class="dt">color =</span> artist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="13-cluster_analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div id="k-means" class="section level2" number="9.1">
+<div id="k-means" class="section level2">
 <h2><span class="header-section-number">9.1</span> K-Means</h2>
 <p>One of the most popular algorithms for clustering is the <strong>K-means</strong> algorithm. The “K” stands for the number of clusters that are specified as a hyperparameter (more on how to set that parameter later). The algorithm then tries to separate the observations into K clusters such that the variance of the features (e.g., our audio features) is minimized. Therefore, it is important to <code>scale</code> all variables before performing clustering such that they all contribute equally to the distance between the observations. Intuitively the algorithm groups observations by iteratively calculating the mean or center of each cluster, assigning each observation to the cluster with the closest mean and re-calculating the mean… The algorithm has “converged” (i.e., is done) when the assignments no longer change.
 Let’s try it out with our two artists. In order to perform clustering we first have to remove all missing values from the used variables as for those we cannot calculate distances. Because we know that there are two artists in the sample we will start with two clusters.</p>
-<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="cluster-analysis.html#cb731-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
-<span id="cb731-2"><a href="cluster-analysis.html#cb731-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb731-3"><a href="cluster-analysis.html#cb731-3" aria-hidden="true" tabindex="-1"></a>tracks_scale <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">artist =</span> example_tracks<span class="sc">$</span>artist,</span>
-<span id="cb731-4"><a href="cluster-analysis.html#cb731-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">energy =</span> <span class="fu">scale</span>(example_tracks<span class="sc">$</span>energy), <span class="at">acousticness =</span> <span class="fu">scale</span>(example_tracks<span class="sc">$</span>acousticness))</span>
-<span id="cb731-5"><a href="cluster-analysis.html#cb731-5" aria-hidden="true" tabindex="-1"></a>tracks_scale <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(tracks_scale)</span>
-<span id="cb731-6"><a href="cluster-analysis.html#cb731-6" aria-hidden="true" tabindex="-1"></a>kmeans_clusters <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(tracks_scale[<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>)</span>
-<span id="cb731-7"><a href="cluster-analysis.html#cb731-7" aria-hidden="true" tabindex="-1"></a>kmeans_clusters<span class="sc">$</span>centers</span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="cluster-analysis.html#cb731-1"></a><span class="kw">library</span>(cluster)</span>
+<span id="cb731-2"><a href="cluster-analysis.html#cb731-2"></a></span>
+<span id="cb731-3"><a href="cluster-analysis.html#cb731-3"></a>tracks_scale &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">artist =</span> example_tracks<span class="op">$</span>artist, </span>
+<span id="cb731-4"><a href="cluster-analysis.html#cb731-4"></a>    <span class="dt">energy =</span> <span class="kw">scale</span>(example_tracks<span class="op">$</span>energy), <span class="dt">acousticness =</span> <span class="kw">scale</span>(example_tracks<span class="op">$</span>acousticness))</span>
+<span id="cb731-5"><a href="cluster-analysis.html#cb731-5"></a>tracks_scale &lt;-<span class="st"> </span><span class="kw">na.omit</span>(tracks_scale)</span>
+<span id="cb731-6"><a href="cluster-analysis.html#cb731-6"></a>kmeans_clusters &lt;-<span class="st"> </span><span class="kw">kmeans</span>(tracks_scale[<span class="op">-</span><span class="dv">1</span>], <span class="dv">2</span>)</span>
+<span id="cb731-7"><a href="cluster-analysis.html#cb731-7"></a>kmeans_clusters<span class="op">$</span>centers</span></code></pre></div>
 <pre><code>##        energy acousticness
 ## 1 -1.43946637   1.32346535
 ## 2  0.50068396  -0.46033577</code></pre>
 <p>The <code>kmeans</code> function returns, among other statistics, the centers of each cluster and a cluster identifier for each observation which we can add to our original data. In our case one cluster’s center is rather low in energy and high acousticness and the second one has higher energy and lower acousticness.</p>
 <p>In our plot we can add a color for each cluster and a different marker shape for each artist. We observe that cluster 1 corresponds mostly to Robin Schulz songs and cluster 2 mostly to Adele. Alternatively we can also look at the counts in each cluster per artist using the <code>table</code> function.</p>
-<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="cluster-analysis.html#cb733-1" aria-hidden="true" tabindex="-1"></a>tracks_scale<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(kmeans_clusters<span class="sc">$</span>cluster)</span>
-<span id="cb733-2"><a href="cluster-analysis.html#cb733-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tracks_scale, <span class="fu">aes</span>(<span class="at">x =</span> energy, <span class="at">y =</span> acousticness,</span>
-<span id="cb733-3"><a href="cluster-analysis.html#cb733-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> cluster, <span class="at">shape =</span> artist)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="cluster-analysis.html#cb733-1"></a>tracks_scale<span class="op">$</span>cluster &lt;-<span class="st"> </span><span class="kw">as.factor</span>(kmeans_clusters<span class="op">$</span>cluster)</span>
+<span id="cb733-2"><a href="cluster-analysis.html#cb733-2"></a><span class="kw">ggplot</span>(tracks_scale, <span class="kw">aes</span>(<span class="dt">x =</span> energy, <span class="dt">y =</span> acousticness, </span>
+<span id="cb733-3"><a href="cluster-analysis.html#cb733-3"></a>    <span class="dt">color =</span> cluster, <span class="dt">shape =</span> artist)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="13-cluster_analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="cluster-analysis.html#cb734-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(tracks_scale<span class="sc">$</span>artist, tracks_scale<span class="sc">$</span>cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="cluster-analysis.html#cb734-1"></a><span class="kw">table</span>(tracks_scale<span class="op">$</span>artist, tracks_scale<span class="op">$</span>cluster)</span></code></pre></div>
 <pre><code>##               
 ##                 1  2
 ##   Adele        14  9
 ##   Robin Schulz  2 37</code></pre>
-<p>In the previous example it was easy to set the number of clusters. However, if we use all artists in our data the best value for “K” is not immediately obvious. Surely some artists should be in the same cluster. We can user the <code>NbClust</code> package to determine the best number of clusters according to various indices (see <code>?NbClust</code>). First we scale all our variables and then we use the scaled versions to determine “K.” To make computations faster we will use songs by 6 famous artists. Then we count how many indices would choose a certain number of clusters. The two best candidates are 3 clusters, chosen by 13 indices and 2 clusters, chosen by 5 indices.</p>
-<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="cluster-analysis.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
-<span id="cb736-2"><a href="cluster-analysis.html#cb736-2" aria-hidden="true" tabindex="-1"></a>famous_artists <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Ed Sheeran&quot;</span>, <span class="st">&quot;Eminem&quot;</span>, <span class="st">&quot;Rihanna&quot;</span>,</span>
-<span id="cb736-3"><a href="cluster-analysis.html#cb736-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Taylor Swift&quot;</span>, <span class="st">&quot;Queen&quot;</span>)</span>
-<span id="cb736-4"><a href="cluster-analysis.html#cb736-4" aria-hidden="true" tabindex="-1"></a>famous_tracks <span class="ot">&lt;-</span> tracks[tracks<span class="sc">$</span>artistName <span class="sc">%in%</span> famous_artists,</span>
-<span id="cb736-5"><a href="cluster-analysis.html#cb736-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb736-6"><a href="cluster-analysis.html#cb736-6" aria-hidden="true" tabindex="-1"></a>famous_tracks_scale <span class="ot">&lt;-</span> <span class="fu">scale</span>(famous_tracks[<span class="dv">4</span><span class="sc">:</span><span class="fu">ncol</span>(famous_tracks)])</span>
-<span id="cb736-7"><a href="cluster-analysis.html#cb736-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb736-8"><a href="cluster-analysis.html#cb736-8" aria-hidden="true" tabindex="-1"></a>opt_K <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(famous_tracks_scale, <span class="at">method =</span> <span class="st">&quot;kmeans&quot;</span>,</span>
-<span id="cb736-9"><a href="cluster-analysis.html#cb736-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max.nc =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>In the previous example it was easy to set the number of clusters. However, if we use all artists in our data the best value for “K” is not immediately obvious. Surely some artists should be in the same cluster. We can user the <code>NbClust</code> package to determine the best number of clusters according to various indices (see <code>?NbClust</code>). First we scale all our variables and then we use the scaled versions to determine “K”. To make computations faster we will use songs by 6 famous artists. Then we count how many indices would choose a certain number of clusters. The two best candidates are 3 clusters, chosen by 13 indices and 2 clusters, chosen by 5 indices.</p>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="cluster-analysis.html#cb736-1"></a><span class="kw">library</span>(NbClust)</span></code></pre></div>
+<pre><code>## Warning: Paket &#39;NbClust&#39; wurde unter R Version 4.0.3 erstellt</code></pre>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="cluster-analysis.html#cb738-1"></a>famous_artists &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Ed Sheeran&quot;</span>, <span class="st">&quot;Eminem&quot;</span>, <span class="st">&quot;Rihanna&quot;</span>, </span>
+<span id="cb738-2"><a href="cluster-analysis.html#cb738-2"></a>    <span class="st">&quot;Taylor Swift&quot;</span>, <span class="st">&quot;Queen&quot;</span>)</span>
+<span id="cb738-3"><a href="cluster-analysis.html#cb738-3"></a>famous_tracks &lt;-<span class="st"> </span>tracks[tracks<span class="op">$</span>artistName <span class="op">%in%</span><span class="st"> </span>famous_artists, </span>
+<span id="cb738-4"><a href="cluster-analysis.html#cb738-4"></a>    ]</span>
+<span id="cb738-5"><a href="cluster-analysis.html#cb738-5"></a>famous_tracks_scale &lt;-<span class="st"> </span><span class="kw">scale</span>(famous_tracks[<span class="dv">4</span><span class="op">:</span><span class="kw">ncol</span>(famous_tracks)])</span>
+<span id="cb738-6"><a href="cluster-analysis.html#cb738-6"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb738-7"><a href="cluster-analysis.html#cb738-7"></a>opt_K &lt;-<span class="st"> </span><span class="kw">NbClust</span>(famous_tracks_scale, <span class="dt">method =</span> <span class="st">&quot;kmeans&quot;</span>, </span>
+<span id="cb738-8"><a href="cluster-analysis.html#cb738-8"></a>    <span class="dt">max.nc =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p><img src="13-cluster_analysis_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="13-cluster_analysis_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
-<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="cluster-analysis.html#cb737-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(opt_K<span class="sc">$</span>Best.nc[<span class="st">&quot;Number_clusters&quot;</span>, ])</span></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="cluster-analysis.html#cb739-1"></a><span class="kw">table</span>(opt_K<span class="op">$</span>Best.nc[<span class="st">&quot;Number_clusters&quot;</span>, ])</span></code></pre></div>
 <pre><code>## 
 ##  0  2  3  4  8 10 
 ##  2  5 13  1  1  4</code></pre>
 <p>We can now proceed as before with running the k-means algorithm. Looking at the centers for each of the clusters could give us an indication for the types of songs we can expect in each of them (recall that they are assigned based on their distance to the center).</p>
-<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="cluster-analysis.html#cb739-1" aria-hidden="true" tabindex="-1"></a>kmeans_tracks <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(famous_tracks_scale, <span class="dv">3</span>)</span>
-<span id="cb739-2"><a href="cluster-analysis.html#cb739-2" aria-hidden="true" tabindex="-1"></a>kmeans_tracks<span class="sc">$</span>centers</span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="cluster-analysis.html#cb741-1"></a>kmeans_tracks &lt;-<span class="st"> </span><span class="kw">kmeans</span>(famous_tracks_scale, <span class="dv">3</span>)</span>
+<span id="cb741-2"><a href="cluster-analysis.html#cb741-2"></a>kmeans_tracks<span class="op">$</span>centers</span></code></pre></div>
 <pre><code>##   danceability      energy    loudness        mode speechiness acousticness
 ## 1   0.27583013  0.45262138  0.48533019 -0.14613775 -0.25764006  -0.56189652
 ## 2  -0.53855482 -0.95664951 -0.87423829  0.26329095 -0.41476830   0.97728432
@@ -529,11 +482,11 @@ Let’s try it out with our two artists. In order to perform clustering we first
 ## 1      0.062663241 -0.25242508  0.40120798  0.037899761 -0.090474590
 ## 2     -0.068167189 -0.27281478 -0.61580855 -0.177610227  0.097542547
 ## 3     -0.028493444  1.24692568  0.18851883  0.264828616  0.042956919</code></pre>
-<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="cluster-analysis.html#cb741-1" aria-hidden="true" tabindex="-1"></a>famous_tracks<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(kmeans_tracks<span class="sc">$</span>cluster)</span>
-<span id="cb741-2"><a href="cluster-analysis.html#cb741-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(famous_tracks, <span class="fu">aes</span>(<span class="at">y =</span> cluster, <span class="at">fill =</span> artistName)) <span class="sc">+</span></span>
-<span id="cb741-3"><a href="cluster-analysis.html#cb741-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="cluster-analysis.html#cb743-1"></a>famous_tracks<span class="op">$</span>cluster &lt;-<span class="st"> </span><span class="kw">as.factor</span>(kmeans_tracks<span class="op">$</span>cluster)</span>
+<span id="cb743-2"><a href="cluster-analysis.html#cb743-2"></a><span class="kw">ggplot</span>(famous_tracks, <span class="kw">aes</span>(<span class="dt">y =</span> cluster, <span class="dt">fill =</span> artistName)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb743-3"><a href="cluster-analysis.html#cb743-3"></a><span class="st">    </span><span class="kw">geom_bar</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="13-cluster_analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="cluster-analysis.html#cb742-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(famous_tracks<span class="sc">$</span>artistName, famous_tracks<span class="sc">$</span>cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="cluster-analysis.html#cb744-1"></a><span class="kw">table</span>(famous_tracks<span class="op">$</span>artistName, famous_tracks<span class="op">$</span>cluster)</span></code></pre></div>
 <pre><code>##               
 ##                 1  2  3
 ##   Ed Sheeran   23 34  2
@@ -541,24 +494,24 @@ Let’s try it out with our two artists. In order to perform clustering we first
 ##   Queen         9  9  6
 ##   Rihanna      13  1  1
 ##   Taylor Swift 64 44  3</code></pre>
-<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="cluster-analysis.html#cb744-1" aria-hidden="true" tabindex="-1"></a>ed <span class="ot">&lt;-</span> famous_tracks[famous_tracks<span class="sc">$</span>artistName <span class="sc">==</span> <span class="st">&quot;Ed Sheeran&quot;</span>,</span>
-<span id="cb744-2"><a href="cluster-analysis.html#cb744-2" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb744-3"><a href="cluster-analysis.html#cb744-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ed, <span class="fu">aes</span>(<span class="at">x =</span> energy, <span class="at">y =</span> valence, <span class="at">color =</span> cluster)) <span class="sc">+</span></span>
-<span id="cb744-4"><a href="cluster-analysis.html#cb744-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="cluster-analysis.html#cb746-1"></a>ed &lt;-<span class="st"> </span>famous_tracks[famous_tracks<span class="op">$</span>artistName <span class="op">==</span><span class="st"> &quot;Ed Sheeran&quot;</span>, </span>
+<span id="cb746-2"><a href="cluster-analysis.html#cb746-2"></a>    ]</span>
+<span id="cb746-3"><a href="cluster-analysis.html#cb746-3"></a><span class="kw">ggplot</span>(ed, <span class="kw">aes</span>(<span class="dt">x =</span> energy, <span class="dt">y =</span> valence, <span class="dt">color =</span> cluster)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb746-4"><a href="cluster-analysis.html#cb746-4"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="13-cluster_analysis_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="cluster-analysis.html#cb745-1" aria-hidden="true" tabindex="-1"></a>ed[ed<span class="sc">$</span>cluster <span class="sc">==</span> <span class="dv">1</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="cluster-analysis.html#cb747-1"></a>ed[ed<span class="op">$</span>cluster <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, ]</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[3],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["loudness"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["cluster"],"name":[15],"type":["fct"],"align":["left"]}],"data":[{"1":"GBAHS1400099","2":"Thinking out Loud","3":"Ed Sheeran","4":"0.781","5":"0.445","6":"-6.061","7":"1","8":"0.0295","9":"0.4740","10":"0.00000000","11":"0.1840","12":"0.591","13":"78.998","14":"281560","15":"1"},{"1":"GBAHS1600463","2":"Shape of You","3":"Ed Sheeran","4":"0.825","5":"0.652","6":"-3.183","7":"0","8":"0.0802","9":"0.5810","10":"0.00000000","11":"0.0931","12":"0.931","13":"95.977","14":"233713","15":"1"},{"1":"GBAHS1600462","2":"Castle on the Hill","3":"Ed Sheeran","4":"0.461","5":"0.834","6":"-4.868","7":"1","8":"0.0989","9":"0.0232","10":"0.00000000","11":"0.1400","12":"0.471","13":"135.007","14":"261154","15":"1"},{"1":"GBAHS1700026","2":"Galway Girl","3":"Ed Sheeran","4":"0.624","5":"0.876","6":"-3.374","7":"1","8":"0.1000","9":"0.0735","10":"0.00000000","11":"0.3270","12":"0.781","13":"99.943","14":"170827","15":"1"},{"1":"GBAHS1700022","2":"Dive","3":"Ed Sheeran","4":"0.761","5":"0.386","6":"-6.158","7":"1","8":"0.0399","9":"0.3550","10":"0.00000000","11":"0.0953","12":"0.526","13":"134.943","14":"238440","15":"1"},{"1":"GBAHS1700020","2":"Eraser","3":"Ed Sheeran","4":"0.640","5":"0.812","6":"-5.647","7":"0","8":"0.0834","9":"0.0860","10":"0.00000000","11":"0.0509","12":"0.914","13":"86.013","14":"227427","15":"1"},{"1":"GBAHS1700036","2":"What Do I Know?","3":"Ed Sheeran","4":"0.838","5":"0.492","6":"-5.690","7":"0","8":"0.0380","9":"0.2510","10":"0.00000000","11":"0.2620","12":"0.895","13":"115.092","14":"237333","15":"1"},{"1":"GBAHS1700030","2":"New Man","3":"Ed Sheeran","4":"0.780","5":"0.745","6":"-3.970","7":"1","8":"0.1450","9":"0.0559","10":"0.00000000","11":"0.0595","12":"0.862","13":"94.026","14":"189280","15":"1"},{"1":"GBAHS1700042","2":"Barcelona","3":"Ed Sheeran","4":"0.747","5":"0.760","6":"-4.294","7":"1","8":"0.1870","9":"0.4480","10":"0.00000000","11":"0.1530","12":"0.682","13":"99.975","14":"191147","15":"1"},{"1":"GBAHS1700044","2":"Bibia Be Ye Ye","3":"Ed Sheeran","4":"0.738","5":"0.677","6":"-5.121","7":"1","8":"0.0824","9":"0.5200","10":"0.00000000","11":"0.1330","12":"0.882","13":"127.067","14":"176747","15":"1"},{"1":"GBAHS1700046","2":"Nancy Mulligan","3":"Ed Sheeran","4":"0.680","5":"0.852","6":"-4.350","7":"1","8":"0.0349","9":"0.1170","10":"0.00000000","11":"0.0866","12":"0.858","13":"101.993","14":"179787","15":"1"},{"1":"GBAHS1700200","2":"Shape of You - Acoustic","3":"Ed Sheeran","4":"0.843","5":"0.400","6":"-5.576","7":"0","8":"0.1030","9":"0.4900","10":"0.00000000","11":"0.1250","12":"0.927","13":"100.728","14":"223573","15":"1"},{"1":"GBAHS1700526","2":"Baby One More Time - Recorded at Spotify Studios New York City","3":"Ed Sheeran","4":"0.792","5":"0.307","6":"-6.224","7":"0","8":"0.0522","9":"0.1890","10":"0.00000000","11":"0.0834","12":"0.631","13":"104.511","14":"177215","15":"1"},{"1":"GBAHS1400082","2":"Sing","3":"Ed Sheeran","4":"0.818","5":"0.670","6":"-4.451","7":"0","8":"0.0472","9":"0.3040","10":"0.00000122","11":"0.0601","12":"0.939","13":"119.988","14":"235382","15":"1"},{"1":"GBAHS1100206","2":"Lego House","3":"Ed Sheeran","4":"0.592","5":"0.637","6":"-8.480","7":"1","8":"0.0992","9":"0.5620","10":"0.00000000","11":"0.1300","12":"0.565","13":"159.701","14":"185093","15":"1"},{"1":"GBAHS1100207","2":"You Need Me, I Don't Need You","3":"Ed Sheeran","4":"0.749","5":"0.837","6":"-8.837","7":"1","8":"0.0512","9":"0.1620","10":"0.00000000","11":"0.5250","12":"0.927","13":"103.483","14":"220413","15":"1"},{"1":"GBAHS1700245","2":"Shape of You (feat. Zion & Lennox) - Latin Remix","3":"Ed Sheeran","4":"0.787","5":"0.872","6":"-1.397","7":"0","8":"0.0871","9":"0.1680","10":"0.00000151","11":"0.0408","12":"0.460","13":"95.995","14":"237664","15":"1"},{"1":"USAT21503687","2":"All of the Stars","3":"Ed Sheeran","4":"0.540","5":"0.557","6":"-6.097","7":"1","8":"0.0259","9":"0.0089","10":"0.00020000","11":"0.3070","12":"0.287","13":"75.035","14":"237147","15":"1"},{"1":"GB6S41000020","2":"Let It Out","3":"Ed Sheeran","4":"0.731","5":"0.603","6":"-7.656","7":"1","8":"0.0378","9":"0.6450","10":"0.01100000","11":"0.1470","12":"0.619","13":"96.973","14":"231547","15":"1"},{"1":"GBAHS1500470","2":"English Rose","3":"Ed Sheeran","4":"0.579","5":"0.649","6":"-6.522","7":"1","8":"0.0352","9":"0.0977","10":"0.00000000","11":"0.1250","12":"0.184","13":"114.593","14":"184173","15":"1"},{"1":"GBAHS1500471","2":"Touch and Go","3":"Ed Sheeran","4":"0.812","5":"0.542","6":"-5.403","7":"0","8":"0.0444","9":"0.2940","10":"0.00010000","11":"0.1410","12":"0.733","13":"110.268","14":"240987","15":"1"},{"1":"GBAHS2100318","2":"Bad Habits","3":"Ed Sheeran","4":"0.808","5":"0.897","6":"-3.712","7":"0","8":"0.0348","9":"0.0469","10":"0.00000000","11":"0.3640","12":"0.591","13":"126.026","14":"231041","15":"1"},{"1":"GBAHS2100671","2":"Shivers","3":"Ed Sheeran","4":"0.788","5":"0.859","6":"-2.724","7":"1","8":"0.0856","9":"0.2810","10":"0.00000000","11":"0.0424","12":"0.822","13":"141.020","14":"207853","15":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="cluster-analysis.html#cb746-1" aria-hidden="true" tabindex="-1"></a>ed[<span class="fu">which.min</span>(ed<span class="sc">$</span>danceability), ]</span></code></pre></div>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="cluster-analysis.html#cb748-1"></a>ed[<span class="kw">which.min</span>(ed<span class="op">$</span>danceability), ]</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[3],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["loudness"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["cluster"],"name":[15],"type":["fct"],"align":["left"]}],"data":[{"1":"GBAHS1701083","2":"Perfect - Acoustic","3":"Ed Sheeran","4":"0.432","5":"0.377","6":"-5.79","7":"1","8":"0.0304","9":"0.459","10":"0","11":"0.114","12":"0.394","13":"94.973","14":"260867","15":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="cluster-analysis.html#cb747-1" aria-hidden="true" tabindex="-1"></a>ed[<span class="fu">order</span>(ed<span class="sc">$</span>danceability, <span class="at">decreasing =</span> T), ]</span></code></pre></div>
+<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="cluster-analysis.html#cb749-1"></a>ed[<span class="kw">order</span>(ed<span class="op">$</span>danceability, <span class="dt">decreasing =</span> T), ]</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["artistName"],"name":[3],"type":["chr"],"align":["left"]},{"label":["danceability"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["loudness"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mode"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["cluster"],"name":[15],"type":["fct"],"align":["left"]}],"data":[{"1":"GBAHS1700200","2":"Shape of You - Acoustic","3":"Ed Sheeran","4":"0.843","5":"0.4000","6":"-5.576","7":"0","8":"0.1030","9":"0.4900","10":"0.00000000","11":"0.1250","12":"0.927","13":"100.728","14":"223573","15":"1"},{"1":"GBAHS1100211","2":"Little Bird - Deluxe Edition","3":"Ed Sheeran","4":"0.843","5":"0.4250","6":"-8.676","7":"1","8":"0.0352","9":"0.5650","10":"0.00000000","11":"0.1020","12":"0.284","13":"104.020","14":"224529","15":"2"},{"1":"GBAHS1700036","2":"What Do I Know?","3":"Ed Sheeran","4":"0.838","5":"0.4920","6":"-5.690","7":"0","8":"0.0380","9":"0.2510","10":"0.00000000","11":"0.2620","12":"0.895","13":"115.092","14":"237333","15":"1"},{"1":"GBAHS1600463","2":"Shape of You","3":"Ed Sheeran","4":"0.825","5":"0.6520","6":"-3.183","7":"0","8":"0.0802","9":"0.5810","10":"0.00000000","11":"0.0931","12":"0.931","13":"95.977","14":"233713","15":"1"},{"1":"GBAHS1400082","2":"Sing","3":"Ed Sheeran","4":"0.818","5":"0.6700","6":"-4.451","7":"0","8":"0.0472","9":"0.3040","10":"0.00000122","11":"0.0601","12":"0.939","13":"119.988","14":"235382","15":"1"},{"1":"GBAHS1500471","2":"Touch and Go","3":"Ed Sheeran","4":"0.812","5":"0.5420","6":"-5.403","7":"0","8":"0.0444","9":"0.2940","10":"0.00010000","11":"0.1410","12":"0.733","13":"110.268","14":"240987","15":"1"},{"1":"GBAHS1100203","2":"Small Bump","3":"Ed Sheeran","4":"0.810","5":"0.4360","6":"-12.683","7":"1","8":"0.0717","9":"0.6890","10":"0.00020000","11":"0.1100","12":"0.446","13":"119.973","14":"259413","15":"2"},{"1":"GBAHS2100318","2":"Bad Habits","3":"Ed Sheeran","4":"0.808","5":"0.8970","6":"-3.712","7":"0","8":"0.0348","9":"0.0469","10":"0.00000000","11":"0.3640","12":"0.591","13":"126.026","14":"231041","15":"1"},{"1":"GBAHS1400090","2":"Don't","3":"Ed Sheeran","4":"0.806","5":"0.6080","6":"-7.008","7":"1","8":"0.0659","9":"0.0113","10":"0.00000000","11":"0.6350","12":"0.849","13":"95.049","14":"219840","15":"3"},{"1":"GBAHS1700526","2":"Baby One More Time - Recorded at Spotify Studios New York City","3":"Ed Sheeran","4":"0.792","5":"0.3070","6":"-6.224","7":"0","8":"0.0522","9":"0.1890","10":"0.00000000","11":"0.0834","12":"0.631","13":"104.511","14":"177215","15":"1"},{"1":"GBAHS2100671","2":"Shivers","3":"Ed Sheeran","4":"0.788","5":"0.8590","6":"-2.724","7":"1","8":"0.0856","9":"0.2810","10":"0.00000000","11":"0.0424","12":"0.822","13":"141.020","14":"207853","15":"1"},{"1":"GBAHS1700245","2":"Shape of You (feat. Zion & Lennox) - Latin Remix","3":"Ed Sheeran","4":"0.787","5":"0.8720","6":"-1.397","7":"0","8":"0.0871","9":"0.1680","10":"0.00000151","11":"0.0408","12":"0.460","13":"95.995","14":"237664","15":"1"},{"1":"GBAHS1400099","2":"Thinking out Loud","3":"Ed Sheeran","4":"0.781","5":"0.4450","6":"-6.061","7":"1","8":"0.0295","9":"0.4740","10":"0.00000000","11":"0.1840","12":"0.591","13":"78.998","14":"281560","15":"1"},{"1":"GBAHS1700030","2":"New Man","3":"Ed Sheeran","4":"0.780","5":"0.7450","6":"-3.970","7":"1","8":"0.1450","9":"0.0559","10":"0.00000000","11":"0.0595","12":"0.862","13":"94.026","14":"189280","15":"1"},{"1":"GBAHS1700022","2":"Dive","3":"Ed Sheeran","4":"0.761","5":"0.3860","6":"-6.158","7":"1","8":"0.0399","9":"0.3550","10":"0.00000000","11":"0.0953","12":"0.526","13":"134.943","14":"238440","15":"1"},{"1":"GBAHS1100207","2":"You Need Me, I Don't Need You","3":"Ed Sheeran","4":"0.749","5":"0.8370","6":"-8.837","7":"1","8":"0.0512","9":"0.1620","10":"0.00000000","11":"0.5250","12":"0.927","13":"103.483","14":"220413","15":"1"},{"1":"GBAHS1700042","2":"Barcelona","3":"Ed Sheeran","4":"0.747","5":"0.7600","6":"-4.294","7":"1","8":"0.1870","9":"0.4480","10":"0.00000000","11":"0.1530","12":"0.682","13":"99.975","14":"191147","15":"1"},{"1":"GBAHS1700044","2":"Bibia Be Ye Ye","3":"Ed Sheeran","4":"0.738","5":"0.6770","6":"-5.121","7":"1","8":"0.0824","9":"0.5200","10":"0.00000000","11":"0.1330","12":"0.882","13":"127.067","14":"176747","15":"1"},{"1":"GBAHS1100199","2":"Drunk","3":"Ed Sheeran","4":"0.733","5":"0.6520","6":"-9.101","7":"1","8":"0.0696","9":"0.4190","10":"0.00000237","11":"0.5210","12":"0.459","13":"99.998","14":"200093","15":"3"},{"1":"GB6S41000020","2":"Let It Out","3":"Ed Sheeran","4":"0.731","5":"0.6030","6":"-7.656","7":"1","8":"0.0378","9":"0.6450","10":"0.01100000","11":"0.1470","12":"0.619","13":"96.973","14":"231547","15":"1"},{"1":"GBAHS1900797","2":"I Don't Care - Acoustic","3":"Ed Sheeran","4":"0.706","5":"0.3490","6":"-8.125","7":"1","8":"0.0302","9":"0.7910","10":"0.00000000","11":"0.1080","12":"0.624","13":"94.058","14":"238220","15":"2"},{"1":"GBAHS1400091","2":"I'm a Mess","3":"Ed Sheeran","4":"0.697","5":"0.3770","6":"-7.755","7":"1","8":"0.0397","9":"0.5560","10":"0.00000000","11":"0.0999","12":"0.336","13":"138.754","14":"244573","15":"2"},{"1":"GBAHS1700046","2":"Nancy Mulligan","3":"Ed Sheeran","4":"0.680","5":"0.8520","6":"-4.350","7":"1","8":"0.0349","9":"0.1170","10":"0.00000000","11":"0.0866","12":"0.858","13":"101.993","14":"179787","15":"1"},{"1":"GBAHS1400095","2":"Bloodstream","3":"Ed Sheeran","4":"0.660","5":"0.3160","6":"-11.567","7":"0","8":"0.0364","9":"0.5290","10":"0.00030000","11":"0.1040","12":"0.543","13":"91.207","14":"300253","15":"2"},{"1":"GBAHS1100095","2":"The A Team","3":"Ed Sheeran","4":"0.642","5":"0.2890","6":"-9.918","7":"1","8":"0.0367","9":"0.6690","10":"0.00000000","11":"0.1800","12":"0.407","13":"84.996","14":"258373","15":"2"},{"1":"GBAHS1400104","2":"I See Fire","3":"Ed Sheeran","4":"0.641","5":"0.1760","6":"-11.692","7":"1","8":"0.0349","9":"0.6380","10":"0.00000514","11":"0.2520","12":"0.297","13":"76.031","14":"299147","15":"2"},{"1":"GBAHS2001193","2":"Afterglow","3":"Ed Sheeran","4":"0.641","5":"0.3240","6":"-5.851","7":"1","8":"0.0299","9":"0.6980","10":"0.00000000","11":"0.3280","12":"0.273","13":"110.184","14":"185487","15":"2"},{"1":"GBAHS1700020","2":"Eraser","3":"Ed Sheeran","4":"0.640","5":"0.8120","6":"-5.647","7":"0","8":"0.0834","9":"0.0860","10":"0.00000000","11":"0.0509","12":"0.914","13":"86.013","14":"227427","15":"1"},{"1":"GBAHS1700026","2":"Galway Girl","3":"Ed Sheeran","4":"0.624","5":"0.8760","6":"-3.374","7":"1","8":"0.1000","9":"0.0735","10":"0.00000000","11":"0.3270","12":"0.781","13":"99.943","14":"170827","15":"1"},{"1":"GBAHS1700038","2":"How Would You Feel (Paean)","3":"Ed Sheeran","4":"0.617","5":"0.4390","6":"-5.630","7":"1","8":"0.0269","9":"0.4240","10":"0.00000000","11":"0.1270","12":"0.242","13":"139.979","14":"280533","15":"2"},{"1":"GBAHS1100202","2":"Wake Me Up","3":"Ed Sheeran","4":"0.616","5":"0.2090","6":"-13.430","7":"1","8":"0.4060","9":"0.9020","10":"0.00000000","11":"0.1390","12":"0.336","13":"86.891","14":"229613","15":"2"},{"1":"GBAHS1400094","2":"Photograph","3":"Ed Sheeran","4":"0.614","5":"0.3790","6":"-10.480","7":"1","8":"0.0476","9":"0.6070","10":"0.00050000","11":"0.0986","12":"0.201","13":"107.989","14":"258987","15":"2"},{"1":"GBAHS1700032","2":"Hearts Don't Break Around Here","3":"Ed Sheeran","4":"0.604","5":"0.3660","6":"-7.881","7":"1","8":"0.0267","9":"0.7190","10":"0.00000000","11":"0.1620","12":"0.181","13":"105.177","14":"248413","15":"2"},{"1":"GB6S41000006","2":"Firefly","3":"Ed Sheeran","4":"0.602","5":"0.3100","6":"-11.469","7":"1","8":"0.0373","9":"0.8860","10":"0.00010000","11":"0.1050","12":"0.360","13":"159.917","14":"255000","15":"2"},{"1":"GB6S41000011","2":"Fire Alarms","3":"Ed Sheeran","4":"0.602","5":"0.2860","6":"-9.886","7":"1","8":"0.0296","9":"0.7720","10":"0.00000000","11":"0.1620","12":"0.379","13":"102.009","14":"144013","15":"2"},{"1":"GBAHS1700024","2":"Perfect","3":"Ed Sheeran","4":"0.599","5":"0.4480","6":"-6.312","7":"1","8":"0.0232","9":"0.1630","10":"0.00000000","11":"0.1060","12":"0.168","13":"95.050","14":"263400","15":"2"},{"1":"GBAHS1100206","2":"Lego House","3":"Ed Sheeran","4":"0.592","5":"0.6370","6":"-8.480","7":"1","8":"0.0992","9":"0.5620","10":"0.00000000","11":"0.1300","12":"0.565","13":"159.701","14":"185093","15":"1"},{"1":"GBAHS1100208","2":"Kiss Me","3":"Ed Sheeran","4":"0.589","5":"0.2270","6":"-16.670","7":"1","8":"0.0498","9":"0.6400","10":"0.00470000","11":"0.0248","12":"0.182","13":"74.993","14":"280853","15":"2"},{"1":"GBAHS1700040","2":"Supermarket Flowers","3":"Ed Sheeran","4":"0.589","5":"0.2420","6":"-10.517","7":"1","8":"0.0442","9":"0.9140","10":"0.00000000","11":"0.0887","12":"0.257","13":"89.749","14":"221107","15":"2"},{"1":"USNLR1300728","2":"I See Fire - From \"The Hobbit - The Desolation Of Smaug\"","3":"Ed Sheeran","4":"0.581","5":"0.0549","6":"-20.514","7":"0","8":"0.0397","9":"0.5590","10":"0.00000000","11":"0.0718","12":"0.234","13":"152.037","14":"300840","15":"2"},{"1":"USNLR1300700","2":"I See Fire","3":"Ed Sheeran","4":"0.581","5":"0.0549","6":"-20.514","7":"0","8":"0.0397","9":"0.5590","10":"0.00000000","11":"0.0718","12":"0.234","13":"152.037","14":"300840","15":"2"},{"1":"GBAHS1500470","2":"English Rose","3":"Ed Sheeran","4":"0.579","5":"0.6490","6":"-6.522","7":"1","8":"0.0352","9":"0.0977","10":"0.00000000","11":"0.1250","12":"0.184","13":"114.593","14":"184173","15":"1"},{"1":"GB6S41000012","2":"She","3":"Ed Sheeran","4":"0.573","5":"0.3440","6":"-10.910","7":"1","8":"0.0361","9":"0.8110","10":"0.00000000","11":"0.1300","12":"0.377","13":"157.783","14":"244653","15":"2"},{"1":"GBAHS1700198","2":"Castle on the Hill - Acoustic","3":"Ed Sheeran","4":"0.563","5":"0.2600","6":"-5.856","7":"1","8":"0.0391","9":"0.5180","10":"0.00000000","11":"0.1460","12":"0.616","13":"145.561","14":"226227","15":"2"},{"1":"GBAHS1700525","2":"Castle on the Hill - Recorded at Spotify Studios New York City","3":"Ed Sheeran","4":"0.556","5":"0.3550","6":"-6.416","7":"1","8":"0.0398","9":"0.5810","10":"0.00000000","11":"0.1180","12":"0.644","13":"147.580","14":"225791","15":"2"},{"1":"GBAHS1700048","2":"Save Myself","3":"Ed Sheeran","4":"0.552","5":"0.2900","6":"-5.617","7":"1","8":"0.0448","9":"0.8500","10":"0.00000000","11":"0.2270","12":"0.481","13":"78.842","14":"247107","15":"2"},{"1":"GBAHS1400100","2":"Afire Love","3":"Ed Sheeran","4":"0.552","5":"0.6370","6":"-6.568","7":"1","8":"0.0445","9":"0.4640","10":"0.00000000","11":"0.1360","12":"0.333","13":"97.970","14":"314280","15":"2"},{"1":"GBUM71800115","2":"Candle In The Wind - 2018 Version","3":"Ed Sheeran","4":"0.549","5":"0.4490","6":"-10.479","7":"1","8":"0.0455","9":"0.7320","10":"0.00000000","11":"0.1170","12":"0.506","13":"76.028","14":"198777","15":"2"},{"1":"GB6S41000009","2":"Cold Coffee","3":"Ed Sheeran","4":"0.544","5":"0.5290","6":"-6.753","7":"1","8":"0.0256","9":"0.4530","10":"0.00000000","11":"0.1310","12":"0.403","13":"92.936","14":"254227","15":"2"},{"1":"USAT21503687","2":"All of the Stars","3":"Ed Sheeran","4":"0.540","5":"0.5570","6":"-6.097","7":"1","8":"0.0259","9":"0.0089","10":"0.00020000","11":"0.3070","12":"0.287","13":"75.035","14":"237147","15":"1"},{"1":"GBAHS1400096","2":"Tenerife Sea","3":"Ed Sheeran","4":"0.530","5":"0.3460","6":"-10.497","7":"1","8":"0.0376","9":"0.6970","10":"0.00000000","11":"0.1050","12":"0.359","13":"121.876","14":"241347","15":"2"},{"1":"GBAHS1100209","2":"Give Me Love","3":"Ed Sheeran","4":"0.526","5":"0.3280","6":"-9.864","7":"1","8":"0.0461","9":"0.6940","10":"0.00000000","11":"0.1120","12":"0.110","13":"116.068","14":"526387","15":"2"},{"1":"GBAHS1700028","2":"Happier","3":"Ed Sheeran","4":"0.522","5":"0.3850","6":"-7.355","7":"1","8":"0.0288","9":"0.5360","10":"0.00000000","11":"0.1350","12":"0.236","13":"89.792","14":"207520","15":"2"},{"1":"GBAHS1400157","2":"Friends","3":"Ed Sheeran","4":"0.516","5":"0.1580","6":"-14.433","7":"1","8":"0.0672","9":"0.7830","10":"0.00000132","11":"0.2220","12":"0.455","13":"93.255","14":"190539","15":"2"},{"1":"GBAHS1800361","2":"Happier - Acoustic","3":"Ed Sheeran","4":"0.493","5":"0.4000","6":"-8.117","7":"1","8":"0.0261","9":"0.0425","10":"0.00000147","11":"0.1330","12":"0.150","13":"91.004","14":"206209","15":"2"},{"1":"GBAHS2100680","2":"Visiting Hours","3":"Ed Sheeran","4":"0.471","5":"0.3960","6":"-6.654","7":"1","8":"0.0336","9":"0.7700","10":"0.00000000","11":"0.0729","12":"0.263","13":"149.609","14":"215507","15":"2"},{"1":"GBAHS1400092","2":"One","3":"Ed Sheeran","4":"0.464","5":"0.3210","6":"-11.120","7":"1","8":"0.0418","9":"0.8770","10":"0.00000000","11":"0.0789","12":"0.306","13":"93.528","14":"252760","15":"2"},{"1":"GBAHS1600462","2":"Castle on the Hill","3":"Ed Sheeran","4":"0.461","5":"0.8340","6":"-4.868","7":"1","8":"0.0989","9":"0.0232","10":"0.00000000","11":"0.1400","12":"0.471","13":"135.007","14":"261154","15":"1"},{"1":"GBAHS1701083","2":"Perfect - Acoustic","3":"Ed Sheeran","4":"0.432","5":"0.3770","6":"-5.790","7":"1","8":"0.0304","9":"0.4590","10":"0.00000000","11":"0.1140","12":"0.394","13":"94.973","14":"260867","15":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -580,6 +533,7 @@ Let’s try it out with our two artists. In order to perform clustering we first
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -598,7 +552,6 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -619,10 +572,6 @@ gitbook.start({
 "text": null
 },
 "download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
 "toc": {
 "collapse": "section"
 }

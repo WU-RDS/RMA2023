@@ -68,7 +68,7 @@ print("hello"))
 ```
 
 ```
-## Error: <text>:1:15: unexpected ')'
+## Error: <text>:1:15: Unerwartete(s) ')'
 ## 1: print("hello"))
 ##                   ^
 ```
@@ -80,7 +80,7 @@ There is one too many closing parenthesis here.
 ```
 
 ```
-## Error: <text>:1:4: unexpected '/'
+## Error: <text>:1:4: Unerwartete(s) '/'
 ## 1: 1 +/
 ##        ^
 ```
@@ -92,7 +92,7 @@ The "/" symbol may not follow the "+" symbol without any additional objects.
 ```
 
 ```
-## Error: <text>:1:3: unexpected numeric constant
+## Error: <text>:1:3: unerwartete numerische Konstante
 ## 1: 1 2
 ##       ^
 ```
@@ -105,7 +105,7 @@ x <- 3
 ```
 
 ```
-## Error: <text>:2:2: unexpected symbol
+## Error: <text>:2:2: unerwartetes Symbol
 ## 1: x <- 3
 ## 2: 2x
 ##     ^
@@ -134,7 +134,7 @@ mean$value
 ```
 
 ```
-## Error in mean$value: object of type 'closure' is not subsettable
+## Error in mean$value: Objekt des Typs 'closure' ist nicht indizierbar
 ```
 
 instead of (i.e., correcting for the missing "s" to identify the data frame by its name)
@@ -158,7 +158,7 @@ summary(aov)[[1]]
 ```
 
 ```
-## Error in object[[i]]: object of type 'closure' is not subsettable
+## Error in object[[i]]: Objekt des Typs 'closure' ist nicht indizierbar
 ```
 
 Make sure all the relevant code is run first:
@@ -211,7 +211,7 @@ mean(xdf$a, xdf$group)
 ```
 
 ```
-## Error in mean.default(xdf$a, xdf$group): 'trim' must be numeric of length one
+## Error in mean.default(xdf$a, xdf$group): 'trim' muss nummerisch sein und Länge 1 haben
 ```
 
 When you get this error make sure your data is in the format you expect it to be (e.g., using the `str` function). And that missing values (i.e., NA) are handles appropriately. 
@@ -244,7 +244,7 @@ This error occurs if a function name is either misspelled or some packages have 
 
 
 ```
-## Error in detach(package:ggplot2): invalid 'name' argument
+## Error in detach(package:ggplot2): ungültiges 'name'Argument
 ```
 
 
@@ -253,7 +253,7 @@ ggplot(data)
 ```
 
 ```
-## Error in ggplot(data): could not find function "ggplot"
+## Error in ggplot(data): konnte Funktion "ggplot" nicht finden
 ```
 
 If you are not sure which package provides a given function, try running:
@@ -273,7 +273,7 @@ x[1,1]
 ```
 
 ```
-## Error in x[1, 1]: incorrect number of dimensions
+## Error in x[1, 1]: falsche Anzahl von Dimensionen
 ```
 
 
@@ -435,7 +435,7 @@ glm(char_y ~ x , data = dat, family=binomial())
 ```
 
 ```
-## Error in weights * y: non-numeric argument to binary operator
+## Error in weights * y: nicht-numerisches Argument für binären Operator
 ```
 
 ## General settings and options

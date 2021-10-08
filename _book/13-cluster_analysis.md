@@ -25,7 +25,7 @@ Let's try to create a recommendation system using track features. In our data we
 ```r
 load(url("https://github.com/WU-RDS/MRDA2021/raw/main/trackfeatures.RData"))
 # remove duplicates
-tracks <- na.omit(tracks[!duplicated(tracks$isrc),
+tracks <- na.omit(tracks[!duplicated(tracks$isrc), 
     ])
 ```
 
@@ -35,15 +35,15 @@ To get an idea of how clustering might work let's first take a look at just  wit
 ```r
 library(ggplot2)
 library(stringr)
-robin_schulz <- tracks[str_detect(tracks$artistName,
+robin_schulz <- tracks[str_detect(tracks$artistName, 
     "Robin Schulz"), ]
 robin_schulz$artist <- "Robin Schulz"
-adele <- tracks[str_detect(tracks$artistName, "Adele"),
+adele <- tracks[str_detect(tracks$artistName, "Adele"), 
     ]
 adele$artist <- "Adele"
 
 example_tracks <- rbind(robin_schulz, adele)
-ggplot(example_tracks, aes(x = energy, y = acousticness,
+ggplot(example_tracks, aes(x = energy, y = acousticness, 
     color = artist)) + geom_point()
 ```
 
@@ -58,7 +58,7 @@ Let's try it out with our two artists. In order to perform clustering we first h
 ```r
 library(cluster)
 
-tracks_scale <- data.frame(artist = example_tracks$artist,
+tracks_scale <- data.frame(artist = example_tracks$artist, 
     energy = scale(example_tracks$energy), acousticness = scale(example_tracks$acousticness))
 tracks_scale <- na.omit(tracks_scale)
 kmeans_clusters <- kmeans(tracks_scale[-1], 2)
@@ -78,7 +78,7 @@ In our plot we can add a color for each cluster and a different marker shape for
 
 ```r
 tracks_scale$cluster <- as.factor(kmeans_clusters$cluster)
-ggplot(tracks_scale, aes(x = energy, y = acousticness,
+ggplot(tracks_scale, aes(x = energy, y = acousticness, 
     color = cluster, shape = artist)) + geom_point(size = 3)
 ```
 
@@ -100,13 +100,20 @@ In the previous example it was easy to set the number of clusters. However, if w
 
 ```r
 library(NbClust)
-famous_artists <- c("Ed Sheeran", "Eminem", "Rihanna",
+```
+
+```
+## Warning: Paket 'NbClust' wurde unter R Version 4.0.3 erstellt
+```
+
+```r
+famous_artists <- c("Ed Sheeran", "Eminem", "Rihanna", 
     "Taylor Swift", "Queen")
-famous_tracks <- tracks[tracks$artistName %in% famous_artists,
+famous_tracks <- tracks[tracks$artistName %in% famous_artists, 
     ]
 famous_tracks_scale <- scale(famous_tracks[4:ncol(famous_tracks)])
 set.seed(123)
-opt_K <- NbClust(famous_tracks_scale, method = "kmeans",
+opt_K <- NbClust(famous_tracks_scale, method = "kmeans", 
     max.nc = 10)
 ```
 
@@ -147,7 +154,7 @@ kmeans_tracks$centers
 
 ```r
 famous_tracks$cluster <- as.factor(kmeans_tracks$cluster)
-ggplot(famous_tracks, aes(y = cluster, fill = artistName)) +
+ggplot(famous_tracks, aes(y = cluster, fill = artistName)) + 
     geom_bar() + theme_bw()
 ```
 
@@ -169,9 +176,9 @@ table(famous_tracks$artistName, famous_tracks$cluster)
 
 
 ```r
-ed <- famous_tracks[famous_tracks$artistName == "Ed Sheeran",
+ed <- famous_tracks[famous_tracks$artistName == "Ed Sheeran", 
     ]
-ggplot(ed, aes(x = energy, y = valence, color = cluster)) +
+ggplot(ed, aes(x = energy, y = valence, color = cluster)) + 
     geom_point() + theme_bw()
 ```
 
