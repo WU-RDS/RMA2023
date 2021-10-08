@@ -503,7 +503,6 @@ a single question that attempts to cover two issues. Such questions can be confu
 
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -515,7 +514,6 @@ Do you think Nike Town offers better variety and prices than other Nike stores?
 
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -544,7 +542,6 @@ Examples:
 If you are asking participants to recall certain brands for instance, make sure you use **unaided recall question:**  
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -556,7 +553,6 @@ What brands of soft drinks do you remember being advertised on TV last night?
 
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -576,7 +572,6 @@ e) Don’t know
 If you are asking participants to list something, the good case practice is **to minimize the effort required by respondents:**  
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -593,7 +588,6 @@ f) Other (please specify) ___________
 </div>
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -607,7 +601,6 @@ Please list all the departments from which you purchased merchandise on your mos
 In a case you are asking for information that could be considered sensitive (e.g. money, family life, political beliefs, religion), they should come at the end of the questionnaire. Moreover, it is recommendable to provide response categories rather than asking for specific figures:  
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -624,7 +617,6 @@ e) over 100.000 €
 
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -940,7 +932,6 @@ Generally, question wording should enable each respondent to understand  questio
 In order to ensure reliability, the issue in terms of **who, what, when and where** should be defined in each question.  
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -954,7 +945,6 @@ In order to ensure reliability, the issue in terms of **who, what, when and wher
 </div>
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -968,7 +958,6 @@ Which brand or brands of shampoo have you personally used at home during the las
 **Use ordinary words.** Words should match the vocabulary level of the participants.
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -980,7 +969,6 @@ Which brand or brands of shampoo have you personally used at home during the las
 
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -993,7 +981,6 @@ Which brand or brands of shampoo have you personally used at home during the las
 **Avoid double negative form**. Double negative question forms can confuse respondents, especially when they need to answer with “Agree” or “Disagree”.
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -1004,7 +991,6 @@ Do you think that it is not uncommon that boys play basketball?
 </div>
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -1017,7 +1003,6 @@ In your opinion, is it common that boys play basketball?
 **Avoid leading questions.**Leading questions clue the participant to what the answer should be. Such questions introduce a bias in a particular direction.  
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -1028,7 +1013,6 @@ In your opinion, is it common that boys play basketball?
 </div>
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -1041,7 +1025,6 @@ In your opinion, is it common that boys play basketball?
 **Avoid ambiguous words.** Words such as usually, normally, frequently, often, regularly, and other similar words, do not define frequency clearly enough.
 
 <div class="incorrect">
-
 <p>Incorrect </p>
 </div>
 
@@ -1057,7 +1040,6 @@ e) Regularly
 </div>
 
 <div class="correct">
-
 <p>Correct </p>
 </div>
 
@@ -1182,7 +1164,7 @@ head(qualtrics,3)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Start Date"],"name":[1],"type":["chr"],"align":["left"]},{"label":["End Date"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Response Type"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IP Address"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["Progress"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Duration (in seconds)"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Finished"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Recorded Date"],"name":[8],"type":["chr"],"align":["left"]},{"label":["Response ID"],"name":[9],"type":["chr"],"align":["left"]},{"label":["Recipient Last Name"],"name":[10],"type":["lgl"],"align":["right"]},{"label":["Recipient First Name"],"name":[11],"type":["lgl"],"align":["right"]},{"label":["Recipient Email"],"name":[12],"type":["lgl"],"align":["right"]},{"label":["External Data Reference"],"name":[13],"type":["lgl"],"align":["right"]},{"label":["Location Latitude"],"name":[14],"type":["chr"],"align":["left"]},{"label":["Location Longitude"],"name":[15],"type":["chr"],"align":["left"]},{"label":["Distribution Channel"],"name":[16],"type":["chr"],"align":["left"]},{"label":["User Language"],"name":[17],"type":["chr"],"align":["left"]},{"label":[" Measuring steps"],"name":[18],"type":["dbl"],"align":["right"]},{"label":[" Calories burned"],"name":[19],"type":["dbl"],"align":["right"]},{"label":[" Measuring heartbeat"],"name":[20],"type":["dbl"],"align":["right"]},{"label":[" Exercise tracking"],"name":[21],"type":["dbl"],"align":["right"]},{"label":[" Measuring distance"],"name":[22],"type":["dbl"],"align":["right"]},{"label":[" Location"],"name":[23],"type":["dbl"],"align":["right"]},{"label":[" Price"],"name":[24],"type":["dbl"],"align":["right"]},{"label":[" Ambience"],"name":[25],"type":["dbl"],"align":["right"]},{"label":[" Customer Service"],"name":[26],"type":["dbl"],"align":["right"]},{"label":[" Active"],"name":[27],"type":["dbl"],"align":["right"]},{"label":[" Cool"],"name":[28],"type":["dbl"],"align":["right"]},{"label":[" Sophisticated"],"name":[29],"type":["dbl"],"align":["right"]},{"label":[" Masculine"],"name":[30],"type":["dbl"],"align":["right"]},{"label":[" Funny"],"name":[31],"type":["dbl"],"align":["right"]},{"label":[" good:bad"],"name":[32],"type":["dbl"],"align":["right"]},{"label":[" pleasant:unpleasant"],"name":[33],"type":["dbl"],"align":["right"]},{"label":[" helpful:not helpful"],"name":[34],"type":["dbl"],"align":["right"]},{"label":[" Selected Choice"],"name":[35],"type":["dbl"],"align":["right"]},{"label":[" Other - Text"],"name":[36],"type":["lgl"],"align":["right"]},{"label":["During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?"],"name":[37],"type":["dbl"],"align":["right"]},{"label":[" ja! Natürlich."],"name":[38],"type":["dbl"],"align":["right"]},{"label":[" Clever"],"name":[39],"type":["dbl"],"align":["right"]},{"label":[" Spar Vital"],"name":[40],"type":["dbl"],"align":["right"]},{"label":[" ..."],"name":[41],"type":["dbl"],"align":["right"]},{"label":[" Percentage groceries"],"name":[42],"type":["dbl"],"align":["right"]},{"label":[" Willingness-to-pay (in EUR)"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["Conditional Questions     Sometimes, you may want to ask questions that are only appropriate for a sub-group of respondents. In this case, you may use filters that can be used to show questions depending on an answer to a previous question. Say, you want to ask a follow-up questions only to respondents who answered \"Yes\" to a previous question. First, you would collect the response to the initial question: Initial question:"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["This is the follow-up questions that is only displayed if the initial question has been answered \"Yes\" (see Option \"Add Display Logic\" in the question menu. Follow-up question:"],"name":[45],"type":["dbl"],"align":["right"]},{"label":[" Willingness to pay (in EUR):"],"name":[46],"type":["dbl"],"align":["right"]},{"label":["In a within-subjects design, you manipulate the independent variable using the same participants (a.k.a. repeated-measures designs). This means, you collect information twice from the same respondents under the different experimental conditions. For example, at the beginning of the questionnaire, you may show respondents the current advertising of Brand X and ask for the purchase probability:     Please consider the follwing advertisement:     A     How likely are you to purchase Brand X in the following 6 months?"],"name":[47],"type":["dbl"],"align":["right"]},{"label":["At a later stage in the questionnaire, you may show the respondent the new advertisement of Brand X and ask for the purchase likelihood again.       Please consider the follwing advertisement:     B     How likely are you to purchase Brand X in the following 6 months?"],"name":[48],"type":["dbl"],"align":["right"]},{"label":[" A"],"name":[49],"type":["dbl"],"align":["right"]},{"label":[" B"],"name":[50],"type":["dbl"],"align":["right"]},{"label":[" Selected Choice_1"],"name":[51],"type":["dbl"],"align":["right"]},{"label":[" Text"],"name":[52],"type":["lgl"],"align":["right"]},{"label":["In a typical week, how many hours do you spend using fitness tracker?"],"name":[53],"type":["dbl"],"align":["right"]},{"label":["Condition"],"name":[54],"type":["chr"],"align":["left"]}],"data":[{"1":"25- 5-2 2   3:2 :45 PM","2":"25- 5-2 2   3:22:22 PM","3":"1","4":"NA","5":"1","6":"96","7":"1","8":"25- 5-2 2   3:22:23 PM","9":"R_2P5PIcN9kqNJNCG","10":"NA","11":"NA","12":"NA","13":"NA","14":"44.5384 6372 7 3","15":"18.667 98999 234","16":"preview","17":"EN","18":"2","19":"4","20":"1","21":"5","22":"3","23":"32","24":"23","25":"32","26":"13","27":"2","28":"3","29":"4","30":"4","31":"4","32":"7","33":"2","34":"5","35":"2","36":"NA","37":"3","38":"NA","39":"1","40":"NA","41":"1","42":"57","43":"153","44":"1","45":"2","46":"23","47":"5","48":"7","49":"12","50":"54","51":"2","52":"NA","53":"3","54":"A"},{"1":"4- 6-2 2   2:56:36 AM","2":"4- 6-2 2   2:58:26 AM","3":"1","4":"NA","5":"1","6":"11","7":"1","8":"4- 6-2 2   2:58:26 AM","9":"R_3JgUt8HfVB6vFXf","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"3","20":"5","21":"2","22":"4","23":"25","24":"30","25":"22","26":"23","27":"1","28":"2","29":"3","30":"4","31":"5","32":"4","33":"3","34":"4","35":"2","36":"NA","37":"4","38":"1","39":"1","40":"NA","41":"NA","42":"42","43":"7","44":"2","45":"NA","46":"5","47":"6","48":"6","49":"4","50":"3","51":"2","52":"NA","53":"4","54":"B"},{"1":"4- 6-2 2   3: 1:58 AM","2":"4- 6-2 2   3: 4:52 AM","3":"1","4":"NA","5":"1","6":"173","7":"1","8":"4- 6-2 2   3: 4:52 AM","9":"R_zerJWBGzioeaoLv","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"2","20":"4","21":"5","22":"3","23":"19","24":"21","25":"30","26":"30","27":"4","28":"4","29":"3","30":"4","31":"4","32":"3","33":"6","34":"7","35":"1","36":"NA","37":"5","38":"1","39":"NA","40":"NA","41":"1","42":"84","43":"7","44":"1","45":"2","46":"21","47":"6","48":"2","49":"21","50":"32","51":"2","52":"NA","53":"5","54":"A"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Start Date"],"name":[1],"type":["chr"],"align":["left"]},{"label":["End Date"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Response Type"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IP Address"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["Progress"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Duration (in seconds)"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Finished"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Recorded Date"],"name":[8],"type":["chr"],"align":["left"]},{"label":["Response ID"],"name":[9],"type":["chr"],"align":["left"]},{"label":["Recipient Last Name"],"name":[10],"type":["lgl"],"align":["right"]},{"label":["Recipient First Name"],"name":[11],"type":["lgl"],"align":["right"]},{"label":["Recipient Email"],"name":[12],"type":["lgl"],"align":["right"]},{"label":["External Data Reference"],"name":[13],"type":["lgl"],"align":["right"]},{"label":["Location Latitude"],"name":[14],"type":["chr"],"align":["left"]},{"label":["Location Longitude"],"name":[15],"type":["chr"],"align":["left"]},{"label":["Distribution Channel"],"name":[16],"type":["chr"],"align":["left"]},{"label":["User Language"],"name":[17],"type":["chr"],"align":["left"]},{"label":["What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["Please choose the degree to which you feel the following descriptions align with our brand? - Active"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["Please choose the degree to which you feel the following descriptions align with our brand? - Cool"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["Please choose the degree to which you feel the following descriptions align with our brand? - Sophisticated"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["Please choose the degree to which you feel the following descriptions align with our brand? - Masculine"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["Please choose the degree to which you feel the following descriptions align with our brand? - Funny"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["How would you judge the product for your personal use? - good:bad"],"name":[32],"type":["dbl"],"align":["right"]},{"label":["How would you judge the product for your personal use? - pleasant:unpleasant"],"name":[33],"type":["dbl"],"align":["right"]},{"label":["How would you judge the product for your personal use? - helpful:not helpful"],"name":[34],"type":["dbl"],"align":["right"]},{"label":["What is your country of origin? - Selected Choice"],"name":[35],"type":["dbl"],"align":["right"]},{"label":["What is your country of origin? - Other - Text"],"name":[36],"type":["lgl"],"align":["right"]},{"label":["During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?"],"name":[37],"type":["dbl"],"align":["right"]},{"label":["Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich."],"name":[38],"type":["dbl"],"align":["right"]},{"label":["Which of the following store brands do you know? (multiple answers possible) - Clever"],"name":[39],"type":["dbl"],"align":["right"]},{"label":["Which of the following store brands do you know? (multiple answers possible) - Spar Vital"],"name":[40],"type":["dbl"],"align":["right"]},{"label":["Which of the following store brands do you know? (multiple answers possible) - ..."],"name":[41],"type":["dbl"],"align":["right"]},{"label":["Slider     What percentage of your disposable income do you spend on groceries? - Percentage groceries"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["Conditional Questions     Sometimes, you may want to ask questions that are only appropriate for a sub-group of respondents. In this case, you may use filters that can be used to show questions depending on an answer to a previous question. Say, you want to ask a follow-up questions only to respondents who answered \"Yes\" to a previous question. First, you would collect the response to the initial question: Initial question:"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["This is the follow-up questions that is only displayed if the initial question has been answered \"Yes\" (see Option \"Add Display Logic\" in the question menu. Follow-up question:"],"name":[45],"type":["dbl"],"align":["right"]},{"label":["After exposing respondents to the experimental conditions, you may collect data on the response variable. Because you have automatically recorded the experimental condition which respondents were assigned to, you may later test for diferences between experimental groups in the response variable (e.g., using an independent-means t-test). For example, you may ask:   How much are you willing to pay for the product under the previously described conditions? - Willingness to pay (in EUR):"],"name":[46],"type":["dbl"],"align":["right"]},{"label":["In a within-subjects design, you manipulate the independent variable using the same participants (a.k.a. repeated-measures designs). This means, you collect information twice from the same respondents under the different experimental conditions. For example, at the beginning of the questionnaire, you may show respondents the current advertising of Brand X and ask for the purchase probability:     Please consider the follwing advertisement:     A     How likely are you to purchase Brand X in the following 6 months?"],"name":[47],"type":["dbl"],"align":["right"]},{"label":["At a later stage in the questionnaire, you may show the respondent the new advertisement of Brand X and ask for the purchase likelihood again.       Please consider the follwing advertisement:     B     How likely are you to purchase Brand X in the following 6 months?"],"name":[48],"type":["dbl"],"align":["right"]},{"label":["You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A"],"name":[49],"type":["dbl"],"align":["right"]},{"label":["You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B"],"name":[50],"type":["dbl"],"align":["right"]},{"label":["What is your gender? - Selected Choice"],"name":[51],"type":["dbl"],"align":["right"]},{"label":["What is your gender? - Other (please specify) - Text"],"name":[52],"type":["lgl"],"align":["right"]},{"label":["In a typical week, how many hours do you spend using fitness tracker?"],"name":[53],"type":["dbl"],"align":["right"]},{"label":["Condition"],"name":[54],"type":["chr"],"align":["left"]}],"data":[{"1":"25- 5-2 2   3:2 :45 PM","2":"25- 5-2 2   3:22:22 PM","3":"1","4":"NA","5":"1","6":"96","7":"1","8":"25- 5-2 2   3:22:23 PM","9":"R_2P5PIcN9kqNJNCG","10":"NA","11":"NA","12":"NA","13":"NA","14":"44.5384 6372 7 3","15":"18.667 98999 234","16":"preview","17":"EN","18":"2","19":"4","20":"1","21":"5","22":"3","23":"32","24":"23","25":"32","26":"13","27":"2","28":"3","29":"4","30":"4","31":"4","32":"7","33":"2","34":"5","35":"2","36":"NA","37":"3","38":"NA","39":"1","40":"NA","41":"1","42":"57","43":"153","44":"1","45":"2","46":"23","47":"5","48":"7","49":"12","50":"54","51":"2","52":"NA","53":"3","54":"A"},{"1":"4- 6-2 2   2:56:36 AM","2":"4- 6-2 2   2:58:26 AM","3":"1","4":"NA","5":"1","6":"11","7":"1","8":"4- 6-2 2   2:58:26 AM","9":"R_3JgUt8HfVB6vFXf","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"3","20":"5","21":"2","22":"4","23":"25","24":"30","25":"22","26":"23","27":"1","28":"2","29":"3","30":"4","31":"5","32":"4","33":"3","34":"4","35":"2","36":"NA","37":"4","38":"1","39":"1","40":"NA","41":"NA","42":"42","43":"7","44":"2","45":"NA","46":"5","47":"6","48":"6","49":"4","50":"3","51":"2","52":"NA","53":"4","54":"B"},{"1":"4- 6-2 2   3: 1:58 AM","2":"4- 6-2 2   3: 4:52 AM","3":"1","4":"NA","5":"1","6":"173","7":"1","8":"4- 6-2 2   3: 4:52 AM","9":"R_zerJWBGzioeaoLv","10":"NA","11":"NA","12":"NA","13":"NA","14":"48.19819641","15":"16.39169312","16":"preview","17":"EN","18":"1","19":"2","20":"4","21":"5","22":"3","23":"19","24":"21","25":"30","26":"30","27":"4","28":"4","29":"3","30":"4","31":"4","32":"3","33":"6","34":"7","35":"1","36":"NA","37":"5","38":"1","39":"NA","40":"NA","41":"1","42":"84","43":"7","44":"1","45":"2","46":"21","47":"6","48":"2","49":"21","50":"32","51":"2","52":"NA","53":"5","54":"A"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -1357,10 +1339,10 @@ In Qualtrics, multiple answers on multiple choice questions are captured in sepa
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
  <thead>
   <tr>
-   <th style="text-align:center;">  ja! Natürlich. </th>
-   <th style="text-align:center;">  Clever </th>
-   <th style="text-align:center;">  Spar Vital </th>
-   <th style="text-align:center;">  ... </th>
+   <th style="text-align:center;"> Which of the following store brands do you know? (multiple answers possible) - ja! Natürlich. </th>
+   <th style="text-align:center;"> Which of the following store brands do you know? (multiple answers possible) - Clever </th>
+   <th style="text-align:center;"> Which of the following store brands do you know? (multiple answers possible) - Spar Vital </th>
+   <th style="text-align:center;"> Which of the following store brands do you know? (multiple answers possible) - ... </th>
   </tr>
  </thead>
 <tbody>
@@ -1479,11 +1461,11 @@ head(rank.data)%>%
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
  <thead>
   <tr>
-   <th style="text-align:center;">  Measuring steps </th>
-   <th style="text-align:center;">  Calories burned </th>
-   <th style="text-align:center;">  Measuring heartbeat </th>
-   <th style="text-align:center;">  Exercise tracking </th>
-   <th style="text-align:center;">  Measuring distance </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance </th>
   </tr>
  </thead>
 <tbody>
@@ -1621,8 +1603,8 @@ posthoc%>%
 <tbody>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Measuring steps </td>
-   <td style="text-align:center;"> Calories burned </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 1369.0 </td>
@@ -1632,8 +1614,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Measuring steps </td>
-   <td style="text-align:center;"> Measuring heartbeat </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 2231.0 </td>
@@ -1643,8 +1625,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Measuring steps </td>
-   <td style="text-align:center;"> Exercise tracking </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 354.0 </td>
@@ -1654,8 +1636,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Measuring steps </td>
-   <td style="text-align:center;"> Measuring distance </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 367.5 </td>
@@ -1665,8 +1647,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Calories burned </td>
-   <td style="text-align:center;"> Measuring heartbeat </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 3214.5 </td>
@@ -1676,8 +1658,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Calories burned </td>
-   <td style="text-align:center;"> Exercise tracking </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 610.5 </td>
@@ -1687,8 +1669,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Calories burned </td>
-   <td style="text-align:center;"> Measuring distance </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 940.0 </td>
@@ -1698,8 +1680,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Measuring heartbeat </td>
-   <td style="text-align:center;"> Exercise tracking </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 1235.0 </td>
@@ -1709,8 +1691,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Measuring heartbeat </td>
-   <td style="text-align:center;"> Measuring distance </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 1307.5 </td>
@@ -1720,8 +1702,8 @@ posthoc%>%
   </tr>
   <tr>
    <td style="text-align:center;"> Rank </td>
-   <td style="text-align:center;"> Exercise tracking </td>
-   <td style="text-align:center;"> Measuring distance </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 3534.5 </td>
@@ -1743,18 +1725,36 @@ cor.matrix
 ```
 
 ```
-##                       Measuring steps  Calories burned  Measuring heartbeat
-##  Measuring steps           1.00000000      -0.04651331           -0.6569094
-##  Calories burned          -0.04651331       1.00000000           -0.2221626
-##  Measuring heartbeat      -0.65690943      -0.22216264            1.0000000
-##  Exercise tracking         0.29633223      -0.10838758           -0.3255840
-##  Measuring distance       -0.05958032      -0.11694481           -0.3817895
-##                       Exercise tracking  Measuring distance
-##  Measuring steps              0.2963322         -0.05958032
-##  Calories burned             -0.1083876         -0.11694481
-##  Measuring heartbeat         -0.3255840         -0.38178948
-##  Exercise tracking            1.0000000         -0.47176821
-##  Measuring distance          -0.4717682          1.00000000
+##                                                                                                                                                                             What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps                                                                                                                                                                  1.00000000
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned                                                                                                                                                                 -0.04651331
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat                                                                                                                                                             -0.65690943
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking                                                                                                                                                                0.29633223
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance                                                                                                                                                              -0.05958032
+##                                                                                                                                                                             What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps                                                                                                                                                                 -0.04651331
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned                                                                                                                                                                  1.00000000
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat                                                                                                                                                             -0.22216264
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking                                                                                                                                                               -0.10838758
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance                                                                                                                                                              -0.11694481
+##                                                                                                                                                                             What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps                                                                                                                                                                      -0.6569094
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned                                                                                                                                                                      -0.2221626
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat                                                                                                                                                                   1.0000000
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking                                                                                                                                                                    -0.3255840
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance                                                                                                                                                                   -0.3817895
+##                                                                                                                                                                             What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps                                                                                                                                                                     0.2963322
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned                                                                                                                                                                    -0.1083876
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat                                                                                                                                                                -0.3255840
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking                                                                                                                                                                   1.0000000
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance                                                                                                                                                                 -0.4717682
+##                                                                                                                                                                             What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps                                                                                                                                                                    -0.05958032
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned                                                                                                                                                                    -0.11694481
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat                                                                                                                                                                -0.38178948
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking                                                                                                                                                                  -0.47176821
+## What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance                                                                                                                                                                  1.00000000
 ```
 
 At the first glance we can observe a lot of negative values, meaning that many features correlate negatively relative to each other. In order to make the interpretation easier, we will try to visualise correlations in a form of a correlation matrix.
@@ -1776,10 +1776,10 @@ If you wish to obtain information about how much one attribute is preferred over
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
  <thead>
   <tr>
-   <th style="text-align:center;">  Location </th>
-   <th style="text-align:center;">  Price </th>
-   <th style="text-align:center;">  Ambience </th>
-   <th style="text-align:center;">  Customer Service </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service </th>
    <th style="text-align:center;"> id </th>
   </tr>
  </thead>
@@ -1845,10 +1845,10 @@ round(res[,1:4],2) %>%
  <thead>
   <tr>
    <th style="text-align:left;">   </th>
-   <th style="text-align:center;">  Location </th>
-   <th style="text-align:center;">  Price </th>
-   <th style="text-align:center;">  Ambience </th>
-   <th style="text-align:center;">  Customer Service </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service </th>
   </tr>
  </thead>
 <tbody>
@@ -1985,139 +1985,139 @@ constant.sum.long %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;"> Price </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </td>
    <td style="text-align:center;"> 80 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Price </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </td>
    <td style="text-align:center;"> 100 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Price </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </td>
    <td style="text-align:center;"> 100 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 60 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 60 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 60 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Ambience </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 50 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Customer Service </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service </td>
    <td style="text-align:center;"> 100 </td>
    <td style="text-align:center;"> TRUE </td>
    <td style="text-align:center;"> FALSE </td>
@@ -2176,10 +2176,18 @@ pairwise.t.test(constant.sum.long$Points,constant.sum.long$Factor, paired = T, p
 ## 
 ## data:  constant.sum.long$Points and constant.sum.long$Factor 
 ## 
-##                    Location  Price  Ambience
-##  Price            2.7e-15   -      -        
-##  Ambience         3.2e-10   0.030  -        
-##  Customer Service < 2e-16   0.742  0.079    
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price            2.7e-15                                                                                                                                                                                                              
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience         3.2e-10                                                                                                                                                                                                              
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service < 2e-16                                                                                                                                                                                                              
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price            -                                                                                                                                                                                                                 
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience         0.030                                                                                                                                                                                                             
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service 0.742                                                                                                                                                                                                             
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price            -                                                                                                                                                                                                                    
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience         -                                                                                                                                                                                                                    
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service 0.079                                                                                                                                                                                                                
 ## 
 ## P value adjustment method: holm
 ```
@@ -2198,9 +2206,10 @@ Here is a glimpse in answers on how important is each factor to our respondents 
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
  <thead>
   <tr>
-   <th style="text-align:center;">  Location </th>
-   <th style="text-align:center;">  Price </th>
-   <th style="text-align:center;">  Ambience </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service </th>
    <th style="text-align:center;">  Customer Service </th>
   </tr>
  </thead>
@@ -2209,17 +2218,20 @@ Here is a glimpse in answers on how important is each factor to our respondents 
    <td style="text-align:center;"> 32 </td>
    <td style="text-align:center;"> 23 </td>
    <td style="text-align:center;"> 32 </td>
+   <td style="text-align:center;"> 13 </td>
    <td style="text-align:center;"> 1 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 25 </td>
    <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 22 </td>
+   <td style="text-align:center;"> 23 </td>
    <td style="text-align:center;"> 43 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 19 </td>
    <td style="text-align:center;"> 21 </td>
+   <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 34 </td>
   </tr>
@@ -2227,18 +2239,21 @@ Here is a glimpse in answers on how important is each factor to our respondents 
    <td style="text-align:center;"> 20 </td>
    <td style="text-align:center;"> 20 </td>
    <td style="text-align:center;"> 20 </td>
+   <td style="text-align:center;"> 40 </td>
    <td style="text-align:center;"> 46 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 10 </td>
+   <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 17 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> 20 </td>
    <td style="text-align:center;"> 20 </td>
+   <td style="text-align:center;"> 60 </td>
    <td style="text-align:center;"> 4 </td>
   </tr>
 </tbody>
@@ -2257,11 +2272,15 @@ head(dinner)%>%
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
  <thead>
   <tr>
-   <th style="text-align:center;">  Location </th>
-   <th style="text-align:center;">  Price </th>
-   <th style="text-align:center;">  Ambience </th>
-   <th style="text-align:center;">  Customer Service </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </th>
+   <th style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service </th>
+   <th style="text-align:center;"> Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR) </th>
+   <th style="text-align:center;"> You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A </th>
+   <th style="text-align:center;"> You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B </th>
    <th style="text-align:center;">  Willingness-to-pay (in EUR) </th>
+   <th style="text-align:center;">  Customer Service </th>
   </tr>
  </thead>
 <tbody>
@@ -2269,43 +2288,67 @@ head(dinner)%>%
    <td style="text-align:center;"> 32 </td>
    <td style="text-align:center;"> 23 </td>
    <td style="text-align:center;"> 32 </td>
-   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 13 </td>
+   <td style="text-align:center;"> 153 </td>
+   <td style="text-align:center;"> 12 </td>
+   <td style="text-align:center;"> 54 </td>
    <td style="text-align:center;"> 29 </td>
+   <td style="text-align:center;"> 1 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 25 </td>
    <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 22 </td>
-   <td style="text-align:center;"> 43 </td>
+   <td style="text-align:center;"> 23 </td>
+   <td style="text-align:center;"> 7 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 3 </td>
    <td style="text-align:center;"> 77 </td>
+   <td style="text-align:center;"> 43 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 19 </td>
    <td style="text-align:center;"> 21 </td>
    <td style="text-align:center;"> 30 </td>
-   <td style="text-align:center;"> 34 </td>
+   <td style="text-align:center;"> 30 </td>
+   <td style="text-align:center;"> 7 </td>
+   <td style="text-align:center;"> 21 </td>
+   <td style="text-align:center;"> 32 </td>
    <td style="text-align:center;"> 52 </td>
+   <td style="text-align:center;"> 34 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 20 </td>
    <td style="text-align:center;"> 20 </td>
    <td style="text-align:center;"> 20 </td>
-   <td style="text-align:center;"> 46 </td>
+   <td style="text-align:center;"> 40 </td>
+   <td style="text-align:center;"> 52 </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
    <td style="text-align:center;"> 31 </td>
+   <td style="text-align:center;"> 46 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 30 </td>
    <td style="text-align:center;"> 10 </td>
-   <td style="text-align:center;"> 17 </td>
+   <td style="text-align:center;"> 30 </td>
+   <td style="text-align:center;"> 117 </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
    <td style="text-align:center;"> 22 </td>
+   <td style="text-align:center;"> 17 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;"> 20 </td>
    <td style="text-align:center;"> 20 </td>
-   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 60 </td>
+   <td style="text-align:center;"> 44 </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
    <td style="text-align:center;"> 35 </td>
+   <td style="text-align:center;"> 4 </td>
   </tr>
 </tbody>
 </table>
@@ -2319,18 +2362,96 @@ correlation
 ```
 
 ```
-##                                Location       Price    Ambience
-##  Location                     1.0000000 -0.31732620 -0.36134355
-##  Price                       -0.3173262  1.00000000 -0.21962027
-##  Ambience                    -0.3613436 -0.21962027  1.00000000
-##  Customer Service            -0.1668810  0.08894752 -0.02405881
-##  Willingness-to-pay (in EUR)  0.1414540 -0.07438388 -0.32550607
-##                               Customer Service  Willingness-to-pay (in EUR)
-##  Location                          -0.16688104                   0.14145397
-##  Price                              0.08894752                  -0.07438388
-##  Ambience                          -0.02405881                  -0.32550607
-##  Customer Service                   1.00000000                   0.12125571
-##  Willingness-to-pay (in EUR)        0.12125571                   1.00000000
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                                                                                                                                                                                                                    1.00000000
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                                                                                                                                                                                                                      -0.31732620
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                                                                                                                                                                                                                   -0.36134355
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                           -0.04130346
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                           -0.08112487
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                           NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                           NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                             0.14145397
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                       -0.16688104
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                                                                                                                                                                                                                -0.31732620
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                                                                                                                                                                                                                    1.00000000
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                                                                                                                                                                                                                -0.21962027
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                        -0.60735926
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                         0.02184242
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                        NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                        NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                         -0.07438388
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                     0.08894752
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                                                                                                                                                                                                                   -0.36134355
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                                                                                                                                                                                                                      -0.21962027
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                                                                                                                                                                                                                    1.00000000
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                           -0.40628646
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                            0.11348694
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                           NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                           NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                            -0.32550607
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                       -0.02405881
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                                                                                                                                                                                                                           -0.04130346
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                                                                                                                                                                                                                              -0.60735926
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                                                                                                                                                                                                                           -0.40628646
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                                    1.00000000
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                   -0.06632089
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                                   NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                                   NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                                     0.26412732
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                                0.04415238
+##                                                                                                                                                                                                                               Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                                                                                                                           -0.08112487
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                                                                                                                               0.02184242
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                                                                                                                            0.11348694
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                   -0.06632089
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                    1.00000000
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                   NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                   NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                    -0.01518050
+##  Customer Service                                                                                                                                                                                                                                                                                                                                0.18247589
+##                                                                                                                                                                                                                               You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                                                                                                                                                                                                                             NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                                                                                                                                                                                                                                NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                                                                                                                                                                                                                             NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                                     NA
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                     NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                             1
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                            NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                                      NA
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                                 NA
+##                                                                                                                                                                                                                               You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                                                                                                                                                                                                                             NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                                                                                                                                                                                                                                NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                                                                                                                                                                                                                             NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                                     NA
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                     NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                            NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                             1
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                                      NA
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                                 NA
+##                                                                                                                                                                                                                                Willingness-to-pay (in EUR)
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location                           0.14145397
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                             -0.07438388
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience                          -0.32550607
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                   0.26412732
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                  -0.01518050
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                  NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                  NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                    1.00000000
+##  Customer Service                                                                                                                                                                                                                               0.12125571
+##                                                                                                                                                                                                                                Customer Service
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location               -0.16688104
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price                   0.08894752
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience               -0.02405881
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service        0.04415238
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                        0.18247589
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                       NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                       NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                         0.12125571
+##  Customer Service                                                                                                                                                                                                                    1.00000000
 ```
 From our data we see, for instance, that some negative correlation between willingness to pay and importance of ambiance as well as some positive correlation between importance of customer service and willingness-to-pay. Let us observe descriptive statistics as well:  
 
@@ -2362,7 +2483,7 @@ psych::describe(dinner)%>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Location </td>
+   <td style="text-align:left;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </td>
    <td style="text-align:center;"> 1 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 12.14530 </td>
@@ -2378,7 +2499,7 @@ psych::describe(dinner)%>%
    <td style="text-align:center;"> 1.003844 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Price </td>
+   <td style="text-align:left;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Price </td>
    <td style="text-align:center;"> 2 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 31.48718 </td>
@@ -2394,7 +2515,7 @@ psych::describe(dinner)%>%
    <td style="text-align:center;"> 1.499613 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Ambience </td>
+   <td style="text-align:left;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Ambience </td>
    <td style="text-align:center;"> 3 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 25.76068 </td>
@@ -2410,24 +2531,72 @@ psych::describe(dinner)%>%
    <td style="text-align:center;"> 1.292286 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Customer Service </td>
+   <td style="text-align:left;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service </td>
    <td style="text-align:center;"> 4 </td>
    <td style="text-align:center;"> 117 </td>
-   <td style="text-align:center;"> 49.35897 </td>
-   <td style="text-align:center;"> 29.47777 </td>
-   <td style="text-align:center;"> 47 </td>
-   <td style="text-align:center;"> 49.29474 </td>
-   <td style="text-align:center;"> 40.0302 </td>
+   <td style="text-align:center;"> 30.60684 </td>
+   <td style="text-align:center;"> 15.97949 </td>
+   <td style="text-align:center;"> 30 </td>
+   <td style="text-align:center;"> 30.74737 </td>
+   <td style="text-align:center;"> 14.8260 </td>
    <td style="text-align:center;"> 0 </td>
-   <td style="text-align:center;"> 98 </td>
-   <td style="text-align:center;"> 98 </td>
-   <td style="text-align:center;"> 0.0342022 </td>
-   <td style="text-align:center;"> -1.1897398 </td>
-   <td style="text-align:center;"> 2.725221 </td>
+   <td style="text-align:center;"> 100 </td>
+   <td style="text-align:center;"> 100 </td>
+   <td style="text-align:center;"> 0.4103958 </td>
+   <td style="text-align:center;"> 1.9020992 </td>
+   <td style="text-align:center;"> 1.477304 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR) </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 117 </td>
+   <td style="text-align:center;"> 101.66667 </td>
+   <td style="text-align:center;"> 54.16195 </td>
+   <td style="text-align:center;"> 103 </td>
+   <td style="text-align:center;"> 103.03158 </td>
+   <td style="text-align:center;"> 60.7866 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 199 </td>
+   <td style="text-align:center;"> -0.1818371 </td>
+   <td style="text-align:center;"> -0.9633914 </td>
+   <td style="text-align:center;"> 5.007274 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A </td>
+   <td style="text-align:center;"> 6 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 12.33333 </td>
+   <td style="text-align:center;"> 8.50490 </td>
+   <td style="text-align:center;"> 12 </td>
+   <td style="text-align:center;"> 12.33333 </td>
+   <td style="text-align:center;"> 11.8608 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 21 </td>
+   <td style="text-align:center;"> 17 </td>
+   <td style="text-align:center;"> 0.0391329 </td>
+   <td style="text-align:center;"> -2.3333333 </td>
+   <td style="text-align:center;"> 4.910307 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B </td>
+   <td style="text-align:center;"> 7 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 29.66667 </td>
+   <td style="text-align:center;"> 25.57994 </td>
+   <td style="text-align:center;"> 32 </td>
+   <td style="text-align:center;"> 29.66667 </td>
+   <td style="text-align:center;"> 32.6172 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 54 </td>
+   <td style="text-align:center;"> 51 </td>
+   <td style="text-align:center;"> -0.0904583 </td>
+   <td style="text-align:center;"> -2.3333333 </td>
+   <td style="text-align:center;"> 14.768585 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Willingness-to-pay (in EUR) </td>
-   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 8 </td>
    <td style="text-align:center;"> 117 </td>
    <td style="text-align:center;"> 32.99145 </td>
    <td style="text-align:center;"> 26.26801 </td>
@@ -2440,6 +2609,22 @@ psych::describe(dinner)%>%
    <td style="text-align:center;"> 0.8007002 </td>
    <td style="text-align:center;"> 0.0124325 </td>
    <td style="text-align:center;"> 2.428479 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Customer Service </td>
+   <td style="text-align:center;"> 9 </td>
+   <td style="text-align:center;"> 117 </td>
+   <td style="text-align:center;"> 49.35897 </td>
+   <td style="text-align:center;"> 29.47777 </td>
+   <td style="text-align:center;"> 47 </td>
+   <td style="text-align:center;"> 49.29474 </td>
+   <td style="text-align:center;"> 40.0302 </td>
+   <td style="text-align:center;"> 0 </td>
+   <td style="text-align:center;"> 98 </td>
+   <td style="text-align:center;"> 98 </td>
+   <td style="text-align:center;"> 0.0342022 </td>
+   <td style="text-align:center;"> -1.1897398 </td>
+   <td style="text-align:center;"> 2.725221 </td>
   </tr>
 </tbody>
 </table>
@@ -2639,18 +2824,96 @@ correlation
 ```
 
 ```
-##                                Location       Price    Ambience
-## Location                      1.0000000 -0.31732620 -0.36134355
-## Price                        -0.3173262  1.00000000 -0.21962027
-## Ambience                     -0.3613436 -0.21962027  1.00000000
-##  Customer Service            -0.1668810  0.08894752 -0.02405881
-##  Willingness-to-pay (in EUR)  0.1414540 -0.07438388 -0.32550607
-##                               Customer Service  Willingness-to-pay (in EUR)
-## Location                           -0.16688104                   0.14145397
-## Price                               0.08894752                  -0.07438388
-## Ambience                           -0.02405881                  -0.32550607
-##  Customer Service                   1.00000000                   0.12125571
-##  Willingness-to-pay (in EUR)        0.12125571                   1.00000000
+##                                                                                                                                                                                                                                  Location
+## Location                                                                                                                                                                                                                       1.00000000
+## Price                                                                                                                                                                                                                         -0.31732620
+## Ambience                                                                                                                                                                                                                      -0.36134355
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service -0.04130346
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                 -0.08112487
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                 NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                 NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                   0.14145397
+##  Customer Service                                                                                                                                                                                                             -0.16688104
+##                                                                                                                                                                                                                                     Price
+## Location                                                                                                                                                                                                                      -0.31732620
+## Price                                                                                                                                                                                                                          1.00000000
+## Ambience                                                                                                                                                                                                                      -0.21962027
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service -0.60735926
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                  0.02184242
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                 NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                 NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                  -0.07438388
+##  Customer Service                                                                                                                                                                                                              0.08894752
+##                                                                                                                                                                                                                                  Ambience
+## Location                                                                                                                                                                                                                      -0.36134355
+## Price                                                                                                                                                                                                                         -0.21962027
+## Ambience                                                                                                                                                                                                                       1.00000000
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service -0.40628646
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                  0.11348694
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                 NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                 NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                  -0.32550607
+##  Customer Service                                                                                                                                                                                                             -0.02405881
+##                                                                                                                                                                                                                               What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service
+## Location                                                                                                                                                                                                                                                                                                                                                                                                                                        -0.04130346
+## Price                                                                                                                                                                                                                                                                                                                                                                                                                                           -0.60735926
+## Ambience                                                                                                                                                                                                                                                                                                                                                                                                                                        -0.40628646
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                                    1.00000000
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                   -0.06632089
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                                   NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                                   NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                                     0.26412732
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                                0.04415238
+##                                                                                                                                                                                                                               Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)
+## Location                                                                                                                                                                                                                                                                                                                                        -0.08112487
+## Price                                                                                                                                                                                                                                                                                                                                            0.02184242
+## Ambience                                                                                                                                                                                                                                                                                                                                         0.11348694
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                   -0.06632089
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                    1.00000000
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                   NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                   NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                    -0.01518050
+##  Customer Service                                                                                                                                                                                                                                                                                                                                0.18247589
+##                                                                                                                                                                                                                               You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A
+## Location                                                                                                                                                                                                                                                                                                                                                                                                                                          NA
+## Price                                                                                                                                                                                                                                                                                                                                                                                                                                             NA
+## Ambience                                                                                                                                                                                                                                                                                                                                                                                                                                          NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                                     NA
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                     NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                             1
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                            NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                                      NA
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                                 NA
+##                                                                                                                                                                                                                               You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B
+## Location                                                                                                                                                                                                                                                                                                                                                                                                                                          NA
+## Price                                                                                                                                                                                                                                                                                                                                                                                                                                             NA
+## Ambience                                                                                                                                                                                                                                                                                                                                                                                                                                          NA
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                                                                                                                                                                                                                     NA
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                     NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                                                                                                                                                                                                            NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                                                                                                                                                                                                             1
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                                                                                                                                                                                                                      NA
+##  Customer Service                                                                                                                                                                                                                                                                                                                                                                                                                                 NA
+##                                                                                                                                                                                                                                Willingness-to-pay (in EUR)
+## Location                                                                                                                                                                                                                                        0.14145397
+## Price                                                                                                                                                                                                                                          -0.07438388
+## Ambience                                                                                                                                                                                                                                       -0.32550607
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service                   0.26412732
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                                  -0.01518050
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                                  NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                                  NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                                    1.00000000
+##  Customer Service                                                                                                                                                                                                                               0.12125571
+##                                                                                                                                                                                                                                Customer Service
+## Location                                                                                                                                                                                                                            -0.16688104
+## Price                                                                                                                                                                                                                                0.08894752
+## Ambience                                                                                                                                                                                                                            -0.02405881
+## What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Customer Service        0.04415238
+## Open-ended questions      How much are you willing to pay for the previously described product? - Willingness-to-pay (in EUR)                                                                                                        0.18247589
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - A                       NA
+## You may also, for example, ask about the  willingness-to-pay under two different conditions using... - Here you may include the experimental treatment (e.g., video, text, pictures) - Willingness-to-pay (in EUR) - B                       NA
+##  Willingness-to-pay (in EUR)                                                                                                                                                                                                         0.12125571
+##  Customer Service                                                                                                                                                                                                                    1.00000000
 ```
 
 By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicolinearity between independent variables.
@@ -2809,11 +3072,11 @@ kableExtra::kbl(align = "c") %>%
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
  <thead>
   <tr>
-   <th style="text-align:center;">  Measuring steps </th>
-   <th style="text-align:center;">  Calories burned </th>
-   <th style="text-align:center;">  Measuring heartbeat </th>
-   <th style="text-align:center;">  Exercise tracking </th>
-   <th style="text-align:center;">  Measuring distance </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Calories burned </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring heartbeat </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Exercise tracking </th>
+   <th style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring distance </th>
   </tr>
  </thead>
 <tbody>
@@ -2878,27 +3141,27 @@ kableExtra::kbl(align = "c") %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;"> Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
    <td style="text-align:center;"> 2 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
    <td style="text-align:center;"> 1 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
    <td style="text-align:center;"> 1 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
    <td style="text-align:center;"> 2 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
    <td style="text-align:center;"> 5 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Measuring steps </td>
+   <td style="text-align:center;"> What features are important to you when evaluating fitness trackers? Please order the following items from the most important to the least important. - Measuring steps </td>
    <td style="text-align:center;"> 4 </td>
   </tr>
 </tbody>
@@ -2957,27 +3220,27 @@ kableExtra::kbl(align = "c") %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;"> Location </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </td>
    <td style="text-align:center;"> 32 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Location </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </td>
    <td style="text-align:center;"> 25 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Location </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </td>
    <td style="text-align:center;"> 19 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Location </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </td>
    <td style="text-align:center;"> 20 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Location </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </td>
    <td style="text-align:center;"> 30 </td>
   </tr>
   <tr>
-   <td style="text-align:center;"> Location </td>
+   <td style="text-align:center;"> What factors do you consider when choosing a place to go for a dinner? Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each factor. - Location </td>
    <td style="text-align:center;"> 0 </td>
   </tr>
 </tbody>
@@ -3351,8 +3614,8 @@ str(df)
 
 ```
 ## 'data.frame':	100 obs. of  2 variables:
-##  $ country_id: num  2 4 5 6 4 3 6 1 4 6 ...
-##  $ country   : Factor w/ 7 levels "Bangladesh","Japan",..: 2 4 5 6 4 3 6 1 4 6 ...
+##  $ country_id: num  6 6 4 4 3 4 3 4 5 2 ...
+##  $ country   : Factor w/ 7 levels "Bangladesh","Japan",..: 6 6 4 4 3 4 3 4 5 2 ...
 ```
 
 In our data frame we have two columns, "country_id" and "country". 
@@ -3368,7 +3631,7 @@ head(df)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]}],"data":[{"1":"2","2":"Japan","3":"Asia","_rn_":"1"},{"1":"4","2":"Germany","3":"Europe","_rn_":"2"},{"1":"5","2":"Italy","3":"Europe","_rn_":"3"},{"1":"6","2":"USA","3":"other","_rn_":"4"},{"1":"4","2":"Germany","3":"Europe","_rn_":"5"},{"1":"3","2":"Austria","3":"Europe","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]}],"data":[{"1":"6","2":"USA","3":"other","_rn_":"1"},{"1":"6","2":"USA","3":"other","_rn_":"2"},{"1":"4","2":"Germany","3":"Europe","_rn_":"3"},{"1":"4","2":"Germany","3":"Europe","_rn_":"4"},{"1":"3","2":"Austria","3":"Europe","_rn_":"5"},{"1":"4","2":"Germany","3":"Europe","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -3382,7 +3645,7 @@ head(df)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]},{"label":["region_1"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"2","2":"Japan","3":"Asia","4":"Asia","_rn_":"1"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","_rn_":"2"},{"1":"5","2":"Italy","3":"Europe","4":"Asia","_rn_":"3"},{"1":"6","2":"USA","3":"other","4":"other","_rn_":"4"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","_rn_":"5"},{"1":"3","2":"Austria","3":"Europe","4":"Europe","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]},{"label":["region_1"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"6","2":"USA","3":"other","4":"other","_rn_":"1"},{"1":"6","2":"USA","3":"other","4":"other","_rn_":"2"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","_rn_":"3"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","_rn_":"4"},{"1":"3","2":"Austria","3":"Europe","4":"Europe","_rn_":"5"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -3403,7 +3666,7 @@ head(df)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]},{"label":["region_1"],"name":[4],"type":["fct"],"align":["left"]},{"label":["region_2"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"2","2":"Japan","3":"Asia","4":"Asia","5":"Asia","_rn_":"1"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","5":"Europe","_rn_":"2"},{"1":"5","2":"Italy","3":"Europe","4":"Asia","5":"Europe","_rn_":"3"},{"1":"6","2":"USA","3":"other","4":"other","5":"other","_rn_":"4"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","5":"Europe","_rn_":"5"},{"1":"3","2":"Austria","3":"Europe","4":"Europe","5":"Europe","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["fct"],"align":["left"]},{"label":["region"],"name":[3],"type":["fct"],"align":["left"]},{"label":["region_1"],"name":[4],"type":["fct"],"align":["left"]},{"label":["region_2"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"6","2":"USA","3":"other","4":"other","5":"other","_rn_":"1"},{"1":"6","2":"USA","3":"other","4":"other","5":"other","_rn_":"2"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","5":"Europe","_rn_":"3"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","5":"Europe","_rn_":"4"},{"1":"3","2":"Austria","3":"Europe","4":"Europe","5":"Europe","_rn_":"5"},{"1":"4","2":"Germany","3":"Europe","4":"Europe","5":"Europe","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
