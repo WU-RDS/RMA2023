@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Marketing Analytics 2021</title>
   <meta name="description" content="An Introduction to Data Analytics Using R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Marketing Analytics 2021" />
   <meta property="og:type" content="book" />
@@ -31,7 +31,9 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
 <link rel="next" href="introduction.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -47,36 +49,34 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -129,6 +129,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
@@ -147,12 +148,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="part"><span><b>I Course outline</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a>
+<ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#grading"><i class="fa fa-check"></i>Grading</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a>
+<ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#discussion-forum"><i class="fa fa-check"></i>Discussion forum</a></li>
@@ -163,9 +167,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Lecture notes</b></span></li>
-<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a><ul>
+<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-foundations-recap"><i class="fa fa-check"></i><b>1.1</b> Marketing foundations (recap)</a></li>
-<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a><ul>
+<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#research-question-and-hypothesis"><i class="fa fa-check"></i><b>1.2.1</b> Research question and hypothesis</a></li>
 <li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.2.2</b> Choosing a research design</a></li>
 <li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#collecting-data"><i class="fa fa-check"></i><b>1.2.3</b> Collecting data</a></li>
@@ -173,7 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#learning-check"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#references"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> How to download and install R and RStudio</a></li>
 <li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#the-r-studio-interface"><i class="fa fa-check"></i><b>2.2</b> The R Studio interface</a></li>
 <li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
@@ -181,13 +188,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#a-typical-r-session"><i class="fa fa-check"></i><b>2.5</b> A typical R session</a></li>
 <li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.6</b> Getting help</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a><ul>
-<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a><ul>
+<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>3.1.1</b> Creating objects</a></li>
 <li class="chapter" data-level="3.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>3.1.2</b> Data types</a></li>
 <li class="chapter" data-level="3.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>3.1.3</b> Data structures</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a><ul>
+<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>3.2.1</b> Getting data for this course</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>3.2.2</b> Import data created by other software packages</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-handling.html"><a href="data-handling.html#import-data-from-qualtrics"><i class="fa fa-check"></i><b>3.2.3</b> Import data from Qualtrics</a></li>
@@ -196,12 +206,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="data-handling.html"><a href="data-handling.html#learning-check-1"><i class="fa fa-check"></i>Learning check</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a><ul>
-<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a><ul>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>4.1.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>4.1.2</b> Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a><ul>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>4.2.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> Continuous variables</a></li>
 <li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>4.2.3</b> Saving plots</a></li>
@@ -210,8 +223,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#learning-check-2"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#references-1"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a><ul>
-<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a><ul>
+<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="statistical-inference.html"><a href="statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>5.1.1</b> Sampling from a known population</a></li>
 <li class="chapter" data-level="5.1.2" data-path="statistical-inference.html"><a href="statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>5.1.2</b> Standard error of the mean</a></li>
 </ul></li>
@@ -221,33 +236,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#learning-check-3"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#references-2"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a><ul>
-<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a><ul>
+<li class="chapter" data-level="6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>6</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-null-hypothesis"><i class="fa fa-check"></i><b>6.1.1</b> The null hypothesis</a></li>
 <li class="chapter" data-level="6.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#statistical-inference-on-a-sample"><i class="fa fa-check"></i><b>6.1.2</b> Statistical inference on a sample</a></li>
 <li class="chapter" data-level="6.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>6.1.3</b> Choosing the right test</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>6.2</b> One sample t-test</a></li>
-<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a><ul>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>6.3</b> Comparing two means</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>6.3.1</b> Independent-means t-test</a></li>
 <li class="chapter" data-level="6.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>6.3.2</b> Dependent-means t-test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#nhst-considerations"><i class="fa fa-check"></i><b>6.4</b> NHST considerations</a><ul>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#nhst-considerations"><i class="fa fa-check"></i><b>6.4</b> NHST considerations</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>6.4.1</b> Type I and Type II Errors</a></li>
 <li class="chapter" data-level="6.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#significance-level-sample-size-power-and-effect-size"><i class="fa fa-check"></i><b>6.4.2</b> Significance level, sample size, power, and effect size</a></li>
 <li class="chapter" data-level="6.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#p-values-stopping-rules-and-p-hacking"><i class="fa fa-check"></i><b>6.4.3</b> P-values, stopping rules and p-hacking</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.5</b> Comparing several means</a><ul>
+<li class="chapter" data-level="6.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>6.5</b> Comparing several means</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-2"><i class="fa fa-check"></i><b>6.5.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>6.5.2</b> Decomposing variance</a></li>
 <li class="chapter" data-level="6.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>6.5.3</b> One-way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.6</b> Non-parametric tests</a><ul>
+<li class="chapter" data-level="6.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>6.6</b> Non-parametric tests</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>6.6.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
 <li class="chapter" data-level="6.6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>6.6.2</b> Wilcoxon signed-rank test</a></li>
 <li class="chapter" data-level="6.6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>6.6.3</b> Kruskal-Wallis test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.7</b> Categorical data</a><ul>
+<li class="chapter" data-level="6.7" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>6.7</b> Categorical data</a>
+<ul>
 <li class="chapter" data-level="6.7.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#confidence-intervals-for-proportions"><i class="fa fa-check"></i><b>6.7.1</b> Confidence intervals for proportions</a></li>
 <li class="chapter" data-level="6.7.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>6.7.2</b> Chi-square test</a></li>
 <li class="chapter" data-level="6.7.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#sample-size-1"><i class="fa fa-check"></i><b>6.7.3</b> Sample size</a></li>
@@ -255,16 +277,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#learning-check-4"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#references-3"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
-<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a><ul>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>7.1</b> Correlation</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>7.1.1</b> Correlation coefficient</a></li>
 <li class="chapter" data-level="7.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>7.1.2</b> Significance testing</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a><ul>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>7.2</b> Regression</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>7.2.1</b> Simple linear regression</a></li>
 <li class="chapter" data-level="7.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>7.2.2</b> Multiple linear regression</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a><ul>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>7.3</b> Potential problems</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>7.3.1</b> Outliers</a></li>
 <li class="chapter" data-level="7.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>7.3.2</b> Influential observations</a></li>
 <li class="chapter" data-level="7.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>7.3.3</b> Non-linearity</a></li>
@@ -276,15 +302,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.9" data-path="regression.html"><a href="regression.html#overfitting"><i class="fa fa-check"></i><b>7.3.9</b> Overfitting</a></li>
 <li class="chapter" data-level="7.3.10" data-path="regression.html"><a href="regression.html#variable-selection"><i class="fa fa-check"></i><b>7.3.10</b> Variable selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a><ul>
+<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>7.4</b> Categorical predictors</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>7.4.1</b> Two categories</a></li>
 <li class="chapter" data-level="7.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>7.4.2</b> More than two categories</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a><ul>
+<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>7.5</b> Extensions of the linear model</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>7.5.1</b> Interaction effects</a></li>
 <li class="chapter" data-level="7.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>7.5.2</b> Non-linear relationships</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a><ul>
+<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>7.6</b> Logistic regression</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>7.6.1</b> Motivation and intuition</a></li>
 <li class="chapter" data-level="7.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>7.6.2</b> Technical details of the model</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>7.6.3</b> Estimation in R</a></li>
@@ -292,9 +321,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#references-4"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a><ul>
+<li class="chapter" data-level="8" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>8</b> Exploratory factor analysis</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a><ul>
+<li class="chapter" data-level="8.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>8.2</b> Steps in factor analysis</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>8.2.1</b> Are the assumptions satisfied?</a></li>
 <li class="chapter" data-level="8.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>8.2.2</b> Deriving factors</a></li>
 <li class="chapter" data-level="8.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>8.2.3</b> Factor interpretation</a></li>
@@ -304,10 +335,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#learning-check-6"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#references-5"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>9</b> Cluster analysis</a></li>
+<li class="chapter" data-level="9" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>9</b> Cluster analysis</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cluster-analysis.html"><a href="cluster-analysis.html#k-means"><i class="fa fa-check"></i><b>9.1</b> K-Means</a></li>
+</ul></li>
 <li class="part"><span><b>III Assignments</b></span></li>
-<li class="chapter" data-level="10" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>10</b> R Markdown</a><ul>
-<li class="chapter" data-level="10.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>10.1</b> Introduction to R Markdown</a><ul>
+<li class="chapter" data-level="10" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>10</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>10.1</b> Introduction to R Markdown</a>
+<ul>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i>Creating a new R Markdown document</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#text-and-equations"><i class="fa fa-check"></i>Text and Equations</a></li>
 <li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#r-code"><i class="fa fa-check"></i>R-Code</a></li>
@@ -315,23 +351,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IV Group project</b></span></li>
-<li class="chapter" data-level="11" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>11</b> Survey design &amp; analysis</a><ul>
-<li class="chapter" data-level="11.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>11.1</b> Your tasks</a><ul>
+<li class="chapter" data-level="11" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html"><i class="fa fa-check"></i><b>11</b> Survey design &amp; analysis</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#your-tasks"><i class="fa fa-check"></i><b>11.1</b> Your tasks</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#topics-for-the-group-project"><i class="fa fa-check"></i><b>11.1.1</b> Topics for the group project</a></li>
 <li class="chapter" data-level="11.1.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#guidelines"><i class="fa fa-check"></i><b>11.1.2</b> Guidelines</a></li>
 <li class="chapter" data-level="11.1.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#timeline"><i class="fa fa-check"></i><b>11.1.3</b> Timeline</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>11.2</b> Part 1: Before collecting data</a><ul>
+<li class="chapter" data-level="11.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-1-before-collecting-data"><i class="fa fa-check"></i><b>11.2</b> Part 1: Before collecting data</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#research-design"><i class="fa fa-check"></i><b>11.2.1</b> Research design</a></li>
 <li class="chapter" data-level="11.2.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#survey-method"><i class="fa fa-check"></i><b>11.2.2</b> Survey method</a></li>
 <li class="chapter" data-level="11.2.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#questionnaire"><i class="fa fa-check"></i><b>11.2.3</b> Questionnaire</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-data-collection-and-analysis"><i class="fa fa-check"></i><b>11.3</b> Part 2: Data collection and analysis</a><ul>
+<li class="chapter" data-level="11.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#part-2-data-collection-and-analysis"><i class="fa fa-check"></i><b>11.3</b> Part 2: Data collection and analysis</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#collecting-data-1"><i class="fa fa-check"></i><b>11.3.1</b> Collecting data</a></li>
 <li class="chapter" data-level="11.3.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-analysis"><i class="fa fa-check"></i><b>11.3.2</b> Data analysis</a></li>
 <li class="chapter" data-level="11.3.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#reporting"><i class="fa fa-check"></i><b>11.3.3</b> Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>11.4</b> Frequently asked questions</a><ul>
+<li class="chapter" data-level="11.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#frequently-asked-questions"><i class="fa fa-check"></i><b>11.4</b> Frequently asked questions</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#multiple-answers-stored-in-one-cell-in-csv"><i class="fa fa-check"></i><b>11.4.1</b> Multiple answers stored in one cell in CSV</a></li>
 <li class="chapter" data-level="11.4.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#labels-for-numeric-values-in-csv-output"><i class="fa fa-check"></i><b>11.4.2</b> Labels for numeric values in CSV output</a></li>
 <li class="chapter" data-level="11.4.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#bar-chart-for-multiple-choice-question-with-multiple-answers"><i class="fa fa-check"></i><b>11.4.3</b> Bar chart for multiple choice question with multiple answers</a></li>
@@ -341,9 +382,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.7" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#collapserecode-categories"><i class="fa fa-check"></i><b>11.4.7</b> Collapse/recode categories</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="part-faq.html"><a href="part-faq.html"><i class="fa fa-check"></i><b>12</b> (PART) FAQ</a></li>
-<li class="chapter" data-level="13" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>13</b> FAQ</a><ul>
-<li class="chapter" data-level="13.1" data-path="faq.html"><a href="faq.html#common-error-messages"><i class="fa fa-check"></i><b>13.1</b> Common error messages</a><ul>
+<li class="part"><span><b>V FAQ</b></span></li>
+<li class="chapter" data-level="12" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>12</b> FAQ</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="faq.html"><a href="faq.html#common-error-messages"><i class="fa fa-check"></i><b>12.1</b> Common error messages</a>
+<ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#a-general-note-on-error-messages"><i class="fa fa-check"></i>A general note on error messages</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-filefile-rt-cannot-open-the-connection"><i class="fa fa-check"></i>Error in file(file, “rt”): cannot open the connection</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-unexpected-symbol-in-call"><i class="fa fa-check"></i>Error: unexpected ‘SYMBOL’ in “CALL”</a></li>
@@ -353,39 +396,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-could-not-find-function-function"><i class="fa fa-check"></i>Error in CALL: could not find function “FUNCTION”</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-incorrect-number-of-dimension"><i class="fa fa-check"></i>Error in CALL: incorrect number of dimension</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="faq.html"><a href="faq.html#installation-of-r-packages"><i class="fa fa-check"></i><b>13.2</b> Installation of R packages</a><ul>
+<li class="chapter" data-level="12.2" data-path="faq.html"><a href="faq.html#installation-of-r-packages"><i class="fa fa-check"></i><b>12.2</b> Installation of R packages</a>
+<ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#what-are-the-different-ways-to-install-r-packages"><i class="fa fa-check"></i>What are the different ways to install R packages?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-cannot-install-packages-due-to-error-in-contrib.urlrepossource-or-warning-message-package-packagename-is-not-available-for-this-version-of-r"><i class="fa fa-check"></i>I cannot install packages due to “Error in contrib.url(repos,”source“)” or “Warning message: package ‘PACKAGENAME’ is not available for this version of R”</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#some-libraries-with-graphical-output-e.g.-summarytools-magick-fail-to-installload-properly-on-macos"><i class="fa fa-check"></i>Some libraries with graphical output (e.g., summarytools, magick) fail to install/load properly on MacOS</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-cannot-install-some-packages-on-macos"><i class="fa fa-check"></i>I cannot install some packages on MacOS</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="faq.html"><a href="faq.html#issues-with-statistics-and-data"><i class="fa fa-check"></i><b>13.3</b> Issues with statistics and data</a><ul>
+<li class="chapter" data-level="12.3" data-path="faq.html"><a href="faq.html#issues-with-statistics-and-data"><i class="fa fa-check"></i><b>12.3</b> Issues with statistics and data</a>
+<ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-does-a-multi-item-scale-lead-to-increased-reliability"><i class="fa fa-check"></i>Why does a multi-item scale lead to increased reliability?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-can-demeaningstandardization-lead-to-missing-values"><i class="fa fa-check"></i>Why can demeaning/standardization lead to missing values?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#the-confidence-interval-ci-of-the-mean-seems-very-small-compared-to-the-dispersion-of-my-sample.-can-this-be-correct"><i class="fa fa-check"></i>The confidence interval (CI) of the mean seems very small compared to the dispersion of my sample. Can this be correct?</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="faq.html"><a href="faq.html#errors-related-to-specific-methods"><i class="fa fa-check"></i><b>13.4</b> Errors related to specific methods</a><ul>
+<li class="chapter" data-level="12.4" data-path="faq.html"><a href="faq.html#errors-related-to-specific-methods"><i class="fa fa-check"></i><b>12.4</b> Errors related to specific methods</a>
+<ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#logistic-regression-1"><i class="fa fa-check"></i>Logistic regression</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#when-using-logistic-regression-error-in-weights-y-non-numeric-argument-to-binary-operator"><i class="fa fa-check"></i>When using logistic regression: Error in weights * y : non-numeric argument to binary operator</a></li>
 </ul></li>
-<li class="chapter" data-level="13.5" data-path="faq.html"><a href="faq.html#general-settings-and-options"><i class="fa fa-check"></i><b>13.5</b> General settings and options</a><ul>
+<li class="chapter" data-level="12.5" data-path="faq.html"><a href="faq.html#general-settings-and-options"><i class="fa fa-check"></i><b>12.5</b> General settings and options</a>
+<ul>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#numbers-are-formatted-weirdly"><i class="fa fa-check"></i>Numbers are formatted weirdly</a></li>
 </ul></li>
-<li class="chapter" data-level="13.6" data-path="faq.html"><a href="faq.html#data-visualizationoutput-issues"><i class="fa fa-check"></i><b>13.6</b> Data visualization/output issues</a><ul>
+<li class="chapter" data-level="12.6" data-path="faq.html"><a href="faq.html#data-visualizationoutput-issues"><i class="fa fa-check"></i><b>12.6</b> Data visualization/output issues</a>
+<ul>
 <li><a href="faq.html#how-can-the-geom-colors-in-a-ggplot-be-changed">How can the <code>geom</code> colors in a <code>ggplot</code> be changed?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-are-some-histograms-displayed-differently"><i class="fa fa-check"></i>Why are some histograms displayed differently?</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#some-labels-in-plots-are-cut-off.-how-can-i-extend-the-plot-margins"><i class="fa fa-check"></i>Some labels in plots are cut off. How can I extend the plot margins?</a></li>
 </ul></li>
-<li class="chapter" data-level="13.7" data-path="faq.html"><a href="faq.html#issues-with-functions-and-function-arguments"><i class="fa fa-check"></i><b>13.7</b> Issues with functions and function arguments</a><ul>
+<li class="chapter" data-level="12.7" data-path="faq.html"><a href="faq.html#issues-with-functions-and-function-arguments"><i class="fa fa-check"></i><b>12.7</b> Issues with functions and function arguments</a>
+<ul>
 <li><a href="faq.html#problems-with-factor-and-as.factor">Problems with <code>factor</code> and <code>as.factor</code></a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#how-can-i-find-an-explanation-of-the-output-of-a-function"><i class="fa fa-check"></i>How can I find an explanation of the output of a function?</a></li>
 <li><a href="faq.html#what-does-the-margin-argument-do">What does the <code>MARGIN</code> argument do?</a></li>
 </ul></li>
-<li class="chapter" data-level="13.8" data-path="faq.html"><a href="faq.html#issues-with-r-markdown"><i class="fa fa-check"></i><b>13.8</b> Issues with R Markdown</a><ul>
+<li class="chapter" data-level="12.8" data-path="faq.html"><a href="faq.html#issues-with-r-markdown"><i class="fa fa-check"></i><b>12.8</b> Issues with R Markdown</a>
+<ul>
 <li><a href="faq.html#i-get-an-error-when-knitting-to-pdf-but-it-works-for-html">I get an error when <code>knit</code>ting to PDF but it works for HTML</a></li>
 <li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-am-not-sure-where-r-code-latex-math-and-text-go"><i class="fa fa-check"></i>I am not sure where R-code, LaTeX math, and text go</a></li>
 </ul></li>
-<li class="chapter" data-level="13.9" data-path="faq.html"><a href="faq.html#new-questions"><i class="fa fa-check"></i><b>13.9</b> New questions</a></li>
+<li class="chapter" data-level="12.9" data-path="faq.html"><a href="faq.html#new-questions"><i class="fa fa-check"></i><b>12.9</b> New questions</a></li>
 </ul></li>
 </ul>
 
@@ -435,7 +485,6 @@ Nils Wlömert
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -454,6 +503,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -474,6 +524,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }

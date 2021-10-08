@@ -80,7 +80,7 @@ table(tracks_scale$artist, tracks_scale$cluster)
 
 In the previous example it was easy to set the number of clusters. However, if we use all artists in our data the best value for "K" is not immediately obvious. Surely some artists should be in the same cluster. We can user the `NbClust` package to determine the best number of clusters according to various indices (see `?NbClust`). First we scale all our variables and then we use the scaled versions to determine "K". To make computations faster we will use songs by 6 famous artists. Then we count how many indices would choose a certain number of clusters. The two best candidates are 3 clusters, chosen by 13 indices and 2 clusters, chosen by 5 indices.
 
-```{r, cache = TRUE}
+```{r echo=TRUE, results='hide', cache=TRUE}
 library(NbClust)
 famous_artists <- c(
 	'Ed Sheeran',
@@ -93,15 +93,16 @@ famous_tracks <- tracks[tracks$artistName %in% famous_artists, ]
 famous_tracks_scale <- scale(famous_tracks[4:ncol(famous_tracks)])
 set.seed(123)
 opt_K <- NbClust(famous_tracks_scale, method = "kmeans", max.nc = 10)
+```
+
+```{r}
 table(opt_K$Best.nc["Number_clusters",])
 ```
 
-A great library for visualizing many statistical analysis results in `ggfortify`. We can use it to plot the results of `kmeans`. In order to get the artists as labels we set them to be the `rownames` of our scaled data matrix.
-
+We can now proceed as before with running the k-means algorithm. Looking at the centers for each of the clusters could give us an indication for the types of songs we can expect in each of them (recall that they are assigned based on their distance to the center).
 
 
 ```{r}
-rownames(famous_tracks_scale) <- famous_tracks$artistName
 kmeans_tracks <- kmeans(famous_tracks_scale, 3)
 kmeans_tracks$centers
 ```
@@ -110,15 +111,16 @@ kmeans_tracks$centers
 ```{r}
 famous_tracks$cluster <- as.factor(kmeans_tracks$cluster)
 ggplot(famous_tracks, aes(y = cluster, fill = artistName)) +
-  geom_bar()
+  geom_bar() +
+  theme_bw()
 table(famous_tracks$artistName, famous_tracks$cluster)
 ```
 
 ```{r, message=FALSE,warning=FALSE}
-library(plotly)
 ed <- famous_tracks[famous_tracks$artistName == "Ed Sheeran",]
-plot_ly(ed, x = ~acousticness, y = ~energy, z= ~valence, color = ~cluster, marker=list(size=4)) %>% 
-  layout(title="Ed Sheeran")
+ggplot(ed, aes(x = energy, y = valence, color = cluster)) +
+  geom_point() +
+  theme_bw()
 ```
 
 ```{r}
