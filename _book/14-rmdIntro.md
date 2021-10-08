@@ -1327,15 +1327,15 @@ confint(tukeys)
 ## 
 ## Fit: aov(formula = revenue ~ retargeting, data = customer_data)
 ## 
-## Quantile = 2.3556
+## Quantile = 2.3559
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate  lwr       upr      
-## generic retargeting - no retargeting == 0        88.3220 -159.4139  336.0579
-## dynamic retargeting - no retargeting == 0       793.9687  553.0249 1034.9125
-## dynamic retargeting - generic retargeting == 0  705.6467  454.5213  956.7720
+## generic retargeting - no retargeting == 0        88.3220 -159.4394  336.0834
+## dynamic retargeting - no retargeting == 0       793.9687  553.0001 1034.9373
+## dynamic retargeting - generic retargeting == 0  705.6467  454.4954  956.7979
 ```
 
 ```r

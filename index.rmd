@@ -29,6 +29,7 @@ if(!"devtools" %in% installed.packages()) install.packages("devtools")
 if(!"robCompositions" %in% installed.packages()) devtools::install_github("matthias-da/robCompositions")
 reqPackages <- reqPackages[!reqPackages %in% installed.packages()]
 lapply(reqPackages, install.packages)
+#clean_cache(clean = FALSE, path = opts_chunk$get("cache.path"))
 }
 ```
 
