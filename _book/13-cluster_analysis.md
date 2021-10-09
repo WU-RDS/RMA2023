@@ -62,9 +62,9 @@ kmeans_clusters$centers
 ```
 
 ```
-##      energy acousticness
-## 1 -1.439466    1.3234653
-## 2  0.500684   -0.4603358
+##        energy acousticness
+## 1 -1.43946637   1.32346535
+## 2  0.50068396  -0.46033577
 ```
 
 The `kmeans` function returns, among other statistics, the centers of each cluster and a cluster identifier for each observation which we can add to our original data. In our case one cluster's center is rather low in energy and high acousticness and the second one has higher energy and lower acousticness. 
