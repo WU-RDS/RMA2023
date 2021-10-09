@@ -681,12 +681,6 @@ In an Rmd document, there are 3 different environments, <a name="rchunk"></a>
 
 **1. R-code** is enclosed in three ticks followed by \{r, [chunk-options](https://rmarkdown.rstudio.com/lesson-3.html#chunk-options)\} where the chunk options can include configuration for printing code and output as well as figures e.g.
 
-> \```{r, echo = TRUE, warnings = FALSE}
-> 
-> print("Hello R!)
-> 
-> ```
-
 
 ```r
 print("Hello R!")
@@ -711,13 +705,15 @@ $$
 
 For aligned multi-line equations we can add `\begin{aligned}` and `\end{aligend}`. The equations will be aligend at the `&` and a line is ended with `\\`.
 
-    $$
-    \begin{aligned}
-    x &= 1 \\
-    y &= 2 \\
-    z = &3
-    \end{aligned}
-    $$
+```  
+$$
+\begin{aligned}
+x &= 1 \\
+y &= 2 \\
+z = &3
+\end{aligned}
+$$
+``` 
 
 $$
 \begin{aligned}
@@ -731,4 +727,4 @@ $$
 
 ## New questions
 
-Couldn't find an answer to your question? In this case, you may use the forum on Learn\@wu to ask your question. We regularly update this section of the website and will   
+Couldn't find an answer to your question? In this case, you may use the forum on Learn\@wu to ask your question. We regularly update this section of the website and will include answers to new questions as they come up.  

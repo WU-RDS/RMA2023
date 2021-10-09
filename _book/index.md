@@ -597,7 +597,7 @@ In case you would like to learn more about the capabilities of R related to the 
 
 * __"[R for Marketing Research and Analytics](http://r-marketing.r-forge.r-project.org/)"__ A great book that is designed to teach R to marketing practitioners and data scientists.
 
-* __"[Statistical Inference via Data Science](https://moderndive.com/)"__ Another book covering topics around Statistical Inference. [FREE online version]
+* __"[Statistical Inference via Data Science](https://moderndive.com/)"__ Another great book covering topics around Statistical Inference. [FREE online version]
 
 * __"[Text Mining with R](http://tidytextmining.com/)"__ This book explains how you can analyze unstructured data (texts) using R. [FREE online version]
 

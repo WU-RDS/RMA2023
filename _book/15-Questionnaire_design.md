@@ -11,6 +11,7 @@ output:
 
 
 
+
 # (PART) Group project {-}
 
 # Survey design & analysis
@@ -39,103 +40,31 @@ extent to which their project requires this.
 
 The first step is to select a topic from the list below. We will send out a survey, asking you to rank the top 3 topics so that we can assign the topics according to your preferences. Please note that only one person per group needs to fill out the survey after you discussed which topic to chose within your groups. If two or more groups have the same preference for a topic, we will select one group randomly. 
 
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
- <thead>
-  <tr>
-   <th style="text-align:left;"> No. </th>
-   <th style="text-align:left;"> Topic </th>
-   <th style="text-align:left;"> Description </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> Consumers’ willingness to pay for organic products </td>
-   <td style="text-align:left;"> Develop a questionnaire to measure consumers’ willingness to pay for organic products (e.g., milk). How much are consumers willing to pay for organic milk vs. conventional milk? What is the observed price premium? How does this vary across consumers? What are the drivers? Does it reflect a desire to achieve better health, eat better quality food, or to contribute to environmental protection? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:left;"> The impact of social distancing on student's learning experience </td>
-   <td style="text-align:left;"> The recent COVID-19 pandemic affected virtually all aspects of people's lives. For university students, many courses that were previously delivered on campus switched to distance learning mode. Develop a questionnaire to assess how distance learning affects student's learning experiences. What are advantages and disadvantages of online teaching? What teaching aids are most helpful to students? What tools should teachers use to overcome the disadvantages? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 3 </td>
-   <td style="text-align:left;"> Student canteen (Mensa) and the WU campus </td>
-   <td style="text-align:left;"> Develop a questionnaire to measure students‘ attitudes and its drivers (e.g., quality of meals, price, etc.) toward the canteen and other restaurants on the campus </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 4 </td>
-   <td style="text-align:left;"> Privacy in social media – consumers’ willingness to switch to a secure messaging service </td>
-   <td style="text-align:left;"> Develop a questionnaire to measure consumers’ willingness to switch from WhatsApp to a secure messaging service (e.g., Threema). What are the main motives (e.g., security concerns, costs, usability, etc.), and are consumers willing to pay for the secure service provider? Can you find evidence for the “privacy paradox”? What factors make users give up their privacy? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 5 </td>
-   <td style="text-align:left;"> Consumers‘ attitude and willingness to pay for store brands </td>
-   <td style="text-align:left;"> Develop a questionnaire to measure consumers’ willingness to pay for a store brand  (e.g., “Clever”, “Billa”). Are consumers willing to pay more for the manufacturer’s brand than for the store brand? What factors affect consumers’ choice? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 6 </td>
-   <td style="text-align:left;"> COVID-19 and consumers’ preference and attitude towards online grocery shopping </td>
-   <td style="text-align:left;"> More and more people use online shopping services (e.g., Amazon Fresh, BillaOnline) to buy groceries, especially since the Coronavirus outbreak. Develop a questionnaire to measure consumers’ attitude and its drivers (e.g., price, service) towards the online grocery shopping. Are there differences before, during and after the pandemic. Are consumers less price sensitive when shopping online than in the offline stores? How likely are consumers to continue using online shopping services in the future? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 7 </td>
-   <td style="text-align:left;"> The most liveable city in the world </td>
-   <td style="text-align:left;"> Vienna is frequently listed as one of the most liveable cities in the world (e.g., by the Economist Intelligence Unit). Develop a questionnaire to investigate the reasons why Vienna ranks so high in different rankings. What are the factors that contribute to its image? Are there differences between different groups of people? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 8 </td>
-   <td style="text-align:left;"> Self-driving cars </td>
-   <td style="text-align:left;"> Companies such as Google heavily invest in the development of self-driving cars. Develop a questionnaire to measure consumers attitude and usage intention for self-driving cars. What are the drivers and deterrents of the consumers’ willingness to adopt this innovation? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 9 </td>
-   <td style="text-align:left;"> Front-of-package nutrition labels </td>
-   <td style="text-align:left;"> Frequent consumption of unhealthy foods can lead to overweight or obesity, hypertension, and cardiovascular disease. The consequences of poor diets is putting a burdon on health care systems and front-of-package labels have been proposed as a means to help consumers to gain a better understanding of the ingredients of a product. Develop a questionnaire to test how front-of-package nutrition labels affect consumer choice. Which type of label is most effective? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 10 </td>
-   <td style="text-align:left;"> Consumer preferences for fair-trade products in the apparel industry </td>
-   <td style="text-align:left;"> Develop a questionnaire to measure consumers’ preferences for sustainable brands and eco fashion. Conduct an experiment to determine whether there are different perceptions regarding the “Fair Trade” effect. </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 11 </td>
-   <td style="text-align:left;"> Going and being vegan: consumers willingness to make the change </td>
-   <td style="text-align:left;"> More and more people are turning to a vegan diet for many reasons, including health, concerns about animal welfare or a desire to protect environment. Develop a questionnaire to measure consumers’ willingness to become a vegan and its drivers (e.g., health, environment, compassion for animals). Did the Coronavirus outbreak change consumer attitudes towards meat-based products? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 12 </td>
-   <td style="text-align:left;"> Freemium business models in the music industry </td>
-   <td style="text-align:left;"> Many music streaming services (e.g., Spotify) offer a baseline version free of charge to consumers but charge for a premium version with additional features. Develop a questionnaire to measure consumers’ attitude towards legal music streaming providers. What factors influence the attitude (e.g., occupation, gender, usage behavior etc.), and how could companies motivate consumers to convert to the premium version of the service? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 13 </td>
-   <td style="text-align:left;"> Local vs. global brands </td>
-   <td style="text-align:left;"> Some researchers argue that the increasing globalization leads to the homogenization of consumer needs and desires across the globe and companies address this trend with standardized global products. However, some consumers appear to prefer local brands over global brands. Develop a questionnaire that investigates the drivers of consumers’ attitudes toward global and local brands. </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 14 </td>
-   <td style="text-align:left;"> The climate debate and green consumption </td>
-   <td style="text-align:left;"> The climate debate is currently on the top of the agenda of many news outlets. Some public figures that strongly favor one side dominate and emotionalize the debate (e.g., Greta Thunberg, Donald Trump). Explore in how far consumers are willing to change their behavior (e.g., cut air-travel) to help protect the environment. What factors influence the willingness to change (e.g., social factors, convenience)? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 15 </td>
-   <td style="text-align:left;"> Car-sharing vs. vehicle ownership </td>
-   <td style="text-align:left;"> Develop a questionnaire to explore the attractiveness of car sharing options for consumers (e.g., Car2go). Are consumers willing and planning to substitute a personal vehicle through car sharing option? Is car sharing likely to affect the amount of driving? Which factors influence these decisions? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 16 </td>
-   <td style="text-align:left;"> Consumers’ attitude towards legal video streaming providers and piracy </td>
-   <td style="text-align:left;"> Video streaming providers like Netflix record a continuous increase in registered users. On the other hand, illegal video streaming portals (e.g., Popcorn Time) are heavily used by other consumers. Develop a questionnaire to measure consumers’ attitude and drivers (e.g. occupation, gender, usage behavior etc.) towards legal video streaming providers. What could be reasons for piracy? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 17 </td>
-   <td style="text-align:left;"> Design your own questionnaire on a topic of your choice </td>
-   <td style="text-align:left;"> Feel free to choose topic of your choice as well. </td>
-  </tr>
-</tbody>
-</table>
-
+<style>
+    th, td { 
+      font-size: 12px;
+      border-collapse: collapse;
+      border-width:3px
+    }
+</style>
+    
+No.    | Topic   | Description 
+--- | ------------  | ---------------------------------------------------
+1 | The most liveable city  | **Topic:**<br />Vienna is frequently listed as one of the most liveable cities in the world (e.g., by the Economist Intelligence Unit). Develop a questionnaire to investigate the reasons why Vienna ranks so high in different rankings. What are the factors that contribute to its image? Are there differences between different groups of people? What dimensions should be considered when measuring the liveability of a city?<br /><br />**Literature:**<br />Merrilees, B., D. Miller, & C. Herington (2009). Antecedents of residents' city brand attitudes. Journal of Business Research, 62 (3), 362-367.<br />Economist Intelligence Unit (2021). The Global Liveability Index 2021.<br />Kennedy, R. & L. Buys. Dimensions of Liveability: A Tool for Sustainable Cities<br />Paul. A. & J.  Sen (2017). Identifying Factors for Evaluating Livability Potential within a Metropolis: A Case of Kolkata. International Journal of Urban and Civil Engineering, 11(1), 50-55.
+2  | Drivers of green consumption  | **Topic:**<br />The climate debate is currently on the agenda of many news media outlets. Explore in how far consumers are willing to change their consumption behavior to help protect the environment when it comes to grocery shopping. What factors influence the willingness to change (e.g., social factors, convenience, quality)? What are barriers that hinder consumers from shopping more sustainable products. Select one specific product and explore the impact of front of package labels indicating the carbon footprint of a product on consumer choice and willingness-to-pay. Can you identify different segments of consumers?<br /><br />**Literature:**<br />Carrero, I., C. Valor, E. Díaz, & V. Labajo (2021). Designed to Be Noticed: A Reconceptualization of Carbon Food Labels as Warning Labels. Sustainability, 13, 1581.<br />Rondonia, A. & S. Grassob (2021). Consumers behaviour towards carbon footprint labels on food: A review of the literature and discussion of industry implications. Journal of Cleaner Production, 301 (June), 127031.<br />White, K., Habib, R., & Hardisty, D.J. (2019).How to SHIFT Consumer Behaviors to be More Sustainable: A Literature Review and Guiding Framework. Journal of Marketing, 83(3), 22-49.  
+3 | Consumers’ willingness to pay for organic products | **Topic:**<br />Develop a questionnaire to measure consumers’ willingness to pay for organic products when it comes to groceries. Select one specific product and explore how much consumers are willing to pay for organic vs. conventional products? What is the observed price premium and what are its drivers? What dimensions can you identify when it comes to organic food preferences? For example, does it reflect a desire to achieve better health, eat better quality food, comply with social norms, or to contribute to environmental protection? What marketing messages are effective in stimulating demand for organic products?<br /><br />**Literature:**<br />Testa et al. (2021). Drivers to green consumption: a systematic review Environment, Development and Sustainability, 23, 4826–4880.<br />Bailey, A., A. Mishra, M. Tiamiyu (2016). GREEN consumption values and Indian consumers' response to marketing communications. The Journal of Consumer Marketing. 33 (7), 562-573.<br />Aigner et al. (2019). The Effectiveness of Promotional Cues for Organic Products in the German Retail Market. Sustainability, 11, 6986.<br />Krystallis, A., C. Fotopoulos, & Y. Zotos (2006). Organic Consumers' Profile and Their Willingness to Pay (WTP) for Selected Organic Food Products in Greece. Journal of International Consumer Marketing, 19(1), 81-106.
+4 | Privacy in social media – consumers’ willingness to pay for a secure social network | **Topic:**<br />Over the last years, media reports about data leaks and questionable business practices through the exploitation of user data by social networks (e.g., Facebook) have increased. Develop a questionnaire to measure consumers’ willingness to pay for a social network that does not track online behavior and exploits this data for different purposes. WHat is the price premium users are willing to pay for privacy? What are the main consumers concerns when it comes to privacy on social media? What factors make users give up their privacy? Can you identify distinct consumer segments? for how much money would users be willing to give up their privacy?<br /><br />**Literature:**<br />Kokolakis, S. (2017). Privacy attitudes and privacy behaviour: A review of current research on the privacy paradox phenomenon. Computers & Security, 64, 122-134.<br />Schreiner, M. and T. Hess (2015). Why Are Consumers Willing to Pay for Privacy? An Application of the Privacy-freemium Model to Media Companies, in Proceedings of the 23rd European Conference on Information. Muenster, Germany.<br />Orito1, Y., Y. Fukuta, & K. Murata (2014). I Will Continue to Use This Nonetheless: Social Media Survive Users' Privacy Concerns. International Journal of Virtual Worlds and Human Computer Interaction, 2, 92-107.
+5 | Consumers‘ attitude and willingness to pay for store brands | **Topic:**<br />Develop a questionnaire to measure consumers’ attitude towards and willingness to pay for store brands (e.g., “Clever”, “Billa”). Select specific product categories and explore if consumers are willing to pay more for the manufacturer’s brand than for the store brand? What factors affect consumers’ choice? Along which dimensions are private label brands perceived differently compared to store brands (e.g., quality, price)? Are there differences in consumer choice across different consumption settings (e.g., private consumption vs. social consumption with friends)?<br /><br />**Literature:**<br />Burton, S. et al. (1998). A Scale for Measuring Attitude Toward Private Label Products and an Examination of Its Psychological and Behavioral Correlates.Journal of the Academy of Marketing Science. 26(4), 293-306.<br />Mostafa, R. & R. Elseidi (2018). Factors affecting consumers’ willingness to buy private label brands (PLBs): Applied study on hypermarkets. Spanish Journal of Marketing - ESIC, 22(3).<br />Steenkamp, J.B., Van Heerde, H.J., & Geyskens, I. (2010). What Makes Consumers Willing to Pay a Price Premium for National Brands over Private Labels?, Journal of Marketing Research, 47(6), 1011-1024.
+6 | Front-of-package nutrition labels | **Topic:**<br />Frequent consumption of unhealthy foods can lead to overweight or obesity, hypertension, and cardiovascular disease. The consequences of poor diets is putting a burden on health care systems and front-of-package labels have been proposed as a means to help consumers to gain a better understanding of the ingredients of a product. Develop a questionnaire to test how front-of-package nutrition labels affect consumer choice. Which type of label is most effective? <br /><br />**Literature:**<br />Ikonen, I. et al. (2020). Consumer effects of front-of-package nutrition labeling: an interdisciplinary meta-analysis. Journal of the Academy of Marketing Science, 48, 360–383.<br />Hamlin, R. & L. McNeill (2018). The Impact of the Australasian ‘Health Star Rating’, Front-of-Pack Nutritional Label, on Consumer Choice: A Longitudinal Study, Nutrients, 10, 906.
+7 | Going and being vegan: consumers willingness to make the change | **Topic:**<br />More and more people are turning to a vegan diet for many reasons, including health, concerns about animal welfare or a desire to protect environment. Develop a questionnaire to measure consumers’ willingness to become a vegan and its drivers (e.g., health, environment, compassion for animals). Find out what dimensions underlie the decision making process. What type of messaging might change consumers attitude towards veganism? How large is the vegan segment, what characteristics does it have, and what are the implications for marketing?<br /><br />**Literature:**<br />Proveg (2021). European consumer survey on plant-based foods.<br />Miguel, I., A. Coelho, & C. Bairrada (2020). Modelling Attitude towards Consumption of Vegan Products, Sustainability, 13, 9.<br />Raggiotto, F., M. Mason, & A. Moretti (2017). Religiosity, materialism, consumer environmental predisposition. Some insights on vegan purchasing intentions in Italy. International Journal of Consumer Studies, 42, 613-626.
+8 |  Consumers’ preference and attitude towards online grocery shopping | **Topic:**<br />More and more people use online grocery shopping services and new companies in this space provide fast and convenient delivery options (e.g., Jokr, Gurkerl.at). In addition, the Coronavirus outbreak has lead to an increase in online shopping adoption. Develop a questionnaire to measure consumers’ attitude and its drivers towards the online grocery shopping. How does online shopping compare to the conventional shopping experience across important dimensions (e.g., price, service, experience)? Are online channels a substitute or a complementary service to shopping in physical stores. What role does the speed of delivery play? In which situations is the online channels preferred and how large is the segment of online shoppers? Are there differences before, during and after the pandemic? What factors can explain the intention of consumers to continue using online shopping services in the future?<br /><br />**Literature:**<br />Frank, D. & A. Peschel. (2020). Sweetening the Deal: The Ingredients that Drive Consumer Adoption of Online Grocery Shopping. Journal of Food Products Marketing, 26(8), 535-544.<br />Amorim, P. & N. DeHoratius (2021). Online Shoppers Don’t Always Care About Faster Delivery, MITSloan Management Review, Fall issue.
+9 | Car-sharing vs. vehicle ownership | **Topic:**<br />Develop a questionnaire to explore the attractiveness of car sharing options for consumers (e.g., Share Now). Are consumers willing and planning to substitute a personal vehicle through car sharing option? Is car sharing likely to affect the amount of driving? Which factors influence these decisions? What are the benefits and deterrents of car sharing services?<br /><br />**Literature:**<br />Möhlmann, M. (2015). Collaborative consumption: determinants of satisfaction and the likelihood of using a sharing economy option again, Journal of Consumer Behaviour, 14, 193-207.<br />Martínez-González, J., E. Parra-López, & A. Barrientos-Báez (2021). Young Consumers’ Intention to Participate in the Sharing Economy: An Integrated Model, Sustainability, 13, 430.<br />Prieto, M. et al. (2019). Shifting consumers into gear: car sharing services in urban areas.International Journal of Retail & Distribution Management, 47(5), 552-570.
+10 | Consumers’ attitude towards legal video streaming providers and piracy | **Topic:**<br />Video streaming providers like Netflix record a continuous increase in registered users. On the other hand, illegal video streaming portals (e.g., Popcorn Time) are heavily used by other consumers. Develop a questionnaire to measure consumers’ attitude towards and drivers (e.g. occupation, gender, usage behavior etc.) of legal video streaming service usage. What could be reasons for piracy and how can pirates be converted to paying customers? What is the willingness-to-pay for legal video streaming services in the current form and what is the price that users would pay if the service features (e.g., content selection) would be improved? How large is the piracy segment?<br /><br />**Literature:**<br />Papies, D. & M. Clement (2008). Adoption of New Movie Distribution Services on the Internet, Journal of Media Economics, 21(3), 131-157.<br />Hennig-Thurau, T., Henning, V., Sattler, H. (2007). Consumer File Sharing of Motion Pictures. Journal of Marketing, 71(4), 63-83.<br />Phau, I., Teah, M., & Liang, J. (2016). Investigating the Factors Influencing Digital Movie Piracy. Journal of Promotion Management, 22(5), 637-664.
+11 | Local vs. global brands | **Topic:**<br />Some researchers argue that the increasing globalization leads to the homogenization of consumer needs and desires across the globe and some companies address this trend with standardized global products. However, some consumers appear to prefer local brands over global brands. Develop a questionnaire that investigates the drivers of consumers’ attitudes toward global and local brands. How do consumers rate global vs. local brands on relevant dimensions with regard to product choice (price, quality, sustainability, etc.)? Select a product category and conduct an experiment to find out what marketing messages for local brands might lead to a more favorable outcome in terms of consumer choice when competing with global brands (use a fictitious brand to avoid confounding effects of existing brand preferences). Can you identify different segments of consumers?<br /><br />**Literature:**<br />Riefler, P. (2019). Local versus global food consumption: the role of brand authenticity. Journal of Consumer Marketing, 37(3), 317–327.<br />Alden, D., J.B. Steenkamp, & R. Batra (2006). Consumer attitudes toward marketplace globalization: Structure, antecedents and consequences. 23, 227-239.<br />Özsomer, A. (2012). The Interplay Between Global and Local Brands: A Closer Look at Perceived Brand Globalness and Local Iconness. Journal of International Marketing, 20(2), 72-95.<br />Zhou, L., Z. Yang, & M. Hui (2010). Non-local or local brands? A multi-level investigation into confidence in brand origin identification and its strategic implications. Journal of the Academy of Marketing Science, 38, 202–218.<br />Steenkamp, J.B. & M. de Jong (2010). A Global Investigation into the Constellation of Consumer Attitudes Toward Global and Local Products. Journal of Marketing, 74(6), 18-40.
+12 | The impact of social distancing on student's learning experience and outcomes | **Topic:**<br />The recent COVID-19 pandemic affected virtually all aspects of people's lives. For university students, many courses that were previously delivered on campus switched to distance learning mode. Develop a questionnaire to assess how distance learning affects student's learning experiences. What are advantages and disadvantages of online teaching? How do students rate distance learning compared to in-person teaching on important dimensions with regard to the learning experience? What teaching aids are most helpful to students? What tools should teachers use to overcome the disadvantages? What mode of teaching would students prefer for the time after the pandemic?<br /><br />**Literature:**<br />Armstrong-Mensah, E. et al. (2020). COVID-19 and Distance Learning: Effects on Georgia State University School of Public Health Students, Frontiers in Public Health, 8, 576227.<br />Gonzalez, T. et al. (2020). Influence of COVID-19 confinement on students’ performance in higher education, PLoS ONE, 15(10), e0239490.<br />Aucejo, E. et al. (2020). The impact of COVID-19 on student experiences and expectations: Evidence from a survey, Journal of Public Economics, 191, 1-15.
+13 | Consumer preferences for fair-trade products in the apparel industry | **Topic:**<br />Develop a questionnaire to measure consumers’ preferences for sustainable brands and eco-fashion. How do consumers rate eco vs. standard brands on relevant dimensions with regard to product choice (price, quality, sustainability, style, etc.)? Select a specific product and conduct an experiment to find out what the price premium consumers are willing to pay for fair-trade products (use a fictitious brand to avoid confounding effects of existing brand preferences). What factors can you identify that predict the price premium? Can you identify different segments of consumers?<br /><br />**Literature:**<br />Balasubramanian, P. & S. Soman (2019). Awareness regarding fair trade concept and the factors influencing the fair trade apparel buying behaviour of consumers in Cochin City. Journal of Strategic Marketing, 27(7), 612-629.<br />Irwin, J. & R. Walker Naylor (2009). Ethical Decisions and Response Mode Compatibility:Weighting of Ethical Attributes in Consideration Sets Formed by Excluding Versus Including Product Alternatives, Journal of Marketing Research, 46(2), 234–246.<br />Ma, Y., Littrell, M., & Niehm, L. (2011). Young female consumers’ intentions toward fair trade consumption. International Journal of Retail & Distribution Management. 40(1), 41-63.<br />Nilssen, R., G. Bick, & R. Abratt (2018). Comparing the relative importance of sustainability as a consumer purchase criterion of food and clothing in the retail sector. Journal of Brand Management, 26, 71-83.<br />Harris, F., H. Roby, & S. Dibb (2016). Sustainable clothing: challenges, barriers and interventions for encouraging more sustainable consumer behaviour. International Journal of Consumer Studies, 40, 309–318.
+14 | Freemium business models in the music industry | **Topic:**<br />Many music streaming services (e.g., Spotify, YouTube) offer a baseline version free of charge to consumers but charge for a premium version with additional features. Develop a questionnaire to measure consumers’ willingness to pay for legal music streaming services. What factors (e.g., product range, sharing features, price, occupation, gender, usage behavior) drive the conversion  from the free tier of the service to the paid tier, and how could companies motivate consumers to convert to the premium version of the service? What is the market potential for paid music subscription services?<br /><br />**Literature:**<br />Wagner, T. & T. Hess (2013). What Drives Users to Pay for Freemium Services? Examining People’s Willingness to Pay for Music Services. Proceedings of the Nineteenth Americas Conference on Information Systems, Chicago, Illinois, August 15-17.<br />Mäntymäki M, Islam AN, Benbasat I. What drives subscribing to premium in freemium services? A consumer value-based view of differences between upgrading to and staying with premium. Informations Systems Journal,30, 295–333.<br />Hamari, J., N. Hanner, & J. Koivisto (2020). "Why pay premium in freemium services?" A study on perceived value, continued use and purchase intentions in free-to-play games, International Journal of Information Management, 51, 102040.<br />Papies, D., F. Eggers, & N. Wlömert (2011). Music for free? How free ad-funded downloads affect consumer choice. Journal of the Academy of Marketing Science volume 39, 777–794. 
+15 | Perceived influence of Social Media Influencers | **Topic:**<br />Confronted with declining effectiveness of traditional marketing channels, companies invest increasing amounts in Influencer Marketing, especially to reach a younger demographic. Develop a questionnaire to assess in which product categories influencer marketing is particularly prevalent. Can you identify changes in media consumption behavior that can explain why social media is so important to reach younger demographics (e.g., differences in media consumption patters across demographics). Conduct an experiment to find out the drivers of the perceived influence of social media Influencers. Particularly, you should investigate if the number of accounts that an Influencer follows affects the perceived influence of this influencer. What could be moderators of this effect?<br /><br />**Literature:**<br />Valsesia, F., D. Proserpio, & J. Nunes (2020). The Positive Effect of Not Following Others on Social Media. Journal of Marketing, 57(6), 1152-1168.<br />Haenlein, M., Anadol, E., Farnsworth, T., Hugo, H., Hunichen, J., & Welte, D. (2020): Navigating the New Era of Influencer Marketing: How to be Successful on Instagram, TikTok, & Co. In: California Management Review 63 (1), 5–25.
 
 ### Guidelines
 
@@ -670,7 +599,7 @@ Here we want to show you the most frequent types of questions students use and w
 
 <div class="figure" style="text-align: center">
 <img src="images/text-entry.PNG" alt="Text or number entry question" width="72%" />
-<p class="caption">(\#fig:unnamed-chunk-34)Text or number entry question</p>
+<p class="caption">(\#fig:unnamed-chunk-33)Text or number entry question</p>
 </div>
 
 A number entry question is a recommended type of question if you are interested in obtaining **ratio data type**. Ratio data type gives you flexibility to apply a broad range of statistical analyses such as regression analysis, correlation computation, t-test (or ANOVA), or factor analysis. Data collected by number entry question is handy to use with data collected by slider questions or with a constant sum question. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.
@@ -682,7 +611,7 @@ Multiple Choice with a single answer is a type of closed-ended question that let
 
 <div class="figure" style="text-align: center">
 <img src="support-multiple-choice-question.png" alt="Multiple choice question with single answer" width="72%" />
-<p class="caption">(\#fig:unnamed-chunk-35)Multiple choice question with single answer</p>
+<p class="caption">(\#fig:unnamed-chunk-34)Multiple choice question with single answer</p>
 </div>
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
@@ -710,7 +639,7 @@ Statistical test that you can think of when analysing categorical data:
 
 <div class="figure" style="text-align: center">
 <img src="multiple-choice-question-multiple-answers.png" alt="Multiple choice question with multiple answers" width="72%" />
-<p class="caption">(\#fig:unnamed-chunk-36)Multiple choice question with multiple answers</p>
+<p class="caption">(\#fig:unnamed-chunk-35)Multiple choice question with multiple answers</p>
 </div>
 
 It is important to distinguish multiple choice questions with single and multiple answers (which will be presented later) as their analysis looks differently.
@@ -729,7 +658,7 @@ The Cochran’s Q test and associated multiple comparisons require the following
 
 <div class="figure" style="text-align: center">
 <img src="rank-order-question.png" alt="Rank order question" width="72%" />
-<p class="caption">(\#fig:unnamed-chunk-37)Rank order question</p>
+<p class="caption">(\#fig:unnamed-chunk-36)Rank order question</p>
 </div>
 
 A rank order question asks respondents to compare items to each other by placing them in order of preference. Note that the data obtained from a rank order question shows an order of a respondent's preference, but not the difference between items. For instance, if it turns out that the most important feature of a fitness tracker for a respondent XY is "Measuring steps" and the second most important feature "Calories burned", we don't know for how much more important is the former one in comparison to the latter one. 
@@ -744,7 +673,7 @@ Friedman rank sum test is used to identify whether there are any statistically s
 
 <div class="figure" style="text-align: center">
 <img src="constant-sum-question.png" alt="Constant sum question" width="72%" />
-<p class="caption">(\#fig:unnamed-chunk-38)Constant sum question</p>
+<p class="caption">(\#fig:unnamed-chunk-37)Constant sum question</p>
 </div>
 
 If you wish to obtain information about how much one attribute is preferred over another one, you may use a constant sum scale. The total box should always be displayed at the bottom to make it easier for respondents. A constant sum question permits collection of ratio data type. With data obtained we would be able to express the relative importance of the options.
@@ -1765,7 +1694,7 @@ library(ggcorrplot)
 ggcorrplot(cor.matrix)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-101-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-100-1.png" width="672" />
 
 From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positively. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
 
@@ -2543,7 +2472,7 @@ ggcoefstats(x = mlr.dinner,
             title = "Willingness to pay predicted by importance of factors")
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-115-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-114-1.png" width="672" />
 
 
 There are couple of things we need to consider when we do multiple linear regression. One of them are potential outliers in our data. Here we identify and visualize them:
@@ -2567,7 +2496,7 @@ We identified observations that belong to outlier values. We can even visualize 
 boxplot(mlr.dinner$residuals, main="Willingnes to pay", boxwex=0.1)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-117-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-116-1.png" width="672" />
 
 In addition, we need to observe whether there are any influential observations:
 
@@ -2576,7 +2505,7 @@ In addition, we need to observe whether there are any influential observations:
 plot(mlr.dinner,4)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-118-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-117-1.png" width="672" />
 
 A rule of thumb to determine whether an observation should be classified as influential or not is to look for observation with a Cook’s distance > 1 .We see from the graph that there are no influential observations.
 
@@ -2590,7 +2519,7 @@ library(car)
 avPlots(mlr.dinner)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-119-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-118-1.png" width="672" />
 
 In our example it does not seem that linear relationships can be reasonably assumed for all variables.
 
@@ -2738,7 +2667,7 @@ p <- ggplot(data=mlc_visualisation,aes(x=Time, y=Count, fill=Time)) +
 p
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-124-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-123-1.png" width="672" />
 
 
 ```r
@@ -2757,7 +2686,7 @@ p<-ggplot(mlc_visualisation, aes(x="", y=Count, fill=Time))+
 p
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-125-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-124-1.png" width="672" />
 
 #### Multiple choice question with multiple answers
 
@@ -2916,7 +2845,7 @@ p <- ggplot(rank.data.long, aes(x=Feature, y=Rank, fill= Feature)) +
 p
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-129-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-128-1.png" width="672" />
 
 Package `ggstatsplot()` provides a great feature, which enables creation of a plot and conducting a statistical test at the same time. 
 
@@ -2933,7 +2862,7 @@ ggstatsplot::ggwithinstats(
   title = "What features are important to you when evualting fitness trackers?")
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-130-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-129-1.png" width="672" />
 
 
 #### Constant Sum question
@@ -2997,7 +2926,7 @@ p<-constant.sum.long %>%
 p
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-132-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-131-1.png" width="672" />
 
 
 ```r
@@ -3011,7 +2940,7 @@ ggstatsplot::ggwithinstats(
   title = "What factors do you consider when choosing a place to go for a dinner?")
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-133-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-132-1.png" width="672" />
 
 ## Frequently asked questions
 
@@ -3146,7 +3075,7 @@ ggplot(shares, aes(x =reorder(response,share), y = share)) +
   coord_flip()
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-145-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-144-1.png" width="672" />
 
 In the end, to save generated plot, we can use `ggsave()` function. The plot will be saved in your working directory.
 
@@ -3253,8 +3182,8 @@ ggRadar(data=Radar_chart_new,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-153-1.png" alt="Radar chart" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-153)Radar chart</p>
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-152-1.png" alt="Radar chart" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-152)Radar chart</p>
 </div>
 
 ### Vertical Likert line chart
@@ -3295,8 +3224,8 @@ ggPair(Pair_chart,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-157-1.png" alt="Pair chart" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-157)Pair chart</p>
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-156-1.png" alt="Pair chart" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-156)Pair chart</p>
 </div>
 
 ### Diverging stacked barchart
@@ -3328,7 +3257,7 @@ likert(t(likert_chart)[,7:1], horizontal = TRUE,
                      reverse = TRUE))
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-160-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-159-1.png" width="672" />
 
 ### Collapse/recode categories
 
