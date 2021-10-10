@@ -44,9 +44,9 @@ Let's use an example to see how ANOVA works. Similar to the previous example, im
 
 
 ```r
-hours_abc <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/hours_abc.dat", 
+hours_abc <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/hours_abc.dat",
     sep = "\t", header = TRUE)  #read in data
-hours_abc$group <- factor(hours_abc$group, levels = c("A", 
+hours_abc$group <- factor(hours_abc$group, levels = c("A",
     "B", "C"), labels = c("low", "medium", "high"))  #convert grouping variable to factor
 str(hours_abc)  #inspect data
 ```
@@ -289,7 +289,7 @@ You could also compute this manually in R using:
 
 
 ```r
-SSM <- sum(100 * (by(hours_abc$hours, hours_abc$group, 
+SSM <- sum(100 * (by(hours_abc$hours, hours_abc$group,
     mean) - mean(hours_abc$hours))^2)
 SSM
 ```
@@ -334,7 +334,7 @@ You could also compute this in R using:
 
 
 ```r
-SSR <- sum((hours_abc$hours - rep(by(hours_abc$hours, 
+SSR <- sum((hours_abc$hours - rep(by(hours_abc$hours,
     hours_abc$group, mean), each = 100))^2)
 SSR
 ```
@@ -491,8 +491,8 @@ ANOVA is relatively immune to violations to the normality assumption when sample
 
 ```r
 set.seed(321)
-hours_fewobs <- data.frame(hours = c(rnorm(10, 20, 
-    5), rnorm(10, 40, 5), rnorm(10, 60, 5)), group = c(rep("low", 
+hours_fewobs <- data.frame(hours = c(rnorm(10, 20,
+    5), rnorm(10, 40, 5), rnorm(10, 60, 5)), group = c(rep("low",
     10), rep("medium", 10), rep("high", 10)))
 by(hours_fewobs$hours, hours_fewobs$group, shapiro.test)
 ```
@@ -540,9 +540,9 @@ qqline(hours_fewobs[hours_fewobs$group == "low", ]$hours)
 </div>
 
 ```r
-qqnorm(hours_fewobs[hours_fewobs$group == "medium", 
+qqnorm(hours_fewobs[hours_fewobs$group == "medium",
     ]$hours)
-qqline(hours_fewobs[hours_fewobs$group == "medium", 
+qqline(hours_fewobs[hours_fewobs$group == "medium",
     ]$hours)
 ```
 
@@ -606,7 +606,7 @@ To compute &eta;<sup>2</sup> from the output, we can extract the relevant sum of
 
 
 ```r
-summary(aov)[[1]]$"Sum Sq"[1]/(summary(aov)[[1]]$"Sum Sq"[1] + 
+summary(aov)[[1]]$"Sum Sq"[1]/(summary(aov)[[1]]$"Sum Sq"[1] +
     summary(aov)[[1]]$"Sum Sq"[2])
 ```
 
@@ -706,7 +706,7 @@ Thus, the “corrected” critical p-value is now 0.017 instead of 0.05 (i.e., t
 
 
 ```r
-bonferroni <- pairwise.t.test(hours_abc$hours, hours_abc$group, 
+bonferroni <- pairwise.t.test(hours_abc$hours, hours_abc$group,
     data = hours_abc, p.adjust.method = "bonferroni")
 bonferroni
 ```
@@ -731,7 +731,7 @@ Note the difference between the results from the post-hoc test compared to indiv
 
 ```r
 data_subset <- subset(hours_abc, group != "low")
-ttest <- t.test(hours ~ group, data = data_subset, 
+ttest <- t.test(hours ~ group, data = data_subset,
     var.equal = TRUE)
 ttest
 ```
@@ -742,7 +742,7 @@ ttest
 ## 
 ## data:  hours by group
 ## t = -11.884, df = 198, p-value < 2.2e-16
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group medium and group high is not equal to 0
 ## 95 percent confidence interval:
 ##  -11.997471  -8.582529
 ## sample estimates:
@@ -880,7 +880,7 @@ mean1
 ```
 
 ```r
-mean2 <- mean(hours_abc[hours_abc$group == "medium", 
+mean2 <- mean(hours_abc[hours_abc$group == "medium",
     "hours"])  #mean group 'medium'
 mean2
 ```
@@ -890,7 +890,7 @@ mean2
 ```
 
 ```r
-mean3 <- mean(hours_abc[hours_abc$group == "high", 
+mean3 <- mean(hours_abc[hours_abc$group == "high",
     "hours"])  #mean group 'high'
 mean3
 ```
@@ -991,24 +991,25 @@ As with the t-test, you could also use the functions contained in the `ggstatspl
 
 ```r
 library(ggstatsplot)
-# ggbetweenstats( data = hours_abc, x = group, y =
-# hours, plot.type = 'box', pairwise.comparisons =
-# TRUE, pairwise.annotation = 'p.value',
+# ggbetweenstats( data = hours_abc, x = group, y
+# = hours, plot.type = 'box',
+# pairwise.comparisons = TRUE,
+# pairwise.annotation = 'p.value',
 # p.adjust.method = 'bonferroni', effsize.type =
-# 'partial_eta', var.equal = FALSE, mean.plotting =
-# TRUE, # whether mean for each group is to be
+# 'partial_eta', var.equal = FALSE, mean.plotting
+# = TRUE, # whether mean for each group is to be
 # displayed mean.ci = TRUE, # whether to display
 # confidence interval for means mean.label.size =
 # 2.5, # size of the label for mean type =
-# 'parametric', # which type of test is to be run k
-# = 3, # number of decimal places for statistical
-# results outlier.label.color = 'darkgreen', #
-# changing the color for the text label title =
-# 'Comparison of listening times between groups',
-# xlab = 'Experimental group', # label for the
-# x-axis variable ylab = 'Listening time', # label
-# for the y-axis variable messages = FALSE,
-# bf.message = FALSE )
+# 'parametric', # which type of test is to be run
+# k = 3, # number of decimal places for
+# statistical results outlier.label.color =
+# 'darkgreen', # changing the color for the text
+# label title = 'Comparison of listening times
+# between groups', xlab = 'Experimental group', #
+# label for the x-axis variable ylab = 'Listening
+# time', # label for the y-axis variable messages
+# = FALSE, bf.message = FALSE )
 ```
 
 

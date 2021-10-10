@@ -64,7 +64,7 @@ As an example data set, we will be using a data set containing music streaming d
 
 
 ```r
-music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv", 
+music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv",
     sep = ",", header = TRUE)
 dim(music_data)
 ```
@@ -103,7 +103,7 @@ In a first step, we need to make sure all variables are in the correct format, a
 
 ```r
 music_data$release_date <- as.Date(music_data$release_date)  #convert to date
-music_data$explicit <- factor(music_data$explicit, 
+music_data$explicit <- factor(music_data$explicit,
     levels = 0:1, labels = c("not explicit", "explicit"))  #convert to factor
 music_data$label <- as.factor(music_data$label)  #convert to factor
 music_data$rep_ctry <- as.factor(music_data$rep_ctry)  #convert to factor
@@ -235,7 +235,7 @@ Note that the above output shows the overall relative frequencies. In many cases
 
 
 ```r
-prop.table(table(music_data[, c("genre", "explicit")]), 
+prop.table(table(music_data[, c("genre", "explicit")]),
     1)  #conditional relative frequencies
 ```
 
@@ -277,7 +277,7 @@ This means that the interquartile range is between ranks 39 and 141. If you want
 
 
 ```r
-by(music_data$min_rank, music_data$genre, quantile, 
+by(music_data$min_rank, music_data$genre, quantile,
     c(0.25, 0.5, 0.75))
 ```
 
@@ -329,7 +329,7 @@ We could, for example, compute the summary statistics for the variables "streams
 
 ```r
 library(psych)
-psych::describe(music_data[, c("streams", "duration_ms", 
+psych::describe(music_data[, c("streams", "duration_ms",
     "danceability", "valence")])
 ```
 
@@ -353,8 +353,8 @@ The ```psych``` package also contains the ```describeBy()``` function, which let
 
 
 ```r
-describeBy(music_data[, c("streams", "duration_ms", 
-    "danceability", "valence")], music_data$genre, 
+describeBy(music_data[, c("streams", "duration_ms",
+    "danceability", "valence")], music_data$genre,
     skew = FALSE, range = FALSE)
 ```
 
@@ -416,19 +416,21 @@ In this example, we used the arguments `skew = FALSE` and `range = FALSE` to exc
 R is open to user contributions and various users have contributed packages that aim at making it easier for researchers to summarize statistics. For example, the <a href="https://cran.r-project.org/web/packages/summarytools/vignettes/Recommendations-rmarkdown.html" target="_blank">summarytools</a> package can be used to summarize the variables. If you would like to use this package and you are a Mac user, you may need to also install XQuartz (X11) too. To do this, go to <a href="https://www.xquartz.org/" target="_blank">this page</a> and download the XQuartz-2.7.7.dmg, then open the downloaded folder and click XQuartz.pkg and follow the instruction on screen and install XQuartz. If you still encouter an error after installing XQuartz, you may find a solution <a href="href="https://www.xquartz.org/" target="_blank">here</a>.
 
 <style type="text/css">
- img {   background-color: transparent;   border: 0; }  .st-table td, .st-table th {   padding: 8px; }  .st-table > thead > tr {    background-color: #eeeeee; }  .st-cross-table td {   text-align: center; }  .st-descr-table td {   text-align: right; }  table.st-table th {   text-align: center; }  table.st-table > thead > tr {    background-color: #eeeeee; }  table.st-table td span {   display: block; }  table.st-table > tfoot > tr > td {   border:none; }  .st-container {   width: 100%;   padding-right: 15px;   padding-left: 15px;   margin-right: auto;   margin-left: auto;   margin-top: 15px; }  .st-multiline {   white-space: pre; }  .st-table {     width: auto;     table-layout: auto;     margin-top: 20px;     margin-bottom: 20px;     max-width: 100%;     background-color: transparent;     border-collapse: collapse; }  .st-table > thead > tr > th, .st-table > tbody > tr > th, .st-table > tfoot > tr > th, .st-table > thead > tr > td, .st-table > tbody > tr > td, .st-table > tfoot > tr > td {   vertical-align: middle; }  .st-table-bordered {   border: 1px solid #bbbbbb; }  .st-table-bordered > thead > tr > th, .st-table-bordered > tbody > tr > th, .st-table-bordered > thead > tr > td, .st-table-bordered > tbody > tr > td {   border: 1px solid #cccccc; }  .st-table-bordered > thead > tr > th, .st-table-bordered > thead > tr > td, .st-table thead > tr > th {   border-bottom: none; }  .st-freq-table > thead > tr > th, .st-freq-table > tbody > tr > th, .st-freq-table > tfoot > tr > th, .st-freq-table > thead > tr > td, .st-freq-table > tbody > tr > td, .st-freq-table > tfoot > tr > td, .st-freq-table-nomiss > thead > tr > th, .st-freq-table-nomiss > tbody > tr > th, .st-freq-table-nomiss > tfoot > tr > th, .st-freq-table-nomiss > thead > tr > td, .st-freq-table-nomiss > tbody > tr > td, .st-freq-table-nomiss > tfoot > tr > td, .st-cross-table > thead > tr > th, .st-cross-table > tbody > tr > th, .st-cross-table > tfoot > tr > th, .st-cross-table > thead > tr > td, .st-cross-table > tbody > tr > td, .st-cross-table > tfoot > tr > td {   padding-left: 20px;   padding-right: 20px; }  .st-table-bordered > thead > tr > th, .st-table-bordered > tbody > tr > th, .st-table-bordered > thead > tr > td, .st-table-bordered > tbody > tr > td {   border: 1px solid #cccccc; }  .st-table-striped > tbody > tr:nth-of-type(odd) {   background-color: #ffffff; }  .st-table-striped > tbody > tr:nth-of-type(even) {   background-color: #f9f9f9; }  .st-descr-table > thead > tr > th, .st-descr-table > tbody > tr > th, .st-descr-table > thead > tr > td, .st-descr-table > tbody > tr > td {   padding-left: 24px;   padding-right: 24px;   word-wrap: break-word; }  .st-freq-table, .st-freq-table-nomiss, .st-cross-table {   border: medium none; }  .st-freq-table > thead > tr:nth-child(1) > th:nth-child(1), .st-cross-table > thead > tr:nth-child(1) > th:nth-child(1), .st-cross-table > thead > tr:nth-child(1) > th:nth-child(3) {   border: none;   background-color: #ffffff;   text-align: center; }  .st-protect-top-border {   border-top: 1px solid #cccccc !important; }  .st-ws-char {   display: inline;   color: #999999;   letter-spacing: 0.2em; }  /* Optionnal classes */ .st-small {   font-size: 13px; }  .st-small td, .st-small th {   padding: 8px; }  .st-small > thead > tr > th, .st-small > tbody > tr > th, .st-small > thead > tr > td, .st-small > tbody > tr > td {   padding-left: 12px;   padding-right: 12px; } </style>
+ img {   background-color: transparent;   border: 0; }  .st-table td, .st-table th {   padding: 8px; }  .st-table > thead > tr {    background-color: #eeeeee; }  .st-cross-table td {   text-align: center; }  .st-descr-table td {   text-align: right; }  table.st-table th {   text-align: center; }  table.st-table > thead > tr {    background-color: #eeeeee; }  table.st-table td span {   display: block; }  table.st-table > tfoot > tr > td {   border:none; }  .st-container {   width: 100%;   padding-right: 15px;   padding-left: 15px;   margin-right: auto;   margin-left: auto;   margin-top: 15px; }  .st-multiline {   white-space: pre; }  .st-table {     width: auto;     table-layout: auto;     margin-top: 20px;     margin-bottom: 20px;     max-width: 100%;     background-color: transparent;     border-collapse: collapse; }  .st-table > thead > tr > th, .st-table > tbody > tr > th, .st-table > tfoot > tr > th, .st-table > thead > tr > td, .st-table > tbody > tr > td, .st-table > tfoot > tr > td {   vertical-align: middle; }  .st-table-bordered {   border: 1px solid #bbbbbb; }  .st-table-bordered > thead > tr > th, .st-table-bordered > tbody > tr > th, .st-table-bordered > thead > tr > td, .st-table-bordered > tbody > tr > td {   border: 1px solid #cccccc; }  .st-table-bordered > thead > tr > th, .st-table-bordered > thead > tr > td, .st-table thead > tr > th {   border-bottom: none; }  .st-freq-table > thead > tr > th, .st-freq-table > tbody > tr > th, .st-freq-table > tfoot > tr > th, .st-freq-table > thead > tr > td, .st-freq-table > tbody > tr > td, .st-freq-table > tfoot > tr > td, .st-freq-table-nomiss > thead > tr > th, .st-freq-table-nomiss > tbody > tr > th, .st-freq-table-nomiss > tfoot > tr > th, .st-freq-table-nomiss > thead > tr > td, .st-freq-table-nomiss > tbody > tr > td, .st-freq-table-nomiss > tfoot > tr > td, .st-cross-table > thead > tr > th, .st-cross-table > tbody > tr > th, .st-cross-table > tfoot > tr > th, .st-cross-table > thead > tr > td, .st-cross-table > tbody > tr > td, .st-cross-table > tfoot > tr > td {   padding-left: 20px;   padding-right: 20px; }  .st-table-bordered > thead > tr > th, .st-table-bordered > tbody > tr > th, .st-table-bordered > thead > tr > td, .st-table-bordered > tbody > tr > td {   border: 1px solid #cccccc; }  .st-table-striped > tbody > tr:nth-of-type(odd) {   background-color: #ffffff; }  .st-table-striped > tbody > tr:nth-of-type(even) {   background-color: #f9f9f9; }  .st-descr-table > thead > tr > th, .st-descr-table > tbody > tr > th, .st-descr-table > thead > tr > td, .st-descr-table > tbody > tr > td {   padding-left: 24px;   padding-right: 24px;   word-wrap: break-word; }  .st-freq-table, .st-freq-table-nomiss, .st-cross-table {   border: medium none; }  .st-freq-table > thead > tr:nth-child(1) > th:nth-child(1), .st-cross-table > thead > tr:nth-child(1) > th:nth-child(1), .st-cross-table > thead > tr:nth-child(1) > th:nth-child(3) {   border: none;   background-color: #ffffff;   text-align: center; }  .st-protect-top-border {   border-top: 1px solid #cccccc !important; }  .st-ws-char {   display: inline;   color: #999999;   letter-spacing: 0.2em; }  /* Optional classes */ .st-small {   font-size: 13px; }  .st-small td, .st-small th {   padding: 8px; }  .st-small > thead > tr > th, .st-small > tbody > tr > th, .st-small > thead > tr > td, .st-small > tbody > tr > td {   padding-left: 12px;   padding-right: 12px; } </style>
 
 
 ```r
 library(summarytools)
-print(dfSummary(music_data[, c("streams", "duration_ms", 
-    "valence", "genre", "label", "explicit")], plain.ascii = FALSE, 
-    style = "grid", valid.col = FALSE, tmp.img.dir = "tmp"), 
+print(dfSummary(music_data[, c("streams", "duration_ms",
+    "valence", "genre", "label", "explicit")], plain.ascii = FALSE,
+    style = "grid", valid.col = FALSE, tmp.img.dir = "tmp"),
     method = "render", headings = FALSE, footnote = NA)
 ```
 
-Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
-<!--html_preserve--><div class="container st-container"><table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
+Error in pryr::where(obj_name) : length(name) == 1 is not TRUE
+
+```{=html}
+<div class="container st-container"><table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
   <thead>
     <tr>
       <th align="center" class="st-protect-top-border"><strong>No</strong></th>
@@ -444,89 +446,71 @@ Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
       <td align="center">1</td>
       <td align="left">streams
 [integer]</td>
-      <td align="left">Mean (sd) : 9724 (11153.8)
-min < med < max:
-1235 < 6006 < 136500
-IQR (CV) : 7262.2 (1.1)</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 9724 (11153.8)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1235 &le; 6006 &le; 136500</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">IQR (CV) : 7262.2 (1.1)</td></tr></table></td>
       <td align="left" style="vertical-align:middle">5009 distinct values</td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoJFiIcFv2yFwAAAGpJREFUaN7t2MEJgDAMQNGs4AjWEdx/NxV6ECyCiSd9f4BHSiGHRChTO5qnYh1b1j0YDAaDwWAwGAwGg8FgMBgMBoPBxlj5Jn3GyuPBYDDYZ7HKur1glfF+jSV/YYwlxRvs+YM71l4plGkDi+Q4GIsH+FIAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTAtMDlUMjI6MzQ6MjgrMDA6MDDDWcktAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTEwLTA5VDIyOjM0OjI4KzAwOjAwsgRxkQAAAABJRU5ErkJggg=="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCgoSFAsJjqGXAAABV0lEQVR42u3dwWnDMABA0bp4uk6QTJhO0PWaq0IE8Q8Bp/V7N2MfxDeyQAd5+f2g+Nx7AH+NYJFg0TpeXKYftNOy9yD3NgZYb2993T38s/do34wpGQkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFq2PH/meHLh83OOWNwRz3PLIlIwEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIs2bCDOHHcX9slgx92FNSUjwSLBoie/YTPHWAheGGy2EPy/iC8MNrM14r13zbqMo7/4S/rUeXh5i0aNVTISLBIsugITWxbpeZkliQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0xMC0xMFQxODoyMDoxMSswMDowMAzIcscAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMTAtMTBUMTg6MjA6MTErMDA6MDB9lcp7AAAAAElFTkSuQmCC"></td>
       <td align="center">0
-(0%)</td>
+(0.0%)</td>
     </tr>
     <tr>
       <td align="center">2</td>
       <td align="left">duration_ms
 [numeric]</td>
-      <td align="left">Mean (sd) : 200493.8 (47667.1)
-min < med < max:
-30133 < 196770 < 1109080
-IQR (CV) : 46900.5 (0.2)</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 200493.8 (47667.1)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">30133 &le; 196770 &le; 1109080</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">IQR (CV) : 46900.5 (0.2)</td></tr></table></td>
       <td align="left" style="vertical-align:middle">5031 distinct values</td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoJFiIcFv2yFwAAAGdJREFUaN7t2bENgEAIQNFb4UZQN5D9d9NgZWKF2Jj3C8oXKhrGUKWZrdksd8O2ONthMBjsL1j9RD5gUd4PBoPBYDAYDAaDwWAwGAwGg8FgMNjnWD4FliYsZw27vhNNWDLRutnbhiodufduRwJYgy8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTAtMDlUMjI6MzQ6MjgrMDA6MDDDWcktAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTEwLTA5VDIyOjM0OjI4KzAwOjAwsgRxkQAAAABJRU5ErkJggg=="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCgoSFAsJjqGXAAABVUlEQVR42u3dwY2CQABAUTFWZwVaoVaw7a1XNEP0x+wS8b0bGBP4GQiZw8z0u6PYr30Bn0awSLDoMD9Yep9dF344TWtf/v+Y3+bhtb8cB+d+1r6PVXgkI8EiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwaIX58PGvnFi8a1gx+HZbU8seiQjwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBoreWh18yXmd/G6vs/0mwLW/feRfsag/rpx5G2DfuwdBM80F1McKGzrO376RR47MiEiwSLLoBpb8Sjl0ZJNEAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTAtMTBUMTg6MjA6MTErMDA6MDAMyHLHAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTEwLTEwVDE4OjIwOjExKzAwOjAwfZXKewAAAABJRU5ErkJggg=="></td>
       <td align="center">1
-(0.02%)</td>
+(0.0%)</td>
     </tr>
     <tr>
       <td align="center">3</td>
       <td align="left">valence
 [numeric]</td>
-      <td align="left">Mean (sd) : 0.5 (0.2)
-min < med < max:
-0 < 0.5 < 1
-IQR (CV) : 0.3 (0.4)</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 0.5 (0.2)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">0 &le; 0.5 &le; 1</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">IQR (CV) : 0.3 (0.4)</td></tr></table></td>
       <td align="left" style="vertical-align:middle">990 distinct values</td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqby8vL///8shn5hAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoJFiIcFv2yFwAAAOZJREFUaN7t1+0NhCAMBmBWODc42ED23+1SJSryFdtq4Hz7R2PgiaIt1RgEJz7NmKy138aYBrYTk/deim1Epxg9rR7m/fzvmF0WTAlziwTseWx9jUrYqgADBixglF9qGJ1pY8Ub5GDFGyxhtO1msXD9GrYpJ6y2dG/GouIvxVwyF9iYWJKUIuysjIZl/6S4WHZ7AQascyztEgRYmqLAgD2P5dofNuZKk8bD4h1PiMWVCNjw2GErkGOHb/d1WKnN5mG10cNioRLpYCERgAG7G6MaqYbRoXus0ktdx1rDgN2MWZUwCE78AOzjzq3ao2yLAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTEwLTA5VDIyOjM0OjI4KzAwOjAww1nJLQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMC0wOVQyMjozNDoyOCswMDowMLIEcZEAAAAASUVORK5CYII="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCgoSFAsJjqGXAAAB6UlEQVR42u3aTVLjMBQAYUzldJwATkhOwPVgw0JKbMXt0r/6WzGbIdOVJ78os/2+iXhv/QJGYzDIYNAt/EM/59n94aV8bi1fTfjLb5f/lsIhPoKff+q+yKTKwfoNcZZnGFT9HXbs3s8RmtBRsHBc+x1WRxIyGNR4JMc4t0KNg423ZDiSkMEgg0EGg4of+uM9B9MqPCXHexKmOJKQwSCDQQaDDAYZDDIYZDDIYFBXd/rH4g9YLb/WHSRYPx+vBgl2rPZ/Khg+WO1335DBWl4ZFQhW/p/T8kQr8g7r54jOzz0MMhiUZSRnu7dPyXSGzXxqxRxJyGCQwSCDQQaDLj4lV1okYpfXinUWiZgjCQ15vZNS+jJ7umCljwpHEjIYZDDIYJDBIINBBoMMBk23uMby7/2TB8u/9zuSkMEgg0EGgwwGGQwyGGQw6PTiuu4XazGw6a/6xVrMkYQm/ywZy/FRfKlgOQ4VRxIyGGQwyGCQwaClnpKxa0vGwsGuLRmOJGQwyGBQ4gzzQmdP8tD3QueZIwktvFbEzm5lBvt39vhxJCGDQQaDDAYZDDIYZDDIPWxXvMZ+BWuswXYdr7GOJBS9w7zQee1hJL3QecWRhAwGGQwyGGQwaAs3iW/Xil3hpr/ZiHEkIYNBBoP+ACL4P6pJgo8/AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTEwLTEwVDE4OjIwOjExKzAwOjAwDMhyxwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMC0xMFQxODoyMDoxMSswMDowMH2VynsAAAAASUVORK5CYII="></td>
       <td align="center">1
-(0.02%)</td>
+(0.0%)</td>
     </tr>
     <tr>
       <td align="center">4</td>
       <td align="left">genre
 [factor]</td>
-      <td align="left">1. Classics & Jazz
-2. Electronic & Dance
-3. HipHop & Rap
-4. other
-5. Pop
-6. Rock
-7. Soundtrack</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. Classics & Jazz</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. Electronic & Dance</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. HipHop & Rap</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. other</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">5. Pop</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">6. Rock</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">7. Soundtrack</td></tr></table></td>
       <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">10</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">0.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">586</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">9.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2898</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">46.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">223</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">3.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">1869</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">30.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">545</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">8.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">65</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">1.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAFMAAACwBAMAAACBTE8fAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoJFiIcFv2yFwAAAIhJREFUWMPt1EEKgCAQRmGPkDdIvYHe/25B0SLSxiEGFd5bfxsHfp1bq+DFNigUakplaUzjVeigqZxBodAeqtiWl5uGRrn9eayvoFDoTRXbmuEf6KWpZCgUakAVM5ScOW18afUL1MpQKPTnthSLHU4rz2jR9D4OFAptUcW2vJzxPwCFQkfTVToA65ZX0EsfcvwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTAtMDlUMjI6MzQ6MjgrMDA6MDDDWcktAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTEwLTA5VDIyOjM0OjI4KzAwOjAwsgRxkQAAAABJRU5ErkJggg=="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAFMAAACsCAQAAACtf1hHAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCgoSFAsJjqGXAAABTUlEQVR42u3bQQrCMBQG4UY8nSfQE9oTeL26NBWqlYRmfpxxE8HFRx8VnsWyTAmdRgNkDmbel2XivNKvJjeZMqnJlElNpkxqMmVSk9mzUq9GrJ8WSnUOuZohzHP9Zv449WuZhnVev71sfvAxzjjFDF2mTGoyZVKTKZOaTJnUQphvS8bYVWI79/SehTB/2NOP7lZNffeefnTrmzlk6DJlUpMpk5pMmdRkyqTmAtxMq84hQ5fZs809feTT8y/M155Ou+NDhi5TJjWZMqnJlElNpkxq7unNtOocMnSZPTvseXrb3n/Q8/TWb5CQocuUSU2mTGoyZVKTKZOae3ozrTqHDD2EuXsBHvvgeucCPPrWChm6TJnUZMqkJlMmNZkyqYUw3dObadU5ZOiJzHlh/fV7g8lNpkxqMmVSkymTmkyZ1GT+IbNAd7S3Qq6mzJ49AbrzbKTvaU/4AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTEwLTEwVDE4OjIwOjExKzAwOjAwDMhyxwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMC0xMFQxODoyMDoxMSswMDowMH2VynsAAAAASUVORK5CYII="></td>
       <td align="center">0
-(0%)</td>
+(0.0%)</td>
     </tr>
     <tr>
       <td align="center">5</td>
       <td align="left">label
 [factor]</td>
-      <td align="left">1. INDEP
-2. SONY
-3. UMG
-4. WARNER</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. INDEP</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. SONY</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. UMG</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. WARNER</td></tr></table></td>
       <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">1441</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">23.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">1256</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">20.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2508</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">40.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">991</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">16.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEkAAABoBAMAAABPrcB8AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoJFiIcFv2yFwAAAGRJREFUSMft1LENwDAIRFFGCBvEyQbO/ru5SUGIsejMSffrV1gILFK365eajlfdj6tTUSGr3N7rsn3KPb3NlZsEFRW4yu29Litzta4z+r8+UVGhqdzeI1xtC5WdBBUVvsrtfcUGtRuLpZmqjLgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTAtMDlUMjI6MzQ6MjgrMDA6MDDDWcktAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTEwLTA5VDIyOjM0OjI4KzAwOjAwsgRxkQAAAABJRU5ErkJggg=="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEkAAABmCAQAAAAtgHS0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCgoSFAyX6jQ0AAAA4ElEQVRo3u3ZwQnDMBBE0Si4ulSQVBhX4PaS6yogkLJr/A9/TjJG8GAl8OD2udFyvxog6b9s8eFddLCebXVH3LD1rx4FoCO5Hzg4SZIkSaJFkiRJkmgBkn4+dLMfqRVpsQFcVzNjHQAODkjqztKemtx6e5sgZXpc3cUADk6SJEmSaJEkSZIkWoAke9yQEdbAwUmaSWG1zOQVDtMJvwjX099z4OAkSZIkiRZJkiRJogVIsloOGWENHByQlOxxVb8Fh6TVHnfOZQAOTpIkSZJokSRJkiRagCR6j2MEODhJM/kCKkAXtG9Y0VsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTAtMTBUMTg6MjA6MTIrMDA6MDA9IGhaAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTEwLTEwVDE4OjIwOjEyKzAwOjAwTH3Q5gAAAABJRU5ErkJggg=="></td>
       <td align="center">0
-(0%)</td>
+(0.0%)</td>
     </tr>
     <tr>
       <td align="center">6</td>
       <td align="left">explicit
 [factor]</td>
-      <td align="left">1. not explicit
-2. explicit</td>
+      <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. not explicit</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. explicit</td></tr></table></td>
       <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">3626</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">58.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2570</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">41.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGQAAAA4BAMAAAD5gEDrAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqb39/f///+DdZCQAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoJFiIcFv2yFwAAAD5JREFUSMdjYBheQIkEANWibEw0MBrVMqplVMvw0UJGcSFIAhjsWgj4WBGLFgKBPKplVMuolmGqhYziYrgAAApMXEp94oD4AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTEwLTA5VDIyOjM0OjI4KzAwOjAww1nJLQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMC0wOVQyMjozNDoyOCswMDowMLIEcZEAAAAASUVORK5CYII="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGQAAAA3CAQAAABQ8SeGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCgoSFAyX6jQ0AAAAoElEQVRo3u3YQQ5AMBBA0Vaczgk4ISfo9diWxIIu+jv5b2dB/GQqMflMMUy9X8CQqCFzfbEPdmC2/BKS0tL73T4ot6swo2UIjSE0htAYQmMIjSE0htAYQmMIzeOfvfx7CkCuFyeDLVFStUSJM1phQm5n5Og6W2tuuRuzoGv9zIQZLUNoDKExhMYQGkNoDKExhMYQGkNoYi7oRhZmtAyhuQDJMQvhoBBo9wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0xMC0xMFQxODoyMDoxMiswMDowMD0gaFoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMTAtMTBUMTg6MjA6MTIrMDA6MDBMfdDmAAAAAElFTkSuQmCC"></td>
       <td align="center">0
-(0%)</td>
+(0.0%)</td>
     </tr>
   </tbody>
-</table></div><!--/html_preserve-->
+</table></div>
+```
 
 The 'Missing' column in the output above tells us that there is one missing value on the 'duration_ms' and 'valence' variables. We might want to exclude this observation by creating a subset of the data.  
 
 
 ```r
-music_data <- music_data[!is.na(music_data$valence) & 
+music_data <- music_data[!is.na(music_data$valence) &
     !is.na(music_data$duration_ms), ]
 ```
 
