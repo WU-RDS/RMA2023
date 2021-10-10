@@ -1301,7 +1301,7 @@ summary(tukeys)
 ## dynamic retargeting - no retargeting == 0        793.97     102.28   7.762
 ## dynamic retargeting - generic retargeting == 0   705.65     106.61   6.619
 ##                                                Pr(>|t|)    
-## generic retargeting - no retargeting == 0         0.678    
+## generic retargeting - no retargeting == 0         0.679    
 ## dynamic retargeting - no retargeting == 0      <0.00001 ***
 ## dynamic retargeting - generic retargeting == 0 <0.00001 ***
 ## ---
@@ -1327,15 +1327,15 @@ confint(tukeys)
 ## 
 ## Fit: aov(formula = revenue ~ retargeting, data = customer_data)
 ## 
-## Quantile = 2.3557
+## Quantile = 2.3554
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate  lwr       upr      
-## generic retargeting - no retargeting == 0        88.3220 -159.4179  336.0619
-## dynamic retargeting - no retargeting == 0       793.9687  553.0210 1034.9164
-## dynamic retargeting - generic retargeting == 0  705.6467  454.5172  956.7761
+## generic retargeting - no retargeting == 0        88.3220 -159.3873  336.0313
+## dynamic retargeting - no retargeting == 0       793.9687  553.0508 1034.8866
+## dynamic retargeting - generic retargeting == 0  705.6467  454.5483  956.7451
 ```
 
 ```r
