@@ -32,6 +32,13 @@ To get an idea of how clustering might work let's first take a look at just  wit
 
 ```r
 library(ggplot2)
+```
+
+```
+## Warning: Paket 'ggplot2' wurde unter R Version 4.0.5 erstellt
+```
+
+```r
 library(stringr)
 robin_schulz <- tracks[str_detect(tracks$artistName,
     "Robin Schulz"), ]
@@ -97,6 +104,13 @@ In the previous example it was easy to set the number of clusters. However, if w
 
 ```r
 library(NbClust)
+```
+
+```
+## Warning: Paket 'NbClust' wurde unter R Version 4.0.3 erstellt
+```
+
+```r
 famous_artists <- c("Ed Sheeran", "Eminem", "Rihanna",
     "Taylor Swift", "Queen")
 famous_tracks <- tracks[tracks$artistName %in% famous_artists,
@@ -145,8 +159,21 @@ To get a quick overview of the centers we can user a radar plot. This allows us 
 
 ```r
 library(ggiraph)
-library(ggiraphExtra)
+```
 
+```
+## Warning: Paket 'ggiraph' wurde unter R Version 4.0.5 erstellt
+```
+
+```r
+library(ggiraphExtra)
+```
+
+```
+## Warning: Paket 'ggiraphExtra' wurde unter R Version 4.0.3 erstellt
+```
+
+```r
 centers <- data.frame(kmeans_tracks$centers)
 centers$cluster <- 1:3
 ggRadar(centers, aes(color = cluster), rescale = FALSE) +

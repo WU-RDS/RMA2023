@@ -334,6 +334,13 @@ To visualize the co-variation between categorical variables, you’ll need to co
 
 ```r
 library(gtools)
+```
+
+```
+## Warning: Paket 'gtools' wurde unter R Version 4.0.5 erstellt
+```
+
+```r
 music_data$streams_cat <- as.numeric(quantcut(music_data$streams,
     5, na.rm = TRUE))
 music_data$speech_cat <- as.numeric(quantcut(music_data$speechiness,

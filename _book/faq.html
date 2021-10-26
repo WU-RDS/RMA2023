@@ -434,50 +434,50 @@ In file(file, &quot;rt&quot;) :
 <div id="error-unexpected-symbol-in-call" class="section level3 unnumbered">
 <h3>Error: unexpected ‘SYMBOL’ in “CALL”</h3>
 <p>Usually the <code>unexpectes SYMBOL</code> message is due to parentheses not being matched but it could also be any other symbol that R cannot interpret in the given context. Please check the line in which the error occurred for typos (especially too many/ too few symbols). Some common examples are:</p>
-<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="faq.html#cb762-1"></a><span class="kw">print</span>(<span class="st">&quot;hello&quot;</span>)<span class="er">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="faq.html#cb774-1"></a><span class="kw">print</span>(<span class="st">&quot;hello&quot;</span>)<span class="er">)</span></span></code></pre></div>
 <pre><code>## Error: &lt;text&gt;:1:15: Unerwartete(s) &#39;)&#39;
 ## 1: print(&quot;hello&quot;))
 ##                   ^</code></pre>
 <p>There is one too many closing parenthesis here.</p>
-<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="faq.html#cb764-1"></a><span class="dv">1</span> <span class="op">+</span><span class="er">/</span><span class="st"> </span><span class="dv">2</span> <span class="co"># Too many symbols</span></span></code></pre></div>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="faq.html#cb776-1"></a><span class="dv">1</span> <span class="op">+</span><span class="er">/</span><span class="st"> </span><span class="dv">2</span> <span class="co"># Too many symbols</span></span></code></pre></div>
 <pre><code>## Error: &lt;text&gt;:1:4: Unerwartete(s) &#39;/&#39;
 ## 1: 1 +/
 ##        ^</code></pre>
 <p>The “/” symbol may not follow the “+” symbol without any additional objects.</p>
-<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="faq.html#cb766-1"></a><span class="dv">1</span> <span class="dv">2</span> <span class="co"># Missing symbol</span></span></code></pre></div>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="faq.html#cb778-1"></a><span class="dv">1</span> <span class="dv">2</span> <span class="co"># Missing symbol</span></span></code></pre></div>
 <pre><code>## Error: &lt;text&gt;:1:3: unerwartete numerische Konstante
 ## 1: 1 2
 ##       ^</code></pre>
 <p>The sequence with a space between numbers is not recognized by R.</p>
-<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="faq.html#cb768-1"></a>x &lt;-<span class="st"> </span><span class="dv">3</span></span>
-<span id="cb768-2"><a href="faq.html#cb768-2"></a>2x <span class="co"># Missing symbol</span></span></code></pre></div>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="faq.html#cb780-1"></a>x &lt;-<span class="st"> </span><span class="dv">3</span></span>
+<span id="cb780-2"><a href="faq.html#cb780-2"></a>2x <span class="co"># Missing symbol</span></span></code></pre></div>
 <pre><code>## Error: &lt;text&gt;:2:2: unerwartetes Symbol
 ## 1: x &lt;- 3
 ## 2: 2x
 ##     ^</code></pre>
 <p>If you wanted to multiply x by 2 you would need to a the "*" symbol, as the following example shows.</p>
-<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="faq.html#cb770-1"></a><span class="dv">2</span><span class="op">*</span>x</span></code></pre></div>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="faq.html#cb782-1"></a><span class="dv">2</span><span class="op">*</span>x</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 </div>
 <div id="error-in-call-object-of-type-closure-is-not-subsettable" class="section level3 unnumbered">
 <h3>Error in CALL : object of type ‘closure’ is not subsettable</h3>
 <p>This error occurs usually when one tries to subset a function (either with <code>fun$element</code> or <code>fun[1]</code> where <code>fun</code> is a function). Check your variable (especially <code>data.frames</code>) names for typos! This happens when you run the following code, for example, since <code>mean</code> is a function:</p>
-<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="faq.html#cb772-1"></a><span class="co"># Does not work:</span></span>
-<span id="cb772-2"><a href="faq.html#cb772-2"></a>means &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb772-3"><a href="faq.html#cb772-3"></a>mean<span class="op">$</span>value</span></code></pre></div>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="faq.html#cb784-1"></a><span class="co"># Does not work:</span></span>
+<span id="cb784-2"><a href="faq.html#cb784-2"></a>means &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb784-3"><a href="faq.html#cb784-3"></a>mean<span class="op">$</span>value</span></code></pre></div>
 <pre><code>## Error in mean$value: Objekt des Typs &#39;closure&#39; ist nicht indizierbar</code></pre>
 <p>instead of (i.e., correcting for the missing “s” to identify the data frame by its name)</p>
-<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="faq.html#cb774-1"></a><span class="co"># Works:</span></span>
-<span id="cb774-2"><a href="faq.html#cb774-2"></a>means &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb774-3"><a href="faq.html#cb774-3"></a>means<span class="op">$</span>value</span></code></pre></div>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="faq.html#cb786-1"></a><span class="co"># Works:</span></span>
+<span id="cb786-2"><a href="faq.html#cb786-2"></a>means &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb786-3"><a href="faq.html#cb786-3"></a>means<span class="op">$</span>value</span></code></pre></div>
 <pre><code>## [1] 1 2 3</code></pre>
 <p>or we give variables the same name as a function (which should generally be avoided) but have not created that variable yet:</p>
-<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="faq.html#cb776-1"></a><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="faq.html#cb788-1"></a><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>## Error in object[[i]]: Objekt des Typs &#39;closure&#39; ist nicht indizierbar</code></pre>
 <p>Make sure all the relevant code is run first:</p>
-<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="faq.html#cb778-1"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">group =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>))</span>
-<span id="cb778-2"><a href="faq.html#cb778-2"></a>aov &lt;-<span class="st"> </span><span class="kw">aov</span>(value<span class="op">~</span>group, dat)</span>
-<span id="cb778-3"><a href="faq.html#cb778-3"></a><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="faq.html#cb790-1"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">group =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>))</span>
+<span id="cb790-2"><a href="faq.html#cb790-2"></a>aov &lt;-<span class="st"> </span><span class="kw">aov</span>(value<span class="op">~</span>group, dat)</span>
+<span id="cb790-3"><a href="faq.html#cb790-3"></a><span class="kw">summary</span>(aov)[[<span class="dv">1</span>]]</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.5","3":"1.5","4":"3","5":"0.3333333","_rn_":"group"},{"1":"1","2":"0.5","3":"0.5","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -487,19 +487,19 @@ In file(file, &quot;rt&quot;) :
 <div id="error-in-call_with_-operator-is-invalid-for-atomic-vectors" class="section level3 unnumbered">
 <h3>Error in CALL_WITH_$: $ operator is invalid for atomic vectors</h3>
 <p>This error occurs when we try to subset a vector using the <code>$</code> operator. Usually this occurs when we think an object is a <code>data.frame</code> with the variable in it but it is really a vector.</p>
-<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="faq.html#cb779-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb779-2"><a href="faq.html#cb779-2"></a>x<span class="op">$</span>a</span></code></pre></div>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="faq.html#cb791-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb791-2"><a href="faq.html#cb791-2"></a>x<span class="op">$</span>a</span></code></pre></div>
 <pre><code>## Error in x$a: $ operator is invalid for atomic vectors</code></pre>
-<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="faq.html#cb781-1"></a>xdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a =</span> x)</span>
-<span id="cb781-2"><a href="faq.html#cb781-2"></a>xdf<span class="op">$</span>a</span></code></pre></div>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="faq.html#cb793-1"></a>xdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a =</span> x)</span>
+<span id="cb793-2"><a href="faq.html#cb793-2"></a>xdf<span class="op">$</span>a</span></code></pre></div>
 <pre><code>## [1] 1 2 3</code></pre>
 <p>Note that this error can also occur as part of function calls when some variables are <code>NA</code>:</p>
-<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="faq.html#cb783-1"></a><span class="kw">library</span>(psych)</span>
-<span id="cb783-2"><a href="faq.html#cb783-2"></a>xdf<span class="op">$</span>group &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb783-3"><a href="faq.html#cb783-3"></a><span class="kw">mean</span>(xdf<span class="op">$</span>a, xdf<span class="op">$</span>group)</span></code></pre></div>
+<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="faq.html#cb795-1"></a><span class="kw">library</span>(psych)</span>
+<span id="cb795-2"><a href="faq.html#cb795-2"></a>xdf<span class="op">$</span>group &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb795-3"><a href="faq.html#cb795-3"></a><span class="kw">mean</span>(xdf<span class="op">$</span>a, xdf<span class="op">$</span>group)</span></code></pre></div>
 <pre><code>## Error in mean.default(xdf$a, xdf$group): &#39;trim&#39; muss nummerisch sein und Länge 1 haben</code></pre>
 <p>When you get this error make sure your data is in the format you expect it to be (e.g., using the <code>str</code> function). And that missing values (i.e., NA) are handles appropriately.</p>
-<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="faq.html#cb785-1"></a><span class="kw">str</span>(xdf)</span></code></pre></div>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="faq.html#cb797-1"></a><span class="kw">str</span>(xdf)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    3 obs. of  2 variables:
 ##  $ a    : int  1 2 3
 ##  $ group: logi  NA NA NA</code></pre>
@@ -516,7 +516,7 @@ In file(file, &quot;rt&quot;) :
 <h3>Error in CALL: could not find function “FUNCTION”</h3>
 <p>This error occurs if a function name is either misspelled or some packages have not been loaded into the current session (<code>library(PACKAGENAME)</code>). You have to re-load all packages every time you restart R. For example if you <strong>did not</strong> load the <code>ggplot2</code> library but try to use the <code>ggplot</code> function:</p>
 <pre><code>## Error in detach(package:ggplot2): ungültiges &#39;name&#39;Argument</code></pre>
-<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="faq.html#cb788-1"></a><span class="kw">ggplot</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="faq.html#cb800-1"></a><span class="kw">ggplot</span>(data)</span></code></pre></div>
 <pre><code>## Error in ggplot(data): konnte Funktion &quot;ggplot&quot; nicht finden</code></pre>
 <p>If you are not sure which package provides a given function, try running:</p>
 <p><code>??FUNCTION</code></p>
@@ -525,17 +525,17 @@ In file(file, &quot;rt&quot;) :
 <div id="error-in-call-incorrect-number-of-dimension" class="section level3 unnumbered">
 <h3>Error in CALL: incorrect number of dimension</h3>
 <p>This error occurs when subsetting an object with the wrong number of dimension. For example if we have a vector <code>x</code> and try to get an element in the second dimension:</p>
-<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="faq.html#cb790-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb790-2"><a href="faq.html#cb790-2"></a>x[<span class="dv">1</span>,<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="faq.html#cb802-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb802-2"><a href="faq.html#cb802-2"></a>x[<span class="dv">1</span>,<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## Error in x[1, 1]: falsche Anzahl von Dimensionen</code></pre>
-<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="faq.html#cb792-1"></a>x[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="faq.html#cb804-1"></a>x[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>Note that <code>data.frame</code>s have two dimensions (each variable is a column, each observation a row) even if there is only one variable:</p>
-<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="faq.html#cb794-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb794-2"><a href="faq.html#cb794-2"></a><span class="kw">data.frame</span>(x)[<span class="dv">1</span>, <span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="faq.html#cb806-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb806-2"><a href="faq.html#cb806-2"></a><span class="kw">data.frame</span>(x)[<span class="dv">1</span>, <span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>For multidimensional objects you can always check the size of each dimension using the <code>dim</code> function:</p>
-<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="faq.html#cb796-1"></a><span class="kw">dim</span>(<span class="kw">data.frame</span>(x))</span></code></pre></div>
+<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="faq.html#cb808-1"></a><span class="kw">dim</span>(<span class="kw">data.frame</span>(x))</span></code></pre></div>
 <pre><code>## [1] 3 1</code></pre>
 <p>For vectors <code>dim</code> will return <code>NULL</code>.</p>
 </div>
@@ -556,17 +556,17 @@ In file(file, &quot;rt&quot;) :
 <ol style="list-style-type: decimal">
 <li>Try adding the <code>repo</code> argument to the <code>install.packages</code> command as in the following example:</li>
 </ol>
-<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="faq.html#cb798-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;PACKAGENAME&quot;</span>, <span class="dt">repo=</span><span class="st">&quot;https://cloud.r-project.org/&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="faq.html#cb810-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;PACKAGENAME&quot;</span>, <span class="dt">repo=</span><span class="st">&quot;https://cloud.r-project.org/&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Try to install the package from GitHub directly using the <code>devtools</code> package.</li>
 </ol>
 <p>For example to get the <code>devtools</code> package and install the <code>ggstatsplot</code> package from the GitHub-user <code>IndrajeetPatil</code> run the following code:</p>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="faq.html#cb799-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
-<span id="cb799-2"><a href="faq.html#cb799-2"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(</span>
-<span id="cb799-3"><a href="faq.html#cb799-3"></a>  <span class="dt">repo =</span> <span class="st">&quot;IndrajeetPatil/ggstatsplot&quot;</span>, <span class="co"># package path on GitHub (&quot;username/packagename&quot;)</span></span>
-<span id="cb799-4"><a href="faq.html#cb799-4"></a>  <span class="dt">dependencies =</span> <span class="ot">TRUE</span>, <span class="co"># installs packages which ggstatsplot depends on</span></span>
-<span id="cb799-5"><a href="faq.html#cb799-5"></a>  <span class="dt">upgrade_dependencies =</span> <span class="ot">TRUE</span> <span class="co"># updates any out of date dependencies</span></span>
-<span id="cb799-6"><a href="faq.html#cb799-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="faq.html#cb811-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb811-2"><a href="faq.html#cb811-2"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(</span>
+<span id="cb811-3"><a href="faq.html#cb811-3"></a>  <span class="dt">repo =</span> <span class="st">&quot;IndrajeetPatil/ggstatsplot&quot;</span>, <span class="co"># package path on GitHub (&quot;username/packagename&quot;)</span></span>
+<span id="cb811-4"><a href="faq.html#cb811-4"></a>  <span class="dt">dependencies =</span> <span class="ot">TRUE</span>, <span class="co"># installs packages which ggstatsplot depends on</span></span>
+<span id="cb811-5"><a href="faq.html#cb811-5"></a>  <span class="dt">upgrade_dependencies =</span> <span class="ot">TRUE</span> <span class="co"># updates any out of date dependencies</span></span>
+<span id="cb811-6"><a href="faq.html#cb811-6"></a>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>In case you are using <code>knit</code>ting process of a R Markdown file, you should not install any packages from within the markdown file. Instead, install the packages first using a plain R script file and then load the package within the markdown file before clicking <code>knit</code> to compile the document.</li>
 </ol>
@@ -596,12 +596,12 @@ In file(file, &quot;rt&quot;) :
 <div id="why-can-demeaningstandardization-lead-to-missing-values" class="section level3 unnumbered">
 <h3>Why can demeaning/standardization lead to missing values?</h3>
 <p>Calculating statistics (e.g., mean, sd) using variables that include <code>NA</code>s will return an <code>NA</code> by default. There are a couple of options to address this problem. The missing values can be deleted from a variable using the <code>na.omit</code> function. Alternatively many functions offer the <code>na.rm</code> argument which will calculate the statistic disregarding <code>NA</code>s. For example, the following will result in NA:</p>
-<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="faq.html#cb800-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">5</span>, <span class="ot">NA</span>)</span>
-<span id="cb800-2"><a href="faq.html#cb800-2"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="faq.html#cb812-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">5</span>, <span class="ot">NA</span>)</span>
+<span id="cb812-2"><a href="faq.html#cb812-2"></a><span class="kw">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <p>While the following disregards the NA values when computing the mean of the numeric vector:</p>
-<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="faq.html#cb802-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">5</span>, <span class="ot">NA</span>)</span>
-<span id="cb802-2"><a href="faq.html#cb802-2"></a><span class="kw">mean</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="faq.html#cb814-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">5</span>, <span class="ot">NA</span>)</span>
+<span id="cb814-2"><a href="faq.html#cb814-2"></a><span class="kw">mean</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 2.75</code></pre>
 <p>Note that the <code>scale</code> function automatically omits missing values when calculating the mean and standard deviation to standardize a variable.</p>
 <p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/missings.R">missings.R</a> for a sample script.</p>
@@ -623,16 +623,16 @@ In file(file, &quot;rt&quot;) :
 <div id="when-using-logistic-regression-error-in-evalfamilyinitialize-y-values-must-be-0-y-1" class="section level4 unnumbered">
 <h4>When using logistic regression: Error in eval(family$initialize) : y values must be 0 &lt;= y &lt;= 1</h4>
 <p>When using logistic regression make sure all the values in the dependent variable (left hand side) are between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span></p>
-<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="faq.html#cb804-1"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb804-2"><a href="faq.html#cb804-2"></a><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x , <span class="dt">data =</span> dat, <span class="dt">family=</span><span class="kw">binomial</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="faq.html#cb816-1"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb816-2"><a href="faq.html#cb816-2"></a><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x , <span class="dt">data =</span> dat, <span class="dt">family=</span><span class="kw">binomial</span>())</span></code></pre></div>
 <pre><code>## Error in eval(family$initialize): y values must be 0 &lt;= y &lt;= 1</code></pre>
 </div>
 </div>
 <div id="when-using-logistic-regression-error-in-weights-y-non-numeric-argument-to-binary-operator" class="section level3 unnumbered">
 <h3>When using logistic regression: Error in weights * y : non-numeric argument to binary operator</h3>
 <p>This error occurs if a variable that is supposed to be numeric is a character</p>
-<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="faq.html#cb806-1"></a>dat<span class="op">$</span>char_y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="st">&quot;1&quot;</span>)</span>
-<span id="cb806-2"><a href="faq.html#cb806-2"></a><span class="kw">glm</span>(char_y <span class="op">~</span><span class="st"> </span>x , <span class="dt">data =</span> dat, <span class="dt">family=</span><span class="kw">binomial</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="faq.html#cb818-1"></a>dat<span class="op">$</span>char_y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="st">&quot;1&quot;</span>)</span>
+<span id="cb818-2"><a href="faq.html#cb818-2"></a><span class="kw">glm</span>(char_y <span class="op">~</span><span class="st"> </span>x , <span class="dt">data =</span> dat, <span class="dt">family=</span><span class="kw">binomial</span>())</span></code></pre></div>
 <pre><code>## Error in weights * y: nicht-numerisches Argument für binären Operator</code></pre>
 </div>
 </div>
@@ -648,17 +648,17 @@ integer. A penalty to be applied when deciding to print numeric values in fixed 
 </blockquote>
 <p>Scientific notation follows the following rule: <span class="math inline">\(VeD \Rightarrow V \times 10^D\)</span>.</p>
 <p>Therefore, <code>options(scipen=-10)</code> would result in:</p>
-<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="faq.html#cb808-1"></a><span class="kw">options</span>(<span class="dt">scipen=</span><span class="op">-</span><span class="dv">10</span>)</span>
-<span id="cb808-2"><a href="faq.html#cb808-2"></a><span class="fl">29.3749592384</span></span></code></pre></div>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="faq.html#cb820-1"></a><span class="kw">options</span>(<span class="dt">scipen=</span><span class="op">-</span><span class="dv">10</span>)</span>
+<span id="cb820-2"><a href="faq.html#cb820-2"></a><span class="fl">29.3749592384</span></span></code></pre></div>
 <pre><code>## [1] 2.937496e+01</code></pre>
 <p>And <code>options(scipen=10)</code> would result in:</p>
-<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="faq.html#cb810-1"></a><span class="kw">options</span>(<span class="dt">scipen=</span><span class="dv">10</span>)</span>
-<span id="cb810-2"><a href="faq.html#cb810-2"></a><span class="fl">29.3749592384</span></span></code></pre></div>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="faq.html#cb822-1"></a><span class="kw">options</span>(<span class="dt">scipen=</span><span class="dv">10</span>)</span>
+<span id="cb822-2"><a href="faq.html#cb822-2"></a><span class="fl">29.3749592384</span></span></code></pre></div>
 <pre><code>## [1] 29.37496</code></pre>
 <p>See also <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/scientificnotation.R">scientificnotation.R</a> for some examples.</p>
 <p>Note that <code>options(digits=...)</code> also allows you to control the number of digits to be displayed for numeric values:</p>
-<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="faq.html#cb812-1"></a><span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">12</span>)</span>
-<span id="cb812-2"><a href="faq.html#cb812-2"></a><span class="fl">29.3749592384</span></span></code></pre></div>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="faq.html#cb824-1"></a><span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">12</span>)</span>
+<span id="cb824-2"><a href="faq.html#cb824-2"></a><span class="fl">29.3749592384</span></span></code></pre></div>
 <pre><code>## [1] 29.3749592384</code></pre>
 </div>
 </div>
@@ -679,10 +679,10 @@ integer. A penalty to be applied when deciding to print numeric values in fixed 
 <div id="some-labels-in-plots-are-cut-off.-how-can-i-extend-the-plot-margins" class="section level3 unnumbered">
 <h3>Some labels in plots are cut off. How can I extend the plot margins?</h3>
 <p>If axis labels (e.g. names) are too long, they are cut off by the default margins of R plots. You can set margins manually in <code>ggplot2</code> as part of the <code>theme</code> settings in the following order: top, right, bottom, left. For example, to add 2cm margin to each side, we can use:</p>
-<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="faq.html#cb814-1"></a>my_ggplot <span class="op">+</span><span class="st"> </span></span>
-<span id="cb814-2"><a href="faq.html#cb814-2"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.margin =</span> <span class="kw">margin</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="st">&quot;cm&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="faq.html#cb826-1"></a>my_ggplot <span class="op">+</span><span class="st"> </span></span>
+<span id="cb826-2"><a href="faq.html#cb826-2"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.margin =</span> <span class="kw">margin</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="st">&quot;cm&quot;</span>))</span></code></pre></div>
 <p>In addition you can try to change the height and width when saving a ggplot (this usually works better):</p>
-<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="faq.html#cb815-1"></a><span class="kw">ggsave</span>(<span class="st">&quot;myggplot.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="faq.html#cb827-1"></a><span class="kw">ggsave</span>(<span class="st">&quot;myggplot.png&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
 <p>Within an Rmd document you can set the with and height as part of the code chunk options using e.g., <code>fig.width=10, fig.height=10</code> <a href="#rchunk">(see also here)</a></p>
 </div>
 </div>
@@ -692,30 +692,30 @@ integer. A penalty to be applied when deciding to print numeric values in fixed 
 <div id="problems-with-factor-and-as.factor" class="section level3 unnumbered">
 <h3>Problems with <code>factor</code> and <code>as.factor</code></h3>
 <p><strong>1. Common mistake:</strong> some groups are not named in <code>levels</code> and <code>labels</code> <span class="math inline">\(\Rightarrow\)</span> results in <code>NA</code> for omitted group like in the following example:</p>
-<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="faq.html#cb816-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb816-2"><a href="faq.html#cb816-2"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>))</span>
-<span id="cb816-3"><a href="faq.html#cb816-3"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="faq.html#cb828-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb828-2"><a href="faq.html#cb828-2"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>))</span>
+<span id="cb828-3"><a href="faq.html#cb828-3"></a>x</span></code></pre></div>
 <pre><code>## [1] no   no   no   yes  no   &lt;NA&gt; no   yes 
 ## Levels: no yes</code></pre>
 <p>In this example, you need to also consider “2” as a factor level to avoid setting the value of this observation to NA:</p>
-<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="faq.html#cb818-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb818-2"><a href="faq.html#cb818-2"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
-<span id="cb818-3"><a href="faq.html#cb818-3"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="faq.html#cb830-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb830-2"><a href="faq.html#cb830-2"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
+<span id="cb830-3"><a href="faq.html#cb830-3"></a>x</span></code></pre></div>
 <pre><code>## [1] no    no    no    yes   no    maybe no    yes  
 ## Levels: no yes maybe</code></pre>
 <p><strong>2. Common mistake:</strong> the code creating the factor is run twice overwriting the original variable <span class="math inline">\(\Rightarrow\)</span> results in <code>NA</code> for all values like in the following example:</p>
-<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="faq.html#cb820-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb820-2"><a href="faq.html#cb820-2"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
-<span id="cb820-3"><a href="faq.html#cb820-3"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
-<span id="cb820-4"><a href="faq.html#cb820-4"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="faq.html#cb832-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb832-2"><a href="faq.html#cb832-2"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
+<span id="cb832-3"><a href="faq.html#cb832-3"></a>x &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
+<span id="cb832-4"><a href="faq.html#cb832-4"></a>x</span></code></pre></div>
 <pre><code>## [1] &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
 ## Levels: no yes maybe</code></pre>
 <p>As can be seen, by running the line of code specifying the factor variable twice, we first specify the factor variable correctly and then incorrectly overwrite this variable again. The second time we run the code, the values are set to NA because R looks from levels of 0,1, and 2 again, but these had already been replaced by the labels when the code was run for the first time. Hence, since there are no elements with the values of 0,1,2 anymore, these values are replaced by missing values.</p>
 <p>Note that this is usually a result of “jumping” back and forth in the code. Run your script from the top and make sure you do not create the factor twice. The second time the original levels do not exist anymore and thus all resulting values are missing without warning or error.</p>
 <p><strong>Possible remedy</strong>: name the factor variable you create differently from the source variable, e.g.,</p>
-<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="faq.html#cb822-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb822-2"><a href="faq.html#cb822-2"></a>y &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
-<span id="cb822-3"><a href="faq.html#cb822-3"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="faq.html#cb834-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb834-2"><a href="faq.html#cb834-2"></a>y &lt;-<span class="st"> </span><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;maybe&quot;</span>))</span>
+<span id="cb834-3"><a href="faq.html#cb834-3"></a>y</span></code></pre></div>
 <pre><code>## [1] no    no    no    yes   no    maybe no    yes  
 ## Levels: no yes maybe</code></pre>
 <p>In this case, you can always go back and re-run the code creating the factor variable from its original source if you have overwritten it accidentally. Otherwise you would need to re-run the entire code to get the original formating of the variable back.</p>
@@ -732,23 +732,23 @@ integer. A penalty to be applied when deciding to print numeric values in fixed 
 <p><code>?lm</code> or <code>?mean</code></p>
 <p>If the function is provided by a package you have to load the package first using the <code>library(...)</code> function.
 e.g.,</p>
-<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="faq.html#cb824-1"></a><span class="kw">library</span>(Hmisc)</span>
-<span id="cb824-2"><a href="faq.html#cb824-2"></a>?rcorr </span></code></pre></div>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="faq.html#cb836-1"></a><span class="kw">library</span>(Hmisc)</span>
+<span id="cb836-2"><a href="faq.html#cb836-2"></a>?rcorr </span></code></pre></div>
 </div>
 <div id="what-does-the-margin-argument-do" class="section level3 unnumbered">
 <h3>What does the <code>MARGIN</code> argument do?</h3>
 <p>Some functions such as <code>apply</code> and <code>prop.table</code> take a <code>MARGIN</code> argument. This argument specifies over which dimension (e.g., rows = 1, columns = 2) a function should be applied. This is especially useful for multidimensional arrays such as matrices.</p>
-<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="faq.html#cb825-1"></a>m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">nrow=</span><span class="dv">3</span>)</span>
-<span id="cb825-2"><a href="faq.html#cb825-2"></a>m</span></code></pre></div>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="faq.html#cb837-1"></a>m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">nrow=</span><span class="dv">3</span>)</span>
+<span id="cb837-2"><a href="faq.html#cb837-2"></a>m</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
 <p>e.g. we could get the <code>max</code> of each <em>row</em> with</p>
-<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="faq.html#cb827-1"></a><span class="kw">apply</span>(m, <span class="dv">1</span>, max)</span></code></pre></div>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="faq.html#cb839-1"></a><span class="kw">apply</span>(m, <span class="dv">1</span>, max)</span></code></pre></div>
 <pre><code>## [1] 7 8 9</code></pre>
 <p>and the <code>max</code> of each <em>column</em> with</p>
-<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="faq.html#cb829-1"></a><span class="kw">apply</span>(m, <span class="dv">2</span>, max)</span></code></pre></div>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="faq.html#cb841-1"></a><span class="kw">apply</span>(m, <span class="dv">2</span>, max)</span></code></pre></div>
 <pre><code>## [1] 3 6 9</code></pre>
 <p>See <a href="https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/QAscripts/margins.R">margins.R</a> for more examples.</p>
 </div>
@@ -758,14 +758,14 @@ e.g.,</p>
 <div id="i-get-an-error-when-knitting-to-pdf-but-it-works-for-html" class="section level3 unnumbered">
 <h3>I get an error when <code>knit</code>ting to PDF but it works for HTML</h3>
 <p>Try installing the <code>tinytex</code> library as follows before <code>knit</code>ing your document:</p>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="faq.html#cb831-1"></a><span class="kw">install.packages</span>(<span class="st">&#39;tinytex&#39;</span>)</span>
-<span id="cb831-2"><a href="faq.html#cb831-2"></a>tinytex<span class="op">::</span><span class="kw">install_tinytex</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="faq.html#cb843-1"></a><span class="kw">install.packages</span>(<span class="st">&#39;tinytex&#39;</span>)</span>
+<span id="cb843-2"><a href="faq.html#cb843-2"></a>tinytex<span class="op">::</span><span class="kw">install_tinytex</span>()</span></code></pre></div>
 </div>
 <div id="i-am-not-sure-where-r-code-latex-math-and-text-go" class="section level3 unnumbered">
 <h3>I am not sure where R-code, LaTeX math, and text go</h3>
 <p>In an Rmd document, there are 3 different environments, <a name="rchunk"></a></p>
 <p><strong>1. R-code</strong> is enclosed in three ticks followed by {r, <a href="https://rmarkdown.rstudio.com/lesson-3.html#chunk-options">chunk-options</a>} where the chunk options can include configuration for printing code and output as well as figures e.g.</p>
-<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="faq.html#cb832-1"></a><span class="kw">print</span>(<span class="st">&quot;Hello R!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="faq.html#cb844-1"></a><span class="kw">print</span>(<span class="st">&quot;Hello R!&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Hello R!&quot;</code></pre>
 <p><strong>2. LaTeX math</strong> can either be enclosed in single dollar signs $x^2$ <span class="math inline">\(\Rightarrow x^2\)</span> for in-line math or
 in double dollar signs to put the math output on its own line</p>
