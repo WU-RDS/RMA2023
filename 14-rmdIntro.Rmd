@@ -909,8 +909,8 @@ The p-value is below any sensible signifcance level and thus we reject the null 
 To further see which of the medians are unequal we perform the Nemenyi post hoc test, which can be found in the ```PCMCR``` package in R. The null hypothesis is that the pairwise medians are equal, while the alternative hypothesis is that the pairwise medians are unequal. 
 
 ```{r, warning=FALSE, message=FALSE}
-library(PMCMR)
-posthoc.kruskal.nemenyi.test(x = customer_data$rank, g = customer_data$retargeting, dist = "Tukey")
+library(PMCMRplus)
+kwAllPairsNemenyiTest(x = customer_data$rank, g = customer_data$retargeting, dist = "Tukey")
 ```
 
 Similar to question 1 we can see that there seems to be no difference in (median) customer ranks of no retargeting vs. generic retargeting. On the other side ranks of dynamic retargeting seem to be significantly different from both no retargeting and generic retargeting. This implies that just dynamic retargeting leads to different customer ranks. 

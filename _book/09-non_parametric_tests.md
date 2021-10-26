@@ -10,7 +10,7 @@ output:
 
 ```
 ## 
-## Attaching package: 'dplyr'
+## Attache Paket: 'dplyr'
 ```
 
 ```
@@ -27,7 +27,7 @@ output:
 
 ```
 ## 
-## Attaching package: 'ggplot2'
+## Attache Paket: 'ggplot2'
 ```
 
 ```
@@ -37,20 +37,20 @@ output:
 ```
 
 ```
-## Loading required package: lattice
+## Lade nötiges Paket: lattice
 ```
 
 ```
-## Loading required package: survival
+## Lade nötiges Paket: survival
 ```
 
 ```
-## Loading required package: Formula
+## Lade nötiges Paket: Formula
 ```
 
 ```
 ## 
-## Attaching package: 'Hmisc'
+## Attache Paket: 'Hmisc'
 ```
 
 ```
@@ -407,22 +407,15 @@ To test for differences between groups, we can, for example, apply post-hoc test
 
 ```r
 library(PMCMR)
-posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales,
+library(PMCMRplus)
+kwAllPairsNemenyiTest(x = online_store_promo$Sales,
     g = online_store_promo$Promotion, dist = "Tukey")
 ```
 
 ```
-## 
-## 	Pairwise comparisons using Tukey and Kramer (Nemenyi) test	
-##                    with Tukey-Dist approximation for independent samples 
-## 
-## data:  online_store_promo$Sales and online_store_promo$Promotion 
-## 
 ##        high    medium 
 ## medium 0.09887 -      
 ## low    0.00016 0.11683
-## 
-## P value adjustment method: none
 ```
 The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from a parametric test, which we could obtain as follows: 
 

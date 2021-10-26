@@ -707,7 +707,7 @@ t.test(streams_sd ~ online_advertising, data = movie_data)
 ## 
 ## data:  streams_sd by online_advertising
 ## t = -7.9513, df = 196.55, p-value = 0.0000000000001418
-## alternative hypothesis: true difference in means between group no and group yes is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -1317.1019  -793.5981
 ## sample estimates:
@@ -787,7 +787,7 @@ t.test(streams_hd ~ online_advertising, data = movie_data)
 ## 
 ## data:  streams_hd by online_advertising
 ## t = -7.5617, df = 138.71, p-value = 0.00000000000494
-## alternative hypothesis: true difference in means between group no and group yes is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -905.6522 -530.2078
 ## sample estimates:
@@ -1327,15 +1327,15 @@ confint(tukeys)
 ## 
 ## Fit: aov(formula = revenue ~ retargeting, data = customer_data)
 ## 
-## Quantile = 2.3553
+## Quantile = 2.3555
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate  lwr       upr      
-## generic retargeting - no retargeting == 0        88.3220 -159.3803  336.0243
-## dynamic retargeting - no retargeting == 0       793.9687  553.0576 1034.8798
-## dynamic retargeting - generic retargeting == 0  705.6467  454.5553  956.7380
+## generic retargeting - no retargeting == 0        88.3220 -159.3976  336.0417
+## dynamic retargeting - no retargeting == 0       793.9687  553.0407 1034.8967
+## dynamic retargeting - generic retargeting == 0  705.6467  454.5377  956.7556
 ```
 
 ```r
@@ -1399,23 +1399,15 @@ To further see which of the medians are unequal we perform the Nemenyi post hoc 
 
 
 ```r
-library(PMCMR)
-posthoc.kruskal.nemenyi.test(x = customer_data$rank,
-    g = customer_data$retargeting, dist = "Tukey")
+library(PMCMRplus)
+kwAllPairsNemenyiTest(x = customer_data$rank, g = customer_data$retargeting,
+    dist = "Tukey")
 ```
 
 ```
-## 
-## 	Pairwise comparisons using Tukey and Kramer (Nemenyi) test	
-##                    with Tukey-Dist approximation for independent samples 
-## 
-## data:  customer_data$rank and customer_data$retargeting 
-## 
 ##                     no retargeting generic retargeting
 ## generic retargeting 0.67           -                  
-## dynamic retargeting 0.000000000022 0.000000030987     
-## 
-## P value adjustment method: none
+## dynamic retargeting 0.000000000022 0.000000030987
 ```
 
 Similar to question 1 we can see that there seems to be no difference in (median) customer ranks of no retargeting vs. generic retargeting. On the other side ranks of dynamic retargeting seem to be significantly different from both no retargeting and generic retargeting. This implies that just dynamic retargeting leads to different customer ranks. 

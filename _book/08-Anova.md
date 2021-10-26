@@ -742,7 +742,7 @@ ttest
 ## 
 ## data:  hours by group
 ## t = -11.884, df = 198, p-value < 2.2e-16
-## alternative hypothesis: true difference in means between group medium and group high is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -11.997471  -8.582529
 ## sample estimates:

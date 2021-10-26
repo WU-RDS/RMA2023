@@ -172,33 +172,33 @@ In the next step you should review the method of data collection. For your group
 A questionnaire creation in Qualtrics starts with creation of a Qualtrics project. Each project consists of a survey, distribution record, and collection of responses and reports. There are three ways to create a questionnaire. First, you can create a new survey project from scratch. Second, you can create a new questionnaire from a copy of an existing questionnaire. Eventually, you can create surveys from a template in your Survey Library, or from an exported QSF file.
 
 ::: {.infobox .download data-latex="{download}"}
-By clicking on the following [link](./ExampleQuestionnaireQualtrics.qsf) you can download a template of a questionnaire in Qualtrics with guidelines and suggestions related to each question type. **Note 
+By clicking on the following [link](./ExampleQuestionnaireQualtrics.qsf) you can download a template of a questionnaire in Qualtrics with guidelines and suggestions related to each question type. 
 :::
 
 
 In order to create a completely new questionnaire, you need to do the following:  
 
-Go to the Projects page by clicking the Qualtric XM logo or clicking Projects on the top-right.  
+1. Go to the Projects page by clicking "Projects" next to the XM logo
 
-<img src="create-new-project.png" width="72%" style="display: block; margin: auto;" />
+2. Create a new project by clicking the blue button on the right side "Create project":  
 
-Create new project by clicking the blue button on the right side.  
-In the "Create your own" section click on the survey button.
+<img src="images/alt_Step_1_alternative.png" width="72%" style="display: block; margin: auto;" />
 
-<img src="create-new-project-2.png" width="72%" style="display: block; margin: auto;" />
+ 
+3. Go to "Create a project" 
+4. Click on "survey".
+5. Get started
 
-Enter a name for your survey and get started with a survey creation.
+<img src="images/alt_step_2_alternative.png" width="72%" style="display: block; margin: auto;" />
 
-<img src="new-survey.png" width="72%" style="display: block; margin: auto;" />
+6. Enter a name for your survey and get started with a survey creation "Create a blank survey project".
 
-If you would like to create a new questionnaire on a basis of an already existing one, then you choose "From a Copy". Subsequently, you need to indicate the questionnaire you would like to copy. Now you are good to go! 
+<img src="images/alt_step_3_alternative.png" width="72%" style="display: block; margin: auto;" />
 
-<img src="survey-copy.png" width="72%" style="display: block; margin: auto;" />
+7./8./9. **If you would like to import the example questionnaire, I provide above, you may do so using the "import from QSF file" option.** If you would like to create a new questionnaire on the basis of an already existing one, then you choose "Copy a survey from an existing project" (you most likely will not need this option). If there is a questionnaire in the Qualtrics Library you would like to use, then you need to choose "From Library", and indicate one library name in the dropdown menu (you most likely will not need this option). If you use the library or copy option, then you need to indicate the questionnaire you would like to copy. Now you are good to go! 
+10. Create your project
 
-If there is a questionnaire in the Qualtrics Library you would like to use, then you need to choose "From Library", and indicate one library name in the dropdown menu. 
-
-<img src="library-survey.png" width="72%" style="display: block; margin: auto;" />
-
+<img src="images/alt_step_5_alternative.png" width="72%" style="display: block; margin: auto;" />
 
 ### Questionnaire structure and contents
 
@@ -238,14 +238,14 @@ Here is a short description of how to set up a randomizer in Qualtrics, so that 
 
 First, navigate to the Survey tab and open your Survey Flow.
 
-<img src="images/surveyflow1.png" width="72%" style="display: block; margin: auto;" />
+<img src="images/structure_survey_flow.png" width="72%" style="display: block; margin: auto;" />
 
 Then click Add Below or Add a New Element Here, depending to where you want to place a randomizer. 
 
 <img src="images/surveyflow2.png" width="72%" style="display: block; margin: auto;" />
 Then choose Randomizer.
 
-<img src="images/surveyflow3.png" width="72%" style="display: block; margin: auto;" />
+<img src="images/structure_randomizer.png" width="72%" style="display: block; margin: auto;" />
 
 Finally, you set the number (the one between - and +) to 1 and check the option "Evenly Present Elements". Next you edit embedded data fields by naming it (e.g., "Group" and "Control","Test Group 1","Test Group 2".)
 

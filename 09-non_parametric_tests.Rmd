@@ -222,7 +222,8 @@ To test for differences between groups, we can, for example, apply post-hoc test
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
 library(PMCMR)
-posthoc.kruskal.nemenyi.test(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
+library(PMCMRplus)
+kwAllPairsNemenyiTest(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
 ```
 The results reveal that there is a significant difference between the "low" and "high" promotion groups. Note that the results are different compared to the results from a parametric test, which we could obtain as follows: 
 

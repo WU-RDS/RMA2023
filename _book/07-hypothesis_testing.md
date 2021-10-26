@@ -736,7 +736,7 @@ t.test(hours ~ group, data = hours_a_b, mu = 0, alternative = "two.sided",
 ## 
 ## data:  hours by group
 ## t = -4.9646, df = 195.73, p-value = 0.000001494
-## alternative hypothesis: true difference in means between group A and group B is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -14.514246  -6.261264
 ## sample estimates:
