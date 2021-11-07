@@ -991,25 +991,33 @@ As with the t-test, you could also use the functions contained in the `ggstatspl
 
 ```r
 library(ggstatsplot)
-# ggbetweenstats( data = hours_abc, x = group, y
-# = hours, plot.type = 'box',
-# pairwise.comparisons = TRUE,
-# pairwise.annotation = 'p.value',
-# p.adjust.method = 'bonferroni', effsize.type =
-# 'partial_eta', var.equal = FALSE, mean.plotting
-# = TRUE, # whether mean for each group is to be
-# displayed mean.ci = TRUE, # whether to display
-# confidence interval for means mean.label.size =
-# 2.5, # size of the label for mean type =
-# 'parametric', # which type of test is to be run
-# k = 3, # number of decimal places for
-# statistical results outlier.label.color =
-# 'darkgreen', # changing the color for the text
-# label title = 'Comparison of listening times
-# between groups', xlab = 'Experimental group', #
-# label for the x-axis variable ylab = 'Listening
-# time', # label for the y-axis variable messages
-# = FALSE, bf.message = FALSE )
+ggbetweenstats(
+  data = hours_abc,
+  x = group,
+  y = hours,
+  plot.type = "box",
+  pairwise.comparisons = TRUE,
+  pairwise.annotation = "p.value",
+  p.adjust.method = "bonferroni",
+  effsize.type = "eta",
+  var.equal = FALSE,
+  mean.plotting = TRUE, # whether mean for each group is to be displayed
+  mean.ci = TRUE, # whether to display confidence interval for means
+  mean.label.size = 2.5, # size of the label for mean
+  type = "parametric", # which type of test is to be run
+  k = 3, # number of decimal places for statistical results
+  outlier.label.color = "darkgreen", # changing the color for the text label
+  title = "Comparison of listening times between groups",
+  xlab = "Experimental group", # label for the x-axis variable
+  ylab = "Listening time", # label for the y-axis variable
+  messages = FALSE,
+  bf.message = FALSE
+)
 ```
+
+<div class="figure" style="text-align: center">
+<img src="08-Anova_files/figure-html/unnamed-chunk-38-1.png" alt="ANOVA using ggstatsplot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-38)ANOVA using ggstatsplot</p>
+</div>
 
 

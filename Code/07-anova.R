@@ -167,7 +167,7 @@ ggbetweenstats(
   pairwise.comparisons = TRUE,
   pairwise.annotation = "p.value",
   p.adjust.method = "bonferroni",
-  effsize.type = "partial_eta",
+  effsize.type = "eta",
   var.equal = FALSE,
   mean.plotting = TRUE, # whether mean for each group is to be displayed
   mean.ci = TRUE, # whether to display confidence interval for means
