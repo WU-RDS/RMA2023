@@ -1,5 +1,5 @@
 # The following code is taken from the fourth chapter of the online script, which provides more detailed explanations:
-# https://imsmwu.github.io/MRDA2020/regression.html 
+# https://wu-rds.github.io/MRDA2021/regression.html
 
 #-------------------------------------------------------------------#
 #---------------------Install missing packages----------------------#
@@ -7,7 +7,7 @@
 
 # At the top of each script this code snippet will make sure that all required packages are installed
 ## ------------------------------------------------------------------------
-req_packages <- c("Hmisc", "psych", "plyr", "ggplot2", "lm.beta", "car", "ggstatsplot", "stargazer", "sandwich", "lmtest", "boot")
+req_packages <- c("Hmisc", "psych", "plyr", "ggplot2", "lm.beta", "car", "ggside","ggstatsplot", "stargazer", "sandwich", "lmtest", "boot")
 req_packages <- req_packages[!req_packages %in% installed.packages()]
 lapply(req_packages, install.packages)
 
