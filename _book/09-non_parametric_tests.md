@@ -10,7 +10,7 @@ output:
 
 ```
 ## 
-## Attache Paket: 'dplyr'
+## Attaching package: 'dplyr'
 ```
 
 ```
@@ -27,7 +27,7 @@ output:
 
 ```
 ## 
-## Attache Paket: 'ggplot2'
+## Attaching package: 'ggplot2'
 ```
 
 ```
@@ -37,20 +37,20 @@ output:
 ```
 
 ```
-## Lade nötiges Paket: lattice
+## Loading required package: lattice
 ```
 
 ```
-## Lade nötiges Paket: survival
+## Loading required package: survival
 ```
 
 ```
-## Lade nötiges Paket: Formula
+## Loading required package: Formula
 ```
 
 ```
 ## 
-## Attache Paket: 'Hmisc'
+## Attaching package: 'Hmisc'
 ```
 
 ```
@@ -121,11 +121,11 @@ Let's load and investigate the data first:
 library(psych)
 library(ggplot2)
 rm(music_sales)
-music_sales <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat",
-    sep = "\t", header = TRUE)  #read in data
-music_sales$group <- factor(music_sales$group, levels = c(1:2),
-    labels = c("low_price", "high_price"))  #convert grouping variable to factor
-str(music_sales)  #inspect data
+music_sales <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+music_sales$group <- factor(music_sales$group, levels = c(1:2), labels = c("low_price", "high_price")) #convert grouping variable to factor
+str(music_sales) #inspect data
 ```
 
 ```
@@ -136,7 +136,7 @@ str(music_sales)  #inspect data
 ```
 
 ```r
-head(music_sales)  #inspect data
+head(music_sales) #inspect data
 ```
 
 <div data-pagedtable="false">
@@ -149,7 +149,7 @@ Inspect descriptives (overall and by group).
 
 
 ```r
-psych::describe(music_sales$unit_sales)  #overall descriptives
+psych::describe(music_sales$unit_sales) #overall descriptives
 ```
 
 ```
@@ -158,7 +158,7 @@ psych::describe(music_sales$unit_sales)  #overall descriptives
 ```
 
 ```r
-describeBy(music_sales$unit_sales, music_sales$group)  #descriptives by group
+describeBy(music_sales$unit_sales, music_sales$group) #descriptives by group
 ```
 
 ```
@@ -195,7 +195,7 @@ Let's assume that one of the parametric assumptions has been violated and we nee
 
 
 ```r
-wilcox.test(unit_sales ~ group, data = music_sales)  #Mann-Whitney U Test
+wilcox.test(unit_sales ~ group, data = music_sales) #Mann-Whitney U Test
 ```
 
 ```
@@ -246,9 +246,10 @@ Let's load and investigate the data first:
 
 ```r
 rm(music_sales_dep)
-music_sales_dep <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment_dependent.dat",
-    sep = "\t", header = TRUE)  #read in data
-str(music_sales_dep)  #inspect data
+music_sales_dep <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_experiment_dependent.dat", 
+                              sep = "\t", 
+                              header = TRUE) #read in data
+str(music_sales_dep) #inspect data
 ```
 
 ```
@@ -259,7 +260,7 @@ str(music_sales_dep)  #inspect data
 ```
 
 ```r
-head(music_sales_dep)  #inspect data
+head(music_sales_dep) #inspect data
 ```
 
 <div data-pagedtable="false">
@@ -303,8 +304,7 @@ Again, let's assume that one of the parametric assumptions has been violated and
 
 
 ```r
-wilcox.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_high_price,
-    paired = TRUE)  #Wilcoxon signed-rank test
+wilcox.test(music_sales_dep$unit_sales_low_price, music_sales_dep$unit_sales_high_price, paired = TRUE) #Wilcoxon signed-rank test
 ```
 
 ```
@@ -353,10 +353,10 @@ As an example, let's use a data set containing data from an experiment at an onl
 
 
 ```r
-online_store_promo <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/online_store_promo.dat",
-    sep = "\t", header = TRUE)  #read in data
-online_store_promo$Promotion <- factor(online_store_promo$Promotion,
-    levels = c(1:3), labels = c("high", "medium", "low"))  #convert grouping variable to factor
+online_store_promo <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/online_store_promo.dat", 
+                                 sep = "\t", 
+                                 header = TRUE) #read in data
+online_store_promo$Promotion <- factor(online_store_promo$Promotion, levels = c(1:3), labels = c("high", "medium","low")) #convert grouping variable to factor
 head(online_store_promo)
 ```
 
@@ -389,7 +389,7 @@ To test if there is a difference in medians between the groups, we can carry out
 
 
 ```r
-kruskal.test(Sales ~ Promotion, data = online_store_promo)
+kruskal.test(Sales ~ Promotion, data = online_store_promo) 
 ```
 
 ```
@@ -408,8 +408,7 @@ To test for differences between groups, we can, for example, apply post-hoc test
 ```r
 library(PMCMR)
 library(PMCMRplus)
-kwAllPairsNemenyiTest(x = online_store_promo$Sales,
-    g = online_store_promo$Promotion, dist = "Tukey")
+kwAllPairsNemenyiTest(x = online_store_promo$Sales, g = online_store_promo$Promotion, dist = "Tukey")
 ```
 
 ```
@@ -421,8 +420,7 @@ The results reveal that there is a significant difference between the "low" and 
 
 
 ```r
-pairwise.t.test(online_store_promo$Sales, online_store_promo$Promotion,
-    data = online_store_promo, p.adjust.method = "bonferroni")
+pairwise.t.test(online_store_promo$Sales, online_store_promo$Promotion, data = online_store_promo, p.adjust.method = "bonferroni")
 ```
 
 ```
@@ -483,20 +481,18 @@ As always, we load the data first:
 
 
 ```r
-call_center <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat",
-    sep = "\t", header = TRUE)  #read in data
-call_center$conversion <- factor(call_center$conversion,
-    levels = c(0:1), labels = c("no", "yes"))  #convert to factor
-call_center$agent <- factor(call_center$agent, levels = c(0:1),
-    labels = c("agent_1", "agent_2"))  #convert to factor
+call_center <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/call_center.dat", 
+                          sep = "\t", 
+                          header = TRUE) #read in data
+call_center$conversion <- factor(call_center$conversion , levels = c(0:1), labels = c("no", "yes")) #convert to factor
+call_center$agent <- factor(call_center$agent , levels = c(0:1), labels = c("agent_1", "agent_2")) #convert to factor
 ```
 
 Next, we create a table to check the relative frequencies:
 
 
 ```r
-rel_freq_table <- as.data.frame(prop.table(table(call_center),
-    2))  #conditional relative frequencies
+rel_freq_table <- as.data.frame(prop.table(table(call_center), 2)) #conditional relative frequencies
 rel_freq_table
 ```
 
@@ -534,16 +530,14 @@ where $\sqrt{p(1-p)}$ is the equivalent to the standard deviation in the formula
 
 
 ```r
-n1 <- nrow(subset(call_center, agent == "agent_1"))  #number of observations for agent 1
-n2 <- nrow(subset(call_center, agent == "agent_2"))  #number of observations for agent 1
-n1_conv <- nrow(subset(call_center, agent == "agent_1" &
-    conversion == "yes"))  #number of conversions for agent 1
-n2_conv <- nrow(subset(call_center, agent == "agent_2" &
-    conversion == "yes"))  #number of conversions for agent 2
+n1 <- nrow(subset(call_center,agent=="agent_1")) #number of observations for agent 1
+n2 <- nrow(subset(call_center,agent=="agent_2")) #number of observations for agent 1
+n1_conv <- nrow(subset(call_center,agent=="agent_1" & conversion=="yes")) #number of conversions for agent 1
+n2_conv <- nrow(subset(call_center,agent=="agent_2" & conversion=="yes")) #number of conversions for agent 2
 p1 <- n1_conv/n1  #proportion of conversions for agent 1
 p2 <- n2_conv/n2  #proportion of conversions for agent 2
 
-error1 <- qnorm(0.975) * sqrt((p1 * (1 - p1))/n1)
+error1 <- qnorm(0.975)*sqrt((p1*(1-p1))/n1)
 ci_lower1 <- p1 - error1
 ci_upper1 <- p1 + error1
 ci_lower1
@@ -562,7 +556,7 @@ ci_upper1
 ```
 
 ```r
-error2 <- qnorm(0.975) * sqrt((p2 * (1 - p2))/n2)
+error2 <- qnorm(0.975)*sqrt((p2*(1-p2))/n2)
 ci_lower2 <- p2 - error2
 ci_upper2 <- p2 + error2
 ci_lower2
@@ -595,10 +589,8 @@ If the confidence interval includes zero, then the data does not suggest a diffe
 
 
 ```r
-ci_lower <- p1 - p2 - qnorm(0.975) * sqrt(p1 * (1 -
-    p1)/n1 + p2 * (1 - p2)/n2)  #95% CI lower bound
-ci_upper <- p1 - p2 + qnorm(0.975) * sqrt(p1 * (1 -
-    p1)/n1 + p2 * (1 - p2)/n2)  #95% CI upper bound
+ci_lower <- p1 - p2 - qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI lower bound
+ci_upper <- p1 - p2 + qnorm(0.975)*sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2) #95% CI upper bound
 ci_lower
 ```
 
@@ -659,10 +651,10 @@ The observed cell frequencies can easily be seen from the contingency table:
 
 ```r
 contigency_table <- table(call_center)
-obs_cell1 <- contigency_table[1, 1]
-obs_cell2 <- contigency_table[1, 2]
-obs_cell3 <- contigency_table[2, 1]
-obs_cell4 <- contigency_table[2, 2]
+obs_cell1 <- contigency_table[1,1]
+obs_cell2 <- contigency_table[1,2]
+obs_cell3 <- contigency_table[2,1]
+obs_cell4 <- contigency_table[2,2]
 ```
 
 The expected cell frequencies can be calculated as follows:
@@ -676,27 +668,17 @@ where $n_r$ are the total observed frequencies per row, $n_c$ are the total obse
 
 ```r
 n <- nrow(call_center)
-exp_cell1 <- (nrow(call_center[call_center$agent ==
-    "agent_1", ]) * nrow(call_center[call_center$conversion ==
-    "no", ]))/n
-exp_cell2 <- (nrow(call_center[call_center$agent ==
-    "agent_1", ]) * nrow(call_center[call_center$conversion ==
-    "yes", ]))/n
-exp_cell3 <- (nrow(call_center[call_center$agent ==
-    "agent_2", ]) * nrow(call_center[call_center$conversion ==
-    "no", ]))/n
-exp_cell4 <- (nrow(call_center[call_center$agent ==
-    "agent_2", ]) * nrow(call_center[call_center$conversion ==
-    "yes", ]))/n
+exp_cell1 <- (nrow(call_center[call_center$agent=="agent_1",])*nrow(call_center[call_center$conversion=="no",]))/n
+exp_cell2 <- (nrow(call_center[call_center$agent=="agent_1",])*nrow(call_center[call_center$conversion=="yes",]))/n
+exp_cell3 <- (nrow(call_center[call_center$agent=="agent_2",])*nrow(call_center[call_center$conversion=="no",]))/n
+exp_cell4 <- (nrow(call_center[call_center$agent=="agent_2",])*nrow(call_center[call_center$conversion=="yes",]))/n
 ```
 
 To sum up, these are the expected cell frequencies
 
 
 ```r
-data.frame(conversion_no = rbind(exp_cell1, exp_cell3),
-    conversion_yes = rbind(exp_cell2, exp_cell4), row.names = c("agent_1",
-        "agent_2"))
+data.frame(conversion_no = rbind(exp_cell1,exp_cell3),conversion_yes = rbind(exp_cell2,exp_cell4), row.names = c("agent_1","agent_2")) 
 ```
 
 ```
@@ -709,9 +691,7 @@ data.frame(conversion_no = rbind(exp_cell1, exp_cell3),
 
 
 ```r
-data.frame(conversion_no = rbind(obs_cell1, obs_cell2),
-    conversion_yes = rbind(obs_cell3, obs_cell4), row.names = c("agent_1",
-        "agent_2"))
+data.frame(conversion_no = rbind(obs_cell1,obs_cell2),conversion_yes = rbind(obs_cell3,obs_cell4), row.names = c("agent_1","agent_2")) 
 ```
 
 ```
@@ -724,9 +704,10 @@ To obtain the test statistic, we simply plug the values into the formula:
 
 
 ```r
-chisq_cal <- sum(((obs_cell1 - exp_cell1)^2/exp_cell1),
-    ((obs_cell2 - exp_cell2)^2/exp_cell2), ((obs_cell3 -
-        exp_cell3)^2/exp_cell3), ((obs_cell4 - exp_cell4)^2/exp_cell4))
+chisq_cal <-  sum(((obs_cell1 - exp_cell1)^2/exp_cell1),
+                  ((obs_cell2 - exp_cell2)^2/exp_cell2),
+                  ((obs_cell3 - exp_cell3)^2/exp_cell3),
+                  ((obs_cell4 - exp_cell4)^2/exp_cell4))
 chisq_cal
 ```
 
@@ -751,8 +732,7 @@ where $r$ is the number of rows and $c$ is the number of columns in the continge
 
 
 ```r
-df <- (nrow(contigency_table) - 1) * (ncol(contigency_table) -
-    1)
+df <-  (nrow(contigency_table) - 1) * (ncol(contigency_table) -1)
 df
 ```
 
@@ -789,7 +769,7 @@ We could also compute the p-value using the ```pchisq()``` function, which tells
 
 
 ```r
-p_val <- 1 - pchisq(chisq_cal, df)
+p_val <- 1-pchisq(chisq_cal,df)
 p_val
 ```
 
@@ -898,10 +878,17 @@ As usual, you could also use the `ggstatsplot` package to obtain the result of t
 
 ```r
 library(ggstatsplot)
-ggbarstats(data = call_center, x = conversion, y = agent,
-    title = "Conversion by agent", xlab = "Agent",
-    palette = "Blues", messages = FALSE, bar.proptest = FALSE,
-    bf.message = FALSE)
+ggbarstats(
+  data = call_center,
+  x = conversion,
+  y = agent,
+  title = "Conversion by agent",
+  xlab = "Agent",
+  palette = "Blues",
+  messages = FALSE,
+  bar.proptest = FALSE,
+  bf.message = FALSE
+)
 ```
 
 <div class="figure" style="text-align: center">
@@ -938,8 +925,7 @@ To **calculate the required sample size** when comparing proportions, the ```pow
 
 
 ```r
-power.prop.test(p1 = 0.02, p2 = 0.025, sig.level = 0.05,
-    power = 0.8)
+power.prop.test(p1=0.02,p2=0.025,sig.level=0.05,power=0.8)
 ```
 
 ```
