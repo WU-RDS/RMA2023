@@ -371,6 +371,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.5.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-export-from-qualtrics"><i class="fa fa-check"></i><b>11.5.2</b> Data export from Qualtrics</a></li>
 <li class="chapter" data-level="11.5.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#importing-qualtrics-data"><i class="fa fa-check"></i><b>11.5.3</b> Importing Qualtrics data</a></li>
 <li class="chapter" data-level="11.5.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-handling-1"><i class="fa fa-check"></i><b>11.5.4</b> Data handling</a></li>
+<li class="chapter" data-level="11.5.5" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#visualizations"><i class="fa fa-check"></i><b>11.5.5</b> Visualizations</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>V FAQ</b></span></li>
@@ -1146,6 +1147,42 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="survey-design-analysis.html#cb817-1" aria-hidden="true" tabindex="-1"></a>green_consumption<span class="sc">$</span>Q33 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(green_consumption<span class="sc">$</span>Q33)</span>
 <span id="cb817-2"><a href="survey-design-analysis.html#cb817-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(green_consumption<span class="sc">$</span>Q33)</span></code></pre></div>
 <pre><code>##  num [1:278] 2.5 3 1.99 2.99 2.5 4.5 1.3 3 4 1.6 ...</code></pre>
+</div>
+</div>
+<div id="visualizations" class="section level3" number="11.5.5">
+<h3><span class="header-section-number">11.5.5</span> Visualizations</h3>
+<div id="multiple-choice" class="section level4" number="11.5.5.1">
+<h4><span class="header-section-number">11.5.5.1</span> Multiple-choice</h4>
+<p>Multiple choice questions can be visualized using barplots of the counts of each possible answer. First we want to get appropriate labels for the different possible choices. For that we need to extract the part of the question that is specific to the option. Since the answers are appended to the question and separated by a <code>-</code> in the labels assigned by Qualtrics we can use pattern matching function to extract the relevant part. This pattern looks as follows:</p>
+<ol style="list-style-type: decimal">
+<li>It starts with <code>(?&lt;=- )</code> which tells the program to look for a <code>-</code> followed by a space. The <code>(?&lt;=)</code> part indicates that we want to look for the pattern but only extract text that comes <em>after</em> it.</li>
+<li><code>.*</code> will extract any text</li>
+</ol>
+<p>Therefore, we will get any text that follows the <code>-</code> pattern. Similarly we can extract just the question with <code>.*(?= -)</code> matching anything <em>before</em> the <code>-</code> pattern.</p>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="survey-design-analysis.html#cb819-1" aria-hidden="true" tabindex="-1"></a>q6_columns <span class="ot">&lt;-</span> <span class="fu">names</span>(carsharing)[<span class="fu">startsWith</span>(<span class="fu">names</span>(carsharing), <span class="st">&quot;Q6&quot;</span>)]</span>
+<span id="cb819-2"><a href="survey-design-analysis.html#cb819-2" aria-hidden="true" tabindex="-1"></a>q6_labels <span class="ot">&lt;-</span> questions_carsharing[q6_columns]</span>
+<span id="cb819-3"><a href="survey-design-analysis.html#cb819-3" aria-hidden="true" tabindex="-1"></a>q6_answers <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(q6_labels, <span class="st">&quot;(?&lt;=- ).*&quot;</span>)</span>
+<span id="cb819-4"><a href="survey-design-analysis.html#cb819-4" aria-hidden="true" tabindex="-1"></a>q6_answers</span></code></pre></div>
+<pre><code>## [1] &quot;to visit somebody&quot;               &quot;to go shopping&quot;                 
+## [3] &quot;to commute (work)&quot;               &quot;to commute (education)&quot;         
+## [5] &quot;to transport goods&quot;              &quot;to escort somebody&quot;             
+## [7] &quot;for business reasons&quot;            &quot;for airport transfer&quot;           
+## [9] &quot;for leisure/cultural activities&quot;</code></pre>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="survey-design-analysis.html#cb821-1" aria-hidden="true" tabindex="-1"></a>q6_question <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(questions_carsharing[<span class="st">&quot;Q6_1&quot;</span>], <span class="st">&quot;.*(?= -)&quot;</span>)</span>
+<span id="cb821-2"><a href="survey-design-analysis.html#cb821-2" aria-hidden="true" tabindex="-1"></a>q6_question</span></code></pre></div>
+<pre><code>## [1] &quot;For what reason(s) do you use your car?&quot;</code></pre>
+<p>The counts are just the column sums of the variables we transformed above. We add the reasons as labels for the y-axis and sort the factor by the corresponding counts. This ensures that the categories with the largest counts will come first in the plot. In addition we can aid interpretability of counts by adding sequential coloring.</p>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="survey-design-analysis.html#cb823-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb823-2"><a href="survey-design-analysis.html#cb823-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span>
+<span id="cb823-3"><a href="survey-design-analysis.html#cb823-3" aria-hidden="true" tabindex="-1"></a>q6_counts <span class="ot">&lt;-</span> <span class="fu">colSums</span>(carsharing[,q6_columns])</span>
+<span id="cb823-4"><a href="survey-design-analysis.html#cb823-4" aria-hidden="true" tabindex="-1"></a>q6_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">count =</span> q6_counts, <span class="at">reason =</span> q6_answers)</span>
+<span id="cb823-5"><a href="survey-design-analysis.html#cb823-5" aria-hidden="true" tabindex="-1"></a>q6_data<span class="sc">$</span>reason <span class="ot">&lt;-</span> <span class="fu">factor</span>(q6_data<span class="sc">$</span>reason, <span class="at">levels =</span> q6_data<span class="sc">$</span>reason[<span class="fu">order</span>(q6_data<span class="sc">$</span>count)])</span>
+<span id="cb823-6"><a href="survey-design-analysis.html#cb823-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(q6_data, <span class="fu">aes</span>(<span class="at">x =</span> count, <span class="at">y =</span> reason, <span class="at">fill =</span> count)) <span class="sc">+</span> </span>
+<span id="cb823-7"><a href="survey-design-analysis.html#cb823-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb823-8"><a href="survey-design-analysis.html#cb823-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb823-9"><a href="survey-design-analysis.html#cb823-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb823-10"><a href="survey-design-analysis.html#cb823-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous_sequential</span>(<span class="at">palette =</span> <span class="st">&quot;Blues 2&quot;</span>)</span></code></pre></div>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
 
 <p><link rel="stylesheet" type="text/css" media="all" href="style.css" /></p>
 </div>

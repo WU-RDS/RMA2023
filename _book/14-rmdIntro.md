@@ -1312,7 +1312,7 @@ summary(tukeys)
 ## dynamic retargeting - no retargeting == 0        793.97     102.28   7.762
 ## dynamic retargeting - generic retargeting == 0   705.65     106.61   6.619
 ##                                                Pr(>|t|)    
-## generic retargeting - no retargeting == 0         0.679    
+## generic retargeting - no retargeting == 0         0.678    
 ## dynamic retargeting - no retargeting == 0      <0.00001 ***
 ## dynamic retargeting - generic retargeting == 0 <0.00001 ***
 ## ---
@@ -1344,9 +1344,9 @@ confint(tukeys)
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate  lwr       upr      
-## generic retargeting - no retargeting == 0        88.3220 -159.4136  336.0576
-## dynamic retargeting - no retargeting == 0       793.9687  553.0252 1034.9122
-## dynamic retargeting - generic retargeting == 0  705.6467  454.5216  956.7718
+## generic retargeting - no retargeting == 0        88.3220 -159.4144  336.0585
+## dynamic retargeting - no retargeting == 0       793.9687  553.0243 1034.9130
+## dynamic retargeting - generic retargeting == 0  705.6467  454.5207  956.7726
 ```
 
 ```r
