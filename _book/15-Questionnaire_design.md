@@ -910,4 +910,60 @@ str(green_consumption$Q33)
 ##  num [1:278] 2.5 3 1.99 2.99 2.5 4.5 1.3 3 4 1.6 ...
 ```
 
+### Visualizations
+
+#### Multiple-choice
+
+Multiple choice questions can be visualized using barplots of the counts of each possible answer. First we want to get appropriate labels for the different possible choices. For that we need to extract the part of the question that is specific to the option. Since the answers are appended to the question and separated by a `-` in the labels assigned by Qualtrics we can use pattern matching function to extract the relevant part. This pattern looks as follows:
+
+1. It starts with `(?<=- )` which tells the program to look for a `-` followed by a space. The `(?<=)` part indicates that we want to look for the pattern but only extract text that comes _after_ it.
+2. `.*` will extract any text
+
+Therefore, we will get any text that follows the `- ` pattern. Similarly we can extract just the question with `.*(?= -)` matching anything _before_ the ` -` pattern.
+
+
+```r
+q6_columns <- names(carsharing)[startsWith(names(carsharing), "Q6")]
+q6_labels <- questions_carsharing[q6_columns]
+q6_answers <- str_extract(q6_labels, "(?<=- ).*")
+q6_answers
+```
+
+```
+## [1] "to visit somebody"               "to go shopping"                 
+## [3] "to commute (work)"               "to commute (education)"         
+## [5] "to transport goods"              "to escort somebody"             
+## [7] "for business reasons"            "for airport transfer"           
+## [9] "for leisure/cultural activities"
+```
+
+```r
+q6_question <- str_extract(questions_carsharing["Q6_1"], ".*(?= -)")
+q6_question
+```
+
+```
+## [1] "For what reason(s) do you use your car?"
+```
+
+The counts are just the column sums of the variables we transformed above. We add the reasons as labels for the y-axis and sort the factor by the corresponding counts. This ensures that the categories with the largest counts will come first in the plot. In addition we can aid interpretability of counts by adding sequential coloring.
+
+
+
+```r
+library(ggplot2)
+library(colorspace)
+q6_counts <- colSums(carsharing[,q6_columns])
+q6_data <- data.frame(count = q6_counts, reason = q6_answers)
+q6_data$reason <- factor(q6_data$reason, levels = q6_data$reason[order(q6_data$count)])
+ggplot(q6_data, aes(x = count, y = reason, fill = count)) + 
+  geom_bar(stat="identity", show.legend = FALSE) + 
+  ylab("") + 
+  theme_bw() + 
+  scale_fill_continuous_sequential(palette = "Blues 2")
+```
+
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-78-1.png" width="672" />
+
+
 
