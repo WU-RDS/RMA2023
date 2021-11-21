@@ -11,6 +11,9 @@ output:
 ---
 
 
+```
+## Warning: Paket 'knitr' wurde unter R Version 4.0.5 erstellt
+```
 
 # (PART) Lecture notes {-}
 

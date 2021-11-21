@@ -178,7 +178,7 @@ summary(cars)
 ```
 
 ```r
-plot(dist~speed, cars)
+plot(dist ~ speed, cars)
 ```
 
 <img src="14-rmdIntro_files/figure-html/cars2-1.png" width="672" />
@@ -342,35 +342,43 @@ e.g.
 
 [Greek letters](https://en.wikipedia.org/wiki/Greek_alphabet#Letters) are preceded by a `\` followed by their name (`$\beta$` = $\beta$). In order to capitalize them simply capitalize the first letter of the name (`$\Gamma$` = $\Gamma$).
 
-<!---
+
 ## Solution assignment 2
 
-As a marketing manager at a video streaming service, you are interested in the effect of online advertising on the number of streams that a movie receives. To test the effect of online advertising on streams, you select a representative sample of 200 movies and randomly assign 100 movies to be included in an online advertising campaign. The other half of the sample serves as the control group. You run the experiment for one week and collect data regarding the number of streams for each movie from this period. Overall, the data set includes the following variables:
+As a marketing manager at an online fashion store, you would like to investigate ways to improve the performance metrics of the website (e.g., time on site, customer expenditure, conversion rate). The data file contains customer information from your web-shop. 
 
-* movieID: unique movie ID
-* streams_sd: number of streams in SD-quality
-* streams_hd: number of streams in HD-quality
-* online_advertising: indicator whether a movie was included in the online advertising campaign (0 = no, 1 = yes)
+The following variables are included in the data set:
 
-Apply appropriate statistical methods to answer the following questions:
+* **customerID:** unique customer ID
+* **revenue:** revenue per customer for the past year (in EUR)
+* **time_on_site:** average time a customer spends on your site per session using the default website design (in seconds)
+* **time_on_site_1:** average time a customer spends on your site per session using the alternative website design (in seconds)
+* **exp_group:** experimental group (2 levels: 0=control, 1=treatment) 
+* **nps:** net promoter score received from customer after last checkout
+* **retargeting:** type of online advertising that the customer was exposed to (3 levels: 1 = no advertising, 2 = generic retargeting, 3 = dynamic retargeting)
+* **conversion:** indicator variable, indicating if a customer purchased something after clicking on a personalized add (0 = no conversion, 1 = conversion) 
 
-1. Compute the 95% confidence interval for the mean number of streams for movies in SD and HD quality and provide an interpretation of the interval  
-2. Your historical data tells you that the movies in SD and HD quality received 2,600 and 1,700 streams in the previous week, respectively. Please test if the number of streams that the movies received (irrespective of whether they were included in the experiment or not) in the week of the experiment is significantly different from the previous week for SD and HD movies.  
-3. Is there a significant difference in streams between movies that were included in the online advertising campaign and those that were not included? (Please conduct the test for SD and HD movies and also compute the effect size Cohen's d)
-4. Is there a significant difference in streams between movies in HD and SD quality? (Please also compute the effect size Cohen's d)
-5. Assume that you plan to run an experiment with two groups to test two different advertising strategies. You randomly assign movies to the control and experimental conditions and your goal is to test if there is a significant difference between the groups regarding the number of streams that the movies receive. How many movies would you need to include in each group of your experiment if you assume the effect size to be 0.3 for a significance level of 0.05 and power of 0.8?     
+Use R and appropriate methods to answer the following questions:
+
+1. The accounting department asks you to provide an estimate of the average revenue per customer. Compute the 95% confidence interval for the mean revenue per customer and provide an interpretation of the interval.  
+2. You run an A/B-Test on your website that aims at analyzing a new personalization feature to stimulate sales. To test the effect of this feature on revenues (variable: "revenue"), you randomly assign users either to a control group (status quo), or to a treatment group (the new personalization feature). The information regarding which group a customer has been assigned to is stored in the variable "exp_group". Is there a significant difference regarding the revenue between customers from the control and treatment groups? Please include the effect size Cohen's d and the confidence intervals in your report. 
+3. After conducting the experiment described above, you would like to find out how to improve the user experience with regard to the new personalization feature. Thus, you expose the same customers from the treatment group from the previous experiment to an alternative page layout and record the time spend on the website after this change had been implemented (variable: "time_on_site_1"). Did the alternative page layout lead to a significant increase regarding the time your customers spend on your website? Please include the effect size Cohen's d and confidence intervals in your report.
+4. Assume that you plan to run an experiment with two groups to test two different advertising strategies. You randomly assign website visitors to the control and experimental conditions and your goal is to test if there is a significant difference between the groups regarding the number of products they purchase from your store. How many users would you need to include in each group of your experiment if you assume the effect size to be 0.1 for a significance level of 0.05 and power of 0.8?  
+5. You are interested in analyzing the effects of different types of online advertising (variable: "retargeting") on revenue per customer (variable: "revenue"). You conduct an experiment in which your customers were exposed to different types of online advertising (randomly assigned) and now you wish to analyze the results. Are there significant differences between the three groups? In your analysis, please inspect if there is an overall difference between the three groups first and then test for differences between the individual groups.  
+6. After the last checkout, you conduct a short survey and obtain data on the Net Promoter Score. The question asks "How likely would you be to recommend [us] to a friend or colleague". The response is a value from 0 [very unlikely] to 10 [very likely]. Did the new personalization feature from the experiment in question 2 (variable: "exp_group") significantly influenced the ratings you obtain for the net promoter score (variable: "nps")?
+7. The goal of the personalization feature was to trigger conversions (i.e., stimulate purchases). Thus, you recorded whether a click on the personalization feature lead to a purchase (variable: "conversion"). Please test the effect of the personalization feature on the conversion rate.   
 
 When answering the questions, please remember to address the following points, where appropriate:
 
 * Formulate the corresponding hypotheses and choose an appropriate statistical test
 * Provide the reason for your choice and discuss if the assumptions of the test are met 
 * Convert the variables to the appropriate type (e.g., factor variables)
-* Create appropriate graphs to explore the data (e.g., boxplot, bar chart, histogram)
-* Provide appropriate descriptive statistics for the variables
+* Create appropriate graphs to explore the data (e.g., plot of means incl. confidence intervals, histogram, boxplot)
+* Provide appropriate descriptive statistics for the variables (e.g., mean, median, standard deviation, etc.)
 * Report and interpret the test results accurately (including confidence intervals)  
-* Finally, don't forget to report your research conclusion in an appropriate way
+* Finally, don't forget to report your research conclusion
 
-When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment2_studendID_name.html".
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment3.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment2_studendID_lastname.html".
 
 **Load and inspect data**
 
@@ -378,28 +386,31 @@ Let´s load the data first and inspect the contained variables:
 
 
 ```r
-movie_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment2.dat", 
-                          sep = "\t", 
-                          header = TRUE) #read in data
-head(movie_data)
+customer_data <- read.table("https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/Assignments/Assignment2/assignment2_data.dat",
+    sep = "\t", header = TRUE)  #read in data
+head(customer_data)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["movieID"],"name":[1],"type":["int"],"align":["right"]},{"label":["online_advertising"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams_sd"],"name":[3],"type":["int"],"align":["right"]},{"label":["streams_hd"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"2365","4":"1432"},{"1":"2","2":"0","3":"1752","4":"2305"},{"1":"3","2":"0","3":"1351","4":"1197"},{"1":"4","2":"0","3":"2495","4":"1112"},{"1":"5","2":"0","3":"3883","4":"1364"},{"1":"6","2":"1","3":"3933","4":"1202"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["customerID"],"name":[1],"type":["int"],"align":["right"]},{"label":["revenue"],"name":[2],"type":["int"],"align":["right"]},{"label":["time_on_site"],"name":[3],"type":["int"],"align":["right"]},{"label":["time_on_site_1"],"name":[4],"type":["int"],"align":["right"]},{"label":["exp_group"],"name":[5],"type":["int"],"align":["right"]},{"label":["nps"],"name":[6],"type":["int"],"align":["right"]},{"label":["retargeting"],"name":[7],"type":["int"],"align":["right"]},{"label":["conversion"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"1862","3":"1000","4":"1034","5":"1","6":"7","7":"3","8":"0"},{"1":"2","2":"2573","3":"996","4":"1023","5":"1","6":"2","7":"1","8":"1"},{"1":"3","2":"861","3":"854","4":"873","5":"1","6":"8","7":"1","8":"0"},{"1":"4","2":"1412","3":"742","4":"NA","5":"0","6":"8","7":"1","8":"0"},{"1":"5","2":"2625","3":"1161","4":"1189","5":"1","6":"10","7":"1","8":"1"},{"1":"6","2":"1095","3":"791","4":"NA","5":"0","6":"10","7":"1","8":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
 ```r
-str(movie_data)
+str(customer_data)
 ```
 
 ```
-## 'data.frame':	200 obs. of  4 variables:
-##  $ movieID           : int  1 2 3 4 5 6 7 8 9 10 ...
-##  $ online_advertising: int  0 0 0 0 0 1 1 1 0 1 ...
-##  $ streams_sd        : int  2365 1752 1351 2495 3883 3933 3849 2770 1146 3033 ...
-##  $ streams_hd        : int  1432 2305 1197 1112 1364 1202 1363 3502 2047 1104 ...
+## 'data.frame':	286 obs. of  8 variables:
+##  $ customerID    : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ revenue       : int  1862 2573 861 1412 2625 1095 3723 1276 2550 1698 ...
+##  $ time_on_site  : int  1000 996 854 742 1161 791 444 486 571 532 ...
+##  $ time_on_site_1: int  1034 1023 873 NA 1189 NA 465 510 601 NA ...
+##  $ exp_group     : int  1 1 1 0 1 0 1 1 1 0 ...
+##  $ nps           : int  7 2 8 8 10 10 10 10 10 10 ...
+##  $ retargeting   : int  3 1 1 1 1 1 3 2 1 2 ...
+##  $ conversion    : int  0 1 0 0 1 1 1 1 0 0 ...
 ```
 
 **Load packages**
@@ -416,567 +427,289 @@ library(lsr)
 library(reshape2)
 library(ggstatsplot)
 library(Rmisc)
+library(plyr)
 ```
 
 
 
 **Question 1**
 
-To compute the confidence intervals for SD and HD streams we will need three things: 1) the mean $\bar x$, 2) the standard error ($s \over \sqrt{n}$), and 3) the critical value for a t-distribution ($t_{crit}$; we will use a t-distribution, because we are not sure of the variance in the population).
+To compute the confidence interval for the average revenue per customer, we will need three things: 1) the mean $\bar x$, 2) the standard error ($s \over \sqrt{n}$), and 3) the critical value for a t-distribution ($t_{crit}$; we will use a t-distribution, because we are not sure of the variance in the population; for this assignment, also the normal distribution and the corresponding $z$-score would have been counted as correct).
+
 
 
 ```r
-#Calculate components of confidence interval formula 
-mean_sd <- mean(movie_data$streams_sd)
-mean_hd <- mean(movie_data$streams_hd)
-
-sd_sd <- sd(movie_data$streams_sd)
-sd_hd <- sd(movie_data$streams_hd)
-
-n <- nrow(movie_data)
-se_sd <- sd_sd/sqrt(n)
-se_hd <- sd_hd/sqrt(n)
-
-df <- n-1
+# Calculate components of confidence interval
+# formula
+mean_rev <- mean(customer_data$revenue)  #mean
+sd_rev <- sd(customer_data$revenue)  #standard deviation
+n <- nrow(customer_data)  #number of observations 
+se_rev <- sd_rev/sqrt(n)
+df <- n - 1  #degress of freedom
 t_crit <- qt(0.975, df)
 ```
 
-Now the confidence intervals for streams in SD and HD quality can be computed as:
+Now the confidence interval can be computed according to the equation: 
+
+$$CI_{rev} = \bar x \pm t_{ \alpha \over 2}*SE_{\bar x}$$
 
 
 ```r
-#Interval for SD movies
-ci_lower_sd <- mean_sd - t_crit * se_sd
-ci_upper_sd <- mean_sd + t_crit * se_sd
-
-#Interval for HD movies
-ci_lower_hd <- mean_hd - t_crit * se_hd
-ci_upper_hd <- mean_hd + t_crit * se_hd
+# Interval for revenue
+ci_lower <- mean_rev - t_crit * se_rev
+ci_upper <- mean_rev + t_crit * se_rev
 ```
 
-Hence, the CI for SD movies is given by:
+Hence, the CI for the revenue variable is given by:
 
 
 ```r
-ci_lower_sd
+ci_lower
 ```
 
 ```
-## [1] 2527.979
-```
-
-```r
-ci_upper_sd
-```
-
-```
-## [1] 2827.851
-```
-
-$CI_{SD} = [2527.97,2827.85]$
-
-Similarly, the CI for HD movies is given by
-
-
-```r
-ci_lower_hd
-```
-
-```
-## [1] 1728.51
+## [1] 1625.715
 ```
 
 ```r
-ci_upper_hd
+ci_upper
 ```
 
 ```
-## [1] 1940.52
+## [1] 1823.375
 ```
 
-$CI_{HD} = [1728.51,1940.52]$
+$CI_{rev} = [1625.72,1823.38]$
 
-The intervals can be interpreted as follows: If we would take 100 samples, calculate the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals. 
+The intervals can be interpreted as follows: If we would take 100 samples, calculate the mean and confidence interval for each of them, then the true population mean would be included in 95% of these intervals. In the sample at hand, this interval spans from 1625.72 to 1823.38.
 
 **Question 2**
 
-To find out whether our data for SD and HD streams differs significantly from the previous week (2600 for SD; 1700 for HD), we will conduct a one sample t-test. This is appropriate, because 1) our data is on an interval scale, and 2) the sampling distribution can be considered as normally distributed due to the fairly large sample size (n=200; see central limit theorem).
-
-Our null hypothesis states that there is no difference between the quantity of SD/HD streams watched in the current week, compared to the previous week. Rejecting the null hypotheses/accepting the alternative hypothesis would mean that there indeed was a difference between the two weeks.
-
-So for our SD streams we could formulate our hypothesis as follows:
-
-$$H_0: \mu_0 = 2600 \\ H_1: \mu_0 \neq 2600 $$
-
-The same approach can be used for our HD streams:
-
-$$H_0: \mu_0 = 1700 \\ H_1: \mu_0 \neq 1700 $$
-
-We can first have a quick look at the descriptive statistics:
-
-
-
-
-```r
-describe(movie_data$streams_sd)
-```
-
-```
-##    vars   n    mean      sd median trimmed     mad min  max range skew kurtosis
-## X1    1 200 2677.92 1075.28   2732 2653.68 1064.51 654 5709  5055  0.2    -0.41
-##       se
-## X1 76.03
-```
-
-```r
-describe(movie_data$streams_hd)
-```
-
-```
-##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
-## X1    1 200 1834.52 760.23 1668.5  1761.9 578.21 246 4305  4059 0.85     0.42
-##       se
-## X1 53.76
-```
-
-
-
-As we can see, the differences between SD/HD and the week before don´t seem to be extraordinary high. To visualize the distribution of the data, we can create histograms:
-
-
-```r
-ggplot(movie_data,aes(streams_sd)) + 
-  geom_histogram(col = "black", fill = "darkblue") + 
-  labs(x = "Number of SD stremas", y = "Frequency") + 
-  theme_bw()
-```
-
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-14-1.png" width="672" />
-
-```r
-ggplot(movie_data,aes(streams_hd)) + 
-  geom_histogram(col = "black", fill = "darkblue") + 
-  labs(x = "Number of HD streams", y = "Frequency") + 
-  theme_bw()
-```
-
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-14-2.png" width="672" />
-
-We can now conduct a one sample t-test to test for significance.
-
-
-```r
-t.test(movie_data$streams_sd, mu = 2600, alternative = "two.sided")
-```
-
-```
-## 
-## 	One Sample t-test
-## 
-## data:  movie_data$streams_sd
-## t = 1.0247, df = 199, p-value = 0.3067
-## alternative hypothesis: true mean is not equal to 2600
-## 95 percent confidence interval:
-##  2527.979 2827.851
-## sample estimates:
-## mean of x 
-##  2677.915
-```
-
-```r
-t.test(movie_data$streams_hd, mu = 1700, alternative = "two.sided")
-```
-
-```
-## 
-## 	One Sample t-test
-## 
-## data:  movie_data$streams_hd
-## t = 2.5023, df = 199, p-value = 0.01314
-## alternative hypothesis: true mean is not equal to 1700
-## 95 percent confidence interval:
-##  1728.51 1940.52
-## sample estimates:
-## mean of x 
-##  1834.515
-```
-
-For SD streams, we can conclude that the average number of SD streams watched in this week (2677.92) were not significantly different from the 2600 streams watched in the previous week, t(199) = 1.025, p > .05 (95% CI = [2528; 2828]). This can be seen from the fact that the p-value is larger than 0.05. This is also evidenced by the fact that the null hypothesis (2600) is included in the range of plausible values given by the confidence interval. 
-
-However for HD streams we see that the perceived mean in our sample (1834.52) is significantly higher compared to the previous week t(199) = 2.502, p <.05 (95% CI = [1729; 1941]). This can be seen from the fact that the p-value is smaller than 0.05. This is also evidenced by the fact that the null hypothesis (1700) is not included in the range of plausible values given by the confidence interval.
-
-Alternatively, you could also use the `ggstatsplot` package to conduct the tests: 
-
-
-```r
-gghistostats(
-  data = movie_data, 
-  x = streams_sd, 
-  title = "Distribution of SD streams", 
-  type = "parametric", 
-  conf.level = 0.95,
-  bar.measure = "mix", 
-  test.value = 2600, 
-  test.value.line = TRUE, 
-  effsize.type = "d", 
-  test.value.color = "#0072B2", 
-  centrality.para = "mean", 
-  centrality.color = "darkred", 
-  binwidth = 300,
-  messages = FALSE, 
-  bf.message = FALSE
-)
-```
-
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-16-1.png" width="672" />
-
-
-```r
-gghistostats(
-  data = movie_data, 
-  x = streams_hd, 
-  title = "Distribution of HD streams", 
-  type = "parametric", 
-  conf.level = 0.95,
-  bar.measure = "mix", 
-  test.value = 2600, 
-  test.value.line = TRUE, 
-  effsize.type = "d", 
-  test.value.color = "#0072B2", 
-  centrality.para = "mean", 
-  centrality.color = "darkred", 
-  binwidth = 300,
-  messages = FALSE, 
-  bf.message = FALSE
-)
-```
-
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-17-1.png" width="672" />
-
-**Question 3**
-
-First we will analyze whether the advertising campaign had an effect on SD streams. We need to formulate a hypothesis which we can test. In this case, the null hypothesis is that the campaign had no effect on the mean number of streams, i.e. that there is no difference in the mean number of streams between the two populations. The alternative hypothesis states that the campaign _did_ have an effect, meaning that there is a difference in the mean number of streams between the populations. In more formal notation this is:
+First we will analyze whether the personalization feature that was tested in the A/B-test had an effect on SD revenues. We need to formulate a hypothesis which we can test. In this case, the null hypothesis is that the feature had no effect on the mean revenue, i.e. that there is no difference in the mean revenue between the two populations. The alternative hypothesis states that the campaign _did_ have an effect, meaning that there is a difference in the mean revenue between the populations. In more formal notation this is:
 
 $$H_0: \mu_0 = \mu_1 \\ H_1: \mu_0 \neq \mu_1$$
 
-We need to transform the variable online_advertising into a factor variable for some of our analyses:
+We need to transform the variable *exp_group* into a factor variable. Note that it is a good idea to do data transformations separate from the analysis in a separate code chunk. This avoids the code being executed twice, which would lead to difficulties because the factor variable would be overwritten with missing (NA) values.  
 
 
 ```r
 # Transform into factor variable
-movie_data$online_advertising <- factor(movie_data$online_advertising, levels = c(0,1), labels = c("no", "yes"))
+customer_data$exp_group <- factor(customer_data$exp_group,
+    levels = c(0, 1), labels = c("control", "treatment"))
 ```
 
-A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means (or a boxplot) would be appropriate.
+A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means (or a boxplot) would be appropriate. 
+
+Let's inspect the descriptive statistics first:
 
 
 ```r
-# Descriptive statistics for SD streams, split by online advertising
-describeBy(movie_data$streams_sd, movie_data$online_advertising)
+# Descriptive statistics
+describeBy(customer_data$revenue, customer_data$exp_group)
 ```
 
 ```
 ## 
 ##  Descriptive statistics by group 
-## group: no
-##    vars   n    mean    sd median trimmed    mad min  max range skew kurtosis
-## X1    1 100 2150.24 897.3 2088.5 2112.99 1188.3 705 4170  3465 0.25    -1.02
-##       se
-## X1 89.73
-## ------------------------------------------------------------ 
-## group: yes
+## group: control
 ##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
-## X1    1 100 3205.59 978.01   3147 3193.69 966.66 654 5709  5055 0.08     0.04
+## X1    1 141 1504.08 789.67   1405  1484.4 787.26  72 3940  3868 0.33    -0.16
 ##      se
-## X1 97.8
+## X1 66.5
+## ------------------------------------------------------------ 
+## group: treatment
+##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
+## X1    1 145 1938.93 852.59   1876 1918.51 895.49 167 5077  4910 0.38     0.25
+##      se
+## X1 70.8
 ```
+It can already be seen that the mean revenue is higher in the treatment group. 
+
 
 ```r
-mean_data <- summarySE(movie_data, measurevar = "streams_sd", 
-    groupvars = c("online_advertising"))
+mean_data <- summarySE(customer_data, measurevar = "revenue",
+    groupvars = c("exp_group"))
 
 # Plot of means
-ggplot(mean_data, aes(x = online_advertising, y = streams_sd)) + 
-    geom_bar(position = position_dodge(0.9), colour = "black", 
-        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
-    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
-        aes(ymin = streams_sd - ci, ymax = streams_sd + ci)) + 
-    theme_bw() + labs(x = "Advertising", y = "Average number of SD streams", 
-    title = "Average number of SD streams by group") + 
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
-    color = "#666666"))
+ggplot(mean_data, aes(x = exp_group, y = revenue)) +
+    geom_bar(position = position_dodge(0.9), colour = "black",
+        fill = "#CCCCCC", stat = "identity", width = 0.65) +
+    geom_errorbar(position = position_dodge(0.9), width = 0.15,
+        aes(ymin = revenue - ci, ymax = revenue + ci)) +
+    theme_bw() + labs(x = "Group", y = "Average revenue",
+    title = "Average revenue by group") + theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5, color = "#666666"))
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
-As we can see in both the descriptive statistics and the plot, the mean of the number of streams is higher where online_advertising = "yes", i.e. for the movies that were included in the marketing campaign. To test whether or not this difference is significant, we need to use a __two sample t-test__. We use an independent-means t-test because we have different movies in each group (i.e., the movies in one condition are *independent* of the movies in the other condition). The requirements are clearly met:
+As we can see in both the descriptive statistics and the plot, the mean revenues were higher for the group that was exposed to the new personalization feature. To test whether or not this difference is significant, we need to use a __independent-means t-test__. We use an independent-means t-test because we have different customers in each group, meaning that we have collected the data using a between-subjects design (i.e., the customers in one condition are *independent* of the customers in the other condition). The requirements are clearly met:
 
-* Our dependent variable is on an interval scale
+* Our dependent variable (revenue) is measured on an interval scale
 * Since we have more than 30 observations per group we do not really have to concern ourselves with whether the data is normally distributed or not (see central limit theorem)
-* If a movie was included in the campaign or not was assigned randomly
+* If a customer was exposed to the feature or not was assigned randomly (i.e., the groups are independent)
 * R automatically performs Welch's t-test, which corrects for unequal variance 
 
 Thus we can perform the test in R
 
 
 ```r
-t.test(streams_sd ~ online_advertising, data = movie_data)
+t.test(revenue ~ exp_group, data = customer_data)
 ```
 
 ```
 ## 
 ## 	Welch Two Sample t-test
 ## 
-## data:  streams_sd by online_advertising
-## t = -7.9513, df = 196.55, p-value = 0.0000000000001418
-## alternative hypothesis: true difference in means between group no and group yes is not equal to 0
+## data:  revenue by exp_group
+## t = -4.4767, df = 283.33, p-value = 0.000011
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1317.1019  -793.5981
+##  -626.0553 -243.6507
 ## sample estimates:
-##  mean in group no mean in group yes 
-##           2150.24           3205.59
+##   mean in group control mean in group treatment 
+##                1504.078                1938.931
 ```
 
-The test is significant, since the p-value is smaller than 0.05, leading us to reject the null hypothesis that there is no difference in the mean number of streams. The p-value states the probability of finding a difference of the observed magnitude or higher, if the null hypothesis was in fact true (i.e., if there was in fact no difference between the populations). In effect, this means that the advertising campaign had an effect on the average number of times a video was streamed. Another thing we can extract from this test result is the confidence interval around the difference in means. Since 0 is not included in the interval, it is not a plausible value, confirming the conclusion to reject the null hypothesis.
+The test is significant, since the p-value is smaller than 0.05, leading us to reject the null hypothesis that there is no difference in the mean revenue. The p-value states the probability of finding a difference of the observed magnitude or higher, if the null hypothesis was in fact true (i.e., if there was in fact no difference between the populations). In effect, this means that the personalization feature had an effect on the average expenditure. Another thing we can extract from this test result is the confidence interval around the difference in means. Since 0 is not included in the interval, it is not a plausible value, confirming the conclusion to reject the null hypothesis.
 
 The standardized effect size can be computed using the ```cohensD``` function:
 
 
 ```r
-cohensD(streams_sd ~ online_advertising, data = movie_data)
+cohensD(revenue ~ exp_group, data = customer_data)
 ```
 
 ```
-## [1] 1.124481
+## [1] 0.5289074
 ```
 
-This magnitude of the effect size (1.12) suggests that the effect of online advertising on the number of SD streams is large.
-
-The same can be done analogously for HD streams:
-
-
-```r
-# Descriptive statistics for HD streams, split by online advertising
-stats <- describeBy(movie_data$streams_hd, movie_data$online_advertising)
-print(stats)
-```
-
-```
-## 
-##  Descriptive statistics by group 
-## group: no
-##    vars   n    mean     sd median trimmed    mad min  max range  skew kurtosis
-## X1    1 100 1475.55 395.04   1483 1490.08 436.63 246 2305  2059 -0.34     -0.2
-##      se
-## X1 39.5
-## ------------------------------------------------------------ 
-## group: yes
-##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
-## X1    1 100 2193.48 863.34   2133  2179.2 962.95 585 4305  3720 0.21    -0.73
-##       se
-## X1 86.33
-```
-
-```r
-mean_data <- summarySE(movie_data, measurevar = "streams_hd", 
-    groupvars = c("online_advertising"))
-
-# Plot of means
-ggplot(mean_data, aes(x = online_advertising, y = streams_hd)) + 
-    geom_bar(position = position_dodge(0.9), colour = "black", 
-        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
-    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
-        aes(ymin = streams_hd - ci, ymax = streams_hd + ci)) + 
-    theme_bw() + labs(x = "Advertising", y = "Average number of HD streams", 
-    title = "Average number of HD streams by group") + 
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
-    color = "#666666"))
-```
-
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-22-1.png" width="672" />
-
-Again, the summary statistics and the plot seem to indicate that there is a difference in means. Using the same reasoning as before, we can conclude that we need a two sample t-test to determine whether this difference is significant (note that *two sample t-test* means the same as *independent-means t-test*).
-
-
-```r
-t.test(streams_hd ~ online_advertising, data = movie_data)
-```
-
-```
-## 
-## 	Welch Two Sample t-test
-## 
-## data:  streams_hd by online_advertising
-## t = -7.5617, df = 138.71, p-value = 0.00000000000494
-## alternative hypothesis: true difference in means between group no and group yes is not equal to 0
-## 95 percent confidence interval:
-##  -905.6522 -530.2078
-## sample estimates:
-##  mean in group no mean in group yes 
-##           1475.55           2193.48
-```
-
-Again, the p-value is so low that any sensible significance level would lead us to reject the null hypothesis, suggesting that there is a difference in mean the number of streams between videos included in the campaign and those that aren't.
-
-Calculate the standardized effect size:
-
-
-```r
-cohensD(streams_hd ~ online_advertising, data = movie_data)
-```
-
-```
-## [1] 1.069388
-```
-
-The magnitude of the effect size indicates again that this effect is large, although it is somewhat smaller than for SD streams.
+This magnitude of the effect size (0.52) suggests that the effect of the personalization feature on the expenditures is medium to large.
 
 Alternatively, you could also use the `ggstatsplot` package to conduct the tests: 
 
 
 ```r
 ggbetweenstats(
-  data = movie_data,
+  data = customer_data,
   plot.type = "box",
-  x = online_advertising, # 2 groups
-  y = streams_sd ,
+  x = exp_group, # 2 groups
+  y = revenue ,
   type = "p", # default
   effsize.type = "d", # display effect size (Cohen's d in output)
   messages = FALSE,
   bf.message = FALSE,
   mean.ci = TRUE,
-  title = "SD streams"
+  title = "Average revenue per customer by group"
 )
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
+Finally, we can conclude from this study that the personalization feature causes users to increase their expenditures and this feature should hence be implemented on the website. 
 
-```r
-ggbetweenstats(
-  data = movie_data,
-  plot.type = "box",
-  x = online_advertising, # 2 groups
-  y = streams_hd ,
-  type = "p", # default
-  effsize.type = "d", # display effect size (Cohen's d in output)
-  messages = FALSE,
-  bf.message = FALSE,
-  mean.ci = TRUE,
-  title = "HD streams"
-)
-```
+**Question 3**
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-26-1.png" width="672" />
-
-**Question 4**
-
-Next we want to examine whether HD and SD streams have similar numbers on average. The null hypothesis here is that there is no difference in the mean number of HD streams and the mean number of SD streams for the same movies. Because the observations come from the same population of movies, we refer to the difference in the means for the same population as $\mu_D$ when stating our hypotheses. The alternative hypothesis states that that there is a difference between the streams in HD and SD quality for the same movies. In mathematical notation this can be written as
+Next we want to examine whether the alternative page layout has an effect on the time that a user spends on the website. The null hypothesis here is that there is no difference in the mean time spend on the website for the same customers between the two alternative page layouts. Because the observations come from the same population of customers (i.e., a within-subject design), we refer to the difference in the means for the same population as $\mu_D$ when stating our hypotheses. The alternative hypothesis states that that there is a difference between the time on site variables for the same customers. In mathematical notation this can be written as
 
 $$H_0: \mu_D = 0 \\ H_1: \mu_D \neq 0$$
 
-Again, we start with descriptive statistics to get a feel for the data.
 
-
-
+Again, we start with descriptive statistics to get a feel for the data. Note that in order to compare the groups, it is important to base the comparison on the same sample. Since only customers from the treatment condition in the first experiment have been included in this follow-up study, we need to make sure that the customers who were not included in the study are not considered when comparing the means: 
 
 
 ```r
-# Descriptive statistics for HD and SD streams
-psych::describe(movie_data$streams_sd)
+# Descriptive statistics
+psych::describe(customer_data[!is.na(customer_data$time_on_site_1),
+    c("time_on_site", "time_on_site_1")])
 ```
 
 ```
-##    vars   n    mean      sd median trimmed     mad min  max range skew kurtosis
-## X1    1 200 2677.92 1075.28   2732 2653.68 1064.51 654 5709  5055  0.2    -0.41
-##       se
-## X1 76.03
+##                vars   n   mean     sd median trimmed    mad min  max range
+## time_on_site      1 145 783.12 324.73    769  785.13 346.93  43 1530  1487
+## time_on_site_1    2 145 813.97 324.81    794  816.09 345.45  78 1552  1474
+##                 skew kurtosis    se
+## time_on_site   -0.02    -0.41 26.97
+## time_on_site_1 -0.03    -0.43 26.97
 ```
 
-```r
-psych::describe(movie_data$streams_hd)
-```
+As can be seen, the mean for the alternative page layout is higher, which we can also show visually using a plot of means (or alternatively a boxplot). 
 
-```
-##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
-## X1    1 200 1834.52 760.23 1668.5  1761.9 578.21 246 4305  4059 0.85     0.42
-##       se
-## X1 53.76
-```
 
 ```r
 # Plot of means
-movie_data_long <- melt(movie_data[, c("streams_sd", "streams_hd")])
-names(movie_data_long) <- c("type", "streams")
+customer_data_long <- melt(customer_data[!is.na(customer_data$time_on_site_1),
+    c("time_on_site", "time_on_site_1")])
+names(customer_data_long) <- c("layout", "time_on_site")
 
-mean_data <- summarySE(movie_data_long, measurevar = "streams", 
-    groupvars = c("type"))
+mean_data <- summarySE(customer_data_long, measurevar = "time_on_site",
+    groupvars = c("layout"))
 
 # Plot of means
-ggplot(mean_data, aes(x = type, y = streams)) + 
-    geom_bar(position = position_dodge(0.9), colour = "black", 
-        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
-    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
-        aes(ymin = streams - ci, ymax = streams + ci)) + 
-    theme_bw() + labs(x = "Type", y = "Average number of streams", 
-    title = "Average number of streams by group") + 
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
+ggplot(mean_data, aes(x = layout, y = time_on_site)) +
+    geom_bar(position = position_dodge(0.9), colour = "black",
+        fill = "#CCCCCC", stat = "identity", width = 0.65) +
+    geom_errorbar(position = position_dodge(0.9), width = 0.15,
+        aes(ymin = time_on_site - ci, ymax = time_on_site +
+            ci)) + theme_bw() + labs(x = "layout",
+    y = "Average time on site", title = "Average time on site by group") +
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
     color = "#666666"))
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 
 
-
-It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same movies are observed for HD and SD streams (i.e., the same movies are available in both formats). This means that we need a __dependent means t-test__. This test is also known as the **paired samples t-test**. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding ```paired = TRUE``` to the code.   
+It appears that there is a difference in the means. To test whether it is significant, we again need a t-test. However, this time we need a slightly different version of the t-test because the same customers are observed for the two page layouts (i.e., the same customers are shown both layouts). This means that we need a __dependent means t-test__. This test is also known as the **paired samples t-test**. The other assumptions are virtually identical to the independent-means t-test. The test can be executed in R by adding ```paired = TRUE``` to the code.   
 
 
 ```r
-t.test(y = movie_data$streams_sd, x = movie_data$streams_hd, paired = TRUE)
+t.test(y = customer_data$time_on_site, x = customer_data$time_on_site_1,
+    paired = TRUE)
 ```
 
 ```
 ## 
 ## 	Paired t-test
 ## 
-## data:  movie_data$streams_hd and movie_data$streams_sd
-## t = -11.214, df = 199, p-value < 0.00000000000000022
+## data:  customer_data$time_on_site_1 and customer_data$time_on_site
+## t = 39.242, df = 144, p-value < 0.00000000000000022
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -991.7133 -695.0867
+##  29.28793 32.39483
 ## sample estimates:
 ## mean of the differences 
-##                  -843.4
+##                30.84138
 ```
-
-The p-value is again lower than the chosen significance level of 5% (i.e., p < .05), which means that we reject the null hypothesis that there is no difference in the mean number of streams in HD and SD quality. Make sure you interpret the p-value correctly. It refers to the probability of observing a difference of the observed magnitude (or larger) between streams in HD and SD quality, assuming that there was in fact no difference between the formats. The confidence interval confirms the conclusion to reject the null hypothesis since $0$ is not contained in the range of plausible values.
+The p-value is again lower than the chosen significance level of 5% (i.e., p < .05), which means that we reject the null hypothesis that there is no difference in the mean time on site between the two page layouts. Make sure you interpret the p-value correctly. It refers to the probability of observing a difference of the observed magnitude (or larger) between the two layouts, assuming that there was in fact no difference between the layouts The confidence interval confirms the conclusion to reject the null hypothesis since $0$ is not contained in the range of plausible values.
 
 Now let's find out how strong this effect is.
 
 
 ```r
-cohensD(movie_data$streams_sd, movie_data$streams_hd, method = 'paired')
+cohensD(customer_data$time_on_site, customer_data$time_on_site_1,
+    method = "paired")
 ```
 
 ```
-## [1] 0.7929318
+## [1] 3.258853
 ```
-A standardized effect size of approx. 0.79 tells us that this effect is large.
+A standardized effect size of approx. 3.23 tells us that this effect is (very) large.
 
-Alternatively, you could also use the `ggstatsplot` package to conduct the tests: 
+Alternatively, you could also use the `ggstatsplot` package to conduct the tests and extract the relevant information from there: 
 
 
 ```r
 ggwithinstats(
-  data = movie_data_long,
-  x = type,
-  y = streams,
+  data = customer_data_long,
+  x = layout,
+  y = time_on_site,
   path.point = FALSE,
   path.mean = TRUE,
   sort = "descending", # ordering groups along the x-axis based on
   sort.fun = mean, # values of `y` variable
-  title = "Number of streams for movies in SD and HD",
+  title = "Time on site for different page layouts",
   messages = FALSE,
   bf.message = FALSE,
   mean.ci = TRUE,
@@ -984,23 +717,26 @@ ggwithinstats(
 )
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
-**Question 5**
+The conclusion from this test would be that the alternative page layout increases the time that users spend on the website and, thus, the alternative layout should be implemented as the new standard. 
 
-The question of how many movies we would need to include in each sample of our experiment can be answered quite comfortably with a power calculation function in R.
+**Question 4**
+
+The question of how many customers we would need to include in each group of our experiment can be answered quite comfortably with a power calculation function in R.
 
 
 ```r
-pwr.t.test(d = 0.3, sig.level = 0.05, power = 0.8, type = c("two.sample"), alternative = c("two.sided"))
+pwr.t.test(d = 0.1, sig.level = 0.05, power = 0.8,
+    type = c("two.sample"), alternative = c("two.sided"))
 ```
 
 ```
 ## 
 ##      Two-sample t test power calculation 
 ## 
-##               n = 175.3847
-##               d = 0.3
+##               n = 1570.733
+##               d = 0.1
 ##       sig.level = 0.05
 ##           power = 0.8
 ##     alternative = two.sided
@@ -1008,97 +744,11 @@ pwr.t.test(d = 0.3, sig.level = 0.05, power = 0.8, type = c("two.sample"), alter
 ## NOTE: n is number in *each* group
 ```
 
-To achieve our desired effect size of 0.3, a significance level of 0.5 and a power of 0.8 we would need to include at least 175 movies per group in our sample.
+To achieve our desired effect size of 0.1, a significance level of 0.5 and a power of 0.8 we would need to include at least 1,570 customers per group in the planned experiment.
 
+**Question 5**
 
-## Solution assignment 3 
-
-The data file contains customer information from an online fashion shop. In an experiment, the customers were exposed to different types of online advertising over the past year (randomly assigned) and now you wish to analyze the results.
-
-The following variables are included in the data set:
-
-* customerID: unique customer ID
-* revenue: revenue per customer for the past year (in EUR)
-* gender: 0=male, 1=female
-* retargeting: type of online advertising that the customer was exposed to (3 levels: 1 = no advertising, 2 = generic retargeting, 3 = dynamic retargeting)
-* customerRank: ranking of customers according to their expenditure level (low rank = valuable customer, high rank = less valuable customer) 
-* conversion: indicator variable, indicating if a customer converted in the previous campaign (0 = no conversion, 1 = conversion) 
-
-Use R and appropriate analytical techniques to answer the following questions:
-
-1. Has the types of online advertising an effect on revenue? Are there significant differences between the individual groups?
-2. Is the customer ranking significantly influenced by the type of online advertising? Are there significant differences between the individual groups?
-3. Does the conversion rate in the previous campaign differ between male and female customers?
-
-When answering the questions, please remember to address the following points, where appropriate:
-
-* Formulate the corresponding hypotheses and choose an appropriate statistical test
-* Provide the reason for your choice and discuss if the assumptions of the test are met 
-* Convert the variables to the appropriate type (e.g., factor variables)
-* Create appropriate graphs to explore the data (e.g., boxplot, bar chart, histogram)
-* Provide appropriate descriptive statistics for the variables
-* Report and interpret the test results accurately (including confidence intervals)  
-* Finally, don't forget to report your research conclusion in an appropriate way
-
-When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment3.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment3_studendID_name.html".
-
-**Load data**
-
-
-```r
-rm(list = ls())
-customer_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment3.csv", 
-                          sep = ";", 
-                          header = TRUE) #read in data
-head(customer_data)
-```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["revenue"],"name":[1],"type":["int"],"align":["right"]},{"label":["gender"],"name":[2],"type":["int"],"align":["right"]},{"label":["retargeting"],"name":[3],"type":["int"],"align":["right"]},{"label":["customerID"],"name":[4],"type":["int"],"align":["right"]},{"label":["rank"],"name":[5],"type":["int"],"align":["right"]},{"label":["conversion"],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"3866","2":"1","3":"3","4":"2","5":"1","6":"1"},{"1":"1576","2":"1","3":"1","4":"7","5":"159","6":"1"},{"1":"2667","2":"1","3":"1","4":"8","5":"37","6":"0"},{"1":"772","2":"1","3":"1","4":"12","5":"259","6":"1"},{"1":"2702","2":"1","3":"3","4":"13","5":"35","6":"1"},{"1":"1277","2":"1","3":"2","4":"14","5":"203","6":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
-```r
-str(customer_data)
-```
-
-```
-## 'data.frame':	296 obs. of  6 variables:
-##  $ revenue    : int  3866 1576 2667 772 2702 1277 2023 2170 3103 3067 ...
-##  $ gender     : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ retargeting: int  3 1 1 1 3 2 1 3 3 1 ...
-##  $ customerID : int  2 7 8 12 13 14 22 24 26 31 ...
-##  $ rank       : int  1 159 37 259 35 203 103 87 17 19 ...
-##  $ conversion : int  1 1 0 1 1 1 0 1 1 0 ...
-```
-
-**Data Preparation**
-
-As always, the first step is to load required packages (packages that have not been used as often in the course will be loaded as required to show which packages contain certain functions) and to load and inspect the data. 
-
-
-```r
-library(plyr)
-library(ggplot2)
-library(psych)
-library(Hmisc)
-library(Rmisc)
-```
-
-Next we are going to recode some of the variables into factors and give them more descriptive level names. 
-
-
-```r
-customer_data$retargeting <- factor(customer_data$retargeting, levels = c(1,2,3), labels = c("no retargeting", "generic retargeting", "dynamic retargeting"))
-customer_data$gender <- factor(customer_data$gender, levels = c(1,0),labels = c("female","male"))
-customer_data$conversion <- factor(customer_data$conversion, levels = c(1,0), labels = c("conversion","no conversion"))
-```
-
-
-**Question 1**
-
-To answer whether the type of advertising has an effect on revenue we need to formulate a testable null hypothesis. In our case the null hypothesis is stating that the average level of sales is equal for all advertising types. In mathematical notation this implies:
+To answer the question of whether the type of advertising has an effect on revenue, we need to formulate a testable null hypothesis. In our case, the null hypothesis is stating that the average level of sales is equal for all three advertising types. In mathematical notation this implies:
 
 $$H_0: \mu_1 = \mu_2 = \mu_3 $$
 
@@ -1112,11 +762,21 @@ $$H_1: \exists {i,j}: {\mu_i \ne \mu_j} $$
 
 The appropriate test for such a hypothesis is one-way ANOVA since we have a metric scales dependent variable and a categorical independent variable with more than two levels.
 
+
+First, we will recode the relevant variables into factors and give them more descriptive level names: 
+
+
+```r
+customer_data$retargeting <- factor(customer_data$retargeting,
+    levels = c(1, 2, 3), labels = c("no retargeting",
+        "generic retargeting", "dynamic retargeting"))
+```
+
 Next we will calculate summary statistics for the data and produce an appropriate plot.
 
 
 ```r
-describeBy(customer_data$revenue,customer_data$retargeting)
+describeBy(customer_data$revenue, customer_data$retargeting)
 ```
 
 ```
@@ -1124,35 +784,37 @@ describeBy(customer_data$revenue,customer_data$retargeting)
 ##  Descriptive statistics by group 
 ## group: no retargeting
 ##    vars   n    mean     sd median trimmed    mad min  max range skew kurtosis
-## X1    1 106 1414.31 714.21 1437.5 1386.42 786.52 100 3356  3256 0.31    -0.53
+## X1    1 103 1418.96 703.56   1343 1395.92 631.59  73 3075  3002 0.29    -0.45
 ##       se
-## X1 69.37
+## X1 69.32
 ## ------------------------------------------------------------ 
 ## group: generic retargeting
-##    vars  n    mean    sd median trimmed    mad min  max range skew kurtosis
-## X1    1 90 1502.63 681.3   1445 1491.79 729.44  78 2885  2807 0.12    -0.74
+##    vars  n    mean     sd median trimmed    mad min  max range skew kurtosis
+## X1    1 87 1617.46 796.96   1551 1611.87 765.02  72 3655  3583 0.15    -0.42
 ##       se
-## X1 71.82
+## X1 85.44
 ## ------------------------------------------------------------ 
 ## group: dynamic retargeting
-##    vars   n    mean     sd median trimmed    mad min  max range  skew kurtosis
-## X1    1 100 2208.28 796.85 2277.5 2218.12 735.37 145 3866  3721 -0.16    -0.51
+##    vars  n    mean     sd median trimmed    mad min  max range skew kurtosis
+## X1    1 96 2149.46 873.18   2213 2135.82 816.91 293 5077  4784 0.25     0.36
 ##       se
-## X1 79.68
+## X1 89.12
 ```
 
 ```r
-mean_data <- summarySE(customer_data, measurevar="revenue", groupvars=c("retargeting"))
-ggplot(mean_data,aes(x = retargeting, y = revenue)) + 
-  geom_bar(position=position_dodge(1), colour="black", fill = "#CCCCCC", stat="identity", width = 0.65) +
-  geom_errorbar(position=position_dodge(.9), width=.15, aes(ymin=revenue-ci, ymax=revenue+ci)) +
-  theme_bw() +
-  labs(x = "Group", y = "Average revenue", title = "Average revenue by group")+
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+mean_data <- summarySE(customer_data, measurevar = "revenue",
+    groupvars = c("retargeting"))
+ggplot(mean_data, aes(x = retargeting, y = revenue)) +
+    geom_bar(position = position_dodge(1), colour = "black",
+        fill = "#CCCCCC", stat = "identity", width = 0.65) +
+    geom_errorbar(position = position_dodge(0.9), width = 0.15,
+        aes(ymin = revenue - ci, ymax = revenue + ci)) +
+    theme_bw() + labs(x = "Group", y = "Average revenue",
+    title = "Average revenue by group") + theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5, color = "#666666"))
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" />
 
 Both the summary statistics and the plot hint at the fact that the means may not be equal. Especially the difference between dynamic retargeting and no retargeting/ generic regtargeting seem to be quite high. Before we move to the formal test, we need to see if a series of assumptions are met, namely:
 
@@ -1164,14 +826,14 @@ The last assumption is satisfied due to the fact that the observations were rand
 
 
 ```r
-#check number of observations by group
+# check number of observations by group
 table(customer_data$retargeting)
 ```
 
 ```
 ## 
 ##      no retargeting generic retargeting dynamic retargeting 
-##                 106                  90                 100
+##                 103                  87                  96
 ```
 
 Due to the fact that there are always more than 30 observations in each group we can rely on the central limit theorem to satisfy the distributional assumptions. 
@@ -1180,33 +842,34 @@ Homogeneity of variances can be checked with Levene's test (implemented as ```le
 
 
 ```r
-#Homogeneity of variances test:
+# Homogeneity of variances test:
 library(car)
-leveneTest(revenue ~ retargeting, data=customer_data, center=mean)
+leveneTest(revenue ~ retargeting, data = customer_data,
+    center = mean)
 ```
 
 ```
 ## Levene's Test for Homogeneity of Variance (center = mean)
 ##        Df F value Pr(>F)
-## group   2  1.2455 0.2893
-##       293
+## group   2  1.4005 0.2482
+##       283
 ```
 
 The test result is insignificant (for a significance level of 5 %), meaning that we do not reject the null hypothesis of equal variances and can operate under the assumption that the variances are equal. 
 
-Since all assumptions are fulfilled we can move on to conducting the actual ANOVA using the ```aov()``` function. As said above, it would also be possible to conduct the analysis using the robust ANOVA using the `oneway.test()` function:
+Since all assumptions are fulfilled we can move on to conducting the actual ANOVA using the ```aov()``` function. As said above, it would also be possible to conduct the analysis using the robust ANOVA using the `oneway.test()` function, which has an in-build correction for unequal variances across groups:
 
 
 ```r
-#Anova:
-aov <- aov(revenue~retargeting, data = customer_data)
+# Anova:
+aov <- aov(revenue ~ retargeting, data = customer_data)
 summary(aov)
 ```
 
 ```
-##              Df    Sum Sq  Mean Sq F value            Pr(>F)    
-## retargeting   2  37966043 18983022   35.26 0.000000000000019 ***
-## Residuals   293 157734112   538342                              
+##              Df    Sum Sq  Mean Sq F value        Pr(>F)    
+## retargeting   2  27948872 13974436   22.27 0.00000000104 ***
+## Residuals   283 177543625   627363                          
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -1217,21 +880,20 @@ Next we will briefly inspect the residuals of the ANOVA to see if the assumption
 
 
 ```r
-#Inspect residuals
-plot(aov,1)
+# Inspect residuals
+plot(aov, 1)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-41-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 The first plot gives us a feel for the distribution of the residuals of the three groups. The residuals seem to be roughly equally distributed, which speaks for the fact that the homogeneity of variances assumptions is fulfilled. 
 
 
-
 ```r
-plot(aov,2)
+plot(aov, 2)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-42-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 The second plot is a QQ-plot of the residuals, meant as a quick visual check to see if the normality assumption is fulfilled. Leading up to the test we only checked if there were more than 30 observations per group to satisfy the normality assumption but despite this being fulfilled it is still important to check the normality of the residuals, as any strange behavior here may indicate problems with the model specification. 
 
@@ -1247,7 +909,7 @@ shapiro.test(resid(aov))
 ## 	Shapiro-Wilk normality test
 ## 
 ## data:  resid(aov)
-## W = 0.99378, p-value = 0.2637
+## W = 0.99294, p-value = 0.1961
 ```
 
 The p value is far above any widely used significance level and thus we can not reject the null hypothesis of normal distribution, which further implies that the normality assumption is fulfilled.
@@ -1262,8 +924,9 @@ Here we will conduct both the Bonferroni correction as well as Tukey's HSD test,
 
 
 ```r
-#bonferroni
-pairwise.t.test(customer_data$revenue, customer_data$retargeting, data=customer_data, p.adjust.method = "bonferroni")
+# bonferroni
+pairwise.t.test(customer_data$revenue, customer_data$retargeting,
+    data = customer_data, p.adjust.method = "bonferroni")
 ```
 
 ```
@@ -1272,9 +935,9 @@ pairwise.t.test(customer_data$revenue, customer_data$retargeting, data=customer_
 ## 
 ## data:  customer_data$revenue and customer_data$retargeting 
 ## 
-##                     no retargeting   generic retargeting
-## generic retargeting 1                -                  
-## dynamic retargeting 0.00000000000042 0.00000000051570   
+##                     no retargeting generic retargeting
+## generic retargeting 0.26           -                  
+## dynamic retargeting 0.0000000011   0.0000252619       
 ## 
 ## P value adjustment method: bonferroni
 ```
@@ -1291,7 +954,7 @@ Alternatively, you could have also chosen to use Tukey's HSD to conduct the post
 
 
 ```r
-#tukey correction using the mult-comp package
+# tukey correction using the mult-comp package
 library(multcomp)
 tukeys <- glht(aov, linfct = mcp(retargeting = "Tukey"))
 summary(tukeys)
@@ -1308,13 +971,13 @@ summary(tukeys)
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate Std. Error t value
-## generic retargeting - no retargeting == 0         88.32     105.17   0.840
-## dynamic retargeting - no retargeting == 0        793.97     102.28   7.762
-## dynamic retargeting - generic retargeting == 0   705.65     106.61   6.619
+## generic retargeting - no retargeting == 0         198.5      115.3   1.721
+## dynamic retargeting - no retargeting == 0         730.5      112.4   6.501
+## dynamic retargeting - generic retargeting == 0    532.0      117.2   4.538
 ##                                                Pr(>|t|)    
-## generic retargeting - no retargeting == 0         0.678    
-## dynamic retargeting - no retargeting == 0      <0.00001 ***
-## dynamic retargeting - generic retargeting == 0 <0.00001 ***
+## generic retargeting - no retargeting == 0         0.199    
+## dynamic retargeting - no retargeting == 0       <0.0001 ***
+## dynamic retargeting - generic retargeting == 0  <0.0001 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## (Adjusted p values reported -- single-step method)
@@ -1338,132 +1001,160 @@ confint(tukeys)
 ## 
 ## Fit: aov(formula = revenue ~ retargeting, data = customer_data)
 ## 
-## Quantile = 2.3556
+## Quantile = 2.3558
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
-##                                                Estimate  lwr       upr      
-## generic retargeting - no retargeting == 0        88.3220 -159.4144  336.0585
-## dynamic retargeting - no retargeting == 0       793.9687  553.0243 1034.9130
-## dynamic retargeting - generic retargeting == 0  705.6467  454.5207  956.7726
+##                                                Estimate lwr      upr     
+## generic retargeting - no retargeting == 0      198.4986 -73.2065 470.2037
+## dynamic retargeting - no retargeting == 0      730.4972 465.7865 995.2079
+## dynamic retargeting - generic retargeting == 0 531.9986 255.7949 808.2022
 ```
 
 ```r
-# The mar parameter changes the margins around created plots. This is done so the labels on the side of the Tukey plot are visible (however, this was not expected). 
+# The mar parameter changes the margins around
+# created plots. This is done so the labels on
+# the side of the Tukey plot are visible
+# (however, this was not expected).
 par(mar = c(5, 20, 4, 2))
 plot(tukeys)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-46-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 
 It is clearly visible that just the CIs of generic retargetring vs. no retargeting cross the 0 bound, which further indicates that the differences in means are statistically not significantly different from 0.
 
-From a reporting standpoint we can say that revenue is higher when using dynamic retargeting vs. no retargeting or generic retargeting, but there is no significant difference between the sales for products in the  dynamic retargeting vs. no retargeting conditions. Managerially, this means that only dynamic retargetting helps us to increase sales. 
+From a reporting standpoint we can say that revenue is higher when using dynamic retargeting vs. no retargeting or generic retargeting, but there is no significant difference between the sales for products in the  dynamic retargeting vs. no retargeting conditions. Managerially, this means that only dynamic retargetting helps us to increase sales and should thus be the preferred choice. 
+
+**Question 6**
+
+For this question we want to examine whether the scores from the NPS measurement are significantly different for the experimental groups. Because we are dealing with data on an ordinal scale, we can not use a t-test for this analysis. The non-parametric counterpart is the Mann-Whitney U Test, which tests for differences in medians between groups. Hence, the null hypothesis is that the medians are equal in each group and the alternative hypothesis is that there is a difference in medians. 
+
+$$H_0: \bar{\mu}_1 =  \bar{\mu}_2  \\ H_1: \bar{\mu}_0 \neq \bar{\mu}_1 $$
+Let's inspect the descriptive statistics first:
 
 
-**Question 2**
+```r
+# Descriptive statistics for NPS, split by group
+describeBy(customer_data$nps, customer_data$exp_group)
+```
 
-For this question we want to examine whether customer ranks are significantly different for different types of advertising. Because we are dealing with data on an ordinal scale, we can not use ANOVA for this type of question. The non-parametric counterpart is the Kruskal-Wallis test, which tests for differences in medians between groups. Hence, the null hypothesis is that the medians are equal in each group and the alternative hypothesis is that there is a difference between at least one pair of groups in terms of the median. 
-
-$$H_0: \bar{\mu}_1 =  \bar{\mu}_2 = \bar{\mu}_3 $$
-$$H_1: \textrm{The meadians are not all equal} $$
-Or, alternatively
-
-$$H_1: \exists {i,j}: {\bar \mu_i \ne \bar \mu_j} $$
+```
+## 
+##  Descriptive statistics by group 
+## group: control
+##    vars   n mean   sd median trimmed  mad min max range  skew kurtosis   se
+## X1    1 141 8.11 2.18      9    8.47 1.48   1  10     9 -1.36     1.45 0.18
+## ------------------------------------------------------------ 
+## group: treatment
+##    vars   n mean   sd median trimmed  mad min max range  skew kurtosis   se
+## X1    1 145 6.83 3.01      8    7.17 2.97   0  10    10 -0.81    -0.55 0.25
+```
 
 A good way to visualize ordinal data is through a boxplot.
 
 
 ```r
-ggplot(data = customer_data, aes(x = retargeting, y = rank)) + 
-  geom_boxplot() + 
-  theme_bw() + 
-  labs(x = "", y = "Rank")
+ggplot(data = customer_data, aes(x = exp_group, y = nps)) +
+    geom_boxplot() + theme_bw() + labs(x = "", y = "Rank")
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" />
 
-The boxplot seems to indicate that the medians are unequal. At least for dynamic retargeting our customer ranks seem to be lower than the ones of no retargeting or generic retargeting.
+The boxplot seems to indicate that the medians are unequal. Surprisingly, the plot indicates that the median NPS score is lower in the treatment group. The may be due to, for example, that while the customers spend more money due to the personalization feature, this feature actually reduces the NPS, possibly because customers are not comfortable with the use of their personal data for advertising purposes.  
 
 The only assumption that we require for this test is that the dependent variable is at least ordinal, which is fulfilled for customer ranks. Hence we can move on to performing the test in R.
 
 
 ```r
-#ordinal data so we use a non-parametric test
-kruskal.test(rank ~ retargeting, data = customer_data)
+# ordinal data so we use a non-parametric test
+wilcox.test(nps ~ exp_group, data = customer_data)
 ```
 
 ```
 ## 
-## 	Kruskal-Wallis rank sum test
+## 	Wilcoxon rank sum test with continuity correction
 ## 
-## data:  rank by retargeting
-## Kruskal-Wallis chi-squared = 54.163, df = 2, p-value =
-## 0.000000000001732
+## data:  nps by exp_group
+## W = 12749, p-value = 0.0002381
+## alternative hypothesis: true location shift is not equal to 0
 ```
+The p-value is below 0.05 and thus we reject the null hypothesis of equal medians. This means that the NPS scores of customers is different for the group that received the personalization feature, implying that the type of personalization feature has an effect on the NPS scores.
 
-The p-value is below any sensible signifcance level and thus we reject the null hypothesis of equal medians. This means that the median rank of customers is different for different types of retargeting, implying that the type of retargeting has an effect on the customer rank.
-
-To further see which of the medians are unequal we perform the Nemenyi post hoc test, which can be found in the ```PCMCR``` package in R. The null hypothesis is that the pairwise medians are equal, while the alternative hypothesis is that the pairwise medians are unequal. 
+Alternatively, you could also use the `ggstatsplot` package to conduct the test: 
 
 
 ```r
-library(PMCMRplus)
-kwAllPairsNemenyiTest(x = customer_data$rank, g = customer_data$retargeting, dist = "Tukey")
+ggbetweenstats(
+  data = customer_data,
+  plot.type = "box",
+  x = exp_group, # 2 groups
+  y = nps ,
+  type = "np", # default
+  effsize.type = "d", # display effect size (Cohen's d in output)
+  messages = FALSE,
+  bf.message = FALSE,
+  mean.ci = TRUE,
+  title = "NPS score by group"
+)
 ```
 
-```
-##                     no retargeting generic retargeting
-## generic retargeting 0.67           -                  
-## dynamic retargeting 0.000000000022 0.000000030987
-```
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 
-Similar to question 1 we can see that there seems to be no difference in (median) customer ranks of no retargeting vs. generic retargeting. On the other side ranks of dynamic retargeting seem to be significantly different from both no retargeting and generic retargeting. This implies that just dynamic retargeting leads to different customer ranks. 
+Considering this test in isolation would indicate that the new personalization feature significantly decreases the NPS scores of your company and should, thus, not be implemented. This would be sufficient as a managerial implication from this test for the assignment. However, taken together, this result and the result from Question 2 that the personalization feature increases revenues indicates that further analyses are reuqired to reach a final conclusion regarding this questions. 
 
+**Question 7**
 
-**Question 3**
+To find out if the new personalization feature has an effect on the conversion rate, we can use a test for proportions instead of a test for mean differences. To test for the equality of proportions (and therefore no difference between them) we can use a $\chi^2$ test.
 
-To find out whether our conversion rate differs between our female and male customers, we can use a test for proportions instead of a test for mean differences. To test for the equality of proportions (and therefore no difference between them) we can use a $\chi^2$ test.
-
-Our null hypothesis in this case states that the proportions of conversion are equal for females and males. Our alternative hypothesis states that these proportions are unequal.
+Our null hypothesis in this case states that the proportions of conversion are the groups with and without the personalization feature. Our alternative hypothesis states that these proportions are unequal.
 
 $$H_0: \pi_1 = \pi_2 \\ H_1: \pi_1 \neq \pi_2$$
+First, we will recode the relevant variables into factors and give them more descriptive level names. Note that the *exp_group* variable had already been converted to a factor variable and, thus, does not need to be converted to a factor variable again.  
+
+
+```r
+customer_data$conversion <- factor(customer_data$conversion,
+    levels = c(0, 1), labels = c("no", "yes"))
+```
 
 First let´s create a summary plot to get a feeling for the data.
 
 
 ```r
 #conditional relative frequencies
-rel_freq_table <- as.data.frame(prop.table(table(customer_data$gender, customer_data$conversion), 1))
-names(rel_freq_table) <- c("gender", "conversion","freq") # changing names of the columns
+rel_freq_table <- as.data.frame(prop.table(table(customer_data$exp_group, customer_data$conversion), 1))
+names(rel_freq_table) <- c("group", "conversion","freq") # changing names of the columns
 rel_freq_table
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["gender"],"name":[1],"type":["fct"],"align":["left"]},{"label":["conversion"],"name":[2],"type":["fct"],"align":["left"]},{"label":["freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"female","2":"conversion","3":"0.3851351"},{"1":"male","2":"conversion","3":"0.1283784"},{"1":"female","2":"no conversion","3":"0.6148649"},{"1":"male","2":"no conversion","3":"0.8716216"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["group"],"name":[1],"type":["fct"],"align":["left"]},{"label":["conversion"],"name":[2],"type":["fct"],"align":["left"]},{"label":["freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"control","2":"no","3":"0.8723404"},{"1":"treatment","2":"no","3":"0.6344828"},{"1":"control","2":"yes","3":"0.1276596"},{"1":"treatment","2":"yes","3":"0.3655172"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
 ```r
-ggplot(rel_freq_table, aes(x = gender, y = freq, fill = conversion)) + #plot data
+ggplot(rel_freq_table, aes(x = group, y = freq, fill = conversion)) + #plot data
   geom_col(width = .7) + #position
   geom_text(aes(label = paste0(round(freq*100,0),"%")), position = position_stack(vjust = 0.5), size = 4) + #add percentages
-  ylab("Proportion of conversions") + xlab("gender") + # specify axis labels
+  ylab("Proportion of conversions") + xlab("group") + # specify axis labels
   theme_bw()
 ```
 
 <img src="14-rmdIntro_files/figure-html/question_3_1-1.png" width="672" />
 
-We see that our conversion seems to be better for our female customers, but let´s check whether these proportions are significantly different.
+We see that our conversion seems to be better for the group with the personalization feature, but let´s check whether these proportions are significantly different.
 
 
 ```r
-n1 <- nrow(subset(customer_data, gender == "female")) #number of observations for females
-n2 <- nrow(subset(customer_data, gender == "male"))  #number of observations for males
-n1_conv <- nrow(subset(customer_data, gender == "female" & conversion == "conversion"))  #number of conversions for females
-n2_conv <- nrow(subset(customer_data, gender == "male" & conversion == "conversion"))  #number of conversions for males
+n1 <- nrow(subset(customer_data, exp_group == "control"))  #number of observations for females
+n2 <- nrow(subset(customer_data, exp_group == "treatment"))  #number of observations for males
+n1_conv <- nrow(subset(customer_data, exp_group ==
+    "control" & conversion == "yes"))  #number of conversions for females
+n2_conv <- nrow(subset(customer_data, exp_group ==
+    "treatment" & conversion == "yes"))  #number of conversions for males
 
 prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)
 ```
@@ -1473,17 +1164,31 @@ prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)
 ## 	2-sample test for equality of proportions with continuity correction
 ## 
 ## data:  c(n1_conv, n2_conv) out of c(n1, n2)
-## X-squared = 24.236, df = 1, p-value = 0.0000008523
+## X-squared = 20.416, df = 1, p-value = 0.000006231
 ## alternative hypothesis: two.sided
 ## 95 percent confidence interval:
-##  0.1548639 0.3586496
+##  -0.3406543 -0.1350610
 ## sample estimates:
 ##    prop 1    prop 2 
-## 0.3851351 0.1283784
+## 0.1276596 0.3655172
+```
+The test showed that the conversion rate for the personalization feature was 23% higher compared to the control group. This difference is highly significant $\chi^2$ (1) = 20.4, p < .05 (95% CI = [0.13,0.37]), which means that we can reject our null hypothesis of equal probability and state that there indeed is a difference between the groups. In managerial terms this means that the personalization feature increases the conversion rate by making the ads more relevant for the customers and the feature should thus be implemented (but see the discussion about lower NPS scores).
+
+This information could have also been extracted using the ggstatsplot package:
+
+
+```r
+library(ggstatsplot)
+ggbarstats(data = customer_data, x = conversion, y = exp_group,
+    title = "Conversion by group", xlab = "Group",
+    palette = "Blues", messages = FALSE, bar.proptest = FALSE,
+    bf.message = FALSE)
 ```
 
-The test showed that the conversion rate for females was 26% higher compared to male customers. This difference is highly significant $\chi^2$ (1) = 24.2, p < .05 (95% CI = [0.16,0.36]), which means that we can reject our null hypothesis of equal probability and state that there indeed is a difference between our male and female customers respective their conversion rate.
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-39-1.png" width="672" />
 
+
+<!---
 ## Solution assignment 4
 
 As a marketing manager of a consumer electronics company, you are assigned the task to analyze the relative influence of different marketing activities. Specifically, you are supposed to analyse the effects of (1) TV advertising, (2) online advertising, and (3) radio advertising on the sales of fitness trackers (wristbands). Your data set consists of sales of the product in different markets (each line represents one market) from the past year, along with the advertising budgets for the product in each of those markets for three different media: TV, online, and radio. 
@@ -1513,9 +1218,8 @@ When you are done with your analysis, click on "Knit to HTML" button above the c
 
 
 ```r
-sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat", 
-                          sep = "\t", 
-                          header = TRUE) #read in data
+sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat",
+    sep = "\t", header = TRUE)  #read in data
 sales_data$market_id <- 1:nrow(sales_data)
 head(sales_data)
 ```
@@ -1575,25 +1279,28 @@ Since we have continuous variables, we use scatterplots to investigate the relat
 
 ```r
 library(ggplot2)
-ggplot(sales_data, aes(x = tv_adspend, y = sales)) + geom_point() + geom_smooth(method = "lm", 
-    fill = "blue", alpha = 0.1) + theme_bw()
+ggplot(sales_data, aes(x = tv_adspend, y = sales)) +
+    geom_point() + geom_smooth(method = "lm", fill = "blue",
+    alpha = 0.1) + theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-53-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-42-1.png" width="672" />
 
 ```r
-ggplot(sales_data, aes(x = online_adspend, y = sales)) + geom_point() + geom_smooth(method = "lm", 
-    fill = "blue", alpha = 0.1) + theme_bw()
+ggplot(sales_data, aes(x = online_adspend, y = sales)) +
+    geom_point() + geom_smooth(method = "lm", fill = "blue",
+    alpha = 0.1) + theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-53-2.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-42-2.png" width="672" />
 
 ```r
-ggplot(sales_data, aes(x = radio_adspend, y = sales)) + geom_smooth(method = "lm", 
-    fill = "blue", alpha = 0.1) + geom_point() +theme_bw()
+ggplot(sales_data, aes(x = radio_adspend, y = sales)) +
+    geom_smooth(method = "lm", fill = "blue", alpha = 0.1) +
+    geom_point() + theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-53-3.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-42-3.png" width="672" />
 
 The plots including the fitted lines from a simple linear model already suggest that there might be a positive linear relationship between sales and TV- and online-advertising. However, there does not appear to be a strong relationship between sales and radio advertising. 
 
@@ -1603,7 +1310,8 @@ The estimate the model, we will use the ```lm()``` function:
   
 
 ```r
-linear_model <- lm(sales ~ tv_adspend + online_adspend + radio_adspend, data = sales_data)
+linear_model <- lm(sales ~ tv_adspend + online_adspend +
+    radio_adspend, data = sales_data)
 ```
 
 Before we can inspect the results, we need to test if there might be potential problems with our model specification. 
@@ -1615,11 +1323,12 @@ The check for outliers, we extract the studentized residuals from our model and 
 
 ```r
 sales_data$stud_resid <- rstudent(linear_model)
-plot(1:nrow(sales_data),sales_data$stud_resid, ylim=c(-3.3,3.3)) #create scatterplot 
-abline(h=c(-3,3),col="red",lty=2) #add reference lines
+plot(1:nrow(sales_data), sales_data$stud_resid, ylim = c(-3.3,
+    3.3))  #create scatterplot 
+abline(h = c(-3, 3), col = "red", lty = 2)  #add reference lines
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-55-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-44-1.png" width="672" />
 
 Since there are no residuals with absolute values larger than 3, we conclude that there are no severe outliers. 
 
@@ -1629,16 +1338,16 @@ To test for influential observations, we use Cook's Distance. You may use the fo
 
 
 ```r
-plot(linear_model,4)
+plot(linear_model, 4)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-56-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-45-1.png" width="672" />
 
 ```r
-plot(linear_model,5)
+plot(linear_model, 5)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-56-2.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-45-2.png" width="672" />
 
 Since all values are well below the cutoff, we conclude that influential observations are not a problem in our model. 
 
@@ -1652,7 +1361,7 @@ library(car)
 avPlots(linear_model)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-57-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-46-1.png" width="672" />
 
 The plots suggest that the linear specification is appropriate. In addition, you could also use the residuals plot to see if the linear specification is appropriate. The red line is a smoothed curve through the residuals plot and if it deviates from the dashed grey horizontal line a lot, this would suggest that a linear specification is not appropriate. 
 
@@ -1661,7 +1370,7 @@ The plots suggest that the linear specification is appropriate. In addition, you
 plot(linear_model, 1)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-58-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-47-1.png" width="672" />
 
 In this example, the red line is close to the dashed grey line, so the linear specification appears reasonable. 
 
@@ -1674,7 +1383,7 @@ Next, we test if the residual variance is approximately the same at all levels o
 plot(linear_model, 1)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-59-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-48-1.png" width="672" />
 
 The spread of residuals at different levels of the predicted outcome does not appear to be very different. Thus, we can conclude that heteroscedasticity is unlikely to be a problem. We can also confirm this conclusion by using the Breusch-Pagan test, which shows an insignificant results, meaning that we cannot reject the Null Hypothesis of equal variances. 
 
@@ -1698,10 +1407,10 @@ Next, we test if the residuals are approximately normally distributed using the 
 
 
 ```r
-plot(linear_model,2)
+plot(linear_model, 2)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-61-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-50-1.png" width="672" />
 
 The Q-Q plot does not suggest a severe deviation from a normal distribution. This could also be validated using the Shapiro test:
 
@@ -1729,7 +1438,8 @@ To test for linear dependence of the regressors, we first test the bivariate cor
 
 ```r
 library("Hmisc")
-rcorr(as.matrix(sales_data[,c("tv_adspend","online_adspend","radio_adspend")]))
+rcorr(as.matrix(sales_data[, c("tv_adspend", "online_adspend",
+    "radio_adspend")]))
 ```
 
 ```
@@ -1752,10 +1462,11 @@ The results show that the bivariate correlations are rather low. This can also b
 
 
 ```r
-plot(sales_data[,c("tv_adspend","online_adspend","radio_adspend")])
+plot(sales_data[, c("tv_adspend", "online_adspend",
+    "radio_adspend")])
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-64-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-53-1.png" width="672" />
 
 In a next step, we compute the variance inflation factor for each predictor variable. The values should be close to 1 and values larger than 4 indicate potential problems with the linear dependence of regressors.  
 
@@ -1879,7 +1590,7 @@ ggplot(sales_data,aes(yhat,sales)) +
   theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-69-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-58-1.png" width="672" />
 
 Of course, you could have also used the functions included in the ggstatsplot package to report the results from your regression model. 
 
@@ -1887,11 +1598,12 @@ Of course, you could have also used the functions included in the ggstatsplot pa
 ```r
 library(ggstatsplot)
 options(scipen = 0)
-#specify_decimal_p(0.00000000004, k = 3L, p.value = TRUE)
+# specify_decimal_p(0.00000000004, k = 3L,
+# p.value = TRUE)
 ggcoefstats(x = linear_model, k = 15, title = "Sales predicted by adspend, airplay, & starpower")
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-70-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-59-1.png" width="672" />
 
 
 **Question 5**
@@ -1904,10 +1616,10 @@ $$\hat{sales}= 0.045*150 + 0.192*26 + 0.007*15 = 14.623$$
   
 
 ```r
-summary(linear_model)$coefficients[1,1] + 
-  summary(linear_model)$coefficients[2,1]*150 + 
-  summary(linear_model)$coefficients[3,1]*26 + 
-  summary(linear_model)$coefficients[4,1]*15
+summary(linear_model)$coefficients[1, 1] + summary(linear_model)$coefficients[2,
+    1] * 150 + summary(linear_model)$coefficients[3,
+    1] * 26 + summary(linear_model)$coefficients[4,
+    1] * 15
 ```
 
 ```
