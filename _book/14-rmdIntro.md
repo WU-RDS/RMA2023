@@ -744,7 +744,7 @@ pwr.t.test(d = 0.1, sig.level = 0.05, power = 0.8,
 ## NOTE: n is number in *each* group
 ```
 
-To achieve our desired effect size of 0.1, a significance level of 0.5 and a power of 0.8 we would need to include at least 1,570 customers per group in the planned experiment.
+To achieve our desired effect size of 0.1, a significance level of 0.5 and a power of 0.8 we would need to include at least 1,571 customers per group in the planned experiment.
 
 **Question 5**
 
@@ -1001,15 +1001,15 @@ confint(tukeys)
 ## 
 ## Fit: aov(formula = revenue ~ retargeting, data = customer_data)
 ## 
-## Quantile = 2.3558
+## Quantile = 2.356
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate lwr      upr     
-## generic retargeting - no retargeting == 0      198.4986 -73.2065 470.2037
-## dynamic retargeting - no retargeting == 0      730.4972 465.7865 995.2079
-## dynamic retargeting - generic retargeting == 0 531.9986 255.7949 808.2022
+## generic retargeting - no retargeting == 0      198.4986 -73.2261 470.2233
+## dynamic retargeting - no retargeting == 0      730.4972 465.7673 995.2270
+## dynamic retargeting - generic retargeting == 0 531.9986 255.7749 808.2222
 ```
 
 ```r
