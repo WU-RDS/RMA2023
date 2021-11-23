@@ -370,9 +370,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="11.5.1" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#guidelines-for-the-submission-and-presentation-1"><i class="fa fa-check"></i><b>11.5.1</b> Guidelines for the submission and presentation</a></li>
 <li class="chapter" data-level="11.5.2" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-export-from-qualtrics"><i class="fa fa-check"></i><b>11.5.2</b> Data export from Qualtrics</a></li>
-<li class="chapter" data-level="11.5.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#importing-qualtrics-data"><i class="fa fa-check"></i><b>11.5.3</b> Importing Qualtrics data</a></li>
-<li class="chapter" data-level="11.5.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-handling-1"><i class="fa fa-check"></i><b>11.5.4</b> Data handling</a></li>
-<li class="chapter" data-level="11.5.5" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#visualizations"><i class="fa fa-check"></i><b>11.5.5</b> Visualizations</a></li>
+<li class="chapter" data-level="11.5.3" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#randomized-groups"><i class="fa fa-check"></i><b>11.5.3</b> Randomized groups</a></li>
+<li class="chapter" data-level="11.5.4" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#importing-qualtrics-data"><i class="fa fa-check"></i><b>11.5.4</b> Importing Qualtrics data</a></li>
+<li class="chapter" data-level="11.5.5" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#data-handling-1"><i class="fa fa-check"></i><b>11.5.5</b> Data handling</a></li>
+<li class="chapter" data-level="11.5.6" data-path="survey-design-analysis.html"><a href="survey-design-analysis.html#visualizations"><i class="fa fa-check"></i><b>11.5.6</b> Visualizations</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>V FAQ</b></span></li>
@@ -1011,8 +1012,13 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <p>If you are not sure which numeric value corresponds to which answer, select a question in the “Survey” tab and click on “Recode values” to see/change which options correspond to which value.</p>
 <p><img src="images/qualtrics_recode_2021_11_17.png" width="72%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="importing-qualtrics-data" class="section level3" number="11.5.3">
-<h3><span class="header-section-number">11.5.3</span> Importing Qualtrics data</h3>
+<div id="randomized-groups" class="section level3" number="11.5.3">
+<h3><span class="header-section-number">11.5.3</span> Randomized groups</h3>
+<p>You can check out the grouping variable(s)’s name(s) under “Survey Flow” in the “Survey” tab. These will be added to the exported data as a column with the name of the group as the value. In the example below there will be a column named “Group” with values “treat1,” “treat2,” and “ctrl.”</p>
+<p><img src="images/qualtrics_experiments_2021_11_23.png" width="72%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="importing-qualtrics-data" class="section level3" number="11.5.4">
+<h3><span class="header-section-number">11.5.4</span> Importing Qualtrics data</h3>
 <p>To import the data to R you can use the “read_survey” function from the “qualtRics” library.</p>
 <div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="survey-design-analysis.html#cb825-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qualtRics)</span>
 <span id="cb825-2"><a href="survey-design-analysis.html#cb825-2" aria-hidden="true" tabindex="-1"></a>green_consumption <span class="ot">&lt;-</span> <span class="fu">read_survey</span>(<span class="st">&quot;data/Green_Consumption.csv&quot;</span>)</span>
@@ -1033,16 +1039,16 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <p><img src="images/qualtrics_question_2021_11_18.png" width="72%" style="display: block; margin: auto;" /></p>
 <p>The value <span class="math inline">\(1\)</span> in our data actually corresponds to the answer <span class="math inline">\(0\)</span>, <span class="math inline">\(2\)</span> to <span class="math inline">\(1-2\)</span> and so on. It is important to keep that in mind when interpreting any results.</p>
 </div>
-<div id="data-handling-1" class="section level3" number="11.5.4">
-<h3><span class="header-section-number">11.5.4</span> Data handling</h3>
+<div id="data-handling-1" class="section level3" number="11.5.5">
+<h3><span class="header-section-number">11.5.5</span> Data handling</h3>
 <p>We can also get just the text of the question using <code>get_label</code> from the <code>sjlabelled</code> library. This function creates a labelled vector that we can subset using the column names in the <code>data.frame</code> to get the corresponding question. It is important to save the labels to a variable before transforming the data as some of the labels will be removed from the <code>data.frame</code> in the process (e.g., by transforming to a factor variable).</p>
 <div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="survey-design-analysis.html#cb828-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjlabelled)</span>
 <span id="cb828-2"><a href="survey-design-analysis.html#cb828-2" aria-hidden="true" tabindex="-1"></a>questions_green_consumption <span class="ot">&lt;-</span> <span class="fu">get_label</span>(green_consumption)</span>
 <span id="cb828-3"><a href="survey-design-analysis.html#cb828-3" aria-hidden="true" tabindex="-1"></a>questions_green_consumption[<span class="st">&quot;Q8&quot;</span>]</span></code></pre></div>
 <pre><code>##                                                                            Q8 
 ## &quot;How many times in a week do you do the grocery shopping for your household?&quot;</code></pre>
-<div id="mutiple-choice-single-answer" class="section level4" number="11.5.4.1">
-<h4><span class="header-section-number">11.5.4.1</span> Mutiple-choice, single answer</h4>
+<div id="mutiple-choice-single-answer" class="section level4" number="11.5.5.1">
+<h4><span class="header-section-number">11.5.5.1</span> Mutiple-choice, single answer</h4>
 <p>For single answer multiple choice questions we can create a <code>factor</code> variable using the corresponding answers as labels.</p>
 <div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="survey-design-analysis.html#cb830-1" aria-hidden="true" tabindex="-1"></a>green_consumption<span class="sc">$</span>Q8 <span class="ot">&lt;-</span> <span class="fu">factor</span>(green_consumption<span class="sc">$</span>Q8,</span>
 <span id="cb830-2"><a href="survey-design-analysis.html#cb830-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
@@ -1051,8 +1057,8 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <pre><code>## [1] 1-2 3-4 1-2 1-2 3-4 3-4
 ## Levels: 0 1-2 3-4 &gt;4</code></pre>
 </div>
-<div id="multiple-answers" class="section level4" number="11.5.4.2">
-<h4><span class="header-section-number">11.5.4.2</span> Multiple answers</h4>
+<div id="multiple-answers" class="section level4" number="11.5.5.2">
+<h4><span class="header-section-number">11.5.5.2</span> Multiple answers</h4>
 <p>In case there are multiple possible answers there will be multiple columns corresponding to the same question but different answers. For example, if we ask people for reasons why they use a car there are multiple options which are not mutually exclusive.</p>
 <div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="survey-design-analysis.html#cb832-1" aria-hidden="true" tabindex="-1"></a>carsharing <span class="ot">&lt;-</span> <span class="fu">read_survey</span>(<span class="st">&quot;data/Car_sharing.csv&quot;</span>)</span>
 <span id="cb832-2"><a href="survey-design-analysis.html#cb832-2" aria-hidden="true" tabindex="-1"></a>questions_carsharing <span class="ot">&lt;-</span> <span class="fu">get_label</span>(carsharing)</span>
@@ -1081,8 +1087,8 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb841-2"><a href="survey-design-analysis.html#cb841-2" aria-hidden="true" tabindex="-1"></a>share_go_shopping</span></code></pre></div>
 <pre><code>## [1] 0.362069</code></pre>
 </div>
-<div id="input-text-fields-for-numeric-values" class="section level4" number="11.5.4.3">
-<h4><span class="header-section-number">11.5.4.3</span> Input text fields for numeric values</h4>
+<div id="input-text-fields-for-numeric-values" class="section level4" number="11.5.5.3">
+<h4><span class="header-section-number">11.5.5.3</span> Input text fields for numeric values</h4>
 <p>Some fields allow for text input but we expect a certain format (e.g., a currency value formated as xxx.xx to assess willingness to pay). However, even if we instruct participants to enter values in that format they might not follow the instructions exactly. Let’s look at some example answers we might get:</p>
 <div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="survey-design-analysis.html#cb843-1" aria-hidden="true" tabindex="-1"></a>questions_green_consumption[<span class="st">&quot;Q33&quot;</span>]</span></code></pre></div>
 <pre><code>##                                                                                                                           Q33 
@@ -1149,8 +1155,8 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb869-2"><a href="survey-design-analysis.html#cb869-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(green_consumption<span class="sc">$</span>Q33)</span></code></pre></div>
 <pre><code>##  num [1:278] 2.5 3 1.99 2.99 2.5 4.5 1.3 3 4 1.6 ...</code></pre>
 </div>
-<div id="rankings" class="section level4" number="11.5.4.4">
-<h4><span class="header-section-number">11.5.4.4</span> Rankings</h4>
+<div id="rankings" class="section level4" number="11.5.5.4">
+<h4><span class="header-section-number">11.5.5.4</span> Rankings</h4>
 <p>In the following example we use data generated from a topic selection process similar to the one you did when you chose your project topic. In order to make ranking questions easier to analyze we first want to get them into a format where we have one column for the group (this could also be a user id), one column for the rank, and one for the topic (i.e., a “long” format). We can use the <code>pivot_longer</code> function from the <code>tidyr</code> package to combine all columns that start with “Q1” (our ranking question; <code>cols = starts_with("Q1")</code>) into one long column.</p>
 <div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="survey-design-analysis.html#cb871-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb871-2"><a href="survey-design-analysis.html#cb871-2" aria-hidden="true" tabindex="-1"></a>topic_selection <span class="ot">&lt;-</span> <span class="fu">read_survey</span>(<span class="st">&quot;data/topic_selection.csv&quot;</span>)</span>
@@ -1183,10 +1189,10 @@ If the <strong>place of residence</strong> is relevant to your research context,
 </div>
 </div>
 </div>
-<div id="visualizations" class="section level3" number="11.5.5">
-<h3><span class="header-section-number">11.5.5</span> Visualizations</h3>
-<div id="multiple-choice" class="section level4" number="11.5.5.1">
-<h4><span class="header-section-number">11.5.5.1</span> Multiple-choice</h4>
+<div id="visualizations" class="section level3" number="11.5.6">
+<h3><span class="header-section-number">11.5.6</span> Visualizations</h3>
+<div id="multiple-choice" class="section level4" number="11.5.6.1">
+<h4><span class="header-section-number">11.5.6.1</span> Multiple-choice</h4>
 <p>Multiple choice questions can be visualized using barplots of the counts of each possible answer. First we want to get appropriate labels for the different possible choices. For that we need to extract the part of the question that is specific to the option. Since the answers are appended to the question and separated by a <code>-</code> in the labels assigned by Qualtrics we can use pattern matching function to extract the relevant part. This pattern looks as follows:</p>
 <ol style="list-style-type: decimal">
 <li>It starts with <code>(?&lt;=- )</code> which tells the program to look for a <code>-</code> followed by a space. The <code>(?&lt;=)</code> part indicates that we want to look for the pattern but only extract text that comes <em>after</em> it.</li>
@@ -1206,7 +1212,7 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb876-2"><a href="survey-design-analysis.html#cb876-2" aria-hidden="true" tabindex="-1"></a>q6_question</span></code></pre></div>
 <pre><code>## [1] &quot;For what reason(s) do you use your car?&quot;</code></pre>
 <p>The counts are just the column sums of the variables we transformed above. We add the reasons as labels for the y-axis and sort the factor by the corresponding counts. This ensures that the categories with the largest counts will come first in the plot. In addition we can aid interpretability of counts by adding sequential coloring based on the count by setting <code>fill=count</code> in the aesthetics (<code>aes</code>). A nice package to help with colors is <code>colorspace</code> which is a companion to R’s internal color system. R (since version 4.0) distinguishes colors by hue (type of color), chroma (colorfulness), and luminance (brightness). To get a feeling for these parameters let’s take a look at a plot that keeps all but one fixed (the last color is always the first blue in the “Blues 2” palette used in the visualization below):</p>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 <p>In addition the grid on the y-axis does not add to the interpretability of the plot and should therefore be removed <code>theme(panel.grid.major.y = element_blank())</code>. Optionally the counts can be added to the plot (<code>geom_text(aes(label = count), hjust = -.2)</code>).</p>
 <div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="survey-design-analysis.html#cb878-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb878-2"><a href="survey-design-analysis.html#cb878-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span>
@@ -1220,11 +1226,11 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb878-10"><a href="survey-design-analysis.html#cb878-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb878-11"><a href="survey-design-analysis.html#cb878-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb878-12"><a href="survey-design-analysis.html#cb878-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous_sequential</span>(<span class="at">palette =</span> <span class="st">&quot;Blues 2&quot;</span>)</span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <p>An important aspect when choosing colors for your plots is color vision deficiency (cvd) which affects about 10% of men (and 0.4% of women).</p>
 <p>For our plot we can simulate cvd as follows and observe that it works well even for people with cvd (the colors you use in your projects should work well for people with cvd but you should not include this plot):</p>
 <div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="survey-design-analysis.html#cb879-1" aria-hidden="true" tabindex="-1"></a><span class="fu">swatchplot</span>(<span class="fu">hcl.colors</span>(<span class="fu">nrow</span>(q6_data), <span class="at">palette =</span> <span class="st">&quot;Blues 2&quot;</span>), <span class="at">cvd =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 <p>If you would like to explore the available colors more check out the <code>hcl_wizard()</code> function (or visit <a href="https://hclwizard.org">hclwizard.org</a>) which launches a small app and lets you choose a color scheme. Once you click on <code>Return to R</code> in the app a function which generates the selected colors will be returned.</p>
 <p>Another option to visualize multiple choice questions is to plot the percentage of respondents who chose a certain answer (note that this will not generally sum up to 1 if multiple answers are possible). The only thing we have to change is to calculate the shares (careful with the denominator!). In this case we might also want to expand the x-axis to 0.4 (<code>expand_limits(x = 0.4</code>) to account for the extra space necessary for the labels.</p>
 <div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="survey-design-analysis.html#cb880-1" aria-hidden="true" tabindex="-1"></a>q6_data<span class="sc">$</span>share <span class="ot">&lt;-</span> q6_data<span class="sc">$</span>count <span class="sc">/</span> <span class="fu">nrow</span>(carsharing)</span>
@@ -1236,10 +1242,10 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb880-7"><a href="survey-design-analysis.html#cb880-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb880-8"><a href="survey-design-analysis.html#cb880-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous_sequential</span>(<span class="at">palette =</span> <span class="st">&quot;Blues 2&quot;</span>) <span class="sc">+</span></span>
 <span id="cb880-9"><a href="survey-design-analysis.html#cb880-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fl">0.4</span>)</span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 </div>
-<div id="rankings-1" class="section level4" number="11.5.5.2">
-<h4><span class="header-section-number">11.5.5.2</span> Rankings</h4>
+<div id="rankings-1" class="section level4" number="11.5.6.2">
+<h4><span class="header-section-number">11.5.6.2</span> Rankings</h4>
 <p>To visualize the distribution of rankings we can use boxplots. Since 1 is the highest rank and 5 the lowest, we can reverse the y-axis (<code>scale_y_reverse</code>).</p>
 <div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="survey-design-analysis.html#cb881-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(topic_selection, <span class="fu">aes</span>(<span class="at">x =</span> topic, <span class="at">y =</span> rank, <span class="at">group =</span> topic)) <span class="sc">+</span></span>
 <span id="cb881-2"><a href="survey-design-analysis.html#cb881-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -1247,7 +1253,7 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb881-4"><a href="survey-design-analysis.html#cb881-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(), </span>
 <span id="cb881-5"><a href="survey-design-analysis.html#cb881-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb881-6"><a href="survey-design-analysis.html#cb881-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>()</span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 <p>Another way to visualize the rankings is a stacked barplot in which we stack the counts of all ranks. Compared to the barplot in the carsharing example above the colors are now more important since we need them to distinguish the ranks. Therefore, a multi-hue sequential (see <code>hcl_palettes("sequential multi", plot = TRUE)</code>) scheme is appropriate. One has to be careful with this type of approach if the number of groups gets larger. It is not easy to find more than 7-8 easily distinguishable colors. In addition we can emphasize the y-grid lines (<code>panel.grid.major.y = element_line(color="black")</code>) and make the bars slightly transparent (<code>alpha = 0.8</code>) to make it easier to see the counts.</p>
 <div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="survey-design-analysis.html#cb882-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rank_counts, <span class="fu">aes</span>(<span class="at">x=</span>topic, <span class="at">y=</span>count, <span class="at">fill=</span>rank)) <span class="sc">+</span> </span>
 <span id="cb882-2"><a href="survey-design-analysis.html#cb882-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
@@ -1257,10 +1263,10 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb882-6"><a href="survey-design-analysis.html#cb882-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb882-7"><a href="survey-design-analysis.html#cb882-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color=</span><span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb882-8"><a href="survey-design-analysis.html#cb882-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(<span class="st">&quot;Inferno&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) </span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
 </div>
-<div id="constant-sum" class="section level4" number="11.5.5.3">
-<h4><span class="header-section-number">11.5.5.3</span> Constant sum</h4>
+<div id="constant-sum" class="section level4" number="11.5.6.3">
+<h4><span class="header-section-number">11.5.6.3</span> Constant sum</h4>
 <p>In many cases we want to assess the relative frequency or share of usage of different products/services. One such case is the share of wallet of different types of grocery providers.</p>
 <div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="survey-design-analysis.html#cb883-1" aria-hidden="true" tabindex="-1"></a>questions_green_consumption[<span class="st">&quot;Q34_1...19&quot;</span>]</span></code></pre></div>
 <pre><code>##                                                                                                                                                     Q34_1...19 
@@ -1301,7 +1307,7 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="survey-design-analysis.html#cb894-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
 <span id="cb894-2"><a href="survey-design-analysis.html#cb894-2" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">hcl.colors</span>(<span class="dv">3</span>, <span class="at">palette =</span> <span class="st">&quot;Blue-Yellow&quot;</span>)</span>
 <span id="cb894-3"><a href="survey-design-analysis.html#cb894-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(shareofwallet_data), <span class="at">lab =</span> <span class="cn">TRUE</span>, <span class="at">colors =</span> colors)</span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
 <p>For easier plotting of distributions we should transform the data to a long format and remove the <code>:</code> from <code>Other:</code>.</p>
 <div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="survey-design-analysis.html#cb895-1" aria-hidden="true" tabindex="-1"></a>shareofwallet_data <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(shareofwallet_data, <span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;points&quot;</span>)</span>
 <span id="cb895-2"><a href="survey-design-analysis.html#cb895-2" aria-hidden="true" tabindex="-1"></a>shareofwallet_data<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">str_remove</span>(shareofwallet_data<span class="sc">$</span>type, <span class="st">&quot;:&quot;</span>)</span>
@@ -1318,12 +1324,12 @@ If the <strong>place of residence</strong> is relevant to your research context,
 <span id="cb896-4"><a href="survey-design-analysis.html#cb896-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb896-5"><a href="survey-design-analysis.html#cb896-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb896-6"><a href="survey-design-analysis.html#cb896-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
 <p>For the text part of the “Other” variable a word cloud can be used to visualize the answers</p>
 <div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="survey-design-analysis.html#cb897-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span>
 <span id="cb897-2"><a href="survey-design-analysis.html#cb897-2" aria-hidden="true" tabindex="-1"></a>shareofwallet_counts <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">by</span>(<span class="fu">na.omit</span>(shareofwallet_text), <span class="fu">na.omit</span>(shareofwallet_text), length))</span>
 <span id="cb897-3"><a href="survey-design-analysis.html#cb897-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(shareofwallet_counts), shareofwallet_counts)</span></code></pre></div>
-<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-92-1.png" width="960" /></p>
+<p><img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-93-1.png" width="960" /></p>
 
 <p><link rel="stylesheet" type="text/css" media="all" href="style.css" /></p>
 </div>
