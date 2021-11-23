@@ -591,6 +591,14 @@ If you are not sure which numeric value corresponds to which answer, select a qu
 
 <img src="images/qualtrics_recode_2021_11_17.png" width="72%" style="display: block; margin: auto;" />
 
+### Randomized groups
+
+You can check out the grouping variable(s)'s name(s) under "Survey Flow" in the "Survey" tab. These will be added to the exported data as a column with the name of the group as the value. In the example below there will be a column named "Group" with values "treat1", "treat2", and "ctrl".
+
+<img src="images/qualtrics_experiments_2021_11_23.png" width="72%" style="display: block; margin: auto;" />
+
+
+
 ### Importing Qualtrics data
 
 To import the data to R you can use the "read_survey" function from the "qualtRics" library.
@@ -998,7 +1006,7 @@ q6_question
 
 The counts are just the column sums of the variables we transformed above. We add the reasons as labels for the y-axis and sort the factor by the corresponding counts. This ensures that the categories with the largest counts will come first in the plot. In addition we can aid interpretability of counts by adding sequential coloring based on the count by setting `fill=count` in the aesthetics (`aes`). A nice package to help with colors is `colorspace` which is a companion to R's internal color system. R (since version 4.0) distinguishes colors by hue (type of color), chroma (colorfulness), and luminance (brightness). To get a feeling for these parameters let's take a look at a plot that keeps all but one fixed (the last color is always the first blue in the "Blues 2" palette used in the visualization below):
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-81-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-82-1.png" width="672" />
 
 In addition the grid on the y-axis does not add to the interpretability of the plot and should therefore be removed ` theme(panel.grid.major.y = element_blank())`. Optionally the counts can be added to the plot (`geom_text(aes(label = count), hjust = -.2)`).
 
@@ -1018,7 +1026,7 @@ ggplot(q6_data[order(q6_data$count, decreasing = TRUE),], aes(x = count, y = rea
   scale_fill_continuous_sequential(palette = "Blues 2")
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-82-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-83-1.png" width="672" />
 
 An important aspect when choosing colors for your plots is color vision deficiency (cvd) which affects about 10% of men (and 0.4% of women). 
 
@@ -1029,7 +1037,7 @@ For our plot we can simulate cvd as follows and observe that it works well even 
 swatchplot(hcl.colors(nrow(q6_data), palette = "Blues 2"), cvd = TRUE)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-83-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-84-1.png" width="672" />
 
 If you would like to explore the available colors more check out the `hcl_wizard()` function (or visit [hclwizard.org](https://hclwizard.org)) which launches a small app and lets you choose a color scheme. Once you click on `Return to R` in the app a function which generates the selected colors will be returned.
 
@@ -1048,7 +1056,7 @@ ggplot(q6_data[order(q6_data$share, decreasing = TRUE),], aes(x = share, y = rea
   expand_limits(x = 0.4)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-84-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-85-1.png" width="672" />
 
 #### Rankings 
 
@@ -1064,7 +1072,7 @@ ggplot(topic_selection, aes(x = topic, y = rank, group = topic)) +
   scale_y_reverse()
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-85-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-86-1.png" width="672" />
 
 Another way to visualize the rankings is a stacked barplot in which we stack the counts of all ranks. Compared to the barplot in the carsharing example above the colors are now more important since we need them to distinguish the ranks. Therefore, a multi-hue sequential (see `hcl_palettes("sequential multi", plot = TRUE)`) scheme is appropriate. One has to be careful with this type of approach if the number of groups gets larger. It is not easy to find more than 7-8 easily distinguishable colors. In addition we can emphasize the y-grid lines (`panel.grid.major.y = element_line(color="black")`) and make the bars slightly transparent (`alpha = 0.8`) to make it easier to see the counts. 
 
@@ -1080,7 +1088,7 @@ ggplot(rank_counts, aes(x=topic, y=count, fill=rank)) +
   scale_fill_discrete_sequential("Inferno", alpha = 0.8) 
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-86-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-87-1.png" width="672" />
 
 
 #### Constant sum 
@@ -1168,7 +1176,7 @@ colors <- hcl.colors(3, palette = "Blue-Yellow")
 ggcorrplot(cor(shareofwallet_data), lab = TRUE, colors = colors)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-89-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-90-1.png" width="672" />
 
 For easier plotting of distributions we should transform the data to a long format and remove the `:` from `Other:`.
 
@@ -1198,7 +1206,7 @@ ggplot(shareofwallet_data, aes(y = points, x=type)) +
   theme(panel.grid.major.x = element_blank())
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-91-1.png" width="672" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-92-1.png" width="672" />
 
 For the text part of the "Other" variable a word cloud can be used to visualize the answers
 
@@ -1209,5 +1217,5 @@ shareofwallet_counts <- c(by(na.omit(shareofwallet_text), na.omit(shareofwallet_
 wordcloud(names(shareofwallet_counts), shareofwallet_counts)
 ```
 
-<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-92-1.png" width="960" />
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-93-1.png" width="960" />
 
