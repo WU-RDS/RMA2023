@@ -1091,3 +1091,42 @@ shareofwallet_counts <- c(by(na.omit(shareofwallet_text), na.omit(shareofwallet_
 wordcloud(names(shareofwallet_counts), shareofwallet_counts)
 ```
 
+#### Comparing groups
+
+We can also use the previous plots to show differences between groups (gender, experimental, etc.). A natural fit to add another "dimension" is the `facet_wrap` layer in `ggplot2`. First we select the appropriate variables.
+
+```{r}
+green_consumption$gender <- factor(green_consumption$Q29, levels = c(1,2), labels = c("F", "M"))
+gender_sow <- green_consumption[,c(shareofwallet_names[1:4], "gender")]
+names(gender_sow)[1:4] <- shareofwallet_answers[1:4]
+gender_sow
+```
+
+Second the data is transformed to a long format again and then the distribution of points is shown for each gender and each store type observed in the data. By adding `scales = "free_y"` to the `facet_warp` layer, the y-axis values can vary across the plots.
+
+```{r}
+gender_sow <- pivot_longer(gender_sow, cols = !last_col(), names_to = "type", values_to = "points")
+gender_sow <- gender_sow[!is.na(gender_sow$gender), ]
+ggplot(gender_sow, aes(x = gender, y = points, fill = gender)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank()) +
+  facet_wrap(~type, scales = "free_y") +
+  xlab("") +
+  scale_fill_discrete_qualitative(palette = "Dynamic") 
+```
+
+Another way to compare multiple values across groups is a radar plot. First we calculate the share of respondents by gender for a couple of car use-cases (`aggregate(. ~ gender, data = car_gender, mean)`. Then we create a radar plot where the color indicates the gender.
+
+```{r warning=FALSE}
+library(ggiraphExtra)
+carsharing$gender <- factor(carsharing$Q26, levels = c(1,2), labels = c("F", "M"))
+car_gender <- carsharing[,c(q6_columns, "gender")]
+car_gender_mean <- aggregate(. ~ gender, data = car_gender, mean)
+names(car_gender_mean) <- c("gender", q6_answers)
+ggRadar(car_gender_mean, aes(color = gender) ) + 
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = c(-30,-50,-90,0,0,0,90,45,10))) +
+  scale_color_discrete_qualitative(palette = "Dynamic") 
+```
+
