@@ -888,6 +888,35 @@ For the whole variable:
 green_consumption$Q33 <- as.numeric(green_consumption$Q33)
 str(green_consumption$Q33)
 ```
+#### Rankings
+
+In the following example we use data generated from a topic selection process similar to the one you did when you chose your project topic. In order to make ranking questions easier to analyze we first want to get them into a format where we have one column for the group (this could also be a user id), one column for the rank, and one for the topic (i.e., a "long" format). We can use the `pivot_longer` function from the `tidyr` package to combine all columns that start with "Q1" (our ranking question; `cols = starts_with("Q1")`) into one long column. 
+
+```{r}
+library(tidyr)
+topic_selection <- read_survey("data/topic_selection.csv")
+topic_selection <- pivot_longer(topic_selection, cols = starts_with("Q1"), values_to = "rank")
+topic_selection
+```
+
+Next we want to filter out all the rows that do not contain ranks and those that have missing values for the ranks (i.e., were not selected at all by a given group; `[endsWith(topic_selection$name, "RANK") & !is.na(topic_selection$rank), ]`). To get the topic of a row we extract the digits  (`[0-9]+`, where the plus indicates one or more) from the `name` variable that come before `_RANK` (`(?=_RANK)`).
+
+```{r}
+topic_selection <- topic_selection[endsWith(topic_selection$name, "RANK") & !is.na(topic_selection$rank), ]
+topic_selection$topic <- as.factor(as.numeric(str_extract(topic_selection$name, "[0-9]+(?=_RANK)")))
+topic_selection
+```
+
+To get a feeling for how popular a question is we might also want to calculate the counts for each topic and rank. For plotting it is also convenient to have the rank as a factor in decreasing order of the rank (see below).
+
+```{r}
+rank_counts <- data.frame(table(topic_selection$rank, topic_selection$topic))
+colnames(rank_counts) <- c("rank", "topic", "count")
+rank_counts$rank <- factor(rank_counts$rank, 
+                           levels = unique(rank_counts$rank)[order(unique(rank_counts$rank), decreasing = TRUE)])
+rank_counts
+```
+
 
 ### Visualizations
 
@@ -909,8 +938,20 @@ q6_question <- str_extract(questions_carsharing["Q6_1"], ".*(?= -)")
 q6_question
 ```
 
-The counts are just the column sums of the variables we transformed above. We add the reasons as labels for the y-axis and sort the factor by the corresponding counts. This ensures that the categories with the largest counts will come first in the plot. In addition we can aid interpretability of counts by adding sequential coloring.
+The counts are just the column sums of the variables we transformed above. We add the reasons as labels for the y-axis and sort the factor by the corresponding counts. This ensures that the categories with the largest counts will come first in the plot. In addition we can aid interpretability of counts by adding sequential coloring based on the count by setting `fill=count` in the aesthetics (`aes`). A nice package to help with colors is `colorspace` which is a companion to R's internal color system. R (since version 4.0) distinguishes colors by hue (type of color), chroma (colorfulness), and luminance (brightness). To get a feeling for these parameters let's take a look at a plot that keeps all but one fixed (the last color is always the first blue in the "Blues 2" palette used in the visualization below):
 
+```{r echo=FALSE}
+library(colorspace)
+blues <- hcl_palettes("Sequential s", palette = "Blues 2")
+swatchplot(
+  "Hue changed" = sequential_hcl(5, h = c(0, blues$h1), c = c(blues$c1, blues$c1), l = blues$l1), 
+  "Chroma changed" = sequential_hcl(5, h = blues$h1, c = c(blues$c1,0), l = blues$l1, rev = TRUE), 
+  "Luminance changed" = sequential_hcl(5, h = blues$h1, c = c(blues$c1,blues$c1), l = c(blues$l1, blues$l2),
+                                       rev = TRUE, power = 1.5, fixup = TRUE)
+  )
+```
+
+In addition the grid on the y-axis does not add to the interpretability of the plot and should therefore be removed ` theme(panel.grid.major.y = element_blank())`. Optionally the counts can be added to the plot (`geom_text(aes(label = count), hjust = -.2)`).
 
 ```{r}
 library(ggplot2)
@@ -918,12 +959,125 @@ library(colorspace)
 q6_counts <- colSums(carsharing[,q6_columns])
 q6_data <- data.frame(count = q6_counts, reason = q6_answers)
 q6_data$reason <- factor(q6_data$reason, levels = q6_data$reason[order(q6_data$count)])
-ggplot(q6_data, aes(x = count, y = reason, fill = count)) + 
+ggplot(q6_data[order(q6_data$count, decreasing = TRUE),], aes(x = count, y = reason, fill = count)) + 
   geom_bar(stat="identity", show.legend = FALSE) + 
+  geom_text(aes(label = count), hjust = -.2) +
   ylab("") + 
-  theme_bw() + 
+  theme_bw() +
+  theme(panel.grid.major.y = element_blank()) +
   scale_fill_continuous_sequential(palette = "Blues 2")
 ```
 
+An important aspect when choosing colors for your plots is color vision deficiency (cvd) which affects about 10% of men (and 0.4% of women). 
 
+For our plot we can simulate cvd as follows and observe that it works well even for people with cvd (the colors you use in your projects should work well for people with cvd but you should not include this plot):
+
+```{r}
+swatchplot(hcl.colors(nrow(q6_data), palette = "Blues 2"), cvd = TRUE)
+```
+
+If you would like to explore the available colors more check out the `hcl_wizard()` function (or visit [hclwizard.org](https://hclwizard.org)) which launches a small app and lets you choose a color scheme. Once you click on `Return to R` in the app a function which generates the selected colors will be returned.
+
+Another option to visualize multiple choice questions is to plot the percentage of respondents who chose a certain answer (note that this will not generally sum up to 1 if multiple answers are possible). The only thing we have to change is to calculate the shares (careful with the denominator!). In this case we might also want to expand the x-axis to 0.4 (`expand_limits(x = 0.4`) to account for the extra space necessary for the labels.
+
+```{r}
+q6_data$share <- q6_data$count / nrow(carsharing)
+ggplot(q6_data[order(q6_data$share, decreasing = TRUE),], aes(x = share, y = reason, fill = share)) + 
+  geom_bar(stat="identity", show.legend = FALSE) + 
+  geom_text(aes(label = round(share, digits =2)), hjust = -.1) +
+  ylab("") + 
+  theme_bw() +
+  theme(panel.grid.major.y = element_blank()) +
+  scale_fill_continuous_sequential(palette = "Blues 2") +
+  expand_limits(x = 0.4)
+```
+
+#### Rankings 
+
+To visualize the distribution of rankings we can use boxplots. Since 1 is the highest rank and 5 the lowest, we can reverse the y-axis (`scale_y_reverse`).
+
+```{r}
+ggplot(topic_selection, aes(x = topic, y = rank, group = topic)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank()) +
+  scale_y_reverse()
+
+```
+
+Another way to visualize the rankings is a stacked barplot in which we stack the counts of all ranks. Compared to the barplot in the carsharing example above the colors are now more important since we need them to distinguish the ranks. Therefore, a multi-hue sequential (see `hcl_palettes("sequential multi", plot = TRUE)`) scheme is appropriate. One has to be careful with this type of approach if the number of groups gets larger. It is not easy to find more than 7-8 easily distinguishable colors. In addition we can emphasize the y-grid lines (`panel.grid.major.y = element_line(color="black")`) and make the bars slightly transparent (`alpha = 0.8`) to make it easier to see the counts. 
+
+```{r}
+ggplot(rank_counts, aes(x=topic, y=count, fill=rank)) + 
+  geom_bar(stat="identity") +
+  theme_bw() +
+  scale_y_continuous(breaks = 0:10) +
+  theme(panel.grid.minor.y = element_blank(), 
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(color="black")) +
+  scale_fill_discrete_sequential("Inferno", alpha = 0.8) 
+```
+
+
+#### Constant sum 
+
+In many cases we want to assess the relative frequency or share of usage of different products/services. One such case is the share of wallet of different types of grocery providers. 
+
+```{r}
+questions_green_consumption["Q34_1...19"]
+questions_green_consumption["Q34_2"]
+questions_green_consumption["Q34_3"]
+```
+
+In this case the searching the names for "Q34" also yields a question that we are not interested in and it is removed when getting the full labels. In addition, we have to distinguish between pre-defined answers and "other" which also has a text field.
+
+```{r}
+shareofwallet_names <- names(green_consumption)[startsWith(names(green_consumption), "Q34")] 
+shareofwallet_labels <- questions_green_consumption[shareofwallet_names[-length(shareofwallet_names)]]
+shareofwallet_answers <- str_extract(shareofwallet_labels, "(?<=- ).*")
+shareofwallet_answers
+shareofwallet_data <- green_consumption[, shareofwallet_names[-length(shareofwallet_names)]]
+shareofwallet_text <- shareofwallet_data$Q34_5_TEXT
+c(na.omit(shareofwallet_text))
+shareofwallet_data <- na.omit(subset(shareofwallet_data, select = -Q34_5_TEXT))
+colnames(shareofwallet_data) <- shareofwallet_answers[-length(shareofwallet_answers)]
+shareofwallet_data
+```
+
+First we can take a look at the correlation of the points allocated to different types. In this case a diverging color scheme is appropriate.
+
+```{r}
+library(ggcorrplot)
+colors <- hcl.colors(3, palette = "Blue-Yellow")
+ggcorrplot(cor(shareofwallet_data), lab = TRUE, colors = colors)
+```
+
+For easier plotting of distributions we should transform the data to a long format and remove the `:` from `Other:`.
+
+```{r}
+shareofwallet_data <- pivot_longer(shareofwallet_data, cols = everything(), names_to = "type", values_to = "points")
+shareofwallet_data$type <- str_remove(shareofwallet_data$type, ":")
+shareofwallet_data
+```
+
+
+It is easier to see the relative popularity of each store type if we sort the boxplots by the respective medians. This is done by sorting the factor levels accordingly.
+
+```{r}
+shareofwallet_median <- sort(c(by(shareofwallet_data$points, shareofwallet_data$type, median)), decreasing = TRUE)
+shareofwallet_data$type <- factor(shareofwallet_data$type, levels = names(shareofwallet_median))
+ggplot(shareofwallet_data, aes(y = points, x=type)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank())
+```
+
+For the text part of the "Other" variable a word cloud can be used to visualize the answers
+
+```{r, fig.width=10, fig.height=10}
+library(wordcloud)
+shareofwallet_counts <- c(by(na.omit(shareofwallet_text), na.omit(shareofwallet_text), length))
+wordcloud(names(shareofwallet_counts), shareofwallet_counts)
+```
 

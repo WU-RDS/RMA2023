@@ -23,8 +23,7 @@ Let's try to create a recommendation system using track features. In our data we
 ```r
 load(url("https://github.com/WU-RDS/MRDA2021/raw/main/trackfeatures.RData"))
 # remove duplicates
-tracks <- na.omit(tracks[!duplicated(tracks$isrc),
-    ])
+tracks <- na.omit(tracks[!duplicated(tracks$isrc), ])
 ```
 
 To get an idea of how clustering might work let's first take a look at just  with two variables, energy and acousticness, and two artists, Robin Schulz and Adele. We immediately see that Adele's songs are more to the top left (high acousticness, low energy) whereas Robin Schulz's songs are mostly on the bottom right (low acousticness, high energy).
@@ -32,24 +31,16 @@ To get an idea of how clustering might work let's first take a look at just  wit
 
 ```r
 library(ggplot2)
-```
-
-```
-## Warning: Paket 'ggplot2' wurde unter R Version 4.0.5 erstellt
-```
-
-```r
 library(stringr)
-robin_schulz <- tracks[str_detect(tracks$artistName,
-    "Robin Schulz"), ]
+robin_schulz <- tracks[str_detect(tracks$artistName, "Robin Schulz"), ]
 robin_schulz$artist <- "Robin Schulz"
-adele <- tracks[str_detect(tracks$artistName, "Adele"),
-    ]
+adele <- tracks[str_detect(tracks$artistName, "Adele"), ]
 adele$artist <- "Adele"
 
 example_tracks <- rbind(robin_schulz, adele)
-ggplot(example_tracks, aes(x = energy, y = acousticness,
-    color = artist)) + geom_point() + theme_bw()
+ggplot(example_tracks, aes(x = energy, y = acousticness, color = artist)) +
+  geom_point() +
+  theme_bw()
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" />
@@ -61,17 +52,16 @@ Let's try it out with our two artists. In order to perform clustering we first h
 
 
 ```r
-tracks_scale <- data.frame(artist = example_tracks$artist,
-    energy = scale(example_tracks$energy), acousticness = scale(example_tracks$acousticness))
+tracks_scale <- data.frame(artist = example_tracks$artist, energy = scale(example_tracks$energy), acousticness = scale(example_tracks$acousticness))
 tracks_scale <- na.omit(tracks_scale)
 kmeans_clusters <- kmeans(tracks_scale[-1], 2)
 kmeans_clusters$centers
 ```
 
 ```
-##        energy acousticness
-## 1 -1.43946637   1.32346535
-## 2  0.50068396  -0.46033577
+##      energy acousticness
+## 1 -1.439466    1.3234653
+## 2  0.500684   -0.4603358
 ```
 
 The `kmeans` function returns, among other statistics, the centers of each cluster and a cluster identifier for each observation which we can add to our original data. In our case one cluster's center is rather low in energy and high acousticness and the second one has higher energy and lower acousticness. 
@@ -81,9 +71,9 @@ In our plot we can add a color for each cluster and a different marker shape for
 
 ```r
 tracks_scale$cluster <- as.factor(kmeans_clusters$cluster)
-ggplot(tracks_scale, aes(x = energy, y = acousticness,
-    color = cluster, shape = artist)) + geom_point(size = 3) +
-    theme_bw()
+ggplot(tracks_scale, aes(x = energy, y = acousticness, color = cluster, shape = artist)) +
+  geom_point(size = 3) +
+  theme_bw()
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" />
@@ -104,28 +94,24 @@ In the previous example it was easy to set the number of clusters. However, if w
 
 ```r
 library(NbClust)
-```
-
-```
-## Warning: Paket 'NbClust' wurde unter R Version 4.0.3 erstellt
-```
-
-```r
-famous_artists <- c("Ed Sheeran", "Eminem", "Rihanna",
-    "Taylor Swift", "Queen")
-famous_tracks <- tracks[tracks$artistName %in% famous_artists,
-    ]
+famous_artists <- c(
+	'Ed Sheeran',
+	'Eminem',
+	'Rihanna',	
+	'Taylor Swift',
+	'Queen'
+	)
+famous_tracks <- tracks[tracks$artistName %in% famous_artists, ]
 famous_tracks_scale <- scale(famous_tracks[4:ncol(famous_tracks)])
 set.seed(123)
-opt_K <- NbClust(famous_tracks_scale, method = "kmeans",
-    max.nc = 10)
+opt_K <- NbClust(famous_tracks_scale, method = "kmeans", max.nc = 10)
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="13-cluster_analysis_files/figure-html/unnamed-chunk-8-2.png" width="672" />
 
 
 ```r
-table(opt_K$Best.nc["Number_clusters", ])
+table(opt_K$Best.nc["Number_clusters",])
 ```
 
 ```
@@ -144,14 +130,14 @@ kmeans_tracks$centers
 ```
 
 ```
-##   danceability      energy    loudness        mode speechiness acousticness
-## 1   0.27583013  0.45262138  0.48533019 -0.14613775 -0.25764006  -0.56189652
-## 2  -0.53855482 -0.95664951 -0.87423829  0.26329095 -0.41476830   0.97728432
-## 3   0.36783417  0.75439003  0.49548619 -0.14929736  1.55461550  -0.50152699
-##   instrumentalness    liveness     valence        tempo  duration_ms
-## 1      0.062663241 -0.25242508  0.40120798  0.037899761 -0.090474590
-## 2     -0.068167189 -0.27281478 -0.61580855 -0.177610227  0.097542547
-## 3     -0.028493444  1.24692568  0.18851883  0.264828616  0.042956919
+##   danceability     energy   loudness       mode speechiness acousticness
+## 1    0.2758301  0.4526214  0.4853302 -0.1461378  -0.2576401   -0.5618965
+## 2   -0.5385548 -0.9566495 -0.8742383  0.2632910  -0.4147683    0.9772843
+## 3    0.3678342  0.7543900  0.4954862 -0.1492974   1.5546155   -0.5015270
+##   instrumentalness   liveness    valence       tempo duration_ms
+## 1       0.06266324 -0.2524251  0.4012080  0.03789976 -0.09047459
+## 2      -0.06816719 -0.2728148 -0.6158085 -0.17761023  0.09754255
+## 3      -0.02849344  1.2469257  0.1885188  0.26482862  0.04295692
 ```
 
 To get a quick overview of the centers we can user a radar plot. This allows us to quickly observe similarities and distinguishing features of clusters.
@@ -159,25 +145,13 @@ To get a quick overview of the centers we can user a radar plot. This allows us 
 
 ```r
 library(ggiraph)
-```
-
-```
-## Warning: Paket 'ggiraph' wurde unter R Version 4.0.5 erstellt
-```
-
-```r
 library(ggiraphExtra)
-```
 
-```
-## Warning: Paket 'ggiraphExtra' wurde unter R Version 4.0.3 erstellt
-```
-
-```r
 centers <- data.frame(kmeans_tracks$centers)
 centers$cluster <- 1:3
-ggRadar(centers, aes(color = cluster), rescale = FALSE) +
-    ggtitle("Centers") + theme_bw()
+ggRadar(centers, aes(color = cluster), rescale = FALSE) + 
+  ggtitle("Centers") +
+  theme_bw()
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" />
@@ -189,7 +163,8 @@ We can use a barplot to visualize the number of songs an artist has in each clus
 ```r
 famous_tracks$cluster <- as.factor(kmeans_tracks$cluster)
 ggplot(famous_tracks, aes(y = cluster, fill = artistName)) +
-    geom_bar() + theme_bw()
+  geom_bar() +
+  theme_bw()
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-12-1.png" width="672" />
@@ -212,9 +187,7 @@ We could use the clustering to make recommendations on both the artist and song 
 
 
 ```r
-recommendation <- famous_tracks[str_detect(famous_tracks$trackName,
-    "Lose Yourself|I Forgot That You Existed|The Archer"),
-    ]
+recommendation <- famous_tracks[str_detect(famous_tracks$trackName, "Lose Yourself|I Forgot That You Existed|The Archer"),]
 recommendation[c("trackName", "artistName", "cluster")]
 ```
 
@@ -225,9 +198,10 @@ recommendation[c("trackName", "artistName", "cluster")]
 </div>
 
 ```r
-ggplot(recommendation, aes(instrumentalness, speechiness,
-    color = cluster)) + geom_point() + geom_label(aes(label = trackName),
-    hjust = "inward") + theme_bw()
+ggplot(recommendation, aes(instrumentalness, speechiness, color = cluster)) +
+  geom_point() +
+  geom_label(aes(label=trackName), hjust = "inward") +
+  theme_bw()
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-13-1.png" width="672" />
@@ -236,8 +210,9 @@ We can color points in a scatterplot by cluster to get a partial picture (2 vari
 
 
 ```r
-ggplot(famous_tracks, aes(x = energy, y = valence,
-    color = cluster)) + geom_point() + theme_bw()
+ggplot(famous_tracks, aes(x = energy, y = valence, color = cluster)) +
+  geom_point() +
+  theme_bw()
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-14-1.png" width="672" />
@@ -248,9 +223,8 @@ Another popular clustering algorithm is *hierarchical clustering*. It is based o
 
 
 ```r
-pf_ri <- tracks[tracks$artistName %in% c("Pink Floyd",
-    "Rihanna"), ]
-pf_ri_scale <- scale(pf_ri[, 4:ncol(pf_ri)])
+pf_ri <- tracks[tracks$artistName %in% c("Pink Floyd", "Rihanna"),]
+pf_ri_scale <- scale(pf_ri[,4:ncol(pf_ri)])
 rownames(pf_ri_scale) <- pf_ri$trackName
 hclust_tracks <- hclust(dist(pf_ri_scale))
 plot(hclust_tracks)
@@ -262,13 +236,13 @@ Again, we have to decide on the number of clusters. Based on a visual inspection
 
 
 ```r
-hclusters <- cutree(hclust_tracks, 4)
+hclusters <- cutree(hclust_tracks,4)
 pf_ri_hier <- data.frame(pf_ri_scale)
 pf_ri_hier$cluster <- as.factor(hclusters)
-hier_centers <- aggregate(. ~ cluster, pf_ri_hier,
-    mean)
-ggRadar(hier_centers, aes(color = cluster), rescale = T) +
-    ggtitle("Centers") + theme_bw()
+hier_centers <- aggregate(. ~ cluster, pf_ri_hier, mean)
+ggRadar(hier_centers, aes(color = cluster), rescale = T) + 
+  ggtitle("Centers") +
+  theme_bw()
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" />
