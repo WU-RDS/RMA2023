@@ -64,8 +64,9 @@ As an example data set, we will be using a data set containing music streaming d
 
 
 ```r
-music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv",
-    sep = ",", header = TRUE)
+music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv", 
+                        sep = ",", 
+                        header = TRUE)
 dim(music_data)
 ```
 
@@ -102,12 +103,11 @@ In a first step, we need to make sure all variables are in the correct format, a
 
 
 ```r
-music_data$release_date <- as.Date(music_data$release_date)  #convert to date
-music_data$explicit <- factor(music_data$explicit,
-    levels = 0:1, labels = c("not explicit", "explicit"))  #convert to factor
-music_data$label <- as.factor(music_data$label)  #convert to factor
-music_data$rep_ctry <- as.factor(music_data$rep_ctry)  #convert to factor
-music_data$genre <- as.factor(music_data$genre)  #convert to factor
+music_data$release_date <- as.Date(music_data$release_date) #convert to date
+music_data$explicit <- factor(music_data$explicit, levels = 0:1, labels = c("not explicit", "explicit")) #convert to factor
+music_data$label <- as.factor(music_data$label) #convert to factor
+music_data$rep_ctry <- as.factor(music_data$rep_ctry) #convert to factor
+music_data$genre <- as.factor(music_data$genre) #convert to factor
 ```
 
 In the following sections, we will inspect the data in more detail.
@@ -125,7 +125,7 @@ As the table above shows, the only permissible operation with nominal variables 
 
 
 ```r
-table(music_data[, c("genre")])  #absolute frequencies
+table(music_data[,c("genre")]) #absolute frequencies
 ```
 
 ```
@@ -137,7 +137,7 @@ table(music_data[, c("genre")])  #absolute frequencies
 ```
 
 ```r
-table(music_data[, c("label")])  #absolute frequencies
+table(music_data[,c("label")]) #absolute frequencies
 ```
 
 ```
@@ -147,7 +147,7 @@ table(music_data[, c("label")])  #absolute frequencies
 ```
 
 ```r
-table(music_data[, c("rep_ctry")])  #absolute frequencies
+table(music_data[,c("rep_ctry")]) #absolute frequencies
 ```
 
 ```
@@ -161,7 +161,7 @@ table(music_data[, c("rep_ctry")])  #absolute frequencies
 ```
 
 ```r
-table(music_data[, c("explicit")])  #absolute frequencies
+table(music_data[,c("explicit")]) #absolute frequencies
 ```
 
 ```
@@ -176,7 +176,7 @@ Often, we are interested in the relative frequencies, which can be obtained by u
 
 
 ```r
-prop.table(table(music_data[, c("genre")]))  #relative frequencies
+prop.table(table(music_data[,c("genre")])) #relative frequencies
 ```
 
 ```
@@ -188,7 +188,7 @@ prop.table(table(music_data[, c("genre")]))  #relative frequencies
 ```
 
 ```r
-prop.table(table(music_data[, c("label")]))  #relative frequencies
+prop.table(table(music_data[,c("label")])) #relative frequencies
 ```
 
 ```
@@ -198,7 +198,7 @@ prop.table(table(music_data[, c("label")]))  #relative frequencies
 ```
 
 ```r
-prop.table(table(music_data[, c("rep_ctry")]))  #relative frequencies
+prop.table(table(music_data[,c("rep_ctry")])) #relative frequencies
 ```
 
 ```
@@ -220,7 +220,7 @@ prop.table(table(music_data[, c("rep_ctry")]))  #relative frequencies
 ```
 
 ```r
-prop.table(table(music_data[, c("explicit")]))  #relative frequencies
+prop.table(table(music_data[,c("explicit")])) #relative frequencies
 ```
 
 ```
@@ -235,8 +235,7 @@ Note that the above output shows the overall relative frequencies. In many cases
 
 
 ```r
-prop.table(table(music_data[, c("genre", "explicit")]),
-    1)  #conditional relative frequencies
+prop.table(table(music_data[,c("genre", "explicit")]),1) #conditional relative frequencies
 ```
 
 ```
@@ -266,7 +265,7 @@ This means that the middle value when the data are arranged is rank number 85 (m
 
 
 ```r
-quantile(music_data$min_rank, c(0.25, 0.5, 0.75))
+quantile(music_data$min_rank,c(0.25,0.5,0.75))
 ```
 
 ```
@@ -277,8 +276,7 @@ This means that the interquartile range is between ranks 39 and 141. If you want
 
 
 ```r
-by(music_data$min_rank, music_data$genre, quantile,
-    c(0.25, 0.5, 0.75))
+by(music_data$min_rank,music_data$genre,quantile,c(0.25,0.5,0.75))
 ```
 
 ```
@@ -329,8 +327,7 @@ We could, for example, compute the summary statistics for the variables "streams
 
 ```r
 library(psych)
-psych::describe(music_data[, c("streams", "duration_ms",
-    "danceability", "valence")])
+psych::describe(music_data[,c("streams", "duration_ms","danceability","valence")])
 ```
 
 ```
@@ -353,9 +350,7 @@ The ```psych``` package also contains the ```describeBy()``` function, which let
 
 
 ```r
-describeBy(music_data[, c("streams", "duration_ms",
-    "danceability", "valence")], music_data$genre,
-    skew = FALSE, range = FALSE)
+describeBy(music_data[,c("streams", "duration_ms","danceability","valence")], music_data$genre,skew = FALSE, range = FALSE)
 ```
 
 ```
@@ -421,13 +416,10 @@ R is open to user contributions and various users have contributed packages that
 
 ```r
 library(summarytools)
-print(dfSummary(music_data[, c("streams", "duration_ms",
-    "valence", "genre", "label", "explicit")], plain.ascii = FALSE,
-    style = "grid", valid.col = FALSE, tmp.img.dir = "tmp"),
-    method = "render", headings = FALSE, footnote = NA)
+print(dfSummary(music_data[,c("streams","duration_ms","valence","genre","label","explicit")], plain.ascii = FALSE, style = "grid",valid.col = FALSE, tmp.img.dir = "tmp"),  method = 'render',headings = FALSE,footnote= NA)
 ```
 
-Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
+Error in pryr::where(obj_name) : length(name) == 1 is not TRUE
 
 ```{=html}
 <div class="container st-container"><table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
@@ -448,7 +440,7 @@ Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
 [integer]</td>
       <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 9724 (11153.8)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1235 &le; 6006 &le; 136500</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">IQR (CV) : 7262.2 (1.1)</td></tr></table></td>
       <td align="left" style="vertical-align:middle">5009 distinct values</td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoaFQIQyiWctgAAAGtJREFUaN7t2MsJgEAMQMFtwRJcS7D/3vwgKLgsknjSeQUMgUAOKUWR6tY4JDuwaV6DwWAwGAwGg8FgMBgMBoPBYDAYrI2lf9JXLD0eDAaDfRbLnNsblhnv11hwC20sKHawU9x7jtVXKoq0AI1wOLL95T5vAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTEwLTI2VDIxOjAyOjE2KzAwOjAwbgk45gAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMC0yNlQyMTowMjoxNiswMDowMB9UgFoAAAAASUVORK5CYII="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCxYVHCPWAlR3AAABV0lEQVR42u3dwWnDMABA0bp4uk6QTJhO0PWaq0IE8Q8Bp/V7N2MfxDeyQAd5+f2g+Nx7AH+NYJFg0TpeXKYftNOy9yD3NgZYb2993T38s/do34wpGQkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFgkWCRYJFq2PH/meHLh83OOWNwRz3PLIlIwEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIs2bCDOHHcX9slgx92FNSUjwSLBoie/YTPHWAheGGy2EPy/iC8MNrM14r13zbqMo7/4S/rUeXh5i0aNVTISLBIsugITWxbpeZkliQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0xMS0yMlQyMDoyODozNSswMTowMDRzfjEAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMTEtMjJUMjA6Mjg6MzUrMDE6MDBFLsaNAAAAAElFTkSuQmCC"></td>
       <td align="center">0
 (0.0%)</td>
     </tr>
@@ -458,7 +450,7 @@ Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
 [numeric]</td>
       <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 200493.8 (47667.1)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">30133 &le; 196770 &le; 1109080</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">IQR (CV) : 46900.5 (0.2)</td></tr></table></td>
       <td align="left" style="vertical-align:middle">5031 distinct values</td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoaFQIQyiWctgAAAGdJREFUaN7t2bENgEAIQNFb4UZQN5D9d9NgZWKF2Jj3C8oXKhrGUKWZrdksd8O2ONthMBjsL1j9RD5gUd4PBoPBYDAYDAaDwWAwGAwGg8FgMNjnWD4FliYsZw27vhNNWDLRutnbhiodufduRwJYgy8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTAtMjZUMjE6MDI6MTYrMDA6MDBuCTjmAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTEwLTI2VDIxOjAyOjE2KzAwOjAwH1SAWgAAAABJRU5ErkJggg=="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCxYVHCPWAlR3AAABVUlEQVR42u3dwY2CQABAUTFWZwVaoVaw7a1XNEP0x+wS8b0bGBP4GQiZw8z0u6PYr30Bn0awSLDoMD9Yep9dF344TWtf/v+Y3+bhtb8cB+d+1r6PVXgkI8EiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwaIX58PGvnFi8a1gx+HZbU8seiQjwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBIsEiwSLBoreWh18yXmd/G6vs/0mwLW/feRfsag/rpx5G2DfuwdBM80F1McKGzrO376RR47MiEiwSLLoBpb8Sjl0ZJNEAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTEtMjJUMjA6Mjg6MzUrMDE6MDA0c34xAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTExLTIyVDIwOjI4OjM1KzAxOjAwRS7GjQAAAABJRU5ErkJggg=="></td>
       <td align="center">1
 (0.0%)</td>
     </tr>
@@ -468,7 +460,7 @@ Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
 [numeric]</td>
       <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">Mean (sd) : 0.5 (0.2)</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">min &le; med &le; max:</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">0 &le; 0.5 &le; 1</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">IQR (CV) : 0.3 (0.4)</td></tr></table></td>
       <td align="left" style="vertical-align:middle">990 distinct values</td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoaFQIQyiWctgAAAOdJREFUaN7t11sSgyAMBVC2UHZQ2EHZ/95alKlSXkMSHWNvfvQDziCaEI1BUOIxDOucew7GDLCNsCEELvYlLorFp5XDQnjdHXPLhglhfpGAnY+tr1EIWxVgwIAlLOaXGBbvpLHmAilYc4HT2GdV05hNkwqst3VNLJ97Sywr/lzMF3OB6cSKPGJhv4o2rPonRcWqxwswYBfHyi6BgZUpCgzY+Vit/SFjvjVJH5afeEwsr0TA1GO7o4CP7b7dv8NabTYN641Wi6VKJIOlRAAG7Ggs1kgxLF6OwDrtzzw2GgZME+ZEwiAo8QZLhM68ZXeLbAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0xMC0yNlQyMTowMjoxNiswMDowMG4JOOYAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMTAtMjZUMjE6MDI6MTYrMDA6MDAfVIBaAAAAAElFTkSuQmCC"></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCxYVHCPWAlR3AAAB6UlEQVR42u3aTVLjMBQAYUzldJwATkhOwPVgw0JKbMXt0r/6WzGbIdOVJ78os/2+iXhv/QJGYzDIYNAt/EM/59n94aV8bi1fTfjLb5f/lsIhPoKff+q+yKTKwfoNcZZnGFT9HXbs3s8RmtBRsHBc+x1WRxIyGNR4JMc4t0KNg423ZDiSkMEgg0EGg4of+uM9B9MqPCXHexKmOJKQwSCDQQaDDAYZDDIYZDDIYFBXd/rH4g9YLb/WHSRYPx+vBgl2rPZ/Khg+WO1335DBWl4ZFQhW/p/T8kQr8g7r54jOzz0MMhiUZSRnu7dPyXSGzXxqxRxJyGCQwSCDQQaDLj4lV1okYpfXinUWiZgjCQ15vZNS+jJ7umCljwpHEjIYZDDIYJDBIINBBoMMBk23uMby7/2TB8u/9zuSkMEgg0EGgwwGGQwyGGQw6PTiuu4XazGw6a/6xVrMkYQm/ywZy/FRfKlgOQ4VRxIyGGQwyGCQwaClnpKxa0vGwsGuLRmOJGQwyGBQ4gzzQmdP8tD3QueZIwktvFbEzm5lBvt39vhxJCGDQQaDDAYZDDIYZDDIPWxXvMZ+BWuswXYdr7GOJBS9w7zQee1hJL3QecWRhAwGGQwyGGQwaAs3iW/Xil3hpr/ZiHEkIYNBBoP+ACL4P6pJgo8/AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTExLTIyVDIwOjI4OjM1KzAxOjAwNHN+MQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMS0yMlQyMDoyODozNSswMTowMEUuxo0AAAAASUVORK5CYII="></td>
       <td align="center">1
 (0.0%)</td>
     </tr>
@@ -478,7 +470,7 @@ Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
 [factor]</td>
       <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. Classics & Jazz</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. Electronic & Dance</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. HipHop & Rap</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. other</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">5. Pop</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">6. Rock</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">7. Soundtrack</td></tr></table></td>
       <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">10</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">0.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">586</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">9.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2898</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">46.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">223</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">3.6%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">1869</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">30.2%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">545</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">8.8%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">65</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">1.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAFMAAACsBAMAAAD1WI3/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoaFQIQyiWctgAAAIpJREFUWMPt1MENgCAQBVFKkA5EOoD+ezPRkxFY9rAiOnN+ByX569xcBS+2QKFQUypLY7qdhQ4a8xEUCu2him15uUfuQKv1+gKtoNCPU8Vgho9bdwd6acwJCv05VQxGcm+ilZNWfqxSCQr9EVUMRjFDG1r4thqN9z+GQqE1qtiWlzO+A1AodDSdpR1+s0X3RYcTzAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0xMC0yNlQyMTowMjoxNiswMDowMG4JOOYAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMTAtMjZUMjE6MDI6MTYrMDA6MDAfVIBaAAAAAElFTkSuQmCC"></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAFMAAACsCAQAAACtf1hHAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCxYVHCPWAlR3AAABTUlEQVR42u3bQQrCMBQG4UY8nSfQE9oTeL26NBWqlYRmfpxxE8HFRx8VnsWyTAmdRgNkDmbel2XivNKvJjeZMqnJlElNpkxqMmVSk9mzUq9GrJ8WSnUOuZohzHP9Zv449WuZhnVev71sfvAxzjjFDF2mTGoyZVKTKZOaTJnUQphvS8bYVWI79/SehTB/2NOP7lZNffeefnTrmzlk6DJlUpMpk5pMmdRkyqTmAtxMq84hQ5fZs809feTT8y/M155Ou+NDhi5TJjWZMqnJlElNpkxq7unNtOocMnSZPTvseXrb3n/Q8/TWb5CQocuUSU2mTGoyZVKTKZOae3ozrTqHDD2EuXsBHvvgeucCPPrWChm6TJnUZMqkJlMmNZkyqYUw3dObadU5ZOiJzHlh/fV7g8lNpkxqMmVSkymTmkyZ1GT+IbNAd7S3Qq6mzJ49AbrzbKTvaU/4AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTExLTIyVDIwOjI4OjM1KzAxOjAwNHN+MQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMS0yMlQyMDoyODozNSswMTowMEUuxo0AAAAASUVORK5CYII="></td>
       <td align="center">0
 (0.0%)</td>
     </tr>
@@ -488,7 +480,7 @@ Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
 [factor]</td>
       <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. INDEP</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. SONY</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">3. UMG</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">4. WARNER</td></tr></table></td>
       <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">1441</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">23.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">1256</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">20.3%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2508</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">40.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">991</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">16.0%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEkAAABmBAMAAAB1p6EMAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoaFQIQyiWctgAAAGNJREFUSMft1LsNACAIRVFHkA38bKD772ZjofgJjRGSd+tTSAI6p7e0REO+q1xZBQrKspLtPV17odij4l6xGaGgjCvZ3tM1NVfLCqefaQoKypqS7f3fe4xHNc4IBWVfyfZeYw2ySYeJtZyxOwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0xMC0yNlQyMTowMjoxNiswMDowMG4JOOYAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMTAtMjZUMjE6MDI6MTYrMDA6MDAfVIBaAAAAAElFTkSuQmCC"></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEkAAABmCAQAAAAtgHS0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCxYVHCPWAlR3AAAA4ElEQVRo3u3ZwQnDMBBE0Si4ulSQVBhX4PaS6yogkLJr/A9/TjJG8GAl8OD2udFyvxog6b9s8eFddLCebXVH3LD1rx4FoCO5Hzg4SZIkSaJFkiRJkmgBkn4+dLMfqRVpsQFcVzNjHQAODkjqztKemtx6e5sgZXpc3cUADk6SJEmSaJEkSZIkWoAke9yQEdbAwUmaSWG1zOQVDtMJvwjX099z4OAkSZIkiRZJkiRJogVIsloOGWENHByQlOxxVb8Fh6TVHnfOZQAOTpIkSZJokSRJkiRagCR6j2MEODhJM/kCKkAXtG9Y0VsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMTEtMjJUMjA6Mjg6MzUrMDE6MDA0c34xAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTExLTIyVDIwOjI4OjM1KzAxOjAwRS7GjQAAAABJRU5ErkJggg=="></td>
       <td align="center">0
 (0.0%)</td>
     </tr>
@@ -498,7 +490,7 @@ Error in pryr::where(obj_name) : length(name) == 1 ist nicht TRUE
 [factor]</td>
       <td align="left" style="padding:8;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">1. not explicit</td></tr><tr style="background-color:transparent"><td style="padding:0;margin:0;border:0" align="left">2. explicit</td></tr></table></td>
       <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">3626</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">58.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 5px 0 7px;margin:0;border:0" align="right">2570</td><td style="padding:0 2px 0 0;border:0;" align="left">(</td><td style="padding:0;border:0" align="right">41.5%</td><td style="padding:0 4px 0 2px;border:0" align="left">)</td></tr></table></td>
-      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGQAAAA3BAMAAAAI1vI+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5QoaFQIQyiWctgAAAD5JREFUSMdjYBheQIkEANWibEw0MBrVMqplVMvw0UJGcSFIAqCrFgLOV8SihUCIjWoZ1TKqZZhqIaO4GC4AAN2mWV6pHzODAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTEwLTI2VDIxOjAyOjE2KzAwOjAwbgk45gAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0xMC0yNlQyMTowMjoxNiswMDowMB9UgFoAAAAASUVORK5CYII="></td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent;"><img style="border:none;background-color:transparent;padding:0;max-width:max-content;" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAGQAAAA3CAQAAABQ8SeGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflCxYVHCPWAlR3AAAAoElEQVRo3u3YQQ5AMBBA0Vaczgk4ISfo9diWxIIu+jv5b2dB/GQqMflMMUy9X8CQqCFzfbEPdmC2/BKS0tL73T4ot6swo2UIjSE0htAYQmMIjSE0htAYQmMIzeOfvfx7CkCuFyeDLVFStUSJM1phQm5n5Og6W2tuuRuzoGv9zIQZLUNoDKExhMYQGkNoDKExhMYQGkNoYi7oRhZmtAyhuQDJMQvhoBBo9wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0xMS0yMlQyMDoyODozNSswMTowMDRzfjEAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMTEtMjJUMjA6Mjg6MzUrMDE6MDBFLsaNAAAAAElFTkSuQmCC"></td>
       <td align="center">0
 (0.0%)</td>
     </tr>
@@ -510,8 +502,7 @@ The 'Missing' column in the output above tells us that there is one missing valu
 
 
 ```r
-music_data <- music_data[!is.na(music_data$valence) &
-    !is.na(music_data$duration_ms), ]
+music_data <- music_data[!is.na(music_data$valence) & !is.na(music_data$duration_ms),]
 ```
 
 In the command above, `!is.na()` is used to filter the rows for observations where the respective variable does not have missing values. The "!" in this case translates to "is not" and the function `is.na()` checks for missing values. Hence, the entire statement can be read as "select the rows from the 'music_data' data set where the values of the 'valence' and 'duration_ms' variables are not missing".
@@ -598,7 +589,7 @@ To also take the other end of the distribution into consideration, we would need
 
 
 ```r
-pnorm(-1.96) * 2
+pnorm(-1.96)*2
 ```
 
 ```
@@ -624,7 +615,7 @@ And the associated probability is:
 
 
 ```r
-pnorm(min(music_data$tempo_std)) * 2
+pnorm(min(music_data$tempo_std))*2
 ```
 
 ```
