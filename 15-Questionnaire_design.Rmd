@@ -1130,7 +1130,7 @@ ggRadar(car_gender_mean, aes(color = gender) ) +
   scale_color_discrete_qualitative(palette = "Dynamic") 
 ```
 
-Finally, we can create a pairplot to compare statistics across groups using the `ggPair` function. Notice that despite the last two functions are provided by the `ggiraphExtra` package, they are producing `ggplot2` compatible plots. Thus, we can still use `ggplot2` layers for theme and coloring. 
+We can also create a pairplot to compare statistics across groups using the `ggPair` function. Notice that despite the last two functions are provided by the `ggiraphExtra` package, they are producing `ggplot2` compatible plots. Thus, we can still use `ggplot2` layers for theme and coloring. 
 
 ```{r}
 ggPair(car_gender_mean, horizontal = TRUE, aes(color = gender)) +
@@ -1139,4 +1139,148 @@ ggPair(car_gender_mean, horizontal = TRUE, aes(color = gender)) +
   scale_color_discrete_qualitative(palette = "Dynamic") 
 ```
 
+#### Likert scales
+
+For [likert](https://core.ecu.edu/wuenschk/StatHelp/Likert.htm) scales that range for example from "strongly agree" to "strongly disagree" a diverging barplot is appropriate. The `likert` function from the `HH` package can be used to easily create such a plot. Unfortunately, this function does not produce a `ggplot` and therefore we need slightly different syntax. The legend is called `key` in the `likert` plot and we can format the automatically generated `key` using `auto.key = list(columns = 2, title= "")`, producing two columns and removing the legend title. In addition we can add vertical lines to the plot with `panel.abline(v=seq(-100,50,by=50),col="lightgrey")` which has to be wrapped in a function that finally generates the plot.
+
+```{r}
+library(HH)
+carsharing_benefits <- carsharing[, startsWith(names(carsharing), "Q13_")]
+benefit_labels <- questions_carsharing[ startsWith(names(carsharing), "Q13_")]
+names(carsharing_benefits) <- str_extract(benefit_labels, "(?<=- ).*")
+carsharing_benefits <- pivot_longer(carsharing_benefits, cols = everything())
+carsharing_benefits$value <- factor(carsharing_benefits$value, 
+                                    levels = 1:7, 
+                                    labels = c(
+                                      "strongly disagree",
+                                      "disagree",
+                                      "somewhat disagree",
+                                      "neutral",
+                                      "somewhat agree",
+                                      "agree", 
+                                      "strongly agree"))
+likert(table(carsharing_benefits), 
+       main = "", ylab = "", xlab = "number of respondents", 
+       col = hcl.colors(7, palette = "Blue-Red 2", rev = TRUE),
+       auto.key = list(columns = 2, title= ""),     
+       panel=function(...){
+               panel.abline(v=seq(-100,50,by=50),col="lightgrey")
+               panel.likert(...)
+             }
+       )
+```
+
+### Working with factors
+
+#### Reordering factors
+
+Recall our share-of-wallet plot above
+
+```{r}
+shareofwallet_median <- sort(c(by(shareofwallet_data$points, 
+                                  shareofwallet_data$type, median)), 
+                             decreasing = TRUE)
+shareofwallet_data$type <- factor(shareofwallet_data$type, levels = names(shareofwallet_median))
+ggplot(shareofwallet_data, aes(y = points, x=type)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank())
+```
+
+We set the order of the types of store by ordering the `levels` when we created the factor.
+
+However, if we already have a factor that we would like to reorder we can use the `fct_reorder` function from the `forcats` package (which has the added benefit of having a cat themed package in our project). This function takes the factor as the first argument. The second argument is the variable by which we want to sort and the third is the function applied in order to sort the groups in the factor (ascending by default). In the example below we sort by the lowest to highest variance (`var`), for example.
+
+```{r}
+library(forcats)
+ggplot(shareofwallet_data, aes(y = points, x=fct_reorder(type, points, var))) +
+  geom_boxplot() +
+  xlab("type") +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank())
+```
+A special version of that function is `fct_infreq` which sorts the factor by frequency of occurrence. We can recreate the topic selection plot with the bars ordered by the total amount of times a topic was selected. Notice also that we can use a slightly different way of creating the plot (without calculating the counts first).
+
+```{r}
+topic_selection$rank <- factor(topic_selection$rank, levels = 5:1)
+ggplot(topic_selection, aes(x=fct_infreq(topic), fill=rank)) + 
+  geom_bar(stat = "count") +
+  theme_bw() +
+  xlab("topic") +
+  scale_y_continuous(breaks = 0:10) +
+  theme(panel.grid.minor.y = element_blank(), 
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(color="black")) +
+  scale_fill_discrete_sequential("Inferno", alpha = 0.8) 
+```
+
+Another useful factor-reordering functions is `fct_rev` to reverse the order (can be combined with the others). 
+
+#### Combining / collapsing factors
+
+In some cases we want to combine multiple factor values to one (e.g., when we do not have enough observations in each group). Let's say we want to combine a 7-point likert scale to only 3 levels for an analysis. We can use the `fct_collapse` function for that.
+
+```{r}
+str(carsharing_benefits$value)
+
+carsharing_benefits$value_collapsed <- fct_collapse(carsharing_benefits$value,
+             disagree = c("strongly disagree", "disagree"),
+             neutral = c("somewhat disagree", "neutral", "somewhat agree"),
+             agree = c("agree", "strongly agree"))
+carsharing_benefits[, c("value", "value_collapsed")]
+```
+
+#### Handling choice and text input
+
+For some questions predefined answers are provided but participants can also fill in their own answers. In the data this will lead to multiple columns being added for such a question. Below we see the countries the participants were from. We had checkboxes for "Austria" and "Germany" and a text field for all other countries. We can use the `case_when` function from the `dplyr` package to combine the columns. For each row it checks whether the left-hand-side statement (left of `~`) is `TRUE` and either returns the right-hand-side if that is the case or moves on to the next one. By specifying the last statement as `TRUE ~...` we define a default action if none of the above are `TRUE`. 
+
+```{r}
+library(dplyr)
+country_questions <-  c("Q28_1", "Q28_2", "Q28_3_TEXT")
+questions_green_consumption[country_questions]
+green_consumption[,country_questions]
+green_consumption$country <- as.factor(case_when(
+  green_consumption$Q28_1 == 1 ~ "Austria",
+  green_consumption$Q28_2 == 1 ~ "Germany",
+  TRUE ~ green_consumption$Q28_3_TEXT
+))
+str(green_consumption$country)
+```
+
+However, this leads to many factor levels that have very few observations each.
+
+```{r}
+fct_count(green_consumption$country)
+```
+
+If we only want to keep "Austria", and "Germany" and combine all other countries to "Other" we can use the convenience function `fct_other` and specify only the levels we want to keep.
+
+```{r}
+green_consumption$country_other <- fct_other(green_consumption$country, 
+                                             keep = c("Austria", "Germany"))
+green_consumption[, c("country", "country_other")]
+```
+
+If we do want to keep the countries manually specified we have to check for different spellings for the same country. For string comparisons it can sometimes help to convert all to lower case (e.g., to see that "USA", "Usa", and "usa" are equal)
+
+```{r}
+green_consumption$country <- tolower(green_consumption$country)
+unique(green_consumption$country)
+```
+
+Then we can easily combine different spellings using `fct_collapse`
+
+```{r}
+green_consumption$country <- fct_collapse(green_consumption$country,
+                                          usa = c("usa", "united states"),
+                                          vietnam = c("viet nam", "vietnam", "hanoi"))
+unique(green_consumption$country)
+```
+Finally, we can capitalize all countries (`str_to_title(green_consumption$country)`) and recode the US to be all upper case (`fct_recode(green_consumption$country, USA = "Usa")`).
+
+```{r}
+green_consumption$country <- str_to_title(green_consumption$country)
+green_consumption$country <- fct_recode(green_consumption$country, USA = "Usa")
+unique(green_consumption$country)
+```
 
