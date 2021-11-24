@@ -719,7 +719,7 @@ knitr::include_graphics('images/qualtrics_recode_2021_11_17.png')
 
 You can check out the grouping variable(s)'s name(s) under "Survey Flow" in the "Survey" tab. These will be added to the exported data as a column with the name of the group as the value. In the example below there will be a column named "Group" with values "treat1", "treat2", and "ctrl".
 
-```{r, echo=F, fig.align='center',out.width='72%'}
+```{r, echo=F, fig.align='center',out.width='92%'}
 knitr::include_graphics('images/qualtrics_experiments_2021_11_23.png')
 ```
 
@@ -1116,7 +1116,7 @@ ggplot(gender_sow, aes(x = gender, y = points, fill = gender)) +
   scale_fill_discrete_qualitative(palette = "Dynamic") 
 ```
 
-Another way to compare multiple values across groups is a radar plot. First we calculate the share of respondents by gender for a couple of car use-cases (`aggregate(. ~ gender, data = car_gender, mean)`. Then we create a radar plot where the color indicates the gender.
+Another way to compare multiple values across groups is a radar plot. First we calculate the share of respondents by gender for a couple of car use-cases (`aggregate(. ~ gender, data = car_gender, mean)` where `.` indicates all other variables). Then we create a radar plot where the color indicates the gender. Since the labels are multiple words long we can rotate them to make them fit better (`theme(axis.text.x = element_text(angle = c(-30,...)))`).
 
 ```{r warning=FALSE}
 library(ggiraphExtra)
@@ -1129,4 +1129,14 @@ ggRadar(car_gender_mean, aes(color = gender) ) +
   theme(axis.text.x = element_text(angle = c(-30,-50,-90,0,0,0,90,45,10))) +
   scale_color_discrete_qualitative(palette = "Dynamic") 
 ```
+
+Finally, we can create a pairplot to compare statistics across groups using the `ggPair` function. Notice that despite the last two functions are provided by the `ggiraphExtra` package, they are producing `ggplot2` compatible plots. Thus, we can still use `ggplot2` layers for theme and coloring. 
+
+```{r}
+ggPair(car_gender_mean, horizontal = TRUE, aes(color = gender)) +
+  ggtitle("Average response across genders") +
+  theme_bw() +
+  scale_color_discrete_qualitative(palette = "Dynamic") 
+```
+
 
