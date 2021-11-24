@@ -595,7 +595,7 @@ If you are not sure which numeric value corresponds to which answer, select a qu
 
 You can check out the grouping variable(s)'s name(s) under "Survey Flow" in the "Survey" tab. These will be added to the exported data as a column with the name of the group as the value. In the example below there will be a column named "Group" with values "treat1", "treat2", and "ctrl".
 
-<img src="images/qualtrics_experiments_2021_11_23.png" width="72%" style="display: block; margin: auto;" />
+<img src="images/qualtrics_experiments_2021_11_23.png" width="92%" style="display: block; margin: auto;" />
 
 
 
@@ -1254,7 +1254,7 @@ ggplot(gender_sow, aes(x = gender, y = points, fill = gender)) +
 
 <img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-95-1.png" width="672" />
 
-Another way to compare multiple values across groups is a radar plot. First we calculate the share of respondents by gender for a couple of car use-cases (`aggregate(. ~ gender, data = car_gender, mean)`. Then we create a radar plot where the color indicates the gender.
+Another way to compare multiple values across groups is a radar plot. First we calculate the share of respondents by gender for a couple of car use-cases (`aggregate(. ~ gender, data = car_gender, mean)` where `.` indicates all other variables). Then we create a radar plot where the color indicates the gender. Since the labels are multiple words long we can rotate them to make them fit better (`theme(axis.text.x = element_text(angle = c(-30,...)))`).
 
 
 ```r
@@ -1270,4 +1270,248 @@ ggRadar(car_gender_mean, aes(color = gender) ) +
 ```
 
 <img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-96-1.png" width="672" />
+
+We can also create a pairplot to compare statistics across groups using the `ggPair` function. Notice that despite the last two functions are provided by the `ggiraphExtra` package, they are producing `ggplot2` compatible plots. Thus, we can still use `ggplot2` layers for theme and coloring. 
+
+
+```r
+ggPair(car_gender_mean, horizontal = TRUE, aes(color = gender)) +
+  ggtitle("Average response across genders") +
+  theme_bw() +
+  scale_color_discrete_qualitative(palette = "Dynamic") 
+```
+
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-97-1.png" width="672" />
+
+#### Likert scales
+
+For [likert](https://core.ecu.edu/wuenschk/StatHelp/Likert.htm) scales that range for example from "strongly agree" to "strongly disagree" a diverging barplot is appropriate. The `likert` function from the `HH` package can be used to easily create such a plot. Unfortunately, this function does not produce a `ggplot` and therefore we need slightly different syntax. The legend is called `key` in the `likert` plot and we can format the automatically generated `key` using `auto.key = list(columns = 2, title= "")`, producing two columns and removing the legend title. In addition we can add vertical lines to the plot with `panel.abline(v=seq(-100,50,by=50),col="lightgrey")` which has to be wrapped in a function that finally generates the plot.
+
+
+```r
+library(HH)
+carsharing_benefits <- carsharing[, startsWith(names(carsharing), "Q13_")]
+benefit_labels <- questions_carsharing[ startsWith(names(carsharing), "Q13_")]
+names(carsharing_benefits) <- str_extract(benefit_labels, "(?<=- ).*")
+carsharing_benefits <- pivot_longer(carsharing_benefits, cols = everything())
+carsharing_benefits$value <- factor(carsharing_benefits$value, 
+                                    levels = 1:7, 
+                                    labels = c(
+                                      "strongly disagree",
+                                      "disagree",
+                                      "somewhat disagree",
+                                      "neutral",
+                                      "somewhat agree",
+                                      "agree", 
+                                      "strongly agree"))
+likert(table(carsharing_benefits), 
+       main = "", ylab = "", xlab = "number of respondents", 
+       col = hcl.colors(7, palette = "Blue-Red 2", rev = TRUE),
+       auto.key = list(columns = 2, title= ""),     
+       panel=function(...){
+               panel.abline(v=seq(-100,50,by=50),col="lightgrey")
+               panel.likert(...)
+             }
+       )
+```
+
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-98-1.png" width="672" />
+
+### Working with factors
+
+#### Reordering factors
+
+Recall our share-of-wallet plot above
+
+
+```r
+shareofwallet_median <- sort(c(by(shareofwallet_data$points, 
+                                  shareofwallet_data$type, median)), 
+                             decreasing = TRUE)
+shareofwallet_data$type <- factor(shareofwallet_data$type, levels = names(shareofwallet_median))
+ggplot(shareofwallet_data, aes(y = points, x=type)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank())
+```
+
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-99-1.png" width="672" />
+
+We set the order of the types of store by ordering the `levels` when we created the factor.
+
+However, if we already have a factor that we would like to reorder we can use the `fct_reorder` function from the `forcats` package (which has the added benefit of having a cat themed package in our project). This function takes the factor as the first argument. The second argument is the variable by which we want to sort and the third is the function applied in order to sort the groups in the factor (ascending by default). In the example below we sort by the lowest to highest variance (`var`), for example.
+
+
+```r
+library(forcats)
+ggplot(shareofwallet_data, aes(y = points, x=fct_reorder(type, points, var))) +
+  geom_boxplot() +
+  xlab("type") +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank())
+```
+
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-100-1.png" width="672" />
+A special version of that function is `fct_infreq` which sorts the factor by frequency of occurrence. We can recreate the topic selection plot with the bars ordered by the total amount of times a topic was selected. Notice also that we can use a slightly different way of creating the plot (without calculating the counts first).
+
+
+```r
+topic_selection$rank <- factor(topic_selection$rank, levels = 5:1)
+ggplot(topic_selection, aes(x=fct_infreq(topic), fill=rank)) + 
+  geom_bar(stat = "count") +
+  theme_bw() +
+  xlab("topic") +
+  scale_y_continuous(breaks = 0:10) +
+  theme(panel.grid.minor.y = element_blank(), 
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(color="black")) +
+  scale_fill_discrete_sequential("Inferno", alpha = 0.8) 
+```
+
+<img src="15-Questionnaire_design_files/figure-html/unnamed-chunk-101-1.png" width="672" />
+
+Another useful factor-reordering functions is `fct_rev` to reverse the order (can be combined with the others). 
+
+#### Combining / collapsing factors
+
+In some cases we want to combine multiple factor values to one (e.g., when we do not have enough observations in each group). Let's say we want to combine a 7-point likert scale to only 3 levels for an analysis. We can use the `fct_collapse` function for that.
+
+
+```r
+str(carsharing_benefits$value)
+```
+
+```
+##  Factor w/ 7 levels "strongly disagree",..: 2 4 2 1 5 4 2 6 6 6 ...
+```
+
+```r
+carsharing_benefits$value_collapsed <- fct_collapse(carsharing_benefits$value,
+             disagree = c("strongly disagree", "disagree"),
+             neutral = c("somewhat disagree", "neutral", "somewhat agree"),
+             agree = c("agree", "strongly agree"))
+carsharing_benefits[, c("value", "value_collapsed")]
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["value"],"name":[1],"type":["fct"],"align":["left"]},{"label":["value_collapsed"],"name":[2],"type":["fct"],"align":["left"]}],"data":[{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"strongly disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"strongly agree","2":"agree"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"agree","2":"agree"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"strongly disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"agree","2":"agree"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"somewhat disagree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"strongly agree","2":"agree"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"strongly disagree","2":"disagree"},{"1":"disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"disagree","2":"disagree"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"strongly disagree","2":"disagree"},{"1":"somewhat agree","2":"neutral"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"neutral","2":"neutral"},{"1":"somewhat agree","2":"neutral"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"somewhat disagree","2":"neutral"},{"1":"somewhat disagree","2":"neutral"},{"1":"disagree","2":"disagree"},{"1":"agree","2":"agree"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+#### Handling choice and text input
+
+For some questions predefined answers are provided but participants can also fill in their own answers. In the data this will lead to multiple columns being added for such a question. Below we see the countries the participants were from. We had checkboxes for "Austria" and "Germany" and a text field for all other countries. We can use the `case_when` function from the `dplyr` package to combine the columns. For each row it checks whether the left-hand-side statement (left of `~`) is `TRUE` and either returns the right-hand-side if that is the case or moves on to the next one. By specifying the last statement as `TRUE ~...` we define a default action if none of the above are `TRUE`. 
+
+
+```r
+library(dplyr)
+country_questions <-  c("Q28_1", "Q28_2", "Q28_3_TEXT")
+questions_green_consumption[country_questions]
+```
+
+```
+##                                            Q28_1 
+## "Where do you live? - Selected Choice - Austria" 
+##                                            Q28_2 
+## "Where do you live? - Selected Choice - Germany" 
+##                                       Q28_3_TEXT 
+##              "Where do you live? - Other - Text"
+```
+
+```r
+green_consumption[,country_questions]
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Q28_1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Q28_2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Q28_3_TEXT"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Finland"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"1","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Viet Nam"},{"1":"NA","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"UK"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Australia"},{"1":"NA","2":"NA","3":"Finland"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Uzbekistan"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Uzbekistan"},{"1":"NA","2":"NA","3":"Portu"},{"1":"NA","2":"NA","3":"USA"},{"1":"NA","2":"NA","3":"USA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"NA","3":"Usa"},{"1":"NA","2":"NA","3":"United States"},{"1":"NA","2":"NA","3":"Uzbekistan"},{"1":"NA","2":"NA","3":"Finland"},{"1":"NA","2":"NA","3":"Singapore"},{"1":"NA","2":"NA","3":"Hanoi"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"NA","3":"Viet Nam"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"1","3":"NA"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"1","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Vietnam"},{"1":"NA","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"Norway"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"United States"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"1","2":"NA","3":"NA"},{"1":"NA","2":"1","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"},{"1":"NA","2":"NA","3":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
+green_consumption$country <- as.factor(case_when(
+  green_consumption$Q28_1 == 1 ~ "Austria",
+  green_consumption$Q28_2 == 1 ~ "Germany",
+  TRUE ~ green_consumption$Q28_3_TEXT
+))
+str(green_consumption$country)
+```
+
+```
+##  Factor w/ 14 levels "Australia","Austria",..: 2 2 2 2 2 2 2 2 3 2 ...
+```
+
+However, this leads to many factor levels that have very few observations each.
+
+
+```r
+fct_count(green_consumption$country)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["f"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Australia","2":"1"},{"1":"Austria","2":"80"},{"1":"Finland","2":"3"},{"1":"Germany","2":"10"},{"1":"Hanoi","2":"1"},{"1":"Norway","2":"1"},{"1":"Portu","2":"1"},{"1":"Singapore","2":"1"},{"1":"United States","2":"2"},{"1":"Usa","2":"1"},{"1":"USA","2":"2"},{"1":"Uzbekistan","2":"3"},{"1":"Viet Nam","2":"2"},{"1":"Vietnam","2":"10"},{"1":"NA","2":"160"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+If we only want to keep "Austria", and "Germany" and combine all other countries to "Other" we can use the convenience function `fct_other` and specify only the levels we want to keep.
+
+
+```r
+green_consumption$country_other <- fct_other(green_consumption$country, 
+                                             keep = c("Austria", "Germany"))
+green_consumption[, c("country", "country_other")]
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["country"],"name":[1],"type":["fct"],"align":["left"]},{"label":["country_other"],"name":[2],"type":["fct"],"align":["left"]}],"data":[{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Finland","2":"Other"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Germany","2":"Germany"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Germany","2":"Germany"},{"1":"Germany","2":"Germany"},{"1":"Germany","2":"Germany"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Viet Nam","2":"Other"},{"1":"NA","2":"NA"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"NA","2":"NA"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Australia","2":"Other"},{"1":"Finland","2":"Other"},{"1":"Austria","2":"Austria"},{"1":"Germany","2":"Germany"},{"1":"Vietnam","2":"Other"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"NA","2":"NA"},{"1":"Uzbekistan","2":"Other"},{"1":"NA","2":"NA"},{"1":"Uzbekistan","2":"Other"},{"1":"Portu","2":"Other"},{"1":"USA","2":"Other"},{"1":"USA","2":"Other"},{"1":"Austria","2":"Austria"},{"1":"Vietnam","2":"Other"},{"1":"Usa","2":"Other"},{"1":"United States","2":"Other"},{"1":"Uzbekistan","2":"Other"},{"1":"Finland","2":"Other"},{"1":"Singapore","2":"Other"},{"1":"Hanoi","2":"Other"},{"1":"Vietnam","2":"Other"},{"1":"Vietnam","2":"Other"},{"1":"Vietnam","2":"Other"},{"1":"Viet Nam","2":"Other"},{"1":"NA","2":"NA"},{"1":"Germany","2":"Germany"},{"1":"Vietnam","2":"Other"},{"1":"Germany","2":"Germany"},{"1":"Vietnam","2":"Other"},{"1":"Vietnam","2":"Other"},{"1":"NA","2":"NA"},{"1":"Austria","2":"Austria"},{"1":"Vietnam","2":"Other"},{"1":"Germany","2":"Germany"},{"1":"Germany","2":"Germany"},{"1":"Austria","2":"Austria"},{"1":"NA","2":"NA"},{"1":"Vietnam","2":"Other"},{"1":"NA","2":"NA"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Norway","2":"Other"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"United States","2":"Other"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Austria","2":"Austria"},{"1":"Germany","2":"Germany"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"},{"1":"NA","2":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+If we do want to keep the countries manually specified we have to check for different spellings for the same country. For string comparisons it can sometimes help to convert all to lower case (e.g., to see that "USA", "Usa", and "usa" are equal)
+
+
+```r
+green_consumption$country <- tolower(green_consumption$country)
+unique(green_consumption$country)
+```
+
+```
+##  [1] "austria"       "finland"       "germany"       "viet nam"     
+##  [5] NA              "australia"     "vietnam"       "uzbekistan"   
+##  [9] "portu"         "usa"           "united states" "singapore"    
+## [13] "hanoi"         "norway"
+```
+
+Then we can easily combine different spellings using `fct_collapse`
+
+
+```r
+green_consumption$country <- fct_collapse(green_consumption$country,
+                                          usa = c("usa", "united states"),
+                                          vietnam = c("viet nam", "vietnam", "hanoi"))
+unique(green_consumption$country)
+```
+
+```
+##  [1] austria    finland    germany    vietnam    <NA>       australia 
+##  [7] uzbekistan portu      usa        singapore  norway    
+## 10 Levels: australia austria finland germany vietnam norway portu ... uzbekistan
+```
+Finally, we can capitalize all countries (`str_to_title(green_consumption$country)`) and recode the US to be all upper case (`fct_recode(green_consumption$country, USA = "Usa")`).
+
+
+```r
+green_consumption$country <- str_to_title(green_consumption$country)
+green_consumption$country <- fct_recode(green_consumption$country, USA = "Usa")
+unique(green_consumption$country)
+```
+
+```
+##  [1] Austria    Finland    Germany    Vietnam    <NA>       Australia 
+##  [7] Uzbekistan Portu      USA        Singapore  Norway    
+## 10 Levels: Australia Austria Finland Germany Norway Portu Singapore ... Vietnam
+```
 
