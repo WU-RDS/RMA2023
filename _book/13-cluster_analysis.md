@@ -23,7 +23,22 @@ output:
 :::
 
 
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JtYBQcWqzWk" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
+
 In the previous chapter on factor analysis we tried to reduce the number of variables or columns by identifying underlying dimensions. In order to do so we exploited the fact that some items are highly correlated and therefore might represent the same underlying concept (e.g., health benefits or social benefits). Similarly, in cluster analysis we again do not distinguish between dependent and independent variables. However, in the case of cluster analysis we do not try to reduce the number of variables but the number of observations by grouping similar ones into "clusters". What exactly defines "similarity" depends on the use case. In the case of music, audio features of songs might be used to identify clusters of similar songs (similar to the genre classification) which can be used for recommendation systems. Other use cases are customer segmentation and anomaly (e.g., fraud) detection.
+
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Pv7gf-2lMHE" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
 
 Let's try to create a recommendation system using track features. In our data we have the ISRC, name of the track, name of the artist and audio features of the track. We are going to use the audio features to cluster tracks together such that given one track we can easily identify similar tracks by looking at which cluster it belongs to.
 
