@@ -727,6 +727,19 @@ knitr::include_graphics('images/qualtrics_experiments_2021_11_23.png')
 
 ### Importing Qualtrics data
 
+
+::: {.infobox .download data-latex="{download}"}
+[You can download the corresponding R-Code here](./Code/14-qualtrics.R)
+:::
+
+::: {.infobox .download data-latex="{download}"}
+[You can download the green consumption data here](./data/Green_Consumption.csv)
+:::
+
+::: {.infobox .download data-latex="{download}"}
+[You can download the carsharing data here](./data/Car_sharing.csv)
+:::
+
 To import the data to R you can use the "read_survey" function from the "qualtRics" library.
 
 ```{r}
@@ -1146,9 +1159,11 @@ For [likert](https://core.ecu.edu/wuenschk/StatHelp/Likert.htm) scales that rang
 ```{r}
 library(HH)
 carsharing_benefits <- carsharing[, startsWith(names(carsharing), "Q13_")]
+carsharing_benefits
 benefit_labels <- questions_carsharing[ startsWith(names(carsharing), "Q13_")]
 names(carsharing_benefits) <- str_extract(benefit_labels, "(?<=- ).*")
 carsharing_benefits <- pivot_longer(carsharing_benefits, cols = everything())
+carsharing_benefits
 carsharing_benefits$value <- factor(carsharing_benefits$value, 
                                     levels = 1:7, 
                                     labels = c(
