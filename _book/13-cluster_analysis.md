@@ -13,9 +13,17 @@ output:
 
 # Cluster analysis
 
+
+
 <img src="./images/cluster.PNG" width="25%" style="display: block; margin: auto;" />
 
-In the previous chapter on factor analysis we tried to reduce the number of variables or columns by identifying underlying dimensions. In order to do so we exploited the fact that some items are highly correlated and therefore might represent the same underlying concept (e.g., health benefits or social benefits). Similarly, in cluster analysis we again do not distinguish between dependent and independent variables. However, in the case of cluster analysis we do not try to reduce the number of variables but the number of observations by grouping similar ones into "clusters". What exactly defines "similarity" depends on the use case. In the case of music audio features of songs might be used to identify clusters of similar songs (similar to the genre classification) which can be used for recommendation systems. Other use cases are customer segmentation and anomaly (e.g., fraud) detection.
+
+::: {.infobox .download data-latex="{download}"}
+[You can download the corresponding R-Code here](./Code/12-cluster.R)
+:::
+
+
+In the previous chapter on factor analysis we tried to reduce the number of variables or columns by identifying underlying dimensions. In order to do so we exploited the fact that some items are highly correlated and therefore might represent the same underlying concept (e.g., health benefits or social benefits). Similarly, in cluster analysis we again do not distinguish between dependent and independent variables. However, in the case of cluster analysis we do not try to reduce the number of variables but the number of observations by grouping similar ones into "clusters". What exactly defines "similarity" depends on the use case. In the case of music, audio features of songs might be used to identify clusters of similar songs (similar to the genre classification) which can be used for recommendation systems. Other use cases are customer segmentation and anomaly (e.g., fraud) detection.
 
 Let's try to create a recommendation system using track features. In our data we have the ISRC, name of the track, name of the artist and audio features of the track. We are going to use the audio features to cluster tracks together such that given one track we can easily identify similar tracks by looking at which cluster it belongs to.
 
@@ -47,7 +55,7 @@ ggplot(example_tracks, aes(x = energy, y = acousticness, color = artist)) +
 
 ## K-Means
 
-One of the most popular algorithms for clustering is the **K-means** algorithm. The "K" stands for the number of clusters that are specified as a hyperparameter (more on how to set that parameter later). The algorithm then tries to separate the observations into K clusters such that the variance of the features (e.g., our audio features) is minimized. Therefore, it is important to `scale` all variables before performing clustering such that they all contribute equally to the  distance between the observations. Intuitively the algorithm groups observations by iteratively calculating the mean or center of each cluster, assigning each observation to the cluster with the closest mean and re-calculating the mean... The algorithm has "converged" (i.e., is done) when the assignments no longer change. 
+One of the most popular algorithms for clustering is the **K-means** algorithm. The "K" stands for the number of clusters that are specified as a hyperparameter (more on how to set that parameter later). The algorithm then tries to separate the observations into K clusters such that the within-cluster sum of squared differences form the cluster mean of the features (e.g., our audio features) is minimized.  Therefore, it is important to `scale` all variables before performing clustering such that they all contribute equally to the  distance between the observations. Minimizing the within-cluster sum of squares is equivalent to minimizing the sum of the squared deviations of observations pairwise in the same cluster and maximizing the sum of squared deviations of observations in different clusters. Intuitively the algorithm groups observations by iteratively calculating the mean or center of each cluster, assigning each observation to the cluster with the closest mean and re-calculating the mean... The algorithm has "converged" (i.e., is done) when the assignments no longer change. 
 Let's try it out with our two artists. In order to perform clustering we first have to remove all missing values from the used variables as for those we cannot calculate distances. Because we know that there are two artists in the sample we will start with two clusters.
 
 
@@ -206,13 +214,17 @@ ggplot(recommendation, aes(instrumentalness, speechiness, color = cluster)) +
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
-We can color points in a scatterplot by cluster to get a partial picture (2 variables instead of the full range used in k-means) of what distinguishes the clusters. Clusters 1 and 2, for example, are mostly different in terms of energy and valence.
+We can use the `fviz_cluster` function from the `factoextra` library to get a partial picture. If there are more than 2 variables used for clustering, the package performs a PCA and uses the first two principal components for the visualization.
 
 
 ```r
-ggplot(famous_tracks, aes(x = energy, y = valence, color = cluster)) +
-  geom_point() +
-  theme_bw()
+library(factoextra)
+fviz_cluster(kmeans_tracks, data = famous_tracks_scale,
+             palette = hcl.colors(3, palette = "Dynamic"), 
+             geom = "point",
+             ellipse.type = "convex", 
+             ggtheme = theme_bw()
+             )
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-14-1.png" width="672" />
@@ -232,7 +244,7 @@ plot(hclust_tracks)
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-15-1.png" width="1440" />
 
-Again, we have to decide on the number of clusters. Based on a visual inspection of the hierarchy, choosing 4 clusters seems reasonable. We can get cluster assignments by "cutting the tree" such that we get the desired number of clusters. With hierarchical clustering we do not get the centers of each cluster as a return value as it is not calculated by the method. However we can reduce the clusters manually by calculating the mean of each variable for each cluster using the `aggregate` function. The `.` in the formula stands for "all other variable. As we can see in the middle of the dendrogram there will be two small clusters with 1 and 2 songs in them respectively ("Needed me" in cluster 1 and "dogs", "pigs" in cluster 4).
+Again, we have to decide on the number of clusters. Based on a visual inspection of the hierarchy, choosing 4 clusters seems reasonable. We can get cluster assignments by "cutting the tree" such that we get the desired number of clusters. With hierarchical clustering we do not get the centers of each cluster as a return value as it is not calculated by the method. However we can reduce the clusters manually by calculating the mean of each variable for each cluster using the `aggregate` function. The `.` in the formula stands for "all other variables". As we can see in the middle of the dendrogram there will be two small clusters with 1 and 2 songs in them respectively ("Needed me" in cluster 1 and "dogs", "pigs" in cluster 4).
 
 
 ```r

@@ -1,0 +1,210 @@
+\RequirePackage{ifthen}
+
+\mode<presentation>
+
+
+%%==========%%
+%% Define headline %%
+%%==========%%
+
+\setbeamerfont*{headline}{shape = \upshape,size={\fontsize{6}{6}}}
+
+\ifthenelse{\isundefined{\sectionHeader}}{}
+{
+	\defbeamertemplate*{headline}{wu2017}[1][left]
+	{%
+	
+		\ifnum\thesection>0
+			
+			\ifthenelse{\thepage>\inserttotalframenumber}{}
+			{
+				\begin{minipage}[t]{.75\textwidth}
+            				\usebeamerfont{headline}
+					\textcolor{wugrey}
+					{
+						\hspace*{0.93cm}
+						\sectionHeader~\thesection.~\insertsection
+					}
+					\par
+				\end{minipage}
+			}
+
+			% Special form of vertical alignement due to error issues for variable headers/footers
+			\vspace*{-0.5cm}
+
+		\fi
+
+	}
+}
+
+
+%%==========%%
+%% Define footline %%
+%%==========%%
+
+\setbeamerfont*{footline}{shape = \upshape,size={\fontsize{6}{6}}}
+
+\defbeamertemplate*{footline}{wu2017}[1][left]
+{%
+	
+	\ifnum\c@framenumber>1
+
+		\vspace{-2.1cm}
+		
+		\ifnum\placementLogoFooter=1
+			\begin{minipage}[t]{\textwidth}
+            			\usebeamerfont{footline}
+				\begin{tabular}{p{0.2\textwidth} p{0.45\textwidth} p{0.1\textwidth}p{0.1\textwidth}}
+				\textcolor{wugrey}
+				{	
+					\hspace*{0.72cm}
+           				%\MakeUppercase{\slideNumberLabelFooter} \insertframenumber{}
+					\slideNumberLabelFooter~\insertframenumber{}
+				}
+				& \textcolor{wugrey}
+				{
+					\ifthenelse{\isundefined{\textFooter}}{}
+					{
+						\hspace*{-0.9cm}
+						\textFooter
+					}
+				}
+				& \textcolor{wugrey}
+				{
+					\ifthenelse{\isundefined{\dateFooter}}{}
+					{
+						\hspace*{-0.5cm}
+						\dateFooter
+					}
+				}& \\
+				&&&
+				\end{tabular}
+				\par
+			\end{minipage}
+		\fi
+
+		\ifnum\placementLogoFooter=2
+			\begin{minipage}[t]{\textwidth}
+            			\usebeamerfont{footline}
+				\begin{tabular}{p{0.2\textwidth} p{0.45\textwidth} p{0.1\textwidth}p{0.1\textwidth}}
+				&\textcolor{wugrey}
+				{
+					\ifthenelse{\isundefined{\textFooter}}{}
+					{
+						\textFooter
+					}
+				}
+				& \multicolumn{1}{r}
+				{
+					\textcolor{wugrey}
+					{
+						\ifthenelse{\isundefined{\dateFooter}}{}
+						{
+							\dateFooter
+						}
+					}
+				}
+				& \multicolumn{1}{r}
+				{
+					\textcolor{wugrey}
+					{	
+           					%\MakeUppercase{\slideNumberLabelFooter} \insertframenumber{}
+						\slideNumberLabelFooter~\insertframenumber{}
+					} 
+				}\\
+				&&&
+				\end{tabular}
+				\par
+			\end{minipage}
+		\fi
+
+	\fi
+
+}
+
+
+%%============%%
+%% Set frame title style %%
+%%============%%
+
+\setbeamerfont*{frametitle}{family = \fontfamily{qcs}, series=\bf,size={\fontsize{14}{14}}}
+
+\defbeamertemplate*{frametitle}{wu2017}[1][left]
+{
+	\begin{minipage}[t][.13\textheight][c]{.75\textwidth}
+            	\usebeamerfont{frametitle}
+		\textcolor{wublack}
+           	\insertframetitle\par
+	\end{minipage}
+}
+
+
+%%===============%%
+%% Define fonts and itemize %%
+%%===============%%
+
+\addtobeamertemplate{frametitle}{}{\vspace*{0.2cm}}
+
+\setbeamertemplate{itemize item}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacksquare$}}
+\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacksquare$}}
+
+\setbeamerfont{itemize/enumerate body}{size={\fontsize{11}{13}}}
+\setbeamerfont{itemize/enumerate subbody}{size={\fontsize{10}{12}}}
+\setbeamerfont{itemize/enumerate subsubbody}{size={\fontsize{9}{11}}}
+
+\setbeamerfont{normal text}{size={\fontsize{11}{13}}}
+\setbeamerfont{structure}{size={\fontsize{11}{13}}}
+\setbeamerfont{alerted text}{size={\fontsize{11}{13}}}
+\setbeamerfont{example text}{size={\fontsize{11}{13}}}
+\setbeamerfont{block title}{size={\fontsize{11}{13}}, series = \bf}
+\setbeamerfont{block body}{size={\fontsize{11}{13}}}
+
+\setbeamerfont{section in toc}{size={\fontsize{13}{15}}}
+\setbeamerfont{subsection in toc}{size={\fontsize{11}{13}}}
+\setbeamerfont{subsubsection in toc}{size={\fontsize{9}{11}}}
+
+\setlength{\leftmargini}{11pt}
+
+
+%%=============================%%
+%% Define part and section slide / table of contents %%
+%%=============================%%
+
+\AtBeginPart{
+
+	\ifthenelse{\isundefined{\includePartPages}}{}
+	{
+      		\begin{frame}
+        			\partpage
+      		\end{frame}
+   	 }
+ 
+  	\ifthenelse{\isundefined{\includeTocAtBeginPart}}{}
+	{ 
+    		\begin{frame}{Outline}
+     			\phantom{phantom}%necessary to get the title typeset
+     			{
+				\Large \partname~\insertromanpartnumber: \insertpart\\
+			}
+      			\tableofcontents
+    		\end{frame}
+	}
+
+}
+
+
+\AtBeginSection{
+ 
+  	\ifthenelse{\isundefined{\includeTocAtBeginSection}}{}
+	{ 
+    		\begin{frame}{Outline}
+     			     \tableofcontents[currentsection]
+    		\end{frame}
+	}
+
+}
+
+
+\mode
+<all>

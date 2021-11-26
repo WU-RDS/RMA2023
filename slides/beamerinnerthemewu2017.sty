@@ -1,0 +1,258 @@
+\mode<presentation>
+
+\setbeamertemplate{items}[default]
+\setbeamertemplate{blocks}[default]
+
+
+%%===================%%
+%% Define table of contents style %%
+%%===================%%
+
+\defbeamertemplate*{section in toc}{wu2017}
+{
+
+	\leavevmode\leftskip=1em
+  	\textcolor{wublue}
+	{
+   		\tiny\raise1.5pt\hbox{
+        		\donotcoloroutermaths$\blacksquare$}%triangle
+    	 }~\inserttocsection\par
+
+}
+
+\defbeamertemplate*{subsection in toc}{wu2017}
+{
+ 
+	\leavevmode\leftskip=2em
+  	\textcolor{wublue}
+	{
+    		\tiny\raise1.5pt\hbox{
+        		\donotcoloroutermaths$\blacksquare$}%triangle
+	}~\inserttocsubsection\par
+
+}
+
+\defbeamertemplate*{subsubsection in toc}{wu2017}
+{
+ 
+	\leavevmode\normalsize\usebeamerfont{subsection in toc}\leftskip=3em
+ 	\textcolor{wublue}
+	{
+		\tiny\raise1.5pt\hbox{
+        		\donotcoloroutermaths$\blacksquare$}%triangle
+    	}~\usebeamerfont{subsubsection in toc}\inserttocsubsubsection\par
+
+}
+
+
+%%===============%%
+%% Define background style %%
+%%===============%%
+
+\setbeamertemplate{background}
+{
+	%% for title page %%
+	\ifnum\c@framenumber=1  
+
+ 		\begin{tikzpicture}
+  	
+			\useasboundingbox (0,0) rectangle(\paperwidth,\paperheight);
+ 			
+			%% select background graphic %%
+			\ifnum\titleBackground=1
+				\node at (\paperwidth/2,\paperheight/2) {\includegraphics[width=\paperwidth, height=\paperheight]{Graphics/D2}};
+			\fi
+			\ifnum\titleBackground=2
+				\node at (\paperwidth/2,\paperheight/2) {\includegraphics[width=\paperwidth, height=\paperheight]{Graphics/Campus}};
+			\fi
+			\ifnum\titleBackground=3
+				\node at (\paperwidth/2,\paperheight/2) {\includegraphics[width=\paperwidth, height=\paperheight]{Graphics/Forum}};
+			\fi
+			
+			%% 2-line or 1-line title %%
+			\ifnum\titleLength=2
+				\ifnum\titleBackground=0
+					\fill[wublue] (\paperwidth*.033,\paperheight*.53) rectangle(\paperwidth * .68,\paperheight * .88);
+					\draw [wublue, thick] (\paperwidth * .033,\paperheight*.53) rectangle(\paperwidth * .967,\paperheight * .88);
+				\else
+					\fill[wublue,opacity=.9] (\paperwidth*.033,\paperheight*.53) rectangle(\paperwidth * .68,\paperheight * .88);
+					\fill[wuwhite] (\paperwidth * .68,\paperheight*.53) rectangle(\paperwidth * .967,\paperheight * .88);
+				\fi
+				\node at (\paperwidth*.824,\paperheight*.705) {\includegraphics[width=3.5cm]{Graphics/WU_Logo}};
+				\ifthenelse{\isundefined{\affiliationText}}
+				{
+					\fill[wuwhite,opacity=.9] (\paperwidth*.033,\paperheight*.37) rectangle(\paperwidth/2,\paperheight * .48);
+				}{
+					\fill[wuwhite,opacity=.9] (\paperwidth*.033,\paperheight*.3) rectangle(\paperwidth/2,\paperheight * .48);
+				}
+			\else
+				\ifnum\titleBackground=0
+					\fill[wublue] (\paperwidth*.033,\paperheight*.59) rectangle(\paperwidth * .68,\paperheight * .88);
+					\draw [wublue, thick](\paperwidth * .033,\paperheight*.59) rectangle(\paperwidth * .967,\paperheight * .88);
+				\else
+					\fill[wublue,opacity=.9] (\paperwidth*.033,\paperheight*.59) rectangle(\paperwidth * .68,\paperheight * .88);
+					\fill[wuwhite] (\paperwidth * .68,\paperheight*.59) rectangle(\paperwidth * .967,\paperheight * .88);
+				\fi
+				\node at (\paperwidth*.824,\paperheight*.735) {\includegraphics[width=3.5cm]{Graphics/WU_Logo}};
+				\ifthenelse{\isundefined{\affiliationText}}
+				{
+					\fill[wuwhite,opacity=.9] (\paperwidth*.033,\paperheight*.43) rectangle(\paperwidth/2,\paperheight * .54);
+				}{
+					\fill[wuwhite,opacity=.9] (\paperwidth*.033,\paperheight*.36) rectangle(\paperwidth/2,\paperheight * .54);
+				}
+			\fi
+			\ifnum\titleBackground=0
+				\node at (\paperwidth*.824,\paperheight*.08) {\includegraphics[width=3.2cm]{Graphics/Triple-Accreditation}};
+			\else
+				\node at (\paperwidth*.824,\paperheight*.08) {\includegraphics[width=3.2cm]{Graphics/Triple-Accreditation-negative}};
+			\fi
+
+  		\end{tikzpicture}
+
+	\fi
+
+	%% not for title page %%
+	\ifnum\c@framenumber>1  
+
+		% background graphic
+ 		\begin{tikzpicture}
+  	
+			\useasboundingbox (0,0) rectangle(\paperwidth,\paperheight);
+			
+			\node at (\paperwidth*.88,\paperheight*.91) {\includegraphics[width=2cm]{Graphics/WU_Logo}};
+			\fill[wublue] (0,\paperheight*.82) rectangle(\paperwidth,\paperheight * .827);
+			\ifnum\placementLogoFooter=1  
+				\node at (\paperwidth*.9,\paperheight*.045) {\includegraphics[width=2.3cm]{Graphics/Triple-Accreditation}};
+			\fi
+			\ifnum\placementLogoFooter=2 
+				\node at (\paperwidth*.13,\paperheight*.045) {\includegraphics[width=2.3cm]{Graphics/Triple-Accreditation}};
+			\fi
+
+  		\end{tikzpicture}
+
+	\fi	
+
+}
+
+
+%%==============%%
+%% Define title page text %%
+%%==============%%
+
+\defbeamertemplate*{title page}{wu2017}[1][\raggedleft]
+{
+
+	%% define fonts %%
+	\setbeamerfont*{title}{family = \fontfamily{qcs}, series=\bf,size={\fontsize{21}{24}}}
+	\setbeamerfont*{subtitle}{series=\bf,size={\fontsize{12}{12}}}
+	\setbeamerfont*{author}{size={\fontsize{8}{8}}}	
+	\setbeamerfont*{date}{size={\fontsize{6}{6}}}
+
+	%% 2-line or 1-line title %%
+	\vskip0.125\paperheight
+	\begin{minipage}[t][.05\textheight][c]{.65\textwidth}
+            	\usebeamerfont{subtitle}
+		\textcolor{wublack}
+           	\insertsubtitle\par
+	\end{minipage}
+
+	\ifnum\titleLength=2
+		{
+		\vskip.01\paperheight
+		\begin{minipage}[t][.16\textheight][c]{.65\textwidth}
+            		\usebeamerfont{title}
+	 		\textcolor{wuwhite}
+            		\inserttitle\par
+		\end{minipage}}
+		\vskip.122\paperheight
+	\fi
+
+	\ifnum\titleLength=1
+		\vskip.01\paperheight
+		\begin{minipage}[t][.08\textheight][c]{.65\textwidth}
+            		\usebeamerfont{title}
+	 		\textcolor{wuwhite}
+            		\inserttitle\par
+		\end{minipage}
+		\vskip.14\paperheight
+	\fi
+
+	%% different vertical alignment whether titleText is defined %%	
+
+	\ifthenelse{\isundefined{\affiliationText}}
+	{
+		\begin{minipage}[t][.08\textheight][c]{.45\textwidth}
+           		\usebeamerfont{author}
+	 		\textcolor{wublack}
+           		\insertauthor\par
+		\end{minipage}
+		\vskip.07\paperheight
+	}{
+		\begin{minipage}[t][.15\textheight][c]{.45\textwidth}
+           		\usebeamerfont{author}
+	 		\textcolor{wublack}
+			\insertauthor
+			\vspace{0.2cm} \\
+			\affiliationText\par
+		\end{minipage}
+	}		
+
+	\ifnum\titleLength=2
+		\vskip.255\paperheight
+	\fi
+
+	\ifnum\titleLength=1
+		\vskip.315\paperheight
+	\fi
+
+	%% black font for date if background is white %%
+	\ifnum\titleBackground=0
+		\begin{minipage}[t][.05\textheight][c]{.45\textwidth}
+            		\usebeamerfont{date}
+			\textcolor{wublack}
+			{
+				\insertdate
+			}
+			\par
+		\end{minipage}
+	\fi
+
+	\ifnum\titleBackground>0
+		\begin{minipage}[t][.05\textheight][c]{.45\textwidth}
+            		\usebeamerfont{date}
+			\textcolor{wuwhite}
+			{
+				\insertdate
+			}
+			\par
+		\end{minipage}
+	\fi
+
+}
+
+
+%%===========%%
+%% Define end page %%
+%%===========%%
+
+\ifthenelse{\isundefined{\address}}{}
+{
+	\setbeamertemplate{endpage}{
+ 	\addtocounter{framenumber}{1}
+
+		\begin{tikzpicture}
+  	
+			\useasboundingbox (\paperwidth*.07,\paperheight*.1) rectangle(\paperwidth*.9,\paperheight*.8);
+			\draw [wugrey, thick] (\paperwidth*.07,\paperheight*.0) rectangle (\paperwidth * .55,\paperheight * .45);
+			\node at (\paperwidth*.11,\paperheight*.22) {\includegraphics[width=0.95cm]{Graphics/WU_Logo2}};
+			\node[text width=\paperwidth*.33,font=\scriptsize,anchor=west, right] at (\paperwidth*.18,\paperheight*.32){\address};
+
+  		\end{tikzpicture}
+	}
+
+}
+
+\AtEndDocument{\usebeamertemplate{endpage}}
+
+
+\mode<all>
