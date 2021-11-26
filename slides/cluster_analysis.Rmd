@@ -1,0 +1,294 @@
+---
+title: |
+  | Cluster Analysis
+subtitle: Marketing Analytics
+author: |
+  | Daniel Winkler
+  
+#date: "02/03/2019"
+classoption: "aspectratio=1610"
+params:
+  print_address: FALSE # Set FALSE to remove last slide with contact info
+  student_copy: FALSE # Set TRUE to remove solutions to exercises. Optionally set file name in pandoc args
+header-includes:
+  - \usepackage{beamerthemewu2017} # Load WU theme
+  - \usepackage[misc, alpine]{ifsym} # Package for symbols in address
+  - \usepackage{booktabs}
+  - \usepackage{dirtree}
+  - \newcommand{\titleLength}{2} # Number of lines for title {1,2}
+  - \newcommand{\titleBackground}{1} # Picture on title 1 = D2
+  - \newcommand{\placementLogoFooter}{1} # Footer logos 1 = right, 2 = left
+  - \newcommand{\slideNumberLabelFooter}{} # Set text before page number
+  - \newcommand{\textFooter}{Marketing Analytics} # Set footer text
+  - \newcommand{\address}{\textbf{Daniel Winkler} \\ \vskip.5cm \Letter \hskip.3cm dwinkler@wu.ac.at \\ \vskip.5cm \Hut \hskip.4cm D2 (Entrance A)\\ \vskip.5cm \Telephone \hskip.2cm +43 1 31336 4888} # Set text for address box on last slide if print_address: TRUE (above)
+  - \newcommand{\affiliationText}{} # Set Affiliation
+  - \usenavigationsymbolstemplate{}
+  - \newcommand{\includeTocAtBeginSection}{} # Comment out with "#" to remove TOCs at beginning of sections
+output:
+  beamer_presentation:
+    slide_level: 3
+#    pandoc_args: ["--output=intro_to_r_solution.pdf"]
+    keep_tex: false # set true for debugging
+#    fig_crop: false
+  tables: true
+---
+
+### Objectives 
+```{r set-options, echo=FALSE, cache=FALSE}
+options(xtable.comment = FALSE, width = 60) # Width of slide
+knitr::opts_chunk$set(comment=NA, fig.width=6, fig.height=3, cache = TRUE, fig.align = 'center') # fits plot to page with axes labels visible
+knitr::opts_knit$set(root.dir="~/Documents/01-Projects/MarketingAnalytics/slides/") # Unfortunatelly have to set this
+```
+
+#### Learn
+
+  1. The basic concept of cluster analysis
+  2. Popular clustering algorithms
+      - Core idea
+      - Determining the number of clusters
+      - Visualization
+
+
+### Basic concept of cluster analysis
+
+- Goal: Group observations into **clusters** such that those in the same cluster are more "similar" than those of other clusters.
+
+- Reduction in number of *rows* 
+
+- No distinction between dependent and independent variables.
+
+- What exactly constitutes a cluster is not clear and many different concepts exist.
+
+- We are going to discuss two popular concepts:
+    + Centroid based: K-Means
+    + Connectivity based: Hierarchical clustering
+
+
+### K-Means
+
+- Assigns each observation to one of K clusters. 
+
+- Iterative procedure repeated until cluster assignments no longer change:
+    1. Assign each observation to the cluster with the closest mean
+    2. Re-calculate the cluster means taking into account the changed assignments
+
+- The number of clusters K is a priori unclear (more later)
+
+### A first example
+
+```{r include=TRUE, echo=FALSE}
+load(url("https://github.com/WU-RDS/MRDA2021/raw/main/trackfeatures.RData"))
+# remove duplicates
+tracks <- na.omit(tracks[!duplicated(tracks$isrc), ])
+set.seed(1)
+library(ggplot2)
+library(stringr)
+library(colorspace)
+robin_schulz <- tracks[str_detect(tracks$artistName, "Robin Schulz"), ]
+robin_schulz$artist <- "Robin Schulz"
+adele <- tracks[str_detect(tracks$artistName, "Adele"), ]
+adele$artist <- "Adele"
+
+example_tracks <- rbind(robin_schulz, adele)
+ggplot(example_tracks, 
+       aes(x = energy, y = acousticness, color = artist)) +
+  geom_point() + theme_bw() + scale_color_discrete_qualitative(palette = "Dynamic")
+```
+
+
+### A first example
+
+- Example: two artists and two variables, $K=2$.
+- Important: `scale` all variables before clustering to ensure equal contribution to distance
+
+```{r}
+tracks_scale <- data.frame(
+  artist = example_tracks$artist, 
+  energy = scale(example_tracks$energy), 
+  acousticness = scale(example_tracks$acousticness))
+kmeans_clusters <- kmeans(tracks_scale[-1], 2)
+kmeans_clusters$centers
+```
+
+### A first example
+
+```{r, echo = FALSE}
+tracks_scale$cluster <- as.factor(kmeans_clusters$cluster)
+ggplot(tracks_scale, aes(x = energy, y = acousticness, color = cluster, shape = artist)) +
+  geom_point(size = 3) +
+  theme_bw() + scale_color_discrete_qualitative(palette = "Dynamic")
+```
+
+### Choosing the number of clusters
+
+- If we extend the sample to the more interesting case of multiple artists the optimal K is unclear
+- We can calculate varying indices for the optimal K and use the one that is optimal for the most indices
+- In this case $3$ is the best number of clusters according to the majority rule, chosen by 13 indices
+
+
+```{r, include = FALSE}
+famous_artists <- c(
+    'Ed Sheeran',
+    'Eminem',
+    'Rihanna',  
+    'Taylor Swift',
+    'Queen'
+    )
+famous_tracks <- tracks[tracks$artistName %in% famous_artists, ]
+famous_tracks_scale <- scale(famous_tracks[4:ncol(famous_tracks)])
+set.seed(123)
+```
+
+```{r, fig.show='hide', results='hide', cache=TRUE}
+library(NbClust)
+opt_K <- NbClust(famous_tracks_scale, 
+                 method = "kmeans", max.nc = 10)
+```
+```{r}
+table(opt_K$Best.nc["Number_clusters", ])
+```
+
+### Extended example
+
+```{r}
+kmeans_tracks <- kmeans(famous_tracks_scale, 3)
+kmeans_tracks$centers
+```
+
+### Extended example
+
+- Characterize clusters
+
+```{r, echo = FALSE, fig.width=3.8, fig.height=3.8}
+library(ggiraphExtra)
+
+centers <- data.frame(kmeans_tracks$centers)
+centers$cluster <- 1:3
+ggRadar(centers, aes(color = cluster), rescale = FALSE) + 
+  #ggtitle("Centers") +
+  theme_bw() +
+  theme(text = element_text(size =5)) + scale_color_discrete_qualitative(palette = "Dynamic")
+```
+
+### 2D-Visualization
+
+- Reduce dimensions with PCA and plot 2 components
+- Gives a *partial* picture
+
+```{r, echo = FALSE, fig.height=2.5, message=FALSE}
+library(factoextra)
+fviz_cluster(kmeans_tracks, data = famous_tracks_scale,
+             palette = hcl.colors(3, palette = "Dynamic"), 
+             geom = "point",
+             ellipse.type = "convex", 
+             ggtheme = theme_bw()
+             )
+```
+
+
+
+### Extended example
+
+- Characterize artists
+
+```{r, echo = FALSE, fig.height=2.5}
+famous_tracks$cluster <- as.factor(kmeans_tracks$cluster)
+ggplot(famous_tracks, aes(y = cluster, fill = artistName)) +
+  geom_bar() +
+  theme_bw() +
+  scale_fill_discrete_qualitative(palette = "Dynamic") +
+  theme(legend.title = element_blank())
+```
+
+### Making a recommendation
+
+- Given a liked song, recommend songs in the same cluster
+
+\small
+
+```{r, size = "small"}
+famous_tracks[famous_tracks$trackName=="The Archer","cluster"]
+```
+
+
+
+```{r, echo = FALSE}
+knitr::kable(head(famous_tracks[famous_tracks$cluster == 2, 
+                   c("trackName", "artistName", "cluster")]), row.names = FALSE)
+```
+\normalsize
+
+
+### Hierarchical clustering
+
+- Idea: similar observations can be "merged" to one cluster
+- Starts out merging pairs of the most similar or closest observations
+- Iteratively merges the most similar clusters until there is only one cluster left
+- Does not require a priori setting of the number of clusters
+- Number of clusters is determined post-hoc by "cutting-off" at some iteration
+
+
+### Visualization
+
+
+![](../images/hclust.png){height=90%}
+
+### Example
+
+- Calculate distances between observations (default: Euclidean) using `dist`
+- Use distances in `hclust` to perform a hierarchical cluster analysis
+
+```{r, echo = FALSE}
+pf_ri <- tracks[tracks$artistName %in% c("Pink Floyd", "Rihanna"),]
+pf_ri_scale <- scale(pf_ri[,4:ncol(pf_ri)])
+rownames(pf_ri_scale) <- pf_ri$trackName
+```
+
+
+```{r}
+hclust_tracks <- hclust(dist(pf_ri_scale))
+hclust_tracks
+```
+### Characterize clusters
+
+- Decide on cut-off based on dendrogram. Specify the desired number of clusters using `cutree`.
+- Calculate summary statistics for cluster
+
+```{r}
+hclusters <- cutree(hclust_tracks,4)
+pf_ri_hier <- data.frame(pf_ri_scale)
+pf_ri_hier$cluster <- as.factor(hclusters)
+aggregate(. ~ cluster, pf_ri_hier, mean)[,1:5]
+```
+
+
+\normalsize
+<!-- Do not Edit below here. Set print_address in yaml header -->
+
+```{r lastSlide, results="asis",echo=FALSE, purl=FALSE}
+if(params$print_address){
+cat(
+  "### Contact me if you have further questions!
+
+\\ifthenelse{\\isundefined{\\address}}{}
+{
+	\\setbeamertemplate{endpage}{
+ 	\\addtocounter{framenumber}{1}
+
+		\\begin{tikzpicture}
+  	
+			\\useasboundingbox (\\paperwidth*.07,\\paperheight*.1) rectangle(\\paperwidth*.9,\\paperheight*.45);
+			\\draw [wugrey, thick] (\\paperwidth*.07,\\paperheight*.0) rectangle (\\paperwidth * .55,\\paperheight *.45);
+			\\node at (\\paperwidth*.11,\\paperheight*.22) {\\includegraphics[width=0.95cm]{Graphics/WU_Logo2}};
+			\\node[text width=\\paperwidth*.33,font=\\scriptsize,anchor=west, right] at (\\paperwidth*.18,\\paperheight*.32){\\address};
+
+  		\\end{tikzpicture}
+	}
+
+}
+
+
+\\usebeamertemplate{endpage}"
+)
+}
+```

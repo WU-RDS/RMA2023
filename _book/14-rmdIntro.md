@@ -996,9 +996,9 @@ confint(tukeys)
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate lwr      upr     
-## generic retargeting - no retargeting == 0      198.4986 -73.1858 470.1830
-## dynamic retargeting - no retargeting == 0      730.4972 465.8066 995.1877
-## dynamic retargeting - generic retargeting == 0 531.9986 255.8159 808.1813
+## generic retargeting - no retargeting == 0      198.4986 -73.1816 470.1788
+## dynamic retargeting - no retargeting == 0      730.4972 465.8107 995.1837
+## dynamic retargeting - generic retargeting == 0 531.9986 255.8201 808.1770
 ```
 
 ```r
