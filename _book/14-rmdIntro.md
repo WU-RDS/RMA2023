@@ -178,7 +178,7 @@ summary(cars)
 ```
 
 ```r
-plot(dist~speed, cars)
+plot(dist ~ speed, cars)
 ```
 
 <img src="14-rmdIntro_files/figure-html/cars2-1.png" width="672" />
@@ -386,9 +386,8 @@ Let´s load the data first and inspect the contained variables:
 
 
 ```r
-customer_data <- read.table("https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/Assignments/Assignment2/assignment2_data.dat", 
-                          sep = "\t", 
-                          header = TRUE) #read in data
+customer_data <- read.table("https://raw.githubusercontent.com/WU-RDS/MRDA2021/main/Assignments/Assignment2/assignment2_data.dat",
+    sep = "\t", header = TRUE)  #read in data
 head(customer_data)
 ```
 
@@ -440,12 +439,13 @@ To compute the confidence interval for the average revenue per customer, we will
 
 
 ```r
-#Calculate components of confidence interval formula 
-mean_rev <- mean(customer_data$revenue) #mean
-sd_rev <- sd(customer_data$revenue) #standard deviation
-n <- nrow(customer_data) #number of observations 
+# Calculate components of confidence interval
+# formula
+mean_rev <- mean(customer_data$revenue)  #mean
+sd_rev <- sd(customer_data$revenue)  #standard deviation
+n <- nrow(customer_data)  #number of observations 
 se_rev <- sd_rev/sqrt(n)
-df <- n-1 #degress of freedom
+df <- n - 1  #degress of freedom
 t_crit <- qt(0.975, df)
 ```
 
@@ -455,7 +455,7 @@ $$CI_{rev} = \bar x \pm t_{ \alpha \over 2}*SE_{\bar x}$$
 
 
 ```r
-#Interval for revenue
+# Interval for revenue
 ci_lower <- mean_rev - t_crit * se_rev
 ci_upper <- mean_rev + t_crit * se_rev
 ```
@@ -494,7 +494,8 @@ We need to transform the variable *exp_group* into a factor variable. Note that 
 
 ```r
 # Transform into factor variable
-customer_data$exp_group <- factor(customer_data$exp_group, levels = c(0,1), labels = c("control", "treatment"))
+customer_data$exp_group <- factor(customer_data$exp_group,
+    levels = c(0, 1), labels = c("control", "treatment"))
 ```
 
 A good way to get a feeling for the data is to compute descriptive statistics and create appropriate plots. Since we are testing differences in means, a plot of means (or a boxplot) would be appropriate. 
@@ -503,7 +504,7 @@ Let's inspect the descriptive statistics first:
 
 
 ```r
-# Descriptive statistics 
+# Descriptive statistics
 describeBy(customer_data$revenue, customer_data$exp_group)
 ```
 
@@ -526,19 +527,18 @@ It can already be seen that the mean revenue is higher in the treatment group.
 
 
 ```r
-mean_data <- summarySE(customer_data, measurevar = "revenue", 
+mean_data <- summarySE(customer_data, measurevar = "revenue",
     groupvars = c("exp_group"))
 
 # Plot of means
-ggplot(mean_data, aes(x = exp_group, y = revenue)) + 
-    geom_bar(position = position_dodge(0.9), colour = "black", 
-        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
-    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
-        aes(ymin = revenue - ci, ymax = revenue + ci)) + 
-    theme_bw() + labs(x = "Group", y = "Average revenue", 
-    title = "Average revenue by group") + 
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
-    color = "#666666"))
+ggplot(mean_data, aes(x = exp_group, y = revenue)) +
+    geom_bar(position = position_dodge(0.9), colour = "black",
+        fill = "#CCCCCC", stat = "identity", width = 0.65) +
+    geom_errorbar(position = position_dodge(0.9), width = 0.15,
+        aes(ymin = revenue - ci, ymax = revenue + ci)) +
+    theme_bw() + labs(x = "Group", y = "Average revenue",
+    title = "Average revenue by group") + theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5, color = "#666666"))
 ```
 
 <img src="14-rmdIntro_files/figure-html/unnamed-chunk-11-1.png" width="672" />
@@ -563,7 +563,7 @@ t.test(revenue ~ exp_group, data = customer_data)
 ## 
 ## data:  revenue by exp_group
 ## t = -4.4767, df = 283.33, p-value = 0.000011
-## alternative hypothesis: true difference in means between group control and group treatment is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -626.0553 -243.6507
 ## sample estimates:
@@ -619,8 +619,9 @@ Again, we start with descriptive statistics to get a feel for the data. Note tha
 
 
 ```r
-# Descriptive statistics 
-psych::describe(customer_data[!is.na(customer_data$time_on_site_1),c("time_on_site","time_on_site_1")])
+# Descriptive statistics
+psych::describe(customer_data[!is.na(customer_data$time_on_site_1),
+    c("time_on_site", "time_on_site_1")])
 ```
 
 ```
@@ -637,21 +638,22 @@ As can be seen, the mean for the alternative page layout is higher, which we can
 
 ```r
 # Plot of means
-customer_data_long <- melt(customer_data[!is.na(customer_data$time_on_site_1), c("time_on_site", "time_on_site_1")])
+customer_data_long <- melt(customer_data[!is.na(customer_data$time_on_site_1),
+    c("time_on_site", "time_on_site_1")])
 names(customer_data_long) <- c("layout", "time_on_site")
 
-mean_data <- summarySE(customer_data_long, measurevar = "time_on_site", 
+mean_data <- summarySE(customer_data_long, measurevar = "time_on_site",
     groupvars = c("layout"))
 
 # Plot of means
-ggplot(mean_data, aes(x = layout, y = time_on_site)) + 
-    geom_bar(position = position_dodge(0.9), colour = "black", 
-        fill = "#CCCCCC", stat = "identity", width = 0.65) + 
-    geom_errorbar(position = position_dodge(0.9), width = 0.15, 
-        aes(ymin = time_on_site - ci, ymax = time_on_site + ci)) + 
-    theme_bw() + labs(x = "layout", y = "Average time on site", 
-    title = "Average time on site by group") + 
-    theme_bw() + theme(plot.title = element_text(hjust = 0.5, 
+ggplot(mean_data, aes(x = layout, y = time_on_site)) +
+    geom_bar(position = position_dodge(0.9), colour = "black",
+        fill = "#CCCCCC", stat = "identity", width = 0.65) +
+    geom_errorbar(position = position_dodge(0.9), width = 0.15,
+        aes(ymin = time_on_site - ci, ymax = time_on_site +
+            ci)) + theme_bw() + labs(x = "layout",
+    y = "Average time on site", title = "Average time on site by group") +
+    theme_bw() + theme(plot.title = element_text(hjust = 0.5,
     color = "#666666"))
 ```
 
@@ -663,7 +665,8 @@ It appears that there is a difference in the means. To test whether it is signif
 
 
 ```r
-t.test(y = customer_data$time_on_site, x = customer_data$time_on_site_1, paired = TRUE)
+t.test(y = customer_data$time_on_site, x = customer_data$time_on_site_1,
+    paired = TRUE)
 ```
 
 ```
@@ -685,7 +688,8 @@ Now let's find out how strong this effect is.
 
 
 ```r
-cohensD(customer_data$time_on_site, customer_data$time_on_site_1, method = 'paired')
+cohensD(customer_data$time_on_site, customer_data$time_on_site_1,
+    method = "paired")
 ```
 
 ```
@@ -723,7 +727,8 @@ The question of how many customers we would need to include in each group of our
 
 
 ```r
-pwr.t.test(d = 0.1, sig.level = 0.05, power = 0.8, type = c("two.sample"), alternative = c("two.sided"))
+pwr.t.test(d = 0.1, sig.level = 0.05, power = 0.8,
+    type = c("two.sample"), alternative = c("two.sided"))
 ```
 
 ```
@@ -762,14 +767,16 @@ First, we will recode the relevant variables into factors and give them more des
 
 
 ```r
-customer_data$retargeting <- factor(customer_data$retargeting, levels = c(1,2,3), labels = c("no retargeting", "generic retargeting", "dynamic retargeting"))
+customer_data$retargeting <- factor(customer_data$retargeting,
+    levels = c(1, 2, 3), labels = c("no retargeting",
+        "generic retargeting", "dynamic retargeting"))
 ```
 
 Next we will calculate summary statistics for the data and produce an appropriate plot.
 
 
 ```r
-describeBy(customer_data$revenue,customer_data$retargeting)
+describeBy(customer_data$revenue, customer_data$retargeting)
 ```
 
 ```
@@ -795,14 +802,16 @@ describeBy(customer_data$revenue,customer_data$retargeting)
 ```
 
 ```r
-mean_data <- summarySE(customer_data, measurevar="revenue", groupvars=c("retargeting"))
-ggplot(mean_data,aes(x = retargeting, y = revenue)) + 
-  geom_bar(position=position_dodge(1), colour="black", fill = "#CCCCCC", stat="identity", width = 0.65) +
-  geom_errorbar(position=position_dodge(.9), width=.15, aes(ymin=revenue-ci, ymax=revenue+ci)) +
-  theme_bw() +
-  labs(x = "Group", y = "Average revenue", title = "Average revenue by group")+
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+mean_data <- summarySE(customer_data, measurevar = "revenue",
+    groupvars = c("retargeting"))
+ggplot(mean_data, aes(x = retargeting, y = revenue)) +
+    geom_bar(position = position_dodge(1), colour = "black",
+        fill = "#CCCCCC", stat = "identity", width = 0.65) +
+    geom_errorbar(position = position_dodge(0.9), width = 0.15,
+        aes(ymin = revenue - ci, ymax = revenue + ci)) +
+    theme_bw() + labs(x = "Group", y = "Average revenue",
+    title = "Average revenue by group") + theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5, color = "#666666"))
 ```
 
 <img src="14-rmdIntro_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" />
@@ -817,7 +826,7 @@ The last assumption is satisfied due to the fact that the observations were rand
 
 
 ```r
-#check number of observations by group
+# check number of observations by group
 table(customer_data$retargeting)
 ```
 
@@ -833,9 +842,10 @@ Homogeneity of variances can be checked with Levene's test (implemented as ```le
 
 
 ```r
-#Homogeneity of variances test:
+# Homogeneity of variances test:
 library(car)
-leveneTest(revenue ~ retargeting, data=customer_data, center=mean)
+leveneTest(revenue ~ retargeting, data = customer_data,
+    center = mean)
 ```
 
 ```
@@ -851,8 +861,8 @@ Since all assumptions are fulfilled we can move on to conducting the actual ANOV
 
 
 ```r
-#Anova:
-aov <- aov(revenue~retargeting, data = customer_data)
+# Anova:
+aov <- aov(revenue ~ retargeting, data = customer_data)
 summary(aov)
 ```
 
@@ -870,8 +880,8 @@ Next we will briefly inspect the residuals of the ANOVA to see if the assumption
 
 
 ```r
-#Inspect residuals
-plot(aov,1)
+# Inspect residuals
+plot(aov, 1)
 ```
 
 <img src="14-rmdIntro_files/figure-html/unnamed-chunk-27-1.png" width="672" />
@@ -880,7 +890,7 @@ The first plot gives us a feel for the distribution of the residuals of the thre
 
 
 ```r
-plot(aov,2)
+plot(aov, 2)
 ```
 
 <img src="14-rmdIntro_files/figure-html/unnamed-chunk-28-1.png" width="672" />
@@ -914,8 +924,9 @@ Here we will conduct both the Bonferroni correction as well as Tukey's HSD test,
 
 
 ```r
-#bonferroni
-pairwise.t.test(customer_data$revenue, customer_data$retargeting, data=customer_data, p.adjust.method = "bonferroni")
+# bonferroni
+pairwise.t.test(customer_data$revenue, customer_data$retargeting,
+    data = customer_data, p.adjust.method = "bonferroni")
 ```
 
 ```
@@ -943,7 +954,7 @@ Alternatively, you could have also chosen to use Tukey's HSD to conduct the post
 
 
 ```r
-#tukey correction using the mult-comp package
+# tukey correction using the mult-comp package
 library(multcomp)
 tukeys <- glht(aov, linfct = mcp(retargeting = "Tukey"))
 summary(tukeys)
@@ -990,19 +1001,22 @@ confint(tukeys)
 ## 
 ## Fit: aov(formula = revenue ~ retargeting, data = customer_data)
 ## 
-## Quantile = 2.3559
+## Quantile = 2.356
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
 ##                                                Estimate lwr      upr     
-## generic retargeting - no retargeting == 0      198.4986 -73.2174 470.2146
-## dynamic retargeting - no retargeting == 0      730.4972 465.7758 995.2185
-## dynamic retargeting - generic retargeting == 0 531.9986 255.7838 808.2134
+## generic retargeting - no retargeting == 0      198.4986 -73.2286 470.2258
+## dynamic retargeting - no retargeting == 0      730.4972 465.7649 995.2294
+## dynamic retargeting - generic retargeting == 0 531.9986 255.7724 808.2247
 ```
 
 ```r
-# The mar parameter changes the margins around created plots. This is done so the labels on the side of the Tukey plot are visible (however, this was not expected). 
+# The mar parameter changes the margins around
+# created plots. This is done so the labels on
+# the side of the Tukey plot are visible
+# (however, this was not expected).
 par(mar = c(5, 20, 4, 2))
 plot(tukeys)
 ```
@@ -1042,10 +1056,8 @@ A good way to visualize ordinal data is through a boxplot.
 
 
 ```r
-ggplot(data = customer_data, aes(x = exp_group, y = nps)) + 
-  geom_boxplot() + 
-  theme_bw() + 
-  labs(x = "", y = "Rank")
+ggplot(data = customer_data, aes(x = exp_group, y = nps)) +
+    geom_boxplot() + theme_bw() + labs(x = "", y = "Rank")
 ```
 
 <img src="14-rmdIntro_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" />
@@ -1056,7 +1068,7 @@ The only assumption that we require for this test is that the dependent variable
 
 
 ```r
-#ordinal data so we use a non-parametric test
+# ordinal data so we use a non-parametric test
 wilcox.test(nps ~ exp_group, data = customer_data)
 ```
 
@@ -1103,7 +1115,8 @@ First, we will recode the relevant variables into factors and give them more des
 
 
 ```r
-customer_data$conversion <- factor(customer_data$conversion, levels = c(0,1), labels = c("no", "yes"))
+customer_data$conversion <- factor(customer_data$conversion,
+    levels = c(0, 1), labels = c("no", "yes"))
 ```
 
 First let´s create a summary plot to get a feeling for the data.
@@ -1136,10 +1149,12 @@ We see that our conversion seems to be better for the group with the personaliza
 
 
 ```r
-n1 <- nrow(subset(customer_data, exp_group == "control")) #number of observations for females
+n1 <- nrow(subset(customer_data, exp_group == "control"))  #number of observations for females
 n2 <- nrow(subset(customer_data, exp_group == "treatment"))  #number of observations for males
-n1_conv <- nrow(subset(customer_data, exp_group == "control" & conversion == "yes"))  #number of conversions for females
-n2_conv <- nrow(subset(customer_data, exp_group == "treatment" & conversion == "yes"))  #number of conversions for males
+n1_conv <- nrow(subset(customer_data, exp_group ==
+    "control" & conversion == "yes"))  #number of conversions for females
+n2_conv <- nrow(subset(customer_data, exp_group ==
+    "treatment" & conversion == "yes"))  #number of conversions for males
 
 prop.test(x = c(n1_conv, n2_conv), n = c(n1, n2), conf.level = 0.95)
 ```
@@ -1164,26 +1179,19 @@ This information could have also been extracted using the ggstatsplot package:
 
 ```r
 library(ggstatsplot)
-ggbarstats(
-  data = customer_data,
-  x = conversion,
-  y = exp_group,
-  title = "Conversion by group",
-  xlab = "Group",
-  palette = "Blues",
-  messages = FALSE,
-  bar.proptest = FALSE,
-  bf.message = FALSE
-)
+ggbarstats(data = customer_data, x = conversion, y = exp_group,
+    title = "Conversion by group", xlab = "Group",
+    palette = "Blues", messages = FALSE, bar.proptest = FALSE,
+    bf.message = FALSE)
 ```
 
 <img src="14-rmdIntro_files/figure-html/unnamed-chunk-39-1.png" width="672" />
 
 
-<!---
-## Solution assignment 4
 
-As a marketing manager of a consumer electronics company, you are assigned the task to analyze the relative influence of different marketing activities. Specifically, you are supposed to analyse the effects of (1) TV advertising, (2) online advertising, and (3) radio advertising on the sales of fitness trackers (wristbands). Your data set consists of sales of the product in different markets (each line represents one market) from the past year, along with the advertising budgets for the product in each of those markets for three different media: TV, online, and radio. 
+## Solution assignment 3
+
+As a marketing manager of a consumer electronics company, you are assigned the task to analyze the relative influence of different marketing activities. Specifically, you are supposed to analyze the effects of (1) TV advertising, (2) online advertising, and (3) radio advertising on the sales of fitness trackers (wristbands). Your data set consists of sales of the product in different markets (each line represents one market) from the past year, along with the advertising budgets for the product in each of those markets for three different media: TV, online, and radio. 
 
 The following variables are available to you:
   
@@ -1204,15 +1212,14 @@ Please conduct the following analyses:
 * How do you judge the fit of the model? Please also visualize the model fit using an appropriate graph.
 5. What sales quantity would you predict based on your model for a product when the marketing activities are planned as follows: TV: 150 thsd. €, Online: 26 thsd. €, Radio: 15 thsd. €? Please provide the equation you used to make the prediction. 
 
-When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment4.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment4_studendID_name.html".
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment3.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment3_studendID_name.html".
 
 **Load data**
 
 
 ```r
-sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat", 
-                          sep = "\t", 
-                          header = TRUE) #read in data
+sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat",
+    sep = "\t", header = TRUE)  #read in data
 sales_data$market_id <- 1:nrow(sales_data)
 head(sales_data)
 ```
@@ -1238,9 +1245,9 @@ str(sales_data)
 
 **Question 1**
 
-In a first step, we specify the regression equation. In this case, sales is the dependent variable which is regressed on the different types of advertising expenditures that represent the independent variables. Thus, the regression equation is:
+In a first step, we specify the regression equation. In this case, sales is the dependent variable which is regressed on the different types of advertising expenditures that represent the independent variables for product *i*. Thus, the regression equation is:
 
-$$Sales=\beta_0 + \beta_1 * tv\_adspend + \beta_2 * online\_adspend + \beta_3 * radio\_adspend + \epsilon$$
+$$Sales_{i}=\beta_0 + \beta_1 * tv\_adspend_{i} + \beta_2 * online\_adspend_{i} + \beta_3 * radio\_adspend_{i} + \epsilon$$
   
 **Question 2**
   
@@ -1267,30 +1274,60 @@ psych::describe(sales_data)
 ## market_id         -1.22 4.44
 ```
 
+Inspecting the correlation matrix reveals that the sales variable is positively correlated with tv advertising and online advertising expenditures. The correlations among the independent variables appear moderate. 
+  
+
+```r
+library("Hmisc")
+rcorr(as.matrix(sales_data[, c("sales", "tv_adspend",
+    "online_adspend", "radio_adspend")]))
+```
+
+```
+##                sales tv_adspend online_adspend radio_adspend
+## sales           1.00       0.78           0.54         -0.04
+## tv_adspend      0.78       1.00           0.05          0.03
+## online_adspend  0.54       0.05           1.00         -0.07
+## radio_adspend  -0.04       0.03          -0.07          1.00
+## 
+## n= 236 
+## 
+## 
+## P
+##                sales  tv_adspend online_adspend radio_adspend
+## sales                 0.0000     0.0000         0.5316       
+## tv_adspend     0.0000            0.4127         0.6735       
+## online_adspend 0.0000 0.4127                    0.2790       
+## radio_adspend  0.5316 0.6735     0.2790
+```
+
 Since we have continuous variables, we use scatterplots to investigate the relationship between sales and each of the predictor variables.
 
 
 ```r
 library(ggplot2)
-ggplot(sales_data, aes(x = tv_adspend, y = sales)) + geom_point() + geom_smooth(method = "lm", 
-    fill = "blue", alpha = 0.1) + theme_bw()
+ggplot(sales_data, aes(x = tv_adspend, y = sales)) +
+    geom_point() + geom_smooth(method = "lm", fill = "blue",
+    alpha = 0.1) + theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-42-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-43-1.png" width="672" />
 
 ```r
-ggplot(sales_data, aes(x = online_adspend, y = sales)) + geom_point() + geom_smooth(method = "lm", 
-    fill = "blue", alpha = 0.1) + theme_bw()
+ggplot(sales_data, aes(x = online_adspend, y = sales)) +
+    geom_point() + geom_smooth(method = "lm", fill = "blue",
+    alpha = 0.1) + theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-42-2.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-43-2.png" width="672" />
 
 ```r
-ggplot(sales_data, aes(x = radio_adspend, y = sales)) + geom_smooth(method = "lm", 
-    fill = "blue", alpha = 0.1) + geom_point() +theme_bw()
+ggplot(sales_data, aes(x = radio_adspend, y = sales)) +
+    geom_smooth(method = "lm", fill = "blue", alpha = 0.1) +
+    geom_point() + theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-42-3.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-43-3.png" width="672" />
 
 The plots including the fitted lines from a simple linear model already suggest that there might be a positive linear relationship between sales and TV- and online-advertising. However, there does not appear to be a strong relationship between sales and radio advertising. 
 
@@ -1300,7 +1337,8 @@ The estimate the model, we will use the ```lm()``` function:
   
 
 ```r
-linear_model <- lm(sales ~ tv_adspend + online_adspend + radio_adspend, data = sales_data)
+linear_model <- lm(sales ~ tv_adspend + online_adspend +
+    radio_adspend, data = sales_data)
 ```
 
 Before we can inspect the results, we need to test if there might be potential problems with our model specification. 
@@ -1312,11 +1350,12 @@ The check for outliers, we extract the studentized residuals from our model and 
 
 ```r
 sales_data$stud_resid <- rstudent(linear_model)
-plot(1:nrow(sales_data),sales_data$stud_resid, ylim=c(-3.3,3.3)) #create scatterplot 
-abline(h=c(-3,3),col="red",lty=2) #add reference lines
+plot(1:nrow(sales_data), sales_data$stud_resid, ylim = c(-3.3,
+    3.3))  #create scatterplot 
+abline(h = c(-3, 3), col = "red", lty = 2)  #add reference lines
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-44-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-45-1.png" width="672" />
 
 Since there are no residuals with absolute values larger than 3, we conclude that there are no severe outliers. 
 
@@ -1326,16 +1365,16 @@ To test for influential observations, we use Cook's Distance. You may use the fo
 
 
 ```r
-plot(linear_model,4)
+plot(linear_model, 4)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-45-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-46-1.png" width="672" />
 
 ```r
-plot(linear_model,5)
+plot(linear_model, 5)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-45-2.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-46-2.png" width="672" />
 
 Since all values are well below the cutoff, we conclude that influential observations are not a problem in our model. 
 
@@ -1349,7 +1388,7 @@ library(car)
 avPlots(linear_model)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-46-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-47-1.png" width="672" />
 
 The plots suggest that the linear specification is appropriate. In addition, you could also use the residuals plot to see if the linear specification is appropriate. The red line is a smoothed curve through the residuals plot and if it deviates from the dashed grey horizontal line a lot, this would suggest that a linear specification is not appropriate. 
 
@@ -1358,7 +1397,7 @@ The plots suggest that the linear specification is appropriate. In addition, you
 plot(linear_model, 1)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-47-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-48-1.png" width="672" />
 
 In this example, the red line is close to the dashed grey line, so the linear specification appears reasonable. 
 
@@ -1371,7 +1410,7 @@ Next, we test if the residual variance is approximately the same at all levels o
 plot(linear_model, 1)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-48-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-49-1.png" width="672" />
 
 The spread of residuals at different levels of the predicted outcome does not appear to be very different. Thus, we can conclude that heteroscedasticity is unlikely to be a problem. We can also confirm this conclusion by using the Breusch-Pagan test, which shows an insignificant results, meaning that we cannot reject the Null Hypothesis of equal variances. 
 
@@ -1395,10 +1434,10 @@ Next, we test if the residuals are approximately normally distributed using the 
 
 
 ```r
-plot(linear_model,2)
+plot(linear_model, 2)
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-50-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-51-1.png" width="672" />
 
 The Q-Q plot does not suggest a severe deviation from a normal distribution. This could also be validated using the Shapiro test:
 
@@ -1426,7 +1465,8 @@ To test for linear dependence of the regressors, we first test the bivariate cor
 
 ```r
 library("Hmisc")
-rcorr(as.matrix(sales_data[,c("tv_adspend","online_adspend","radio_adspend")]))
+rcorr(as.matrix(sales_data[, c("tv_adspend", "online_adspend",
+    "radio_adspend")]))
 ```
 
 ```
@@ -1445,14 +1485,15 @@ rcorr(as.matrix(sales_data[,c("tv_adspend","online_adspend","radio_adspend")]))
 ## radio_adspend  0.6735     0.2790
 ```
 
-The results show that the bivariate correlations are rather low. This can also be shown in a plot:
+The results show that the bivariate correlations are low to moderate. This can also be shown in a plot:
 
 
 ```r
-plot(sales_data[,c("tv_adspend","online_adspend","radio_adspend")])
+plot(sales_data[, c("tv_adspend", "online_adspend",
+    "radio_adspend")])
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-53-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-54-1.png" width="672" />
 
 In a next step, we compute the variance inflation factor for each predictor variable. The values should be close to 1 and values larger than 4 indicate potential problems with the linear dependence of regressors.  
 
@@ -1576,7 +1617,7 @@ ggplot(sales_data,aes(yhat,sales)) +
   theme_bw()
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-58-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-59-1.png" width="672" />
 
 Of course, you could have also used the functions included in the ggstatsplot package to report the results from your regression model. 
 
@@ -1584,27 +1625,28 @@ Of course, you could have also used the functions included in the ggstatsplot pa
 ```r
 library(ggstatsplot)
 options(scipen = 0)
-#specify_decimal_p(0.00000000004, k = 3L, p.value = TRUE)
+# specify_decimal_p(0.00000000004, k = 3L,
+# p.value = TRUE)
 ggcoefstats(x = linear_model, k = 15, title = "Sales predicted by adspend, airplay, & starpower")
 ```
 
-<img src="14-rmdIntro_files/figure-html/unnamed-chunk-59-1.png" width="672" />
+<img src="14-rmdIntro_files/figure-html/unnamed-chunk-60-1.png" width="672" />
 
 
 **Question 5**
   
 Finally, we can predict the outcome for the given marketing mix using the following equation: 
   
-$$\hat{sales}= 0.045*150 + 0.192*26 + 0.007*15 = 14.623$$
+$$\hat{sales}= 3.6 + 0.045*150 + 0.186*26 + 0.011*15 = 15.11$$
 
  
   
 
 ```r
-summary(linear_model)$coefficients[1,1] + 
-  summary(linear_model)$coefficients[2,1]*150 + 
-  summary(linear_model)$coefficients[3,1]*26 + 
-  summary(linear_model)$coefficients[4,1]*15
+summary(linear_model)$coefficients[1, 1] + summary(linear_model)$coefficients[2,
+    1] * 150 + summary(linear_model)$coefficients[3,
+    1] * 26 + summary(linear_model)$coefficients[4,
+    1] * 15
 ```
 
 ```
@@ -1612,7 +1654,5 @@ summary(linear_model)$coefficients[1,1] +
 ```
 
 This means that given the planned marketing mix, we would expect to sell around 15,112 units (recall that the variables are measured in thousands of units). 
-
--->
 
 

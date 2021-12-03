@@ -235,11 +235,8 @@ We can use the `fviz_cluster` function from the `factoextra` library to get a pa
 ```r
 library(factoextra)
 fviz_cluster(kmeans_tracks, data = famous_tracks_scale,
-             palette = hcl.colors(3, palette = "Dynamic"), 
-             geom = "point",
-             ellipse.type = "convex", 
-             ggtheme = theme_bw()
-             )
+    palette = hcl.colors(3, palette = "Dynamic"), geom = "point",
+    ellipse.type = "convex", ggtheme = theme_bw())
 ```
 
 <img src="13-cluster_analysis_files/figure-html/unnamed-chunk-14-1.png" width="672" />
