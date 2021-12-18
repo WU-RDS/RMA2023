@@ -554,29 +554,29 @@ After discussing all the steps in the research process up to the data collection
 
 **(LC1.1) Indicate the level of measurement of the following variables:**
 
-* Occupation of survey participants
-* Willingness-to-pay for a product 
-* Your grade in the marketing research course (1, 2, 3, 4, 5) 
-* Rank order of most important product attributes 
-* Student registration number
-* Gender of survey participants
-* Consumer preferences measured on a 5-point Likert scale
-* Mileage (kilometers per liter) a car gets
-* Age of survey participants
-* Temperature in °C
-* Number of products sold
+* Occupation of survey participants (nominal)
+* Willingness-to-pay for a product (ratio)
+* Your grade in the marketing research course (1, 2, 3, 4, 5) (ordinal) 
+* Rank order of most important product attributes (ordinal)
+* Student registration number (nominal)
+* Gender of survey participants (nominal)
+* Consumer preferences measured on a 5-point Likert scale (ordinal; interval if you would argue that the difference between the scalepoints is the same)
+* Mileage (kilometers per liter) a car gets (ratio)
+* Age of survey participants (ratio)
+* Temperature in °C (interval)
+* Number of products sold (ratio)
 
 **(LC1.2) Which of the answers is correct? A nominal scale …**
 
 - [ ] …has an absolute zero point
 - [ ] …possesses all properties of an ordinal scale
-- [ ] …can have numerical values
-- [ ] …serves as a label to classify/categorize objects
+- [x] …can have numerical values
+- [x] …serves as a label to classify/categorize objects
 - [ ] None of the above 	
 
 **(LC1.3) Which of these statements regarding formative constructs are true?**
 
-- [ ] Indicators (items) measure the cause for the change of the not directly observable construct
+- [x] Indicators (items) measure the cause for the change of the not directly observable construct
 - [ ] Indicators (items) measure the effect of the change in a not directly observable construct
 - [ ] The indicators (items) of the scale should be highly correlated
 - [ ] Multi-item measurement is particularly important for the increase in the reliability of the measurement
@@ -587,17 +587,17 @@ After discussing all the steps in the research process up to the data collection
 - [ ] …the main concern is to generate predictions of future outcomes 
 - [ ] …the main concern is to maximize the explained variance
 - [ ] …observational research is the 'gold standard'
-- [ ] …randomization minimizes unsystematic variation
+- [x] …randomization minimizes unsystematic variation
 - [ ] None of the above 	
 
 **(LC1.5) True or false? Reliability refers to the consistency of a measurement.**
 
-- [ ] True 
+- [x] True 
 - [ ] False
 
 **(LC1.5) Using a between-subjects design, we ... **
 
-- [ ] ... manipulate the independent variable (treatment) using different persons for each group
+- [x] ... manipulate the independent variable (treatment) using different persons for each group
 - [ ] ... manipulate independent variable using the same participants for each group 
 - [ ] ... manipulate the dependent variable (treatment) using different persons for each group
 - [ ] ... manipulate dependent variable using the same participants for each group 
@@ -605,23 +605,23 @@ After discussing all the steps in the research process up to the data collection
 
 **(LC1.6) When conducting field experiments, the term crossover effect means ...**
 
-- [ ] ... that an individual who was supposed to be assigned to one treatment is accidentally exposed to another treatment 
+- [x] ... that an individual who was supposed to be assigned to one treatment is accidentally exposed to another treatment 
 - [ ] ... that a treated individual affects the outcomes for other untreated individuals  
 - [ ] ... that individuals can be part of both the test and the control condition
 - [ ] None of the above
 
 **(LC1.7) Conditions for causality are ...**
 
-- [ ] ... a cause and an effect should vary together in the way predicted by the hypothesis under consideration 
+- [x] ... a cause and an effect should vary together in the way predicted by the hypothesis under consideration 
 - [ ] ... random assignment of test units
-- [ ] ... the causing event must occur before the effect
-- [ ] ... absence of other possible causal factors
+- [x] ... the causing event must occur before the effect
+- [x] ... absence of other possible causal factors
 - [ ] None of the above
 
 **(LC1.8) The effect of the treatment on the treated in DID models can be written as ...**
 
 - [ ] $(Yt,pre - Yt,post) − (Yc,post - Yc,pre)$  
-- [ ] $(Yt,post - Yt,pre) − (Yc,post - Yc,pre)$ 
+- [x] $(Yt,post - Yt,pre) − (Yc,post - Yc,pre)$ 
 - [ ] $(Yt,pre - Yt,post) − (Yc,pre - Yc,post)$  
 - [ ] $(Yt,post - Yt,pre) − (Yc,pre - Yc,post)$  
 - [ ] None of the above
@@ -629,15 +629,15 @@ After discussing all the steps in the research process up to the data collection
 **(LC1.9) In predictive modeling tasks ...**
 
 - [ ] ... once major concern are unobserved confounders
-- [ ] ... one major concern is overfitting 
-- [ ] ... we primarily care about the predictive ability of the model  
+- [x] ... one major concern is overfitting 
+- [x] ... we primarily care about the predictive ability of the model  
 - [ ] ... we primarily care about causal effects 
 - [ ] None of the above
 
 **(LC1.10) True or false? For ordinal scales, the magnitude of difference between scale points is known**
 
 - [ ] True 
-- [ ] False
+- [x] False
 
 
 ## References {-}

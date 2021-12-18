@@ -938,12 +938,12 @@ ggmap(de_map_g_str, extent = "device") +
 
 - [ ] Nominal
 - [ ] Ordinal
-- [ ] Interval
-- [ ] Ratio
+- [x] Interval
+- [x] Ratio
 
 **(LC4.2) How can you compute the standardized variate of a variable X?**
 
-- [ ] $Z=\frac{X_i-\bar{X}}{s}$
+- [x] $Z=\frac{X_i-\bar{X}}{s}$
 - [ ] $Z=\frac{\bar{X}+X_i}{s}$
 - [ ] $Z=\frac{s}{\bar{X}+X_i}$
 - [ ] $Z=s*({\bar{X}+X_i)}$
@@ -962,7 +962,7 @@ ggmap(de_map_g_str, extent = "device") +
 - [ ] `df$mpg_std <- zscore(df$mpg)`
 - [ ] `df$mpg_std <- stdv(df$mpg)`
 - [ ] `df$mpg_std <- std.scale(df$mpg)`
-- [ ] `df$mpg_std <- scale(df$mpg)`
+- [x] `df$mpg_std <- scale(df$mpg)`
 - [ ] None of the above 	
 
 **(LC4.4) How could you produce the below output?**
@@ -973,7 +973,7 @@ ggmap(de_map_g_str, extent = "device") +
   </script>
 </div>
 
-- [ ] `describe(mtcars[,c("hp","mpg","qsec")])`
+- [x] `describe(mtcars[,c("hp","mpg","qsec")])`
 - [ ] `summary(mtcars[,c("hp","mpg","qsec")])`
 - [ ] `table(mtcars[,c("hp","mpg","qsec")])`
 - [ ] `str(mtcars[,c("hp","mpg","qsec")])`
@@ -989,7 +989,7 @@ ggmap(de_map_g_str, extent = "device") +
 ```
 
 - [ ] `describe(mtcars$carb)`
-- [ ] `table(mtcars$carb)`
+- [x] `table(mtcars$carb)`
 - [ ] `str(mtcars$carb)`
 - [ ] `prop.table(mtcars$carb)`
 - [ ] None of the above 	
@@ -998,7 +998,7 @@ ggmap(de_map_g_str, extent = "device") +
 
 - [ ] Two categorical variables
 - [ ] One categorical and one continuous variable
-- [ ] Two continuous variables
+- [x] Two continuous variables
 - [ ] One continuous variable
 - [ ] None of the above 	
 
@@ -1007,8 +1007,8 @@ ggmap(de_map_g_str, extent = "device") +
 <img src="05-visualization_files/figure-html/unnamed-chunk-58-1.png" width="672" />
 
 - [ ] This is a bar chart
-- [ ] This is a histogram
-- [ ] It shows the frequency distribution of a continuous variable
+- [x] This is a histogram
+- [x] It shows the frequency distribution of a continuous variable
 - [ ] It shows the frequency distribution of a categorical variable
 - [ ] None of the above 	
 
@@ -1017,14 +1017,14 @@ ggmap(de_map_g_str, extent = "device") +
 <img src="05-visualization_files/figure-html/unnamed-chunk-59-1.png" width="50%" />
 
 - [ ] This is a bar chart
-- [ ] 50% of observations are contained in the gray area
+- [x] 50% of observations are contained in the gray area
 - [ ] The horizontal black line indicates the mean
-- [ ] This is a boxplot
+- [x] This is a boxplot
 - [ ] None of the above 	
 
 **(LC4.9) Which function can help you to save a graph made with `ggplot()`?** 
 
-- [ ] `ggsave()`
+- [x] `ggsave()`
 - [ ] `write.plot()`
 - [ ] `save.plot()`
 - [ ] `export.plot()`
@@ -1032,7 +1032,7 @@ ggmap(de_map_g_str, extent = "device") +
 **(LC4.10) For a variable that follows a normal distribution, within how many standard deviations of the mean are 95% of values?**
 
 - [ ] 1.645
-- [ ] 1.960
+- [x] 1.960
 - [ ] 2.580
 - [ ] 3.210
 - [ ] None of the above 	

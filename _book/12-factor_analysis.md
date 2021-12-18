@@ -1400,9 +1400,9 @@ head(test_data)
 
 **(LC8.1) The goals of factor analysis are...**
 
-- [ ] ...to identify underlying dimensions that explain correlations among variables.
+- [x] ...to identify underlying dimensions that explain correlations among variables.
 - [ ] ...to identify multiplicative effects in a linear regression.
-- [ ] ...to identify a smaller set of uncorrelated variables.
+- [x] ...to identify a smaller set of uncorrelated variables.
 - [ ] ...to identify interaction terms in a linear regression.
 - [ ] None of the above 
 
@@ -1411,13 +1411,13 @@ head(test_data)
 - [ ] A reduction greater than 50% of the input variables
 - [ ] Between a third and a fourth of the input variables
 - [ ] A reduction smaller than 50% of the input variables
-- [ ] None of the above 
+- [x] None of the above 
 
 **(LC8.3) What assumptions have to be fulfilled for using factor analysis?**
 
-- [ ] Variables must be in interval or ratio scale
-- [ ] Existence of some underlying factor structure
-- [ ] The correlation matrix must have sufficient number of correlations
+- [x] Variables must be in interval or ratio scale
+- [x] Existence of some underlying factor structure
+- [x] The correlation matrix must have sufficient number of correlations
 - [ ] Variables must be measured using ordinal scales
 - [ ] None of the above
 
@@ -1425,29 +1425,29 @@ head(test_data)
 
 - [ ] Regression coefficients
 - [ ] Correlations between the variables
-- [ ] Weights of a variable on a factor
-- [ ] Factor loadings
+- [x] Weights of a variable on a factor
+- [x] Factor loadings
 - [ ] None of the above 
 
 **(LC8.5) What is the null hypothesis of the Bartlett’s test of sphericity?**
 
 - [ ] All variables are correlated in the population
 - [ ] The correlation matrix is singular
-- [ ] All variables are uncorrelated in the population
-- [ ] The correlation matrix is an identity matrix
+- [x] All variables are uncorrelated in the population
+- [x] The correlation matrix is an identity matrix
 - [ ] None of the above 
 
 **(LC8.6) Before conducting PCA, how can you test the sampling adequacy of your data (i.e., how suited your data is for Factor Analysis)?**
 
 - [ ] Kaiser-Meyer-Olkin (KMO) test with scores <0.5
-- [ ] Kaiser-Meyer-Olkin (KMO) test with scores >0.5
+- [x] Kaiser-Meyer-Olkin (KMO) test with scores >0.5
 - [ ] By inspecting the scree plot
 - [ ] Cronbach's alpha test with scores >0.7
 - [ ] None of the above 
 
 **(LC8.7) What is communality?**
 
-- [ ] Proportion of common variance in a variable
+- [x] Proportion of common variance in a variable
 - [ ] Variance that is unique to a particular variable
 - [ ] Proportion of unique variance in a variable
 - [ ] Covariance between two factors
@@ -1456,13 +1456,13 @@ head(test_data)
 **(LC8.8) Orthogonal factor rotation assumes:**
 
 - [ ] Inter-correlated factors
-- [ ] Uncorrelated factors
+- [x] Uncorrelated factors
 - [ ] Outer-correlated factors
 - [ ] None of the above 
 
 **(LC8.9) Imagine you want to conduct a PCA on 10 variables without factor rotation and in a first step, you wish to find out how many components you should extract. How would the corresponding R Code look?**
 
-- [ ] `principal(data, nfactors = 10, rotate = "none")`
+- [x] `principal(data, nfactors = 10, rotate = "none")`
 - [ ] `principal(data, nfactors = “varimax”, rotate = 10)`
 - [ ] `principal(data, nfactors = 10, rotate = "oblimin")`
 - [ ] `principal(data, nfactors = 10, rotate = "varimax")`
@@ -1473,7 +1473,8 @@ head(test_data)
 - [ ] Validity (i.e. “consistency”) requires the absence of random errors
 - [ ] Reliability (i.e. “truthfulness") requires the absence of measurement errors
 - [ ] Validity describes the extent to which a scale produces consistent results in repeated measurements
-- [ ] None of the above 
+- [x] None of the above 
+
 
 
 ## References {-}

@@ -963,7 +963,7 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 
 **(LC6.1) The Null Hypothesis ($H_0$) is a statement of:**
 
-- [ ] The status-quo/no effect
+- [x] The status-quo/no effect
 - [ ] The desired status
 - [ ] The expected status
 - [ ] None of the above 
@@ -971,22 +971,22 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 **(LC6.2) Which statements about the Null Hypothesis ($H_0$) are TRUE?**
 
 - [ ] In scientific research, the goal is usually to confirm it
-- [ ] In scientific research, the goal is usually to reject it
+- [x] In scientific research, the goal is usually to reject it
 - [ ] It can be confirmed with one test
 - [ ] None of the above 
 
 **(LC6.3) The t-distribution:**
 
-- [ ] Has more probability mass in its tails compared to the normal distribution and therefore corrects for small samples
-- [ ] Approaches the normal distribution as n increases
-- [ ] Is the distribution of the t-statistic
+- [x] Has more probability mass in its tails compared to the normal distribution and therefore corrects for small samples
+- [x] Approaches the normal distribution as n increases
+- [x] Is the distribution of the t-statistic
 - [ ] Has less probability mass in its tails compared to the normal distribution and therefore corrects for small samples
 - [ ] None of the above 
 
 **(LC6.4) Type I vs. Type II Errors: Which of the following statements is TRUE?**
 
-- [ ] Type II Error: We believe there is no effect, when in fact there is
-- [ ] Type I Error: We believe there is an effect, when in fact there isn’t
+- [x] Type II Error: We believe there is no effect, when in fact there is
+- [x] Type I Error: We believe there is an effect, when in fact there isn’t
 - [ ] Type I Error: We believe there is no effect, when in fact there is
 - [ ] Type II Error: We believe there is an effect, when in fact there isn’t
 - [ ] None of the above 
@@ -994,16 +994,16 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 **(LC6.5) When planning an experiment, which of the following information would you need to compute the required sample size?**
 
 - [ ] The p-value (p)
-- [ ] The significance level (alpha)
-- [ ] The effect size (d)
+- [x] The significance level (alpha)
+- [x] The effect size (d)
 - [ ] The critical value of the test statistic (t)
 - [ ] None of the above 
 
 **(LC6.6) In which setting would you reject the null hypothesis when conducting a statistical test?**
 
-- [ ] When the absolute value of the calculated test-statistic (e.g., t-value) exceeds the critical value of the test statistic at your specified significance level (e.g., 0.05)
-- [ ] When the p-value is smaller than your specified significance level (e.g., 0.05)
-- [ ] When the confidence interval associated with the test does not contain zero
+- [x] When the absolute value of the calculated test-statistic (e.g., t-value) exceeds the critical value of the test statistic at your specified significance level (e.g., 0.05)
+- [x] When the p-value is smaller than your specified significance level (e.g., 0.05)
+- [x] When the confidence interval associated with the test does not contain zero
 - [ ] When the test-statistic (e.g., t-value) is lower than the critical value of the test statistic at your specified significance level (e.g., 0.05)
 - [ ] None of the above 
 
@@ -1012,24 +1012,24 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 - [ ] The lower the absolute value of the test statistic, the lower the p-value
 - [ ] The higher the absolute value of the test statistic, the higher the p-value
 - [ ] There is no connection between the test statistic and the p-value
-- [ ] None of the above 
+- [x] None of the above 
 
 **(LC6.8) What does a significant test result tell you?**
 
 - [ ] The importance of an effect
 - [ ] That the null hypothesis is false
 - [ ] That the null hypothesis is true
-- [ ] None of the above 
+- [x] None of the above 
 
 **(LC6.9) In an experiment in which you compare the means between two groups, you should collect data until your test shows a significant results. True or false?**
 
 - [ ] True
-- [ ] False
+- [x] False
 
 **(LC6.10) If you have data from an within-subjects experimental design, you should use the independent-means t-test. True or false?**
 
 - [ ] True
-- [ ] False
+- [x] False
  
 -------------------------------------------------------
 **Questions for chapters 6.4 and following from here**
@@ -1037,7 +1037,7 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 
 **(LC6.11) When should you use an ANOVA rather than a t-test?**   
 
-- [ ] To compare the means for more than populations
+- [x] To compare the means for more than populations
 - [ ] To compare the means of two groups
 - [ ] To adjust the variance of different sets
 - [ ] To test for causality
@@ -1047,7 +1047,7 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 
 - [ ] H0:μ1≠μ2≠μ3
 - [ ] H1:μ1=μ2=μ3
-- [ ] H0:μ1=μ2=μ3
+- [x] H0:μ1=μ2=μ3
 - [ ] H0:μ1≠μ2=μ3
 - [ ] None of the above 
 
@@ -1056,28 +1056,28 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 - [ ] Because the parametric assumptions of the t-test are not met
 - [ ] Because of deflated Type III Error rates
 - [ ] Due to the family-wise error rate the Type II Error is inflated
-- [ ] Because the Type I Error rate (alpha) wouldn't be 0.05
+- [x] Because the Type I Error rate (alpha) wouldn't be 0.05
 - [ ] None of the above 
 
 **(LC6.14) Which assumptions have to be satisfied to be able to use ANOVA on data from a between-subject design with three groups?**   
 
 - [ ] Same mean for all groups
-- [ ] Normal distribution of data
-- [ ] Homogeneity of variances
-- [ ] Independence of observation
+- [x] Normal distribution of data
+- [x] Homogeneity of variances
+- [x] Independence of observation
 - [ ] None of the above 
 
 **(LC6.15) What procedures are designed to correct of family-wise error rate in ANOVA?**   
 
-- [ ] Bonferroni correction
-- [ ] Tukey’s HSD
+- [x] Bonferroni correction
+- [x] Tukey’s HSD
 - [ ] t-test
-- [ ] Post-hoc tests
+- [x] Post-hoc tests
 - [ ] None of the above 
 
 **(LC6.16) Which of the following are examples for non-parametric tests?**   
 
-- [ ] Chi-Squared test
+- [x] Chi-Squared test
 - [ ] ANOVA
 - [ ] Kruskal-Wilcoxon test
 - [ ] T-test
@@ -1085,32 +1085,32 @@ The output tells us that we need 1.3809\times 10^{4} observations per group to d
 
 **(LC6.17) When should you use non-parametric tests?**   
 
-- [ ] When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
-- [ ] You have a very small sample size
-- [ ] When your dependent variable is measured on an ordinal scale
-- [ ] When your data is better represented by the median
+- [x] When the assumptions of parametric tests are not met (e.g., normally distributed sampling distribution)
+- [x] You have a very small sample size
+- [x] When your dependent variable is measured on an ordinal scale
+- [x] When your data is better represented by the median
 - [ ] None of the above 
 
 **(LC6.18) When should you use a Wilcoxon Rank Sum Test (= Mann-Whitney U Test)?**   
 
-- [ ] When the assumptions of the t-test have been violated
+- [x] When the assumptions of the t-test have been violated
 - [ ] The variances are not significantly different between groups
-- [ ] As a non-parametric alternative to the independent-means t-test
+- [x] As a non-parametric alternative to the independent-means t-test
 - [ ] When the assumptions of the ANOVA have been violated
 - [ ] None of the above 
 
 **(LC6.19) What does a Chi squared test do?**   
 
-- [ ] Tests the statistical significance of the observed association in a cross-tabulation
+- [x] Tests the statistical significance of the observed association in a cross-tabulation
 - [ ] Tests whether group A affects group B
-- [ ] Produces a test statistic that is Chi Squared distributed
-- [ ] Tests for the association between two or more categorical variables
+- [x] Produces a test statistic that is Chi Squared distributed
+- [x] Tests for the association between two or more categorical variables
 - [ ] None of the above 
 
 **(LC6.20) Which R-function would be suitable if you wanted to perform a test with ranked (ordinal) data in a two-group between-subject design?**   
 
 - [ ] `kruskal.test(x, ...)`
-- [ ] `wilcox.test(x, ...)`
+- [x] `wilcox.test(x, ...)`
 - [ ] `aov(formula, data = ,...)`
 - [ ] `t.test(x, ...)`
 - [ ] None of the above 

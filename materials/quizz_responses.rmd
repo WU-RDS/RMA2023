@@ -9,6 +9,199 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+**(LC1.1) Indicate the level of measurement of the following variables:**
+
+* Occupation of survey participants (nominal)
+* Willingness-to-pay for a product (ratio)
+* Your grade in the marketing research course (1, 2, 3, 4, 5) (ordinal) 
+* Rank order of most important product attributes (ordinal)
+* Student registration number (nominal)
+* Gender of survey participants (nominal)
+* Consumer preferences measured on a 5-point Likert scale (ordinal; interval if you would argue that the difference between the scalepoints is the same)
+* Mileage (kilometers per liter) a car gets (ratio)
+* Age of survey participants (ratio)
+* Temperature in °C (interval)
+* Number of products sold (ratio)
+
+**(LC1.2) Which of the answers is correct? A nominal scale …**
+
+- [ ] …has an absolute zero point
+- [ ] …possesses all properties of an ordinal scale
+- [x] …can have numerical values
+- [x] …serves as a label to classify/categorize objects
+- [ ] None of the above 	
+
+**(LC1.3) Which of these statements regarding formative constructs are true?**
+
+- [x] Indicators (items) measure the cause for the change of the not directly observable construct
+- [ ] Indicators (items) measure the effect of the change in a not directly observable construct
+- [ ] The indicators (items) of the scale should be highly correlated
+- [ ] Multi-item measurement is particularly important for the increase in the reliability of the measurement
+- [ ] None of the above
+
+**(LC1.4) In causal inference tasks, ...**
+
+- [ ] …the main concern is to generate predictions of future outcomes 
+- [ ] …the main concern is to maximize the explained variance
+- [ ] …observational research is the 'gold standard'
+- [x] …randomization minimizes unsystematic variation
+- [ ] None of the above 	
+
+**(LC1.5) True or false? Reliability refers to the consistency of a measurement.**
+
+- [x] True 
+- [ ] False
+
+**(LC1.5) Using a between-subjects design, we ... **
+
+- [x] ... manipulate the independent variable (treatment) using different persons for each group
+- [ ] ... manipulate independent variable using the same participants for each group 
+- [ ] ... manipulate the dependent variable (treatment) using different persons for each group
+- [ ] ... manipulate dependent variable using the same participants for each group 
+- [ ] None of the above
+
+**(LC1.6) When conducting field experiments, the term crossover effect means ...**
+
+- [x] ... that an individual who was supposed to be assigned to one treatment is accidentally exposed to another treatment 
+- [ ] ... that a treated individual affects the outcomes for other untreated individuals  
+- [ ] ... that individuals can be part of both the test and the control condition
+- [ ] None of the above
+
+**(LC1.7) Conditions for causality are ...**
+
+- [x] ... a cause and an effect should vary together in the way predicted by the hypothesis under consideration 
+- [ ] ... random assignment of test units
+- [x] ... the causing event must occur before the effect
+- [x] ... absence of other possible causal factors
+- [ ] None of the above
+
+**(LC1.8) The effect of the treatment on the treated in DID models can be written as ...**
+
+- [ ] $(Yt,pre - Yt,post) − (Yc,post - Yc,pre)$  
+- [x] $(Yt,post - Yt,pre) − (Yc,post - Yc,pre)$ 
+- [ ] $(Yt,pre - Yt,post) − (Yc,pre - Yc,post)$  
+- [ ] $(Yt,post - Yt,pre) − (Yc,pre - Yc,post)$  
+- [ ] None of the above
+
+**(LC1.9) In predictive modeling tasks ...**
+
+- [ ] ... once major concern are unobserved confounders
+- [x] ... one major concern is overfitting 
+- [x] ... we primarily care about the predictive ability of the model  
+- [ ] ... we primarily care about causal effects 
+- [ ] None of the above
+
+**(LC1.10) True or false? For ordinal scales, the magnitude of difference between scale points is known**
+
+- [ ] True 
+- [x] False
+
+
+
+
+
+
+**(LC3.1) Which of the following are data types are recognized by R?**
+
+- [x] Factor
+- [x] Date
+- [ ] Decimal
+- [ ] Vector
+- [ ] None of the above 	
+
+**(LC3.2) What function should you use to check if an object is a data frame?**
+
+- [ ] `type()`
+- [x] `str()`
+- [x] `class()`
+- [ ] `object.type()`
+- [ ] None of the above 	
+
+**(LC3.3) You would like to combine three vectors (student, grade, date) in a data frame. What would happen when executing the following code?** 
+
+```{r, warning=FALSE, error=FALSE, message=FALSE, eval=F}
+student <- c('Max','Jonas','Saskia','Victoria')
+grade <- c(3,2,1,2)
+date <- as.Date(c('2020-10-06','2020-10-08','2020-10-09'))
+df <- data.frame(student,grade,date)
+```
+
+- [ ] Error because a data frame can not have different data types
+- [ ] Error because you should use `as.data.frame()` instead of `data.frame()`
+- [x] Error because all vectors need to have the same length
+- [ ] Error because the column names are not specified
+- [ ] This code should not report an error	
+
+**You would like to analyze the following data frame**
+
+```{r,echo=FALSE}
+student <- c('Christian','Matthias','Max','Christina','Ines','Eddie','Janine','Victoria','Pia','Julia','Lena')
+grade <- c(1,1,NA,3,2,1,2,3,1,2,3)
+country <- c("AT","AT","AT","AT","DE","DE","DE","SK","US","CA",'AT')
+df <- data.frame(student,grade,country)
+df
+```
+
+**(LC3.4) How can you obtain Christina's grade from the data frame?**
+
+- [x] `df[4,2]`
+- [ ] `df[2,4]`
+- [ ] `df[student="Christina","grade"]`
+- [x] `df[student=="Christina","grade"]`
+- [ ] None of the above 	
+
+**(LC3.5) How can you add a new variable 'student_id' to the data frame that assigns numbers to students in an ascending order?**
+
+- [x] `df$student_id <- 1:nrow(df)`
+- [ ] `df&student_id <- 1:nrow(df)`
+- [x] `df[,"student_id"] <- 1:nrow(df)`
+- [ ] `df$student_id <- 1:length(df)`
+- [ ] None of the above 	
+
+**(LC3.6) How could you obtain all rows with students who obtained a 1?**
+
+- [x] `df[df$grade==1,]`
+- [x] `df[grade == min(df$grade),]`
+- [ ] `df[,df$grade==1]`
+- [x] `df[grade==1,]`
+- [ ] None of the above 	
+
+**(LC3.7) How could you create a subset of observations where the grade is not missing (NA) **
+
+- [ ] `df_subset <- df[grade!=NA,]`
+- [ ] `df_subset <- df[isnot.na(grade),]`
+- [x] `df_subset <- df[!is.na(grade),]`
+- [ ] `df_subset <- df[,grade!=NA]`
+- [ ] None of the above 
+
+**(LC3.8) What is the share of students with a grade better than 3?**
+
+- [ ] `df[grade<3,]/nrow(df)`
+- [ ] `nrow(df[grade<3,])/length(df)`
+- [x] `nrow(df[grade<3,])/nrow(df)`
+- [ ] `nrow(df[,grade<3])/nrow(df)`
+- [ ] None of the above
+
+**(LC3.9) You would like to load a .csv file from your working directory. What function would you use do it?**
+
+- [ ] `read.table(file_name.csv)`
+- [ ] `load.csv("file.csv")`
+- [x] `read.table("file.csv")`
+- [ ] `get.table(file_name.csv)`
+- [ ] None of the above
+
+**(LC3.10) After you loaded the file, you would like to inspect the types of data contained in it. How would you do it?**
+
+- [ ] `ncol(df)`
+- [ ] `nrow(df)`
+- [ ] `dim(df)`
+- [x] `str(df)`
+- [ ] None of the above
+
+
+
+
 **(LC4.1) For which data types is it meaningful to compute the mean?**
 
 - [ ] Nominal
