@@ -31,23 +31,45 @@ In the previous chapter, we saw how we may use the keyboard to input data in R. 
 
 ### Getting data for this course
 
-Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). You can directly import these data sets from GitHub without having to copy data sets from one place to another. If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
+Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). You can directly import these data sets from GitHub without having to copy data sets from one place to another. If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.csv()``` function. To figure out the structure of the data you can read the first couple of lines of a file using the `readLines` function. The ```header=TRUE``` argument in the `read.csv` function indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep=";"```-argument specifies the delimiter (the character used to separate the columns), which is a ";" in this case. 
 
 
 ```r
-test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
-                        sep = "\t", 
+readLines("https://short.wu.ac.at/ma22_musicdata", n = 3)
+```
+
+```
+## [1] "\"isrc\";\"artist_id\";\"streams\";\"weeks_in_charts\";\"n_regions\";\"danceability\";\"energy\";\"speechiness\";\"instrumentalness\";\"liveness\";\"valence\";\"tempo\";\"song_length\";\"song_age\";\"explicit\";\"n_playlists\";\"sp_popularity\";\"youtube_views\";\"tiktok_counts\";\"ins_followers_artist\";\"monthly_listeners_artist\";\"playlist_total_reach_artist\";\"sp_fans_artist\";\"shazam_counts\";\"artistName\";\"trackName\";\"release_date\";\"genre\";\"label\";\"top10\";\"expert_rating\""
+## [2] "\"BRRGE1603547\";3679;11944813;141;1;50,9;80,3;4;0,05;46,3;65,1;166,018;3,11865;228,285714285714;0;450;51;145030723;9740;29613108;4133393;24286416;3308630;73100;\"Luan Santana\";\"Eu, VocÃª, O Mar e Ela\";\"2016-06-20\";\"other\";\"Independent\";1;\"excellent\""                                                                                                                                                                                                                                            
+## [3] "\"USUM71808193\";5239;8934097;51;21;35,3;75,5;73,3;0;39;43,7;191,153;3,228;144,285714285714;0;768;54;13188411;358700;3693566;18367363;143384531;465412;588550;\"Alessia Cara\";\"Growing Pains\";\"2018-06-14\";\"Pop\";\"Universal Music\";0;\"good\""
+```
+
+```r
+test_data <- read.csv("https://short.wu.ac.at/ma22_musicdata", 
+                        sep = ";", 
                         header = TRUE)
 head(test_data)
 ```
 
-Note that it is also possible to download the data from the respective folder on the "Learn\@WU" platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["artist_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["weeks_in_charts"],"name":[4],"type":["int"],"align":["right"]},{"label":["n_regions"],"name":[5],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[6],"type":["chr"],"align":["left"]},{"label":["energy"],"name":[7],"type":["chr"],"align":["left"]},{"label":["speechiness"],"name":[8],"type":["chr"],"align":["left"]},{"label":["instrumentalness"],"name":[9],"type":["chr"],"align":["left"]},{"label":["liveness"],"name":[10],"type":["chr"],"align":["left"]},{"label":["valence"],"name":[11],"type":["chr"],"align":["left"]},{"label":["tempo"],"name":[12],"type":["chr"],"align":["left"]},{"label":["song_length"],"name":[13],"type":["chr"],"align":["left"]},{"label":["song_age"],"name":[14],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[15],"type":["int"],"align":["right"]},{"label":["n_playlists"],"name":[16],"type":["int"],"align":["right"]},{"label":["sp_popularity"],"name":[17],"type":["int"],"align":["right"]},{"label":["youtube_views"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["tiktok_counts"],"name":[19],"type":["int"],"align":["right"]},{"label":["ins_followers_artist"],"name":[20],"type":["int"],"align":["right"]},{"label":["monthly_listeners_artist"],"name":[21],"type":["int"],"align":["right"]},{"label":["playlist_total_reach_artist"],"name":[22],"type":["int"],"align":["right"]},{"label":["sp_fans_artist"],"name":[23],"type":["int"],"align":["right"]},{"label":["shazam_counts"],"name":[24],"type":["int"],"align":["right"]},{"label":["artistName"],"name":[25],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[26],"type":["chr"],"align":["left"]},{"label":["release_date"],"name":[27],"type":["chr"],"align":["left"]},{"label":["genre"],"name":[28],"type":["chr"],"align":["left"]},{"label":["label"],"name":[29],"type":["chr"],"align":["left"]},{"label":["top10"],"name":[30],"type":["int"],"align":["right"]},{"label":["expert_rating"],"name":[31],"type":["chr"],"align":["left"]}],"data":[{"1":"BRRGE1603547","2":"3679","3":"11944813","4":"141","5":"1","6":"50,9","7":"80,3","8":"4","9":"0,05","10":"46,3","11":"65,1","12":"166,018","13":"3,11865","14":"228,285714285714","15":"0","16":"450","17":"51","18":"145030723","19":"9740","20":"29613108","21":"4133393","22":"24286416","23":"3308630","24":"73100","25":"Luan Santana","26":"Eu, VocÃª, O Mar e Ela","27":"2016-06-20","28":"other","29":"Independent","30":"1","31":"excellent"},{"1":"USUM71808193","2":"5239","3":"8934097","4":"51","5":"21","6":"35,3","7":"75,5","8":"73,3","9":"0","10":"39","11":"43,7","12":"191,153","13":"3,228","14":"144,285714285714","15":"0","16":"768","17":"54","18":"13188411","19":"358700","20":"3693566","21":"18367363","22":"143384531","23":"465412","24":"588550","25":"Alessia Cara","26":"Growing Pains","27":"2018-06-14","28":"Pop","29":"Universal Music","30":"0","31":"good"},{"1":"ES5701800181","2":"776407","3":"38835","4":"1","5":"1","6":"68,3","7":"67,6","8":"14,7","9":"0","10":"7,26","11":"43,4","12":"98,992","13":"3,01555","14":"112,285714285714","15":"0","16":"48","17":"32","18":"6116639","19":"0","20":"623778","21":"888273","22":"4846378","23":"23846","24":"0","25":"Ana Guerra","26":"El Remedio","27":"2018-04-26","28":"Pop","29":"Universal Music","30":"0","31":"good"},{"1":"ITRSE2000050","2":"433730","3":"46766","4":"1","5":"1","6":"70,4","7":"56,8","8":"26,8","9":"0,000253","10":"8,91","11":"49,5","12":"91,007","13":"3,45341666666667","14":"50,7142857142857","15":"0","16":"6","17":"44","18":"0","19":"13","20":"81601","21":"143761","22":"156521","23":"1294","24":"0","25":"Claver Gold feat. Murubutu","26":"Ulisse","27":"2020-03-31","28":"HipHop/Rap","29":"Independent","30":"0","31":"poor"},{"1":"QZJ842000061","2":"526471","3":"2930573","4":"7","5":"4","6":"84,2","7":"57,8","8":"13,8","9":"0","10":"22,8","11":"19","12":"74,496","13":"3,94631666666667","14":"58,2857142857143","15":"0","16":"475","17":"52","18":"0","19":"515","20":"11962358","21":"15551876","22":"90841884","23":"380204","24":"55482","25":"Trippie Redd feat. Young Thug","26":"YELL OH","27":"2020-02-07","28":"HipHop/Rap","29":"Universal Music","30":"0","31":"excellent"},{"1":"USIR20400274","2":"1939","3":"72199738","4":"226","5":"8","6":"35,2","7":"91,1","8":"7,47","9":"0","10":"9,95","11":"23,6","12":"148,033","13":"3,71621666666667","14":"876,714285714286","15":"0","16":"20591","17":"81","18":"20216069","19":"67300","20":"1169284","21":"16224250","22":"80408253","23":"1651866","24":"5281161","25":"The Killers","26":"Mr. Brightside","27":"2004-06-07","28":"Rock","29":"Universal Music","30":"1","31":"fair"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+Note that it is also possible to download the data, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
 
 
 ```r
-test_data <- read.table("test_data.csv", header=TRUE, sep = ",")
+test_data <- read.csv("data/music_data_fin.csv", header=TRUE, sep = ";")
 head(test_data)
 ```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["artist_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["weeks_in_charts"],"name":[4],"type":["int"],"align":["right"]},{"label":["n_regions"],"name":[5],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[6],"type":["chr"],"align":["left"]},{"label":["energy"],"name":[7],"type":["chr"],"align":["left"]},{"label":["speechiness"],"name":[8],"type":["chr"],"align":["left"]},{"label":["instrumentalness"],"name":[9],"type":["chr"],"align":["left"]},{"label":["liveness"],"name":[10],"type":["chr"],"align":["left"]},{"label":["valence"],"name":[11],"type":["chr"],"align":["left"]},{"label":["tempo"],"name":[12],"type":["chr"],"align":["left"]},{"label":["song_length"],"name":[13],"type":["chr"],"align":["left"]},{"label":["song_age"],"name":[14],"type":["chr"],"align":["left"]},{"label":["explicit"],"name":[15],"type":["int"],"align":["right"]},{"label":["n_playlists"],"name":[16],"type":["int"],"align":["right"]},{"label":["sp_popularity"],"name":[17],"type":["int"],"align":["right"]},{"label":["youtube_views"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["tiktok_counts"],"name":[19],"type":["int"],"align":["right"]},{"label":["ins_followers_artist"],"name":[20],"type":["int"],"align":["right"]},{"label":["monthly_listeners_artist"],"name":[21],"type":["int"],"align":["right"]},{"label":["playlist_total_reach_artist"],"name":[22],"type":["int"],"align":["right"]},{"label":["sp_fans_artist"],"name":[23],"type":["int"],"align":["right"]},{"label":["shazam_counts"],"name":[24],"type":["int"],"align":["right"]},{"label":["artistName"],"name":[25],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[26],"type":["chr"],"align":["left"]},{"label":["release_date"],"name":[27],"type":["chr"],"align":["left"]},{"label":["genre"],"name":[28],"type":["chr"],"align":["left"]},{"label":["label"],"name":[29],"type":["chr"],"align":["left"]},{"label":["top10"],"name":[30],"type":["int"],"align":["right"]},{"label":["expert_rating"],"name":[31],"type":["chr"],"align":["left"]}],"data":[{"1":"BRRGE1603547","2":"3679","3":"11944813","4":"141","5":"1","6":"50,9","7":"80,3","8":"4","9":"0,05","10":"46,3","11":"65,1","12":"166,018","13":"3,11865","14":"228,285714285714","15":"0","16":"450","17":"51","18":"145030723","19":"9740","20":"29613108","21":"4133393","22":"24286416","23":"3308630","24":"73100","25":"Luan Santana","26":"Eu, VocÃª, O Mar e Ela","27":"2016-06-20","28":"other","29":"Independent","30":"1","31":"excellent"},{"1":"USUM71808193","2":"5239","3":"8934097","4":"51","5":"21","6":"35,3","7":"75,5","8":"73,3","9":"0","10":"39","11":"43,7","12":"191,153","13":"3,228","14":"144,285714285714","15":"0","16":"768","17":"54","18":"13188411","19":"358700","20":"3693566","21":"18367363","22":"143384531","23":"465412","24":"588550","25":"Alessia Cara","26":"Growing Pains","27":"2018-06-14","28":"Pop","29":"Universal Music","30":"0","31":"good"},{"1":"ES5701800181","2":"776407","3":"38835","4":"1","5":"1","6":"68,3","7":"67,6","8":"14,7","9":"0","10":"7,26","11":"43,4","12":"98,992","13":"3,01555","14":"112,285714285714","15":"0","16":"48","17":"32","18":"6116639","19":"0","20":"623778","21":"888273","22":"4846378","23":"23846","24":"0","25":"Ana Guerra","26":"El Remedio","27":"2018-04-26","28":"Pop","29":"Universal Music","30":"0","31":"good"},{"1":"ITRSE2000050","2":"433730","3":"46766","4":"1","5":"1","6":"70,4","7":"56,8","8":"26,8","9":"0,000253","10":"8,91","11":"49,5","12":"91,007","13":"3,45341666666667","14":"50,7142857142857","15":"0","16":"6","17":"44","18":"0","19":"13","20":"81601","21":"143761","22":"156521","23":"1294","24":"0","25":"Claver Gold feat. Murubutu","26":"Ulisse","27":"2020-03-31","28":"HipHop/Rap","29":"Independent","30":"0","31":"poor"},{"1":"QZJ842000061","2":"526471","3":"2930573","4":"7","5":"4","6":"84,2","7":"57,8","8":"13,8","9":"0","10":"22,8","11":"19","12":"74,496","13":"3,94631666666667","14":"58,2857142857143","15":"0","16":"475","17":"52","18":"0","19":"515","20":"11962358","21":"15551876","22":"90841884","23":"380204","24":"55482","25":"Trippie Redd feat. Young Thug","26":"YELL OH","27":"2020-02-07","28":"HipHop/Rap","29":"Universal Music","30":"0","31":"excellent"},{"1":"USIR20400274","2":"1939","3":"72199738","4":"226","5":"8","6":"35,2","7":"91,1","8":"7,47","9":"0","10":"9,95","11":"23,6","12":"148,033","13":"3,71621666666667","14":"876,714285714286","15":"0","16":"20591","17":"81","18":"20216069","19":"67300","20":"1169284","21":"16224250","22":"80408253","23":"1651866","24":"5281161","25":"The Killers","26":"Mr. Brightside","27":"2004-06-07","28":"Rock","29":"Universal Music","30":"1","31":"fair"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 
 ### Import data created by other software packages
 
@@ -90,13 +112,12 @@ When you inspect the data frame in R after you imported the data, you will find 
 
 ### Export data
 
-Exporting to different formats is also easy, as you can just replace "read" with "write" in many of the previously discussed functions (e.g. ```write.table(object, "file_name")```). This will save the data file to the working directory. To check what the current working directory is you can use ```getwd()```. By default, the ```write.table(object, "file_name")```function includes the row number as the first variable. By specifying ```row.names = FALSE```, you may exclude this variable since it doesn't contain any useful information.  
+Exporting to different formats is also easy, as you can just replace "read" with "write" in many of the previously discussed functions (e.g. ```write.csv(object, "file_name")```). This will save the data file to the working directory. To check what the current working directory is you can use ```getwd()```. By default, the ```write.csv(object, "file_name")```function includes the row number as the first variable. By specifying ```row.names = FALSE```, you may exclude this variable since it doesn't contain any useful information.  
 
 
 ```r
-write.table(music_data, "musicData.dat", row.names = FALSE, sep = "\t") #writes to a tab-delimited text file
-write.table(music_data, "musicData.csv", row.names = FALSE, sep = ",") #writes to a comma-separated value file 
-write_sav(music_data, "my_file.sav")
+write.csv(music_data, "musicData.csv", row.names = FALSE) #writes to a comma-separated value file 
+write_sav(music_data, "musicData.sav")
 ```
 
 ### Import data from the Web
@@ -116,7 +137,7 @@ print(population)
 
 ```
 ## {xml_nodeset (1)}
-## [1] <table class="wikitable sortable"><tbody>\n<tr>\n<th>Rank</th>\n<th><a hr ...
+## [1] <table class="wikitable sortable"><tbody>\n<tr>\n<th>Rank</th>\n<th>\n<a  ...
 ```
 
 The output shows that there are two tables on the website and the first one appears to contain the relevant information. So let's read the first table using the  ```html_table()``` function. Note that ```population``` is of class "list". A list is a vector that has other R objects (e.g., other vectors, data frames, matrices, etc.) as its elements. If we want to access the data of one of the elements, we have to use two square brackets on each side instead of just one (e.g., ```population[[1]]``` gets us the first table from the list of tables on the website; the argument ```fill = TRUE``` ensures that empty cells are replaced with missing values when reading the table).
@@ -129,7 +150,7 @@ head(population) #checks if we scraped the desired data
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country or dependent territory"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Region"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[4],"type":["chr"],"align":["left"]},{"label":["% of world"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Source (official or from the United Nations)"],"name":[7],"type":["chr"],"align":["left"]},{"label":["Notes"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"–","2":"N/A","3":"World","4":"7,911,029,000","5":"N/A","6":"22 Nov 2021","7":"UN projection[2]","8":"N/A"},{"1":"1","2":"China","3":"Asia","4":"1,411,778,724","5":"17.8%","6":"1 Nov 2020","7":"2020 census result[3]","8":"The census figure refers to mainland China, excluding its special administrative regions of Hong Kong and Macau, the former of which returned to Chinese sovereignty on 1 July 1997 and the latter on 20 December 1999.\\nChina's status is disputed, as it is currently not recognized by certain countries. See List of states with limited recognition."},{"1":"2","2":"India","3":"Asia","4":"1,384,652,149","5":"17.5%","6":"22 Nov 2021","7":"National population clock[4]","8":"The figure includes the population of India-administered Kashmir but not of China- or Pakistan-administered Kashmir."},{"1":"3","2":"United States","3":"Americas","4":"332,751,452","5":"4.21%","6":"22 Nov 2021","7":"National population clock[5]","8":"Includes the 50 states and the District of Columbia, but excludes the U.S. territories."},{"1":"4","2":"Indonesia","3":"Asia","4":"271,350,000","5":"3.43%","6":"31 Dec 2020","7":"National annual estimate[6]","8":""},{"1":"5","2":"Pakistan","3":"Asia","4":"225,200,000","5":"2.85%","6":"1 Jul 2021","7":"UN projection[2]","8":"The figure includes the population of Pakistan-administered Kashmir but not of China- or India-administered Kashmir."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country / Dependency"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Percentage of the world"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source (official or from the United Nations)"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Notes"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"–","2":"World","3":"7,984,239,000","4":"100%","5":"12 Oct 2022","6":"UN projection[3]","7":""},{"1":"1","2":"China","3":"1,412,600,000","4":"17.7%","5":"31 Dec 2021","6":"Official estimate[4]","7":"The population figure refers to mainland China, excluding its special administrative regions of Hong Kong and Macau, the former of which returned to Chinese sovereignty in 1997 and the latter in 1999."},{"1":"2","2":"India","3":"1,375,586,000","4":"17.2%","5":"1 Mar 2022","6":"Official projection[5]","7":"The figure includes the population of Indian-administered Jammu and Kashmir and Ladakh."},{"1":"3","2":"United States","3":"331,893,745","4":"4.16%","5":"1 Jul 2021","6":"Official estimate[6]","7":"The figure includes the 50 states and the District of Columbia, but excludes the territories of the United States."},{"1":"4","2":"Indonesia","3":"275,773,800","4":"3.45%","5":"1 Jul 2022","6":"Official estimate[7]","7":""},{"1":"5","2":"Pakistan","3":"229,489,000","4":"2.87%","5":"1 Jul 2022","6":"UN projection[3]","7":"The figure includes the population of Pakistan-administered Azad Kashmir and Gilgit-Baltistan."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -155,7 +176,7 @@ head(population) #checks if we scraped the desired data
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country or dependent territory"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Region"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["% of world"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Source (official or from the United Nations)"],"name":[7],"type":["chr"],"align":["left"]},{"label":["Notes"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"–","2":"N/A","3":"World","4":"7911029000","5":"N/A","6":"22 Nov 2021","7":"UN projection[2]","8":"N/A"},{"1":"1","2":"China","3":"Asia","4":"1411778724","5":"17.8%","6":"1 Nov 2020","7":"2020 census result[3]","8":"The census figure refers to mainland China, excluding its special administrative regions of Hong Kong and Macau, the former of which returned to Chinese sovereignty on 1 July 1997 and the latter on 20 December 1999.\\nChina's status is disputed, as it is currently not recognized by certain countries. See List of states with limited recognition."},{"1":"2","2":"India","3":"Asia","4":"1384652149","5":"17.5%","6":"22 Nov 2021","7":"National population clock[4]","8":"The figure includes the population of India-administered Kashmir but not of China- or Pakistan-administered Kashmir."},{"1":"3","2":"United States","3":"Americas","4":"332751452","5":"4.21%","6":"22 Nov 2021","7":"National population clock[5]","8":"Includes the 50 states and the District of Columbia, but excludes the U.S. territories."},{"1":"4","2":"Indonesia","3":"Asia","4":"271350000","5":"3.43%","6":"31 Dec 2020","7":"National annual estimate[6]","8":""},{"1":"5","2":"Pakistan","3":"Asia","4":"225200000","5":"2.85%","6":"1 Jul 2021","7":"UN projection[2]","8":"The figure includes the population of Pakistan-administered Kashmir but not of China- or India-administered Kashmir."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Rank"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Country / Dependency"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Population"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Percentage of the world"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Date"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Source (official or from the United Nations)"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Notes"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"–","2":"World","3":"7984239000","4":"100%","5":"12 Oct 2022","6":"UN projection[3]","7":""},{"1":"1","2":"China","3":"1412600000","4":"17.7%","5":"31 Dec 2021","6":"Official estimate[4]","7":"The population figure refers to mainland China, excluding its special administrative regions of Hong Kong and Macau, the former of which returned to Chinese sovereignty in 1997 and the latter in 1999."},{"1":"2","2":"India","3":"1375586000","4":"17.2%","5":"1 Mar 2022","6":"Official projection[5]","7":"The figure includes the population of Indian-administered Jammu and Kashmir and Ladakh."},{"1":"3","2":"United States","3":"331893745","4":"4.16%","5":"1 Jul 2021","6":"Official estimate[6]","7":"The figure includes the 50 states and the District of Columbia, but excludes the territories of the United States."},{"1":"4","2":"Indonesia","3":"275773800","4":"3.45%","5":"1 Jul 2022","6":"Official estimate[7]","7":""},{"1":"5","2":"Pakistan","3":"229489000","4":"2.87%","5":"1 Jul 2022","6":"UN projection[3]","7":"The figure includes the population of Pakistan-administered Azad Kashmir and Gilgit-Baltistan."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -205,7 +226,7 @@ str(ctrydata)
 ##   ..$ total      : int 60
 ##   ..$ sourceid   : chr "2"
 ##   ..$ sourcename : chr "World Development Indicators"
-##   ..$ lastupdated: chr "2021-10-28"
+##   ..$ lastupdated: chr "2022-09-16"
 ##  $ :'data.frame':	60 obs. of  8 variables:
 ##   ..$ indicator      :'data.frame':	60 obs. of  2 variables:
 ##   .. ..$ id   : chr [1:60] "SP.POP.TOTL" "SP.POP.TOTL" "SP.POP.TOTL" "SP.POP.TOTL" ...
@@ -246,7 +267,7 @@ head(google_trends$interest_over_time)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["date"],"name":[1],"type":["dttm"],"align":["right"]},{"label":["hits"],"name":[2],"type":["int"],"align":["right"]},{"label":["keyword"],"name":[3],"type":["chr"],"align":["left"]},{"label":["geo"],"name":[4],"type":["chr"],"align":["left"]},{"label":["time"],"name":[5],"type":["chr"],"align":["left"]},{"label":["gprop"],"name":[6],"type":["chr"],"align":["left"]},{"label":["category"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"2012-09-01","2":"16","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2012-10-01","2":"12","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2012-11-01","2":"11","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2012-12-01","2":"9","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2013-01-01","2":"14","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2013-02-01","2":"12","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["date"],"name":[1],"type":["dttm"],"align":["right"]},{"label":["hits"],"name":[2],"type":["int"],"align":["right"]},{"label":["keyword"],"name":[3],"type":["chr"],"align":["left"]},{"label":["geo"],"name":[4],"type":["chr"],"align":["left"]},{"label":["time"],"name":[5],"type":["chr"],"align":["left"]},{"label":["gprop"],"name":[6],"type":["chr"],"align":["left"]},{"label":["category"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"2012-09-01","2":"17","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2012-10-01","2":"13","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2012-11-01","2":"13","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2012-12-01","2":"10","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2013-01-01","2":"14","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"},{"1":"2013-02-01","2":"12","3":"data science","4":"US","5":"2012-09-01 2020-10-06","6":"web","7":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -271,6 +292,8 @@ covid_data <- covid19(country = "US",level = 2,start = "2020-01-01")
 ```
 ## We have invested a lot of time and effort in creating COVID-19 Data Hub, please cite the following when using it:
 ## 
+## To cite package 'COVID19' in publications use:
+## 
 ##   Guidotti, E., Ardia, D., (2020), "COVID-19 Data Hub", Journal of Open
 ##   Source Software 5(51):2376, doi: 10.21105/joss.02376.
 ## 
@@ -287,7 +310,7 @@ covid_data <- covid19(country = "US",level = 2,start = "2020-01-01")
 ##     pages = {2376},
 ##   }
 ## 
-## To retrieve citation and metadata of the data sources see ?covid19cite. To hide this message use 'verbose = FALSE'.
+## To hide this message use 'verbose = FALSE'.
 ```
 
 ```r
@@ -296,7 +319,7 @@ head(covid_data)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["date"],"name":[2],"type":["date"],"align":["right"]},{"label":["confirmed"],"name":[3],"type":["int"],"align":["right"]},{"label":["deaths"],"name":[4],"type":["int"],"align":["right"]},{"label":["recovered"],"name":[5],"type":["int"],"align":["right"]},{"label":["tests"],"name":[6],"type":["int"],"align":["right"]},{"label":["vaccines"],"name":[7],"type":["int"],"align":["right"]},{"label":["people_vaccinated"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["people_fully_vaccinated"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["hosp"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["icu"],"name":[11],"type":["int"],"align":["right"]},{"label":["vent"],"name":[12],"type":["int"],"align":["right"]},{"label":["school_closing"],"name":[13],"type":["int"],"align":["right"]},{"label":["workplace_closing"],"name":[14],"type":["int"],"align":["right"]},{"label":["cancel_events"],"name":[15],"type":["int"],"align":["right"]},{"label":["gatherings_restrictions"],"name":[16],"type":["int"],"align":["right"]},{"label":["transport_closing"],"name":[17],"type":["int"],"align":["right"]},{"label":["stay_home_restrictions"],"name":[18],"type":["int"],"align":["right"]},{"label":["internal_movement_restrictions"],"name":[19],"type":["int"],"align":["right"]},{"label":["international_movement_restrictions"],"name":[20],"type":["int"],"align":["right"]},{"label":["information_campaigns"],"name":[21],"type":["int"],"align":["right"]},{"label":["testing_policy"],"name":[22],"type":["int"],"align":["right"]},{"label":["contact_tracing"],"name":[23],"type":["int"],"align":["right"]},{"label":["facial_coverings"],"name":[24],"type":["int"],"align":["right"]},{"label":["vaccination_policy"],"name":[25],"type":["int"],"align":["right"]},{"label":["elderly_people_protection"],"name":[26],"type":["int"],"align":["right"]},{"label":["government_response_index"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["stringency_index"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["containment_health_index"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["economic_support_index"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["administrative_area_level"],"name":[31],"type":["int"],"align":["right"]},{"label":["administrative_area_level_1"],"name":[32],"type":["chr"],"align":["left"]},{"label":["administrative_area_level_2"],"name":[33],"type":["chr"],"align":["left"]},{"label":["administrative_area_level_3"],"name":[34],"type":["lgl"],"align":["right"]},{"label":["latitude"],"name":[35],"type":["dbl"],"align":["right"]},{"label":["longitude"],"name":[36],"type":["dbl"],"align":["right"]},{"label":["population"],"name":[37],"type":["int"],"align":["right"]},{"label":["iso_alpha_3"],"name":[38],"type":["chr"],"align":["left"]},{"label":["iso_alpha_2"],"name":[39],"type":["chr"],"align":["left"]},{"label":["iso_numeric"],"name":[40],"type":["int"],"align":["right"]},{"label":["iso_currency"],"name":[41],"type":["chr"],"align":["left"]},{"label":["key_local"],"name":[42],"type":["chr"],"align":["left"]},{"label":["key_google_mobility"],"name":[43],"type":["chr"],"align":["left"]},{"label":["key_apple_mobility"],"name":[44],"type":["chr"],"align":["left"]},{"label":["key_jhu_csse"],"name":[45],"type":["chr"],"align":["left"]},{"label":["key_nuts"],"name":[46],"type":["chr"],"align":["left"]},{"label":["key_gadm"],"name":[47],"type":["chr"],"align":["left"]}],"data":[{"1":"10b692cc","2":"2020-03-16","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-17","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-18","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-19","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-20","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-21","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["date"],"name":[2],"type":["date"],"align":["right"]},{"label":["confirmed"],"name":[3],"type":["int"],"align":["right"]},{"label":["deaths"],"name":[4],"type":["int"],"align":["right"]},{"label":["recovered"],"name":[5],"type":["int"],"align":["right"]},{"label":["tests"],"name":[6],"type":["int"],"align":["right"]},{"label":["vaccines"],"name":[7],"type":["int"],"align":["right"]},{"label":["people_vaccinated"],"name":[8],"type":["int"],"align":["right"]},{"label":["people_fully_vaccinated"],"name":[9],"type":["int"],"align":["right"]},{"label":["hosp"],"name":[10],"type":["int"],"align":["right"]},{"label":["icu"],"name":[11],"type":["int"],"align":["right"]},{"label":["vent"],"name":[12],"type":["int"],"align":["right"]},{"label":["school_closing"],"name":[13],"type":["int"],"align":["right"]},{"label":["workplace_closing"],"name":[14],"type":["int"],"align":["right"]},{"label":["cancel_events"],"name":[15],"type":["int"],"align":["right"]},{"label":["gatherings_restrictions"],"name":[16],"type":["int"],"align":["right"]},{"label":["transport_closing"],"name":[17],"type":["int"],"align":["right"]},{"label":["stay_home_restrictions"],"name":[18],"type":["int"],"align":["right"]},{"label":["internal_movement_restrictions"],"name":[19],"type":["int"],"align":["right"]},{"label":["international_movement_restrictions"],"name":[20],"type":["int"],"align":["right"]},{"label":["information_campaigns"],"name":[21],"type":["int"],"align":["right"]},{"label":["testing_policy"],"name":[22],"type":["int"],"align":["right"]},{"label":["contact_tracing"],"name":[23],"type":["int"],"align":["right"]},{"label":["facial_coverings"],"name":[24],"type":["int"],"align":["right"]},{"label":["vaccination_policy"],"name":[25],"type":["int"],"align":["right"]},{"label":["elderly_people_protection"],"name":[26],"type":["int"],"align":["right"]},{"label":["government_response_index"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["stringency_index"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["containment_health_index"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["economic_support_index"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["administrative_area_level"],"name":[31],"type":["int"],"align":["right"]},{"label":["administrative_area_level_1"],"name":[32],"type":["chr"],"align":["left"]},{"label":["administrative_area_level_2"],"name":[33],"type":["chr"],"align":["left"]},{"label":["administrative_area_level_3"],"name":[34],"type":["chr"],"align":["left"]},{"label":["latitude"],"name":[35],"type":["dbl"],"align":["right"]},{"label":["longitude"],"name":[36],"type":["dbl"],"align":["right"]},{"label":["population"],"name":[37],"type":["int"],"align":["right"]},{"label":["iso_alpha_3"],"name":[38],"type":["chr"],"align":["left"]},{"label":["iso_alpha_2"],"name":[39],"type":["chr"],"align":["left"]},{"label":["iso_numeric"],"name":[40],"type":["int"],"align":["right"]},{"label":["iso_currency"],"name":[41],"type":["chr"],"align":["left"]},{"label":["key_local"],"name":[42],"type":["chr"],"align":["left"]},{"label":["key_google_mobility"],"name":[43],"type":["chr"],"align":["left"]},{"label":["key_apple_mobility"],"name":[44],"type":["chr"],"align":["left"]},{"label":["key_jhu_csse"],"name":[45],"type":["chr"],"align":["left"]},{"label":["key_nuts"],"name":[46],"type":["lgl"],"align":["right"]},{"label":["key_gadm"],"name":[47],"type":["chr"],"align":["left"]}],"data":[{"1":"10b692cc","2":"2020-03-16","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-17","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-18","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-19","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-20","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"},{"1":"10b692cc","2":"2020-03-21","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"NA","25":"NA","26":"NA","27":"NA","28":"NA","29":"NA","30":"NA","31":"2","32":"United States","33":"Northern Mariana Islands","34":"NA","35":"14.15569","36":"145.2119","37":"55144","38":"USA","39":"US","40":"840","41":"USD","42":"69","43":"NA","44":"Northern Mariana Islands","45":"US69","46":"NA","47":"MNP"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -314,8 +337,8 @@ plot(covid_data[covid_data$administrative_area_level_2=="New York",c("date","con
 
 **(LC3.1) Which of the following are data types are recognized by R?**
 
-- [x] Factor
-- [x] Date
+- [ ] Factor
+- [ ] Date
 - [ ] Decimal
 - [ ] Vector
 - [ ] None of the above 	
@@ -323,8 +346,8 @@ plot(covid_data[covid_data$administrative_area_level_2=="New York",c("date","con
 **(LC3.2) What function should you use to check if an object is a data frame?**
 
 - [ ] `type()`
-- [x] `str()`
-- [x] `class()`
+- [ ] `str()`
+- [ ] `class()`
 - [ ] `object.type()`
 - [ ] None of the above 	
 
@@ -340,7 +363,7 @@ df <- data.frame(student,grade,date)
 
 - [ ] Error because a data frame can not have different data types
 - [ ] Error because you should use `as.data.frame()` instead of `data.frame()`
-- [x] Error because all vectors need to have the same length
+- [ ] Error because all vectors need to have the same length
 - [ ] Error because the column names are not specified
 - [ ] This code should not report an error	
 
@@ -354,49 +377,49 @@ df <- data.frame(student,grade,date)
 
 **(LC3.4) How can you obtain Christina's grade from the data frame?**
 
-- [x] `df[4,2]`
+- [ ] `df[4,2]`
 - [ ] `df[2,4]`
-- [ ] `df[student="Christina","grade"]`
-- [x] `df[student=="Christina","grade"]`
+- [ ] `filter(df, student = Christina) %>% select(grade)`
+- [ ] `filter(df, student == "Christina") %>% select(grade)`
 - [ ] None of the above 	
 
 **(LC3.5) How can you add a new variable 'student_id' to the data frame that assigns numbers to students in an ascending order?**
 
-- [x] `df$student_id <- 1:nrow(df)`
+- [ ] `df$student_id <- 1:nrow(df)`
 - [ ] `df&student_id <- 1:nrow(df)`
-- [x] `df[,"student_id"] <- 1:nrow(df)`
-- [ ] `df$student_id <- 1:length(df)`
+- [ ] `mutate(df, student_id = 1:nrow(df))`
+- [ ] `mutate(df, student_id = 1:length(df))`
 - [ ] None of the above 	
 
 **(LC3.6) How could you obtain all rows with students who obtained a 1?**
 
-- [x] `df[df$grade==1,]`
-- [x] `df[grade == min(df$grade),]`
-- [ ] `df[,df$grade==1]`
-- [x] `df[grade==1,]`
+- [ ] `filter(df, grade == 1)`
+- [ ] `filter(df, grade == min(df$grade, na.rm = TRUE))`
+- [ ] `select(df, grade == 1)`
+- [ ] `filter(df, grade == min(df$grade))`
 - [ ] None of the above 	
 
 **(LC3.7) How could you create a subset of observations where the grade is not missing (NA) **
 
-- [ ] `df_subset <- df[grade!=NA,]`
-- [ ] `df_subset <- df[isnot.na(grade),]`
-- [x] `df_subset <- df[!is.na(grade),]`
-- [ ] `df_subset <- df[,grade!=NA]`
+- [ ] `df_subset <- filter(df, !is.na(grade))`
+- [ ] `df_subset <- filter(df, isnot.na(grade))`
+- [ ] `df_subset <- filter(df, grade != NA)`
+- [ ] `df_subset <- filter(df, grade != "NA")`
 - [ ] None of the above 
 
 **(LC3.8) What is the share of students with a grade better than 3?**
 
-- [ ] `df[grade<3,]/nrow(df)`
-- [ ] `nrow(df[grade<3,])/length(df)`
-- [x] `nrow(df[grade<3,])/nrow(df)`
-- [ ] `nrow(df[,grade<3])/nrow(df)`
+- [ ] `filter(df, grade < 3)/nrow(df)`
+- [ ] `nrow(filter(df, grade < 3))/length(df)`
+- [ ] `nrow(filter(df, grade < 3))/nrow(df)`
+- [ ] `filter(df, grade < 3)/length(df)`
 - [ ] None of the above
 
 **(LC3.9) You would like to load a .csv file from your working directory. What function would you use do it?**
 
 - [ ] `read.table(file_name.csv)`
 - [ ] `load.csv("file.csv")`
-- [x] `read.table("file.csv")`
+- [ ] `read.table("file.csv")`
 - [ ] `get.table(file_name.csv)`
 - [ ] None of the above
 
@@ -405,5 +428,5 @@ df <- data.frame(student,grade,date)
 - [ ] `ncol(df)`
 - [ ] `nrow(df)`
 - [ ] `dim(df)`
-- [x] `str(df)`
+- [ ] `str(df)`
 - [ ] None of the above

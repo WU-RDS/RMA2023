@@ -16,7 +16,7 @@ output:
 ## Introduction to R Markdown
 
 ::: {.infobox .download data-latex="{download}"}
-[You can download the example markdown file here](./Code/example_markdown.Rmd)
+[You can download the example markdown file here](./Code/rmarkdown_example.Rmd)
 :::
 
 This page will guide you through creating and editing R Markdown documents. This is a useful tool for reporting your analysis (e.g. for homework assignments). Of course, there is also [a cheat sheet for R-Markdown](https://www.rstudio.org/links/r_markdown_cheat_sheet) and [this book](https://bookdown.org/yihui/rmarkdown/) contains a comprehensive discussion of the format. 

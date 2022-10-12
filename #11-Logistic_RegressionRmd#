@@ -1,0 +1,350 @@
+---
+output:
+  html_document:
+    toc: yes
+  html_notebook: default
+  pdf_document:
+    toc: yes
+---
+
+```{r eval=TRUE, echo=F, message=FALSE, warning=FALSE, purl=FALSE}
+library(knitr)
+options(digits = 7, scipen = 999)
+opts_chunk$set(tidy.opts=list(width.cutoff=75),tidy=FALSE, rownames.print = FALSE, rows.print = 10, echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r eval=TRUE, echo=F, message=FALSE, warning=FALSE}
+unloadNamespace("latex2exp") # unloads latex2exp to fix the specific error, that the chart in 6.6.2 didn't display TeX output properly
+```
+
+## Logistic regression
+
+::: {.infobox .download data-latex="{download}"}
+[You can download the corresponding R-Code here](./Code/10-regression.R)
+:::
+
+<br>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/J7T7_ulyQ0I" frameborder="0" allowfullscreen></iframe>
+</div>
+<br>
+
+
+### Motivation and intuition
+
+In the last section we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. A more useful method is the logistic regression. In particular we are going to have a look at the logit model. In the following dataset we are trying to predict whether a song will be a top-10 hit on a popular music streaming platform. In a first step we are going to use only the danceability index as a predictor. Later we are going to add more independent variables. 
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Simulated binary outcome data"}
+library(ggplot2)
+library(gridExtra)
+
+chart_data <- read.delim2("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/chart_data_logistic.dat",header=T, sep = "\t",stringsAsFactors = F, dec = ".")
+#Create a new dummy variable "top10", which is 1 if a song made it to the top10 and 0 else:
+chart_data$top10 <- ifelse(chart_data$rank<11,1,0)
+
+# Inspect data
+head(chart_data)
+str(chart_data)
+```
+
+Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a __logistic regression model__. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. Notice that songs with a higher danceability index (on the right of the x-axis) seem to cluster more at $1$ and those with a lower more at $0$ so we expect a positive influence of danceability on the probability of a song to become a top-10 hit. 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', fig.cap="The same binary data explained by two models; A linear probability model (on the left) and a logistic regression model (on the right)"}
+#Scatterplot showing the association between two variables using a linear model
+plt.lin <- ggplot(chart_data,aes(danceability,top10)) +  
+  geom_point(shape=1) +
+  geom_smooth(method = "lm") +
+  theme_bw()
+
+#Scatterplot showing the association between two variables using a glm
+plt.logit <- ggplot(chart_data,aes(danceability,top10)) +  
+  geom_point(shape=1) +
+  geom_smooth(method = "glm", 
+              method.args = list(family = "binomial"), 
+              se = FALSE) +
+  theme_bw()
+grid.arrange(plt.lin, plt.logit, ncol = 2)
+```
+
+A key insight at this point is that the connection between $\mathbf{X}$ and $Y$ is __non-linear__ in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by danceability around values of $0.5$, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.  
+
+### Technical details of the model
+
+As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:
+
+$$
+f(\mathbf{X}) = \frac{1}{1 + e^{-\mathbf{X}}}
+$$
+This function transforms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1. 
+
+```{r, echo = FALSE}
+library(latex2exp)
+x <- seq(-10, 10, length.out = 1000)
+fx <- 1/(1+exp(-x))
+df <- data.frame(x = x, fx = fx)
+ggplot(df, aes(x = x, y = fx)) + 
+  geom_line()+
+  labs(y = TeX("$\\frac{1}{1+e^{-\\mathbf{X}}}$"), x = TeX("$\\mathbf{X}$"))+
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5)) + 
+  theme_bw()
+```
+
+
+
+The logistic function on its own is not very useful yet, as we want to be able to determine how predictors influence the probability of a value to be equal to 1. To this end we replace the $\mathbf{X}$ in the function above with our familiar linear specification, i.e.
+
+$$
+\mathbf{X} = \beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i}\\
+f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i})}}
+$$
+
+In our case we only have $\beta_0$ and $\beta_1$, the coefficient associated with danceability. 
+
+In general we now have a mathematical relationship between our predictor variables $(x_1, ..., x_m)$ and the probability of $y_i$ being equal to one. The last step is to estimate the parameters of this model $(\beta_0, \beta_1, ..., \beta_m)$ to determine the magnitude of the effects.  
+
+### Estimation in R
+
+We are now going to show how to perform logistic regression in R. Instead of ```lm()``` we now use ```glm(Y~X, family=binomial(link = 'logit'))``` to use the logit model. We can still use the ```summary()``` command to inspect the output of the model. 
+
+```{r}
+#Run the glm
+logit_model <- glm(top10 ~ danceability,family=binomial(link='logit'),data=chart_data)
+#Inspect model summary
+summary(logit_model )
+```
+
+Noticeably this output does not include an $R^2$ value to asses model fit. Multiple "Pseudo $R^2$s", similar to the one used in OLS, have been developed. There are packages that return the $R^2$ given a logit model (see ```rcompanion``` or ```pscl```). The calculation by hand is also fairly simple. We define the function ```logisticPseudoR2s()``` that takes a logit model as an input and returns three popular pseudo $R^2$ values.
+
+```{r}
+logisticPseudoR2s <- function(LogModel) {
+  dev <- LogModel$deviance 
+  nullDev <- LogModel$null.deviance 
+  modelN <- length(LogModel$fitted.values)
+  R.l <-  1 -  dev / nullDev
+  R.cs <- 1- exp ( -(nullDev - dev) / modelN)
+  R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
+  cat("Pseudo R^2 for logistic regression\n")
+  cat("Hosmer and Lemeshow R^2  ", round(R.l, 3), "\n")
+  cat("Cox and Snell R^2        ", round(R.cs, 3), "\n")
+  cat("Nagelkerke R^2           ", round(R.n, 3),    "\n")
+}
+#Inspect Pseudo R2s
+logisticPseudoR2s(logit_model )
+```
+
+The coefficients of the model give the change in the [log odds](https://en.wikipedia.org/wiki/Odds#Statistical_usage) of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being $1$. In order to get the odds ratios we can simply take the exponent of the coefficients. 
+
+```{r}
+exp(coef(logit_model ))
+```
+
+Notice that the coefficient is extremely large. That is (partly) due to the fact that the danceability variable is constrained to values between $0$ and $1$ and the coefficients are for a unit change. We can make the "unit-change" interpretation more meaningful by multiplying the danceability index by $100$. This linear transformation does not affect the model fit or the p-values.
+
+```{r message=FALSE, warning=FALSE}
+#Re-scale independet variable
+chart_data$danceability_100 <- chart_data$danceability*100 
+#Run the regression model
+logit_model <- glm(top10 ~ danceability_100,family=binomial(link='logit'),data=chart_data)
+#Inspect model summary
+summary(logit_model )
+#Inspect Pseudo R2s
+logisticPseudoR2s(logit_model )
+#Convert coefficients to odds ratios
+exp(coef(logit_model ))
+```
+
+We observe that danceability positively affects the likelihood of becoming at top-10 hit. To get the confidence intervals for the coefficients we can use the same function as with OLS
+
+```{r message=FALSE, warning=FALSE}
+confint(logit_model)
+```
+
+In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the ```logitmfx(...)``` function from the ```mfx``` package. If we set ```logitmfx(logit_model, data = my_data, atmean = FALSE)``` we calculate the latter. Setting ```atmean = TRUE``` will calculate the former. However, in general we are most interested in the sign and significance of the coefficient.
+
+```{r, message = FALSE, warning = FALSE}
+library(mfx)
+# Average partial effect
+logitmfx(logit_model, data = chart_data, atmean = FALSE)
+```
+
+This now gives the average partial effects in percentage points. An additional point on the danceability scale (from $1$ to $100$), on average, makes it $1.57%$ more likely for a song to become at top-10 hit.
+
+To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value $+1$. For example if we are interested in how much more likely a song with 51 compared to 50 danceability is to become a hit we can simply calculate the following
+
+```{r}
+#Probability of a top 10 hit with a danceability of 50
+prob_50 <- exp(-(-summary(logit_model)$coefficients[1,1]-summary(logit_model)$coefficients[2,1]*50 ))
+prob_50
+
+#Probability of a top 10 hit with a danceability of 51
+prob_51 <- exp(-(-summary(logit_model)$coefficients[1,1]-summary(logit_model)$coefficients[2,1]*51 ))
+prob_51
+
+#Odds ratio
+prob_51/prob_50
+```
+
+So the odds are 20% higher at 51 than at 50. 
+
+#### Logistic model with multiple predictors
+
+Of course we can also use multiple predictors in logistic regression as shown in the formula above. We might want to add spotify followers (in million) and weeks since the release of the song.
+```{r}
+chart_data$spotify_followers_m <- chart_data$spotifyFollowers/1000000
+chart_data$weeks_since_release <- chart_data$daysSinceRelease/7
+```
+
+Again, the familiar formula interface can be used with the ```glm()``` function. All the model summaries shown above still work with multiple predictors.
+
+```{r}
+multiple_logit_model <- glm(top10 ~ danceability_100 + spotify_followers_m + weeks_since_release,family=binomial(link='logit'),data=chart_data)
+summary(multiple_logit_model)
+logisticPseudoR2s(multiple_logit_model)
+exp(coef(multiple_logit_model))
+confint(multiple_logit_model)
+```
+
+
+#### Model selection
+
+The question remains, whether a variable *should* be added to the model. We will present two methods for model selection for logistic regression. The first is based on the _Akaike Information Criterium_ (AIC). It is reported with the summary output for logit models. The value of the AIC is __relative__, meaning that it has no interpretation by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models. 
+
+For example, consider the following model, where we exclude the ```followers``` covariate. Seeing as it was able to contribute significantly to the explanatory power of the model, the AIC increases, indicating that the model including ```followers``` is better suited to explain the data. We always want the lowest possible AIC. 
+
+```{r, message = FALSE, warning = FALSE}
+multiple_logit_model2 <- glm(top10 ~ danceability_100 + weeks_since_release,family=binomial(link='logit'),data=chart_data)
+
+summary(multiple_logit_model2)
+
+```
+
+As a second measure for variable selection, you can use the pseudo $R^2$s as shown above. The fit is distinctly worse according to all three values presented here, when excluding the Spotify followers. 
+
+```{r}
+logisticPseudoR2s(multiple_logit_model2)
+```
+
+
+#### Predictions
+
+We can predict the probability given an observation using the ```predict(my_logit, newdata = ..., type = "response")``` function. Replace ```...``` with the observed values for which you would like to predict the outcome variable.
+
+
+```{r, message = FALSE, warning = FALSE}
+# Prediction for one observation
+predict(multiple_logit_model, newdata = data.frame(danceability_100=50, spotify_followers_m=10, weeks_since_release=1), type = "response")
+```
+
+The prediction indicates that a song with danceability of $50$ from an artist with $10M$ Spotify followers has a $66%$ chance of being in the top-10, 1 week after its release. 
+
+#### Perfect Prediction Logit
+
+Perfect prediction occurs whenever a linear function of $X$ can perfectly separate the $1$s from the $0$s in the dependent variable. This is problematic when estimating a logit model as it will result in biased estimators (also check to p-values in the example!). R will return the following message if this occurs:
+
+```glm.fit: fitted probabilities numerically 0 or 1 occurred```
+
+Given this error, one should not use the output of the ```glm(...)``` function for the analysis. There are [various ways](https://stats.stackexchange.com/a/68917) to deal with this problem, one of which is to use Firth's bias-reduced penalized-likelihood logistic regression with the ```logistf(Y~X)``` function in the ```logistf``` package.  
+
+##### Example
+
+In this example data $Y = 0$ if $x_1 <0$ and $Y=1$ if $x_1>0$ and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are $1$ despite $x_1$ being a predictor of $Y$. Thus, we turn to the penalized-likelihood version. This model correctly indicates that $x_1$ is in fact a predictor for $Y$ as the coefficient is significant.  
+
+```{r, message = FALSE, warning = FALSE}
+Y <- c(0,0,0,0,1,1,1,1)
+X <- cbind(c(-1,-2,-3,-3,5,6,10,11),c(3,2,-1,-1,2,4,1,0))
+
+# Perfect prediction with regular logit
+summary(glm(Y~X, family=binomial(link="logit")))
+
+library(logistf)
+# Perfect prediction with penalized-likelihood logit
+summary(logistf(Y~X))
+```
+
+
+## Learning check {-}
+
+**(LC7.1) What is a correlation coefficient?**
+
+- [ ] It describes the difference in means of two variables
+- [ ] It describes the causal relation between two variables
+- [ ] It is the standardized covariance
+- [ ] It describes the degree to which the variation in one variable is related to the variation in another variable
+- [ ] None of the above 
+
+**(LC7.2) Which line through a scatterplot produces the best fit in a linear regression model?**
+
+- [ ] The line associated with the steepest slope parameter
+- [ ] The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values
+- [ ] The line that minimizes the sum of the squared residuals
+- [ ] The line that maximizes the sum of the squared residuals
+- [ ] None of the above 
+
+**(LC7.3) What is the interpretation of the regression coefficient ($\beta_1$=0.05) in a regression model where log(sales) (i.e., log-transformed units) is the dependent variable and log(advertising) (i.e., the log-transformed advertising expenditures in Euro) is the independent variable (i.e., $log(sales)=13.4+0.05∗log(advertising)$)?**
+
+- [ ] An increase in advertising by 1€ leads to an increase in sales by 0.5 units
+- [ ] A 1% increase in advertising leads to a 0.05% increase in sales
+- [ ] A 1% increase in advertising leads to a 5% decrease in sales
+- [ ] An increase in advertising by 1€ leads to an increase in sales by 0.005 units
+- [ ] None of the above
+
+**(LC7.4) Which of the following statements about the adjusted R-squared is TRUE?**
+
+- [ ] It is always larger than the regular $R^{2}$
+- [ ] It increases with every additional variable
+- [ ] It increases only with additional variables that add more explanatory power than pure chance
+- [ ] It contains a “penalty” for including unnecessary variables
+- [ ] None of the above 
+
+**(LC7.5) What does the term overfitting refer to?**
+
+- [ ] A regression model that has too many predictor variables
+- [ ] A regression model that fits to a specific data set so poorly, that it will not generalize to other samples
+- [ ] A regression model that fits to a specific data set so well, that it will only predict well within the sample but not generalize to other samples
+- [ ] A regression model that fits to a specific data set so well, that it will generalize to other samples particularly well
+- [ ] None of the above 
+
+**(LC7.6) What are assumptions of the linear regression model?**
+
+- [ ] Endogeneity
+- [ ] Independent errors
+- [ ] Heteroscedasticity
+- [ ] Linear dependence of regressors
+- [ ] None of the above 
+
+**(LC7.7) What does the problem of heteroscedasticity in a regression model refer to?**
+
+- [ ] The variance of the error term is not constant
+- [ ] A strong linear relationship between the independent variables
+- [ ] The variance of the error term is constant
+- [ ] A correlation between the error term and the independent variables
+- [ ] None of the above 
+
+**(LC7.8) What are properties of the multiplicative regression model (i.e., log-log specification)?**
+
+- [ ] Constant marginal returns
+- [ ] Decreasing marginal returns
+- [ ] Constant elasticity
+- [ ] Increasing marginal returns
+- [ ] None of the above 
+
+**(LC7.9) When do you use a logistic regression model?**
+
+- [ ] When the dependent variable is continuous
+- [ ] When the independent and dependent variables are binary
+- [ ] When the dependent variable is binary
+- [ ] None of the above 
+
+**(LC7.10) What is the correct way to implement a linear regression model in R? (x = independent variable, y = dependent variable)?**
+
+- [ ] `lm(y~x, data=data)`
+- [ ] `lm(x~y + error, data=data)`
+- [ ] `lm(x~y, data=data)`
+- [ ] `lm(y~x + error, data=data)`
+- [ ] None of the above 
+
+
+## References {-}
+
+* Field, A., Miles J., & Field, Z. (2012): Discovering Statistics Using R. Sage Publications (**chapters 6, 7, 8**).
+* James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013): An Introduction to Statistical Learning with Applications in R, Springer (**chapter 3**)

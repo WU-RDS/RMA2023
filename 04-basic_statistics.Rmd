@@ -68,37 +68,75 @@ ratio, or coefficient of variation  | No  | No  | No  | Yes
 
 As an example data set, we will be using a data set containing music streaming data from a popular streaming service. Let's load and inspect the data first.
 
-```{r, message=FALSE, warning=FALSE, eval=TRUE}
-music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv", 
-                        sep = ",", 
-                        header = TRUE)
-dim(music_data)
-head(music_data)
+```{r eval=FALSE, include=FALSE, purl=FALSE}
+music_data <- read.csv2("https://short.wu.ac.at/ma22_musicdata")
+set.seed(1)
+music_data$expert_rating <- factor(sample(1:5, nrow(music_data), replace = TRUE, prob = c(0.08, 0.2, 0.35, 0.35, 0.02)), levels = 1:5, 
+                                   labels = c("poor", "fair", "good", "excellent", "masterpiece"),
+                                  )
+write.csv2(music_data, "data/music_data_fin.csv", row.names = FALSE)
 ```
 
-The data set contains information about all songs that appeared in the Top200 charts of a popular streaming service in Austria between 2017 and 2020. The `dim()`-function returns the dimensions of the data frame (i.e., the number of rows and columns). As can be seen, the data set comprises information for 6,196 songs and 19 variables. The variables in the data set are:
 
-* track_id: unique ID of a song
-* min_rank: the minimum chart rank
-* streams: the maximum number of daily streams
-* isrc: alternative song ID
-* artist_id: unique ID of the performing artist
-* release_date: release_date of the song
-* explicit: indicates whether a song has explicit lyrics (1) or not (0)
-* duration: the duration in milliseconds
-* danceability, energy, loudness, speechiness, instrumentalness, liveness, valence, tempo are the [audio features](https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/), describing the music style across various dimension
-* label: the music label an artist is signed to
-* rep_ctry: the repertoire country
-* genre: the song genre
+```{r, message=FALSE, warning=FALSE, eval=TRUE, cache=TRUE}
+# read.csv2 is shorthand for read.csv(file, sep = ";")
+music_data <- read.csv2("https://short.wu.ac.at/ma22_musicdata")
+dim(music_data)
+head(music_data)
+names(music_data)
+```
+
+The data set contains information about all songs that appeared in the Top200 charts of a popular streaming service between 2017 and 2020. The `dim()`-function returns the dimensions of the data frame (i.e., the number of rows and columns). As can be seen, the data set comprises information for 66,796 songs and 31 variables. The variables in the data set are:
+
+* isrc: unique song id
+* artist_id: unique artist ID
+* streams: the number of streams of the song received globally between 2017-2021
+* weeks_in_charts: the number of weeks the song was in the top200 charts in this period
+* n_regions: the number of markets where the song appeared in the top200 charts
+* audio features, see: (see: https://developer.spotify.com/documentation/web-api/reference/*category-tracks) 
+    * danceability
+    * energy
+    * speechiness
+    * instrumentalness
+    * liveness
+    * valence
+    * tempo
+* song_length: the duration of the song (in minutes)
+* song_age: the age of the song (in weeks since release)
+* explicit: indicator for explicit lyrics
+* n_playlists: number of playlists a song is featured on
+* sp_popularity: the Spotify popularity index of an artist
+* youtube_views: the number of views the song received on YouTube
+* tiktok_counts: the number of Tiktok views the song received on TikTok
+* ins_followers_artist: the number of Instagram followers of the artist
+* monthly_listeners_artist: the number of monthly listeners of an artist
+* playlist_total_reach_artist: the number of playlist followers of the playlists the song is on
+* sp_fans_artist: the number of fans of the artist on Spotify
+* shazam_counts: the number of times a song is shazamed
+* artistName: name of the artist
+* trackName: name of the song
+* release_date: release date of song
+* genre: genre associated with the song
+* label: music label associated with the song
+* top10: indicator whether the song was in the top 10
+* expert_rating: 5-scale rating by a music expert (poor, fair, good, excellent, masterpiece)
 
 In a first step, we need to make sure all variables are in the correct format, according to these variable definitions: 
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
-music_data$release_date <- as.Date(music_data$release_date) #convert to date
-music_data$explicit <- factor(music_data$explicit, levels = 0:1, labels = c("not explicit", "explicit")) #convert to factor
-music_data$label <- as.factor(music_data$label) #convert to factor
-music_data$rep_ctry <- as.factor(music_data$rep_ctry) #convert to factor
-music_data$genre <- as.factor(music_data$genre) #convert to factor
+library(tidyverse)
+music_data <- music_data |> # pipe music data into mutate
+  mutate(release_date = as.Date(release_date), # convert to date
+         explicit = factor(explicit, levels = 0:1, labels = c("not explicit", "explicit")), # convert to factor w. new labels
+         label = as.factor(label), # convert to factor with values as labels
+         genre = as.factor(genre),
+         top10 = as.logical(top10),
+         # Create an ordered factor for the ratings (e.g., for arranging the data)
+         expert_rating = factor(expert_rating, 
+                                levels = c("poor", "fair", "good", "excellent", "masterpiece"), 
+                                ordered = TRUE)
+         )
+head(music_data)
 ```
 
 In the following sections, we will inspect the data in more detail.
@@ -108,56 +146,70 @@ In the following sections, we will inspect the data in more detail.
 Categorical variables contain a finite number of categories or distinct groups and are also known as qualitative or non-metric variables. There are different types of categorical variables:
 
 * **Nominal variables**: variables that have two or more categories but no logical order (e.g., music genres). A dichotomous variable (also referred to as dummy variable or binary variable) is simply a nominal variable that only has two categories (e.g., indicator for explicit lyrics).
-* **Ordinal variables**: variables that have two or more categories that can also be ordered or ranked (e.g., chart ranks in our example).
+* **Ordinal variables**: variables that have two or more categories that can also be ordered or ranked (e.g., expert ratings).
 
-Let's now start to investigate the **nominal variables** in our data set (i.e., explicit, genre, label, rep_ctry).
+Let's now start to investigate the **nominal variables** in our data set (i.e., explicit, genre, label).
 
 As the table above shows, the only permissible operation with nominal variables is counting. That is, we can inspect the frequency distribution, which tells us how many observations we have per category. The ```table()``` function creates a frequency table that counts how many observations we have in each category. 
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
-table(music_data[,c("genre")]) #absolute frequencies
-table(music_data[,c("label")]) #absolute frequencies
-table(music_data[,c("rep_ctry")]) #absolute frequencies
-table(music_data[,c("explicit")]) #absolute frequencies
+table(music_data$genre) #absolute frequencies
+table(music_data$label) #absolute frequencies
+table(music_data$explicit) #absolute frequencies
 ```
 
-The numbers associated with the factor level in the output tell you, how many observations there are per category. For example, there are 2,898 songs from the HipHop & Rap genre. 
+The numbers associated with the factor level in the output tell you, how many observations there are per category. For example, there are `r nrow(music_data[music_data$genre == "HipHop/Rap", ])` songs from the HipHop & Rap genre. 
 
 Often, we are interested in the relative frequencies, which can be obtained by using the ```prop.table()``` function.
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
-prop.table(table(music_data[,c("genre")])) #relative frequencies
-prop.table(table(music_data[,c("label")])) #relative frequencies
-prop.table(table(music_data[,c("rep_ctry")])) #relative frequencies
-prop.table(table(music_data[,c("explicit")])) #relative frequencies
+prop.table(table(music_data$genre)) #relative frequencies
+prop.table(table(music_data$label)) #relative frequencies
+prop.table(table(music_data$explicit)) #relative frequencies
+```
+```{r include=FALSE}
+warner_share <- prop.table(table(music_data$label))
+warner_share <- round(100*warner_share[names(warner_share) == "Warner Music"], digits = 1)
+rock_share <- prop.table(table(music_data$genre))
+rock_share <- round(100*rock_share[names(rock_share) == "Rock"], digits = 1)
+explicit_share <- prop.table(table(music_data$explicit))
+explicit_share <- round(100*explicit_share[names(explicit_share) == "explicit"], digits = 1)
 ```
 
-Now the output gives you the relative frequencies. For example, the market share of Warner Music in the Austrian Top200 charts is ~16%, ~8.8% of songs are from the Rock genre, ~4.4% of songs are from Austrian artists, and ~41.5% of the songs have explicit lyrics. 
+
+Now the output gives you the relative frequencies. For example, the market share of Warner Music in the Top200 charts is ~`r warner_share`%, ~`r rock_share`% of songs are from the Rock genre, and ~`r explicit_share`% of the songs have explicit lyrics. 
 
 Note that the above output shows the overall relative frequencies. In many cases, it is meaningful to consider conditional relative frequencies. This can be achieved by adding a ```,1``` to the ```prop.table()``` command, which tells R to compute the relative frequencies by row (which is in our case the genre variable). The following code can be used to show the relative frequency of songs with explicit lyrics by genre.  
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
-prop.table(table(music_data[,c("genre", "explicit")]),1) #conditional relative frequencies
+prop.table(table(select(music_data, genre, explicit)),1) #conditional relative frequencies
 ```
-As can be seen, the presence of explicit lyrics greatly varies across genres. While in the HipHop genre ~73% of songs have explicit lyrics, in the Rock genre, this share is only ~11.2%.  
+As can be seen, the presence of explicit lyrics greatly varies across genres. While in the Electro/Dance genre ~`r round(100*prop.table(table(music_data[, c("genre", "explicit")]),1)["Electro/Dance", "explicit"], digits = 1)`% of songs have explicit lyrics, in the Country genre, this share is only ~`r round(100*prop.table(table(music_data[, c("genre", "explicit")]),1)["Country", "explicit"], digits = 1)`%.
 
-The 'min_rank' variable is an example of an **ordinal variable**. Although we can now rank order the songs with respect to their minimum chart rank, this variable doesn't contain information about the distance between two songs. Music popularity charts are often highly skewed towards the top songs, so that the absolute difference in streams between ranks 1 and 2 is larger compared to the differences between songs with ranks, say 101 and 102. This means that the distance between ranks 1 and 2 is not the same as the distance between ranks 101 and 102. To get a measure of central tendency, we could, for example, compute the median of this variable using the `median()`-function. 
+The 'expert_rating' variable is an example of an **ordinal variable**. Although we can now rank order the songs with respect to their rating, this variable doesn't contain information about the distance between two songs. To get a measure of central tendency, we could, for example, compute the median of this variable using the `quantile()`-function (recall that the 50th percentile is the median). For ordinal factors we also have to set the algorithm that calculates the percentiles to `type=1` (see `?quantile` for more details).
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
-median(music_data$min_rank)
+median_rating <- quantile(music_data$expert_rating, 0.5, type = 1)
+median_rating
 ```
-This means that the middle value when the data are arranged is rank number 85 (median = 50th percentile). Note that you could also compute other percentiles using the `quanile()`-function. For example, to get the median and the interquartile range, we could compute the 25th, 50th, and 75th percentile.  
+This means that the "middle" value when the data are arranged is expert rating "good" (median = 50th percentile). Note that you could also compute other percentiles using the `quanile()`-function. For example, to get the median and the interquartile range, we could compute the 25th, 50th, and 75th percentile.  
 
 ```{r, message=FALSE, warning=FALSE, eval=TRUE}
-quantile(music_data$min_rank,c(0.25,0.5,0.75))
+quantile(music_data$expert_rating,c(0.25,0.5,0.75), type = 1)
 ```
-This means that the interquartile range is between ranks 39 and 141. If you wanted to compare different genres according to these statistics, you could do this using the `by()`-function as follows:
+This means that the interquartile range is between "fair" and "excellent". If you wanted to compare different genres according to these statistics, you could do this using the `group_by()`-function as follows:
 
-```{r, message=FALSE, warning=FALSE, eval=TRUE}
-by(music_data$min_rank,music_data$genre,quantile,c(0.25,0.5,0.75))
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+percentiles <- c(0.25, 0.5, 0.75)
+rating_percentiles <- music_data |>
+  group_by(explicit) |>
+  summarize(
+    percentile = percentiles,
+    value = quantile(expert_rating, percentiles, type = 1)) 
+rating_percentiles
 ```
+In this case, we don't observe any differences in the first, second, or third quantile of expert ratings between explicit and non-explicit songs.
 
-The results show that, for example, HipHop artists achieve higher chart ranks compared to artists from other genres and the dispersion of values (IQR) is somewhat lower for this genre. This means that artists from the HipHop Genre consistently achieve higher ranks compared to other artists from other genres.   
 
 ### Continuous variables
 
@@ -170,20 +222,20 @@ Continuous variables (also know as metric variables) are numeric variables that 
 
 For interval and ratio variables we can also compute the mean as a measure of central tendency, as well as the variance and the standard deviation as measures of dispersion. Computing descriptive statistics for continuous variables is easy and there are many functions from different packages that let you calculate summary statistics (including the ```summary()``` function from the ```base``` package). In this tutorial, we will use the ```describe()``` function from the ```psych``` package. Note that you could just as well use other packages to compute the descriptive statistics (e.g., the ```stat.desc()``` function from the ```pastecs``` package). Which one you choose depends on what type of information you seek (the results provide slightly different information) and on personal preferences. 
 
-We could, for example, compute the summary statistics for the variables "streams", "duration_ms", "danceability", and "valence" in our data set as follows:
+We could, for example, compute the summary statistics for the variables "streams", "danceability", and "valence" in our data set as follows:
 
 ```{r message=FALSE, warning=FALSE, paged.print = FALSE}
 library(psych)
-psych::describe(music_data[,c("streams", "duration_ms","danceability","valence")])
+psych::describe(select(music_data, streams, danceability, valence))
 ```
-You can see that the output contains measures of central tendency (e.g., the mean) and dispersion (e.g., sd) for the selected variables. It can be seen, for example, that the mean of the streams variable is 9,724 while the median is 6,006. This already tells us something about the distribution of the data. Because the mean is substantially higher than the median, we can conclude that there are a few songs with many streams, resulting in a right skew of the distribution. The median as a measure of central tendency is generally less susceptible to outliers.   
+You can see that the output contains measures of central tendency (e.g., the mean) and dispersion (e.g., sd) for the selected variables. It can be seen, for example, that the mean of the streams variable is 7,314,674 while the median is 333,336. This already tells us something about the distribution of the data. Because the mean is substantially higher than the median, we can conclude that there are a few songs with many streams, resulting in a right skew of the distribution. The median as a measure of central tendency is generally less susceptible to outliers.   
 
 In the above command, we used the ```psych::``` prefix to avoid confusion and to make sure that R uses the ```describe()``` function from the ```psych``` package since there are many other packages that also contain a ```desribe()``` function. Note that you could also compute these statistics separately by using the respective functions (e.g., ```mean()```, ```sd()```, ```median()```, ```min()```, ```max()```, etc.). There are many options for additional statistics for this function. For example, you could add the argument `IQR = TRUE` to add the interquartile range to the output.   
 
 The ```psych``` package also contains the ```describeBy()``` function, which lets you compute the summary statistics by sub-groups separately. For example, we could compute the summary statistics by genre as follows: 
 
 ```{r message=FALSE, warning=FALSE}
-describeBy(music_data[,c("streams", "duration_ms","danceability","valence")], music_data$genre,skew = FALSE, range = FALSE)
+describeBy(select(music_data, streams, danceability, valence), music_data$genre,skew = FALSE, range = FALSE)
 ```
 
 In this example, we used the arguments `skew = FALSE` and `range = FALSE` to exclude some statistics from the output. 
@@ -197,13 +249,13 @@ st_css()
 
 ```{r, message=FALSE, error = FALSE, warning = FALSE, results='asis'}
 library(summarytools)
-print(dfSummary(music_data[,c("streams","duration_ms","valence","genre","label","explicit")], plain.ascii = FALSE, style = "grid",valid.col = FALSE, tmp.img.dir = "tmp"),  method = 'render',headings = FALSE,footnote= NA)
+print(dfSummary(select(music_data, streams, valence, genre, label, explicit), plain.ascii = FALSE, style = "grid",valid.col = FALSE, tmp.img.dir = "tmp", graph.magnif = .65),  method = 'render',headings = FALSE,footnote= NA)
 ```
 
-The 'Missing' column in the output above tells us that there is one missing value on the 'duration_ms' and 'valence' variables. We might want to exclude this observation by creating a subset of the data.  
+The 'Missing' column in the output above gives us information about missing values. It this case, there are no missing values; however, in reality there are usually at least a couple of lost or not recorded values. To get more precise analysis results, we might want to exclude these observations by creating a "complete" subset of our data. Imagine that we have a missing value in the variable "valence"; we would create a subset by filtering that hypothetical observation out:
 
 ```{r message=FALSE, warning=FALSE}
-music_data <- music_data[!is.na(music_data$valence) & !is.na(music_data$duration_ms),]
+music_data_valence <- filter(music_data, !is.na(valence))
 ```
 
 In the command above, `!is.na()` is used to filter the rows for observations where the respective variable does not have missing values. The "!" in this case translates to "is not" and the function `is.na()` checks for missing values. Hence, the entire statement can be read as "select the rows from the 'music_data' data set where the values of the 'valence' and 'duration_ms' variables are not missing".
@@ -254,7 +306,7 @@ If we create the histogram again, we can see that the scale has changed and now 
 ```{r message=FALSE, warning=FALSE,fig.align='center',fig.cap = "Histogram of standardized tempo variable"}
 hist(music_data$tempo_std)
 ```
-Not that you could have also used the `scale()`-function instead of computing the z-scores manually, which leads to the same result: 
+Note that you could have also used the `scale()`-function instead of computing the z-scores manually, which leads to the same result: 
 
 ```{r message=FALSE, warning=FALSE}
 music_data$tempo_std <- scale(music_data$tempo)

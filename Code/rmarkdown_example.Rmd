@@ -1,0 +1,560 @@
+---
+title: "Getting started with R"
+subtitle: "Marketing Analytics"
+author: "Daniel Winkler"
+output: 
+  html_document:
+    df_print: paged
+date: '2022-10-10'
+---
+
+```{r setup, include=FALSE}
+# Cache will save executed chunks so repeated builds are faster
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE) 
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated.
+
+```{r charts}
+# Read CSV files <- Everything after a # is a comment and not evaluated
+library(tidyverse) # Load a library that provides more functions
+charts <- read.csv2("https://short.wu.ac.at/ma22_musicdata") # Read the data; '<-' is the assignment operator, notice that 'charts' appears on the right  
+charts # View some of the data
+```
+
+## R-Code
+
+R-code is contained in so called "chunks". These chunks always start with three backticks `` ` ``  and `r` in curly braces (`{r}`) and end with three backticks. Optionally, parameters can be added after the ```r``` to influence how a chunk behaves. Additionally, you can also give each chunk a name. Note that these have to be **unique**, otherwise R will refuse to knit your document. A new code chunk can also be added by using the shortcut `Ctrl+Alt+i` (`Strg+Alt+i` on a German keyboard).
+
+
+### Chunk options
+
+You can suppress messages and warnings by adding `message=FALSE, warning=FALSE` to the chunk header like so
+````
+```{r charts_no_messages, message=FALSE, warning=FALSE}`r ''`
+# Read CSV files
+library(tidyverse)
+#charts <- read_csv("charts_global_at.csv")
+charts
+```
+````
+
+```{r charts_no_messages, message=FALSE, warning=FALSE}
+# Read CSV files
+library(tidyverse)
+#charts <- read.csv2("https://short.wu.ac.at/ma22_musicdata")
+charts
+```
+
+In addition you can even hide the code using `echo=FALSE` (similar to slides)
+
+````
+```{r charts_no_code, message=FALSE, warning=FALSE, echo=FALSE}`r ''`
+# Read CSV files
+library(tidyverse)
+#charts <- read_csv("charts_global_at.csv")
+charts
+```
+````
+
+```{r charts_no_code, message=FALSE, warning=FALSE, echo=FALSE}
+# Read CSV files
+library(tidyverse)
+#charts <- read.csv2("https://short.wu.ac.at/ma22_musicdata")
+charts
+```
+
+All those options can be set using the `knitr::opts_chunk$set(...)` function that is already included in every new document, e.g.,
+
+````
+```{r setup, include=FALSE}`r ''`
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE)
+```
+````
+
+In this chunk we see the option `include=FALSE` which means "run the code but do not show the code or any output". Perfect for setting preferences the audience does not need to be aware of! Another useful option is `scipen` which controls which numbers are formatted in scientific formatting like so 
+
+```{r}
+x <- 100000000000
+x
+```
+Changing `scipen` to something large will tell R to print zeros instead. Can you hide the following code chunk?
+
+```{r}
+options(scipen = 99999)
+x
+```
+
+
+
+We will see more chunk options related to visualizations later.
+
+
+## Adding text
+
+RMarkdown combines R code/ output with text. You can use this for example, for your thesis. 
+
+### Headings
+Usually you want to include some kind of heading to structure your text. A heading is created using `#` signs. A single `#` creates a first level heading, two `##` a second level and so on. 
+
+`# First level heading`
+
+# First level heading
+
+`## Second level heading`
+
+## Second level heading
+
+`##### Fith level heading`
+
+##### Fith level heading
+
+It is important to note here that the ```#``` symbol means something different within the code chunks as opposed to outside of them. If you continue to put a ```#``` in front of all your regular text, it will all be interpreted as a first level heading, making your text very large.
+
+### Lists
+
+Bullet point lists are created using `*`, `+` or `-`. Sub-items are created by indenting the item using 4 spaces or 2 tabs. 
+
+````
+* First Item
+* Second Item
+    + first sub-item
+        - first sub-sub-item
+    + second sub-item
+````
+* First Item
+* Second Item
+    + first sub-item
+        - first sub-sub-item
+    + second sub-item
+
+
+Ordered lists can be created using numbers and letters. If you need sub-sub-items use `A)` instead of `A.` on the third level. 
+
+````
+1. First item
+    a. first sub-item
+        A) first sub-sub-item 
+     b. second sub-item
+2. Second item
+````
+
+1. First item
+    a. first sub-item
+        A) first sub-sub-item
+    b. second sub-item
+2. Second item
+
+
+### Text formatting
+
+Text can be formatted in *italics* (`*italics*`) or **bold** (`**bold**`). In addition, you can add block quotes with `>`
+
+````
+> Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.
+````
+> Lorem ipsum dolor amet chillwave lomo ramps, four loko green juice messenger bag raclette forage offal shoreditch chartreuse austin. Slow-carb poutine meggings swag blog, pop-up salvia taxidermy bushwick freegan ugh poke.
+
+## Exploring data
+
+```{r}
+library(skimr)
+skim(charts)
+```
+
+```{r}
+str(charts)
+```
+
+
+```{r}
+head(charts)
+```
+
+## Functions
+
+When analyzing data in R, you will access most of the functionalities by calling functions. A function is a piece of code written to carry out a specified task (e.g., the `skim(charts)`-function to get an overview of `charts`). It may or may not accept arguments or parameters and it may or may not return one or more values. Functions are generally called like this:
+
+```{r eval = FALSE}
+function_name(argument1 = value1, argument2 = value2)
+```
+
+Functions have a default order of arguments which allows us to omit the argument name and write
+
+```{r eval = FALSE}
+function_name(value1, value2)
+```
+
+if we know the correct order. The easiest way to learn about a function is to look at the help file using `?function_name`. Try it out:
+
+```{r}
+?skim
+```
+
+However, this will only work for loaded packages (after calling `library(skimr)`). If you are not sure which (installed) package provides a function try `??function_name`, e.g.,
+
+```{r}
+??nnet
+```
+
+Many packages also come with [companion websites](https://www.tidyverse.org) and so called [vignettes](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html) (btw you can add hyperlinks to your RMarkdown documents using `[text](https://my-link.html)`.
+
+You can also define your own functions to reuse some operations
+
+```{r}
+add_one <- function(x){
+  new_value <- x + 1 # intermediate variables in functions are not saved in your environment. Check!
+  return(new_value)
+}
+add_one(5)
+add_one(67)
+```
+
+Of course we can do more interesting stuff like converting temperatures:
+
+$$
+^{\circ}\mathbf{C} = (^{\circ}\mathbf{F} - 32) \times 5/9
+$$
+
+```{r}
+FtoC <- function(temperature_f){
+  return((temperature_f - 32) * 5/9)
+}
+FtoC(100)
+FtoC(70)
+```
+
+An example IceCream sales:
+
+```{r}
+data("IceCream", package = "sur")
+skim(IceCream)
+```
+
+```{r}
+IceCream$temp_c <- FtoC(IceCream$temp) # Using the $ operator we can assign a new variable in an existing data.frame
+skim(IceCream)
+```
+
+```{r}
+ggplot(IceCream, aes(x = temp_c, y = barsold)) + # cons -> consumption
+  geom_point()
+```
+
+## Data types
+
+The most important types of data are:
+
+
+Data type   | Description	 
+-------------   | --------------------------------------------------------------------------
+Numeric   | Approximations of the real numbers,  $\normalsize\mathbb{R}$ (e.g., mileage a car gets: 23.6, 20.9, etc.)
+Integer   | Whole numbers,  $\normalsize\mathbb{Z}$ (e.g., number of sales: 7, 0, 120, 63, etc.)
+Character   | Text data (strings, e.g., product names)
+Factor    | Categorical data for classification (e.g., product groups)
+Logical   | TRUE, FALSE
+Date    | Date variables (e.g., sales dates: 21-06-2015, 06-21-15, 21-Jun-2015, etc.)
+
+Variables can be converted from one type to another using the appropriate functions (e.g., ```as.numeric()```,```as.integer()```,```as.character()```, ```as.factor()```,```as.logical()```, ```as.Date()```). For example, we could convert the object ```y``` to character as follows:
+
+```{r}
+y <- 5
+print(y)
+y <- as.character(y)
+print(y)
+```
+
+Notice how the value is in quotation marks since it is now of type character. 
+
+Entering a vector of data into R can be done with the ``` c(x1,x2,..,x_n)``` ("concatenate") command. In order to be able to use our vector (or any other variable) later on we want to assign it a name using the assignment operator ``` <-```. You can choose names arbitrarily (but the first character of a name cannot be a number). Just make sure they are descriptive and unique. Assigning the same name to two variables (e.g. vectors) will result in deletion of the first. Instead of converting a variable we can also create a new one and use an existing one as input. In this case we omit the ```as.``` and simply use the name of the type (e.g. ```factor()```). There is a subtle difference between the two: When converting a variable, with e.g. ```as.factor()```, we can only pass the variable we want to convert without additional arguments and R determines the factor levels by the existing unique values in the variable or just returns the variable itself if it is a factor already. When we specifically create a variable (just ```factor()```, ```matrix()```, etc.), we can and should set the options of this type explicitly. For a factor variable these could be the labels and levels, for a matrix the number of rows and columns and so on.  
+
+```{r}
+head(charts$explicit)
+charts$explicit <- factor(charts$explicit, levels = c(1,0), labels = c("Explicit", "Not Explicit"))
+skim(charts, explicit)
+```
+
+
+
+## Data structures
+
+Now let's create a table that contains the variables in columns and each observation in a row (like in SPSS or Excel). There are different data structures in R (e.g., Matrix, Vector, List, Array). In this course, we will mainly use <b>data frames</b>. 
+
+<p style="text-align:center;"><img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/Graphics/dataframe.JPG" alt="data types" height="320"></p>
+
+
+```{r}
+vec <- c(1,2,3,4,5,6,7,8)
+vec
+mat <- matrix(vec, ncol = 2)
+mat
+arr <- array(vec, c(2,2,2))
+arr
+li <- list(vector = vec, matrix = mat, array = arr)
+li
+```
+
+`data.frame`s are similar to matrices but are more flexible in the sense that they may contain different data types (e.g., numeric, character, etc.), where all values of vectors and matrices have to be of the same type (e.g. character). It is often more convenient to use characters instead of numbers (e.g. when indicating a persons sex: "F", "M" instead of 1 for female , 2 for male). Thus we would like to combine both numeric and character values while retaining the respective desired features. This is where "data frames" come into play. `data.frame`s can have different types of data in each column. `data.frame()` creates a separate column for each vector, which is usually what we want (similar to SPSS or Excel).
+
+```{r}
+df <- data.frame(vec = vec, vec_plus_one = add_one(vec), letters = c('a','b', 'c', 'd', 'e', 'f','g','h'))
+df
+# matrix will convert everything to characters
+matrix(c(vec, add_one(vec), c('a','b', 'c', 'd', 'e', 'f','g','h')), ncol = 3)
+```
+### Accessing Variables in a `data.frame`
+
+```{r, print.max = 10}
+# Single column
+IceCream$temp_c
+# Multiple columns
+select(IceCream, temp_c, temp)
+# First row
+head(IceCream, 1)
+# First 6 rows
+head(IceCream)
+# Combination
+select(IceCream, temp_c, temp) |> head()
+```
+
+## Data Input
+
+In general: click on file via the RStudio file explorer and the correct function will be shown. Copy that into your script. 
+
+In some cases we want to download data from external sources (e.g., APIs). There are a couple of packages that can facilitate that.
+
+### Wikipedia
+
+Wikipedia includes many interesting and up-to-date tables. For example you might be looking for a suitable [TikTok influencer](https://en.wikipedia.org/wiki/List_of_most-followed_TikTok_accounts) for your products:
+
+```{r, message=FALSE}
+library(rvest)
+library(janitor)
+library(stringr)
+most_followed_link <- 'https://en.wikipedia.org/wiki/List_of_most-followed_TikTok_accounts'
+most_followed_page <- read_html(most_followed_link)
+most_followed_tables <- html_nodes(most_followed_page, "table.wikitable")
+most_followed <- most_followed_tables[[1]] %>% html_table(fill = TRUE)
+most_followed
+names(most_followed)
+most_followed <- clean_names(most_followed)
+names(most_followed)
+names(most_followed) <- str_remove(names(most_followed), "10_")
+names(most_followed)
+```
+
+
+### JSON APIs
+
+Reading data from websites can be tricky since you need to analyze the page structure first. Many web-services (e.g., Facebook, Twitter, YouTube) actually have application programming interfaces (API’s), which you can use to obtain data in a pre-structured format. JSON (JavaScript Object Notation) is a popular lightweight data-interchange format in which data can be obtained.
+
+The process of obtaining data from APIs consists of the following steps:
+
+Identify an API that has enough data to be relevant and reliable (e.g., [www.programmableweb.com](https://www.programmableweb.com) has >12,000 open web APIs in 63 categories).
+Request information by calling (or, more technically speaking, creating a request to) the API (e.g., R, python, php or JavaScript).
+Receive response messages, which is usually in JavaScript Object Notation (JSON) or Extensible Markup Language (XML) format.
+Write a parser to pull out the elements you want and put them into a of simpler format
+Store, process or analyze data according the marketing research question.
+Let’s assume that you would like to obtain population data again. The World Bank has an API that allows you to easily obtain this kind of data. The details are usually provided in the API reference, e.g., here. You simply “call” the API for the desired information and get a structured JSON file with the desired key-value pairs in return. For example, the population for Austria from 1960 to 2019 can be obtained using this call. The file can be easily read into R using the `fromJSON()`-function from the jsonlite-package. Again, the result is a list and the second element `ctrydata[[2]]` contains the desired data, from which we select the “value” and “data” columns using `select`.
+
+```{r, message = FALSE}
+library(jsonlite)
+url <- "http://api.worldbank.org/v2/countries/AT/indicators/SP.POP.TOTL/?date=1960:2021&format=json&per_page=100" #specifies url
+ctrydata <- fromJSON(url) #parses the data 
+str(ctrydata)
+select(ctrydata[[2]], value, date)
+ctrydata[[2]]$date <- as.numeric(ctrydata[[2]]$date)
+ggplot(ctrydata[[2]], aes(x = date, y = value)) +
+  geom_line()
+```
+
+Try to recreate the following table for the "ease of doing business" indicator (see function `arrange`)
+
+```{r}
+doing_business_url <- "http://api.worldbank.org/v2/countries/all/indicators/IC.BUS.EASE.XQ/?date=2019&format=json&per_page=6000" #specifies url
+#...
+```
+
+
+## Data manipulation: `dplyr` & `tidyr`
+
+Both `dplyr` and `tidyr` are already included in the tidyverse package so we don't have to load anything else.
+
+From [dplyr](https://dplyr.tidyverse.org) we are going to use the following functions 
+
+- `select()` picks variables based on their names. Reduces columns.
+- `filter()` picks cases based on their values. Reduces rows by removing based on filtering function.
+- `mutate()` adds new variables that are functions of existing variables. Adds column(s).
+- `summarize()` reduces multiple values down to a single summary. Reduces rows by summarizing values. 
+- `arrange()` changes the ordering of the rows. Sorts data based on column(s)
+
+These combine naturally with `group_by()` which allows you to perform any operation “by group”.
+
+For filtering we will need the following logical operations
+
+**Logical operations **
+
+| Operation | Description | Example | Result |
+| --- | --- | --- | --- |
+| `a==b` | a equal b | `8/2==4` | `r TRUE` |
+| `a!=b` | a not equal b | `8/2!=5` | `r TRUE` |
+| `a>b` | a greater b | `2*2>3` | `r TRUE` |
+| `a>=b` | a greater or equal b | `5>=10/2` | `r TRUE` |
+| `a<b` | a less b | `6/2 < 5` | `r TRUE` |
+| `a<=b` | a less or equal b | `5<=10/2` | `r TRUE` |
+
+Logical AND: `&&` e.g. `5>=4 && 7>5` $\Rightarrow$ `r TRUE`
+
+Logical OR: `||` e.g. `5>=4 || 7>10` $\Rightarrow$ `r TRUE`
+
+- `&` and `|`: element-wise; 
+- `&&` and `||`: only first element
+
+
+
+```{r, message=FALSE}
+select(charts, trackName, artistName, streams)
+filter(charts, danceability > 0.96, explicit == "Not Explicit")
+
+# %>% inserts the previous output as the first argument
+mutate(charts, log_streams = log(streams)) %>% 
+  select(trackName, artistName, streams, log_streams)
+group_by(charts, artistName) %>%
+  mutate(streams_std = scale(streams), 
+         streams_mean = mean(streams), 
+         streams_sd = sd(streams),
+         streams_std_manual = (streams - streams_mean)/streams_sd) %>%
+  select(trackName,streams_mean, streams_sd, streams_std, streams_std_manual,  streams)
+summarize(charts, streams=sum(streams))
+group_by(charts, artistName) %>% 
+  summarize(total_streams = sum(streams)) 
+group_by(charts, artistName) %>% 
+  summarize(total_streams = sum(streams)) %>%
+  arrange(desc(total_streams))
+
+group_by(charts, label) %>%
+  filter(genre == "Pop") %>%
+  summarize(tracks_in_charts = n(), total_streams = sum(streams), avg_danceability = mean(danceability)) %>%
+  filter(tracks_in_charts > 5000) %>%
+  arrange(desc(tracks_in_charts))
+```
+
+The [tidyr](https://tidyr.tidyverse.org) package provides functions to "pivot" tables from long to wide and vice versa.
+
+```{r, message = FALSE, warning = FALSE}
+music_data_ctry <-
+  read.table(
+    "https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/streaming_charts_ctry.csv",
+    sep = ",",
+    header = TRUE
+  ) |>
+  mutate(week = as.Date(week),
+         region = as.factor(region))
+head(music_data_ctry)
+year_streams <- filter(music_data_ctry, region %in% c("de", "at", "ch")) %>%
+  group_by(year = format(week, "%Y"), region) %>%
+  summarize(streams = sum(streams))
+year_streams
+
+year_wide <-
+  pivot_wider(year_streams, names_from = year, values_from = streams)
+year_wide
+
+filter(year_wide, across(`2017`:`2020`, ~ !is.na(.)))
+
+```
+
+Usually the more useful function is `pivot_wider` because most packages (e.g., `ggplot2`) expect long data.
+
+```{r}
+pivot_longer(year_wide, `2017`:`2020`, 
+             names_to = "year", 
+             values_to = "streams", 
+             values_drop_na = TRUE)
+```
+
+
+## Including Plots
+
+Let's create a plot that shows the streams for the top 10 regions in the sample for 2019 and 2020. First we prepare the data
+
+```{r}
+top10regions <- filter(music_data_ctry, format(week, '%Y') %in% c("2019", "2020")) %>%
+  group_by(region) %>% 
+  summarize(total_streams = sum(streams)) %>%
+  top_n(n=10,total_streams) %>%
+  arrange(desc(total_streams))
+top10regions
+top10streams <- filter(music_data_ctry, region %in% top10regions$region) %>%
+  mutate(year = format(week, "%Y"))
+```
+
+### Anatomy of a `ggplot`
+
+The `ggplot` function prepares the "canvas" for the plot by looking at the data we want to plot. The axes and coloring/fill color can be passed to `aes` as variables.
+
+```{r}
+ggplot(top10streams, aes(x = region, y = streams, fill = year))
+```
+ 
+Next we add (`+`) layers to the plot to show the data. To see which regions are increasingly important, its better to draw the  bars next to each other.
+ 
+```{r}
+ggplot(top10streams, aes(x = region, y = streams, fill = year)) +
+  geom_bar(stat = "identity", position = "dodge")
+```
+
+Alternatively, if we are more interested in total streams:
+
+```{r}
+ggplot(top10streams, aes(x = region, y = streams, fill = year)) +
+  geom_bar(stat = "identity", position = "stack")
+```
+
+
+Next we want to have an ordering to easily compare the importance of the regions:
+
+```{r}
+plt_streams <- ggplot(top10streams, aes(x = fct_reorder(region, streams, max), y = streams, fill = year)) +
+  geom_bar(stat = "identity", position = "dodge")
+plt_streams
+```
+
+Finally let's clean the plot up a bit. Notice that we can save plots and add to them later! In addition the width of the plot is increase through the chunk option `fig.width=12` here.
+
+```{r, fig.width=12, dpi = 500}
+plt_streams + 
+  ggtitle("Total streams of most important regions", subtitle = "2017-2020") + # add title layer
+  theme_bw() +
+  theme(panel.border = element_blank(), # remove box around plot
+        axis.line = element_line(color = 'black'), # add x, y axes
+        panel.grid.major.x = element_blank(), # remove x grid lines
+        legend.title = element_blank(), # remove "year" from legend
+        axis.title.y = element_text(size = 16), # increase y title text size
+        axis.title.x = element_blank(), # remove x title
+        axis.text = element_text(size = 15), # increase text size of labels on both axes
+        legend.text = element_text(size = 15), # increase legend text size
+        title = element_text(size = 18)) + # increase title text size
+  scale_y_continuous(expand = expansion(mult = c(0, .1)), # remove spacing on bottom
+                     labels = scales::comma) # add commas to the number of streams
+```
+
+
+Let's try to clean this plot up together:
+
+```{r global-streams, fig.width = 6}
+music_data_ctry %>%
+  filter(region != "global") %>% # Remove global streams
+  group_by(year_month = format(week, "%Y-%m")) %>% # We want to summarize per month
+  summarize(streams = sum(streams)) %>% # Calculate sum of streams
+  ggplot(aes(x = year_month, y = streams, group = 1)) + # plot setup
+    geom_line() + # add lines
+    ggtitle("Monthly streams") + # add title
+    scale_x_discrete(guide = guide_axis(n.dodge = 2))# +
+   # theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+

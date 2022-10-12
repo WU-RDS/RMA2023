@@ -9,7 +9,7 @@ output:
 
 ## Data import and export 
 
-```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, purl=FALSE}
 library(knitr)
 options(scipen = 999)
 #This code automatically tidies code so that it does not reach over the page
@@ -45,19 +45,20 @@ In the previous chapter, we saw how we may use the keyboard to input data in R. 
 
 ### Getting data for this course
 
-Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). You can directly import these data sets from GitHub without having to copy data sets from one place to another. If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.table()``` function. The ```header=TRUE``` argument indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep="\t"```-argument specifies the delimiter (the character used to separate the columns), which is a TAB in this case.
+Most of the data sets we will be working with in this course will be stored in text files (i.e., .dat, .txt, .csv). All data sets we will be working with are stored in a repository on GitHub (similar to other cloud storage services such as Dropbox). You can directly import these data sets from GitHub without having to copy data sets from one place to another. If you know the location, where the files are stored, you may conveniently load the data directly from GitHub into R using the ```read.csv()``` function. To figure out the structure of the data you can read the first couple of lines of a file using the `readLines` function. The ```header=TRUE``` argument in the `read.csv` function indicates that the first line of data represents the header, i.e., it contains the names of the columns. The ```sep=";"```-argument specifies the delimiter (the character used to separate the columns), which is a ";" in this case. 
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
-test_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/test_data.dat", 
-                        sep = "\t", 
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+readLines("https://short.wu.ac.at/ma22_musicdata", n = 3)
+test_data <- read.csv("https://short.wu.ac.at/ma22_musicdata", 
+                        sep = ";", 
                         header = TRUE)
 head(test_data)
 ```
 
-Note that it is also possible to download the data from the respective folder on the "Learn\@WU" platform, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
+Note that it is also possible to download the data, placing it in the working directory and importing it from there. However, this requires an additional step to download the file manually first. If you chose this option, please **remember to put the data file in the working directory first**. If the import is not working, check your working directory setting using ```getwd()```. Once you placed the file in the working directory, you can import it using the same command as above. Note that the file must be given as a character string (i.e., in quotation marks) and has to end with the file extension (e.g., .csv, .tsv, etc.).
 
-```{r eval=FALSE, message=FALSE, warning=FALSE}
-test_data <- read.table("test_data.csv", header=TRUE, sep = ",")
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+test_data <- read.csv("data/music_data_fin.csv", header=TRUE, sep = ";")
 head(test_data)
 ```
 
@@ -95,12 +96,11 @@ When you inspect the data frame in R after you imported the data, you will find 
 
 ### Export data
 
-Exporting to different formats is also easy, as you can just replace "read" with "write" in many of the previously discussed functions (e.g. ```write.table(object, "file_name")```). This will save the data file to the working directory. To check what the current working directory is you can use ```getwd()```. By default, the ```write.table(object, "file_name")```function includes the row number as the first variable. By specifying ```row.names = FALSE```, you may exclude this variable since it doesn't contain any useful information.  
+Exporting to different formats is also easy, as you can just replace "read" with "write" in many of the previously discussed functions (e.g. ```write.csv(object, "file_name")```). This will save the data file to the working directory. To check what the current working directory is you can use ```getwd()```. By default, the ```write.csv(object, "file_name")```function includes the row number as the first variable. By specifying ```row.names = FALSE```, you may exclude this variable since it doesn't contain any useful information.  
 
 ```{r eval=FALSE}
-write.table(music_data, "musicData.dat", row.names = FALSE, sep = "\t") #writes to a tab-delimited text file
-write.table(music_data, "musicData.csv", row.names = FALSE, sep = ",") #writes to a comma-separated value file 
-write_sav(music_data, "my_file.sav")
+write.csv(music_data, "musicData.csv", row.names = FALSE) #writes to a comma-separated value file 
+write_sav(music_data, "musicData.sav")
 ```
 
 ### Import data from the Web
@@ -208,8 +208,8 @@ plot(covid_data[covid_data$administrative_area_level_2=="New York",c("date","con
 
 **(LC3.1) Which of the following are data types are recognized by R?**
 
-- [x] Factor
-- [x] Date
+- [ ] Factor
+- [ ] Date
 - [ ] Decimal
 - [ ] Vector
 - [ ] None of the above 	
@@ -217,8 +217,8 @@ plot(covid_data[covid_data$administrative_area_level_2=="New York",c("date","con
 **(LC3.2) What function should you use to check if an object is a data frame?**
 
 - [ ] `type()`
-- [x] `str()`
-- [x] `class()`
+- [ ] `str()`
+- [ ] `class()`
 - [ ] `object.type()`
 - [ ] None of the above 	
 
@@ -233,7 +233,7 @@ df <- data.frame(student,grade,date)
 
 - [ ] Error because a data frame can not have different data types
 - [ ] Error because you should use `as.data.frame()` instead of `data.frame()`
-- [x] Error because all vectors need to have the same length
+- [ ] Error because all vectors need to have the same length
 - [ ] Error because the column names are not specified
 - [ ] This code should not report an error	
 
@@ -249,49 +249,49 @@ df
 
 **(LC3.4) How can you obtain Christina's grade from the data frame?**
 
-- [x] `df[4,2]`
+- [ ] `df[4,2]`
 - [ ] `df[2,4]`
-- [ ] `df[student="Christina","grade"]`
-- [x] `df[student=="Christina","grade"]`
+- [ ] `filter(df, student = Christina) %>% select(grade)`
+- [ ] `filter(df, student == "Christina") %>% select(grade)`
 - [ ] None of the above 	
 
 **(LC3.5) How can you add a new variable 'student_id' to the data frame that assigns numbers to students in an ascending order?**
 
-- [x] `df$student_id <- 1:nrow(df)`
+- [ ] `df$student_id <- 1:nrow(df)`
 - [ ] `df&student_id <- 1:nrow(df)`
-- [x] `df[,"student_id"] <- 1:nrow(df)`
-- [ ] `df$student_id <- 1:length(df)`
+- [ ] `mutate(df, student_id = 1:nrow(df))`
+- [ ] `mutate(df, student_id = 1:length(df))`
 - [ ] None of the above 	
 
 **(LC3.6) How could you obtain all rows with students who obtained a 1?**
 
-- [x] `df[df$grade==1,]`
-- [x] `df[grade == min(df$grade),]`
-- [ ] `df[,df$grade==1]`
-- [x] `df[grade==1,]`
+- [ ] `filter(df, grade == 1)`
+- [ ] `filter(df, grade == min(df$grade, na.rm = TRUE))`
+- [ ] `select(df, grade == 1)`
+- [ ] `filter(df, grade == min(df$grade))`
 - [ ] None of the above 	
 
 **(LC3.7) How could you create a subset of observations where the grade is not missing (NA) **
 
-- [ ] `df_subset <- df[grade!=NA,]`
-- [ ] `df_subset <- df[isnot.na(grade),]`
-- [x] `df_subset <- df[!is.na(grade),]`
-- [ ] `df_subset <- df[,grade!=NA]`
+- [ ] `df_subset <- filter(df, !is.na(grade))`
+- [ ] `df_subset <- filter(df, isnot.na(grade))`
+- [ ] `df_subset <- filter(df, grade != NA)`
+- [ ] `df_subset <- filter(df, grade != "NA")`
 - [ ] None of the above 
 
 **(LC3.8) What is the share of students with a grade better than 3?**
 
-- [ ] `df[grade<3,]/nrow(df)`
-- [ ] `nrow(df[grade<3,])/length(df)`
-- [x] `nrow(df[grade<3,])/nrow(df)`
-- [ ] `nrow(df[,grade<3])/nrow(df)`
+- [ ] `filter(df, grade < 3)/nrow(df)`
+- [ ] `nrow(filter(df, grade < 3))/length(df)`
+- [ ] `nrow(filter(df, grade < 3))/nrow(df)`
+- [ ] `filter(df, grade < 3)/length(df)`
 - [ ] None of the above
 
 **(LC3.9) You would like to load a .csv file from your working directory. What function would you use do it?**
 
 - [ ] `read.table(file_name.csv)`
 - [ ] `load.csv("file.csv")`
-- [x] `read.table("file.csv")`
+- [ ] `read.table("file.csv")`
 - [ ] `get.table(file_name.csv)`
 - [ ] None of the above
 
@@ -300,5 +300,5 @@ df
 - [ ] `ncol(df)`
 - [ ] `nrow(df)`
 - [ ] `dim(df)`
-- [x] `str(df)`
+- [ ] `str(df)`
 - [ ] None of the above
