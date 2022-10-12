@@ -7,9 +7,6 @@ output:
   html_notebook: default
 ---
 
-
-
-
 # Group project
 
 Coming soon!

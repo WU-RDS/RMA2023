@@ -7,9 +7,6 @@ output:
   html_notebook: default
 ---
 
-
-
-
 # Supervised learning
 
 Coming soon!
