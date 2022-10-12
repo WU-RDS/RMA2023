@@ -178,7 +178,7 @@ summary(cars)
 ```
 
 ```r
-plot(dist~speed, cars)
+plot(dist ~ speed, cars)
 ```
 
 <img src="09-rmdIntro_files/figure-html/cars2-1.png" width="672" />

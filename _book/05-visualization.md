@@ -296,18 +296,16 @@ We can now take these tables to construct plots grouped by explicitness. To achi
 
 
 ```r
-ggplot(table_plot_cond_rel, aes(x = fct_reorder(genre, Freq), y = Freq)) + 
-  geom_col(aes(fill = Freq)) +
-      facet_wrap(~explicit) +
-  labs(x = "", y = "Relative frequency", title = "Distribution of genres for explicit and non-explicit songs") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq * 100)), vjust=-0.2) +
-  theme_minimal() +
-  ylim(0,1) +
-  scale_fill_continuous_sequential(palette = "Blues") +
-  theme(axis.text.x = element_text(angle=45,vjust=1.1,hjust=1),
-        plot.title = element_text(hjust = 0.5,color = "#666666"),
-        legend.position = "none"
-        ) 
+ggplot(table_plot_cond_rel, aes(x = fct_reorder(genre,
+    Freq), y = Freq)) + geom_col(aes(fill = Freq)) +
+    facet_wrap(~explicit) + labs(x = "", y = "Relative frequency",
+    title = "Distribution of genres for explicit and non-explicit songs") +
+    geom_text(aes(label = sprintf("%.0f%%", Freq *
+        100)), vjust = -0.2) + theme_minimal() + ylim(0,
+    1) + scale_fill_continuous_sequential(palette = "Blues") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1.1,
+        hjust = 1), plot.title = element_text(hjust = 0.5,
+        color = "#666666"), legend.position = "none")
 ```
 
 <div class="figure" style="text-align: center">
@@ -416,14 +414,12 @@ Now, let's create a boxplot based on these variables and plot the log-transforme
 
 
 ```r
-ggplot(music_data,aes(x = fct_reorder(genre, log_streams), y = log_streams)) +
-  geom_boxplot(coef = 3) + 
-  labs(x = "Genre", y = "Number of streams (log-scale)") + 
-  theme_minimal() + 
-  theme(axis.text.x = element_text(angle=45,vjust=1.1,hjust=1),
-        plot.title = element_text(hjust = 0.5,color = "#666666"),
-        legend.position = "none"
-        ) 
+ggplot(music_data, aes(x = fct_reorder(genre, log_streams),
+    y = log_streams)) + geom_boxplot(coef = 3) + labs(x = "Genre",
+    y = "Number of streams (log-scale)") + theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1.1,
+        hjust = 1), plot.title = element_text(hjust = 0.5,
+        color = "#666666"), legend.position = "none")
 ```
 
 <div class="figure" style="text-align: center">
@@ -438,13 +434,10 @@ Note that you could also flip the boxplot. To do this, you only need to exchange
 
 
 ```r
-ggplot(music_data,aes(x = log_streams, y = fct_reorder(genre, log_streams))) +
-  geom_boxplot(coef = 3) + 
-  labs(x = "Number of streams (log-scale)", y = "Genre") + 
-  theme_minimal() + 
-  theme(plot.title = element_text(hjust = 0.5,color = "#666666"),
-        legend.position = "none"
-        ) 
+ggplot(music_data, aes(x = log_streams, y = fct_reorder(genre,
+    log_streams))) + geom_boxplot(coef = 3) + labs(x = "Number of streams (log-scale)",
+    y = "Genre") + theme_minimal() + theme(plot.title = element_text(hjust = 0.5,
+    color = "#666666"), legend.position = "none")
 ```
 
 <div class="figure" style="text-align: center">
@@ -456,11 +449,10 @@ It is often meaningful to augment the boxplot with the data points using ```geom
 
 
 ```r
-ggplot(music_data,aes(x = log_streams , y = fct_reorder(genre, log_streams))) +
-  geom_jitter(colour="red", alpha = 0.1) +
-  geom_boxplot(coef = 3, alpha =0.1) + 
-  labs(x = "Number of streams (log-scale)", y = "Genre") + 
-  theme_minimal() 
+ggplot(music_data, aes(x = log_streams, y = fct_reorder(genre,
+    log_streams))) + geom_jitter(colour = "red", alpha = 0.1) +
+    geom_boxplot(coef = 3, alpha = 0.1) + labs(x = "Number of streams (log-scale)",
+    y = "Genre") + theme_minimal()
 ```
 
 <div class="figure" style="text-align: center">
