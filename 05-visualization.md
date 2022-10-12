@@ -37,7 +37,7 @@ ggplot2 is built around the idea of constructing plots by stacking layers on top
 
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Eer3BHhS5IY" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/FCx9yrkwm68" frameborder="0" allowfullscreen></iframe>
 </div>
 <br>
 
@@ -47,39 +47,38 @@ To give you an example of how the graphics are composed, let's go back to the fr
 
 
 ```r
-music_data <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/music_data_at.csv", 
-                        sep = ",", 
-                        header = TRUE)
-music_data$release_date <- as.Date(music_data$release_date) #convert to date
-music_data$explicit <- factor(music_data$explicit, levels = 0:1, labels = c("not explicit", "explicit")) #convert to factor
-music_data$label <- as.factor(music_data$label) #convert to factor
-music_data$rep_ctry <- as.factor(music_data$rep_ctry) #convert to factor
-music_data$genre <- as.factor(music_data$genre) #convert to factor
-prop.table(table(music_data[,c("genre")])) #relative frequencies
+library(tidyverse)
+music_data <- read.csv2("https://short.wu.ac.at/ma22_musicdata") |> # pipe music data into mutate
+  mutate(release_date = as.Date(release_date), # convert to date
+         explicit = factor(explicit, levels = 0:1, labels = c("not explicit", "explicit")), # convert to factor w. new labels
+         label = as.factor(label), # convert to factor with values as labels
+         genre = as.factor(genre),
+         top10 = as.logical(top10),
+         # Create an ordered factor for the ratings (e.g., for arranging the data)
+         expert_rating = factor(expert_rating, 
+                                levels = c("poor", "fair", "good", "excellent", "masterpiece"), 
+                                ordered = TRUE)
+         ) |>
+  filter(!is.na(valence))
+head(music_data)
 ```
 
-```
-## 
-##    Classics & Jazz Electronic & Dance       HipHop & Rap              other 
-##        0.001613944        0.094577147        0.467721110        0.035990962 
-##                Pop               Rock         Soundtrack 
-##        0.301646223        0.087959974        0.010490639
-```
-
-```r
-music_data <- music_data[!is.na(music_data$valence) & !is.na(music_data$duration_ms),] # exclude cases with missing values
-```
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["artist_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["weeks_in_charts"],"name":[4],"type":["int"],"align":["right"]},{"label":["n_regions"],"name":[5],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["song_length"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["song_age"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["explicit"],"name":[15],"type":["fct"],"align":["left"]},{"label":["n_playlists"],"name":[16],"type":["int"],"align":["right"]},{"label":["sp_popularity"],"name":[17],"type":["int"],"align":["right"]},{"label":["youtube_views"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["tiktok_counts"],"name":[19],"type":["int"],"align":["right"]},{"label":["ins_followers_artist"],"name":[20],"type":["int"],"align":["right"]},{"label":["monthly_listeners_artist"],"name":[21],"type":["int"],"align":["right"]},{"label":["playlist_total_reach_artist"],"name":[22],"type":["int"],"align":["right"]},{"label":["sp_fans_artist"],"name":[23],"type":["int"],"align":["right"]},{"label":["shazam_counts"],"name":[24],"type":["int"],"align":["right"]},{"label":["artistName"],"name":[25],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[26],"type":["chr"],"align":["left"]},{"label":["release_date"],"name":[27],"type":["date"],"align":["right"]},{"label":["genre"],"name":[28],"type":["fct"],"align":["left"]},{"label":["label"],"name":[29],"type":["fct"],"align":["left"]},{"label":["top10"],"name":[30],"type":["lgl"],"align":["right"]},{"label":["expert_rating"],"name":[31],"type":["ord"],"align":["right"]}],"data":[{"1":"BRRGE1603547","2":"3679","3":"11944813","4":"141","5":"1","6":"50.9","7":"80.3","8":"4.00","9":"0.050000","10":"46.30","11":"65.1","12":"166.018","13":"3.118650","14":"228.28571","15":"not explicit","16":"450","17":"51","18":"145030723","19":"9740","20":"29613108","21":"4133393","22":"24286416","23":"3308630","24":"73100","25":"Luan Santana","26":"Eu, VocÃª, O Mar e Ela","27":"2016-06-20","28":"other","29":"Independent","30":"TRUE","31":"excellent"},{"1":"USUM71808193","2":"5239","3":"8934097","4":"51","5":"21","6":"35.3","7":"75.5","8":"73.30","9":"0.000000","10":"39.00","11":"43.7","12":"191.153","13":"3.228000","14":"144.28571","15":"not explicit","16":"768","17":"54","18":"13188411","19":"358700","20":"3693566","21":"18367363","22":"143384531","23":"465412","24":"588550","25":"Alessia Cara","26":"Growing Pains","27":"2018-06-14","28":"Pop","29":"Universal Music","30":"FALSE","31":"good"},{"1":"ES5701800181","2":"776407","3":"38835","4":"1","5":"1","6":"68.3","7":"67.6","8":"14.70","9":"0.000000","10":"7.26","11":"43.4","12":"98.992","13":"3.015550","14":"112.28571","15":"not explicit","16":"48","17":"32","18":"6116639","19":"0","20":"623778","21":"888273","22":"4846378","23":"23846","24":"0","25":"Ana Guerra","26":"El Remedio","27":"2018-04-26","28":"Pop","29":"Universal Music","30":"FALSE","31":"good"},{"1":"ITRSE2000050","2":"433730","3":"46766","4":"1","5":"1","6":"70.4","7":"56.8","8":"26.80","9":"0.000253","10":"8.91","11":"49.5","12":"91.007","13":"3.453417","14":"50.71429","15":"not explicit","16":"6","17":"44","18":"0","19":"13","20":"81601","21":"143761","22":"156521","23":"1294","24":"0","25":"Claver Gold feat. Murubutu","26":"Ulisse","27":"2020-03-31","28":"HipHop/Rap","29":"Independent","30":"FALSE","31":"poor"},{"1":"QZJ842000061","2":"526471","3":"2930573","4":"7","5":"4","6":"84.2","7":"57.8","8":"13.80","9":"0.000000","10":"22.80","11":"19.0","12":"74.496","13":"3.946317","14":"58.28571","15":"not explicit","16":"475","17":"52","18":"0","19":"515","20":"11962358","21":"15551876","22":"90841884","23":"380204","24":"55482","25":"Trippie Redd feat. Young Thug","26":"YELL OH","27":"2020-02-07","28":"HipHop/Rap","29":"Universal Music","30":"FALSE","31":"excellent"},{"1":"USIR20400274","2":"1939","3":"72199738","4":"226","5":"8","6":"35.2","7":"91.1","8":"7.47","9":"0.000000","10":"9.95","11":"23.6","12":"148.033","13":"3.716217","14":"876.71429","15":"not explicit","16":"20591","17":"81","18":"20216069","19":"67300","20":"1169284","21":"16224250","22":"80408253","23":"1651866","24":"5281161","25":"The Killers","26":"Mr. Brightside","27":"2004-06-07","28":"Rock","29":"Universal Music","30":"TRUE","31":"fair"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 How can we plot this kind of data? Since we have a categorical variable, we will use a bar plot. However, to be able to use the table for your plot, you first need to assign it to an object as a data frame using the ```as.data.frame()```-function.
 
 
 ```r
-table_plot_rel <- as.data.frame(prop.table(table(music_data[,c("genre")]))) #relative frequencies #relative frequencies
+table_plot_rel <- as.data.frame(prop.table(table(music_data$genre))) #relative frequencies
 head(table_plot_rel)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Var1"],"name":[1],"type":["fct"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics & Jazz","2":"0.001614205"},{"1":"Electronic & Dance","2":"0.094592413"},{"1":"HipHop & Rap","2":"0.467635190"},{"1":"other","2":"0.035996772"},{"1":"Pop","2":"0.301694915"},{"1":"Rock","2":"0.087974173"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Var1"],"name":[1],"type":["fct"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics/Jazz","2":"0.001197677"},{"1":"Country","2":"0.007545362"},{"1":"Electro/Dance","2":"0.040466495"},{"1":"German Folk","2":"0.008069345"},{"1":"HipHop/Rap","2":"0.316351279"},{"1":"other","2":"0.078268160"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -87,14 +86,13 @@ Since ```Var1``` is not a very descriptive name, let's rename the variable to so
 
 
 ```r
-library(plyr)
-table_plot_rel <- plyr::rename(table_plot_rel, c(Var1="Genre"))
+table_plot_rel <- rename(table_plot_rel, Genre = Var1)
 head(table_plot_rel)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Genre"],"name":[1],"type":["fct"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics & Jazz","2":"0.001614205"},{"1":"Electronic & Dance","2":"0.094592413"},{"1":"HipHop & Rap","2":"0.467635190"},{"1":"other","2":"0.035996772"},{"1":"Pop","2":"0.301694915"},{"1":"Rock","2":"0.087974173"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Genre"],"name":[1],"type":["fct"],"align":["left"]},{"label":["Freq"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics/Jazz","2":"0.001197677"},{"1":"Country","2":"0.007545362"},{"1":"Electro/Dance","2":"0.040466495"},{"1":"German Folk","2":"0.008069345"},{"1":"HipHop/Rap","2":"0.316351279"},{"1":"other","2":"0.078268160"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -102,7 +100,6 @@ Once we have our data set we can begin constructing the plot. As mentioned previ
 
 
 ```r
-library(ggplot2)
 bar_chart <- ggplot(table_plot_rel, aes(x = Genre,y = Freq))
 bar_chart
 ```
@@ -112,7 +109,7 @@ bar_chart
 <p class="caption">(\#fig:unnamed-chunk-7)Bar chart (step 1)</p>
 </div>
 
-You can see that the coordinate system is empty. This is because so far, we have told R only which variables we would like to plot but we haven't specified which geometric figures (points, bars, lines, etc.) we would like to use. This is done using the ```geom_xxx()``` function. ggplot includes many different geoms, for a wide range of plots (e.g., geom_line, geom_histogram, geom_boxplot, etc.). A good overview of the various geom functions can be found <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">here</a>. In our case, we would like to use a bar chart for which ```geom_col``` is appropriate.
+You can see that the coordinate system is empty. This is because so far, we have told R only which variables we would like to plot but we haven't specified which geometric figures (points, bars, lines, etc.) we would like to use. This is done using the ```geom_xxx()``` function. ggplot includes many different geoms, for a wide range of plots (e.g., geom_line, geom_histogram, geom_boxplot, etc.). A good overview of the various geom functions can be found <a href="https://github.com/rstudio/cheatsheets/blob/a9d72b61746ceabb94ef247af14b263ab5fbf15f/data-visualization-2.1.pdf" target="_blank">here</a>. In our case, we would like to use a bar chart for which ```geom_col``` is appropriate.
 
 
 ```r
@@ -145,7 +142,7 @@ How about adding some value labels to the bars? This can be done using ```geom_t
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
   xlab("Genre") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) 
+  geom_text(aes(label = sprintf("%.0f%%", Freq * 100)), vjust=-0.2) 
 ```
 
 <div class="figure" style="text-align: center">
@@ -160,7 +157,7 @@ We could go ahead and specify the appearance of every single element of the plot
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
   xlab("Genre") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
+  geom_text(aes(label = sprintf("%.1f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_bw()
 ```
 
@@ -176,7 +173,7 @@ and ```theme_minimal()``` looks like this:
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
   xlab("Genre") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
+  geom_text(aes(label = sprintf("%.1f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_minimal() 
 ```
 
@@ -191,7 +188,7 @@ In a next step, let's prevent the axis labels from overlapping by rotating the l
 bar_chart + geom_col() +
   ylab("Relative frequency") + 
   xlab("Genre") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
+  geom_text(aes(label = sprintf("%.1f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle=45,vjust=0.75)) 
 ```
@@ -207,10 +204,10 @@ We could also add a title and combine all labels using the `labs` function.
 ```r
 bar_chart + geom_col() +
   labs(x = "Genre", y = "Relative frequency", title = "Chart songs by genre") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
+  geom_text(aes(label = sprintf("%.1f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle=45,vjust=0.75),
-        plot.title = element_text(hjust = 0.5,color = "#666666")
+        plot.title = element_text(hjust = 0.5, color = "#666666")
         ) 
 ```
 
@@ -218,16 +215,17 @@ bar_chart + geom_col() +
 <img src="05-visualization_files/figure-html/unnamed-chunk-14-1.png" alt="Bar chart (options 1)" width="672" />
 <p class="caption">(\#fig:unnamed-chunk-14)Bar chart (options 1)</p>
 </div>
-We could also add some color to the bars using `scale_fill_brewer`, which comes with a range of <a href="http://applied-r.com/rcolorbrewer-palettes/" target="_blank">color palettes</a>. 
+We could also add some color to the bars using the `colorspace` library, which comes with a range of <a href="https://colorspace.r-forge.r-project.org/articles/ggplot2_color_scales.html" target="_blank">color palettes</a>. For example the shading of the bar could reflect the frequency:
 
 
 ```r
-bar_chart + geom_col(aes(fill = Genre)) +
+library(colorspace)
+bar_chart + geom_col(aes(fill = Freq)) +
   labs(x = "Genre", y = "Relative frequency", title = "Chart share by genre") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
+  geom_text(aes(label = sprintf("%.1f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_minimal() +
   ylim(0,0.5) +
-  scale_fill_brewer(palette = "Blues") +
+  scale_fill_continuous_sequential(palette = "Blues") +
   theme(axis.text.x = element_text(angle=45,vjust=0.75),
         plot.title = element_text(hjust = 0.5,color = "#666666"),
         legend.title = element_blank()
@@ -238,14 +236,33 @@ bar_chart + geom_col(aes(fill = Genre)) +
 <img src="05-visualization_files/figure-html/unnamed-chunk-15-1.png" alt="Bar chart (options 1)" width="672" />
 <p class="caption">(\#fig:unnamed-chunk-15)Bar chart (options 1)</p>
 </div>
-These were examples of built-in formatting options of ```ggolot()```, where the default is ```theme_classic()```. For even more options, check out the ```ggthemes``` package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example ```theme_economist()``` uses the formatting of the journal "The Economist":
+
+Finally, we can reorder the bars by size using `fct_reorder`. The first argument to the function is the `factor` we want to reorder (genre) and the second the variable by which we want to order it (frequency):
+
+
+```r
+bar_chart + geom_col(aes(x=fct_reorder(Genre, Freq), fill = Freq)) +
+  labs(x = "Genre", y = "Relative frequency", title = "Chart share by genre") + 
+  geom_text(aes(label = sprintf("%.1f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
+  theme_minimal() +
+  ylim(0,0.5) +
+  scale_fill_continuous_sequential(palette = "Blues") +
+  theme(axis.text.x = element_text(angle=45,vjust=0.75),
+        plot.title = element_text(hjust = 0.5,color = "#666666"),
+        legend.title = element_blank()
+        )
+```
+
+<img src="05-visualization_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+
+The default theme in `ggplot` is ```theme_classic()```. For even more options, check out the ```ggthemes``` package, which includes formats for specific publications. You can check out the different themes <a href="https://cran.r-project.org/web/packages/ggthemes/vignettes/ggthemes.html" target="_blank">here</a>. For example ```theme_economist()``` uses the formatting of the journal "The Economist":
 
 
 ```r
 library(ggthemes)
-bar_chart + geom_col() +
+bar_chart + geom_col(aes(x=fct_reorder(Genre, Freq))) +
   labs(x = "Genre", y = "Relative frequency", title = "Chart songs by genre") + 
-  geom_text(aes(label = sprintf("%.0f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
+  geom_text(aes(label = sprintf("%.1f%%", Freq/sum(Freq) * 100)), vjust=-0.2) +
   theme_economist() +
   ylim(0,0.5) +
   theme(axis.text.x = element_text(angle=45,vjust=0.55),
@@ -254,8 +271,8 @@ bar_chart + geom_col() +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-16-1.png" alt="Bar chart (options 2)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-16)Bar chart (options 2)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-17-1.png" alt="Bar chart (options 2)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17)Bar chart (options 2)</p>
 </div>
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
@@ -266,27 +283,27 @@ In a next step, we might want to investigate whether the relative frequencies di
 
 
 ```r
-table_plot_cond_rel <- as.data.frame(prop.table(table(music_data[,c("genre", "explicit")]),2)) #conditional relative frequencies
+table_plot_cond_rel <- as.data.frame(prop.table(table(select(music_data, genre, explicit)),2)) #conditional relative frequencies
 table_plot_cond_rel
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["genre"],"name":[1],"type":["fct"],"align":["left"]},{"label":["explicit"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics & Jazz","2":"not explicit","3":"0.0027586207"},{"1":"Electronic & Dance","2":"not explicit","3":"0.1459310345"},{"1":"HipHop & Rap","2":"not explicit","3":"0.2115862069"},{"1":"other","2":"not explicit","3":"0.0601379310"},{"1":"Pop","2":"not explicit","3":"0.4284137931"},{"1":"Rock","2":"not explicit","3":"0.1335172414"},{"1":"Soundtrack","2":"not explicit","3":"0.0176551724"},{"1":"Classics & Jazz","2":"explicit","3":"0.0000000000"},{"1":"Electronic & Dance","2":"explicit","3":"0.0221789883"},{"1":"HipHop & Rap","2":"explicit","3":"0.8287937743"},{"1":"other","2":"explicit","3":"0.0019455253"},{"1":"Pop","2":"explicit","3":"0.1229571984"},{"1":"Rock","2":"explicit","3":"0.0237354086"},{"1":"Soundtrack","2":"explicit","3":"0.0003891051"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["genre"],"name":[1],"type":["fct"],"align":["left"]},{"label":["explicit"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Freq"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics/Jazz","2":"not explicit","3":"0.001126222"},{"1":"Country","2":"not explicit","3":"0.008429603"},{"1":"Electro/Dance","2":"not explicit","3":"0.030442128"},{"1":"German Folk","2":"not explicit","3":"0.006450182"},{"1":"HipHop/Rap","2":"not explicit","3":"0.341996144"},{"1":"other","2":"not explicit","3":"0.082265413"},{"1":"Pop","2":"not explicit","3":"0.433424910"},{"1":"R&B","2":"not explicit","3":"0.029605993"},{"1":"Reggae","2":"not explicit","3":"0.001877037"},{"1":"Rock","2":"not explicit","3":"0.059553265"},{"1":"Soundtrack","2":"not explicit","3":"0.004829104"},{"1":"Classics/Jazz","2":"explicit","3":"0.001708776"},{"1":"Country","2":"explicit","3":"0.001220554"},{"1":"Electro/Dance","2":"explicit","3":"0.112168925"},{"1":"German Folk","2":"explicit","3":"0.019650922"},{"1":"HipHop/Rap","2":"explicit","3":"0.132918345"},{"1":"other","2":"explicit","3":"0.049676553"},{"1":"Pop","2":"explicit","3":"0.569876724"},{"1":"R&B","2":"explicit","3":"0.017820090"},{"1":"Reggae","2":"explicit","3":"0.001342610"},{"1":"Rock","2":"explicit","3":"0.088368119"},{"1":"Soundtrack","2":"explicit","3":"0.005248383"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 We can now take these tables to construct plots grouped by explicitness. To achieve this we simply need to add the `facet_wrap()` function, which replicates a plot multiple times, split by a specified grouping factor. Note that the grouping factor has to be supplied in R’s formula notation, hence it is preceded by a “~” symbol.
 
 
 ```r
-ggplot(table_plot_cond_rel, aes(x = genre, y = Freq)) + 
-  geom_col(aes(fill = genre)) +
+ggplot(table_plot_cond_rel, aes(x = fct_reorder(genre, Freq), y = Freq)) + 
+  geom_col(aes(fill = Freq)) +
       facet_wrap(~explicit) +
   labs(x = "", y = "Relative frequency", title = "Distribution of genres for explicit and non-explicit songs") + 
   geom_text(aes(label = sprintf("%.0f%%", Freq * 100)), vjust=-0.2) +
   theme_minimal() +
   ylim(0,1) +
-  scale_fill_brewer(palette = "Blues") +
+  scale_fill_continuous_sequential(palette = "Blues") +
   theme(axis.text.x = element_text(angle=45,vjust=1.1,hjust=1),
         plot.title = element_text(hjust = 0.5,color = "#666666"),
         legend.position = "none"
@@ -294,19 +311,19 @@ ggplot(table_plot_cond_rel, aes(x = genre, y = Freq)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-18-1.png" alt="Grouped bar chart (facet_wrap)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-18)Grouped bar chart (facet_wrap)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-19-1.png" alt="Grouped bar chart (facet_wrap)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-19)Grouped bar chart (facet_wrap)</p>
 </div>
 
 Alternatively, we might be interested to investigate the relative frequencies of explicit and non-explicit lyrics for each genre. To achieve this, we can also use the fill argument, which tells ggplot to fill the bars by a specified variable (in our case “explicit”). The position = "dodge" argument causes the bars to be displayed next to each other (as opposed to stacked on top of one another).
 
 
 ```r
-table_plot_cond_rel_1 <- as.data.frame(prop.table(table(music_data[,c("genre", "explicit")]),1)) #conditional relative frequencies
+table_plot_cond_rel_1 <- as.data.frame(prop.table(table(select(music_data, genre, explicit)),1)) #conditional relative frequencies
 ggplot(table_plot_cond_rel_1, aes(x = genre, y = Freq, fill = explicit)) + #use "fill" argument for different colors
   geom_col(position = "dodge") + #use "dodge" to display bars next to each other (instead of stacked on top)
   geom_text(aes(label = sprintf("%.0f%%", Freq * 100)),position=position_dodge(width=0.9), vjust=-0.25) +
-    scale_fill_brewer(palette = "Blues") +
+    scale_fill_discrete_qualitative(palette = "Dynamic") +
   labs(x = "Genre", y = "Relative frequency", title = "Explicit lyrics share by genre") + 
   theme_minimal() +
   theme(axis.text.x = element_text(angle=45,vjust=1.1,hjust=1),
@@ -316,88 +333,17 @@ ggplot(table_plot_cond_rel_1, aes(x = genre, y = Freq, fill = explicit)) + #use 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-19-1.png" alt="Grouped bar chart (fill)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-19)Grouped bar chart (fill)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-20-1.png" alt="Grouped bar chart (fill)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-20)Grouped bar chart (fill)</p>
 </div>
 
 
-#### Pie chart
-
-We could also visualize the same information using a pie chart.
-
-
-```r
-ggplot(subset(table_plot_rel,Freq > 0), aes(x="", y=Freq, fill=Genre)) + # Create a basic bar
-  geom_bar(stat="identity", width=1) + 
-  coord_polar("y", start=0) + #Convert to pie (polar coordinates) 
-  geom_text(aes(label = paste0(round(Freq*100), "%")), position = position_stack(vjust = 0.5)) + #add labels
-  scale_fill_brewer(palette = "Blues") +
-  labs(x = NULL, y = NULL, fill = NULL, title = "Spotify tracks by Genre") +  #remove labels and add title
-  theme_minimal() + 
-  theme(axis.line = element_blank(),  # Tidy up the theme
-        axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        plot.title = element_text(hjust = 0.5, color = "#666666"))   
-```
-
-<img src="05-visualization_files/figure-html/unnamed-chunk-20-1.png" width="672" />
-
-#### Covariation plots
-
-To visualize the co-variation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Say, we wanted to investigate the association between the popularity of a song and the level of 'speechiness'. For this exercise, let's assume we have both variables measured as categorical (factor) variables. We can use the `quantcut()` function to create categorical variables based on the continuous variables. All we need to do is tell the function how many categories we would like to obtain and it will divide the data based on the percentiles equally.  
-
-
-```r
-library(gtools)
-music_data$streams_cat <- as.numeric(quantcut(music_data$streams, 5, na.rm=TRUE))
-music_data$speech_cat <- as.numeric(quantcut(music_data$speechiness, 3, na.rm=TRUE))
-
-music_data$streams_cat <- factor(music_data$streams_cat, levels = 1:5, labels = c("low", "low-med", "medium", "med-high", "high")) #convert to factor
-music_data$speech_cat <- factor(music_data$speech_cat, levels = 1:3, labels = c("low", "medium", "high")) #convert to factor
-```
-
-Now we have multiple ways to visualize a relationship between the two variables with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with ```geom_count()``` as the example below shows where the `stat(prop)` argument assures that we get relative frequencies and with the `group` argument we tell R to compute the relative frequencies by speechiness.
-
-
-```r
-ggplot(data = music_data) + 
-  geom_count(aes(x = speech_cat, y = streams_cat, size = stat(prop), group = speech_cat))  + 
-  ylab("Popularity") + 
-  xlab("Speechiness") + 
-  labs(size = "Proportion") +
-  theme_bw()
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-22-1.png" alt="Covariation between categorical data (1)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-22)Covariation between categorical data (1)</p>
-</div>
-The plot shows that there appears to be a positive association between the popularity of a song and its level of speechiness. 
-
-Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this, we first have to create a dataframe that contains the relative frequencies of all combinations of factors. Then we can take this dataframe and pass it to ```geom_tile()```, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the ```aes()``` function.  
-
-
-```r
-table_plot_rel <- prop.table(table(music_data[,c("speech_cat", "streams_cat")]),1)
-table_plot_rel <- as.data.frame(table_plot_rel)
-
-ggplot(table_plot_rel, aes(x = speech_cat, y = streams_cat)) + 
-  geom_tile(aes(fill = Freq)) + 
-  ylab("Populartiy") + 
-  xlab("Speechiness") + 
-  theme_bw()
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-23-1.png" alt="Covariation between categorical data (2)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23)Covariation between categorical data (2)</p>
-</div>
 
 ### Continuous variables
 
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/1ttdoi_QMAw" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/WuMp80qZGc4" frameborder="0" allowfullscreen></iframe>
 </div>
 <br>
 
@@ -412,40 +358,44 @@ head(music_data)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["track_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["min_rank"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams"],"name":[3],"type":["int"],"align":["right"]},{"label":["isrc"],"name":[4],"type":["chr"],"align":["left"]},{"label":["artist_id"],"name":[5],"type":["chr"],"align":["left"]},{"label":["release_date"],"name":[6],"type":["date"],"align":["right"]},{"label":["explicit"],"name":[7],"type":["fct"],"align":["left"]},{"label":["danceability"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["loudness"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["label"],"name":[17],"type":["fct"],"align":["left"]},{"label":["rep_ctry"],"name":[18],"type":["fct"],"align":["left"]},{"label":["genre"],"name":[19],"type":["fct"],"align":["left"]},{"label":["streams_cat"],"name":[20],"type":["fct"],"align":["left"]},{"label":["speech_cat"],"name":[21],"type":["fct"],"align":["left"]}],"data":[{"1":"000xQL6tZNLJzIrtIgxqSl","2":"65","3":"4066","4":"USRC11700675","5":"5ZsFI1h6hIdQRw2ti0hz81","6":"2017-03-23","7":"not explicit","8":"0.748","9":"188491","10":"0.627","11":"-6.029","12":"0.0644","13":"0.0000","14":"0.0852","15":"0.524","16":"120.963","17":"SONY","18":"US","19":"Rock","20":"low-med","21":"medium"},{"1":"003eoIwxETJujVWmNFMoZy","2":"136","3":"3871","4":"USUM71808193","5":"2wUjUUtkb5lvLKcGKsKqsR","6":"2018-06-15","7":"not explicit","8":"0.353","9":"193680","10":"0.755","11":"-6.276","12":"0.7330","13":"0.0000","14":"0.3900","15":"0.437","16":"191.153","17":"UMG","18":"US","19":"Pop","20":"low-med","21":"high"},{"1":"003vvx7Niy0yvhvHt4a68B","2":"197","3":"4574","4":"USIR20400274","5":"0C0XlULifJtAgn6ZNCW2eu","6":"2004-06-01","7":"not explicit","8":"0.352","9":"222973","10":"0.911","11":"-5.230","12":"0.0747","13":"0.0000","14":"0.0995","15":"0.236","16":"148.033","17":"UMG","18":"US","19":"Rock","20":"low-med","21":"medium"},{"1":"009CKw0AJZiyaIFG8uGl5C","2":"22","3":"11633","4":"ATR211823101","5":"5DxtpBc8OxcLW5KvAwtzBy","6":"2018-07-27","7":"not explicit","8":"0.761","9":"184274","10":"0.956","11":"-4.320","12":"0.0283","13":"0.0000","14":"0.3160","15":"0.973","16":"133.989","17":"INDEP","18":"AT","19":"Pop","20":"med-high","21":"low"},{"1":"00adbfJZUIpz8vRycsR7WV","2":"168","3":"5076","4":"DEA621801609","5":"6gto7HVNhu4ARE3P3g8Y5Y","6":"2018-12-07","7":"explicit","8":"0.560","9":"183400","10":"0.734","11":"-5.976","12":"0.0635","13":"0.0001","14":"0.1700","15":"0.191","16":"76.042","17":"WARNER","18":"DE","19":"HipHop & Rap","20":"medium","21":"medium"},{"1":"00gv2BypA7ieovRSsD7rO8","2":"32","3":"11951","4":"DEYD21901001","5":"0lFLP59V4TY3XgnrkFIwxK","6":"2019-07-26","7":"explicit","8":"0.827","9":"163195","10":"0.671","11":"-5.942","12":"0.0394","13":"0.0007","14":"0.0694","15":"0.668","16":"102.003","17":"WARNER","18":"DE","19":"HipHop & Rap","20":"med-high","21":"low"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["artist_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["weeks_in_charts"],"name":[4],"type":["int"],"align":["right"]},{"label":["n_regions"],"name":[5],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["song_length"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["song_age"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["explicit"],"name":[15],"type":["fct"],"align":["left"]},{"label":["n_playlists"],"name":[16],"type":["int"],"align":["right"]},{"label":["sp_popularity"],"name":[17],"type":["int"],"align":["right"]},{"label":["youtube_views"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["tiktok_counts"],"name":[19],"type":["int"],"align":["right"]},{"label":["ins_followers_artist"],"name":[20],"type":["int"],"align":["right"]},{"label":["monthly_listeners_artist"],"name":[21],"type":["int"],"align":["right"]},{"label":["playlist_total_reach_artist"],"name":[22],"type":["int"],"align":["right"]},{"label":["sp_fans_artist"],"name":[23],"type":["int"],"align":["right"]},{"label":["shazam_counts"],"name":[24],"type":["int"],"align":["right"]},{"label":["artistName"],"name":[25],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[26],"type":["chr"],"align":["left"]},{"label":["release_date"],"name":[27],"type":["date"],"align":["right"]},{"label":["genre"],"name":[28],"type":["fct"],"align":["left"]},{"label":["label"],"name":[29],"type":["fct"],"align":["left"]},{"label":["top10"],"name":[30],"type":["lgl"],"align":["right"]},{"label":["expert_rating"],"name":[31],"type":["ord"],"align":["right"]}],"data":[{"1":"BRRGE1603547","2":"3679","3":"11944813","4":"141","5":"1","6":"50.9","7":"80.3","8":"4.00","9":"0.050000","10":"46.30","11":"65.1","12":"166.018","13":"3.118650","14":"228.28571","15":"not explicit","16":"450","17":"51","18":"145030723","19":"9740","20":"29613108","21":"4133393","22":"24286416","23":"3308630","24":"73100","25":"Luan Santana","26":"Eu, VocÃª, O Mar e Ela","27":"2016-06-20","28":"other","29":"Independent","30":"TRUE","31":"excellent"},{"1":"USUM71808193","2":"5239","3":"8934097","4":"51","5":"21","6":"35.3","7":"75.5","8":"73.30","9":"0.000000","10":"39.00","11":"43.7","12":"191.153","13":"3.228000","14":"144.28571","15":"not explicit","16":"768","17":"54","18":"13188411","19":"358700","20":"3693566","21":"18367363","22":"143384531","23":"465412","24":"588550","25":"Alessia Cara","26":"Growing Pains","27":"2018-06-14","28":"Pop","29":"Universal Music","30":"FALSE","31":"good"},{"1":"ES5701800181","2":"776407","3":"38835","4":"1","5":"1","6":"68.3","7":"67.6","8":"14.70","9":"0.000000","10":"7.26","11":"43.4","12":"98.992","13":"3.015550","14":"112.28571","15":"not explicit","16":"48","17":"32","18":"6116639","19":"0","20":"623778","21":"888273","22":"4846378","23":"23846","24":"0","25":"Ana Guerra","26":"El Remedio","27":"2018-04-26","28":"Pop","29":"Universal Music","30":"FALSE","31":"good"},{"1":"ITRSE2000050","2":"433730","3":"46766","4":"1","5":"1","6":"70.4","7":"56.8","8":"26.80","9":"0.000253","10":"8.91","11":"49.5","12":"91.007","13":"3.453417","14":"50.71429","15":"not explicit","16":"6","17":"44","18":"0","19":"13","20":"81601","21":"143761","22":"156521","23":"1294","24":"0","25":"Claver Gold feat. Murubutu","26":"Ulisse","27":"2020-03-31","28":"HipHop/Rap","29":"Independent","30":"FALSE","31":"poor"},{"1":"QZJ842000061","2":"526471","3":"2930573","4":"7","5":"4","6":"84.2","7":"57.8","8":"13.80","9":"0.000000","10":"22.80","11":"19.0","12":"74.496","13":"3.946317","14":"58.28571","15":"not explicit","16":"475","17":"52","18":"0","19":"515","20":"11962358","21":"15551876","22":"90841884","23":"380204","24":"55482","25":"Trippie Redd feat. Young Thug","26":"YELL OH","27":"2020-02-07","28":"HipHop/Rap","29":"Universal Music","30":"FALSE","31":"excellent"},{"1":"USIR20400274","2":"1939","3":"72199738","4":"226","5":"8","6":"35.2","7":"91.1","8":"7.47","9":"0.000000","10":"9.95","11":"23.6","12":"148.033","13":"3.716217","14":"876.71429","15":"not explicit","16":"20591","17":"81","18":"20216069","19":"67300","20":"1169284","21":"16224250","22":"80408253","23":"1651866","24":"5281161","25":"The Killers","26":"Mr. Brightside","27":"2004-06-07","28":"Rock","29":"Universal Music","30":"TRUE","31":"fair"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
-Now we can create the histogram using ```geom_histogram()```. The argument ```binwidth``` specifies the range that each bar spans, ```col = "black"``` specifies the border to be black and ```fill = "darkblue"``` sets the inner color of the bars to dark blue. For brevity, we have now also started naming the x and y axis with the single function ```labs()```, instead of using the two distinct functions ```xlab()``` and ```ylab()```.
+Now we can create the histogram using ```geom_histogram()```. The argument ```binwidth``` specifies the range that each bar spans, ```col = "black"``` specifies the border to be black and ```fill = "darkblue"``` sets the inner color of the bars to dark blue. For brevity, we have now also started naming the x and y axis with the single function ```labs()```, instead of using the two distinct functions ```xlab()``` and ```ylab()```. Let's look at the distribution of streams of R&B songs:
 
 
 ```r
-ggplot(music_data,aes(streams)) + 
-  geom_histogram(binwidth = 4000, col = "black", fill = "darkblue") + 
-  labs(x = "Number of streams", y = "Frequency", title = "Distribution of streams") + 
-  theme_bw()
+music_data |>
+  filter(genre=="R&B") |>
+  ggplot(aes(streams)) + 
+    geom_histogram(binwidth = 20000000, col = "black", fill = "darkblue") + 
+    labs(x = "Number of streams", y = "Frequency", title = "Distribution of streams") + 
+    theme_bw()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-25-1.png" alt="Histogram" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25)Histogram</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-22-1.png" alt="Histogram" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-22)Histogram</p>
 </div>
 
 If you would like to highlight certain points of the distribution, you can use the `geom_vline` (short for vertical line) function to do this. For example, we may want to highlight the mean and the median of the distribution.
 
 
 ```r
-ggplot(music_data,aes(streams)) + 
-  geom_histogram(binwidth = 4000, col = "black", fill = "darkblue") + 
+music_data |>
+  filter(genre=="R&B") |>
+ggplot(aes(streams)) + 
+  geom_histogram(binwidth = 20000000, col = "black", fill = "darkblue") + 
   labs(x = "Number of streams", y = "Frequency", title = "Distribution of streams", subtitle = "Red vertical line = mean, green vertical line = median") + 
-  geom_vline(xintercept = mean(music_data$streams), color = "red", size = 1) +
-  geom_vline(xintercept = median(music_data$streams), color = "green", size = 1) +
+  geom_vline(aes(xintercept = mean(streams)), color = "red", size = 1) +
+  geom_vline(aes(xintercept = median(streams)), color = "green", size = 1) +
   theme_bw()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-26-1.png" alt="Histogram 2" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-26)Histogram 2</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-23-1.png" alt="Histogram 2" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-23)Histogram 2</p>
 </div>
 In this case, you should indicate what the lines refer to. In the plot above, the 'subtitle' argument was used to add this information to the plot. 
 
@@ -466,11 +416,10 @@ Now, let's create a boxplot based on these variables and plot the log-transforme
 
 
 ```r
-ggplot(music_data,aes(x = genre, y = log_streams, fill = genre)) +
+ggplot(music_data,aes(x = fct_reorder(genre, log_streams), y = log_streams)) +
   geom_boxplot(coef = 3) + 
   labs(x = "Genre", y = "Number of streams (log-scale)") + 
   theme_minimal() + 
-  scale_fill_brewer(palette = "Blues") +
   theme(axis.text.x = element_text(angle=45,vjust=1.1,hjust=1),
         plot.title = element_text(hjust = 0.5,color = "#666666"),
         legend.position = "none"
@@ -478,8 +427,8 @@ ggplot(music_data,aes(x = genre, y = log_streams, fill = genre)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-28-1.png" alt="Boxplot by group" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-28)Boxplot by group</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-25-1.png" alt="Boxplot by group" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-25)Boxplot by group</p>
 </div>
 The following graphic shows you how to interpret the boxplot:
 
@@ -489,38 +438,37 @@ Note that you could also flip the boxplot. To do this, you only need to exchange
 
 
 ```r
-ggplot(music_data,aes(x = log_streams, y = genre, fill = genre)) +
+ggplot(music_data,aes(x = log_streams, y = fct_reorder(genre, log_streams))) +
   geom_boxplot(coef = 3) + 
   labs(x = "Number of streams (log-scale)", y = "Genre") + 
   theme_minimal() + 
-  scale_fill_brewer(palette = "Blues") +
   theme(plot.title = element_text(hjust = 0.5,color = "#666666"),
         legend.position = "none"
         ) 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-29-1.png" alt="Boxplot by group" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-29)Boxplot by group</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-26-1.png" alt="Boxplot by group" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-26)Boxplot by group</p>
 </div>
 
 It is often meaningful to augment the boxplot with the data points using ```geom_jitter()```. This way, differences in the distribution of the variable between the genres become even more apparent. 
 
 
 ```r
-ggplot(music_data,aes(x = log_streams , y = genre)) +
-  geom_boxplot(coef = 3) + 
+ggplot(music_data,aes(x = log_streams , y = fct_reorder(genre, log_streams))) +
+  geom_jitter(colour="red", alpha = 0.1) +
+  geom_boxplot(coef = 3, alpha =0.1) + 
   labs(x = "Number of streams (log-scale)", y = "Genre") + 
-  theme_minimal() +
-  geom_jitter(colour="red", alpha = 0.1) 
+  theme_minimal() 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-30-1.png" alt="Boxplot by group" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-30)Boxplot by group</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-27-1.png" alt="Boxplot by group" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-27)Boxplot by group</p>
 </div>
 
-In case you would like to create the boxplot on the total data (i.e., not by group), just leave the ```x = ``` argument within the ```aes()``` function empty: 
+In case you would like to create the boxplot on the total data (i.e., not by group), just leave the ```y = ``` argument within the ```aes()``` function empty: 
 
 
 ```r
@@ -530,8 +478,8 @@ ggplot(music_data,aes(x = log_streams, y = "")) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-31-1.png" alt="Single Boxplot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-31)Single Boxplot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-28-1.png" alt="Single Boxplot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-28)Single Boxplot</p>
 </div>
 
 
@@ -541,7 +489,7 @@ Another way to get an overview of the difference between two groups is to plot t
 
 
 ```r
-music_data$genre_dummy <- as.factor(ifelse(music_data$genre=="HipHop & Rap","HipHop & Rap","other"))
+music_data$genre_dummy <- as.factor(ifelse(music_data$genre=="HipHop/Rap","HipHop & Rap","other"))
 ```
 
 To make plotting the desired comparison easier, we can compute all relevant statistics first, using the ```summarySE()``` function from the `Rmisc` package.  
@@ -555,7 +503,7 @@ mean_data
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["genre_dummy"],"name":[1],"type":["fct"],"align":["left"]},{"label":["N"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["ci"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"HipHop & Rap","2":"2897","3":"11616.835","4":"12425.353","5":"230.8524","6":"452.6517"},{"1":"other","2":"3298","3":"8063.757","4":"9603.244","5":"167.2217","6":"327.8689"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["genre_dummy"],"name":[1],"type":["fct"],"align":["left"]},{"label":["N"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["ci"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"HipHop & Rap","2":"21131","3":"6772815","4":"37100201","5":"255220.9","6":"500252.4"},{"1":"other","2":"45665","3":"7565413","4":"41208925","5":"192841.1","6":"377971.6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -573,8 +521,8 @@ ggplot(mean_data,aes(x = genre_dummy, y = streams)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-34-1.png" alt="Plot of means" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-34)Plot of means</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-31-1.png" alt="Plot of means" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-31)Plot of means</p>
 </div>
 
 As can be seen, there is a large difference between the genres with respect to the average number of streams. 
@@ -591,7 +539,7 @@ mean_data2
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["genre_dummy"],"name":[1],"type":["fct"],"align":["left"]},{"label":["explicit"],"name":[2],"type":["fct"],"align":["left"]},{"label":["N"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["streams"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ci"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"HipHop & Rap","2":"not explicit","3":"767","4":"12767.426","5":"13538.248","6":"488.8378","7":"959.6208"},{"1":"HipHop & Rap","2":"explicit","3":"2130","4":"11202.515","5":"11975.687","6":"259.4840","7":"508.8687"},{"1":"other","2":"not explicit","3":"2858","4":"8198.021","5":"10054.883","6":"188.0814","7":"368.7891"},{"1":"other","2":"explicit","3":"440","4":"7191.650","5":"5811.415","6":"277.0483","7":"544.5059"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["genre_dummy"],"name":[1],"type":["fct"],"align":["left"]},{"label":["explicit"],"name":[2],"type":["fct"],"align":["left"]},{"label":["N"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["streams"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ci"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"HipHop & Rap","2":"not explicit","3":"20042","4":"7009717","5":"38037891","6":"268686.5","7":"526647.7"},{"1":"HipHop & Rap","2":"explicit","3":"1089","4":"2412873","5":"7734491","6":"234378.5","7":"459885.0"},{"1":"other","2":"not explicit","3":"38561","4":"8459087","5":"44385299","6":"226029.4","7":"443023.5"},{"1":"other","2":"explicit","3":"7104","4":"2714494","5":"13949731","6":"165506.2","7":"324441.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 Now we obtained the results for four different groups (2 genres x 2 lyric types) and we can amend the plot easily by adding the 'fill' argument to the ```ggplot()``` function. The ```scale_fill_manual()``` function is optional and specifies the color of the bars manually. 
@@ -609,8 +557,8 @@ ggplot(mean_data2,aes(x = genre_dummy, y = streams, fill = explicit)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-36-1.png" alt="Grouped plot of means" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-36)Grouped plot of means</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-33-1.png" alt="Grouped plot of means" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-33)Grouped plot of means</p>
 </div>
 The results of the analysis show that also in the HipHop & Rap genre, songs with non-explicit lyrics obtain more streams on average, contrary to our expectations. 
 
@@ -630,8 +578,8 @@ ggplot(music_data, aes(speechiness, log_streams)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-37-1.png" alt="Scatter plot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-37)Scatter plot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-34-1.png" alt="Scatter plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-34)Scatter plot</p>
 </div>
 As you can see, there appears to be a positive relationship between advertising and sales.
 
@@ -651,8 +599,8 @@ ggplot(music_data, aes(speechiness, log_streams, colour = explicit)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-38-1.png" alt="Grouped scatter plot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-38)Grouped scatter plot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-35-1.png" alt="Grouped scatter plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-35)Grouped scatter plot</p>
 </div>
 
 It appears from the plot that the association between speechiness and the number of streams is stronger for songs without explicit lyrics. 
@@ -665,9 +613,9 @@ Another important type of plot is the line plot used if, for example, you have a
 ```r
 music_data_ctry <- read.table("https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/streaming_charts_ctry.csv", 
                         sep = ",", 
-                        header = TRUE)
-music_data_ctry$week <- as.Date(music_data_ctry$week)
-music_data_ctry$region <- as.factor(music_data_ctry$region)
+                        header = TRUE) |>
+  mutate(week = as.Date(week),
+         region = as.factor(region))
 head(music_data_ctry)
 ```
 
@@ -677,33 +625,34 @@ head(music_data_ctry)
   </script>
 </div>
 
-In a first step, let's investigate the development for Austria, by subsetting the data to region 'at'. 
+In a first step, let's investigate the development for Austria, by filtering the data to region 'at'. 
 
 
 ```r
-music_data_at <- subset(music_data_ctry, region == 'at')
+music_data_at <- filter(music_data_ctry, region == 'at')
 ```
 
-Given the correct ```aes()``` and geom specification ggplot constructs the correct plot for us.
+Given the correct ```aes()``` and geom specification ggplot constructs the correct plot for us. In order to make large numbers more readable we use the `label_comma` function from the `scales` package in the `scale_y_continuous` layer. 
 
 
 ```r
 ggplot(music_data_at, aes(x = week, y = streams)) + 
   geom_line() + 
-  labs(x = "Week", y = "Total streams in Austria", title = "Weekly number of streams in Austria") +
+  labs(x = "", y = "Total streams in Austria", title = "Weekly number of streams in Austria") +
   theme_bw() +
+  scale_y_continuous(labels = scales::label_comma()) +
   theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-41-1.png" alt="Line plot" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-41)Line plot</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-38-1.png" alt="Line plot" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-38)Line plot</p>
 </div>
 There appears to be a positive trend in the market. Now let's compare Austria to other countries. Note that the ```%in%``` operator checks for us if any of the region names specified in the vector are included in the region column. 
 
 
 ```r
-music_data_at_compare <- subset(music_data_ctry, region %in% c('at','de','ch','se','dk','nl'))
+music_data_at_compare <- filter(music_data_ctry, region %in% c('at','de','ch','se','dk','nl'))
 ```
 
 We can now include the other specified countries in the plot by using the 'color' argument. 
@@ -714,12 +663,13 @@ ggplot(music_data_at_compare, aes(x = week, y = streams, color = region)) +
   geom_line() + 
   labs(x = "Week", y = "Total streams", title = "Weekly number of streams by country") +
   theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) 
+  theme(plot.title = element_text(hjust = 0.5,color = "#666666")) +
+  scale_y_continuous(labels = scales::label_comma())
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-43-1.png" alt="Line plot (by region)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-43)Line plot (by region)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-40-1.png" alt="Line plot (by region)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-40)Line plot (by region)</p>
 </div>
 One issue in plot like this can be that the scales between countries is very different (i.e., in Germany there are many more streams because Germany is larger than the other countries). You could also use the ```facet_wrap()``` function to create one individual plot by region and specify 'scales = "free_y"' so that each individual plot has its own scale on the y-axis. We should also indicate the number of streams in millions by dividing the number of streams. 
 
@@ -734,14 +684,14 @@ ggplot(music_data_at_compare, aes(x = week, y = streams/1000000)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-44-1.png" alt="Line plot (facet wrap)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-44)Line plot (facet wrap)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-41-1.png" alt="Line plot (facet wrap)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-41)Line plot (facet wrap)</p>
 </div>
 Now it's easier to see that the trends are different between countries. While Sweden and Denmark appear to be saturated, the other market show strong growth. 
 
 #### Area plots
 
-A slightly different why to plot this data is through area plot using the ```geom_area()``` function. 
+A slightly different way to plot this data is through area plot using the ```geom_area()``` function. 
 
 
 ```r
@@ -754,8 +704,8 @@ ggplot(music_data_at_compare, aes(x = week, y = streams/1000000)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-45-1.png" alt="Line plot (facet wrap)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-45)Line plot (facet wrap)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-42-1.png" alt="Line plot (facet wrap)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-42)Line plot (facet wrap)</p>
 </div>
 
 If the relative share of the overall streaming volume is of interest, you could use a stacked area plot to visualize this. 
@@ -770,8 +720,8 @@ ggplot(music_data_at_compare, aes(x = week, y = streams/1000000,group=region,fil
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-46-1.png" alt="Line plot (facet wrap)" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-46)Line plot (facet wrap)</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-43-1.png" alt="Line plot (facet wrap)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-43)Line plot (facet wrap)</p>
 </div>
 
 In this type of plot it is easy to spot the relative size of the regions. 
@@ -780,15 +730,15 @@ In some cases it could also make sense to add a secondary y-axis, for example, i
 
 
 ```r
-music_data_at_se_compare <- subset(music_data_ctry, region %in% c('at','se'))
+music_data_at_se_compare <- filter(music_data_ctry, region %in% c('at','se'))
 ```
 
-In order to add the secondary y-axis, we need the data in a slightly different format where we have one column for each country. This is called the 'wide format' as opposed to the 'long format' where the data is stacked on top of each other for all regions. We can easily convert the data to the wide format by using the ```spread()``` function from the `tidyr` package. 
+In order to add the secondary y-axis, we need the data in a slightly different format where we have one column for each country. This is called the 'wide format' as opposed to the 'long format' where the data is stacked on top of each other for all regions. We can easily convert the data to the wide format by using the ```pivot_wider()``` function from the `tidyr` package. 
 
 
 ```r
 library(tidyr)
-data_wide <- spread(music_data_at_se_compare, region, streams)
+data_wide <- pivot_wider(music_data_at_se_compare, names_from = region, values_from = streams)
 data_wide
 ```
 
@@ -824,8 +774,8 @@ ggplot(data_wide) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-50-1.png" alt="Secondary y-axis" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-50)Secondary y-axis</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-47-1.png" alt="Secondary y-axis" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-47)Secondary y-axis</p>
 </div>
 
 In this plot it is easy to see the difference in trends between the countries.  
@@ -856,19 +806,24 @@ You may use the <a href="https://indrajeetpatil.github.io/ggstatsplot/index.html
 
 ```r
 library(ggstatsplot)
-#music_data_subs <- subset(music_data, genre %in% c("HipHop & Rap", "Soundtrack","Pop","Rock"))
-#ggbetweenstats(
-#    data = music_data_subs,
-#    title = "Number of streams by genre", # title for the plot
-#    plot.type = "box",
-#    x = genre, # 2 groups
-#    y = log_streams,
-#    type = "p", # default
-#    messages = FALSE,
-#    bf.message = FALSE,
-#    pairwise.comparisons = TRUE # display results from pairwise comparisons
-#  )
+music_data_subs <- filter(music_data, genre %in% c("HipHop/Rap", "Soundtrack","Pop","Rock"))
+ggbetweenstats(
+   data = music_data_subs,
+   title = "Number of streams by genre", # title for the plot
+   plot.type = "box",
+   x = genre, # 4 groups
+   y = log_streams,
+   type = "p", # default
+   messages = FALSE,
+   bf.message = FALSE,
+   pairwise.comparisons = TRUE # display results from pairwise comparisons
+ )
 ```
+
+<div class="figure" style="text-align: center">
+<img src="05-visualization_files/figure-html/unnamed-chunk-49-1.png" alt="Boxplot using ggstatsplot package" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-49)Boxplot using ggstatsplot package</p>
+</div>
 
 ##### Combination of plots (ggExtra)
 
@@ -886,13 +841,66 @@ ggExtra::ggMarginal(p, type = "histogram")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-visualization_files/figure-html/unnamed-chunk-53-1.png" alt="Scatter plot with histogram" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-53)Scatter plot with histogram</p>
+<img src="05-visualization_files/figure-html/unnamed-chunk-50-1.png" alt="Scatter plot with histogram" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-50)Scatter plot with histogram</p>
 </div>
 
 In this case, the ```type = "histogram"``` argument specifies that we would like to plot a histogram. However, you could also opt for ```type = "boxplot"``` or ```type = "density"``` to use a boxplot or density plot instead.
 
-#### Location data (ggmap)
+#### Appendix 
+
+##### Covariation plots
+
+To visualize the co-variation between categorical variables, you’ll need to count the number of observations for each combination stored in the frequency table. Say, we wanted to investigate the association between the popularity of a song and the level of 'speechiness'. For this exercise, let's assume we have both variables measured as categorical (factor) variables. We can use the `quantcut()` function to create categorical variables based on the continuous variables. All we need to do is tell the function how many categories we would like to obtain and it will divide the data based on the percentiles equally.  
+
+
+```r
+library(gtools)
+music_data$streams_cat <- as.numeric(quantcut(music_data$streams, 5, na.rm=TRUE))
+music_data$speech_cat <- as.numeric(quantcut(music_data$speechiness, 3, na.rm=TRUE))
+
+music_data$streams_cat <- factor(music_data$streams_cat, levels = 1:5, labels = c("low", "low-med", "medium", "med-high", "high")) #convert to factor
+music_data$speech_cat <- factor(music_data$speech_cat, levels = 1:3, labels = c("low", "medium", "high")) #convert to factor
+```
+
+Now we have multiple ways to visualize a relationship between the two variables with ggplot. One option would be to use a variation of the scatterplot which counts how many points overlap at any given point and increases the dot size accordingly. This can be achieved with ```geom_count()``` as the example below shows where the `stat(prop)` argument assures that we get relative frequencies and with the `group` argument we tell R to compute the relative frequencies by speechiness.
+
+
+```r
+ggplot(data = music_data) + 
+  geom_count(aes(x = speech_cat, y = streams_cat, size = stat(prop), group = speech_cat))  + 
+  ylab("Popularity") + 
+  xlab("Speechiness") + 
+  labs(size = "Proportion") +
+  theme_bw()
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-visualization_files/figure-html/unnamed-chunk-52-1.png" alt="Covariation between categorical data (1)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-52)Covariation between categorical data (1)</p>
+</div>
+The plot shows that there appears to be a positive association between the popularity of a song and its level of speechiness. 
+
+Another option would be to use a tile plot that changes the color of the tile based on the frequency of the combination of factors. To achieve this, we first have to create a dataframe that contains the relative frequencies of all combinations of factors. Then we can take this dataframe and pass it to ```geom_tile()```, while specifying that the fill of each tile should be dependent on the observed frequency of the factor combination, which is done by specifying the fill in the ```aes()``` function.  
+
+
+```r
+table_plot_rel <- prop.table(table(music_data[,c("speech_cat", "streams_cat")]),1)
+table_plot_rel <- as.data.frame(table_plot_rel)
+
+ggplot(table_plot_rel, aes(x = speech_cat, y = streams_cat)) + 
+  geom_tile(aes(fill = Freq)) + 
+  ylab("Populartiy") + 
+  xlab("Speechiness") + 
+  theme_bw()
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-visualization_files/figure-html/unnamed-chunk-53-1.png" alt="Covariation between categorical data (2)" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-53)Covariation between categorical data (2)</p>
+</div>
+
+##### Location data (ggmap)
 
 Now that we have covered the most important plots, we can look at what other type of data you may come across. One type of data that is increasingly available is the geo-location of customers and users (e.g., from app usage data). The following data set contains the app usage data of Shazam users from Germany. The data contains the latitude and longitude information where a music track was "shazamed". 
 
@@ -938,12 +946,12 @@ ggmap(de_map_g_str, extent = "device") +
 
 - [ ] Nominal
 - [ ] Ordinal
-- [x] Interval
-- [x] Ratio
+- [ ] Interval
+- [ ] Ratio
 
 **(LC4.2) How can you compute the standardized variate of a variable X?**
 
-- [x] $Z=\frac{X_i-\bar{X}}{s}$
+- [ ] $Z=\frac{X_i-\bar{X}}{s}$
 - [ ] $Z=\frac{\bar{X}+X_i}{s}$
 - [ ] $Z=\frac{s}{\bar{X}+X_i}$
 - [ ] $Z=s*({\bar{X}+X_i)}$
@@ -962,7 +970,7 @@ ggmap(de_map_g_str, extent = "device") +
 - [ ] `df$mpg_std <- zscore(df$mpg)`
 - [ ] `df$mpg_std <- stdv(df$mpg)`
 - [ ] `df$mpg_std <- std.scale(df$mpg)`
-- [x] `df$mpg_std <- scale(df$mpg)`
+- [ ] `df$mpg_std <- scale(df$mpg)`
 - [ ] None of the above 	
 
 **(LC4.4) How could you produce the below output?**
@@ -973,10 +981,10 @@ ggmap(de_map_g_str, extent = "device") +
   </script>
 </div>
 
-- [x] `describe(mtcars[,c("hp","mpg","qsec")])`
-- [ ] `summary(mtcars[,c("hp","mpg","qsec")])`
-- [ ] `table(mtcars[,c("hp","mpg","qsec")])`
-- [ ] `str(mtcars[,c("hp","mpg","qsec")])`
+- [ ] `describe(select(mtcars, hp, mpg, qsec))`
+- [ ] `summary(select(mtcars, hp, mpg, qsec))`
+- [ ] `table(select(mtcars, hp, mpg, qsec))`
+- [ ] `str(select(mtcars, hp, mpg, qsec))`
 - [ ] None of the above 	
 
 **(LC4.5) The last column "carb" indicates the number of carburetors each model has. By using a function we got to know the number of car models that have a certain number carburetors. Which function helped us to obtain this information?** 
@@ -989,7 +997,7 @@ ggmap(de_map_g_str, extent = "device") +
 ```
 
 - [ ] `describe(mtcars$carb)`
-- [x] `table(mtcars$carb)`
+- [ ] `table(mtcars$carb)`
 - [ ] `str(mtcars$carb)`
 - [ ] `prop.table(mtcars$carb)`
 - [ ] None of the above 	
@@ -998,7 +1006,7 @@ ggmap(de_map_g_str, extent = "device") +
 
 - [ ] Two categorical variables
 - [ ] One categorical and one continuous variable
-- [x] Two continuous variables
+- [ ] Two continuous variables
 - [ ] One continuous variable
 - [ ] None of the above 	
 
@@ -1007,8 +1015,8 @@ ggmap(de_map_g_str, extent = "device") +
 <img src="05-visualization_files/figure-html/unnamed-chunk-58-1.png" width="672" />
 
 - [ ] This is a bar chart
-- [x] This is a histogram
-- [x] It shows the frequency distribution of a continuous variable
+- [ ] This is a histogram
+- [ ] It shows the frequency distribution of a continuous variable
 - [ ] It shows the frequency distribution of a categorical variable
 - [ ] None of the above 	
 
@@ -1017,14 +1025,14 @@ ggmap(de_map_g_str, extent = "device") +
 <img src="05-visualization_files/figure-html/unnamed-chunk-59-1.png" width="50%" />
 
 - [ ] This is a bar chart
-- [x] 50% of observations are contained in the gray area
+- [ ] 50% of observations are contained in the gray area
 - [ ] The horizontal black line indicates the mean
-- [x] This is a boxplot
+- [ ] This is a boxplot
 - [ ] None of the above 	
 
 **(LC4.9) Which function can help you to save a graph made with `ggplot()`?** 
 
-- [x] `ggsave()`
+- [ ] `ggsave()`
 - [ ] `write.plot()`
 - [ ] `save.plot()`
 - [ ] `export.plot()`
@@ -1032,7 +1040,7 @@ ggmap(de_map_g_str, extent = "device") +
 **(LC4.10) For a variable that follows a normal distribution, within how many standard deviations of the mean are 95% of values?**
 
 - [ ] 1.645
-- [x] 1.960
+- [ ] 1.960
 - [ ] 2.580
 - [ ] 3.210
 - [ ] None of the above 	

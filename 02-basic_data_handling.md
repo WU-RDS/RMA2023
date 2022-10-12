@@ -20,7 +20,7 @@ This chapter covers the basics of data handling in R.
 
 <br>
 <div align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Q7AdksOeawU" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-Ib9xY7pcAw" frameborder="0" allowfullscreen></iframe>
 </div>
 <br>
 
@@ -199,7 +199,7 @@ top_10_track_release_date <- as.Date(c("2017-05-24", "2017-06-23", "2017-07-03",
 top10_track_explicit_1 <- c(FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE)  
 ```
 
-In order to "call" a vector we can now simply enter its name:
+In order to "return" a vector we can now simply enter its name:
 
 
 ```r
@@ -265,7 +265,7 @@ music_data # Returns the entire data frame
 
 Hint: You may also use the ```View()```-function to view the data in a table format (like in SPSS or Excel), i.e. enter the command ```View(data)```. Note that you can achieve the same by clicking on the small table icon next to the data frame in the "Environment"-window on the right in RStudio. 
 
-Sometimes it is convenient to return only specific values instead of the entire data frame. There are a variety of ways to identify the elements of a data frame. One easy way is to explicitly state, which rows and columns you wish to view. The general form of the command is ```data.frame[rows,columns]```. By leaving one of the arguments of ```data.frame[rows,columns]``` blank (e.g., ```data.frame[rows,]```) we tell R that we want to access either all rows or columns, respectively. Here are some examples:  
+Sometimes it is convenient to return only specific values instead of the entire data frame. There are a variety of ways to identify the elements of a data frame. One easy way is to explicitly state, which rows and columns you wish to view. The general form of the command is ```data.frame[rows,columns]```. By leaving one of the arguments of ```data.frame[rows,columns]``` blank (e.g., ```data.frame[rows,]```) we tell R that we want to access either all rows or columns, respectively. Note that `a:b` (where `a` and `b` are numbers and `a` < `b`) is short hand notation for `seq(from = a, to = b, by = 1)`. Here are some examples:  
 
 
 ```r
@@ -279,108 +279,81 @@ music_data[ , 2:4] # all rows and columns 2,3,4
 </div>
 
 ```r
-music_data[ ,c("top10_artist_names", "top_10_track_release_date")] # all rows and columns "top10_artist_names" and "top_10_track_release_date"
+music_data[5:7, ] # rows 5,6,7 and all columns
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["top10_artist_names"],"name":[1],"type":["chr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[2],"type":["date"],"align":["right"]}],"data":[{"1":"Axwell /\\\\ Ingrosso","2":"2017-05-24"},{"1":"Imagine Dragons","2":"2017-06-23"},{"1":"J. Balvin","2":"2017-07-03"},{"1":"Robin Schulz","2":"2017-06-30"},{"1":"Jonas Blue","2":"2017-05-05"},{"1":"David Guetta","2":"2017-06-09"},{"1":"French Montana","2":"2017-07-14"},{"1":"Calvin Harris","2":"2017-06-16"},{"1":"Liam Payne","2":"2017-05-18"},{"1":"Lauv","2":"2017-05-19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","_rn_":"6"},{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE","_rn_":"7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+Typically we don't want to remember which row or column number is needed but use names and conditions (e.g, all explicit tracks). In order to make that easier we will add more functions to R by installing a package (sometimes also referred to as "library") called ```tidyverse```. We only have to install it once (per computer) and subsequently we can add the functions the package provides by calling ```library(tidyverse)```. Typically `library(PACKAGENAME)` has to be called again whenever you restart R/RStudio. If you see the error message `could not find function ...` make sure you have loaded all the required packages. The `tidyverse` provides us with convenient tools to manipulate data. 
+
+You may create subsets of the data frame, e.g., using mathematical expressions using the `filter` function:
+
+
+```r
+library(tidyverse)
+```
+
+```
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.6      v purrr   0.3.4 
+## v tibble  3.1.8      v dplyr   1.0.10
+## v tidyr   1.2.1      v stringr 1.4.1 
+## v readr   2.1.2      v forcats 0.5.2 
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+```
+
+```r
+filter(music_data, top10_track_explicit == "explicit") # show only tracks with explicit lyrics  
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
 ```r
-music_data[1:5, c("top10_artist_names", "top_10_track_release_date")] # rows 1 to 5 and columns "top10_artist_names"" and "top_10_track_release_date"
+filter(music_data, top10_track_streams > 100000) # show only tracks with more than 100,000 streams  
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_artist_names"],"name":[1],"type":["chr"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[2],"type":["date"],"align":["right"]}],"data":[{"1":"Axwell /\\\\ Ingrosso","2":"2017-05-24","_rn_":"1"},{"1":"Imagine Dragons","2":"2017-06-23","_rn_":"2"},{"1":"J. Balvin","2":"2017-07-03","_rn_":"3"},{"1":"Robin Schulz","2":"2017-06-30","_rn_":"4"},{"1":"Jonas Blue","2":"2017-05-05","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
-You may also create subsets of the data frame, e.g., using mathematical expressions:
-
-
-```r
-  music_data[top10_track_explicit == "explicit",] # show only tracks with explicit lyrics  
-```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE","_rn_":"7"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
 ```r
-  music_data[top10_track_streams > 100000,] # show only tracks with more than 100,000 streams  
+filter(music_data, top10_artist_names == 'Robin Schulz') # returns all observations from artist "Robin Schulz"
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","_rn_":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
 ```r
-  music_data[top10_artist_names == 'Robin Schulz',] # returns all observations from artist "Robin Schulz"
+explicit_tracks <- filter(music_data, top10_track_explicit == "explicit") # assign a new data.frame for explicit tracs only
+```
+
+
+You may also change the order of the rows in a `data.frame` by using the ```arrange()```-function
+
+
+```r
+#Arrange by genre (ascending: A - Z) and streams (descending: maximum - minimum)
+arrange(music_data, top10_artist_genre, desc(top10_track_streams))
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
-```r
-  music_data[top10_track_explicit == "explicit",] # show only explicit tracks
-```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE","_rn_":"7"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
-The same can be achieved using the ```subset()```-function
-
-
-```r
-  subset(music_data,top10_track_explicit == "explicit") # selects subsets of observations in a data frame
-```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE","_rn_":"7"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
-```r
-  #creates a new data frame that only contains tracks from genre "Dance" 
-  music_data_dance <- subset(music_data,top10_artist_genre == "Dance") 
-  music_data_dance
-```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","_rn_":"1"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","_rn_":"6"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-
-```r
-  rm(music_data_dance) # removes an object from the workspace
-```
-
-You may also change the order of the variables in a data frame by using the ```order()```-function
-
-
-```r
-#Orders by genre (ascending) and streams (descending)
-music_data[order(top10_artist_genre,-top10_track_streams),] 
-```
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","_rn_":"2"},{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","_rn_":"1"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","_rn_":"6"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE","_rn_":"8"},{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE","_rn_":"7"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","_rn_":"3"},{"1":"87869","2":"Liam Payne","3":"not explicit","4":"Pop","5":"2017-05-18","6":"FALSE","_rn_":"9"},{"1":"85599","2":"Lauv","3":"not explicit","4":"Pop","5":"2017-05-19","6":"FALSE","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]}],"data":[{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE"},{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance","5":"2017-06-16","6":"TRUE"},{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap","5":"2017-07-14","6":"TRUE"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE"},{"1":"87869","2":"Liam Payne","3":"not explicit","4":"Pop","5":"2017-05-18","6":"FALSE"},{"1":"85599","2":"Lauv","3":"not explicit","4":"Pop","5":"2017-05-19","6":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -482,9 +455,9 @@ ls(music_data) # list all objects associated with an object
 ## [5] "top10_track_explicit_1"    "top10_track_streams"
 ```
 
-#### Append and delete variables to/from data frames
+#### Select, append and delete variables to/from data frames
 
-To call a certain column in a data frame, we may also use the ```$``` notation. For example, this returns all values associated with the variable "top10_track_streams":
+To return a single column in a data frame, use the ```$``` notation. For example, this returns all values associated with the variable "top10_track_streams":
   
 
 ```r
@@ -494,6 +467,33 @@ music_data$top10_track_streams
 ```
 ##  [1] 163608 126687 120480 110022 108630  95639  94690  89011  87869  85599
 ```
+
+If you want to select more than one variable you can use the `select` function. It takes the `data.frame` containing the data as its first argument and  the variables that you need after it:
+
+
+```r
+select(music_data, top10_artist_names, top10_track_streams, top10_track_explicit)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_artist_names"],"name":[1],"type":["chr"],"align":["left"]},{"label":["top10_track_streams"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]}],"data":[{"1":"Axwell /\\\\ Ingrosso","2":"163608","3":"not explicit"},{"1":"Imagine Dragons","2":"126687","3":"not explicit"},{"1":"J. Balvin","2":"120480","3":"not explicit"},{"1":"Robin Schulz","2":"110022","3":"not explicit"},{"1":"Jonas Blue","2":"108630","3":"not explicit"},{"1":"David Guetta","2":"95639","3":"not explicit"},{"1":"French Montana","2":"94690","3":"explicit"},{"1":"Calvin Harris","2":"89011","3":"explicit"},{"1":"Liam Payne","2":"87869","3":"not explicit"},{"1":"Lauv","2":"85599","3":"not explicit"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+`select` can also be used to remove columns by prepending a `-` to their name:
+
+
+```r
+select(music_data, -top_10_track_release_date, -top10_track_explicit_1)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance"},{"1":"94690","2":"French Montana","3":"explicit","4":"Hip-Hop/Rap"},{"1":"89011","2":"Calvin Harris","3":"explicit","4":"Dance"},{"1":"87869","2":"Liam Payne","3":"not explicit","4":"Pop"},{"1":"85599","2":"Lauv","3":"not explicit","4":"Pop"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
 
 Assume that you wanted to add an additional variable to the data frame. You may use the ```$``` notation to achieve this:
 
@@ -512,32 +512,35 @@ head(music_data)
   </script>
 </div>
 
-To delete a variable, you can simply create a ```subset``` of the full data frame that excludes the variables that you wish to drop:
+In order to add a function (e.g., `log`) of multiple existing variables to the `data.frame` use `mutate`. Multiple commands can be chained using so called pipes - operators that can be read as "then". Since R version 4.1 there are native pipes (`|>`) as well as the ones provided by the `tidyverse` (`%>%`):
 
 
 ```r
-music_data <- subset(music_data,select = -c(log_streams)) # deletes the variable log streams 
-head(music_data)
+mutate(music_data, 
+       sqrt_streams = sqrt(top10_track_streams),
+       # "%Y" extracts the year, format returns a character
+       release_year = as.integer(format(top_10_track_release_date, "%Y")) 
+       ) |>
+  select(top10_artist_names, sqrt_streams, release_year)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["top_10_track_release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["top10_artist_names"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sqrt_streams"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["release_year"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Axwell /\\\\ Ingrosso","2":"404.4849","3":"2017"},{"1":"Imagine Dragons","2":"355.9312","3":"2017"},{"1":"J. Balvin","2":"347.1023","3":"2017"},{"1":"Robin Schulz","2":"331.6956","3":"2017"},{"1":"Jonas Blue","2":"329.5907","3":"2017"},{"1":"David Guetta","2":"309.2556","3":"2017"},{"1":"French Montana","2":"307.7174","3":"2017"},{"1":"Calvin Harris","2":"298.3471","3":"2017"},{"1":"Liam Payne","2":"296.4271","3":"2017"},{"1":"Lauv","2":"292.5731","3":"2017"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
-You can also rename variables in a data frame, e.g., using the ```rename()```-function from the ```plyr``` package. In the following code "::" signifies that the function "rename" should be taken from the package "plyr". This can be useful if multiple packages have a function with the same name. Calling a function this way also means that you can access a function without loading the entire package via ```library()```.
+You can also rename variables in a data frame, e.g., using the ```rename()```-function. In the following code "::" signifies that the function "rename" should be taken from the package "dplyr" (note: this package is part of the `tidyverse`). This can be useful if multiple packages have a function with the same name. Calling a function this way also means that you can access a function without loading the entire package via ```library()```.
 
 
 ```r
-library(plyr)
-music_data <- plyr::rename(music_data, c(top10_artist_genre="genre",top_10_track_release_date="release_date"))
+music_data <- dplyr::rename(music_data, genre = top10_artist_genre, release_date = top_10_track_release_date)
 head(music_data)
 ```
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["log_streams"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["obs_number"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"12.00523","8":"1","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"11.74947","8":"2","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"11.69924","8":"3","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"11.60844","8":"4","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"11.59570","8":"5","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"11.46834","8":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -551,7 +554,7 @@ head(music_data)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["top10_artist_genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["log_streams"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["obs_number"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"12.00523","8":"1","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"11.74947","8":"2","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"11.69924","8":"3","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"11.60844","8":"4","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"11.59570","8":"5","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"11.46834","8":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 
@@ -565,14 +568,16 @@ head(music_data)
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["obs_number"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"1","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"2","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"3","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"4","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"5","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["top10_track_streams"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["top10_artist_names"],"name":[2],"type":["chr"],"align":["left"]},{"label":["top10_track_explicit"],"name":[3],"type":["fct"],"align":["left"]},{"label":["genre"],"name":[4],"type":["fct"],"align":["left"]},{"label":["release_date"],"name":[5],"type":["date"],"align":["right"]},{"label":["top10_track_explicit_1"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["log_streams"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["obs_number"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"163608","2":"Axwell /\\\\ Ingrosso","3":"not explicit","4":"Dance","5":"2017-05-24","6":"FALSE","7":"12.00523","8":"1","_rn_":"1"},{"1":"126687","2":"Imagine Dragons","3":"not explicit","4":"Alternative","5":"2017-06-23","6":"FALSE","7":"11.74947","8":"2","_rn_":"2"},{"1":"120480","2":"J. Balvin","3":"not explicit","4":"Latino","5":"2017-07-03","6":"FALSE","7":"11.69924","8":"3","_rn_":"3"},{"1":"110022","2":"Robin Schulz","3":"not explicit","4":"Dance","5":"2017-06-30","6":"FALSE","7":"11.60844","8":"4","_rn_":"4"},{"1":"108630","2":"Jonas Blue","3":"not explicit","4":"Dance","5":"2017-05-05","6":"FALSE","7":"11.59570","8":"5","_rn_":"5"},{"1":"95639","2":"David Guetta","3":"not explicit","4":"Dance","5":"2017-06-09","6":"FALSE","7":"11.46834","8":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+
+<!-- TODO: change dataset, add summarize, group by -->
 
 
 <br><br>
 
 ::: {.infobox_orange .hint data-latex="{hint}"}
-Note that the data handling approach explained in this chapter uses the so-called 'base R' dialect. There are other dialects in R, which are basically different ways of achieving the same thing. Two other popular dialects in R are 'data.table' and the 'tidyverse' see e.g., [here](https://wetlandscapes.com/blog/a-comparison-of-r-dialects/) and [here](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/). Once you become more advanced, you may want to look into the other dialects to achieve certain tasks more efficiently. For now, it is sufficient to be aware that there are other approaches to data handling and each dialect has it's strengths and weaknesses. We will be mostly using 'base R' for the tutorial on this website.   
+Note that the data handling approach explained in this chapter touches on the so-called 'base R' and 'tidyverse' dialects. There are other dialects in R, which are basically different ways of achieving the same thing. Another popular dialect in R is 'data.table', see e.g., [here](https://wetlandscapes.com/blog/a-comparison-of-r-dialects/) and [here](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/). Once you become more advanced, you may want to look into the other dialects to achieve certain tasks more efficiently. For now, it is sufficient to be aware that there are other approaches to data handling and each dialect has it's strengths and weaknesses. We will be mostly using 'base R' for the tutorial on this website.   
 :::
 
