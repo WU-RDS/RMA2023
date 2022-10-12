@@ -58,7 +58,7 @@ The contents on this website are divided into weekly readings. To be able to fol
 <br>
 **Lecture dates - Group A (2206)**
 <br>
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;border-bottom: 0;'>
  <thead>
   <tr>
    <th style="text-align:left;"> Date </th>
@@ -117,7 +117,7 @@ The contents on this website are divided into weekly readings. To be able to fol
 <br>
 **Lecture dates - Group B (2207)**
 <br>
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;border-bottom: 0;'>
  <thead>
   <tr>
    <th style="text-align:left;"> Date </th>
@@ -171,7 +171,7 @@ The contents on this website are divided into weekly readings. To be able to fol
   </tr>
 </tbody>
 <tfoot><tr><td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A.</td></tr></tfoot>
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group B.</td></tr></tfoot>
 </table>
 
 <br>
@@ -187,7 +187,7 @@ There will be 3 individual assignments. These assignments need to be submitted i
 <br>
 **Assignment schedule - Group A (2206)**
 <br>
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<table style="NAborder-bottom: 0;">
  <thead>
   <tr>
    <th style="text-align:left;"> Assignment </th>
@@ -219,7 +219,7 @@ There will be 3 individual assignments. These assignments need to be submitted i
 <br>
 **Assignment schedule - Group B (2207)**
 <br>
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;border-bottom: 0;'>
  <thead>
   <tr>
    <th style="text-align:left;"> Assignment </th>
@@ -245,26 +245,16 @@ There will be 3 individual assignments. These assignments need to be submitted i
   </tr>
 </tbody>
 <tfoot><tr><td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A.</td></tr></tfoot>
+<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group B.</td></tr></tfoot>
 </table>
 
 <br>
 
 #### Group project {-}
 
-The marketing research group project consists of multiple consecutive steps: 
+The group project consists of an extended analysis of a data set using the methods we covered in the course and the reporting of the results using the R markdown format.
 
-* the design of a questionnaire
-* data collection using an online survey
-* data handling & data analysis
-* recording of a video with a presentation of you results
-
-We will offer coaching sessions throughout this process, providing feedback and allowing you to ask questions. The submission dates and the dates and times for the coaching sessions are summarized in the table below. 
-
-Your main point of contact for the group project will be Daniel Winkler ([daniel.winkler@wu.ac.at](mailto:daniel.winkler@wu.ac.at)). You may contact Daniel at least one week in advance to schedule individual coaching sessions for your groups (in-person or online) during the following times:
-
-* Thursdays 09:00AM - 05:00PM
-* Fridays 01:00PM - 05:00PM
+The **submission date** for the group project is on **December 8, 2022**. There is an opportunity to schedule a **coaching session** regarding the group project on **November 24** between 9:00AM nd 5:00PM. If you would like to make use of the opportunity to schedule a coaching session, please register an appointment by sending me an email.
 
 Again, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Learn\@wu, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Learn\@wu.
 <br>
