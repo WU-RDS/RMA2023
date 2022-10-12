@@ -7,7 +7,9 @@ output:
   html_notebook: default
 ---
 
+
+
 # Unsupervised learning
 
-Coming soon!
+<img src="./images/soon.jpg" width="75%" style="display: block; margin: auto;" />
 
