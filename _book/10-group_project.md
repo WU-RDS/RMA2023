@@ -7,6 +7,8 @@ output:
   html_notebook: default
 ---
 
+
+
 # Group project
 
-Coming soon!
+<img src="./images/soon.jpg" width="90%" style="display: block; margin: auto;" />
