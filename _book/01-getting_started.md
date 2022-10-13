@@ -128,14 +128,14 @@ library("tidyverse")
 ```
 
 ```
-## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.3.6      v purrr   0.3.4 
-## v tibble  3.1.8      v dplyr   1.0.10
-## v tidyr   1.2.1      v stringr 1.4.1 
-## v readr   2.1.2      v forcats 0.5.2 
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
 ```
 
 ```r
