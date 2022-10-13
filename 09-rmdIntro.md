@@ -342,3 +342,11 @@ e.g.
 
 [Greek letters](https://en.wikipedia.org/wiki/Greek_alphabet#Letters) are preceded by a `\` followed by their name (`$\beta$` = $\beta$). In order to capitalize them simply capitalize the first letter of the name (`$\Gamma$` = $\Gamma$).
 
+
+
+# Group project
+
+This page is under construction!
+
+<img src="./images/soon.jpg" width="90%" style="display: block; margin: auto;" />
+
