@@ -158,7 +158,6 @@ music_data_new <- mutate(music_data,
 music_data <- dplyr::rename(music_data, genre = top10_artist_genre, release_date = top_10_track_release_date)
 head(music_data)
 
-drn <- dplyr::rename
 ## ---- message=FALSE, warning=FALSE-----------------------------------------------------------------------------------------------------------------------------
 names(music_data)[names(music_data)=="genre"] <- "top10_artist_genre"
 head(music_data)
