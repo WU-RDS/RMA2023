@@ -338,18 +338,3 @@ Note that this does **not** mean that for a specific sample there is a $95\%$ ch
 * Malhotra, N. K.(2010). Marketing Research: An Applied Orientation (6th. ed.). Prentice Hall.
 * Vasishth, S. (2014). An introduction to statistical data analysis (lecture notes)
 
-
-# Supervised learning
-
-This page is under construction!
-
-
-<img src="./images/soon.jpg" width="90%" style="display: block; margin: auto;" />
-
-
-
-# Unsupervised learning
-
-This page is under construction!
-
-<img src="./images/soon.jpg" width="75%" style="display: block; margin: auto;" />
