@@ -1814,45 +1814,81 @@ summary(logistf(Y ~ X))
 
 ## Learning check {-}
 
-**(LC7.1) What is a correlation coefficient?**
+**(LC6.1) What is a correlation coefficient?**
 
 - [ ] It describes the difference in means of two variables
 - [ ] It describes the causal relation between two variables
-- [ ] It is the standardized covariance
-- [ ] It describes the degree to which the variation in one variable is related to the variation in another variable
+- [x] It is the standardized covariance
+- [x] It describes the degree to which the variation in one variable is related to the variation in another variable
 - [ ] None of the above 
 
-**(LC7.2) Which line through a scatterplot produces the best fit in a linear regression model?**
+**(LC6.2) Which line through a scatterplot produces the best fit in a linear regression model?**
 
 - [ ] The line associated with the steepest slope parameter
-- [ ] The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values
+- [x] The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values
 - [ ] The line that minimizes the sum of the squared residuals
 - [ ] The line that maximizes the sum of the squared residuals
 - [ ] None of the above 
 
-**(LC7.3) Which of the following statements about the adjusted R-squared is TRUE?**
+**(LC6.3) Which of the following statements about the adjusted R-squared is TRUE?**
 
 - [ ] It is always larger than the regular $R^{2}$
 - [ ] It increases with every additional variable
-- [ ] It increases only with additional variables that add more explanatory power than pure chance
-- [ ] It contains a “penalty” for including unnecessary variables
+- [x] It increases only with additional variables that add more explanatory power than pure chance
+- [x] It contains a “penalty” for including unnecessary variables
 - [ ] None of the above 
 
-**(LC7.4) When do you use a logistic regression model?**
+**(LC6.4) When do you use a logistic regression model?**
 
 - [ ] When the dependent variable is continuous
 - [ ] When the independent and dependent variables are binary
-- [ ] When the dependent variable is binary
+- [x] When the dependent variable is binary
 - [ ] None of the above 
 
-**(LC7.5) What is the correct way to implement a linear regression model in R? (x = independent variable, y = dependent variable)?**
+**(LC6.5) What is the correct way to implement a linear regression model in R? (x = independent variable, y = dependent variable)?**
 
-- [ ] `lm(y~x, data=data)`
+- [x] `lm(y~x, data=data)`
 - [ ] `lm(x~y + error, data=data)`
 - [ ] `lm(x~y, data=data)`
 - [ ] `lm(y~x + error, data=data)`
 - [ ] None of the above 
 
+**(LC6.6) Consider the output from a bivariate correlation below**
+
+- [ ] …lower prices cause higher sales.
+- [x] …lower prices are associated with higher sales and vice versa.
+- [ ] None of the above
+
+
+<img src="./images/cor_table11.png" width="75%" style="display: block; margin: auto;" />
+**(LC6.7) When interpreting the statistical significance of a regression coefficient, the p-value…**
+
+- [ ] …of 0.05 means that, if the null hypothesis is true (i.e., if the independent variable would NOT affect the outcome), the odds are 19 in 20 of getting a regression coefficient as large or larger than the estimated coefficient
+- [x] …of 0.05 means that, if the null hypothesis is true (i.e., if the independent variable would NOT affect the outcome), the odds are 1 in 20 of getting a regression coefficient as large or larger than the estimated coefficient
+- [x] ...of 0.05 means that the effect is statistically significant at the 5% level. 
+- [x] ...does not tell you anything about the significance of the effect
+- [x] …will get smaller, the larger the calculated value of the test statistic (t-value).
+
+**(LC6.8) In which setting(s) would a regression coefficient be interpreted as "statistically significant"?**
+
+- [x] When the absolute value of the calculated test-statistic (e.g., t-value) exceeds the critical value of the test statistic at your specified significance level (e.g., 0.05)
+- [ ] When the test-statistic (e.g., t-value) is lower than the critical value of the test statistic at your specified significance level (e.g., 0.05)
+- [x] When the confidence interval associated with the test does not contain zero
+- [x] When the p-value is smaller than your specified significance level (e.g., 0.05)
+
+**(LC6.9) When interpreting the significance of the coefficients in a regression model, what is the relationship between the test statistic (e.g., t-value) and the p-value?**
+
+- [ ] The lower the absolute value of the test statistic, the lower the p-value
+- [x] The higher the absolute value of the test statistic, the higher the p-value
+- [ ] There is no connection between the test statistic and the p-value
+- [x] The higher the absolute value of the test statistic, the lower the p-value
+
+**(LC6.10) What does the term overfitting refer to?**
+
+- [ ] A regression model that fits to a specific data set so poorly, that it will not generalize to other samples
+- [ ] A regression model that fits to a specific data set so well, that it will generalize to other samples particularly well
+- [ ] A regression model that has too many predictor variables
+- [x] A regression model that fits to a specific data set so well, that it will only predict well within the sample but not generalize to other samples
 
 ## References {-}
 
