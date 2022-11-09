@@ -253,12 +253,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html"><i class="fa fa-check"></i><b>7</b> Unsupervised learning</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#principal-component-analysis"><i class="fa fa-check"></i><b>7.1</b> Principal component analysis</a></li>
+<li class="chapter" data-level="7.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#principal-component-analysis"><i class="fa fa-check"></i><b>7.1</b> Principal component analysis</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#introduction-1"><i class="fa fa-check"></i><b>7.1.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.1.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>7.1.2</b> Steps in factor analysis</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#cluster-analysis"><i class="fa fa-check"></i><b>7.2</b> Cluster analysis</a>
 <ul>
 <li class="chapter" data-level="7.2.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#k-means"><i class="fa fa-check"></i><b>7.2.1</b> K-Means</a></li>
 <li class="chapter" data-level="7.2.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.2.2</b> Hierarchical Clustering</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#references-4"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="part"><span><b>III Assignments</b></span></li>
 <li class="chapter" data-level="8" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown</a>
@@ -1625,44 +1631,80 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 </div>
 <div id="learning-check-4" class="section level2 unnumbered hasAnchor">
 <h2>Learning check<a href="supervised-learning.html#learning-check-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>(LC7.1) What is a correlation coefficient?</strong></p>
+<p><strong>(LC6.1) What is a correlation coefficient?</strong></p>
 <ul class="task-list">
 <li><input type="checkbox" disabled="" />It describes the difference in means of two variables</li>
 <li><input type="checkbox" disabled="" />It describes the causal relation between two variables</li>
-<li><input type="checkbox" disabled="" />It is the standardized covariance</li>
-<li><input type="checkbox" disabled="" />It describes the degree to which the variation in one variable is related to the variation in another variable</li>
+<li><input type="checkbox" disabled="" checked="" />It is the standardized covariance</li>
+<li><input type="checkbox" disabled="" checked="" />It describes the degree to which the variation in one variable is related to the variation in another variable</li>
 <li><input type="checkbox" disabled="" />None of the above</li>
 </ul>
-<p><strong>(LC7.2) Which line through a scatterplot produces the best fit in a linear regression model?</strong></p>
+<p><strong>(LC6.2) Which line through a scatterplot produces the best fit in a linear regression model?</strong></p>
 <ul class="task-list">
 <li><input type="checkbox" disabled="" />The line associated with the steepest slope parameter</li>
-<li><input type="checkbox" disabled="" />The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values</li>
+<li><input type="checkbox" disabled="" checked="" />The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values</li>
 <li><input type="checkbox" disabled="" />The line that minimizes the sum of the squared residuals</li>
 <li><input type="checkbox" disabled="" />The line that maximizes the sum of the squared residuals</li>
 <li><input type="checkbox" disabled="" />None of the above</li>
 </ul>
-<p><strong>(LC7.3) Which of the following statements about the adjusted R-squared is TRUE?</strong></p>
+<p><strong>(LC6.3) Which of the following statements about the adjusted R-squared is TRUE?</strong></p>
 <ul class="task-list">
 <li><input type="checkbox" disabled="" />It is always larger than the regular <span class="math inline">\(R^{2}\)</span></li>
 <li><input type="checkbox" disabled="" />It increases with every additional variable</li>
-<li><input type="checkbox" disabled="" />It increases only with additional variables that add more explanatory power than pure chance</li>
-<li><input type="checkbox" disabled="" />It contains a “penalty” for including unnecessary variables</li>
+<li><input type="checkbox" disabled="" checked="" />It increases only with additional variables that add more explanatory power than pure chance</li>
+<li><input type="checkbox" disabled="" checked="" />It contains a “penalty” for including unnecessary variables</li>
 <li><input type="checkbox" disabled="" />None of the above</li>
 </ul>
-<p><strong>(LC7.4) When do you use a logistic regression model?</strong></p>
+<p><strong>(LC6.4) When do you use a logistic regression model?</strong></p>
 <ul class="task-list">
 <li><input type="checkbox" disabled="" />When the dependent variable is continuous</li>
 <li><input type="checkbox" disabled="" />When the independent and dependent variables are binary</li>
-<li><input type="checkbox" disabled="" />When the dependent variable is binary</li>
+<li><input type="checkbox" disabled="" checked="" />When the dependent variable is binary</li>
 <li><input type="checkbox" disabled="" />None of the above</li>
 </ul>
-<p><strong>(LC7.5) What is the correct way to implement a linear regression model in R? (x = independent variable, y = dependent variable)?</strong></p>
+<p><strong>(LC6.5) What is the correct way to implement a linear regression model in R? (x = independent variable, y = dependent variable)?</strong></p>
 <ul class="task-list">
-<li><input type="checkbox" disabled="" /><code>lm(y~x, data=data)</code></li>
+<li><input type="checkbox" disabled="" checked="" /><code>lm(y~x, data=data)</code></li>
 <li><input type="checkbox" disabled="" /><code>lm(x~y + error, data=data)</code></li>
 <li><input type="checkbox" disabled="" /><code>lm(x~y, data=data)</code></li>
 <li><input type="checkbox" disabled="" /><code>lm(y~x + error, data=data)</code></li>
 <li><input type="checkbox" disabled="" />None of the above</li>
+</ul>
+<p><strong>(LC6.6) Consider the output from a bivariate correlation below</strong></p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />…lower prices cause higher sales.</li>
+<li><input type="checkbox" disabled="" checked="" />…lower prices are associated with higher sales and vice versa.</li>
+<li><input type="checkbox" disabled="" />None of the above</li>
+</ul>
+<p><img src="images/cor_table11.png" width="75%" style="display: block; margin: auto;" />
+<strong>(LC6.7) When interpreting the statistical significance of a regression coefficient, the p-value…</strong></p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />…of 0.05 means that, if the null hypothesis is true (i.e., if the independent variable would NOT affect the outcome), the odds are 19 in 20 of getting a regression coefficient as large or larger than the estimated coefficient</li>
+<li><input type="checkbox" disabled="" checked="" />…of 0.05 means that, if the null hypothesis is true (i.e., if the independent variable would NOT affect the outcome), the odds are 1 in 20 of getting a regression coefficient as large or larger than the estimated coefficient</li>
+<li><input type="checkbox" disabled="" checked="" />…of 0.05 means that the effect is statistically significant at the 5% level.</li>
+<li><input type="checkbox" disabled="" checked="" />…does not tell you anything about the significance of the effect</li>
+<li><input type="checkbox" disabled="" checked="" />…will get smaller, the larger the calculated value of the test statistic (t-value).</li>
+</ul>
+<p><strong>(LC6.8) In which setting(s) would a regression coefficient be interpreted as “statistically significant”?</strong></p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />When the absolute value of the calculated test-statistic (e.g., t-value) exceeds the critical value of the test statistic at your specified significance level (e.g., 0.05)</li>
+<li><input type="checkbox" disabled="" />When the test-statistic (e.g., t-value) is lower than the critical value of the test statistic at your specified significance level (e.g., 0.05)</li>
+<li><input type="checkbox" disabled="" checked="" />When the confidence interval associated with the test does not contain zero</li>
+<li><input type="checkbox" disabled="" checked="" />When the p-value is smaller than your specified significance level (e.g., 0.05)</li>
+</ul>
+<p><strong>(LC6.9) When interpreting the significance of the coefficients in a regression model, what is the relationship between the test statistic (e.g., t-value) and the p-value?</strong></p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />The lower the absolute value of the test statistic, the lower the p-value</li>
+<li><input type="checkbox" disabled="" checked="" />The higher the absolute value of the test statistic, the higher the p-value</li>
+<li><input type="checkbox" disabled="" />There is no connection between the test statistic and the p-value</li>
+<li><input type="checkbox" disabled="" checked="" />The higher the absolute value of the test statistic, the lower the p-value</li>
+</ul>
+<p><strong>(LC6.10) What does the term overfitting refer to?</strong></p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />A regression model that fits to a specific data set so poorly, that it will not generalize to other samples</li>
+<li><input type="checkbox" disabled="" />A regression model that fits to a specific data set so well, that it will generalize to other samples particularly well</li>
+<li><input type="checkbox" disabled="" />A regression model that has too many predictor variables</li>
+<li><input type="checkbox" disabled="" checked="" />A regression model that fits to a specific data set so well, that it will only predict well within the sample but not generalize to other samples</li>
 </ul>
 </div>
 <div id="references-3" class="section level2 unnumbered hasAnchor">

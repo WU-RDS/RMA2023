@@ -253,12 +253,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html"><i class="fa fa-check"></i><b>7</b> Unsupervised learning</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#principal-component-analysis"><i class="fa fa-check"></i><b>7.1</b> Principal component analysis</a></li>
+<li class="chapter" data-level="7.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#principal-component-analysis"><i class="fa fa-check"></i><b>7.1</b> Principal component analysis</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#introduction-1"><i class="fa fa-check"></i><b>7.1.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.1.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>7.1.2</b> Steps in factor analysis</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#cluster-analysis"><i class="fa fa-check"></i><b>7.2</b> Cluster analysis</a>
 <ul>
 <li class="chapter" data-level="7.2.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#k-means"><i class="fa fa-check"></i><b>7.2.1</b> K-Means</a></li>
 <li class="chapter" data-level="7.2.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.2.2</b> Hierarchical Clustering</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#references-4"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
 <li class="part"><span><b>III Assignments</b></span></li>
 <li class="chapter" data-level="8" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown</a>
@@ -419,21 +425,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="load-data" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> Load data<a href="group-project-1.html#load-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="group-project-1.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb381-2"><a href="group-project-1.html#cb381-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb381-3"><a href="group-project-1.html#cb381-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb381-4"><a href="group-project-1.html#cb381-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraph)</span>
-<span id="cb381-5"><a href="group-project-1.html#cb381-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraphExtra)</span>
-<span id="cb381-6"><a href="group-project-1.html#cb381-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
-<span id="cb381-7"><a href="group-project-1.html#cb381-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb381-8"><a href="group-project-1.html#cb381-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
-<span id="cb381-9"><a href="group-project-1.html#cb381-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
-<span id="cb381-10"><a href="group-project-1.html#cb381-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb381-11"><a href="group-project-1.html#cb381-11" aria-hidden="true" tabindex="-1"></a>music_data <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;https://raw.githubusercontent.com/WU-RDS/RMA2022/main/data/music_data_group.csv&quot;</span>,</span>
-<span id="cb381-12"><a href="group-project-1.html#cb381-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">dec =</span> <span class="st">&quot;,&quot;</span>)</span>
-<span id="cb381-13"><a href="group-project-1.html#cb381-13" aria-hidden="true" tabindex="-1"></a>music_data<span class="sc">$</span>genre <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(music_data<span class="sc">$</span>genre)</span>
-<span id="cb381-14"><a href="group-project-1.html#cb381-14" aria-hidden="true" tabindex="-1"></a>music_data<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(music_data<span class="sc">$</span>label)</span>
-<span id="cb381-15"><a href="group-project-1.html#cb381-15" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(music_data)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="group-project-1.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb444-2"><a href="group-project-1.html#cb444-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb444-3"><a href="group-project-1.html#cb444-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb444-4"><a href="group-project-1.html#cb444-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraph)</span>
+<span id="cb444-5"><a href="group-project-1.html#cb444-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraphExtra)</span>
+<span id="cb444-6"><a href="group-project-1.html#cb444-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb444-7"><a href="group-project-1.html#cb444-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb444-8"><a href="group-project-1.html#cb444-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
+<span id="cb444-9"><a href="group-project-1.html#cb444-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb444-10"><a href="group-project-1.html#cb444-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb444-11"><a href="group-project-1.html#cb444-11" aria-hidden="true" tabindex="-1"></a>music_data <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;https://raw.githubusercontent.com/WU-RDS/RMA2022/main/data/music_data_group.csv&quot;</span>,</span>
+<span id="cb444-12"><a href="group-project-1.html#cb444-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">dec =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb444-13"><a href="group-project-1.html#cb444-13" aria-hidden="true" tabindex="-1"></a>music_data<span class="sc">$</span>genre <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(music_data<span class="sc">$</span>genre)</span>
+<span id="cb444-14"><a href="group-project-1.html#cb444-14" aria-hidden="true" tabindex="-1"></a>music_data<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(music_data<span class="sc">$</span>label)</span>
+<span id="cb444-15"><a href="group-project-1.html#cb444-15" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(music_data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    66796 obs. of  30 variables:
 ##  $ isrc                       : chr  &quot;BRRGE1603547&quot; &quot;USUM71808193&quot; &quot;ES5701800181&quot; &quot;ITRSE2000050&quot; ...
 ##  $ artist_id                  : int  3679 5239 776407 433730 526471 1939 210184 212546 4938 119985 ...
@@ -469,38 +475,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="question-1" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Question 1<a href="group-project-1.html#question-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="group-project-1.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
-<span id="cb383-2"><a href="group-project-1.html#cb383-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="group-project-1.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
+<span id="cb446-2"><a href="group-project-1.html#cb446-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
 <p>Interpret the results here!</p>
 </div>
 <div id="question-2" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> Question 2<a href="group-project-1.html#question-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="group-project-1.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
-<span id="cb384-2"><a href="group-project-1.html#cb384-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="group-project-1.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
+<span id="cb447-2"><a href="group-project-1.html#cb447-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
 <p>Interpret the results here!</p>
 </div>
 <div id="question-3" class="section level2 hasAnchor" number="10.5">
 <h2><span class="header-section-number">10.5</span> Question 3<a href="group-project-1.html#question-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="group-project-1.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
-<span id="cb385-2"><a href="group-project-1.html#cb385-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="group-project-1.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
+<span id="cb448-2"><a href="group-project-1.html#cb448-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
 <p>Interpret the results here!</p>
 </div>
 <div id="question-4" class="section level2 hasAnchor" number="10.6">
 <h2><span class="header-section-number">10.6</span> Question 4<a href="group-project-1.html#question-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="group-project-1.html#cb386-1" aria-hidden="true" tabindex="-1"></a>famous_artists <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Ed Sheeran&quot;</span>, <span class="st">&quot;Drake&quot;</span>, <span class="st">&quot;Post Malone&quot;</span>,</span>
-<span id="cb386-2"><a href="group-project-1.html#cb386-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ariana Grande&quot;</span>, <span class="st">&quot;Billie Eilish&quot;</span>, <span class="st">&quot;Dua Lipa&quot;</span>, <span class="st">&quot;Travis Scott&quot;</span>,</span>
-<span id="cb386-3"><a href="group-project-1.html#cb386-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Taylor Swift&quot;</span>, <span class="st">&quot;Imagine Dragons&quot;</span>, <span class="st">&quot;Selena Gomez&quot;</span>,</span>
-<span id="cb386-4"><a href="group-project-1.html#cb386-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ozuna&quot;</span>, <span class="st">&quot;Justin Bieber&quot;</span>, <span class="st">&quot;Coldplay&quot;</span>, <span class="st">&quot;Eminem&quot;</span>)</span>
-<span id="cb386-5"><a href="group-project-1.html#cb386-5" aria-hidden="true" tabindex="-1"></a>famous_tracks <span class="ot">&lt;-</span> music_data <span class="sc">%&gt;%</span></span>
-<span id="cb386-6"><a href="group-project-1.html#cb386-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(artistName <span class="sc">%in%</span> famous_artists)</span>
-<span id="cb386-7"><a href="group-project-1.html#cb386-7" aria-hidden="true" tabindex="-1"></a>famous_tracks_scale <span class="ot">&lt;-</span> famous_tracks <span class="sc">%&gt;%</span></span>
-<span id="cb386-8"><a href="group-project-1.html#cb386-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">vars</span>(danceability<span class="sc">:</span>song_age), scale)</span>
-<span id="cb386-9"><a href="group-project-1.html#cb386-9" aria-hidden="true" tabindex="-1"></a>famous_tracks_scale <span class="ot">&lt;-</span> famous_tracks_scale <span class="sc">%&gt;%</span></span>
-<span id="cb386-10"><a href="group-project-1.html#cb386-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">vars</span>(danceability<span class="sc">:</span>song_age), as.vector)</span>
-<span id="cb386-11"><a href="group-project-1.html#cb386-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="group-project-1.html#cb449-1" aria-hidden="true" tabindex="-1"></a>famous_artists <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Ed Sheeran&quot;</span>, <span class="st">&quot;Drake&quot;</span>, <span class="st">&quot;Post Malone&quot;</span>,</span>
+<span id="cb449-2"><a href="group-project-1.html#cb449-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ariana Grande&quot;</span>, <span class="st">&quot;Billie Eilish&quot;</span>, <span class="st">&quot;Dua Lipa&quot;</span>, <span class="st">&quot;Travis Scott&quot;</span>,</span>
+<span id="cb449-3"><a href="group-project-1.html#cb449-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Taylor Swift&quot;</span>, <span class="st">&quot;Imagine Dragons&quot;</span>, <span class="st">&quot;Selena Gomez&quot;</span>,</span>
+<span id="cb449-4"><a href="group-project-1.html#cb449-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Ozuna&quot;</span>, <span class="st">&quot;Justin Bieber&quot;</span>, <span class="st">&quot;Coldplay&quot;</span>, <span class="st">&quot;Eminem&quot;</span>)</span>
+<span id="cb449-5"><a href="group-project-1.html#cb449-5" aria-hidden="true" tabindex="-1"></a>famous_tracks <span class="ot">&lt;-</span> music_data <span class="sc">%&gt;%</span></span>
+<span id="cb449-6"><a href="group-project-1.html#cb449-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(artistName <span class="sc">%in%</span> famous_artists)</span>
+<span id="cb449-7"><a href="group-project-1.html#cb449-7" aria-hidden="true" tabindex="-1"></a>famous_tracks_scale <span class="ot">&lt;-</span> famous_tracks <span class="sc">%&gt;%</span></span>
+<span id="cb449-8"><a href="group-project-1.html#cb449-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">vars</span>(danceability<span class="sc">:</span>song_age), scale)</span>
+<span id="cb449-9"><a href="group-project-1.html#cb449-9" aria-hidden="true" tabindex="-1"></a>famous_tracks_scale <span class="ot">&lt;-</span> famous_tracks_scale <span class="sc">%&gt;%</span></span>
+<span id="cb449-10"><a href="group-project-1.html#cb449-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">vars</span>(danceability<span class="sc">:</span>song_age), as.vector)</span>
+<span id="cb449-11"><a href="group-project-1.html#cb449-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code></pre></div>
 <p>Interpret the results here!</p>
 
 <p><link rel="stylesheet" type="text/css" media="all" href="style.css" /></p>
