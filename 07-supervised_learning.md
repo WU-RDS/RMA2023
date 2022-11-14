@@ -1879,7 +1879,7 @@ summary(logistf(Y ~ X))
 **(LC6.9) When interpreting the significance of the coefficients in a regression model, what is the relationship between the test statistic (e.g., t-value) and the p-value?**
 
 - [ ] The lower the absolute value of the test statistic, the lower the p-value
-- [x] The higher the absolute value of the test statistic, the higher the p-value
+- [ ] The higher the absolute value of the test statistic, the higher the p-value
 - [ ] There is no connection between the test statistic and the p-value
 - [x] The higher the absolute value of the test statistic, the lower the p-value
 
