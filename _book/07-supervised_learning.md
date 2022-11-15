@@ -1826,7 +1826,7 @@ summary(logistf(Y ~ X))
 
 - [ ] The line associated with the steepest slope parameter
 - [x] The line that minimizes the sum of the squared deviations of the predicted values (regression line) from the observed values
-- [ ] The line that minimizes the sum of the squared residuals
+- [x] The line that minimizes the sum of the squared residuals
 - [ ] The line that maximizes the sum of the squared residuals
 - [ ] None of the above 
 
@@ -1866,7 +1866,7 @@ summary(logistf(Y ~ X))
 - [ ] …of 0.05 means that, if the null hypothesis is true (i.e., if the independent variable would NOT affect the outcome), the odds are 19 in 20 of getting a regression coefficient as large or larger than the estimated coefficient
 - [x] …of 0.05 means that, if the null hypothesis is true (i.e., if the independent variable would NOT affect the outcome), the odds are 1 in 20 of getting a regression coefficient as large or larger than the estimated coefficient
 - [x] ...of 0.05 means that the effect is statistically significant at the 5% level. 
-- [x] ...does not tell you anything about the significance of the effect
+- [x] ...does not tell you anything about the importance of the effect
 - [x] …will get smaller, the larger the calculated value of the test statistic (t-value).
 
 **(LC6.8) In which setting(s) would a regression coefficient be interpreted as "statistically significant"?**
