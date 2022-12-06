@@ -561,3 +561,165 @@ summary(linear_model)$coefficients[1,1] +
 $$\hat{sales}= 3.6 + 0.045*150 + 0.187*26 + 0.011*15 = 15.11$$
 
 This means that given the planned marketing mix, we would expect to sell around 15,112 units. 
+
+
+## Assignment 3
+
+As a marketing manager of a music streaming service, you are interested to categorise the inventory according to musical features of songs. Hence, you are assigned the task of conducting a cluster analysis in order to assign each song to a distinct segment.   
+
+The following variables are available to you:
+
+* isrc (unique song id)
+* trackName (name of song)
+* artistName (name of artist)
+* danceability
+* energy
+* loudness
+* mode
+* speechiness
+* acousticness
+* instrumentalness
+* liveness
+* valence
+* tempo
+* duration_ms
+
+Please conduct the following analyses: 
+
+1. Standardize the song feature variables as a preparation for the cluster analysis.
+2. Provide a histogram for all 11 song features to describe the distribution of the variables
+3. Determinde the optimal number of clusters
+4. Run the K-Means Cluster analysis using the optimal number of clusters
+5. Describe the clusters visually: 
+    * radar plot by song feature
+    * bar chart for artists per cluster
+    * 2D visualization using of clusters (using PCA)
+6. Imagine you create a playlist and you would like to find a song that is similar to the song "Monkey Wrench" by the Foo Fighters. Name one example song that would fit on the same playlist according to the cluster analysis (i.e., a song from the same cluster)? 
+
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment3.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment3_studendID_name.html".
+
+We first load the data:
+
+```{r load_data3, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(psych)
+library(dplyr)
+library(ggiraph)
+library(ggiraphExtra)
+library(NbClust)
+library(factoextra)
+library(GPArotation)
+options(scipen = 999)
+set.seed(123)
+track_data <- read.table("https://raw.githubusercontent.com/WU-RDS/RMA2022/main/data/tracks_cluster.csv", 
+                     sep = ";", header = TRUE, dec = ",") #read data
+str(track_data)
+```
+
+### Q1
+
+We can standardize the relevant variables as follows:
+
+```{r question_1_13, warning=F, message=F}
+# standardize variables
+track_data_scale <- track_data %>% mutate_at(vars(danceability:duration_ms), scale)
+track_data_scale <- track_data_scale %>% mutate_at(vars(danceability:duration_ms),as.vector)
+```
+
+### Q2
+
+Now we can create histograms of the respective variables to inspect their distributions:
+
+```{r question_2_13, warning=F, message=F}
+ggplot(track_data_scale,aes(x=danceability)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=energy)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=loudness)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=mode)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=speechiness)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=acousticness)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=instrumentalness)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=liveness)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=valence)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=tempo)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+ggplot(track_data_scale,aes(x=duration_ms)) + geom_histogram(color="black",fill="steelblue") + theme_bw()
+```
+
+The distributions of the variables reveal nothing that would disqualify them from being included in the cluster analysis (e.g., severe outliers, etc.).
+
+### Q3
+
+The optimal number of clusters may be derived as follows (recall that you might get different results due to different starting values for the algorithm):
+
+```{r question_3_13, warning=F, message=F}
+# optimal number of clusters
+set.seed(123)
+opt_K <- NbClust(track_data_scale %>% select(danceability:duration_ms), method = "kmeans", max.nc = 10)
+table(opt_K$Best.nc["Number_clusters",])
+```
+
+According to the output, the optimal number of clusters is 3.
+
+### Q4
+
+Now we can run the analysis using 3 clusters:
+ 
+```{r question_4_13, warning=F, message=F}
+kmeans_tracks <- kmeans(track_data_scale %>% select(danceability:duration_ms), 3)
+```
+
+### Q5
+
+We can describe and characterize the clusters as follows. In a first step, we can inspect the mean values of the cluster variables by cluster. 
+ 
+```{r question_5_13, warning=F, message=F}
+kmeans_tracks$centers
+centers <- data.frame(kmeans_tracks$centers)
+centers$cluster <- 1:3
+ggRadar(centers, aes(color = cluster), rescale = FALSE) + 
+  ggtitle("Centers") +
+  theme_bw()
+```
+This analysis reveals that there is one cluster (cluster 1) that exhibits comparatively high levels of liveness and speechiness and another cluster (cluster 3) that is characterized by high levels of acousticness and instrumentalness. Cluster 2 appears to have moderate values on all dimensions. 
+
+We can further characterize the clusters by inspecting the artists in each cluster:
+
+```{r question_5_23, warning=F, message=F}
+track_data$cluster <- as.factor(kmeans_tracks$cluster)
+ggplot(track_data, aes(y = cluster, fill = artistName)) +
+  geom_bar() +
+  theme_bw()
+```
+We can also count how many songs each artist has in each cluster:
+
+```{r question_5_33, warning=F, message=F}
+table(track_data$artistName, track_data$cluster)
+```
+
+It appears that cluster 1 consists of songs by rap artists such as Kontra K, Cpaital Bra, and Drake, while cluster 3 consists of songs by artists such as Coldplay and Taylor Swift. Cluster 2 is a mix of songs by different artists. This appears consistent with the analysis of the song features from the previous plot. 
+
+Finally, we can group the songs by cluster and visualize their association with the first two principal components from a pca-analysis. Although this reduces the information compared to the original 11 variables, we cannot meaningfully display the 11 dimensions in detail.
+
+```{r question_5_43, warning=F, message=F}
+fviz_cluster(kmeans_tracks, data = track_data_scale %>% select(danceability:duration_ms),
+             palette = hcl.colors(3, palette = "Dynamic"), 
+             geom = "point",
+             ellipse.type = "convex", 
+             ggtheme = theme_bw())
+```
+
+Although the two dimensions only represent a fraction (approx. 41%) of the variation across the 11 dimensions, the plot shows that the cluster separates the songs rather well, since each cluster has a sizable area that is not overlapping with any of the other clusters. 
+
+### Q6
+
+For our playlist, let's first see in which cluster the song is:
+ 
+```{r question_6_13, warning=F, message=F}
+track_data %>% filter(trackName == "Monkey Wrench")
+```
+
+The song is in cluster number 2, so we can select any song from this cluster for our playlist:
+
+```{r question_6_23, warning=F, message=F}
+recommendations <- track_data %>% filter(cluster==2)
+head(recommendations)
+```
