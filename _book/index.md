@@ -1,7 +1,7 @@
 ---
 knit: "bookdown::render_book"
 new_session: TRUE
-title: "Retail Marketing Analytics 2022"
+title: "Retail Marketing Analytics 2023"
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
@@ -56,9 +56,9 @@ The general approach is that students will first familiarize themselves with the
 The contents on this website are divided into weekly readings. To be able to follow the curriculum and complete the assignments, you need to read the materials assigned for the respective week. The relevant chapters are indicated in the table below. The weekly readings will be complemented with weekly interactive sessions in the PC lab, which provide you with an opportunity to ask questions about the assigned readings. **Please note that you need to go through the materials on your own in the week before the respective session.** For example, chapters 2, 3 & 4 will be discussed in the second session. The dates and times for the classroom sessions are indicated in the table below for each group separately. It is highly recommended to prepare questions or comments about the materials for these sessions that you think might be interesting and helpful to the class. As a preparation for the in-class discussions, you should go through the **Learning check** section at the end of each chapter. By working through these questions, you may self-assess your progress and identify knowledge gaps regarding the materials that were assigned for the previous week.        
 
 <br>
-**Lecture dates - Group A (2206)**
+**Lecture dates (5138)**
 <br>
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
  <thead>
   <tr>
    <th style="text-align:left;"> Date </th>
@@ -71,109 +71,55 @@ The contents on this website are divided into weekly readings. To be able to fol
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Oct. 13 </td>
+   <td style="text-align:left;"> April 20 </td>
    <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 08:00AM - 12:00PM </td>
+   <td style="text-align:left;"> 04:00PM - 08:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
    <td style="text-align:left;"> Introduction to the course <br>Basic concepts </td>
    <td style="text-align:left;"> 1 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Oct. 20 </td>
+   <td style="text-align:left;"> April 27 </td>
    <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 08:00AM - 12:00PM </td>
-   <td style="text-align:left;"> LC.-1.038 </td>
+   <td style="text-align:left;"> 04:00PM - 08:00PM </td>
+   <td style="text-align:left;"> TC.-1.61 </td>
    <td style="text-align:left;"> Introduction to R &amp; R Markdown </td>
    <td style="text-align:left;"> 2, 3, 4 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Oct. 27 </td>
+   <td style="text-align:left;"> May 04 </td>
    <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 08:00AM - 12:00PM </td>
+   <td style="text-align:left;"> 04:00PM - 08:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
    <td style="text-align:left;"> Introduction to inferential statistics <br>Hypothesis testing </td>
    <td style="text-align:left;"> 5 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Nov. 4 </td>
-   <td style="text-align:left;"> Friday </td>
-   <td style="text-align:left;"> 08:00AM - 12:00PM </td>
-   <td style="text-align:left;"> LC.-1.038 </td>
+   <td style="text-align:left;"> May 11 </td>
+   <td style="text-align:left;"> Thursday </td>
+   <td style="text-align:left;"> 04:00PM - 09:00PM </td>
+   <td style="text-align:left;"> TC.-1.61 </td>
    <td style="text-align:left;"> Supervised learning </td>
    <td style="text-align:left;"> 6 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Nov. 11 </td>
-   <td style="text-align:left;"> Friday </td>
-   <td style="text-align:left;"> 08:00AM - 12:00PM </td>
-   <td style="text-align:left;"> TC.3.02 </td>
+   <td style="text-align:left;"> May 25 </td>
+   <td style="text-align:left;"> Thursday </td>
+   <td style="text-align:left;"> 04:00PM - 09:00PM </td>
+   <td style="text-align:left;"> TC.-1.61 </td>
    <td style="text-align:left;"> Unsupervised learning </td>
    <td style="text-align:left;"> 7 </td>
   </tr>
-</tbody>
-<tfoot><tr><td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A.</td></tr></tfoot>
-</table>
-<br>
-**Lecture dates - Group B (2207)**
-<br>
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;border-bottom: 0;'>
- <thead>
   <tr>
-   <th style="text-align:left;"> Date </th>
-   <th style="text-align:left;"> Day </th>
-   <th style="text-align:left;"> Time </th>
-   <th style="text-align:left;"> Room </th>
-   <th style="text-align:left;"> Topics </th>
-   <th style="text-align:left;"> Chapters </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Oct. 13 </td>
+   <td style="text-align:left;"> June 01 </td>
    <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 03:30PM - 07:30PM </td>
-   <td style="text-align:left;"> D2.-1.019 </td>
-   <td style="text-align:left;"> Introduction to the course <br>Basic concepts </td>
-   <td style="text-align:left;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Oct. 20 </td>
-   <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 03:30PM - 07:30PM </td>
-   <td style="text-align:left;"> LC.2.064 </td>
-   <td style="text-align:left;"> Introduction to R &amp; R Markdown </td>
-   <td style="text-align:left;"> 2, 3, 4 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Oct. 27 </td>
-   <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 03:30PM - 07:30PM </td>
-   <td style="text-align:left;"> LC.2.064 </td>
-   <td style="text-align:left;"> Introduction to inferential statistics <br>Hypothesis testing </td>
-   <td style="text-align:left;"> 5 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Nov. 3 </td>
-   <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 03:30PM - 07:30PM </td>
-   <td style="text-align:left;"> LC.2.064 </td>
-   <td style="text-align:left;"> Supervised learning </td>
-   <td style="text-align:left;"> 6 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Nov. 10 </td>
-   <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 03:30PM - 07:30PM </td>
-   <td style="text-align:left;"> D2.-1.019 </td>
-   <td style="text-align:left;"> Unsupervised learning </td>
-   <td style="text-align:left;"> 7 </td>
+   <td style="text-align:left;"> 04:00PM - 06:00PM </td>
+   <td style="text-align:left;"> Online </td>
+   <td style="text-align:left;"> Exam </td>
+   <td style="text-align:left;"> -- </td>
   </tr>
 </tbody>
-<tfoot><tr><td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group B.</td></tr></tfoot>
 </table>
-
 <br>
 
 ::: {.infobox_red .caution data-latex="{caution}"}
@@ -198,54 +144,22 @@ There will be 3 individual assignments. These assignments need to be submitted i
 <tbody>
   <tr>
    <td style="text-align:left;"> Assignment 1: R Basics </td>
-   <td style="text-align:left;"> Oct. 20 </td>
-   <td style="text-align:left;"> Oct. 26, 11:59PM </td>
+   <td style="text-align:left;"> April 27 </td>
+   <td style="text-align:left;"> May 3, 11:59PM </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Assignment 2: Supervised learning </td>
-   <td style="text-align:left;"> Nov. 4 </td>
-   <td style="text-align:left;"> Nov. 10, 11:59PM </td>
+   <td style="text-align:left;"> May 11 </td>
+   <td style="text-align:left;"> May 24, 11:59PM </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Assignment 3: Unsupervised learning </td>
-   <td style="text-align:left;"> Nov. 11 </td>
-   <td style="text-align:left;"> Nov. 20, 11:59PM </td>
+   <td style="text-align:left;"> May 25 </td>
+   <td style="text-align:left;"> June 8, 11:59PM </td>
   </tr>
 </tbody>
 <tfoot><tr><td style="padding: 0; " colspan="100%">
 <span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A.</td></tr></tfoot>
-</table>
-
-<br>
-**Assignment schedule - Group B (2207)**
-<br>
-<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;border-bottom: 0;'>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Assignment </th>
-   <th style="text-align:left;"> Assigned </th>
-   <th style="text-align:left;"> Submission </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Assignment 1: R Basics </td>
-   <td style="text-align:left;"> Oct. 20 </td>
-   <td style="text-align:left;"> Oct. 26, 11:59PM </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Assignment 2: Supervised learning </td>
-   <td style="text-align:left;"> Nov. 3 </td>
-   <td style="text-align:left;"> Nov. 9, 11:59PM </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Assignment 3: Unsupervised learning </td>
-   <td style="text-align:left;"> Nov. 11 </td>
-   <td style="text-align:left;"> Nov. 20, 11:59PM </td>
-  </tr>
-</tbody>
-<tfoot><tr><td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group B.</td></tr></tfoot>
 </table>
 
 <br>
@@ -254,7 +168,7 @@ There will be 3 individual assignments. These assignments need to be submitted i
 
 The group project consists of an extended analysis of a data set using the methods we covered in the course and the reporting of the results using the R markdown format.
 
-The **submission date** for the group project is on **December 8, 2022**. There is an opportunity to schedule a **coaching session** regarding the group project on **November 24** between 9:00AM nd 5:00PM. If you would like to make use of the opportunity to schedule a coaching session, please register an appointment by sending me an email.
+The **submission date** for the group project is on **June 14, 2023**. There is an opportunity to schedule a **coaching session** regarding the group project on **June 12** between 9:00AM nd 5:00PM. If you would like to make use of the opportunity to schedule a coaching session, please register an appointment by sending me an email.
 
 Again, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Learn\@wu, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Learn\@wu.
 <br>
@@ -270,7 +184,7 @@ Grading is based on the following components:
 
 These grading components will be weighted with the respective weights to arrive at the final grade percentage.
 
-The **final exam** will take place online on **November 17, 2022 at 3:30PM for course 2207** and on **November 18, 2022 at 9:30AM for course 2206**. Details about the setup of the exam will be provided in the course. The exam covers questions about the concepts and methods (no coding) and I will provide example exams from the previous years to give you an idea about what type of questions you can expect.   
+The **final exam** will take place online on **June 01, 2023 from 4:00PM - 06:00PM**. Details about the setup of the exam will be provided in the course. The exam covers questions about the concepts and methods (no coding) and I will provide example exams from the previous years to give you an idea about what type of questions you can expect.   
 
 To ensure an equal contribution of group members for the group assignment, a **peer assessment** will be conducted among group members, which enters into the computation of the individual grades for the project. This means that the members of a group are required to assess other students regarding their relative contribution. 
 

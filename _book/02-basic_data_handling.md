@@ -299,10 +299,29 @@ library(tidyverse)
 
 ```
 ## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.3.6      v purrr   0.3.4 
+## v ggplot2 3.4.0      v purrr   1.0.1 
 ## v tibble  3.1.8      v dplyr   1.0.10
-## v tidyr   1.2.1      v stringr 1.4.1 
-## v readr   2.1.2      v forcats 0.5.2 
+## v tidyr   1.2.1      v stringr 1.5.0 
+## v readr   2.1.3      v forcats 0.5.2
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 4.2.2
+```
+
+```
+## Warning: package 'readr' was built under R version 4.2.2
+```
+
+```
+## Warning: package 'purrr' was built under R version 4.2.2
+```
+
+```
+## Warning: package 'stringr' was built under R version 4.2.2
+```
+
+```
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
