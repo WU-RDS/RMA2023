@@ -346,3 +346,377 @@ e.g.
 # Assignment solutions
 
 The solutions to the assignments will be published here. 
+
+
+## Assignment 1
+
+We'll use the music data set from the last session as the basis for the assignment. 
+
+Please use R to solve the tasks. When you finished the assignment, click on the "Knit to HTML" in the RStudio menu. This will create an html document in the folder in which the assignment1.Rmd file is stored. Open this file in your browser to check if everything is correct. If you are happy with the output, pleas submit the .html-file via the assignment on Learn\@WU using the following file name: "assignment1_studendID_lastname.html".
+
+We'll first load the data that is needed for the assignment.
+
+
+```r
+library(dplyr)
+library(psych)
+library(ggplot2)
+
+music_data <- read.csv2("https://raw.githubusercontent.com/WU-RDS/RMA2022/main/data/music_data_fin.csv",
+    sep = ";", header = TRUE, dec = ",")
+str(music_data)
+```
+
+```
+## 'data.frame':	66796 obs. of  31 variables:
+##  $ isrc                       : chr  "BRRGE1603547" "USUM71808193" "ES5701800181" "ITRSE2000050" ...
+##  $ artist_id                  : int  3679 5239 776407 433730 526471 1939 210184 212546 4938 119985 ...
+##  $ streams                    : num  11944813 8934097 38835 46766 2930573 ...
+##  $ weeks_in_charts            : int  141 51 1 1 7 226 13 1 64 7 ...
+##  $ n_regions                  : int  1 21 1 1 4 8 1 1 5 1 ...
+##  $ danceability               : num  50.9 35.3 68.3 70.4 84.2 35.2 73 55.6 71.9 34.6 ...
+##  $ energy                     : num  80.3 75.5 67.6 56.8 57.8 91.1 69.6 24.5 85 43.3 ...
+##  $ speechiness                : num  4 73.3 14.7 26.8 13.8 7.47 35.5 3.05 3.17 6.5 ...
+##  $ instrumentalness           : num  0.05 0 0 0.000253 0 0 0 0 0.02 0 ...
+##  $ liveness                   : num  46.3 39 7.26 8.91 22.8 9.95 32.1 9.21 11.4 10.1 ...
+##  $ valence                    : num  65.1 43.7 43.4 49.5 19 23.6 58.4 27.6 36.7 76.8 ...
+##  $ tempo                      : num  166 191.2 99 91 74.5 ...
+##  $ song_length                : num  3.12 3.23 3.02 3.45 3.95 ...
+##  $ song_age                   : num  228.3 144.3 112.3 50.7 58.3 ...
+##  $ explicit                   : int  0 0 0 0 0 0 0 0 1 0 ...
+##  $ n_playlists                : int  450 768 48 6 475 20591 6 105 547 688 ...
+##  $ sp_popularity              : int  51 54 32 44 52 81 44 8 59 68 ...
+##  $ youtube_views              : num  1.45e+08 1.32e+07 6.12e+06 0.00 0.00 ...
+##  $ tiktok_counts              : int  9740 358700 0 13 515 67300 0 0 653 3807 ...
+##  $ ins_followers_artist       : int  29613108 3693566 623778 81601 11962358 1169284 1948850 39381 9751080 343 ...
+##  $ monthly_listeners_artist   : int  4133393 18367363 888273 143761 15551876 16224250 2683086 1318874 4828847 3088232 ...
+##  $ playlist_total_reach_artist: int  24286416 143384531 4846378 156521 90841884 80408253 7332603 24302331 8914977 8885252 ...
+##  $ sp_fans_artist             : int  3308630 465412 23846 1294 380204 1651866 214001 10742 435457 1897685 ...
+##  $ shazam_counts              : int  73100 588550 0 0 55482 5281161 0 0 39055 0 ...
+##  $ artistName                 : chr  "Luan Santana" "Alessia Cara" "Ana Guerra" "Claver Gold feat. Murubutu" ...
+##  $ trackName                  : chr  "Eu, VocÃª, O Mar e Ela" "Growing Pains" "El Remedio" "Ulisse" ...
+##  $ release_date               : chr  "2016-06-20" "2018-06-14" "2018-04-26" "2020-03-31" ...
+##  $ genre                      : chr  "other" "Pop" "Pop" "HipHop/Rap" ...
+##  $ label                      : chr  "Independent" "Universal Music" "Universal Music" "Independent" ...
+##  $ top10                      : int  1 0 0 0 0 1 0 0 0 0 ...
+##  $ expert_rating              : chr  "excellent" "good" "good" "poor" ...
+```
+
+```r
+head(music_data)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["isrc"],"name":[1],"type":["chr"],"align":["left"]},{"label":["artist_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["weeks_in_charts"],"name":[4],"type":["int"],"align":["right"]},{"label":["n_regions"],"name":[5],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["song_length"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["song_age"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["explicit"],"name":[15],"type":["int"],"align":["right"]},{"label":["n_playlists"],"name":[16],"type":["int"],"align":["right"]},{"label":["sp_popularity"],"name":[17],"type":["int"],"align":["right"]},{"label":["youtube_views"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["tiktok_counts"],"name":[19],"type":["int"],"align":["right"]},{"label":["ins_followers_artist"],"name":[20],"type":["int"],"align":["right"]},{"label":["monthly_listeners_artist"],"name":[21],"type":["int"],"align":["right"]},{"label":["playlist_total_reach_artist"],"name":[22],"type":["int"],"align":["right"]},{"label":["sp_fans_artist"],"name":[23],"type":["int"],"align":["right"]},{"label":["shazam_counts"],"name":[24],"type":["int"],"align":["right"]},{"label":["artistName"],"name":[25],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[26],"type":["chr"],"align":["left"]},{"label":["release_date"],"name":[27],"type":["chr"],"align":["left"]},{"label":["genre"],"name":[28],"type":["chr"],"align":["left"]},{"label":["label"],"name":[29],"type":["chr"],"align":["left"]},{"label":["top10"],"name":[30],"type":["int"],"align":["right"]},{"label":["expert_rating"],"name":[31],"type":["chr"],"align":["left"]}],"data":[{"1":"BRRGE1603547","2":"3679","3":"11944813","4":"141","5":"1","6":"50.9","7":"80.3","8":"4.00","9":"0.050000","10":"46.30","11":"65.1","12":"166.018","13":"3.118650","14":"228.28571","15":"0","16":"450","17":"51","18":"145030723","19":"9740","20":"29613108","21":"4133393","22":"24286416","23":"3308630","24":"73100","25":"Luan Santana","26":"Eu, VocÃª, O Mar e Ela","27":"2016-06-20","28":"other","29":"Independent","30":"1","31":"excellent"},{"1":"USUM71808193","2":"5239","3":"8934097","4":"51","5":"21","6":"35.3","7":"75.5","8":"73.30","9":"0.000000","10":"39.00","11":"43.7","12":"191.153","13":"3.228000","14":"144.28571","15":"0","16":"768","17":"54","18":"13188411","19":"358700","20":"3693566","21":"18367363","22":"143384531","23":"465412","24":"588550","25":"Alessia Cara","26":"Growing Pains","27":"2018-06-14","28":"Pop","29":"Universal Music","30":"0","31":"good"},{"1":"ES5701800181","2":"776407","3":"38835","4":"1","5":"1","6":"68.3","7":"67.6","8":"14.70","9":"0.000000","10":"7.26","11":"43.4","12":"98.992","13":"3.015550","14":"112.28571","15":"0","16":"48","17":"32","18":"6116639","19":"0","20":"623778","21":"888273","22":"4846378","23":"23846","24":"0","25":"Ana Guerra","26":"El Remedio","27":"2018-04-26","28":"Pop","29":"Universal Music","30":"0","31":"good"},{"1":"ITRSE2000050","2":"433730","3":"46766","4":"1","5":"1","6":"70.4","7":"56.8","8":"26.80","9":"0.000253","10":"8.91","11":"49.5","12":"91.007","13":"3.453417","14":"50.71429","15":"0","16":"6","17":"44","18":"0","19":"13","20":"81601","21":"143761","22":"156521","23":"1294","24":"0","25":"Claver Gold feat. Murubutu","26":"Ulisse","27":"2020-03-31","28":"HipHop/Rap","29":"Independent","30":"0","31":"poor"},{"1":"QZJ842000061","2":"526471","3":"2930573","4":"7","5":"4","6":"84.2","7":"57.8","8":"13.80","9":"0.000000","10":"22.80","11":"19.0","12":"74.496","13":"3.946317","14":"58.28571","15":"0","16":"475","17":"52","18":"0","19":"515","20":"11962358","21":"15551876","22":"90841884","23":"380204","24":"55482","25":"Trippie Redd feat. Young Thug","26":"YELL OH","27":"2020-02-07","28":"HipHop/Rap","29":"Universal Music","30":"0","31":"excellent"},{"1":"USIR20400274","2":"1939","3":"72199738","4":"226","5":"8","6":"35.2","7":"91.1","8":"7.47","9":"0.000000","10":"9.95","11":"23.6","12":"148.033","13":"3.716217","14":"876.71429","15":"0","16":"20591","17":"81","18":"20216069","19":"67300","20":"1169284","21":"16224250","22":"80408253","23":"1651866","24":"5281161","25":"The Killers","26":"Mr. Brightside","27":"2004-06-07","28":"Rock","29":"Universal Music","30":"1","31":"fair"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+You should then convert the variables to the correct types:  
+  
+  
+  ```r
+  music_data <-  music_data %>% 
+  mutate(label = as.factor(label), # convert label and genre variables to factor with values as labels
+         genre = as.factor(genre)) %>% as.data.frame()
+  ```
+
+### Q1
+
+Create a new data frame containing the most successful songs of the artist "Billie Eilish" by filtering the original data set by the artist "Billie Eilish" and order the observations in an descending order.  
+
+
+```r
+billie_eilish <- music_data %>% 
+  select(artistName,trackName,streams) %>% #select relevant variables
+  filter(artistName == "Billie Eilish") %>% #filter by artist name
+  arrange(desc(streams)) #arrange by number of streams (in descending order)
+billie_eilish #print output
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["artistName"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Billie Eilish","2":"bad guy","3":"1459149566"},{"1":"Billie Eilish","2":"everything i wanted","3":"594991676"},{"1":"Billie Eilish","2":"bury a friend","3":"298707880"},{"1":"Billie Eilish","2":"Therefore I Am","3":"269394372"},{"1":"Billie Eilish","2":"ocean eyes","3":"228294513"},{"1":"Billie Eilish","2":"wish you were gay","3":"199352351"},{"1":"Billie Eilish","2":"bury a friend","3":"171699755"},{"1":"Billie Eilish","2":"idontwannabeyouanymore","3":"134877101"},{"1":"Billie Eilish","2":"i love you","3":"128265348"},{"1":"Billie Eilish","2":"No Time To Die","3":"121455669"},{"1":"Billie Eilish","2":"bellyache","3":"114384636"},{"1":"Billie Eilish","2":"you should see me in a crown","3":"109741912"},{"1":"Billie Eilish","2":"all the good girls go to hell","3":"105095062"},{"1":"Billie Eilish","2":"my strange addiction","3":"81688070"},{"1":"Billie Eilish","2":"my future","3":"77747843"},{"1":"Billie Eilish","2":"xanny","3":"75431724"},{"1":"Billie Eilish","2":"you should see me in a crown","3":"55975472"},{"1":"Billie Eilish","2":"idontwannabeyouanymore","3":"48966600"},{"1":"Billie Eilish","2":"wish you were gay","3":"46356201"},{"1":"Billie Eilish","2":"come out and play","3":"42644497"},{"1":"Billie Eilish","2":"ilomilo","3":"39796217"},{"1":"Billie Eilish","2":"listen before i go","3":"36231682"},{"1":"Billie Eilish","2":"8","3":"28632208"},{"1":"Billie Eilish","2":"ocean eyes","3":"27799975"},{"1":"Billie Eilish","2":"my boy","3":"20712656"},{"1":"Billie Eilish","2":"goodbye","3":"16134884"},{"1":"Billie Eilish","2":"WHEN I WAS OLDER - Music Inspired By The Film ROMA","3":"6951014"},{"1":"Billie Eilish","2":"bitches broken hearts","3":"5117114"},{"1":"Billie Eilish","2":"my boy","3":"2770987"},{"1":"Billie Eilish","2":"COPYCAT","3":"2662176"},{"1":"Billie Eilish","2":"bitches broken hearts","3":"2628953"},{"1":"Billie Eilish","2":"COPYCAT","3":"1494523"},{"1":"Billie Eilish","2":"watch","3":"889256"},{"1":"Billie Eilish","2":"watch","3":"98178"},{"1":"Billie Eilish","2":"watch","3":"63376"},{"1":"Billie Eilish","2":"watch","3":"20764"},{"1":"Billie Eilish","2":"idontwannabeyouanymore","3":"12768"},{"1":"Billie Eilish","2":"watch","3":"11480"},{"1":"Billie Eilish","2":"watch","3":"2929"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### Q2
+
+Create a new data frame containing the 100 overall most successful songs in the data frame and order them descending by the number of streams.
+
+Here you could simply arrange the whole data set by streams and then take 100 first rows using the `head()`-function:
+  
+
+```r
+top_100 <- music_data %>% 
+  select(artistName,trackName,streams) %>% #select relevant variables
+  arrange(desc(streams)) %>% #arrange by number of streams (in descending order)
+  head(100) #select first 100 observations
+top_100
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["artistName"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["streams"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Ed Sheeran","2":"Shape of You","3":"2165692479"},{"1":"Tones and I","2":"Dance Monkey","3":"1909947000"},{"1":"Billie Eilish","2":"bad guy","3":"1459149566"},{"1":"Lewis Capaldi","2":"Someone You Loved","3":"1419867299"},{"1":"Shawn Mendes feat. Camila Cabello","2":"SeÃ±orita","3":"1156206588"},{"1":"XXXTENTACION","2":"SAD!","3":"1103693478"},{"1":"Lady Gaga feat. Bradley Cooper","2":"Shallow","3":"1095593020"},{"1":"Ed Sheeran","2":"Perfect","3":"1045189446"},{"1":"Marshmello feat. Bastille","2":"Happier","3":"1040018252"},{"1":"Post Malone","2":"Circles","3":"1033994547"},{"1":"Travis Scott","2":"SICKO MODE","3":"1032407145"},{"1":"Post Malone","2":"Better Now","3":"1020891071"},{"1":"Roddy Ricch","2":"The Box","3":"995059793"},{"1":"Luis Fonsi feat. Daddy Yankee feat. Justin Bieber","2":"Despacito - Remix","3":"956567836"},{"1":"James Arthur","2":"Say You Won't Let Go","3":"949840761"},{"1":"Kendrick Lamar","2":"HUMBLE.","3":"946692345"},{"1":"XXXTENTACION","2":"Jocelyn Flores","3":"936906948"},{"1":"Harry Styles","2":"Watermelon Sugar","3":"912812908"},{"1":"DaBaby feat. Roddy Ricch","2":"ROCKSTAR (feat. Roddy Ricch)","3":"908563621"},{"1":"Dua Lipa","2":"New Rules","3":"899361369"},{"1":"Travis Scott","2":"goosebumps","3":"885410605"},{"1":"Post Malone feat. Quavo","2":"Congratulations","3":"876828681"},{"1":"Post Malone","2":"I Fall Apart","3":"853129702"},{"1":"Maroon 5","2":"Memories","3":"840176116"},{"1":"Ariana Grande","2":"7 rings","3":"829033275"},{"1":"The Chainsmokers feat. Coldplay","2":"Something Just Like This","3":"818014494"},{"1":"Maroon 5 feat. Cardi B","2":"Girls Like You (feat. Cardi B)","3":"808796253"},{"1":"Post Malone feat. 21 Savage","2":"rockstar","3":"798643747"},{"1":"Cardi B feat. Bad Bunny feat. J Balvin","2":"I Like It","3":"788587558"},{"1":"24kGoldn feat. iann dior","2":"Mood (feat. Iann Dior)","3":"764725273"},{"1":"Drake","2":"God's Plan","3":"760650552"},{"1":"Halsey","2":"Without Me","3":"757392659"},{"1":"KAROL G feat. Nicki Minaj","2":"Tusa","3":"756602731"},{"1":"Juice WRLD","2":"Lucid Dreams","3":"743680155"},{"1":"Billie Eilish feat. Khalid","2":"lovely (with Khalid)","3":"736917003"},{"1":"XXXTENTACION","2":"Moonlight","3":"728758339"},{"1":"Calvin Harris feat. Dua Lipa","2":"One Kiss (with Dua Lipa)","3":"725852183"},{"1":"Powfu feat. beabadoobee","2":"death bed (feat. beabadoobee)","3":"721854372"},{"1":"Lil Uzi Vert","2":"XO Tour Llif3","3":"718056532"},{"1":"Luis Fonsi feat. Daddy Yankee","2":"Despacito (Featuring Daddy Yankee)","3":"716267413"},{"1":"DJ Snake feat. Selena Gomez feat. Ozuna feat. Cardi B","2":"Taki Taki (with Selena Gomez, Ozuna & Cardi B)","3":"711683906"},{"1":"Ava Max","2":"Sweet but Psycho","3":"708945613"},{"1":"Post Malone feat. Swae Lee","2":"Sunflower - Spider-Man: Into the Spider-Verse","3":"698637220"},{"1":"Lewis Capaldi","2":"Before You Go","3":"673256732"},{"1":"Travis Scott","2":"HIGHEST IN THE ROOM","3":"671834884"},{"1":"French Montana feat. Swae Lee","2":"Unforgettable","3":"664523097"},{"1":"Dua Lipa","2":"Don't Start Now","3":"662931410"},{"1":"Ed Sheeran feat. Justin Bieber","2":"I Don't Care (with Justin Bieber)","3":"661619647"},{"1":"Ed Sheeran feat. Khalid","2":"Beautiful People (feat. Khalid)","3":"645594217"},{"1":"Daddy Yankee feat. Snow","2":"Con Calma","3":"641512230"},{"1":"5 Seconds of Summer","2":"Youngblood","3":"630620840"},{"1":"Cardi B feat. Megan Thee Stallion","2":"WAP (feat. Megan Thee Stallion)","3":"628693128"},{"1":"Drake","2":"In My Feelings","3":"628416077"},{"1":"Bruno Mars","2":"That's What I Like","3":"626610789"},{"1":"Dua Lipa","2":"IDGAF","3":"625837067"},{"1":"Khalid","2":"Young Dumb & Broke","3":"620192359"},{"1":"Charlie Puth","2":"Attention","3":"618037150"},{"1":"Panic! At The Disco","2":"High Hopes","3":"617513542"},{"1":"Dynoro feat. Gigi D'Agostino","2":"In My Mind","3":"617150168"},{"1":"The Chainsmokers feat. Halsey","2":"Closer","3":"616860951"},{"1":"Harry Styles","2":"Adore You","3":"605863996"},{"1":"Marshmello feat. Khalid","2":"Silence","3":"597974176"},{"1":"Bad Bunny feat. Drake","2":"MIA (feat. Drake)","3":"597084944"},{"1":"Logic feat. Alessia Cara feat. Khalid","2":"1-800-273-8255","3":"595389235"},{"1":"Billie Eilish","2":"everything i wanted","3":"594991676"},{"1":"J Balvin feat. Willy William","2":"Mi Gente","3":"591160912"},{"1":"Post Malone","2":"Wow.","3":"590232906"},{"1":"Kygo feat. Selena Gomez","2":"It Ain't Me (with Selena Gomez)","3":"589126392"},{"1":"Pedro CapÃ³ feat. Farruko","2":"Calma - Remix","3":"586985863"},{"1":"Mithoon feat. Arijit Singh","2":"Chal Ghar Chalen (From \"\"Malang - Unleash The Madness\"\") [Mithoon feat. Arijit Singh]","3":"582308170"},{"1":"Mariah Carey","2":"All I Want for Christmas Is You","3":"581830387"},{"1":"Post Malone feat. 21 Savage","2":"rockstar","3":"567757276"},{"1":"Marshmello feat. Anne-Marie","2":"FRIENDS","3":"566399912"},{"1":"Dua Lipa","2":"Don't Start Now","3":"559248821"},{"1":"Post Malone feat. Swae Lee","2":"Sunflower - Spider-Man: Into the Spider-Verse","3":"557862968"},{"1":"Camila Cabello feat. Young Thug","2":"Havana","3":"554032710"},{"1":"Bad Bunny feat. Tainy","2":"Callaita","3":"551285702"},{"1":"ZAYN feat. Taylor Swift","2":"I Donâ\\200\\231t Wanna Live Forever (Fifty Shades Darker) - From \"\"Fifty Shades Darker (Original Motion Picture Soundtrack)\"\"","3":"550678451"},{"1":"Tyga feat. Offset","2":"Taste (feat. Offset)","3":"549014318"},{"1":"J. Cole","2":"MIDDLE CHILD","3":"539371861"},{"1":"Lil Baby feat. Gunna","2":"Drip Too Hard","3":"537625961"},{"1":"Post Malone feat. Young Thug","2":"Goodbyes (Feat. Young Thug)","3":"534832406"},{"1":"Regard","2":"Ride It","3":"530000154"},{"1":"Juice WRLD","2":"Robbery","3":"528728435"},{"1":"XXXTENTACION feat. Trippie Redd","2":"Fuck Love (feat. Trippie Redd)","3":"525695922"},{"1":"Topic feat. A7S","2":"Breaking Me (feat. A7S)","3":"524982001"},{"1":"Danny Ocean","2":"Me RehÃºso","3":"523590834"},{"1":"Shawn Mendes","2":"There's Nothing Holdin' Me Back","3":"520429071"},{"1":"Camila Cabello feat. Young Thug","2":"Havana","3":"516295447"},{"1":"Justin Bieber feat. Quavo","2":"Intentions","3":"514862825"},{"1":"Post Malone feat. Ty Dolla $ign","2":"Psycho (feat. Ty Dolla $ign)","3":"513812937"},{"1":"Nio Garcia feat. Casper Magico feat. Bad Bunny feat. Darell feat. Ozuna feat. Nicky Jam","2":"Te BotÃ© - Remix","3":"513303473"},{"1":"Sam Smith","2":"Too Good At Goodbyes - Edit","3":"512836763"},{"1":"Anuel AA feat. Daddy Yankee feat. KAROL G feat. J Balvin feat. Ozuna","2":"China","3":"511648110"},{"1":"Doja Cat","2":"Say So","3":"507466329"},{"1":"BlocBoy JB feat. Drake","2":"Look Alive (feat. Drake)","3":"504359415"},{"1":"Meek Mill feat. Drake","2":"Going Bad (feat. Drake)","3":"504025912"},{"1":"Sam Smith feat. Normani","2":"Dancing With A Stranger (with Normani)","3":"502577475"},{"1":"Ed Sheeran","2":"Castle on the Hill","3":"498013905"},{"1":"Zedd feat. Alessia Cara","2":"Stay (with Alessia Cara)","3":"490037377"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### Q3
+
+Which genres are most popular? Group the data by genre and compute the sum of streams by genre. 
+
+Using `dplyr` functions, you could first group the observations by genre, then summarize the streams using `sum()`:
+  
+
+```r
+genres_popularity <- music_data %>% 
+  group_by(genre) %>% #group by genre
+  summarize(streams = sum(streams)) #compute sum of streams per genre
+genres_popularity
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["genre"],"name":[1],"type":["fct"],"align":["left"]},{"label":["streams"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics/Jazz","2":"58854804"},{"1":"Country","2":"7575073860"},{"1":"Electro/Dance","2":"33815774273"},{"1":"German Folk","2":"1521744994"},{"1":"HipHop/Rap","2":"143116357087"},{"1":"other","2":"65952433233"},{"1":"Pop","2":"173713597202"},{"1":"R&B","2":"28843269808"},{"1":"Reggae","2":"775976707"},{"1":"Rock","2":"29085255798"},{"1":"Soundtrack","2":"4132622529"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### Q4
+
+Which music label is most successful? Group the data by music label and compute the sum of streams by label and the average number of streams for all songs associated with a label. 
+
+Just like in the previous task, it would be enough to group the observations (in this case, by labels), and get the sums and averages of streams:
+  
+
+```r
+label_success <- music_data %>% 
+  group_by(label) %>% #group by label
+  summarize(sum_streams = sum(streams),
+            avg_streams = mean(streams)) #compute sum of streams and average streams per label
+label_success
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["label"],"name":[1],"type":["fct"],"align":["left"]},{"label":["sum_streams"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["avg_streams"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Independent","2":"94289773362","3":"4177659"},{"1":"Sony Music","2":"108111852495","3":"8725735"},{"1":"Universal Music","2":"197499391883","3":"9129964"},{"1":"Warner Music","2":"88689942555","3":"8691684"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### Q5
+
+How do the songs differ in terms of the song features? Please first select the relevant variables (7 song features) and compute the descriptive statistics for these variables by genre.     
+
+All audio features (danceability, energy, speechiness, instrumentalness, liveness, valence, and tempo) are variables measured on a **ratio scale**, which means that we can evaluate their **average values**. We can use `describeBy()` function, which displays mean by default alongside with range and other values:
+  
+
+```r
+library(psych)
+describeBy(select(music_data, danceability, energy,
+    speechiness, instrumentalness, liveness, valence,
+    tempo), music_data$genre, skew = FALSE)
+```
+
+```
+## 
+##  Descriptive statistics by group 
+## group: Classics/Jazz
+##                  vars  n   mean    sd   min    max  range   se
+## danceability        1 80  46.00 18.34  7.33  83.70  76.37 2.05
+## energy              2 80  30.85 19.51  0.26  85.00  84.74 2.18
+## speechiness         3 80   6.11  6.55  2.46  46.70  44.24 0.73
+## instrumentalness    4 80  11.34 25.65  0.00  96.10  96.10 2.87
+## liveness            5 80  13.44  7.63  4.61  39.50  34.89 0.85
+## valence             6 80  38.24 24.30  3.60  90.00  86.40 2.72
+## tempo               7 80 113.23 33.74 56.72 232.69 175.97 3.77
+## ------------------------------------------------------------ 
+## group: Country
+##                  vars   n   mean    sd   min    max  range   se
+## danceability        1 504  59.67 11.98 19.20  92.20  73.00 0.53
+## energy              2 504  69.71 18.71  4.84  97.70  92.86 0.83
+## speechiness         3 504   5.16  4.10  2.48  35.10  32.62 0.18
+## instrumentalness    4 504   0.24  4.04  0.00  89.10  89.10 0.18
+## liveness            5 504  23.70 21.43  3.35  98.50  95.15 0.95
+## valence             6 504  58.90 21.08  7.40  96.70  89.30 0.94
+## tempo               7 504 124.52 31.19 48.72 203.93 155.21 1.39
+## ------------------------------------------------------------ 
+## group: Electro/Dance
+##                  vars    n   mean    sd   min   max  range   se
+## danceability        1 2703  66.55 11.87 22.40  97.3  74.90 0.23
+## energy              2 2703  74.51 13.99  2.62  99.9  97.28 0.27
+## speechiness         3 2703   7.82  6.33  2.37  47.4  45.03 0.12
+## instrumentalness    4 2703   5.05 16.75  0.00  98.5  98.50 0.32
+## liveness            5 2703  18.57 14.12  2.21  96.5  94.29 0.27
+## valence             6 2703  47.50 21.49  3.15  97.8  94.65 0.41
+## tempo               7 2703 120.74 19.42 73.99 215.9 141.91 0.37
+## ------------------------------------------------------------ 
+## group: German Folk
+##                  vars   n   mean    sd   min    max  range   se
+## danceability        1 539  63.03 15.36 20.60  96.40  75.80 0.66
+## energy              2 539  61.73 22.56  5.48  99.90  94.42 0.97
+## speechiness         3 539   9.80 10.20  2.45  49.90  47.45 0.44
+## instrumentalness    4 539   1.75 10.02  0.00  96.10  96.10 0.43
+## liveness            5 539  18.65 15.38  1.91  98.80  96.89 0.66
+## valence             6 539  56.07 24.07  6.92  98.00  91.08 1.04
+## tempo               7 539 119.38 28.53 58.69 202.12 143.43 1.23
+## ------------------------------------------------------------ 
+## group: HipHop/Rap
+##                  vars     n   mean    sd   min    max  range   se
+## danceability        1 21131  73.05 12.30  8.39  98.00  89.61 0.08
+## energy              2 21131  65.10 13.28  0.54  99.00  98.46 0.09
+## speechiness         3 21131  20.92 13.55  2.54  96.60  94.06 0.09
+## instrumentalness    4 21131   0.61  5.03  0.00  97.80  97.80 0.03
+## liveness            5 21131  16.90 12.49  1.19  97.60  96.41 0.09
+## valence             6 21131  49.04 20.73  3.33  97.90  94.57 0.14
+## tempo               7 21131 121.68 28.22 38.80 230.27 191.47 0.19
+## ------------------------------------------------------------ 
+## group: other
+##                  vars    n   mean    sd   min    max  range   se
+## danceability        1 5228  64.53 15.39  7.83  96.70  88.87 0.21
+## energy              2 5228  63.91 20.46  3.32  98.80  95.48 0.28
+## speechiness         3 5228   9.30 10.38  2.36  95.50  93.14 0.14
+## instrumentalness    4 5228   0.72  6.32  0.00  97.00  97.00 0.09
+## liveness            5 5228  21.91 20.27  1.51  99.10  97.59 0.28
+## valence             6 5228  60.16 22.73  3.84  99.00  95.16 0.31
+## tempo               7 5228 123.65 31.98 46.72 210.16 163.44 0.44
+## ------------------------------------------------------------ 
+## group: Pop
+##                  vars     n   mean    sd min   max range   se
+## danceability        1 30069  63.74 14.46   0  98.3  98.3 0.08
+## energy              2 30069  62.91 18.62   0 100.0 100.0 0.11
+## speechiness         3 30069   9.85 10.20   0  95.6  95.6 0.06
+## instrumentalness    4 30069   1.16  7.76   0  98.7  98.7 0.04
+## liveness            5 30069  17.26 13.16   0  98.9  98.9 0.08
+## valence             6 30069  50.33 22.57   0  98.7  98.7 0.13
+## tempo               7 30069 120.94 28.44   0 217.4 217.4 0.16
+## ------------------------------------------------------------ 
+## group: R&B
+##                  vars    n   mean    sd   min    max  range   se
+## danceability        1 1881  67.97 13.43  8.66  97.00  88.34 0.31
+## energy              2 1881  61.25 15.80  2.46  96.10  93.64 0.36
+## speechiness         3 1881  12.34 10.10  2.29  85.60  83.31 0.23
+## instrumentalness    4 1881   0.96  6.86  0.00  94.20  94.20 0.16
+## liveness            5 1881  16.04 11.62  2.07  89.10  87.03 0.27
+## valence             6 1881  52.83 23.01  3.21  98.20  94.99 0.53
+## tempo               7 1881 120.17 32.02 58.39 215.93 157.54 0.74
+## ------------------------------------------------------------ 
+## group: Reggae
+##                  vars   n   mean    sd   min    max  range   se
+## danceability        1 121  75.06  9.33 40.40  94.40  54.00 0.85
+## energy              2 121  67.61 14.91 14.50  91.10  76.60 1.36
+## speechiness         3 121  11.96  8.69  2.62  36.30  33.68 0.79
+## instrumentalness    4 121   1.82  9.52  0.00  86.10  86.10 0.87
+## liveness            5 121  18.02 14.89  1.38  78.40  77.02 1.35
+## valence             6 121  69.73 18.38 13.80  96.60  82.80 1.67
+## tempo               7 121 111.80 31.03 66.86 214.02 147.17 2.82
+## ------------------------------------------------------------ 
+## group: Rock
+##                  vars    n   mean    sd   min    max  range   se
+## danceability        1 4214  54.75 13.98  6.28  98.00  91.72 0.22
+## energy              2 4214  67.77 21.37  1.37  99.80  98.43 0.33
+## speechiness         3 4214   6.19  5.22  2.22  54.60  52.38 0.08
+## instrumentalness    4 4214   5.69 17.47  0.00  98.20  98.20 0.27
+## liveness            5 4214  18.65 14.52  2.08  98.80  96.72 0.22
+## valence             6 4214  45.65 22.53  2.62  97.30  94.68 0.35
+## tempo               7 4214 122.25 28.70 46.22 209.79 163.57 0.44
+## ------------------------------------------------------------ 
+## group: Soundtrack
+##                  vars   n   mean    sd   min    max  range   se
+## danceability        1 326  52.82 16.25 15.00  91.50  76.50 0.90
+## energy              2 326  52.05 21.96  1.26  97.90  96.64 1.22
+## speechiness         3 326   6.82  7.51  2.42  81.80  79.38 0.42
+## instrumentalness    4 326   5.02 19.37  0.00  93.50  93.50 1.07
+## liveness            5 326  17.49 14.80  2.37  84.20  81.83 0.82
+## valence             6 326  37.99 22.44  3.09  96.50  93.41 1.24
+## tempo               7 326 119.50 30.80 60.81 205.54 144.73 1.71
+```
+
+
+### Q6
+
+How many songs in the data set are associated with each label? 
+  
+You could use `table()` to get the number of songs by label:
+  
+
+```r
+table(music_data$label)
+```
+
+```
+## 
+##     Independent      Sony Music Universal Music    Warner Music 
+##           22570           12390           21632           10204
+```
+
+
+### Q7
+
+Which share of streams do the different genres account for?
+  
+
+```r
+genre_streams <- music_data %>%
+    group_by(genre) %>%
+    summarise(genre_streams = sum(streams))  #first compute sum of streams by genre
+genre_streams_share <- genre_streams %>%
+    mutate(genre_share = genre_streams/sum(genre_streams))  #then divide the sum by the total streams
+genre_streams_share
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["genre"],"name":[1],"type":["fct"],"align":["left"]},{"label":["genre_streams"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["genre_share"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Classics/Jazz","2":"58854804","3":"0.0001204582"},{"1":"Country","2":"7575073860","3":"0.0155039173"},{"1":"Electro/Dance","2":"33815774273","3":"0.0692108062"},{"1":"German Folk","2":"1521744994","3":"0.0031145582"},{"1":"HipHop/Rap","2":"143116357087","3":"0.2929165063"},{"1":"other","2":"65952433233","3":"0.1349849641"},{"1":"Pop","2":"173713597202","3":"0.3555399328"},{"1":"R&B","2":"28843269808","3":"0.0590335724"},{"1":"Reggae","2":"775976707","3":"0.0015881929"},{"1":"Rock","2":"29085255798","3":"0.0595288455"},{"1":"Soundtrack","2":"4132622529","3":"0.0084582460"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+### Q8
+
+Create a histogram for the variable "Valence" 
+
+This is a simple plot of valence distribution across all songs in your data (we can see that it follows normal distribution):
+  
+
+```r
+ggplot(music_data, aes(x = valence)) + geom_histogram(binwidth = 4,
+    col = "white", fill = "lavenderblush3") + labs(x = "Valence",
+    y = "Frequency") + theme_minimal()
+```
+
+<div class="figure" style="text-align: center">
+<img src="09-rmdIntro_files/figure-html/question_8-1.png" alt="Distribution of valence" width="672" />
+<p class="caption">(\#fig:question_8)Distribution of valence</p>
+</div>
+
+### Q9
+
+Create a grouped boxplot for the variable "energy" by genre.
+
+
+```r
+ggplot(music_data, aes(x = genre, y = energy, color = genre)) +
+    geom_boxplot(coef = 3) + labs(x = "Genre", y = "Energy") +
+    theme_minimal() + coord_flip()
+```
+
+<div class="figure" style="text-align: center">
+<img src="09-rmdIntro_files/figure-html/question_9-1.png" alt="Boxplot of energy by genre" width="672" />
+<p class="caption">(\#fig:question_9)Boxplot of energy by genre</p>
+</div>
+
+### Q10
+
+Create a scatterplot for the variables "valence" and "energy"
+
+Finally, we can visualize the relationship between valence and energy of songs in our data:
+  
+
+```r
+ggplot(music_data, aes(x = valence, y = energy)) +
+    geom_point(shape = 1) + labs(x = "Valence", y = "Energy") +
+    theme_minimal()
+```
+
+<div class="figure" style="text-align: center">
+<img src="09-rmdIntro_files/figure-html/question_10-1.png" alt="Scatterplot of energy and valence" width="672" />
+<p class="caption">(\#fig:question_10)Scatterplot of energy and valence</p>
+</div>
