@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>20 - content_pl: 1 if playlist is curated accoridng to content (e.g., genre), 0 else | Retail Marketing Analytics 2023</title>
+  <meta name="description" content="An Introduction to Data Analytics Using R" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="20 - content_pl: 1 if playlist is curated accoridng to content (e.g., genre), 0 else | Retail Marketing Analytics 2023" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="An Introduction to Data Analytics Using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="20 - content_pl: 1 if playlist is curated accoridng to content (e.g., genre), 0 else | Retail Marketing Analytics 2023" />
+  
+  <meta name="twitter:description" content="An Introduction to Data Analytics Using R" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="prev" href="context_pl-1-if-playlist-is-curated-according-to-a-context-e.g.-running-cooking-commuting-etc.-0-else.html"/>
+<link rel="next" href="ranking_pl-1-if-playlist-is-ranking-based-e.g.-top-100-de-charts-0-else.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">RMA 2023</a></strong></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Course outline</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-structure"><i class="fa fa-check"></i>Course structure</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#grading"><i class="fa fa-check"></i>Grading</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#course-materials"><i class="fa fa-check"></i>Course materials</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#discussion-forum"><i class="fa fa-check"></i>Discussion forum</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#contact"><i class="fa fa-check"></i>Contact</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Lecture notes</b></span></li>
+<li class="chapter" data-level="1" data-path="preliminaries.html"><a href="preliminaries.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="preliminaries.html"><a href="preliminaries.html#marketing-foundations-recap"><i class="fa fa-check"></i><b>1.1</b> Marketing foundations (recap)</a></li>
+<li class="chapter" data-level="1.2" data-path="preliminaries.html"><a href="preliminaries.html#the-research-process"><i class="fa fa-check"></i><b>1.2</b> The research process</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="preliminaries.html"><a href="preliminaries.html#research-question-and-hypothesis"><i class="fa fa-check"></i><b>1.2.1</b> Research question and hypothesis</a></li>
+<li class="chapter" data-level="1.2.2" data-path="preliminaries.html"><a href="preliminaries.html#choosing-a-research-design"><i class="fa fa-check"></i><b>1.2.2</b> Choosing a research design</a></li>
+<li class="chapter" data-level="1.2.3" data-path="preliminaries.html"><a href="preliminaries.html#collecting-data"><i class="fa fa-check"></i><b>1.2.3</b> Collecting data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#learning-check"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="preliminaries.html"><a href="preliminaries.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> How to download and install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#the-r-studio-interface"><i class="fa fa-check"></i><b>2.2</b> The R Studio interface</a></li>
+<li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#packages"><i class="fa fa-check"></i><b>2.4</b> Packages</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#a-typical-r-session"><i class="fa fa-check"></i><b>2.5</b> A typical R session</a></li>
+<li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.6</b> Getting help</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>3</b> Data handling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>3.1</b> Basic data handling</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>3.1.1</b> Creating objects</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>3.1.2</b> Data types</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>3.1.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>3.2</b> Data import and export</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>3.2.1</b> Getting data for this course</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>3.2.2</b> Import data created by other software packages</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-handling.html"><a href="data-handling.html#import-data-from-qualtrics"><i class="fa fa-check"></i><b>3.2.3</b> Import data from Qualtrics</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-handling.html"><a href="data-handling.html#export-data"><i class="fa fa-check"></i><b>3.2.4</b> Export data</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-handling.html"><a href="data-handling.html#import-data-from-the-web"><i class="fa fa-check"></i><b>3.2.5</b> Import data from the Web</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="data-handling.html"><a href="data-handling.html#learning-check-1"><i class="fa fa-check"></i>Learning check</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary statistics</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>4.1.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="4.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>4.1.2</b> Continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>4.2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>4.2.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> Continuous variables</a></li>
+<li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>4.2.3</b> Saving plots</a></li>
+<li class="chapter" data-level="4.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#ggplot-extensions"><i class="fa fa-check"></i><b>4.2.4</b> ggplot extensions</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#learning-check-2"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#references-1"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>5</b> Statistical inference</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="statistical-inference.html"><a href="statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>5.1</b> If we knew it all</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="statistical-inference.html"><a href="statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>5.1.1</b> Sampling from a known population</a></li>
+<li class="chapter" data-level="5.1.2" data-path="statistical-inference.html"><a href="statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>5.1.2</b> Standard error of the mean</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="statistical-inference.html"><a href="statistical-inference.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>5.2</b> The Central Limit Theorem</a></li>
+<li class="chapter" data-level="5.3" data-path="statistical-inference.html"><a href="statistical-inference.html#using-what-we-actually-know"><i class="fa fa-check"></i><b>5.3</b> Using what we actually know</a></li>
+<li class="chapter" data-level="5.4" data-path="statistical-inference.html"><a href="statistical-inference.html#confidence-intervals-for-the-sample-mean"><i class="fa fa-check"></i><b>5.4</b> Confidence Intervals for the Sample Mean</a></li>
+<li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#learning-check-3"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="statistical-inference.html"><a href="statistical-inference.html#references-2"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>6</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="supervised-learning.html"><a href="supervised-learning.html#linear-regression"><i class="fa fa-check"></i><b>6.1</b> Linear regression</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="supervised-learning.html"><a href="supervised-learning.html#correlation"><i class="fa fa-check"></i><b>6.1.1</b> Correlation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="supervised-learning.html"><a href="supervised-learning.html#regression-analysis"><i class="fa fa-check"></i><b>6.1.2</b> Regression analysis</a></li>
+<li class="chapter" data-level="6.1.3" data-path="supervised-learning.html"><a href="supervised-learning.html#categorical-predictors"><i class="fa fa-check"></i><b>6.1.3</b> Categorical predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="supervised-learning.html"><a href="supervised-learning.html#logistic-regression"><i class="fa fa-check"></i><b>6.2</b> Logistic regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="supervised-learning.html"><a href="supervised-learning.html#motivation-and-intuition"><i class="fa fa-check"></i><b>6.2.1</b> Motivation and intuition</a></li>
+<li class="chapter" data-level="6.2.2" data-path="supervised-learning.html"><a href="supervised-learning.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>6.2.2</b> Technical details of the model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="supervised-learning.html"><a href="supervised-learning.html#estimation-in-r"><i class="fa fa-check"></i><b>6.2.3</b> Estimation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="supervised-learning.html"><a href="supervised-learning.html#learning-check-4"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="supervised-learning.html"><a href="supervised-learning.html#references-3"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html"><i class="fa fa-check"></i><b>7</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#principal-component-analysis"><i class="fa fa-check"></i><b>7.1</b> Principal component analysis</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#introduction-1"><i class="fa fa-check"></i><b>7.1.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.1.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>7.1.2</b> Steps in factor analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#cluster-analysis"><i class="fa fa-check"></i><b>7.2</b> Cluster analysis</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#k-means"><i class="fa fa-check"></i><b>7.2.1</b> K-Means</a></li>
+<li class="chapter" data-level="7.2.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.2.2</b> Hierarchical Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
+<li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#references-4"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="part"><span><b>III Assignments</b></span></li>
+<li class="chapter" data-level="8" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>8</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="r-markdown.html"><a href="r-markdown.html#introduction-to-r-markdown"><i class="fa fa-check"></i><b>8.1</b> Introduction to R Markdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i>Creating a new R Markdown document</a></li>
+<li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#text-and-equations"><i class="fa fa-check"></i>Text and Equations</a></li>
+<li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#r-code"><i class="fa fa-check"></i>R-Code</a></li>
+<li class="chapter" data-level="" data-path="r-markdown.html"><a href="r-markdown.html#latex-math"><i class="fa fa-check"></i>LaTeX Math</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="assignment-solutions.html"><a href="assignment-solutions.html"><i class="fa fa-check"></i><b>9</b> Assignment solutions</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="assignment-solutions.html"><a href="assignment-solutions.html#assignment-1"><i class="fa fa-check"></i><b>9.1</b> Assignment 1</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q1"><i class="fa fa-check"></i><b>9.1.1</b> Q1</a></li>
+<li class="chapter" data-level="9.1.2" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q2"><i class="fa fa-check"></i><b>9.1.2</b> Q2</a></li>
+<li class="chapter" data-level="9.1.3" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q3"><i class="fa fa-check"></i><b>9.1.3</b> Q3</a></li>
+<li class="chapter" data-level="9.1.4" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q4"><i class="fa fa-check"></i><b>9.1.4</b> Q4</a></li>
+<li class="chapter" data-level="9.1.5" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q5"><i class="fa fa-check"></i><b>9.1.5</b> Q5</a></li>
+<li class="chapter" data-level="9.1.6" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q6"><i class="fa fa-check"></i><b>9.1.6</b> Q6</a></li>
+<li class="chapter" data-level="9.1.7" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q7"><i class="fa fa-check"></i><b>9.1.7</b> Q7</a></li>
+<li class="chapter" data-level="9.1.8" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q8"><i class="fa fa-check"></i><b>9.1.8</b> Q8</a></li>
+<li class="chapter" data-level="9.1.9" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q9"><i class="fa fa-check"></i><b>9.1.9</b> Q9</a></li>
+<li class="chapter" data-level="9.1.10" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q10"><i class="fa fa-check"></i><b>9.1.10</b> Q10</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="group-project-1.html"><a href="group-project-1.html"><i class="fa fa-check"></i><b>10</b> Group project</a></li>
+<li class="chapter" data-level="11" data-path="playlist_id-unique-id-per-playlist.html"><a href="playlist_id-unique-id-per-playlist.html"><i class="fa fa-check"></i><b>11</b> - playlist_id: unique ID per playlist</a></li>
+<li class="chapter" data-level="12" data-path="playlist_owner-curator-of-playlist.html"><a href="playlist_owner-curator-of-playlist.html"><i class="fa fa-check"></i><b>12</b> - playlist_owner: curator of playlist</a></li>
+<li class="chapter" data-level="13" data-path="playlist_name-name-of-playlist.html"><a href="playlist_name-name-of-playlist.html"><i class="fa fa-check"></i><b>13</b> - playlist_name: name of playlist</a></li>
+<li class="chapter" data-level="14" data-path="playlist_follower-number-of-playlist-follower.html"><a href="playlist_follower-number-of-playlist-follower.html"><i class="fa fa-check"></i><b>14</b> - playlist_follower: number of playlist follower</a></li>
+<li class="chapter" data-level="15" data-path="spotify_pl-1-if-playlist-is-curated-by-spotify-0-else.html"><a href="spotify_pl-1-if-playlist-is-curated-by-spotify-0-else.html"><i class="fa fa-check"></i><b>15</b> - spotify_pl: 1 if playlist is curated by Spotify, 0 else</a></li>
+<li class="chapter" data-level="16" data-path="major_pl-1-if-playlist-is-curated-by-major-label-0-else.html"><a href="major_pl-1-if-playlist-is-curated-by-major-label-0-else.html"><i class="fa fa-check"></i><b>16</b> - major_pl: 1 if playlist is curated by major label, 0 else</a></li>
+<li class="chapter" data-level="17" data-path="artist_pl-1-if-playlist-is-artist-specific-e.g.-this-is-playlists-0-else.html"><a href="artist_pl-1-if-playlist-is-artist-specific-e.g.-this-is-playlists-0-else.html"><i class="fa fa-check"></i><b>17</b> - artist_pl: 1 if playlist is artist specific (e.g., “this is…” playlists), 0 else</a></li>
+<li class="chapter" data-level="18" data-path="german_pl-1-if-playlist-contains-high-share-of-german-content-0-else.html"><a href="german_pl-1-if-playlist-contains-high-share-of-german-content-0-else.html"><i class="fa fa-check"></i><b>18</b> - german_pl: 1 if playlist contains high share of german content, 0 else</a></li>
+<li class="chapter" data-level="19" data-path="context_pl-1-if-playlist-is-curated-according-to-a-context-e.g.-running-cooking-commuting-etc.-0-else.html"><a href="context_pl-1-if-playlist-is-curated-according-to-a-context-e.g.-running-cooking-commuting-etc.-0-else.html"><i class="fa fa-check"></i><b>19</b> - context_pl: 1 if playlist is curated according to a context (e.g., running, cooking, commuting, etc.), 0 else</a></li>
+<li class="chapter" data-level="20" data-path="content_pl-1-if-playlist-is-curated-accoridng-to-content-e.g.-genre-0-else.html"><a href="content_pl-1-if-playlist-is-curated-accoridng-to-content-e.g.-genre-0-else.html"><i class="fa fa-check"></i><b>20</b> - content_pl: 1 if playlist is curated accoridng to content (e.g., genre), 0 else</a></li>
+<li class="chapter" data-level="21" data-path="ranking_pl-1-if-playlist-is-ranking-based-e.g.-top-100-de-charts-0-else.html"><a href="ranking_pl-1-if-playlist-is-ranking-based-e.g.-top-100-de-charts-0-else.html"><i class="fa fa-check"></i><b>21</b> - ranking_pl: 1 if playlist is ranking-based (e.g., top 100 DE charts), 0 else</a></li>
+<li class="chapter" data-level="22" data-path="artist_fame-avg.-artist-popularity-of-artists-on-playlist.html"><a href="artist_fame-avg.-artist-popularity-of-artists-on-playlist.html"><i class="fa fa-check"></i><b>22</b> - artist_fame: avg. artist popularity of artists on playlist</a></li>
+<li class="chapter" data-level="23" data-path="avg_song_age-avg.-week-since-release-of-songs-on-playlist.html"><a href="avg_song_age-avg.-week-since-release-of-songs-on-playlist.html"><i class="fa fa-check"></i><b>23</b> - avg_song_age: avg. week since release of songs on playlist</a></li>
+<li class="chapter" data-level="24" data-path="n_artists_playlist-avg.-number-of-unique-artists-on-playlist.html"><a href="n_artists_playlist-avg.-number-of-unique-artists-on-playlist.html"><i class="fa fa-check"></i><b>24</b> - n_artists_playlist: avg. number of unique artists on playlist</a></li>
+<li class="chapter" data-level="25" data-path="n_songs_playlist-avg.-number-of-unique-songs-on-playlist.html"><a href="n_songs_playlist-avg.-number-of-unique-songs-on-playlist.html"><i class="fa fa-check"></i><b>25</b> - n_songs_playlist: avg. number of unique songs on playlist</a></li>
+<li class="chapter" data-level="26" data-path="new_songs_30d-avg.-number-of-new-song-listings-per-playlist-over-the-past-30days.html"><a href="new_songs_30d-avg.-number-of-new-song-listings-per-playlist-over-the-past-30days.html"><i class="fa fa-check"></i><b>26</b> - new_songs_30d: avg. number of new song listings per playlist over the past 30days</a></li>
+<li class="chapter" data-level="27" data-path="new_song_share-avg.-share-of-new-song-listings-per-playlist-over-the-past-30days.html"><a href="new_song_share-avg.-share-of-new-song-listings-per-playlist-over-the-past-30days.html"><i class="fa fa-check"></i><b>27</b> - new_song_share: avg. share of new song listings per playlist over the past 30days</a></li>
+<li class="chapter" data-level="28" data-path="n_genres-avg.-number-of-genres-that-songs-on-a-playlist-are-associated-with.html"><a href="n_genres-avg.-number-of-genres-that-songs-on-a-playlist-are-associated-with.html"><i class="fa fa-check"></i><b>28</b> - n_genres: avg. number of genres that songs on a playlist are associated with</a></li>
+<li class="chapter" data-level="29" data-path="major_share-avg.-share-of-major-label-content.html"><a href="major_share-avg.-share-of-major-label-content.html"><i class="fa fa-check"></i><b>29</b> - major_share: avg. share of major label content</a></li>
+<li class="chapter" data-level="30" data-path="n_country_rep-avg.-number-of-countries-where-the-songs-on-a-given-playlist-come-from.html"><a href="n_country_rep-avg.-number-of-countries-where-the-songs-on-a-given-playlist-come-from.html"><i class="fa fa-check"></i><b>30</b> - n_country_rep: avg. number of countries where the songs on a given playlist come from</a></li>
+<li class="chapter" data-level="31" data-path="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><a href="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><i class="fa fa-check"></i><b>31</b> - avg_song_similariy: measure of how similar the songs on a playlist are (higher values = more similar)</a>
+<ul>
+<li class="chapter" data-level="31.1" data-path="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><a href="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html#data-analysis"><i class="fa fa-check"></i><b>31.1</b> Data analysis</a></li>
+<li class="chapter" data-level="31.2" data-path="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><a href="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html#load-data"><i class="fa fa-check"></i><b>31.2</b> Load data</a></li>
+<li class="chapter" data-level="31.3" data-path="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><a href="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html#question-1"><i class="fa fa-check"></i><b>31.3</b> Question 1</a></li>
+<li class="chapter" data-level="31.4" data-path="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><a href="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html#question-2"><i class="fa fa-check"></i><b>31.4</b> Question 2</a></li>
+<li class="chapter" data-level="31.5" data-path="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><a href="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html#question-3"><i class="fa fa-check"></i><b>31.5</b> Question 3</a></li>
+<li class="chapter" data-level="31.6" data-path="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html"><a href="avg_song_similariy-measure-of-how-similar-the-songs-on-a-playlist-are-higher-values-more-similar.html#question-4"><i class="fa fa-check"></i><b>31.6</b> Question 4</a></li>
+</ul></li>
+<li class="part"><span><b>IV FAQ</b></span></li>
+<li class="chapter" data-level="32" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>32</b> FAQ</a>
+<ul>
+<li class="chapter" data-level="32.1" data-path="faq.html"><a href="faq.html#common-error-messages"><i class="fa fa-check"></i><b>32.1</b> Common error messages</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#a-general-note-on-error-messages"><i class="fa fa-check"></i>A general note on error messages</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-filefile-rt-cannot-open-the-connection"><i class="fa fa-check"></i>Error in file(file, “rt”): cannot open the connection</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-unexpected-symbol-in-call"><i class="fa fa-check"></i>Error: unexpected ‘SYMBOL’ in “CALL”</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-object-of-type-closure-is-not-subsettable"><i class="fa fa-check"></i>Error in CALL : object of type ‘closure’ is not subsettable</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call_with_-operator-is-invalid-for-atomic-vectors"><i class="fa fa-check"></i>Error in CALL_WITH_$: $ operator is invalid for atomic vectors</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-object-name-not-found"><i class="fa fa-check"></i>Error in CALL: object ‘NAME’ not found</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-could-not-find-function-function"><i class="fa fa-check"></i>Error in CALL: could not find function “FUNCTION”</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#error-in-call-incorrect-number-of-dimension"><i class="fa fa-check"></i>Error in CALL: incorrect number of dimension</a></li>
+</ul></li>
+<li class="chapter" data-level="32.2" data-path="faq.html"><a href="faq.html#installation-of-r-packages"><i class="fa fa-check"></i><b>32.2</b> Installation of R packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#what-are-the-different-ways-to-install-r-packages"><i class="fa fa-check"></i>What are the different ways to install R packages?</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-cannot-install-packages-due-to-error-in-contrib.urlrepossource-or-warning-message-package-packagename-is-not-available-for-this-version-of-r"><i class="fa fa-check"></i>I cannot install packages due to “Error in contrib.url(repos,”source”)” or “Warning message: package ‘PACKAGENAME’ is not available for this version of R”</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#some-libraries-with-graphical-output-e.g.-summarytools-magick-fail-to-installload-properly-on-macos"><i class="fa fa-check"></i>Some libraries with graphical output (e.g., summarytools, magick) fail to install/load properly on MacOS</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-cannot-install-some-packages-on-macos"><i class="fa fa-check"></i>I cannot install some packages on MacOS</a></li>
+</ul></li>
+<li class="chapter" data-level="32.3" data-path="faq.html"><a href="faq.html#issues-with-statistics-and-data"><i class="fa fa-check"></i><b>32.3</b> Issues with statistics and data</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-does-a-multi-item-scale-lead-to-increased-reliability"><i class="fa fa-check"></i>Why does a multi-item scale lead to increased reliability?</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-can-demeaningstandardization-lead-to-missing-values"><i class="fa fa-check"></i>Why can demeaning/standardization lead to missing values?</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#the-confidence-interval-ci-of-the-mean-seems-very-small-compared-to-the-dispersion-of-my-sample.-can-this-be-correct"><i class="fa fa-check"></i>The confidence interval (CI) of the mean seems very small compared to the dispersion of my sample. Can this be correct?</a></li>
+</ul></li>
+<li class="chapter" data-level="32.4" data-path="faq.html"><a href="faq.html#errors-related-to-specific-methods"><i class="fa fa-check"></i><b>32.4</b> Errors related to specific methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#logistic-regression-1"><i class="fa fa-check"></i>Logistic regression</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#when-using-logistic-regression-error-in-weights-y-non-numeric-argument-to-binary-operator"><i class="fa fa-check"></i>When using logistic regression: Error in weights * y : non-numeric argument to binary operator</a></li>
+</ul></li>
+<li class="chapter" data-level="32.5" data-path="faq.html"><a href="faq.html#general-settings-and-options"><i class="fa fa-check"></i><b>32.5</b> General settings and options</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#numbers-are-formatted-weirdly"><i class="fa fa-check"></i>Numbers are formatted weirdly</a></li>
+</ul></li>
+<li class="chapter" data-level="32.6" data-path="faq.html"><a href="faq.html#data-visualizationoutput-issues"><i class="fa fa-check"></i><b>32.6</b> Data visualization/output issues</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#how-can-the-geom-colors-in-a-ggplot-be-changed"><i class="fa fa-check"></i>How can the <code>geom</code> colors in a <code>ggplot</code> be changed?</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#why-are-some-histograms-displayed-differently"><i class="fa fa-check"></i>Why are some histograms displayed differently?</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#some-labels-in-plots-are-cut-off.-how-can-i-extend-the-plot-margins"><i class="fa fa-check"></i>Some labels in plots are cut off. How can I extend the plot margins?</a></li>
+</ul></li>
+<li class="chapter" data-level="32.7" data-path="faq.html"><a href="faq.html#issues-with-functions-and-function-arguments"><i class="fa fa-check"></i><b>32.7</b> Issues with functions and function arguments</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#problems-with-factor-and-as.factor"><i class="fa fa-check"></i>Problems with <code>factor</code> and <code>as.factor</code></a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#how-can-i-find-an-explanation-of-the-output-of-a-function"><i class="fa fa-check"></i>How can I find an explanation of the output of a function?</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#what-does-the-margin-argument-do"><i class="fa fa-check"></i>What does the <code>MARGIN</code> argument do?</a></li>
+</ul></li>
+<li class="chapter" data-level="32.8" data-path="faq.html"><a href="faq.html#issues-with-r-markdown"><i class="fa fa-check"></i><b>32.8</b> Issues with R Markdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-get-an-error-when-knitting-to-pdf-but-it-works-for-html"><i class="fa fa-check"></i>I get an error when <code>knit</code>ting to PDF but it works for HTML</a></li>
+<li class="chapter" data-level="" data-path="faq.html"><a href="faq.html#i-am-not-sure-where-r-code-latex-math-and-text-go"><i class="fa fa-check"></i>I am not sure where R-code, LaTeX math, and text go</a></li>
+</ul></li>
+<li class="chapter" data-level="32.9" data-path="faq.html"><a href="faq.html#new-questions"><i class="fa fa-check"></i><b>32.9</b> New questions</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Retail Marketing Analytics 2023</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="content_pl-1-if-playlist-is-curated-accoridng-to-content-e.g.-genre-0-else" class="section level1 hasAnchor" number="20">
+<h1><span class="header-section-number">20</span> - content_pl: 1 if playlist is curated accoridng to content (e.g., genre), 0 else<a href="content_pl-1-if-playlist-is-curated-accoridng-to-content-e.g.-genre-0-else.html#content_pl-1-if-playlist-is-curated-accoridng-to-content-e.g.-genre-0-else" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="context_pl-1-if-playlist-is-curated-according-to-a-context-e.g.-running-cooking-commuting-etc.-0-else.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ranking_pl-1-if-playlist-is-ranking-based-e.g.-top-100-de-charts-0-else.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
