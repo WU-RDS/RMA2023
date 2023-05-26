@@ -292,6 +292,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.9" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q9"><i class="fa fa-check"></i><b>9.1.9</b> Q9</a></li>
 <li class="chapter" data-level="9.1.10" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q10"><i class="fa fa-check"></i><b>9.1.10</b> Q10</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="assignment-solutions.html"><a href="assignment-solutions.html#assignment-2"><i class="fa fa-check"></i><b>9.2</b> Assignment 2</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q1-1"><i class="fa fa-check"></i><b>9.2.1</b> Q1</a></li>
+<li class="chapter" data-level="9.2.2" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q2-1"><i class="fa fa-check"></i><b>9.2.2</b> Q2</a></li>
+<li class="chapter" data-level="9.2.3" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q3-1"><i class="fa fa-check"></i><b>9.2.3</b> Q3</a></li>
+<li class="chapter" data-level="9.2.4" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q4-1"><i class="fa fa-check"></i><b>9.2.4</b> Q4</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="group-project-1.html"><a href="group-project-1.html"><i class="fa fa-check"></i><b>10</b> Group project</a>
 <ul>
@@ -673,6 +680,181 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 (#fig:question_10)Scatterplot of energy and valence
 </p>
 </div>
+</div>
+</div>
+<div id="assignment-2" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Assignment 2<a href="assignment-solutions.html#assignment-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As a marketing manager of a consumer electronics company, you are assigned the task to analyze the relative influence of different marketing activities. Specifically, you are supposed to analyze the effects of (1) TV advertising, (2) online advertising, and (3) radio advertising on the sales of fitness trackers (wristbands). Your data set consists of sales of the product in different markets (each line represents one market) from the past year, along with the advertising budgets for the product in each of those markets for three different media: TV, online, and radio.</p>
+<p>The following variables are available to you:</p>
+<ul>
+<li>Sales (in thousands of units)</li>
+<li>TV advertising budget (in thousands of Euros)</li>
+<li>Online advertising budget (in thousands of Euros)</li>
+<li>Radio advertising budget (in thousands of Euros)</li>
+</ul>
+<p>Please conduct the following analyses:</p>
+<ol style="list-style-type: decimal">
+<li>Formally state the regression equation, which you will use to determine the relative influence of the marketing activities on sales.</li>
+<li>Describe the model variables using appropriate statistics and plots</li>
+<li>Estimate a multiple linear regression model and interpret the model results:</li>
+</ol>
+<ul>
+<li>Which variables have a significant influence on sales and what is the interpretation of the coefficients?</li>
+<li>How do you judge the fit of the model? Please also visualize the model fit using an appropriate graph.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>What sales quantity would you predict based on your model for a product when the marketing activities are planned as follows: TV: EUR 150 thsd., Online: EUR 26 thsd., Radio: EUR 15 thsd.? Please provide the equation you used for your prediction.</li>
+</ol>
+<p>When you are done with your analysis, click on “Knit to HTML” button above the code editor. This will create a HTML document of your results in the folder where the “assignment2.Rmd” file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn@WU. The file name should be “assignment2_studendID_name.html”.</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="assignment-solutions.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb455-2"><a href="assignment-solutions.html#cb455-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb455-3"><a href="assignment-solutions.html#cb455-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb455-4"><a href="assignment-solutions.html#cb455-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggstatsplot)</span>
+<span id="cb455-5"><a href="assignment-solutions.html#cb455-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb455-6"><a href="assignment-solutions.html#cb455-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-7"><a href="assignment-solutions.html#cb455-7" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat&quot;</span>,</span>
+<span id="cb455-8"><a href="assignment-solutions.html#cb455-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)  <span class="co">#read in data</span></span>
+<span id="cb455-9"><a href="assignment-solutions.html#cb455-9" aria-hidden="true" tabindex="-1"></a>sales_data<span class="sc">$</span>market_id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(sales_data)</span>
+<span id="cb455-10"><a href="assignment-solutions.html#cb455-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sales_data)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["tv_adspend"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["online_adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["radio_adspend"],"name":[3],"type":["int"],"align":["right"]},{"label":["sales"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["market_id"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"68.6","2":"10.3","3":"24","4":"8.6","5":"1"},{"1":"136.6","2":"29.0","3":"40","4":"15.8","5":"2"},{"1":"14.5","2":"44.3","3":"25","4":"11.8","5":"3"},{"1":"214.6","2":"26.2","3":"40","4":"17.1","5":"4"},{"1":"285.0","2":"13.9","3":"31","4":"17.4","5":"5"},{"1":"139.6","2":"74.9","3":"24","4":"24.4","5":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="assignment-solutions.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sales_data)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    236 obs. of  5 variables:
+##  $ tv_adspend    : num  68.6 136.6 14.5 214.6 285 ...
+##  $ online_adspend: num  10.3 29 44.3 26.2 13.9 74.9 31.1 14.1 24.5 13.9 ...
+##  $ radio_adspend : int  24 40 25 40 31 24 12 9 38 18 ...
+##  $ sales         : num  8.6 15.8 11.8 17.1 17.4 24.4 19.5 4.7 20.7 19.5 ...
+##  $ market_id     : int  1 2 3 4 5 6 7 8 9 10 ...</code></pre>
+<div id="q1-1" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Q1<a href="assignment-solutions.html#q1-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In a first step, we specify the regression equation. In this case, sales is the <strong>dependent variable</strong> which is regressed on the different types of advertising expenditures that represent the <strong>independent variables</strong> for product <em>i</em>. Thus, the regression equation is:</p>
+<p><span class="math display">\[sales_{i}=\beta_0 + \beta_1 * tv\_adspend_{i} + \beta_2 * online\_adspend_{i} + \beta_3 * radio\_adspend_{i} + \epsilon\]</span></p>
+<p>This equation will be used later to turn the output of the regression analysis (namely the coefficients: <span class="math inline">\(\beta_0\)</span> - intersect coefficient, and <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, and <span class="math inline">\(\beta_3\)</span> that represent the unknown relationship between sales and advertising expenditures on TV, online channels and radio, respectively) to the “managerial” form and draw marketing conclusions.</p>
+</div>
+<div id="q2-1" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Q2<a href="assignment-solutions.html#q2-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The descriptive statistics for the variables can be checked using the <code>describe()</code> function:</p>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="assignment-solutions.html#cb458-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(sales_data)</span></code></pre></div>
+<pre><code>##                vars   n   mean    sd median trimmed    mad min   max range skew
+## tv_adspend        1 236 148.65 89.77 141.85  147.45 117.27 1.1 299.6 298.5 0.12
+## online_adspend    2 236  25.61 14.33  24.35   24.70  14.53 1.6  74.9  73.3 0.61
+## radio_adspend     3 236  27.70 12.57  27.00   27.36  13.34 2.0  63.0  61.0 0.22
+## sales             4 236  14.83  5.40  14.15   14.72   5.93 1.4  29.0  27.6 0.16
+## market_id         5 236 118.50 68.27 118.50  118.50  87.47 1.0 236.0 235.0 0.00
+##                kurtosis   se
+## tv_adspend        -1.26 5.84
+## online_adspend     0.08 0.93
+## radio_adspend     -0.53 0.82
+## sales             -0.57 0.35
+## market_id         -1.22 4.44</code></pre>
+<p>Inspecting the correlation matrix reveals that the sales variable is positively correlated with TV advertising and online advertising expenditures. The correlations among the independent variables appear to be low to moderate.</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="assignment-solutions.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(sales_data[, <span class="fu">c</span>(<span class="st">&quot;sales&quot;</span>, <span class="st">&quot;tv_adspend&quot;</span>,</span>
+<span id="cb460-2"><a href="assignment-solutions.html#cb460-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;online_adspend&quot;</span>, <span class="st">&quot;radio_adspend&quot;</span>)]))</span></code></pre></div>
+<pre><code>##                sales tv_adspend online_adspend radio_adspend
+## sales           1.00       0.78           0.54         -0.04
+## tv_adspend      0.78       1.00           0.05          0.03
+## online_adspend  0.54       0.05           1.00         -0.07
+## radio_adspend  -0.04       0.03          -0.07          1.00
+## 
+## n= 236 
+## 
+## 
+## P
+##                sales  tv_adspend online_adspend radio_adspend
+## sales                 0.0000     0.0000         0.5316       
+## tv_adspend     0.0000            0.4127         0.6735       
+## online_adspend 0.0000 0.4127                    0.2790       
+## radio_adspend  0.5316 0.6735     0.2790</code></pre>
+<p>Since we have continuous variables, we use scatterplots to investigate the relationship between sales and each of the predictor variables.</p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="assignment-solutions.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales_data, <span class="fu">aes</span>(<span class="at">x =</span> tv_adspend, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb462-2"><a href="assignment-solutions.html#cb462-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb462-3"><a href="assignment-solutions.html#cb462-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">color =</span> <span class="st">&quot;lavenderblush3&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb462-4"><a href="assignment-solutions.html#cb462-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb462-5"><a href="assignment-solutions.html#cb462-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales_data, <span class="fu">aes</span>(<span class="at">x =</span> online_adspend, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb462-6"><a href="assignment-solutions.html#cb462-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb462-7"><a href="assignment-solutions.html#cb462-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">color =</span> <span class="st">&quot;lavenderblush3&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb462-8"><a href="assignment-solutions.html#cb462-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb462-9"><a href="assignment-solutions.html#cb462-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales_data, <span class="fu">aes</span>(<span class="at">x =</span> radio_adspend, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb462-10"><a href="assignment-solutions.html#cb462-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb462-11"><a href="assignment-solutions.html#cb462-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">color =</span> <span class="st">&quot;lavenderblush3&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb462-12"><a href="assignment-solutions.html#cb462-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="09-rmdIntro_files/figure-html/unnamed-chunk-6-1.png" width="50%" /><img src="09-rmdIntro_files/figure-html/unnamed-chunk-6-2.png" width="50%" /><img src="09-rmdIntro_files/figure-html/unnamed-chunk-6-3.png" width="50%" /></p>
+<p>The plots including the fitted lines from a simple linear model already suggest that there might be a positive linear relationship between sales and TV- and online-advertising. However, there does not appear to be a strong relationship between sales and radio advertising.</p>
+<p>Further steps include estimate of a multiple linear regression model in order to determine the relative influence of each type of advertising on sales.</p>
+</div>
+<div id="q3-1" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Q3<a href="assignment-solutions.html#q3-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The estimate the model, we will use the <code>lm()</code> function:</p>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="assignment-solutions.html#cb463-1" aria-hidden="true" tabindex="-1"></a>linear_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> tv_adspend <span class="sc">+</span> online_adspend <span class="sc">+</span></span>
+<span id="cb463-2"><a href="assignment-solutions.html#cb463-2" aria-hidden="true" tabindex="-1"></a>    radio_adspend, <span class="at">data =</span> sales_data)</span></code></pre></div>
+<p>In a next step, we will investigate the results from the model using the <code>summary()</code> function.</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="assignment-solutions.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linear_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ tv_adspend + online_adspend + radio_adspend, 
+##     data = sales_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.1113 -1.4161 -0.0656  1.3233  5.5198 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value             Pr(&gt;|t|)    
+## (Intercept)     3.604140   0.460057   7.834    0.000000000000169 ***
+## tv_adspend      0.045480   0.001491  30.508 &lt; 0.0000000000000002 ***
+## online_adspend  0.186859   0.009359  19.965 &lt; 0.0000000000000002 ***
+## radio_adspend  -0.011469   0.010656  -1.076                0.283    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.048 on 232 degrees of freedom
+## Multiple R-squared:  0.8582, Adjusted R-squared:  0.8564 
+## F-statistic: 468.1 on 3 and 232 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+<p>For each of the individual predictors, we test the following hypothesis:</p>
+<p><span class="math display">\[H_0: \beta_k=0\]</span>
+<span class="math display">\[H_1: \beta_k\ne0\]</span></p>
+<p>where k denotes the number of the regression coefficient. In the present example, we reject the null hypothesis for tv_adspend and online_adspend, where we observe a significant effect (i.e., p-value &lt; 0.05). However, we fail to reject the null for the “radio_adspend” variable (i.e., the effect is insignificant).</p>
+<p>The interpretation of the coefficients is as follows:</p>
+<ul>
+<li>tv_adspend (β<sub>1</sub>): when TV advertising expenditures increase by 1000 Euro, sales will increase by 45 units;</li>
+<li>online_adspend (β<sub>2</sub>): when online advertising expenditures increase by 1000 Euro, sales will increase by 187 units;</li>
+<li>radio_adspend (β<sub>3</sub>): when radio advertising expenditures increase by 1000 Euro, sales will increase by -11 units (i.e., decrease by 11 units).</li>
+</ul>
+<p>You should always provide a measure of uncertainty that is associated with the estimates. You could compute the confidence intervals around the coefficients using the <code>confint()</code> function.</p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="assignment-solutions.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(linear_model)</span></code></pre></div>
+<pre><code>##                      2.5 %     97.5 %
+## (Intercept)     2.69771633 4.51056393
+## tv_adspend      0.04254244 0.04841668
+## online_adspend  0.16841843 0.20529924
+## radio_adspend  -0.03246402 0.00952540</code></pre>
+<p>The results show that, for example, the 95% confidence interval associated with coefficient capturing the effect of online advertising on sales is between 0.168 and 0.205.</p>
+<p>Regarding the model fit, the R<sup>2</sup> statistic tells us that <strong>approximately 86% of the variance can be explained by the model</strong>. This can be visualized as follows:</p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="assignment-solutions.html#cb468-1" aria-hidden="true" tabindex="-1"></a>sales_data<span class="sc">$</span>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(linear_model)</span>
+<span id="cb468-2"><a href="assignment-solutions.html#cb468-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales_data, <span class="fu">aes</span>(yhat, sales)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb468-3"><a href="assignment-solutions.html#cb468-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">&quot;predicted values&quot;</span>) <span class="sc">+</span></span>
+<span id="cb468-4"><a href="assignment-solutions.html#cb468-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">&quot;observed values&quot;</span>) <span class="sc">+</span></span>
+<span id="cb468-5"><a href="assignment-solutions.html#cb468-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="09-rmdIntro_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>In addition, the output tells us that our predictions on average deviate from the observed values by 2048 units (see residual standard error, remember that the sales variable is measures in thousand units).</p>
+<p>Of course, you could have also used the functions included in the ggstatsplot package to report the results from your regression model.</p>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="assignment-solutions.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcoefstats</span>(<span class="at">x =</span> linear_model, <span class="at">k =</span> <span class="dv">3</span>, <span class="at">title =</span> <span class="st">&quot;Sales predicted by TV-, online-, &amp; radio advertising&quot;</span>)</span></code></pre></div>
+<p><img src="09-rmdIntro_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="q4-1" class="section level3 hasAnchor" number="9.2.4">
+<h3><span class="header-section-number">9.2.4</span> Q4<a href="assignment-solutions.html#q4-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Finally, we can predict the outcome for the given marketing mix using the following equation:</p>
+<p><span class="math display">\[\hat{Sales} = \beta_0 + \beta_1*150 + \beta_2*26 + \beta_3*15 \]</span></p>
+<p>The coefficients can be extracted from the summary of the linear model and used for quick sales value prediction as follows:</p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="assignment-solutions.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linear_model)<span class="sc">$</span>coefficients[<span class="dv">1</span>, <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">summary</span>(linear_model)<span class="sc">$</span>coefficients[<span class="dv">2</span>,</span>
+<span id="cb470-2"><a href="assignment-solutions.html#cb470-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>] <span class="sc">*</span> <span class="dv">150</span> <span class="sc">+</span> <span class="fu">summary</span>(linear_model)<span class="sc">$</span>coefficients[<span class="dv">3</span>,</span>
+<span id="cb470-3"><a href="assignment-solutions.html#cb470-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>] <span class="sc">*</span> <span class="dv">26</span> <span class="sc">+</span> <span class="fu">summary</span>(linear_model)<span class="sc">$</span>coefficients[<span class="dv">4</span>,</span>
+<span id="cb470-4"><a href="assignment-solutions.html#cb470-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>] <span class="sc">*</span> <span class="dv">15</span></span></code></pre></div>
+<pre><code>## [1] 15.11236</code></pre>
+<p><span class="math display">\[\hat{sales}= 3.6 + 0.045*150 + 0.187*26 + 0.011*15 = 15.11\]</span></p>
+<p>This means that given the planned marketing mix, we would expect to sell around 15,112 units.</p>
 
 </div>
 </div>

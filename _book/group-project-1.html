@@ -292,6 +292,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.9" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q9"><i class="fa fa-check"></i><b>9.1.9</b> Q9</a></li>
 <li class="chapter" data-level="9.1.10" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q10"><i class="fa fa-check"></i><b>9.1.10</b> Q10</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="assignment-solutions.html"><a href="assignment-solutions.html#assignment-2"><i class="fa fa-check"></i><b>9.2</b> Assignment 2</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q1-1"><i class="fa fa-check"></i><b>9.2.1</b> Q1</a></li>
+<li class="chapter" data-level="9.2.2" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q2-1"><i class="fa fa-check"></i><b>9.2.2</b> Q2</a></li>
+<li class="chapter" data-level="9.2.3" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q3-1"><i class="fa fa-check"></i><b>9.2.3</b> Q3</a></li>
+<li class="chapter" data-level="9.2.4" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q4-1"><i class="fa fa-check"></i><b>9.2.4</b> Q4</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="group-project-1.html"><a href="group-project-1.html"><i class="fa fa-check"></i><b>10</b> Group project</a>
 <ul>
@@ -416,45 +423,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="load-data" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> Load data<a href="group-project-1.html#load-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="group-project-1.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb455-2"><a href="group-project-1.html#cb455-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb455-3"><a href="group-project-1.html#cb455-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb455-4"><a href="group-project-1.html#cb455-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraph)</span>
-<span id="cb455-5"><a href="group-project-1.html#cb455-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraphExtra)</span>
-<span id="cb455-6"><a href="group-project-1.html#cb455-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
-<span id="cb455-7"><a href="group-project-1.html#cb455-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb455-8"><a href="group-project-1.html#cb455-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
-<span id="cb455-9"><a href="group-project-1.html#cb455-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
-<span id="cb455-10"><a href="group-project-1.html#cb455-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb455-11"><a href="group-project-1.html#cb455-11" aria-hidden="true" tabindex="-1"></a>playlist_data <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;https://raw.githubusercontent.com/WU-RDS/RMA2023/main/data/rma_playlist_data.csv&quot;</span>,</span>
-<span id="cb455-12"><a href="group-project-1.html#cb455-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">dec =</span> <span class="st">&quot;.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="group-project-1.html#cb472-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb472-2"><a href="group-project-1.html#cb472-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb472-3"><a href="group-project-1.html#cb472-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb472-4"><a href="group-project-1.html#cb472-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraph)</span>
+<span id="cb472-5"><a href="group-project-1.html#cb472-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraphExtra)</span>
+<span id="cb472-6"><a href="group-project-1.html#cb472-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb472-7"><a href="group-project-1.html#cb472-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb472-8"><a href="group-project-1.html#cb472-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
+<span id="cb472-9"><a href="group-project-1.html#cb472-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb472-10"><a href="group-project-1.html#cb472-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb472-11"><a href="group-project-1.html#cb472-11" aria-hidden="true" tabindex="-1"></a>playlist_data <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;https://raw.githubusercontent.com/WU-RDS/RMA2023/main/data/rma_playlist_data.csv&quot;</span>,</span>
+<span id="cb472-12"><a href="group-project-1.html#cb472-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">dec =</span> <span class="st">&quot;.&quot;</span>)</span></code></pre></div>
 </div>
 <div id="question-1" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> Question 1<a href="group-project-1.html#question-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="group-project-1.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
-<span id="cb456-2"><a href="group-project-1.html#cb456-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="group-project-1.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
+<span id="cb473-2"><a href="group-project-1.html#cb473-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
 <p>Interpret the results here!</p>
 </div>
 <div id="question-2" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> Question 2<a href="group-project-1.html#question-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="group-project-1.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
-<span id="cb457-2"><a href="group-project-1.html#cb457-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="group-project-1.html#cb474-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
+<span id="cb474-2"><a href="group-project-1.html#cb474-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
 <p>Interpret the results here!</p>
 </div>
 <div id="question-3" class="section level2 hasAnchor" number="10.5">
 <h2><span class="header-section-number">10.5</span> Question 3<a href="group-project-1.html#question-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="group-project-1.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
-<span id="cb458-2"><a href="group-project-1.html#cb458-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="group-project-1.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
+<span id="cb475-2"><a href="group-project-1.html#cb475-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
 <p>Interpret the results here!</p>
 </div>
 <div id="question-4" class="section level2 hasAnchor" number="10.6">
 <h2><span class="header-section-number">10.6</span> Question 4<a href="group-project-1.html#question-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Provide a description of your steps here!</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="group-project-1.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
-<span id="cb459-2"><a href="group-project-1.html#cb459-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="group-project-1.html#cb476-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here (you can use multiple</span></span>
+<span id="cb476-2"><a href="group-project-1.html#cb476-2" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunks per question if you like)</span></span></code></pre></div>
 <p>Interpret the results here!</p>
 
 <p><link rel="stylesheet" type="text/css" media="all" href="style.css" /></p>
