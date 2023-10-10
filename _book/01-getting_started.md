@@ -128,19 +128,23 @@ library("tidyverse")
 ```
 
 ```
-## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.4.0      v purrr   1.0.1 
-## v tibble  3.1.8      v dplyr   1.0.10
-## v tidyr   1.2.1      v stringr 1.5.0 
-## v readr   2.1.3      v forcats 0.5.2
+## Warning: package 'tidyverse' was built under R version 4.2.3
 ```
 
 ```
-## Warning: package 'ggplot2' was built under R version 4.2.2
+## Warning: package 'ggplot2' was built under R version 4.2.3
 ```
 
 ```
-## Warning: package 'readr' was built under R version 4.2.2
+## Warning: package 'tibble' was built under R version 4.2.3
+```
+
+```
+## Warning: package 'tidyr' was built under R version 4.2.3
+```
+
+```
+## Warning: package 'readr' was built under R version 4.2.3
 ```
 
 ```
@@ -148,13 +152,32 @@ library("tidyverse")
 ```
 
 ```
+## Warning: package 'dplyr' was built under R version 4.2.3
+```
+
+```
 ## Warning: package 'stringr' was built under R version 4.2.2
 ```
 
 ```
+## Warning: package 'forcats' was built under R version 4.2.3
+```
+
+```
+## Warning: package 'lubridate' was built under R version 4.2.3
+```
+
+```
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.2     v readr     2.1.4
+## v forcats   1.0.0     v stringr   1.5.0
+## v ggplot2   3.4.2     v tibble    3.2.1
+## v lubridate 1.9.2     v tidyr     1.3.0
+## v purrr     1.0.1     
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
+## i Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors
 ```
 
 ```r
