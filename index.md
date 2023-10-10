@@ -71,7 +71,7 @@ The contents on this website are divided into weekly readings. To be able to fol
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> April 20 </td>
+   <td style="text-align:left;"> Oct 12 </td>
    <td style="text-align:left;"> Thursday </td>
    <td style="text-align:left;"> 04:00PM - 08:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
@@ -79,7 +79,7 @@ The contents on this website are divided into weekly readings. To be able to fol
    <td style="text-align:left;"> 1 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> April 27 </td>
+   <td style="text-align:left;"> Oct 19 </td>
    <td style="text-align:left;"> Thursday </td>
    <td style="text-align:left;"> 04:00PM - 08:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
@@ -87,7 +87,7 @@ The contents on this website are divided into weekly readings. To be able to fol
    <td style="text-align:left;"> 2, 3, 4 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> May 04 </td>
+   <td style="text-align:left;"> Nov 09 </td>
    <td style="text-align:left;"> Thursday </td>
    <td style="text-align:left;"> 04:00PM - 08:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
@@ -95,7 +95,7 @@ The contents on this website are divided into weekly readings. To be able to fol
    <td style="text-align:left;"> 5 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> May 11 </td>
+   <td style="text-align:left;"> Nov 16 </td>
    <td style="text-align:left;"> Thursday </td>
    <td style="text-align:left;"> 04:00PM - 09:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
@@ -103,7 +103,7 @@ The contents on this website are divided into weekly readings. To be able to fol
    <td style="text-align:left;"> 6 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> May 25 </td>
+   <td style="text-align:left;"> Nov 23 </td>
    <td style="text-align:left;"> Thursday </td>
    <td style="text-align:left;"> 04:00PM - 09:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
@@ -111,9 +111,9 @@ The contents on this website are divided into weekly readings. To be able to fol
    <td style="text-align:left;"> 7 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> June 01 </td>
+   <td style="text-align:left;"> Nov 30 </td>
    <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 04:00PM - 06:00PM </td>
+   <td style="text-align:left;"> 03:00PM - 05:00PM </td>
    <td style="text-align:left;"> Online </td>
    <td style="text-align:left;"> Exam </td>
    <td style="text-align:left;"> -- </td>
@@ -123,12 +123,12 @@ The contents on this website are divided into weekly readings. To be able to fol
 <br>
 
 ::: {.infobox_red .caution data-latex="{caution}"}
-We understand that the self-study format might pose challenges to the learning process because we cannot troubleshoot in person outside of the classroom sessions. Remember that it is very unlikely that you are the only student encountering a particular problem. So please make use of the forum on Learn\@WU (see below) to interact with your peers or ask us questions so that everyone else will benefit from the answer (there are no stupid questions!). In case you cannot get answers to address a specific problem, we will be available during the in-person classroom sessions for coaching.
+We understand that the self-study format might pose challenges to the learning process because we cannot troubleshoot in person outside of the classroom sessions. Remember that it is very unlikely that you are the only student encountering a particular problem. So please make use of the forum on via Canvas (see below) to interact with your peers or ask us questions so that everyone else will benefit from the answer (there are no stupid questions!). In case you cannot get answers to address a specific problem, we will be available during the in-person classroom sessions for coaching.
 :::
 
 #### Individual assignments {-}
 
-There will be 3 individual assignments. These assignments need to be submitted in the [R Markdown format](https://rmarkdown.rstudio.com/) (see chapter 8) via Learn\@wu. There will be a coaching session dedicated to the R Markdown reporting format in the second session, when the first homework is assigned. 
+There will be 3 individual assignments. These assignments need to be submitted in the [R Markdown format](https://rmarkdown.rstudio.com/) (see chapter 8) via Canvas. There will be a coaching session dedicated to the R Markdown reporting format in the second session, when the first homework is assigned. 
 
 <br>
 **Assignment schedule - Group A (2206)**
@@ -144,33 +144,31 @@ There will be 3 individual assignments. These assignments need to be submitted i
 <tbody>
   <tr>
    <td style="text-align:left;"> Assignment 1: R Basics </td>
-   <td style="text-align:left;"> April 27 </td>
-   <td style="text-align:left;"> May 3, 11:59PM </td>
+   <td style="text-align:left;"> Oct 19 </td>
+   <td style="text-align:left;"> Nov 2, 11:59PM </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Assignment 2: Supervised learning </td>
-   <td style="text-align:left;"> May 11 </td>
-   <td style="text-align:left;"> May 24, 11:59PM </td>
+   <td style="text-align:left;"> Nov 16 </td>
+   <td style="text-align:left;"> Nov 22, 11:59PM </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Assignment 3: Unsupervised learning </td>
-   <td style="text-align:left;"> May 25 </td>
-   <td style="text-align:left;"> June 8, 11:59PM </td>
+   <td style="text-align:left;"> Nov 23 </td>
+   <td style="text-align:left;"> Dec 7, 11:59PM </td>
   </tr>
 </tbody>
 <tfoot><tr><td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span> <sup></sup> Dates and times are indicated for group A.</td></tr></tfoot>
+<sup></sup> </td></tr></tfoot>
 </table>
 
 <br>
 
 #### Group project {-}
 
-The group project consists of an extended analysis of a data set using the methods we covered in the course and the reporting of the results using the R markdown format.
+The group project consists of an extended analysis of a data set using the methods we covered in the course and the reporting of the results using the R markdown format. The **submission date** for the group project is on **December 15, 2023**. 
 
-The **submission date** for the group project is on **June 14, 2023**. There is an opportunity to schedule a **coaching session** regarding the group project on **June 12** between 9:00AM nd 5:00PM. If you would like to make use of the opportunity to schedule a coaching session, please register an appointment by sending me an email.
-
-Again, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Learn\@wu, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Learn\@wu.
+Again, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Canvas, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Canvas.
 <br>
 
 ### Grading {-}
@@ -184,7 +182,7 @@ Grading is based on the following components:
 
 These grading components will be weighted with the respective weights to arrive at the final grade percentage.
 
-The **final exam** will take place online on **June 01, 2023 from 4:00PM - 06:00PM**. Details about the setup of the exam will be provided in the course. The exam covers questions about the concepts and methods (no coding) and I will provide example exams from the previous years to give you an idea about what type of questions you can expect.   
+The **final exam** will take place online on **November 30, 2023 from 03:00PM - 05:00PM**. Details about the setup of the exam will be provided in the course. The exam covers questions about the concepts and methods (no coding) and I will provide example exams from the previous years to give you an idea about what type of questions you can expect.   
 
 To ensure an equal contribution of group members for the group assignment, a **peer assessment** will be conducted among group members, which enters into the computation of the individual grades for the project. This means that the members of a group are required to assess other students regarding their relative contribution. 
 
@@ -269,7 +267,7 @@ In case you would like to learn more about the capabilities of R related to the 
 
 ### Contact {-}
 
-Feel free to send me an email in case you have questions. However, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Learn\@wu, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Learn\@wu.
+Feel free to send me an email in case you have questions. However, please make sure that you have exhausted all other resources to solve a particular problem, such as the online tutorial, the forum on Canvas, and other web resources (see below) before you schedule a coaching session. If you feel that other students might have similar questions and would benefit from an answer to a particular question, you should post the question in the forum on Canvas.
 
 ### Acknowledgements {-}
 
