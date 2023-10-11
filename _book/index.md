@@ -97,7 +97,7 @@ The contents on this website are divided into weekly readings. To be able to fol
   <tr>
    <td style="text-align:left;"> Nov 16 </td>
    <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 04:00PM - 09:00PM </td>
+   <td style="text-align:left;"> 03:00PM - 08:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
    <td style="text-align:left;"> Supervised learning </td>
    <td style="text-align:left;"> 6 </td>
@@ -105,7 +105,7 @@ The contents on this website are divided into weekly readings. To be able to fol
   <tr>
    <td style="text-align:left;"> Nov 23 </td>
    <td style="text-align:left;"> Thursday </td>
-   <td style="text-align:left;"> 04:00PM - 09:00PM </td>
+   <td style="text-align:left;"> 03:00PM - 08:00PM </td>
    <td style="text-align:left;"> TC.-1.61 </td>
    <td style="text-align:left;"> Unsupervised learning </td>
    <td style="text-align:left;"> 7 </td>
