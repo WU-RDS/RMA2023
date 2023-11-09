@@ -255,6 +255,161 @@ kable(mathy.df, escape=FALSE) %>%
 
 # Assignment solutions
 
-The solutions to the assignments will be published here. 
+
+## Assignment 1
+
+We'll use the music data set from the last session as the basis for the assignment. 
+
+Please use R to solve the tasks. When you finished the assignment, click on the "Knit to HTML" in the RStudio menu. This will create an html document in the folder in which the assignment1.Rmd file is stored. Open this file in your browser to check if everything is correct. If you are happy with the output, pleas submit the .html-file via the assignment on Learn\@WU using the following file name: "assignment1_studendID_lastname.html".
+
+We'll first load the data that is needed for the assignment.
+
+```{r load_data, message = FALSE, warning = FALSE}
+library(dplyr)
+library(psych)
+library(ggplot2)
+
+music_data <- read.csv2("https://raw.githubusercontent.com/WU-RDS/RMA2022/main/data/music_data_fin.csv",
+                        sep = ";", header = TRUE, dec = ",")
+str(music_data)
+head(music_data) 
+```
+
+You should then convert the variables to the correct types:  
+  
+```{r convert_variables, message=FALSE, warning=FALSE}
+music_data <-  music_data %>% 
+  mutate(label = as.factor(label), # convert label and genre variables to factor with values as labels
+         genre = as.factor(genre)) %>% as.data.frame()
+```
+
+### Q1
+
+Create a new data frame containing the most successful songs of the artist "Billie Eilish" by filtering the original data set by the artist "Billie Eilish" and order the observations in an descending order.  
+
+```{r question_1, message = FALSE, warning = FALSE}
+billie_eilish <- music_data %>% 
+  select(artistName,trackName,streams) %>% #select relevant variables
+  filter(artistName == "Billie Eilish") %>% #filter by artist name
+  arrange(desc(streams)) #arrange by number of streams (in descending order)
+billie_eilish #print output
+```
+
+### Q2
+
+Create a new data frame containing the 100 overall most successful songs in the data frame and order them descending by the number of streams.
+
+Here you could simply arrange the whole data set by streams and then take 100 first rows using the `head()`-function:
+  
+```{r question_2, message = FALSE, warning = FALSE}
+top_100 <- music_data %>% 
+  select(artistName,trackName,streams) %>% #select relevant variables
+  arrange(desc(streams)) %>% #arrange by number of streams (in descending order)
+  head(100) #select first 100 observations
+top_100
+```
+
+### Q3
+
+Which genres are most popular? Group the data by genre and compute the sum of streams by genre. 
+
+Using `dplyr` functions, you could first group the observations by genre, then summarize the streams using `sum()`:
+  
+```{r question_3_1, message = FALSE, warning = FALSE}
+genres_popularity <- music_data %>% 
+  group_by(genre) %>% #group by genre
+  summarize(streams = sum(streams)) #compute sum of streams per genre
+genres_popularity
+```
+
+### Q4
+
+Which music label is most successful? Group the data by music label and compute the sum of streams by label and the average number of streams for all songs associated with a label. 
+
+Just like in the previous task, it would be enough to group the observations (in this case, by labels), and get the sums and averages of streams:
+  
+```{r question_4_1, message = FALSE, warning = FALSE}
+label_success <- music_data %>% 
+  group_by(label) %>% #group by label
+  summarize(sum_streams = sum(streams),
+            avg_streams = mean(streams)) #compute sum of streams and average streams per label
+label_success
+```
+
+### Q5
+
+How do the songs differ in terms of the song features? Please first select the relevant variables (7 song features) and compute the descriptive statistics for these variables by genre.     
+
+All audio features (danceability, energy, speechiness, instrumentalness, liveness, valence, and tempo) are variables measured on a **ratio scale**, which means that we can evaluate their **average values**. We can use `describeBy()` function, which displays mean by default alongside with range and other values:
+  
+```{r question_5_1, message = FALSE, warning = FALSE}
+library(psych)
+describeBy(select(music_data, 
+                  danceability, energy, speechiness, instrumentalness, liveness, valence, tempo), 
+           music_data$genre, skew = FALSE) 
+```
+
+
+### Q6
+
+How many songs in the data set are associated with each label? 
+  
+You could use `table()` to get the number of songs by label:
+  
+```{r question_6, message = FALSE, warning = FALSE}
+table(music_data$label)
+```
+
+
+### Q7
+
+Which share of streams do the different genres account for?
+  
+```{r question_7, message = FALSE, warning = FALSE}
+genre_streams <- music_data %>% 
+  group_by(genre) %>%
+  summarise(genre_streams=sum(streams)) #first compute sum of streams by genre
+genre_streams_share <- genre_streams %>%
+  mutate(genre_share = genre_streams/sum(genre_streams)) #then divide the sum by the total streams
+genre_streams_share
+```
+
+### Q8
+
+Create a histogram for the variable "Valence" 
+
+This is a simple plot of valence distribution across all songs in your data (we can see that it follows normal distribution):
+  
+```{r question_8, message = FALSE, warning = FALSE, fig.cap=c("Distribution of valence"), fig.align="center", echo=TRUE}
+ggplot(music_data,aes(x = valence)) + 
+  geom_histogram(binwidth = 4, col = "white", fill = "lavenderblush3") + 
+  labs(x = "Valence", y = "Frequency") +
+  theme_minimal()
+```
+
+### Q9
+
+Create a grouped boxplot for the variable "energy" by genre.
+
+```{r question_9, message = FALSE, warning = FALSE, fig.cap=c("Boxplot of energy by genre"), fig.align="center", echo=TRUE}
+ggplot(music_data, aes(x = genre, y = energy, color = genre)) + 
+  geom_boxplot(coef = 3) + 
+  labs(x = "Genre", y = "Energy") + 
+  theme_minimal() + 
+  coord_flip()
+```
+
+### Q10
+
+Create a scatterplot for the variables "valence" and "energy"
+
+Finally, we can visualize the relationship between valence and energy of songs in our data:
+  
+```{r question_10, message = FALSE, warning = FALSE, fig.cap=c("Scatterplot of energy and valence"), fig.align="center", echo=TRUE}
+ggplot(music_data, aes(x = valence, y = energy)) +
+  geom_point(shape = 1) + 
+  labs(x = "Valence", y = "Energy") +
+  theme_minimal()
+```
 
 
