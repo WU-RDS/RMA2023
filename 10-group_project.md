@@ -4,6 +4,8 @@
 
 Die Informationen zum Gruppenprojekt entnehmen Sie bitte der .Rmd-Datei in dem entsprechenden Assignment auf Canvas. Verwenden Sie R, um die Aufgaben zu loesen. Wenn Sie mit der Bearbeitung fertig sind, klicken Sie auf den "Knit to HTML" Button oben in der Menueleiste in R. Dadurch wird ein HTML-Dokument in dem Ordner erstellt, in dem die group_project.Rmd Datei gespeichert ist. Oeffnen Sie diese Datei im Browser um zu testen, ob der Inhalt korrekt dargestellt wird. Wenn der Output korrekt ist, reichen Sie die .html Datei ueber Learn ein. Den Dateinamen sollten sie wie folgt waehlen: "group_project_groupID.html".
 
+Bitte denken Sie daran, die Schritte in Ihren Analysen zu beschreiben und zu begründen, sowie die Ergebnisse zu interpretieren. Es ist nicht ausreichend, die Analysen unkommentiert auszuführen.
+
 As a marketing manager of a music streaming service, you are set the task to derive insights from data using different quantitative analyses.   
 
 The following variables are available to you:
