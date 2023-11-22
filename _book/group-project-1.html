@@ -265,7 +265,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#cluster-analysis"><i class="fa fa-check"></i><b>7.2</b> Cluster analysis</a>
 <ul>
 <li class="chapter" data-level="7.2.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#k-means"><i class="fa fa-check"></i><b>7.2.1</b> K-Means</a></li>
-<li class="chapter" data-level="7.2.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.2.2</b> Hierarchical Clustering</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#references-4"><i class="fa fa-check"></i>References</a></li>
@@ -297,7 +296,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.10" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q10"><i class="fa fa-check"></i><b>9.1.10</b> Q10</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="group-project-1.html"><a href="group-project-1.html"><i class="fa fa-check"></i><b>10</b> Group project</a></li>
+<li class="chapter" data-level="10" data-path="group-project-1.html"><a href="group-project-1.html"><i class="fa fa-check"></i><b>10</b> Group project</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="group-project-1.html"><a href="group-project-1.html#data-analysis"><i class="fa fa-check"></i><b>10.1</b> Data analysis</a></li>
+<li class="chapter" data-level="10.2" data-path="group-project-1.html"><a href="group-project-1.html#load-data"><i class="fa fa-check"></i><b>10.2</b> Load data</a></li>
+<li class="chapter" data-level="10.3" data-path="group-project-1.html"><a href="group-project-1.html#question-1"><i class="fa fa-check"></i><b>10.3</b> Question 1</a></li>
+<li class="chapter" data-level="10.4" data-path="group-project-1.html"><a href="group-project-1.html#question-2"><i class="fa fa-check"></i><b>10.4</b> Question 2</a></li>
+<li class="chapter" data-level="10.5" data-path="group-project-1.html"><a href="group-project-1.html#question-3"><i class="fa fa-check"></i><b>10.5</b> Question 3</a></li>
+<li class="chapter" data-level="10.6" data-path="group-project-1.html"><a href="group-project-1.html#question-4"><i class="fa fa-check"></i><b>10.6</b> Question 4</a></li>
+</ul></li>
 <li class="part"><span><b>IV FAQ</b></span></li>
 <li class="chapter" data-level="11" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>11</b> FAQ</a>
 <ul>
@@ -372,9 +379,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="group-project-1" class="section level1 hasAnchor" number="10">
 <h1><span class="header-section-number">10</span> Group project<a href="group-project-1.html#group-project-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Information about the group project will be posted here soon.</p>
+<p>Die Informationen zum Gruppenprojekt entnehmen Sie bitte der .Rmd-Datei in dem entsprechenden Assignment auf Canvas. Verwenden Sie R, um die Aufgaben zu loesen. Wenn Sie mit der Bearbeitung fertig sind, klicken Sie auf den “Knit to HTML” Button oben in der Menueleiste in R. Dadurch wird ein HTML-Dokument in dem Ordner erstellt, in dem die group_project.Rmd Datei gespeichert ist. Oeffnen Sie diese Datei im Browser um zu testen, ob der Inhalt korrekt dargestellt wird. Wenn der Output korrekt ist, reichen Sie die .html Datei ueber Learn ein. Den Dateinamen sollten sie wie folgt waehlen: “group_project_groupID.html”.</p>
+<p>As a marketing manager of a music streaming service, you are set the task to derive insights from data using different quantitative analyses.</p>
+<p>The following variables are available to you:</p>
+<ul>
+<li>playlist_id: unique ID per playlist</li>
+<li>playlist_owner: curator of playlist</li>
+<li>playlist_name: name of playlist</li>
+<li>playlist_follower: number of playlist follower</li>
+<li>spotify_pl: 1 if playlist is curated by Spotify, 0 else</li>
+<li>major_pl: 1 if playlist is curated by major label, 0 else</li>
+<li>artist_pl: 1 if playlist is artist specific (e.g., “this is…” playlists), 0 else</li>
+<li>german_pl: 1 if playlist contains high share of german content, 0 else</li>
+<li>context_pl: 1 if playlist is curated according to a context (e.g., running, cooking, commuting, etc.), 0 else</li>
+<li>content_pl: 1 if playlist is curated accoridng to content (e.g., genre), 0 else</li>
+<li>ranking_pl: 1 if playlist is ranking-based (e.g., top 100 DE charts), 0 else</li>
+<li>artist_fame: avg. artist popularity of artists on playlist</li>
+<li>avg_song_age: avg. week since release of songs on playlist</li>
+<li>n_artists_playlist: avg. number of unique artists on playlist</li>
+<li>n_songs_playlist: avg. number of unique songs on playlist</li>
+<li>new_songs_30d: avg. number of new song listings per playlist over the past 30days</li>
+<li>new_song_share: avg. share of new song listings per playlist over the past 30days</li>
+<li>n_genres: avg. number of genres that songs on a playlist are associated with</li>
+<li>major_share: avg. share of major label content</li>
+<li>n_country_rep: avg. number of countries where the songs on a given playlist come from<br />
+</li>
+<li>avg_song_similariy: measure of how similar the songs on a playlist are (higher values = more similar)</li>
+</ul>
+<p>Please conduct the following analyses:</p>
+<ol style="list-style-type: decimal">
+<li><p>You are interested to understand what curation decisions drive the success of playlists. TO this end, build and estimate a regression model to explain the success of playlist curators in terms of their followers. This means, the variable “playlist_follower” is your dependent variable. As independent (explanatory) variables, you may choose from the remaining variables. Decide based on appropriate criteria between a linear model specification and a non-linear model specification (i.e., using log-transformation). After you have decided for the model specification, please formally state the regression equation, visualize the relationships between the dependent variable and independent variables using appropriate plots and interpret the model coefficients. Which model variables have a significant influence on the dependent variable? How do you judge the fit of the model?</p></li>
+<li><p>Build and estimate a classification model (i.e., logistic regression) that helps you to classify different playlist types, particularly, to differentiate between playlists that are managed by Spotify and playlists that are managed by other curators. This means, the variable “spotify_pl” is your dependent variable. As independent (explanatory) variables, you can choose from the remaining variables. Please formally state the regression equation, visualize the relationship between the top10 variable and the independent variables using appropriate plots and interpret the model coefficients. Which of the independent variable help you to differentiate between the playlist types?</p></li>
+<li><p>You are interested to learn more about whether the independent variables may be reduced to a smaller set of variables. Conduct a PCA using the 10 variables: artist_fame, avg_song_age, n_artists_playlist, n_songs_playlist, new_songs_30d, new_song_share, n_genres, major_share, n_country_rep, avg_song_similarity. How many components emerge and how can these be interpreted? Please conduct the tests discussed in class to see if PCA is appropriate for this data.</p></li>
+<li><p>You would like to investigate the similarity between playlists and how you could group songs into clusters using the 11 variables: artist_fame, avg_song_age, n_artists_playlist, n_songs_playlist, new_songs_30d, new_song_share, n_genres, major_share, n_country_rep, avg_song_similarity, playlist_follower. Conduct a cluster analysis for the subset of artists provided below. Determine the optimal number of clusters first, then run the cluster analysis using k-means clustering and visualize and interpret the results accordingly. Imagine you would like to recommend a playlist to a user that is most similar to the playlist “80s SMASH HITS” curated by “myplay.com”. Which playlist would you recommend?</p></li>
+</ol>
+<p>When you are done with your analysis, click on “Knit to HTML” button above the code editor. This will create a HTML document of your results in the folder where the “group_project.Rmd” file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Canvas. The file name should be “group_assignment_group_id.html”.</p>
+<div id="data-analysis" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Data analysis<a href="group-project-1.html#data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="load-data" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Load data<a href="group-project-1.html#load-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="group-project-1.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb463-2"><a href="group-project-1.html#cb463-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb463-3"><a href="group-project-1.html#cb463-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb463-4"><a href="group-project-1.html#cb463-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraph)</span>
+<span id="cb463-5"><a href="group-project-1.html#cb463-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraphExtra)</span>
+<span id="cb463-6"><a href="group-project-1.html#cb463-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb463-7"><a href="group-project-1.html#cb463-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb463-8"><a href="group-project-1.html#cb463-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
+<span id="cb463-9"><a href="group-project-1.html#cb463-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb463-10"><a href="group-project-1.html#cb463-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb463-11"><a href="group-project-1.html#cb463-11" aria-hidden="true" tabindex="-1"></a>playlist_data <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;https://raw.githubusercontent.com/WU-RDS/RMA2023/main/data/rma_playlist_data.csv&quot;</span>,</span>
+<span id="cb463-12"><a href="group-project-1.html#cb463-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">dec =</span> <span class="st">&quot;.&quot;</span>)</span>
+<span id="cb463-13"><a href="group-project-1.html#cb463-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(playlist_data)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["playlist_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["playlist_owner"],"name":[2],"type":["chr"],"align":["left"]},{"label":["playlist_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["spotify_pl"],"name":[4],"type":["int"],"align":["right"]},{"label":["major_pl"],"name":[5],"type":["int"],"align":["right"]},{"label":["artist_pl"],"name":[6],"type":["int"],"align":["right"]},{"label":["german_pl"],"name":[7],"type":["int"],"align":["right"]},{"label":["context_pl"],"name":[8],"type":["int"],"align":["right"]},{"label":["content_pl"],"name":[9],"type":["int"],"align":["right"]},{"label":["ranking_pl"],"name":[10],"type":["int"],"align":["right"]},{"label":["playlist_follower"],"name":[11],"type":["int"],"align":["right"]},{"label":["artist_fame"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["avg_song_age"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["n_artists_playlist"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["n_songs_playlist"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["new_songs_30d"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["new_song_share"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["n_genres"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["major_share"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["n_country_rep"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["avg_song_similarity"],"name":[21],"type":["dbl"],"align":["right"]}],"data":[{"1":"00BTx3ggFpepiYT4T9sdo5","2":"beengan","3":"Metal Gym Hours","4":"0","5":"0","6":"0","7":"0","8":"0","9":"1","10":"0","11":"168495","12":"131.99405","13":"284.31648","14":"59.745223","15":"66.63057","16":"6.000000","17":"0.096235978","18":"4.203822","19":"0.5836797","20":"12.121019","21":"0.7494937"},{"1":"00e2vXzWaSmxJ1Fga6l2ug","2":"logansandberg","3":"Party - Breathe - Jax Jones - Vigiland Friday Night Axwell /\\\\ Ingrosso More Than You Know","4":"0","5":"0","6":"0","7":"0","8":"1","9":"0","10":"0","11":"221068","12":"301.35776","13":"148.78716","14":"75.617834","15":"108.10828","16":"24.821656","17":"0.212003765","18":"8.152866","19":"0.8629232","20":"21.318471","21":"0.7008787"},{"1":"00sP0XsnG64tXgaBUJ8u2c","2":"darrenorourk","3":"Hipster Morning","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"52154","12":"1549.48528","13":"424.48640","14":"266.675159","15":"413.76433","16":"1.853503","17":"0.004484624","18":"13.821656","19":"0.6208318","20":"23.821656","21":"0.5517421"},{"1":"00t68Ndg5LJHxmKKE8LPXI","2":"theedgenz","3":"The Edge Fat 40","4":"0","5":"0","6":"0","7":"0","8":"0","9":"0","10":"0","11":"22334","12":"781.04395","13":"29.24226","14":"36.191083","15":"39.92357","16":"21.363057","17":"0.535719992","18":"7.936306","19":"0.7993758","20":"9.292994","21":"0.5973310"},{"1":"012Jm4s6ckHWnKqs1d4ZIv","2":"sonymusicaustralia","3":"R N Beats","4":"0","5":"1","6":"0","7":"0","8":"0","9":"1","10":"0","11":"17848","12":"73.17763","13":"28.77840","14":"50.388535","15":"62.08280","16":"74.414013","17":"1.198615937","18":"7.732484","19":"0.6529823","20":"7.885350","21":"0.5524443"},{"1":"01DbkmjFPYPeZyw7MxBal5","2":"logicofficial","3":"OCD","4":"0","5":"0","6":"0","7":"0","8":"0","9":"1","10":"0","11":"119139","12":"1.84098","13":"116.40405","14":"1.146497","15":"44.49682","16":"17.515924","17":"0.358885541","18":"3.458599","19":"0.8407240","20":"2.675159","21":"0.5453239"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="question-1" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Question 1<a href="group-project-1.html#question-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Provide a description of your steps here!</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="group-project-1.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here</span></span></code></pre></div>
+<p>Interpret the results here!</p>
+</div>
+<div id="question-2" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Question 2<a href="group-project-1.html#question-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Provide a description of your steps here!</p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="group-project-1.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here</span></span></code></pre></div>
+<p>Interpret the results here!</p>
+</div>
+<div id="question-3" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Question 3<a href="group-project-1.html#question-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Provide a description of your steps here!</p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="group-project-1.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here</span></span></code></pre></div>
+<p>Interpret the results here!</p>
+</div>
+<div id="question-4" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> Question 4<a href="group-project-1.html#question-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Provide a description of your steps here!</p>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="group-project-1.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="co"># provide your code here</span></span></code></pre></div>
+<p>Interpret the results here!</p>
 
 <p><link rel="stylesheet" type="text/css" media="all" href="style.css" /></p>
+</div>
 </div>
 
 

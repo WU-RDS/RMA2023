@@ -1565,39 +1565,6 @@ fviz_cluster(kmeans_tracks, data = famous_tracks_scale,
 
 <img src="08-unsupervised_learning_files/figure-html/unnamed-chunk-44-1.png" width="672" />
 
-### Hierarchical Clustering
-
-Another popular clustering algorithm is *hierarchical clustering*. It is based on the idea that similar clusters can be merged. It starts off assigning each observation, in our case song, its own cluster. In a second step the two most similar or closest songs are combined to a single cluster. Then, in each iteration, the two most similar clusters are merged until all songs are in a single cluster. Hierarchical clustering requires us to provide a distance matrix rather then the song features. Distances between observations can be calculated using the `dist` function. There are multiple distance measures that can be used to calculate the distances. One of the most popular ones, and also the default, is the euclidean distance, defined as the square-root of the sum of squared element wise differences between two vectors. So in our case to calculate the distance between two songs we would take the squared difference in valence, danceability, liveness and so on, sum them up and take the square root of the sum. To get a better overview let's use songs by Pink Floyd and Rihanna in this example.
-
-
-```r
-pf_ri <- tracks[tracks$artistName %in% c("Pink Floyd",
-    "Rihanna"), ]
-pf_ri_scale <- scale(pf_ri[, 4:ncol(pf_ri)])
-rownames(pf_ri_scale) <- pf_ri$trackName
-hclust_tracks <- hclust(dist(pf_ri_scale))
-plot(hclust_tracks)
-```
-
-<img src="08-unsupervised_learning_files/figure-html/unnamed-chunk-45-1.png" width="1440" />
-
-Again, we have to decide on the number of clusters. Based on a visual inspection of the hierarchy, choosing 4 clusters seems reasonable. We can get cluster assignments by "cutting the tree" such that we get the desired number of clusters. With hierarchical clustering we do not get the centers of each cluster as a return value as it is not calculated by the method. However we can reduce the clusters manually by calculating the mean of each variable for each cluster using the `aggregate` function. The `.` in the formula stands for "all other variables". As we can see in the middle of the dendrogram there will be two small clusters with 1 and 2 songs in them respectively ("Needed me" in cluster 1 and "dogs", "pigs" in cluster 4).
-
-
-```r
-hclusters <- cutree(hclust_tracks, 4)
-pf_ri_hier <- data.frame(pf_ri_scale)
-pf_ri_hier$cluster <- as.factor(hclusters)
-hier_centers <- aggregate(. ~ cluster, pf_ri_hier,
-    mean)
-ggRadar(hier_centers, aes(color = cluster), rescale = T) +
-    ggtitle("Centers") + theme_bw()
-```
-
-<img src="08-unsupervised_learning_files/figure-html/unnamed-chunk-46-1.png" width="672" />
-
-
-
 ## Learning check {-}
 
 **(LC7.1) The goals of PCA are...**
