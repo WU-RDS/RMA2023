@@ -265,7 +265,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#cluster-analysis"><i class="fa fa-check"></i><b>7.2</b> Cluster analysis</a>
 <ul>
 <li class="chapter" data-level="7.2.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#k-means"><i class="fa fa-check"></i><b>7.2.1</b> K-Means</a></li>
-<li class="chapter" data-level="7.2.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.2.2</b> Hierarchical Clustering</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#learning-check-5"><i class="fa fa-check"></i>Learning check</a></li>
 <li class="chapter" data-level="" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#references-4"><i class="fa fa-check"></i>References</a></li>
@@ -297,7 +296,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.10" data-path="assignment-solutions.html"><a href="assignment-solutions.html#q10"><i class="fa fa-check"></i><b>9.1.10</b> Q10</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="group-project-1.html"><a href="group-project-1.html"><i class="fa fa-check"></i><b>10</b> Group project</a></li>
+<li class="chapter" data-level="10" data-path="group-project-1.html"><a href="group-project-1.html"><i class="fa fa-check"></i><b>10</b> Group project</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="group-project-1.html"><a href="group-project-1.html#data-analysis"><i class="fa fa-check"></i><b>10.1</b> Data analysis</a></li>
+<li class="chapter" data-level="10.2" data-path="group-project-1.html"><a href="group-project-1.html#load-data"><i class="fa fa-check"></i><b>10.2</b> Load data</a></li>
+<li class="chapter" data-level="10.3" data-path="group-project-1.html"><a href="group-project-1.html#question-1"><i class="fa fa-check"></i><b>10.3</b> Question 1</a></li>
+<li class="chapter" data-level="10.4" data-path="group-project-1.html"><a href="group-project-1.html#question-2"><i class="fa fa-check"></i><b>10.4</b> Question 2</a></li>
+<li class="chapter" data-level="10.5" data-path="group-project-1.html"><a href="group-project-1.html#question-3"><i class="fa fa-check"></i><b>10.5</b> Question 3</a></li>
+<li class="chapter" data-level="10.6" data-path="group-project-1.html"><a href="group-project-1.html#question-4"><i class="fa fa-check"></i><b>10.6</b> Question 4</a></li>
+</ul></li>
 <li class="part"><span><b>IV FAQ</b></span></li>
 <li class="chapter" data-level="11" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>11</b> FAQ</a>
 <ul>
@@ -1555,26 +1562,6 @@ Let’s try it out with our two artists. In order to perform clustering we first
 <span id="cb433-3"><a href="unsupervised-learning.html#cb433-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">hcl.colors</span>(<span class="dv">3</span>, <span class="at">palette =</span> <span class="st">&quot;Dynamic&quot;</span>), <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
 <span id="cb433-4"><a href="unsupervised-learning.html#cb433-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ellipse.type =</span> <span class="st">&quot;convex&quot;</span>, <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>())</span></code></pre></div>
 <p><img src="08-unsupervised_learning_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
-</div>
-<div id="hierarchical-clustering" class="section level3 hasAnchor" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> Hierarchical Clustering<a href="unsupervised-learning.html#hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Another popular clustering algorithm is <em>hierarchical clustering</em>. It is based on the idea that similar clusters can be merged. It starts off assigning each observation, in our case song, its own cluster. In a second step the two most similar or closest songs are combined to a single cluster. Then, in each iteration, the two most similar clusters are merged until all songs are in a single cluster. Hierarchical clustering requires us to provide a distance matrix rather then the song features. Distances between observations can be calculated using the <code>dist</code> function. There are multiple distance measures that can be used to calculate the distances. One of the most popular ones, and also the default, is the euclidean distance, defined as the square-root of the sum of squared element wise differences between two vectors. So in our case to calculate the distance between two songs we would take the squared difference in valence, danceability, liveness and so on, sum them up and take the square root of the sum. To get a better overview let’s use songs by Pink Floyd and Rihanna in this example.</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="unsupervised-learning.html#cb434-1" aria-hidden="true" tabindex="-1"></a>pf_ri <span class="ot">&lt;-</span> tracks[tracks<span class="sc">$</span>artistName <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Pink Floyd&quot;</span>,</span>
-<span id="cb434-2"><a href="unsupervised-learning.html#cb434-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Rihanna&quot;</span>), ]</span>
-<span id="cb434-3"><a href="unsupervised-learning.html#cb434-3" aria-hidden="true" tabindex="-1"></a>pf_ri_scale <span class="ot">&lt;-</span> <span class="fu">scale</span>(pf_ri[, <span class="dv">4</span><span class="sc">:</span><span class="fu">ncol</span>(pf_ri)])</span>
-<span id="cb434-4"><a href="unsupervised-learning.html#cb434-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(pf_ri_scale) <span class="ot">&lt;-</span> pf_ri<span class="sc">$</span>trackName</span>
-<span id="cb434-5"><a href="unsupervised-learning.html#cb434-5" aria-hidden="true" tabindex="-1"></a>hclust_tracks <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(pf_ri_scale))</span>
-<span id="cb434-6"><a href="unsupervised-learning.html#cb434-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hclust_tracks)</span></code></pre></div>
-<p><img src="08-unsupervised_learning_files/figure-html/unnamed-chunk-45-1.png" width="1440" /></p>
-<p>Again, we have to decide on the number of clusters. Based on a visual inspection of the hierarchy, choosing 4 clusters seems reasonable. We can get cluster assignments by “cutting the tree” such that we get the desired number of clusters. With hierarchical clustering we do not get the centers of each cluster as a return value as it is not calculated by the method. However we can reduce the clusters manually by calculating the mean of each variable for each cluster using the <code>aggregate</code> function. The <code>.</code> in the formula stands for “all other variables”. As we can see in the middle of the dendrogram there will be two small clusters with 1 and 2 songs in them respectively (“Needed me” in cluster 1 and “dogs”, “pigs” in cluster 4).</p>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="unsupervised-learning.html#cb435-1" aria-hidden="true" tabindex="-1"></a>hclusters <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hclust_tracks, <span class="dv">4</span>)</span>
-<span id="cb435-2"><a href="unsupervised-learning.html#cb435-2" aria-hidden="true" tabindex="-1"></a>pf_ri_hier <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(pf_ri_scale)</span>
-<span id="cb435-3"><a href="unsupervised-learning.html#cb435-3" aria-hidden="true" tabindex="-1"></a>pf_ri_hier<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(hclusters)</span>
-<span id="cb435-4"><a href="unsupervised-learning.html#cb435-4" aria-hidden="true" tabindex="-1"></a>hier_centers <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(. <span class="sc">~</span> cluster, pf_ri_hier,</span>
-<span id="cb435-5"><a href="unsupervised-learning.html#cb435-5" aria-hidden="true" tabindex="-1"></a>    mean)</span>
-<span id="cb435-6"><a href="unsupervised-learning.html#cb435-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggRadar</span>(hier_centers, <span class="fu">aes</span>(<span class="at">color =</span> cluster), <span class="at">rescale =</span> T) <span class="sc">+</span></span>
-<span id="cb435-7"><a href="unsupervised-learning.html#cb435-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;Centers&quot;</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="08-unsupervised_learning_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 </div>
 </div>
 <div id="learning-check-5" class="section level2 unnumbered hasAnchor">
