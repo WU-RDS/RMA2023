@@ -719,4 +719,260 @@ ggplot(music_data, aes(x = valence, y = energy)) +
 <p class="caption">(\#fig:question_10)Scatterplot of energy and valence</p>
 </div>
 
+## Assignment 2
 
+As a marketing manager of a consumer electronics company, you are assigned the task to analyze the relative influence of different marketing activities. Specifically, you are supposed to analyze the effects of (1) TV advertising, (2) online advertising, and (3) radio advertising on the sales of fitness trackers (wristbands). Your data set consists of sales of the product in different markets (each line represents one market) from the past year, along with the advertising budgets for the product in each of those markets for three different media: TV, online, and radio. 
+
+The following variables are available to you:
+  
+* Sales (in thousands of units)
+* TV advertising budget (in thousands of Euros)
+* Online advertising budget (in thousands of Euros)
+* Radio advertising budget (in thousands of Euros)
+
+Please conduct the following analyses: 
+  
+1. Formally state the regression equation, which you will use to determine the relative influence of the marketing activities on sales.
+2. Describe the model variables using appropriate statistics and plots
+3. Estimate a multiple linear regression model and interpret the model results:
+  * Which variables have a significant influence on sales and what is the interpretation of the coefficients?
+  * How do you judge the fit of the model? Please also visualize the model fit using an appropriate graph.
+4. What sales quantity would you predict based on your model for a product when the marketing activities are planned as follows: TV: EUR 150 thsd., Online: EUR 26 thsd., Radio: EUR 15 thsd.? Please provide the equation you used for your prediction. 
+
+When you are done with your analysis, click on "Knit to HTML" button above the code editor. This will create a HTML document of your results in the folder where the "assignment2.Rmd" file is stored. Open this file in your Internet browser to see if the output is correct. If the output is correct, submit the HTML file via Learn\@WU. The file name should be "assignment2_studendID_name.html".
+
+
+
+```r
+library(tidyverse)
+library(psych)
+library(Hmisc)
+library(ggstatsplot)
+options(scipen = 999)
+
+sales_data <- read.table("https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/assignment4.dat",
+    sep = "\t", header = TRUE)  #read in data
+sales_data$market_id <- 1:nrow(sales_data)
+head(sales_data)
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["tv_adspend"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["online_adspend"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["radio_adspend"],"name":[3],"type":["int"],"align":["right"]},{"label":["sales"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["market_id"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"68.6","2":"10.3","3":"24","4":"8.6","5":"1"},{"1":"136.6","2":"29.0","3":"40","4":"15.8","5":"2"},{"1":"14.5","2":"44.3","3":"25","4":"11.8","5":"3"},{"1":"214.6","2":"26.2","3":"40","4":"17.1","5":"4"},{"1":"285.0","2":"13.9","3":"31","4":"17.4","5":"5"},{"1":"139.6","2":"74.9","3":"24","4":"24.4","5":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+
+```r
+str(sales_data)
+```
+
+```
+## 'data.frame':	236 obs. of  5 variables:
+##  $ tv_adspend    : num  68.6 136.6 14.5 214.6 285 ...
+##  $ online_adspend: num  10.3 29 44.3 26.2 13.9 74.9 31.1 14.1 24.5 13.9 ...
+##  $ radio_adspend : int  24 40 25 40 31 24 12 9 38 18 ...
+##  $ sales         : num  8.6 15.8 11.8 17.1 17.4 24.4 19.5 4.7 20.7 19.5 ...
+##  $ market_id     : int  1 2 3 4 5 6 7 8 9 10 ...
+```
+
+### Q1
+
+In a first step, we specify the regression equation. In this case, sales is the **dependent variable** which is regressed on the different types of advertising expenditures that represent the **independent variables** for product *i*. Thus, the regression equation is:
+  
+$$sales_{i}=\beta_0 + \beta_1 * tv\_adspend_{i} + \beta_2 * online\_adspend_{i} + \beta_3 * radio\_adspend_{i} + \epsilon$$
+  
+This equation will be used later to turn the output of the regression analysis (namely the coefficients: $\beta_0$ - intersect coefficient, and $\beta_1$, $\beta_2$, and $\beta_3$ that represent the unknown relationship between sales and advertising expenditures on TV, online channels and radio, respectively) to the "managerial" form and draw marketing conclusions.  
+
+### Q2
+
+The descriptive statistics for the variables can be checked using the ```describe()``` function:
+  
+
+```r
+psych::describe(sales_data)
+```
+
+```
+##                vars   n   mean    sd median trimmed    mad min   max range skew
+## tv_adspend        1 236 148.65 89.77 141.85  147.45 117.27 1.1 299.6 298.5 0.12
+## online_adspend    2 236  25.61 14.33  24.35   24.70  14.53 1.6  74.9  73.3 0.61
+## radio_adspend     3 236  27.70 12.57  27.00   27.36  13.34 2.0  63.0  61.0 0.22
+## sales             4 236  14.83  5.40  14.15   14.72   5.93 1.4  29.0  27.6 0.16
+## market_id         5 236 118.50 68.27 118.50  118.50  87.47 1.0 236.0 235.0 0.00
+##                kurtosis   se
+## tv_adspend        -1.26 5.84
+## online_adspend     0.08 0.93
+## radio_adspend     -0.53 0.82
+## sales             -0.57 0.35
+## market_id         -1.22 4.44
+```
+
+Inspecting the correlation matrix reveals that the sales variable is positively correlated with TV advertising and online advertising expenditures. The correlations among the independent variables appear to be low to moderate. 
+
+
+```r
+rcorr(as.matrix(sales_data[, c("sales", "tv_adspend",
+    "online_adspend", "radio_adspend")]))
+```
+
+```
+##                sales tv_adspend online_adspend radio_adspend
+## sales           1.00       0.78           0.54         -0.04
+## tv_adspend      0.78       1.00           0.05          0.03
+## online_adspend  0.54       0.05           1.00         -0.07
+## radio_adspend  -0.04       0.03          -0.07          1.00
+## 
+## n= 236 
+## 
+## 
+## P
+##                sales  tv_adspend online_adspend radio_adspend
+## sales                 0.0000     0.0000         0.5316       
+## tv_adspend     0.0000            0.4127         0.6735       
+## online_adspend 0.0000 0.4127                    0.2790       
+## radio_adspend  0.5316 0.6735     0.2790
+```
+
+Since we have continuous variables, we use scatterplots to investigate the relationship between sales and each of the predictor variables.
+
+
+```r
+ggplot(sales_data, aes(x = tv_adspend, y = sales)) +
+    geom_point(shape = 1) + geom_smooth(method = "lm",
+    fill = "gray", color = "lavenderblush3", alpha = 0.1) +
+    theme_minimal()
+ggplot(sales_data, aes(x = online_adspend, y = sales)) +
+    geom_point(shape = 1) + geom_smooth(method = "lm",
+    fill = "gray", color = "lavenderblush3", alpha = 0.1) +
+    theme_minimal()
+ggplot(sales_data, aes(x = radio_adspend, y = sales)) +
+    geom_point(shape = 1) + geom_smooth(method = "lm",
+    fill = "gray", color = "lavenderblush3", alpha = 0.1) +
+    theme_minimal()
+```
+
+<img src="09-rmdIntro_files/figure-html/unnamed-chunk-6-1.png" width="50%" /><img src="09-rmdIntro_files/figure-html/unnamed-chunk-6-2.png" width="50%" /><img src="09-rmdIntro_files/figure-html/unnamed-chunk-6-3.png" width="50%" />
+
+The plots including the fitted lines from a simple linear model already suggest that there might be a positive linear relationship between sales and TV- and online-advertising. However, there does not appear to be a strong relationship between sales and radio advertising. 
+
+Further steps include estimate of a multiple linear regression model in order to determine the relative influence of each type of advertising on sales.
+
+### Q3
+
+The estimate the model, we will use the ```lm()``` function:
+  
+
+```r
+linear_model <- lm(sales ~ tv_adspend + online_adspend +
+    radio_adspend, data = sales_data)
+```
+
+In a next step, we will investigate the results from the model using the ```summary()``` function. 
+
+
+```r
+summary(linear_model)
+```
+
+```
+## 
+## Call:
+## lm(formula = sales ~ tv_adspend + online_adspend + radio_adspend, 
+##     data = sales_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.1113 -1.4161 -0.0656  1.3233  5.5198 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value             Pr(>|t|)    
+## (Intercept)     3.604140   0.460057   7.834    0.000000000000169 ***
+## tv_adspend      0.045480   0.001491  30.508 < 0.0000000000000002 ***
+## online_adspend  0.186859   0.009359  19.965 < 0.0000000000000002 ***
+## radio_adspend  -0.011469   0.010656  -1.076                0.283    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.048 on 232 degrees of freedom
+## Multiple R-squared:  0.8582,	Adjusted R-squared:  0.8564 
+## F-statistic: 468.1 on 3 and 232 DF,  p-value: < 0.00000000000000022
+```
+
+
+For each of the individual predictors, we test the following hypothesis: 
+  
+$$H_0: \beta_k=0$$
+$$H_1: \beta_k\ne0$$
+  
+where k denotes the number of the regression coefficient. In the present example, we reject the null hypothesis for tv_adspend and online_adspend, where we observe a significant effect (i.e., p-value < 0.05). However, we fail to reject the null for the "radio_adspend" variable (i.e., the effect is insignificant). 
+
+The interpretation of the coefficients is as follows: 
+  
+* tv_adspend (&beta;<sub>1</sub>): when TV advertising expenditures increase by 1000 Euro, sales will increase by 45 units;
+* online_adspend (&beta;<sub>2</sub>): when online advertising expenditures increase by 1000 Euro, sales will increase by 187 units;
+* radio_adspend (&beta;<sub>3</sub>): when radio advertising expenditures increase by 1000 Euro, sales will increase by -11 units (i.e., decrease by 11 units).
+
+You should always provide a measure of uncertainty that is associated with the estimates. You could compute the confidence intervals around the coefficients using the ```confint()``` function.
+
+
+```r
+confint(linear_model)
+```
+
+```
+##                      2.5 %     97.5 %
+## (Intercept)     2.69771633 4.51056393
+## tv_adspend      0.04254244 0.04841668
+## online_adspend  0.16841843 0.20529924
+## radio_adspend  -0.03246402 0.00952540
+```
+
+The results show that, for example, the 95% confidence interval associated with coefficient capturing the effect of online advertising on sales is between 0.168 and 0.205. 
+
+Regarding the model fit, the R<sup>2</sup> statistic tells us that **approximately 86% of the variance can be explained by the model**. This can be visualized as follows: 
+  
+
+```r
+sales_data$yhat <- predict(linear_model)
+ggplot(sales_data, aes(yhat, sales)) + geom_point(size = 2,
+    shape = 1) + scale_x_continuous(name = "predicted values") +
+    scale_y_continuous(name = "observed values") +
+    geom_abline(intercept = 0, slope = 1) + theme_minimal()
+```
+
+<img src="09-rmdIntro_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+
+In addition, the output tells us that our predictions on average deviate from the observed values by 2048 units (see residual standard error, remember that the sales variable is measures in thousand units).
+
+Of course, you could have also used the functions included in the ggstatsplot package to report the results from your regression model. 
+
+
+```r
+ggcoefstats(x = linear_model, k = 3, title = "Sales predicted by TV-, online-, & radio advertising")
+```
+
+<img src="09-rmdIntro_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+
+### Q4
+
+Finally, we can predict the outcome for the given marketing mix using the following equation: 
+  
+$$\hat{Sales} = \beta_0 + \beta_1*150 + \beta_2*26 + \beta_3*15 $$
+  
+The coefficients can be extracted from the summary of the linear model and used for quick sales value prediction as follows:
+
+
+```r
+summary(linear_model)$coefficients[1, 1] + summary(linear_model)$coefficients[2,
+    1] * 150 + summary(linear_model)$coefficients[3,
+    1] * 26 + summary(linear_model)$coefficients[4,
+    1] * 15
+```
+
+```
+## [1] 15.11236
+```
+
+$$\hat{sales}= 3.6 + 0.045*150 + 0.187*26 + 0.011*15 = 15.11$$
+  
+This means that given the planned marketing mix, we would expect to sell around 15,112 units. 
